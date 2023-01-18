@@ -21,6 +21,7 @@ harvester:
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://hanzetest.azure-api.net"
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
 
 postgres:
   database: "harvester"
@@ -64,3 +65,5 @@ secrets:
     api_key: "arn:aws:secretsmanager:eu-central-1:825135206789:secret:credentials/hva"
   buas:
     api_key: "arn:aws:secretsmanager:eu-central-1:825135206789:secret:credentials/buas"
+  publinova:
+    api_key: null
