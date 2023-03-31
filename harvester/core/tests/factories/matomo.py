@@ -21,8 +21,8 @@ class MatomoVisitsResourceFactory(factory.django.DjangoModelFactory):
 
     since = factory.Maybe(
         "is_initial",
-        make_aware(datetime(year=2020, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
+        make_aware(datetime(year=2022, month=9, day=1)),
+        make_aware(datetime(year=2022, month=10, day=10, hour=13, minute=8, second=39, microsecond=315000))
     )
     status = 200
     head = {
@@ -31,7 +31,7 @@ class MatomoVisitsResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        return f"webstats.surf.nl/?date={self.since:%Y-%m-%dT%H:%M:%SZ}%2C2021-12-12&" \
+        return f"webstats.surf.nl/?date={self.since:%Y-%m-%dT%H:%M:%SZ}%2C2023-12-12&" \
                f"filter_offset=0&format=JSON&idSite=63&method=Live.getLastVisitsDetails&module=API&period=range"
 
     @factory.lazy_attribute

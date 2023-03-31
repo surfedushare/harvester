@@ -50,7 +50,7 @@ class MatomoVisitsResource(HttpResource):
         "filter_offset": "0",
         "idSite": "64"
     }
-    DEFAULT_START_DATE = "2020-01-01"
+    DEFAULT_START_DATE = "2022-09-01"
 
     since = models.DateTimeField()
 
