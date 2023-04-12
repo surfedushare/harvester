@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('sources', '0007_hanze_refactor'),
+        ('sources', '0008_edurep_jsonsearch'),
     ]
 
     operations = [
