@@ -1,5 +1,6 @@
 import os
 from urlobject import URLObject
+from collections import defaultdict
 
 from django.contrib.auth.models import User
 
@@ -8,10 +9,10 @@ from core.models import DatasetVersion, MatomoVisitsResource, Query, QueryRankin
 
 def _create_or_increase_query_ranking(dataset_version, query_string, url_object, user):
     _, external_id = os.path.split(url_object.path.strip("/"))
+    external_id.replace("edurep_delen", "WikiwijsMaken")
     document = Document.objects.filter(dataset_version=dataset_version, reference=external_id).last()
     if not document:
-        print(f"Skipping: {external_id}")
-        return
+        return external_id
     language = document.get_language() or "unk"
     query, _ = Query.objects.get_or_create(query=query_string)
     ranking, _ = QueryRanking.objects.get_or_create(query=query, user=user)
@@ -30,9 +31,21 @@ def create_or_update_download_query_rankings():
         "Goal.Download": True
     }
     superuser = User.objects.get(username="supersurf")
+    not_found = defaultdict(int)
+    visit_lengths = defaultdict(int)
+    visitor_id_counts = defaultdict(int)
     for visit in MatomoVisitsResource.objects.iterate_visits(filter_custom_events=download_event_filter, min_actions=3):
+        visitor_id_counts[visit["visitorId"]] += 1
+    visitor_id_blacklist = {
+        visitor_id for visitor_id, count in visitor_id_counts.items()
+        if count >= 25  # very frequent visitors are suspicious and discarded
+    }
+    for visit in MatomoVisitsResource.objects.iterate_visits(filter_custom_events=download_event_filter, min_actions=3):
+        if visit["visitorId"] in visitor_id_blacklist:
+            continue
         current_query = None
         current_result = None
+        visit_lengths[len(visit["actionDetails"])] += 1
         for action in visit["actionDetails"]:
             if action["type"] == "search":  # record when a query was made and continue iterating
                 current_query = action["siteSearchKeyword"] if not action["siteSearchCategory"] else None
@@ -45,8 +58,13 @@ def create_or_update_download_query_rankings():
                 current_result = action["url"]
                 continue
             elif is_result and action.get("eventAction", None) == "Download":  # record a hit
-                _create_or_increase_query_ranking(latest_dataset_version, current_query, url, superuser)
+                missing = _create_or_increase_query_ranking(latest_dataset_version, current_query, url, superuser)
+                if missing:
+                    not_found[missing] += 1
+                current_result = None
+                continue
             # Non-search related click to a material/other page or immediately after hit
             # We'll reset state
             current_query = None
             current_result = None
+    return not_found, visit_lengths
