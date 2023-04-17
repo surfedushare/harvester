@@ -27,7 +27,7 @@ jsonschema==3.2.0
 pytz==2021.3
 urlobject==2.4.3
 git+https://github.com/fako/django-json-field.git
-lxml==4.8.0
+lxml==4.9.2
 datagrowth==0.18.2
 pandas==1.5.3
 
