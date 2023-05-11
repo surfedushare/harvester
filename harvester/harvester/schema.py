@@ -100,29 +100,6 @@ class HarvesterSchema(AutoSchema):
                             'type': 'string',
                         }
                     },
-                    {
-                        "name": "site_id",
-                        "in": "query",
-                        "required": False,
-                        "description": "Specifies which site to get filters for",
-                        "default": 1,
-                        'schema': {
-                            'type': 'string',
-                        }
-                    }
-                ]
-            if "field-values" in path:
-                operation["parameters"] += [
-                    {
-                        "name": "site_id",
-                        "in": "query",
-                        "required": False,
-                        "description": "Specifies which site to get filters for",
-                        "default": 1,
-                        'schema': {
-                            'type': 'string',
-                        }
-                    }
                 ]
         else:
             operation["tags"] = ["default"]
