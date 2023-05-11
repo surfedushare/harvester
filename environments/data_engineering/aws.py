@@ -49,7 +49,8 @@ AWS_SECRET_CONFIGURATIONS = {
         "admin_password": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/django",
     },
     "sharekit": {
-        "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
+        "edusources": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
+        "publinova": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
     },
     "harvester": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",
@@ -76,4 +77,7 @@ AWS_SECRET_CONFIGURATIONS = {
     "buas": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/buas",
     },
+    "google": {
+        "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/google"
+    }
 }
