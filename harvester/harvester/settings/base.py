@@ -519,6 +519,11 @@ EDUTERM_API_KEY = environment.secrets.eduterm.api_key
 DEEPL_API_KEY = environment.secrets.deepl.api_key
 
 
+# Google
+
+GOOGLE_API_KEY = environment.secrets.google.api_key
+
+
 # Robots
 # https://pypi.org/project/django-x-robots-tag-middleware/
 
