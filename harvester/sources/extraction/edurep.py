@@ -33,8 +33,6 @@ class EdurepMetadataExtraction(ExtractProcessor):
     def get_files(cls, node):
         if not node:
             return []
-        # This whole method is complete crap,
-        # it needs to be replaced as soon as edurep makes some data consistency promises.
         mime_type = node["schema:encodingFormat"][0] \
             if isinstance(node["schema:encodingFormat"], list) \
             else node["schema:encodingFormat"]
@@ -48,7 +46,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
                         "url": url,
                         "mime_type": mime_type,
                         "hash": sha1(url.encode("utf-8")).hexdigest(),
-                        "copyright": node.get("schema:license", None),
+                        "copyright": cls.get_copyright(node),
                         "access_rights": node["dcterms:accessRights"]
                     }
                 )
@@ -109,18 +107,28 @@ class EdurepMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_copyright(cls, node):
-        copyright = node["lom:copyrightAndOtherRestrictions"]
-        if copyright is not None:
+        copyright = node.get("schema:license", None)
+        if (copyright is not None) and (copyright != "yes"):
+            return copyright
+        copyright = node.get("lom:copyrightAndOtherRestrictions", None)
+        if (copyright is not None) and (copyright != "yes"):
             return copyright
         copyright = cls.parse_copyright_description(cls.get_copyright_description(node))
         return copyright or "yes"
 
     @classmethod
     def get_copyright_description(cls, node):
-        license = node.get("schema:license", None)
-        if license is None:
-            return
-        return license.strip()
+        copyright = node.get("lom:copyrightAndOtherRestrictions")
+        if copyright is not None and isinstance(copyright, str):
+            if copyright != "yes":
+                return copyright.strip()
+        copyright = node.get("schema:copyrightNotice", None)
+        if copyright is not None:
+            if isinstance(copyright, str):
+                return copyright.strip()
+            elif isinstance(copyright, dict):
+                return copyright["@value"]
+        return
 
     @classmethod
     def get_from_youtube(cls, node):
@@ -149,7 +157,11 @@ class EdurepMetadataExtraction(ExtractProcessor):
         educational_levels = []
         blocks = blocks if isinstance(blocks, list) else [blocks]
         for block in blocks:
-            if block["schema:name"]["@value"] in HIGHER_EDUCATION_LEVELS:
+            if isinstance(block["schema:name"], list):
+                for name in block["schema:name"]:
+                    if name["@value"] in HIGHER_EDUCATION_LEVELS:
+                        educational_levels.append(name["@value"])
+            elif block["schema:name"]["@value"] in HIGHER_EDUCATION_LEVELS:
                 educational_levels.append(block["schema:name"]["@value"])
         return educational_levels
 
@@ -191,11 +203,13 @@ class EdurepMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_keywords(cls, node):
-        keyword_dict = node["schema:keywords"]
+        keyword_dict = node.get("schema:keywords", None)
         keyword_values = []
+        if keyword_dict is None:
+            return []
         for keyword in keyword_dict:
             if isinstance(keyword, str):
-                keyword_values.append("keyword is a string?")
+                return []
             elif keyword.get("@value", None) is not None:
                 keyword_values.append(keyword["@value"])
             elif keyword.get("schema:termCode", None) is not None:
@@ -220,9 +234,12 @@ class EdurepMetadataExtraction(ExtractProcessor):
         material_values = []
         if not material_types:
             return []
-        for material_type in material_types:
-            if not isinstance(material_type, str):
-                material_values.append(material_type["schema:termCode"].strip())
+        if isinstance(material_types, list):
+            for material_type in material_types:
+                if not isinstance(material_type, str):
+                    material_values.append(material_type["schema:termCode"].strip())
+        elif not isinstance(material_types, str):
+            material_values.append(material_types["schema:termCode"].strip())
         return material_values
 
     @classmethod
@@ -235,6 +252,12 @@ class EdurepMetadataExtraction(ExtractProcessor):
         if date is None:
             return None
         return date
+
+    @classmethod
+    def get_date_string(cls, node):
+        date_string = cls.get_publisher_date(node)
+        date = date_parser(date_string, dayfirst=True)
+        return date.strftime('%Y-%m-%d')
 
     @classmethod
     def get_publisher_year(cls, node):
@@ -267,7 +290,6 @@ class EdurepMetadataExtraction(ExtractProcessor):
             return publisher
 
 EDUREP_EXTRACTION_OBJECTIVE = {
-    # Essential NPPO properties
     "url": EdurepMetadataExtraction.get_url,
     "files": EdurepMetadataExtraction.get_files,
     "copyright": EdurepMetadataExtraction.get_copyright,
@@ -279,10 +301,8 @@ EDUREP_EXTRACTION_OBJECTIVE = {
     "authors": EdurepMetadataExtraction.get_authors,
     "organizations": EdurepMetadataExtraction.get_organizations,
     "publishers": EdurepMetadataExtraction.get_publisher,
-    "publisher_date": EdurepMetadataExtraction.get_publisher_date,
+    "publisher_date": EdurepMetadataExtraction.get_date_string,
     "publisher_year": EdurepMetadataExtraction.get_publisher_year,
-
-    # Non-essential NPPO properties
     "technical_type": EdurepMetadataExtraction.get_technical_type,
     "from_youtube": EdurepMetadataExtraction.get_from_youtube,
     "is_restricted": EdurepMetadataExtraction.get_is_restricted,
@@ -291,8 +311,6 @@ EDUREP_EXTRACTION_OBJECTIVE = {
     "research_themes": lambda node: [],
     "parties": lambda node: [],
     "doi": lambda node: [],
-
-    # Non-essential Edusources properties (for compatibility reasons)
     "material_types": EdurepMetadataExtraction.get_material_types,
     "aggregation_level": "$.lom:aggregationLevel",
     "lom_educational_levels": EdurepMetadataExtraction.get_educational_levels,
