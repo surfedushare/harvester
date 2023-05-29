@@ -39,7 +39,7 @@ class TestEdurepJsonMigration(TestCase):
             prc = ExtractProcessor(config=extract_config)
             cls.xml_data = [*prc.extract("application/xml", edurep_parsed_old)]
         with open(os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures",
-                            "fixture.edurep.migration.json")) as edurep_file_new:
+                               "fixture.edurep.migration.json")) as edurep_file_new:
             data_new = edurep_file_new.read()
 
             edurep_parsed_new = json.loads(data_new)
@@ -80,7 +80,9 @@ class TestEdurepJsonMigration(TestCase):
     #     for ix, data in enumerate(zip(self.json_data, self.xml_data)):
     #         json_docu, xml_docu = data
     #         self.assertEqual(json_docu["lowest_educational_level"], xml_docu["lowest_educational_level"],
-    #                          f"Json = {json_docu['lowest_educational_level']} xml={xml_docu['lowest_educational_level']}  {ix} \n JSON: \n {json_docu} \n\n XML: \n {xml_docu}")
+    #                          f"Json = {json_docu['lowest_educational_level']}
+    #                          xml={xml_docu['lowest_educational_level']}  {ix} \n JSON:
+    #                          \n {json_docu} \n\n XML: \n {xml_docu}")
     #
     # def test_if_educational_level_equal(self):
     #     for ix, data in enumerate(zip(self.json_data, self.xml_data)):
@@ -102,7 +104,6 @@ class TestGetHarvestSeedsEdurep(TestCase):
 
     def test_get_id(self):
         seeds = self.seeds
-        import json; print(json.dumps(seeds[0], indent=4))
         self.assertEqual(seeds[0]["external_id"], "jsonld-from-lom:wikiwijsmaken:41156")
 
     def test_state_education_level(self):
@@ -158,7 +159,7 @@ class TestGetHarvestSeedsEdurep(TestCase):
         self.assertTrue("gesloten opdracht" in seeds[0]["material_types"],
                         f"gesloten opdracht not in {seeds[3]['material_types']}")
 
-        #l4l
+        # l4l
         self.assertTrue("informatiebron" in seeds[3]["material_types"],
                         f"informatiebron not in {seeds[3]['material_types']}")
         self.assertEqual(len(seeds[3]["material_types"]), 1)

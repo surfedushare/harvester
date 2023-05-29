@@ -7,6 +7,7 @@ from dateutil.parser import parse as date_parser
 from datagrowth.processors import ExtractProcessor
 from django.utils.text import slugify
 
+
 class EdurepMetadataExtraction(ExtractProcessor):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
@@ -281,6 +282,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
                 return copyright and copyright not in ["yes", "unknown"] and "nd" not in copyright
             case "ClosedAccess", _:
                 return False
+
     @classmethod
     def get_publisher(cls, node):
         publisher = node.get("dcterms:publisher", None)
@@ -288,6 +290,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
             return "None"
         else:
             return publisher
+
 
 EDUREP_EXTRACTION_OBJECTIVE = {
     "url": EdurepMetadataExtraction.get_url,

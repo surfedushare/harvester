@@ -37,7 +37,7 @@ class EdurepJsonSearchResourceFactory(factory.django.DjangoModelFactory):
             "args": [f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
             "kwargs": {},
             "method": "get",
-            "url": "https://" + self.uri,
+            "url": "https://" + str(self.uri),
             "headers": {},
             "data": {}
         }
@@ -57,4 +57,3 @@ class EdurepJsonSearchResourceFactory(factory.django.DjangoModelFactory):
     def create_common_responses(cls):
         cls.create(number=0)
         cls.create(number=1)
-
