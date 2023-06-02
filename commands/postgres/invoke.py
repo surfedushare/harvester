@@ -45,11 +45,13 @@ def setup_postgres_localhost(ctx, host="localhost"):
         echo=True, pty=True
     )
     # Create generic superuser named supersurf and site objects
-    is_search_service = ctx.config.service.name == "service"
     admin_password = ctx.config.secrets.django.admin_password
     harvester_key = ctx.config.secrets.harvester.api_key
-    insert_user = insert_django_user_statement("supersurf", admin_password, harvester_key, is_search_service)
-    for statement in [insert_user]:
+    insert_superuser = insert_django_user_statement("supersurf", admin_password, harvester_key)
+    insert_users = [insert_superuser]
+    for username, credential in ctx.config.django.users.items():
+        insert_users.append(insert_django_user_statement(username, credential, credential, configure_settings=False))
+    for statement in insert_users:
         ctx.run(
             f'psql -h {host} -U {postgres_user} -d {ctx.config.postgres.database} -W -c "{statement}"',
             echo=True,

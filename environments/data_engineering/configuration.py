@@ -184,7 +184,8 @@ def create_configuration_and_session():
 
     # Load secrets (we resolve secrets during runtime so that AWS can manage them)
     # This skips over any non-AWS secrets
-    if environment.aws.load_secrets:
+    if environment.aws.load_secrets and CONTEXT != "unprivileged":
+        secrets_manager = session.client('secretsmanager')
         secrets = environment.secrets or {}
         aws_secrets = []
         for group_name, group_secrets in secrets.items():
@@ -192,11 +193,17 @@ def create_configuration_and_session():
                 if secret_id is not None and secret_id.startswith("arn:aws:secretsmanager"):
                     aws_secrets.append((group_name, secret_name, secret_id,))
         # Here we found AWS secrets which we load using boto3
-        if aws_secrets and CONTEXT != "unprivileged":
-            secrets_manager = session.client('secretsmanager')
+        if aws_secrets:
             for group_name, secret_name, secret_id in aws_secrets:
                 secret_value = secrets_manager.get_secret_value(SecretId=secret_id)
                 secret_payload = json.loads(secret_value["SecretString"])
                 secrets[group_name][secret_name] = secret_payload[secret_name]
+        # There is one secret settings that loads under django.users
+        # It contains usernames and corresponding (initial) passwords/tokens which we load upon Postgres setup
+        # We perform some tricks to load the dictionary correctly from AWS into django.users configuration
+        users_secret = secrets_manager.get_secret_value(SecretId=environment.django.users.usernames)
+        users_payload = json.loads(users_secret["SecretString"])
+        environment.django.users = users_payload  # will merge not overwrite
+        environment._remove(("django", "users",), "usernames")  # removes the secret string among users
 
     return environment, session

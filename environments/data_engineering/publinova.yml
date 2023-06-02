@@ -14,3 +14,5 @@ django:
   fixtures:
     - "core/fixtures/initial-publinova.json"
     - "metadata/fixtures/initial-metadata-publinova.json"
+  users:
+    usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/publinova"
