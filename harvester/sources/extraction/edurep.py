@@ -94,6 +94,36 @@ class EdurepMetadataExtraction(ExtractProcessor):
         return settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(mime_type, "unknown")
 
     @classmethod
+    def get_copyright_description(cls, node):
+        copyright = node.get("schema:license", None)
+        if (copyright is not None) and (copyright != "yes"):
+            return copyright
+        copyright = node.get("schema:copyrightNotice", None)
+        if (copyright is not None) and (isinstance(copyright, str)):
+            return copyright
+        return
+
+    @classmethod
+    def get_copyright(cls, node):
+        copyright = node.get("lom:copyrightAndOtherRestrictions", None)
+        if copyright is not None and isinstance(copyright, str):
+            if copyright in settings.COPYRIGHT_VALUES:
+                return copyright
+        copyright = node.get("schema:copyrightNotice", None)
+        if copyright is not None and isinstance(copyright, str):
+            if isinstance(copyright, str):
+                if copyright in settings.COPYRIGHT_VALUES:
+                    return copyright
+            elif isinstance(copyright, dict):
+                if copyright["@value"] in settings.COPYRIGHT_VALUES:
+                    return copyright["@value"]
+        copyright = cls.parse_copyright_description(
+            cls.get_copyright_description(node))
+        if copyright:
+            return copyright
+        return "yes"
+
+    @classmethod
     def parse_copyright_description(cls, description):
         if description is None:
             return
@@ -109,31 +139,6 @@ class EdurepMetadataExtraction(ExtractProcessor):
         else:
             license = "cc-" + license
         return slugify(f"{license}-{url_match.group('version')}")
-
-    @classmethod
-    def get_copyright(cls, node):
-        copyright = node.get("schema:license", None)
-        if (copyright is not None) and (copyright != "yes"):
-            return copyright
-        copyright = node.get("lom:copyrightAndOtherRestrictions", None)
-        if (copyright is not None) and (copyright != "yes"):
-            return copyright
-        copyright = cls.parse_copyright_description(cls.get_copyright_description(node))
-        return copyright or "yes"
-
-    @classmethod
-    def get_copyright_description(cls, node):
-        copyright = node.get("lom:copyrightAndOtherRestrictions")
-        if copyright is not None and isinstance(copyright, str):
-            if copyright != "yes":
-                return copyright.strip()
-        copyright = node.get("schema:copyrightNotice", None)
-        if copyright is not None:
-            if isinstance(copyright, str):
-                return copyright.strip()
-            elif isinstance(copyright, dict):
-                return copyright["@value"]
-        return
 
     @classmethod
     def get_from_youtube(cls, node):

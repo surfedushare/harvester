@@ -54,19 +54,17 @@ class TestGetHarvestSeedsEdurep(TestCase):
 
     def test_copyright_description(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]["copyright_description"], "cc-by-sa-30")
-        self.assertEqual(seeds[1]["copyright_description"], "cc-by-30")
-        self.assertEqual(seeds[0]["copyright_description"], "cc-by-30")
+        self.assertEqual(seeds[2]["copyright_description"], "https://creativecommons.org/licenses/by-sa/3.0/nl/")
         self.assertEqual(seeds[3]["copyright_description"], "http://creativecommons.org/licenses/by-nc-sa/4.0/")
-        self.assertEqual(seeds[4]["copyright_description"], "onbekend")
-        self.assertEqual(seeds[5]["copyright_description"], "cc-by-nc-nd-30")
+        self.assertEqual(seeds[4]["copyright_description"], None)
+        self.assertEqual(seeds[5]["copyright_description"], "https://creativecommons.org/licenses/by-nc-nd/3.0/nl/")
 
     def test_copyright(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]["copyright"], "https://creativecommons.org/licenses/by-sa/3.0/nl/")
+        self.assertEqual(seeds[2]["copyright"], "cc-by-sa-30")
         self.assertEqual(seeds[3]["copyright"], "cc-by-nc-sa-40")
         self.assertEqual(seeds[4]["copyright"], "yes")
-        self.assertEqual(seeds[5]["copyright"], "https://creativecommons.org/licenses/by-nc-nd/3.0/nl/")
+        self.assertEqual(seeds[5]["copyright"], "cc-by-nc-nd-30")
 
     def test_material_types(self):
         seeds = self.seeds
