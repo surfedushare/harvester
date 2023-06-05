@@ -34,6 +34,10 @@ class EdurepMetadataExtraction(ExtractProcessor):
     def get_files(cls, node):
         if not node:
             return []
+        # When handling sources outside l4l wikiwijsmaken and WikiwijsDelen, encodingFormat might be a list.
+        # This is not ideal because the format then cannot be linked to the right document as they are in other lists.
+        # For now the quick fix is to pick the first type from the list,
+        # in the future edurep should provide clear promises on how to deal with this.
         mime_type = node["schema:encodingFormat"][0] \
             if isinstance(node["schema:encodingFormat"], list) \
             else node["schema:encodingFormat"]
@@ -210,7 +214,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
             return []
         for keyword in keyword_dict:
             if isinstance(keyword, str):
-                return []
+                keyword_values.append(keyword)
             elif keyword.get("@value", None) is not None:
                 keyword_values.append(keyword["@value"])
             elif keyword.get("schema:termCode", None) is not None:
@@ -247,8 +251,6 @@ class EdurepMetadataExtraction(ExtractProcessor):
     def get_publisher_date(cls, node):
         date = node.get("schema:datePublished", None)
         if date is None:
-            date = node.get("schema:dateModified", None)
-        if date is None:
             date = node.get("schema:publisherDate", None)
         if date is None:
             return None
@@ -257,13 +259,16 @@ class EdurepMetadataExtraction(ExtractProcessor):
     @classmethod
     def get_date_string(cls, node):
         date_string = cls.get_publisher_date(node)
+        if not date_string:
+            return
         date = date_parser(date_string, dayfirst=True)
         return date.strftime('%Y-%m-%d')
 
     @classmethod
     def get_publisher_year(cls, node):
-
         datetime = cls.get_publisher_date(node)
+        if not datetime:
+            return
         return date_parser(datetime).year
 
     @classmethod
@@ -286,10 +291,24 @@ class EdurepMetadataExtraction(ExtractProcessor):
     @classmethod
     def get_publisher(cls, node):
         publisher = node.get("dcterms:publisher", None)
-        if publisher is None:
-            return "None"
+        if not publisher:
+            return []
+        return [publisher]
+
+    @classmethod
+    def get_study_vocabulary(cls, node):
+        edu_alignment = node.get("schema:educationalAlignment", None)
+        vocabularies = []
+        if not edu_alignment:
+            return
+        if not isinstance(edu_alignment, list):
+            if edu_alignment["schema:educationalFramework"] == 'http://purl.edustandaard.nl/concept':
+                vocabularies.append(edu_alignment["@id"])
         else:
-            return publisher
+            for term in edu_alignment:
+                if term["schema:educationalFramework"] == 'http://purl.edustandaard.nl/concept':
+                    vocabularies.append(term["@id"])
+        return vocabularies
 
 
 EDUREP_EXTRACTION_OBJECTIVE = {
@@ -324,5 +343,6 @@ EDUREP_EXTRACTION_OBJECTIVE = {
     "copyright_description": EdurepMetadataExtraction.get_copyright_description,
     "learning_material_disciplines": lambda node: [],
     "consortium": lambda node: None,
-    "lowest_educational_level": EdurepMetadataExtraction.get_lowest_educational_level
+    "lowest_educational_level": EdurepMetadataExtraction.get_lowest_educational_level,
+    "study_vocabulary": EdurepMetadataExtraction.get_study_vocabulary
 }

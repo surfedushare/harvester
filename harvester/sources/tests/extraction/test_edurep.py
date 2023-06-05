@@ -1,94 +1,12 @@
 from datetime import datetime
-import os
-import json
+
 
 from django.test import TestCase
 from django.utils.timezone import make_aware
-from django.conf import settings
-from bs4 import BeautifulSoup
 
-import edurep.extraction
 from harvester.utils.extraction import get_harvest_seeds
 from core.constants import Repositories
 from sources.factories.edurep.extraction import EdurepJsonSearchResourceFactory, SET_SPECIFICATION
-from edurep.extraction import EdurepDataExtraction
-from datagrowth.configuration import create_config
-from datagrowth.processors import ExtractProcessor
-from sources.extraction.edurep import EdurepMetadataExtraction, EDUREP_EXTRACTION_OBJECTIVE
-
-
-class TestEdurepJsonMigration(TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        with open(os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures",
-                               "fixture.edurep.migration.xml")) as edurep_file_old:
-            data_old = edurep_file_old.read()
-
-            edurep_parsed_old = BeautifulSoup(data_old, "xml")
-            oaipmh_objective = {
-                "@": EdurepDataExtraction.get_oaipmh_records,
-                "external_id": EdurepDataExtraction.get_oaipmh_external_id,
-                "state": EdurepDataExtraction.get_oaipmh_record_state
-            }
-            oaipmh_objective.update(edurep.extraction.EDUREP_EXTRACTION_OBJECTIVE)
-            extract_config = create_config("extract_processor", {
-                "objective": oaipmh_objective
-            })
-            prc = ExtractProcessor(config=extract_config)
-            cls.xml_data = [*prc.extract("application/xml", edurep_parsed_old)]
-        with open(os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures",
-                               "fixture.edurep.migration.json")) as edurep_file_new:
-            data_new = edurep_file_new.read()
-
-            edurep_parsed_new = json.loads(data_new)
-
-            metadata_objective = {
-                "@": "$.response.items",
-                "external_id": "$.@id",
-                "state": EdurepMetadataExtraction.get_record_state
-            }
-            metadata_objective.update(EDUREP_EXTRACTION_OBJECTIVE)
-            extract_config = create_config("extract_processor", {
-                "objective": metadata_objective
-            })
-            prc = ExtractProcessor(config=extract_config)
-            cls.json_data = [*prc.extract("application/json", edurep_parsed_new)]
-
-    def test_if_id_equal(self):
-        for i in range(4):
-            json_docu = self.json_data[i]
-            xml_docu = self.xml_data[i]
-            self.assertEqual(json_docu["external_id"], xml_docu["external_id"])\
-
-    # Year and date do not show up in the xml file
-    # def test_if_date_equal(self):
-    #     for i in range(4):
-    #         json_docu = self.json_data[i]
-    #         xml_docu = self.xml_data[i]
-    #         self.assertEqual(json_docu["publisher_date"], xml_docu["publisher_date"])
-    #
-    # def test_if_year_equal(self):
-    #     import ipdb; ipdb.set_trace()
-    #     for i in range(4):
-    #         json_docu = self.json_data[i]
-    #         xml_docu = self.xml_data[i]
-    #         self.assertEqual(json_docu["publisher_year"], xml_docu["publisher_year"])
-
-    # def test_if_lowest_educational_level_equal(self):
-    #     for ix, data in enumerate(zip(self.json_data, self.xml_data)):
-    #         json_docu, xml_docu = data
-    #         self.assertEqual(json_docu["lowest_educational_level"], xml_docu["lowest_educational_level"],
-    #                          f"Json = {json_docu['lowest_educational_level']}
-    #                          xml={xml_docu['lowest_educational_level']}  {ix} \n JSON:
-    #                          \n {json_docu} \n\n XML: \n {xml_docu}")
-    #
-    # def test_if_educational_level_equal(self):
-    #     for ix, data in enumerate(zip(self.json_data, self.xml_data)):
-    #         json_docu, xml_docu = data
-    #         self.assertEqual(set(json_docu["lom_educational_levels"]), set(xml_docu["lom_educational_levels"]),
-    #                          f"Documents are unequal at index {ix} \n JSON: \n {json_docu} \n\n XML: \n {xml_docu}")
 
 
 class TestGetHarvestSeedsEdurep(TestCase):
@@ -205,6 +123,17 @@ class TestGetHarvestSeedsEdurep(TestCase):
             "http://maken.wikiwijs.nl/41156/Lesmateriaal_Vollegrondgroenteteelt"
         )
 
+    def test_study_vocabularies(self):
+        seeds = self.seeds
+        self.assertEqual(
+            seeds[0]["study_vocabulary"],
+            ['http://purl.edustandaard.nl/concept/38262d7b-2dc9-4712-b687-35b23205bf06']
+        )
+        self.assertEqual(
+            seeds[2]["study_vocabulary"],
+            []
+        )
+
     def test_get_files(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [
@@ -232,7 +161,7 @@ class TestGetHarvestSeedsEdurep(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
           {
-            'name': 'Barry Looman',
+            'name': 'Buurman & Buurman',
             'email': None,
             'external_id': None,
             'dai': None,
@@ -240,7 +169,7 @@ class TestGetHarvestSeedsEdurep(TestCase):
             'isni': None
           },
           {
-            'name': 'Harm Geert Moesker',
+            'name': 'Arthur Dent',
             'email': None,
             'external_id': None,
             'dai': None,
@@ -248,7 +177,7 @@ class TestGetHarvestSeedsEdurep(TestCase):
             'isni': None
           },
           {
-            'name': 'Pieter-Jan Heijnen',
+            'name': 'Geordie Laforge',
             'email': None,
             'external_id': None,
             'dai': None,
@@ -256,7 +185,7 @@ class TestGetHarvestSeedsEdurep(TestCase):
             'isni': None
           },
           {
-            'name': ' Willems',
+            'name': "Muad'dib",
             'email': None,
             'external_id': None,
             'dai': None,
