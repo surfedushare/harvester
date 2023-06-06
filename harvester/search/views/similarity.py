@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from search_client import DocumentTypes
-from search_client.serializers import LearningMaterialResultSerializer, ResearchProductResultSerializer
+from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from search.clients import get_search_client
 from harvester.schema import HarvesterSchema
 
@@ -16,7 +16,7 @@ class SimilaritySerializer(serializers.Serializer):
 
 
 class LearningMaterialSimilaritySerializer(SimilaritySerializer):
-    results = LearningMaterialResultSerializer(many=True, read_only=True)
+    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
     results_total = serializers.IntegerField(read_only=True)
 
 
@@ -30,7 +30,7 @@ class AuthorSuggestionSerializer(serializers.Serializer):
 
 
 class LearningMaterialAuthorSuggestionSerializer(AuthorSuggestionSerializer):
-    results = LearningMaterialResultSerializer(many=True, read_only=True)
+    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
     results_total = serializers.IntegerField(read_only=True)
 
 

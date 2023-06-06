@@ -30,5 +30,7 @@ public_api_patterns = [
         name="metadata-document-detail"
     ),
     path('document/metadata/', views.MetadataDocumentListView.as_view(), name="metadata-documents"),
+    path('document/<str:external_id>/', views.SearchDocumentDetailView.as_view(), name="document-detail"),
+    path('document/', views.SearchDocumentListView.as_view(), name="list-documents"),
 ]
 urlpatterns = public_api_patterns + router.urls + deprecated_api_patterns

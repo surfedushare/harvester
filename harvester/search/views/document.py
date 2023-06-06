@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 from search_client import DocumentTypes
-from search_client.serializers import LearningMaterialResultSerializer, ResearchProductResultSerializer
+from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField
 from search.clients import get_search_client
@@ -41,7 +41,7 @@ class DocumentSearchSerializer(serializers.Serializer):
 
 
 class LearningMaterialSearchSerializer(DocumentSearchSerializer):
-    results = LearningMaterialResultSerializer(many=True, read_only=True)
+    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
 
 
 class ResearchProductSearchSerializer(DocumentSearchSerializer):
@@ -135,7 +135,7 @@ class DocumentSearchDetailAPIView(GenericAPIView):
 
     def get_serializer_class(self):
         if self.document_type == DocumentTypes.LEARNING_MATERIAL:
-            return LearningMaterialResultSerializer
+            return SimpleLearningMaterialResultSerializer
         elif self.document_type == DocumentTypes.RESEARCH_PRODUCT:
             return ResearchProductResultSerializer
         else:
@@ -157,7 +157,7 @@ class DocumentSearchDetailAPIView(GenericAPIView):
 
 class LearningMaterialDetailsSerializer(serializers.Serializer):
     external_ids = serializers.ListField(child=serializers.CharField(), write_only=True)
-    results = LearningMaterialResultSerializer(many=True, read_only=True)
+    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
     records_total = serializers.IntegerField(read_only=True)
 
 
