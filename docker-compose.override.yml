@@ -92,7 +92,6 @@ services:
     network_mode: "host"
     depends_on:
       - harvester
-      - service
       - flower
 
   tika:
