@@ -2,6 +2,7 @@ from urllib.parse import unquote
 
 from django.conf import settings
 from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 from rest_framework import serializers
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -120,7 +121,7 @@ class DatasetVersionDocumentDetailView(RetrieveModelMixin, DatasetVersionDocumen
     def get_object(self):
         queryset = self.get_queryset()
         reference = unquote(self.kwargs["external_id"])
-        return queryset.get(reference=reference)
+        return get_object_or_404(queryset, reference=reference)
 
     def get(self, request, *args, **kwargs):
         try:
