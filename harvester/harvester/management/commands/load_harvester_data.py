@@ -9,7 +9,7 @@ from django.apps import apps
 from django.db import connection
 
 from datagrowth.utils import get_dumps_path, objects_from_disk
-from project.configuration import create_configuration
+from data_engineering.configuration import create_configuration
 from harvester.settings import environment
 from core.models import Dataset, DatasetVersion, Extension, HarvestSource, ElasticIndex
 
@@ -92,7 +92,7 @@ class Command(base.LabelCommand):
 
         assert harvest_source or environment.service.env != "localhost", \
             "Expected a harvest source argument for a localhost environment"
-        source_environment = create_configuration(harvest_source, service="harvester") \
+        source_environment = create_configuration(harvest_source) \
             if harvest_source else environment
 
         # Delete old datasets

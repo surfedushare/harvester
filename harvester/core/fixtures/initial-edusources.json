@@ -1,7 +1,7 @@
 [
 {
     "model": "core.dataset",
-    "pk": 28,
+    "pk": 1,
     "fields": {
         "created_at": "2023-04-20T07:43:18.520Z",
         "modified_at": "2023-04-20T07:43:18.520Z",
@@ -14,7 +14,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 9,
+    "pk": 1,
     "fields": {
         "name": "Library 4 Learning",
         "repository": "edurep.EdurepOAIPMH",
@@ -29,7 +29,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 19,
+    "pk": 2,
     "fields": {
         "name": "Wikiwijs Maken",
         "repository": "edurep.EdurepOAIPMH",
@@ -44,7 +44,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 34,
+    "pk": 3,
     "fields": {
         "name": "Sharekit",
         "repository": "sharekit.SharekitMetadataHarvest",
@@ -59,7 +59,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 35,
+    "pk": 4,
     "fields": {
         "name": "Sharekit (restricted)",
         "repository": "sharekit.SharekitMetadataHarvest",
@@ -74,7 +74,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 36,
+    "pk": 5,
     "fields": {
         "name": "Wikiwijs Delen",
         "repository": "edurep.EdurepOAIPMH",
@@ -89,7 +89,7 @@
 },
 {
     "model": "core.harvestsource",
-    "pk": 37,
+    "pk": 6,
     "fields": {
         "name": "Anatomy Tool",
         "repository": "anatomy_tool.AnatomyToolOAIPMH",
@@ -104,10 +104,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 104,
+    "pk": 1,
     "fields": {
-        "source": 19,
-        "dataset": 28,
+        "source": 2,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",
@@ -117,10 +117,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 105,
+    "pk": 2,
     "fields": {
-        "source": 36,
-        "dataset": 28,
+        "source": 5,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",
@@ -130,10 +130,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 106,
+    "pk": 3,
     "fields": {
-        "source": 9,
-        "dataset": 28,
+        "source": 1,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",
@@ -143,10 +143,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 107,
+    "pk": 4,
     "fields": {
-        "source": 37,
-        "dataset": 28,
+        "source": 6,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",
@@ -156,10 +156,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 108,
+    "pk": 5,
     "fields": {
-        "source": 34,
-        "dataset": 28,
+        "source": 3,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",
@@ -169,10 +169,10 @@
 },
 {
     "model": "core.harvest",
-    "pk": 109,
+    "pk": 6,
     "fields": {
-        "source": 35,
-        "dataset": 28,
+        "source": 4,
+        "dataset": 1,
         "latest_update_at": "1970-01-01T00:00:00Z",
         "harvested_at": "2023-04-01T01:01:48.405Z",
         "purge_after": "2023-05-01T01:01:26.046Z",

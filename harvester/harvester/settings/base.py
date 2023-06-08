@@ -20,7 +20,7 @@ from sentry_sdk.integrations.logging import ignore_logger
 
 from celery.schedules import crontab
 
-from project import create_configuration_and_session, MODE, CONTEXT, PROJECT
+from data_engineering.configuration import create_configuration_and_session, MODE, CONTEXT, PROJECT
 from utils.packaging import get_package_info
 from search_client.version import VERSION as SEARCH_CLIENT_VERSION
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler
@@ -33,7 +33,7 @@ PACKAGE_INFO = get_package_info()
 PACKAGE_INFO["versions"]["search-client"] = SEARCH_CLIENT_VERSION
 GIT_COMMIT = PACKAGE_INFO.get("commit", "unknown-git-commit")
 VERSION = PACKAGE_INFO.get("versions").get("harvester", "0.0.0")
-environment, session = create_configuration_and_session(service='harvester')
+environment, session = create_configuration_and_session()
 credentials = session.get_credentials()
 IS_AWS = environment.aws.is_aws
 ENVIRONMENT = environment.service.env
@@ -274,21 +274,21 @@ LOGGING = {
         },
         'search_harvest': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'harvest-logs',
+            f'harvest-logs-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.WEEKLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
         ),
         'search_documents': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'document-logs',
+            f'document-logs-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.YEARLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
         ),
         'search_results': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'harvest-results',
+            f'harvest-results-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.YEARLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
@@ -441,8 +441,9 @@ COPYRIGHT_VALUES = [
 
 CELERY_BROKER_URL = f'redis://{environment.redis.host}/0'
 CELERY_RESULT_BACKEND = f'redis://{environment.redis.host}/0'
+CELERY_TASK_DEFAULT_QUEUE = environment.project.name
 CELERY_TASK_ROUTES = {
-    'sync_indices': {'queue': 'indexing'}
+    'sync_indices': {'queue': f'{environment.project.name}-indexing'}
 }
 CELERY_BEAT_SCHEDULE = {
     'clean_data': {
@@ -502,7 +503,7 @@ HARVESTER_WEBHOOK_SECRET = environment.secrets.harvester.webhook_secret
 
 # Sharekit
 
-SHAREKIT_API_KEY = environment.secrets.sharekit.api_key
+SHAREKIT_API_KEY = getattr(environment.secrets.sharekit, environment.project.name)
 SHAREKIT_BASE_URL = environment.harvester.repositories.sharekit
 SHAREKIT_WEBHOOK_ALLOWED_IPS = environment.sharekit.webhook_allowed_ips
 SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings
@@ -517,6 +518,11 @@ EDUTERM_API_KEY = environment.secrets.eduterm.api_key
 # Deepl
 
 DEEPL_API_KEY = environment.secrets.deepl.api_key
+
+
+# Google
+
+GOOGLE_API_KEY = environment.secrets.google.api_key
 
 
 # Robots

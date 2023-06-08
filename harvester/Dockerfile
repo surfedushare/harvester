@@ -53,14 +53,10 @@ COPY environments /usr/src/environments
 # See: http://whitenoise.evans.io/en/stable/index.html#
 # If you doubt this decision then read the "infrequently asked question" section for details
 # Here we gather static files that get served through uWSGI if they don't exist
-RUN export APPLICATION_MODE=localhost && python manage.py collectstatic --noinput
+RUN export APPLICATION_MODE=localhost && export APPLICATION_CONTEXT=unprivileged && \
+    python manage.py collectstatic --noinput
 
 # Entrypoint sets our environment correctly
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
-CMD ["uwsgi", "--ini", "/usr/src/app/uwsgi.ini"]
-
-# EXPOSE port 8080 and 8888 to allow communication to/from server
-EXPOSE 8080 8888 8889
-# EXPOSE port 5555 for Flower a Celery monitor tool
-EXPOSE 5555
+CMD ["uwsgi", "--ini", "/usr/src/app/uwsgi/emperor.ini"]

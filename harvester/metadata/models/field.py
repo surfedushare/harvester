@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 from rest_framework import serializers
 
@@ -8,7 +7,7 @@ from metadata.models import MetadataTranslation, MetadataTranslationSerializer, 
 
 class MetadataFieldManager(models.Manager):
 
-    def fetch_value_frequencies(self, alias_prefix=settings.OPENSEARCH_ALIAS_PREFIX, **kwargs):
+    def fetch_value_frequencies(self, alias_prefix="latest", **kwargs):
         client = get_opensearch_client()
         aggregation_query = {
             field.name: {
@@ -70,8 +69,7 @@ class MetadataFieldSerializer(serializers.ModelSerializer):
         return None
 
     def get_children(self, obj):
-        site_id = self.context["request"].GET.get("site_id", 1)
-        children = obj.metadatavalue_set.filter(deleted_at__isnull=True, site__id=site_id) \
+        children = obj.metadatavalue_set.filter(deleted_at__isnull=True) \
             .select_related("translation") \
             .get_cached_trees()
         children.sort(key=lambda child: child.frequency, reverse=True)

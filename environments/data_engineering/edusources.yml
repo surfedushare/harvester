@@ -1,0 +1,18 @@
+aws:
+  harvest_content_bucket: "surfpol-harvester-content-{environment_code}"
+
+postgres:
+  database: "harvester_edusources"
+  user: "harvester_edusources"
+  application_user: "harvester_edusources"
+
+opensearch:
+  alias_prefix: "edusources"
+
+django:
+  domain: "harvester.{environment_code}.surfedushare.nl"
+  fixtures:
+    - "core/fixtures/initial-edusources.json"
+    - "metadata/fixtures/initial-metadata-edusources.json"
+  users:
+    usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/edusources"
