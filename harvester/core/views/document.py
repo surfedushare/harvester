@@ -109,7 +109,7 @@ class SearchDocumentListView(SearchDocumentGenericViewMixin, DatasetVersionDocum
     This endpoint is useful for systems that want a local copy of all possible search results.
 
     Most properties for a Document are automatically documented through the interactive documentation.
-    However there are two special properties that we'll document here.
+    However there are three special properties that we'll document here.
 
     **authors**: The list of authors for a Document.
     Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
@@ -120,6 +120,11 @@ class SearchDocumentListView(SearchDocumentGenericViewMixin, DatasetVersionDocum
     All these properties have string values or are null.
     The hash of a file is a sha1 hash of the file URL and doesn't represent the content of a file.
     The copyright and access_rights properties have values as defined in the NL-LOM standard.
+
+    **extension**: An object indicating the Extension active upon a Document.
+    An Extension consists of two properties: id and is_addition.
+    The id is numeric. The is_addition property indicates whether the Extension adds a new Document
+    or updates a Document from a source. Usually this value will be false.
     """
 
     def get_serializer(self, *args, **kwargs):
