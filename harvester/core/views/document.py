@@ -107,6 +107,19 @@ class SearchDocumentListView(SearchDocumentGenericViewMixin, DatasetVersionDocum
     Returns a list of the most recent documents.
     The dataformat is identical to how a search endpoint would return the document.
     This endpoint is useful for systems that want a local copy of all possible search results.
+
+    Most properties for a Document are automatically documented through the interactive documentation.
+    However there are two special properties that we'll document here.
+
+    **authors**: The list of authors for a Document.
+    Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
+    All these properties have string values or are null.
+
+    **files**: The list of files for a Document.
+    Files are objects with the following properties: title, url, mime_type, hash, copyright and access_rights.
+    All these properties have string values or are null.
+    The hash of a file is a sha1 hash of the file URL and doesn't represent the content of a file.
+    The copyright and access_rights properties have values as defined in the NL-LOM standard.
     """
 
     def get_serializer(self, *args, **kwargs):
@@ -154,6 +167,19 @@ class SearchDocumentDetailView(SearchDocumentGenericViewMixin, DatasetVersionDoc
     """
     Returns the most recent version of a document in the same format a search result would return it.
     This is useful if a system wants to update their copy of a document.
+
+    Most properties for a Document are automatically documented through the interactive documentation.
+    However there are two special properties that we'll document here.
+
+    **authors**: The list of authors for a Document.
+    Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
+    All these properties have string values or are null.
+
+    **files**: The list of files for a Document.
+    Files are objects with the following properties: title, url, mime_type, hash, copyright and access_rights.
+    All these properties have string values or are null.
+    The hash of a file is a sha1 hash of the file URL and doesn't represent the content of a file.
+    The copyright and access_rights properties have values as defined in the NL-LOM standard.
     """
 
     def get_serializer(self, *args, **kwargs):

@@ -149,8 +149,9 @@ class ExtensionListView(generics.ListCreateAPIView):
     ## Request body
 
     To create an extension it should get posted to this endpoint.
-    Below is a list of properties that you can set on an extension.
+    The API documentation automatically indicates which properties of a Document you can overwrite on an extension.
     When performing a GET the same properties can be read.
+    There are a few special properties that we'll explain here in more detail.
 
     **external_id**: The identifier of the document that this extension extends.
     These identifiers are provided by the repository that provided the metadata.
@@ -166,18 +167,8 @@ class ExtensionListView(generics.ListCreateAPIView):
     Any value other than "active" will remove the document from the index.
 
     **authors**: (optional) The list of authors that this extension should overwrite.
-
-    **parties**: (optional) A list of organizations or agents that this extension should add to the search data.
-
-    **projects**: (optional) A list of projects that this extension should adds to the search data.
-
-    **research_themes**: (optional) A list of themes that this extension should overwrite.
-
-    **keywords**: (optional) A list of keywords that this extension should overwrite.
-
-    **is_part_of**: (optional) A list of external_id identifiers that will overwrite the "parents" of the extension.
-
-    **has_parts**: (optional) A list of external_id identifiers that will overwrite the "children" of the extension.
+    Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
+    All these properties have string values or are null.
 
     ## Response body
 
