@@ -40,13 +40,6 @@ class HanDataExtraction(object):
         card = "\n".join(field.strip() for field in el.text.strip().split("\n"))
         return vobject.readOne(card)
 
-    @staticmethod
-    def _serialize_access_rights(access_rights):
-        access_rights = access_rights.replace("Access", "")
-        access_rights = access_rights.lower()
-        access_rights += "-access"
-        return access_rights
-
     @classmethod
     def get_oaipmh_records(cls, soup):
         return soup.find_all('record')
@@ -144,13 +137,6 @@ class HanDataExtraction(object):
         return files[0]["mime_type"].strip()
 
     @classmethod
-    def get_copyright(cls, soup, el):
-        files = cls.get_files(soup, el)
-        if not len(files):
-            return "closed-access"
-        return cls._serialize_access_rights(files[0]["access_rights"])
-
-    @classmethod
     def get_language(cls, soup, el):
         return "unk"
 
@@ -178,8 +164,14 @@ class HanDataExtraction(object):
             family_name = author.find('mods:namepart', attrs={"type": "family"})
             if not given_name and not family_name:
                 continue
+            elif not given_name:
+                name = family_name.text.strip()
+            elif not family_name:
+                name = given_name.text.strip()
+            else:
+                name = f"{given_name.text.strip()} {family_name.text.strip()}"
             authors.append({
-                "name": f"{given_name.text.strip()} {family_name.text.strip()}",
+                "name": name,
                 "email": None,
                 "external_id": None,
                 "dai": None,
@@ -265,7 +257,7 @@ HAN_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
     "url": HanDataExtraction.get_url,
     "files": HanDataExtraction.get_files,
-    "copyright": HanDataExtraction.get_copyright,
+    "copyright": lambda soup, el: None,
     "title": HanDataExtraction.get_title,
     "language": HanDataExtraction.get_language,
     "keywords": lambda soup, el: [],

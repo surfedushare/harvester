@@ -22,5 +22,7 @@ if [ "$APPLICATION_MODE" == "localhost" ] && [ ! -e "/home/app/.aws/credentials"
     export POL_AWS_LOAD_SECRETS=0
     unset AWS_PROFILE
 fi
+
+
 # Executing the normal commands
 exec "$@"

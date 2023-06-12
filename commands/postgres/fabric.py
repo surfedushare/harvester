@@ -54,11 +54,15 @@ def setup_postgres_remote(conn):
             echo=True, pty=True
         )
         # Create generic superuser named supersurf and site objects
-        is_search_service = conn.config.service.name == "service"
         admin_password = conn.config.secrets.django.admin_password
         harvester_key = conn.config.secrets.harvester.api_key
-        insert_user = insert_django_user_statement("supersurf", admin_password, harvester_key, is_search_service)
-        for statement in [insert_user]:
+        insert_superuser = insert_django_user_statement("supersurf", admin_password, harvester_key)
+        insert_users = [insert_superuser]
+        for username, credential in conn.config.django.users.items():
+            insert_users.append(
+                insert_django_user_statement(username, credential, credential, configure_settings=False)
+            )
+        for statement in insert_users:
             conn.local(
                 f'psql -h localhost -p 1111 -U {postgres_user} -d {conn.config.postgres.database} -W -c "{statement}"',
                 echo=True,

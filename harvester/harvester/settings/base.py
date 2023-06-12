@@ -503,7 +503,7 @@ HARVESTER_WEBHOOK_SECRET = environment.secrets.harvester.webhook_secret
 
 # Sharekit
 
-SHAREKIT_API_KEY = environment.secrets.sharekit.api_key
+SHAREKIT_API_KEY = getattr(environment.secrets.sharekit, environment.project.name)
 SHAREKIT_BASE_URL = environment.harvester.repositories.sharekit
 SHAREKIT_WEBHOOK_ALLOWED_IPS = environment.sharekit.webhook_allowed_ips
 SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings
@@ -518,6 +518,11 @@ EDUTERM_API_KEY = environment.secrets.eduterm.api_key
 # Deepl
 
 DEEPL_API_KEY = environment.secrets.deepl.api_key
+
+
+# Google
+
+GOOGLE_API_KEY = environment.secrets.google.api_key
 
 
 # Robots
