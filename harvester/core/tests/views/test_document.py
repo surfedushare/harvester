@@ -76,7 +76,7 @@ class TestDocumentView(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         if not self.format:
-            self.assertEqual(data["next"], f"http://testserver/api/v1/document/?page=2&page_size=10")
+            self.assertEqual(data["next"], "http://testserver/api/v1/document/?page=2&page_size=10")
         else:
             self.assertEqual(data["next"], f"http://testserver/api/v1/document/{self.format}/?page=2&page_size=10")
         self.assertIsNone(data["previous"])
@@ -89,7 +89,7 @@ class TestDocumentView(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         if not self.format:
-            self.assertEqual(data["previous"], f"http://testserver/api/v1/document/?page_size=10")
+            self.assertEqual(data["previous"], "http://testserver/api/v1/document/?page_size=10")
         else:
             self.assertEqual(data["previous"], f"http://testserver/api/v1/document/{self.format}/?page_size=10")
         self.assertIsNone(data["next"])
