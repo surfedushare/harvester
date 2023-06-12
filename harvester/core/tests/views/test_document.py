@@ -219,3 +219,89 @@ class TestMetadataDocumentView(TestDocumentView):
         "created_at": "2020-02-17T10:53:24.388000Z",
         "modified_at": "2020-02-17T10:53:24.388000Z"
     }
+
+
+@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
+class TestExtendedDocumentView(TestCase):
+
+    fixtures = ["datasets-history"]
+    expected_document_output = {
+        "external_id": "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
+        "published_at": "2019",
+        "doi": None,
+        "url": "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7",
+        "title": "Exercises 5",
+        "description": "Fifth exercises of the course",
+        "language": "en",
+        "copyright": "cc-by-nc-40",
+        "video": None,
+        "harvest_source": "edusources",
+        "previews": None,
+        "files": [
+            {
+                "url": "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7",
+                "hash": "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
+                "title": "40. Exercises 5.docx",
+                "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            }
+        ],
+        "authors": [],
+        "has_parts": [
+            "part"
+        ],
+        "is_part_of": [
+            "part"
+        ],
+        "keywords": [
+            "exercise"
+        ],
+        "provider": "SURFnet",
+        "type": "document",
+        "research_object_type": None,
+        "extension": {
+            "id": "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
+            "is_addition": False
+        },
+        "parties": [
+            "SURFnet"
+        ],
+        "research_themes": [
+            "research"
+        ],
+        "projects": [],
+        "owners": [],
+        "contacts": []
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = User.objects.create(username="supersurf")
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(self.user)
+
+    def test_list(self):
+        list_url = reverse("v1:core:list-documents")
+        response = self.client.get(list_url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        extension_document = next(
+            (doc for doc in data["results"]
+             if doc["external_id"] == "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751")
+        )
+        self.assertEqual(
+            extension_document, self.expected_document_output,
+            "Expected Extension not to overwrite Document properties in Document API"
+        )
+
+    def test_detail(self):
+        detail_url = reverse("v1:core:document-detail", args=("5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",))
+        response = self.client.get(detail_url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(
+            data, self.expected_document_output,
+            "Expected Extension not to overwrite Document properties in Document API"
+        )

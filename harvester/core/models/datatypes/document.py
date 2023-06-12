@@ -79,13 +79,13 @@ class Document(DocumentBase):
         }
         return extras
 
-    def get_extension_extras(self):
-        extension_data = copy(self.extension.properties)
+    def get_extension_extras(self, merge_extension):
+        extension_data = copy(self.extension.properties) if merge_extension else {}
         extension_data["extension"] = {
             "id": self.extension.id,
             "is_addition": self.extension.is_addition
         }
-        if self.extension.is_addition:
+        if self.extension.is_addition and merge_extension:
             extension_data["provider"] = {
                 "ror": None,
                 "external_id": None,
@@ -94,11 +94,11 @@ class Document(DocumentBase):
             }
         return extension_data
 
-    def to_search(self):
+    def to_search(self, merge_extension=True):
         # Get the basic document information including from document extensions
         search_base = copy(self.properties)
         if self.extension:
-            extension_details = self.get_extension_extras()
+            extension_details = self.get_extension_extras(merge_extension)
             search_base.update(extension_details)
         else:
             search_base["extension"] = None
