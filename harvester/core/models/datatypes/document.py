@@ -85,23 +85,13 @@ class Document(DocumentBase):
             "id": self.extension.id,
             "is_addition": self.extension.is_addition
         }
-        if "keywords" in extension_data:
-            extension_data["keywords"] = [entry["label"] for entry in extension_data["keywords"]]
-        themes = extension_data.pop("themes", None)
-        if themes:
-            extension_data["research_themes"] = [entry["label"] for entry in themes]
-        parents = extension_data.pop("parents", None)
-        if parents:
-            is_part_of = self.properties.get("is_part_of", [])
-            is_part_of += parents
-            is_part_of = list(set(is_part_of))
-            extension_data["is_part_of"] = is_part_of
-        children = extension_data.pop("children", None)
-        if children:
-            has_parts = self.properties.get("has_parts", [])
-            has_parts += children
-            has_parts = list(set(has_parts))
-            extension_data["has_parts"] = has_parts
+        if self.extension.is_addition:
+            extension_data["provider"] = {
+                "ror": None,
+                "external_id": None,
+                "name": "Publinova",
+                "slug": None
+            }
         return extension_data
 
     def to_search(self):

@@ -50,9 +50,9 @@ class TestDocument(TestCase):
         self.assertEqual(extended_search_document["authors"], [{"name": "The Extension Man"}])
         self.assertEqual(extended_search_document["material_types"], ["kennisoverdracht"])
         self.assertEqual(extended_search_document["keywords"], ["exercise", "extended"])
-        self.assertEqual(sorted(extended_search_document["is_part_of"]), ["parent", "part"])
+        self.assertEqual(sorted(extended_search_document["is_part_of"]), ["parent"])
         self.assertEqual(sorted(extended_search_document["has_parts"]), ["child", "part"])
-        self.assertEqual(extended_search_document["parties"], [{"name": "The Extension Party"}])
+        self.assertEqual(extended_search_document["parties"], ["The Extension Party"])
         self.assertEqual(extended_search_document["research_themes"], ["theme", "extended"])
 
     def test_to_search_delete(self):

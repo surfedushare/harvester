@@ -48,7 +48,6 @@ class MetadataDocumentSerializer(DocumentBaseSerializer):
 
 class DatasetVersionDocumentBaseView(generics.GenericAPIView):
 
-    document_type = settings.DOCUMENT_TYPE
     schema = HarvesterSchema()
 
     def get_queryset(self):
@@ -91,12 +90,10 @@ class MetadataDocumentListView(DatasetVersionDocumentListView):
 
 class SearchDocumentGenericViewMixin(object):
 
-    document_type = settings.DOCUMENT_TYPE
-
     def get_serializer_class(self):
-        if self.document_type == DocumentTypes.LEARNING_MATERIAL:
+        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
             return SimpleLearningMaterialResultSerializer
-        elif self.document_type == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
             return ResearchProductResultSerializer
         else:
             raise AssertionError("DocumentListView expected application to use different DOCUMENT_TYPE")
