@@ -4,10 +4,6 @@ from django.core.management import call_command
 from metadata.models import MetadataValue
 
 
-def translate_with_deepl(text):
-    return input(text)
-
-
 class TestHarvestStudyVocabulary(TestCase):
 
     fixtures = ["initial-study-vocabulary-resources"]
