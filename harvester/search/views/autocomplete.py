@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework import serializers
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
@@ -17,7 +16,6 @@ class AutocompleteAPIView(generics.GenericAPIView):
     This endpoint returns suggestions about what a user may be typing.
     Call this endpoint when a user is typing a search and display the results (for instance below the search bar).
     """
-    document_type = settings.DOCUMENT_TYPE
     serializer_class = AutocompleteRequestSerializer
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
@@ -28,6 +26,6 @@ class AutocompleteAPIView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        client = get_search_client(self.document_type)
+        client = get_search_client()
         response = client.autocomplete(**data)
         return Response(response)

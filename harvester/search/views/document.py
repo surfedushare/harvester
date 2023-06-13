@@ -84,14 +84,13 @@ class DocumentSearchAPIView(GenericAPIView):
     **page**: The current page number.
 
     """
-    document_type = settings.DOCUMENT_TYPE
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if self.document_type == DocumentTypes.LEARNING_MATERIAL:
+        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
             return LearningMaterialSearchSerializer
-        elif self.document_type == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
             return ResearchProductSearchSerializer
         else:
             raise AssertionError("DocumentSearchAPIView expected application to use different DOCUMENT_TYPE")
@@ -110,7 +109,7 @@ class DocumentSearchAPIView(GenericAPIView):
         if include_filter_counts == "1":
             data["drilldown_names"] = serializer.context["filter_fields"]
         # Execute search and return results
-        client = get_search_client(self.document_type)
+        client = get_search_client()
         response = client.search(**data)
         return Response({
             "results": response["results"],
@@ -129,20 +128,19 @@ class DocumentSearchDetailAPIView(GenericAPIView):
     Otherwise it returns the document as an object.
     """
 
-    document_type = settings.DOCUMENT_TYPE
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if self.document_type == DocumentTypes.LEARNING_MATERIAL:
+        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
             return SimpleLearningMaterialResultSerializer
-        elif self.document_type == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
             return ResearchProductResultSerializer
         else:
             raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
 
     def get_object(self):
-        client = get_search_client(self.document_type)
+        client = get_search_client()
         response = client.get_documents_by_id([self.kwargs["external_id"]])
         records = response.get("results", [])
         if not records:
@@ -158,13 +156,13 @@ class DocumentSearchDetailAPIView(GenericAPIView):
 class LearningMaterialDetailsSerializer(serializers.Serializer):
     external_ids = serializers.ListField(child=serializers.CharField(), write_only=True)
     results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
-    records_total = serializers.IntegerField(read_only=True)
+    results_total = serializers.DictField(read_only=True)
 
 
 class ResearchProductDetailsSerializer(serializers.Serializer):
     external_ids = serializers.ListField(child=serializers.CharField(), write_only=True)
     results = ResearchProductResultSerializer(many=True, read_only=True)
-    records_total = serializers.IntegerField(read_only=True)
+    results_total = serializers.DictField(read_only=True)
 
 
 class DocumentSearchDetailsAPIView(GenericAPIView):
@@ -185,15 +183,14 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
     or false when it indicates the lower bound.
     """
 
-    document_type = settings.DOCUMENT_TYPE
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
     max_page_size = 100
 
     def get_serializer_class(self):
-        if self.document_type == DocumentTypes.LEARNING_MATERIAL:
+        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
             return LearningMaterialDetailsSerializer
-        elif self.document_type == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
             return ResearchProductDetailsSerializer
         else:
             raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
@@ -204,7 +201,7 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
         external_ids = serializer.validated_data["external_ids"]
         if len(external_ids) > self.max_page_size:
             raise ValidationError(detail=f"Can't process more than {self.max_page_size} external ids at a time")
-        client = get_search_client(self.document_type)
+        client = get_search_client()
         response = client.get_documents_by_id(external_ids, page_size=self.max_page_size)
         results = response.get("results", [])
         return Response({
