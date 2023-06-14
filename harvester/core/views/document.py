@@ -122,6 +122,13 @@ class SearchDocumentListView(SearchDocumentGenericViewMixin, DatasetVersionDocum
     An Extension consists of two properties: id and is_addition.
     The id is numeric. The is_addition property indicates whether the Extension adds a new Document
     or updates a Document from a source. Usually this value will be false.
+
+    **previews**: For a document that supports thumbnails this object will contain three image links:
+    preview, full_size and preview_small. Where preview is 400x300 pixels and small_preview 200x150 pixels in size.
+    The full_size image varies in size, but will be the largest possible image.
+
+    **video**: For a document with a video that supports additional metadata this object will contain
+    the duration and the embed_url of that video
     """
 
     def get_serializer(self, *args, **kwargs):
@@ -182,6 +189,13 @@ class SearchDocumentDetailView(SearchDocumentGenericViewMixin, DatasetVersionDoc
     All these properties have string values or are null.
     The hash of a file is a sha1 hash of the file URL and doesn't represent the content of a file.
     The copyright and access_rights properties have values as defined in the NL-LOM standard.
+
+    **previews**: For a document that supports thumbnails this object will contain three image links:
+    preview, full_size and preview_small. Where preview is 400x300 pixels and small_preview 200x150 pixels in size.
+    The full_size image varies in size, but will be the largest possible image.
+
+    **video**: For a document with a video that supports additional metadata this object will contain
+    the duration and the embed_url of that video
     """
 
     def get_serializer(self, *args, **kwargs):
