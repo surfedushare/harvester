@@ -62,7 +62,7 @@ PROTOCOL = environment.django.protocol
 
 # Detect our own IP address
 try:
-    response = requests.get("https://api.ipify.org/?format=json")
+    response = requests.get("https://api.ipify.org/?format=json", timeout=3 if DEBUG else None)
     IP = response.json()["ip"]
 except Exception:
     IP = None

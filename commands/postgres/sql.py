@@ -9,7 +9,7 @@ def insert_django_user_statement(username, raw_password, api_key, is_search_serv
         username = username.replace("/superuser", "")
     else:
         is_superuser = username == "supersurf"
-    is_staff = "@surf.nl" in username or is_superuser
+    is_staff = "@surf.nl" in username or "@zooma.nl" in username or is_superuser
     email = username if "@" in username else ""
     # Configure Django during first run to be able to generate passwords hashes
     if configure_settings:

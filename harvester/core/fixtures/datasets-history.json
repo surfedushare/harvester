@@ -92,12 +92,12 @@
       "is_addition": false,
       "properties": {
         "external_id": "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
-        "authors": [{ "name": "The Extension Man" }],
-        "keywords": [{ "label": "exercise" }, { "label": "extended" }],
-        "themes": [{ "label": "theme" }, { "label": "extended" }],
-        "children": ["part", "child"],
-        "parents": ["parent"],
-        "parties": [{ "name": "The Extension Party" }]
+        "authors": [{"name": "The Extension Man"}],
+        "keywords": ["exercise", "extended"],
+        "research_themes": ["theme", "extended"],
+        "has_parts": ["part", "child"],
+        "is_part_of": ["parent"],
+        "parties": ["The Extension Party"]
       }
     }
   },
@@ -115,12 +115,12 @@
         "state": "active",
         "external_id": "custom-extension",
         "title": "New! New! New! Extended titles!",
-        "authors": [{ "name": "The Extension Man" }],
-        "keywords": [{ "label": "exercise" }, { "label": "extended" }],
-        "themes": [{ "label": "theme" }, { "label": "extended" }],
-        "children": ["part", "child"],
-        "parents": ["parent"],
-        "parties": [{ "name": "The Extension Party" }]
+        "authors": [{"name": "The Extension Man"}],
+        "keywords": ["exercise", "extended"],
+        "research_themes": ["theme", "extended"],
+        "has_parts": ["part", "child"],
+        "is_part_of": ["parent"],
+        "parties": ["The Extension Party"]
       }
     }
   },
@@ -171,6 +171,12 @@
         "has_parts": ["part"],
         "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "is_part_of": ["part"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "publishers": ["SURFnet"],
         "organizations": {
           "root": {
@@ -244,6 +250,12 @@
         "mime_type": "text/html",
         "is_part_of": ["part"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -341,6 +353,12 @@
         "mime_type": "application/x-zip",
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -416,6 +434,12 @@
         "material_types": [],
         "is_part_of": ["b5a91d32-66f4-4c12-8795-c427fe47ed97"],
         "publishers": ["Stimuleringsregeling Open en Online Onderwijs"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "Stimuleringsregeling Open en Online Onderwijs",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -489,6 +513,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -562,6 +592,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -635,6 +671,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -711,6 +753,12 @@
         "mime_type": "text/html",
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -792,6 +840,12 @@
         "mime_type": null,
         "is_part_of": ["da4ab96b-bee8-40fc-beed-62fc784b6bfc"],
         "publishers": ["Stimuleringsregeling Open en Online Onderwijs"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "Stimuleringsregeling Open en Online Onderwijs",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -873,6 +927,12 @@
         "mime_type": "application/pdf",
         "is_part_of": ["0937a9fa-e368-4227-aa9e-d36afdffdd72"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -943,6 +1003,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -1016,6 +1082,12 @@
         "material_types": [],
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,

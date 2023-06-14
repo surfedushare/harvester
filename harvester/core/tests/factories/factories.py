@@ -86,6 +86,12 @@ class DocumentFactory(factory.django.DjangoModelFactory):
                 "departments": [],
                 "associates": []
             },
+            "provider": {
+                "external_id": None,
+                "slug": None,
+                "name": None,
+                "ror": False
+            },
             "description": "Gedrag is zorgwekkend",
             "publisher_date": None,
             "copyright": "cc-by-40",
