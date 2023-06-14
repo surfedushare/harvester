@@ -584,7 +584,7 @@ SOURCES = {
         "api_key": environment.secrets.hanze.api_key
     },
     "publinova": {
-        "endpoint": environment.django.repositories.publinova,
+        "endpoint": environment.harvester.repositories.publinova,
         "api_key": environment.secrets.publinova.api_key
     },
 }

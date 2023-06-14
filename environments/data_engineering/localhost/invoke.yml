@@ -26,6 +26,7 @@ harvester:
     han: "https://repository.han.nl"
     hva: "https://accpure.hva.nl"
     hanze: "https://hanzetest.azure-api.net"
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
 
 postgres:
   host: "postgres"
