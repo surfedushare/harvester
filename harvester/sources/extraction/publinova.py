@@ -1,6 +1,8 @@
 import re
 from mimetypes import guess_type
 from hashlib import sha1
+from dateutil.parser import parse as date_parser
+from sentry_sdk import capture_message
 
 from django.conf import settings
 
@@ -23,6 +25,8 @@ class PublinovaMetadataExtraction(ExtractProcessor):
     def _parse_file(file_object):
         url = file_object["url"]
         file_object["hash"] = sha1(url.encode("utf-8")).hexdigest()
+        file_object["copyright"] = None
+        file_object["access_rights"] = "OpenAccess"
         return file_object
 
     @classmethod
@@ -34,11 +38,10 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_language(cls, node):
-        language = node["language"]["term"]["en_GB"]
-        if language == "Dutch":
-            return "nl"
-        elif language == "English":
-            return "en"
+        language = node["language"]
+        if not language:
+            return "unk"
+        capture_message(f"Received a language from Publinova: {language}", level="warning")
         return "unk"
 
     @classmethod
@@ -95,8 +98,35 @@ class PublinovaMetadataExtraction(ExtractProcessor):
         return authors
 
     @classmethod
+    def get_provider(cls, node):
+        return {
+            "ror": None,
+            "external_id": None,
+            "slug": "publinova",
+            "name": "Publinova"
+        }
+
+    @classmethod
+    def get_organizations(cls, node):
+        root = cls.get_provider(node)
+        root["type"] = "repository"
+        return {
+            "root": root,
+            "departments": [],
+            "associates": []
+        }
+
+    @classmethod
     def get_publishers(cls, node):
         return ["Publinova"]
+
+    @classmethod
+    def get_publisher_year(cls, node):
+        published_at = node["published_at"]
+        if published_at is None:
+            return
+        datetime = date_parser(published_at)
+        return datetime.year
 
     @classmethod
     def get_is_restricted(cls, node):
@@ -104,20 +134,25 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_analysis_allowed(cls, node):
-        # We disallow analysis for non-derivative materials as we'll create derivatives in that process
-        # NB: any material that is_restricted will also have analysis_allowed set to False
-        copyright = PublinovaMetadataExtraction.get_copyright(node)
-        return (copyright is not None and "nd" not in copyright) and copyright != "yes"
+        files = cls.get_files(node)
+        if not len(files):
+            return False
+        match files[0]["access_rights"], files[0]["copyright"]:
+            case "OpenAccess", _:
+                return True
+            case "RestrictedAccess", copyright:
+                return copyright and copyright not in ["yes", "unknown"] and "nd" not in copyright
+            case "ClosedAccess", _:
+                return False
 
-    # @classmethod
-    # def get_doi(cls, node):
-    #     if "electronicVersions" not in node:
-    #         return None
-    #     doi_version = next(
-    #         (electronic_version for electronic_version in node["electronicVersions"] if "doi" in electronic_version),
-    #         None
-    #     )
-    #     return doi_version["doi"] if doi_version else None
+    @classmethod
+    def get_research_themes(cls, node):
+        return [theme["label"] for theme in node["research_themes"] or []]
+
+    @classmethod
+    def get_parties(cls, node):
+        return [party["name"] for party in node["parties"] or []]
+
 
 
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
@@ -126,24 +161,26 @@ PUBLINOVA_EXTRACTION_OBJECTIVE = {
     "files": PublinovaMetadataExtraction.get_files,
     "copyright": PublinovaMetadataExtraction.get_copyright,
     "title": "$.title",
-    # "language": PublinovaMetadataExtraction.get_language,
+    "language": PublinovaMetadataExtraction.get_language,
     "keywords": PublinovaMetadataExtraction.get_keywords,
     "description": "$.description",
     "mime_type": PublinovaMetadataExtraction.get_mime_type,
     "authors": PublinovaMetadataExtraction.get_authors,
+    "provider": PublinovaMetadataExtraction.get_provider,
+    "organizations": PublinovaMetadataExtraction.get_organizations,
     "publishers": PublinovaMetadataExtraction.get_publishers,
-    # "publisher_date": lambda node: None,
-    # "publisher_year": "$.publicationStatuses.0.publicationDate.year",
+    "publisher_date": "$.published_at",
+    "publisher_year": PublinovaMetadataExtraction.get_publisher_year,
 
     # # Non-essential NPPO properties
     "technical_type": PublinovaMetadataExtraction.get_technical_type,
     "from_youtube": PublinovaMetadataExtraction.get_from_youtube,
     "is_restricted": PublinovaMetadataExtraction.get_is_restricted,
     "analysis_allowed": PublinovaMetadataExtraction.get_analysis_allowed,
-    # "research_object_type": "$.type.term.en_GB",
-    # "research_themes": lambda node: [],
-    # "parties": lambda node: [],
-    # "doi": PublinovaMetadataExtraction.get_doi,
+    "research_object_type": "$.research_object_type",
+    "research_themes": PublinovaMetadataExtraction.get_research_themes,
+    "parties": PublinovaMetadataExtraction.get_parties,
+    "doi": "$.doi",
 
     # Non-essential Edusources properties (for compatibility reasons)
     "material_types": lambda node: None,
