@@ -155,7 +155,6 @@ class PublinovaMetadataExtraction(ExtractProcessor):
         return [party["name"] for party in node["parties"] or []]
 
 
-
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
     "url": PublinovaMetadataExtraction.get_url,
