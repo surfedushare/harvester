@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0046_edurep_jsonresearch'),
+        ('core', '0046_edurep_jsonsearch'),
     ]
 
     operations = [
