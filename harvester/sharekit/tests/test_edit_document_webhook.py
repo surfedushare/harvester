@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 
 from django.test import TestCase, override_settings
 from django.urls import reverse
@@ -36,10 +37,13 @@ class TestEditDocumentWebhook(TestCase):
         cls.test_ip = "20.56.15.206"
         cls.test_data = cls.load_sharekit_test_data()
 
-    def call_webhook(self, url, ip=None, verb="create"):
+    def call_webhook(self, url, ip=None, verb="create", overrides=None):
+        data = deepcopy(self.test_data[verb])
+        if isinstance(overrides, dict):
+            data["attributes"].update(overrides)
         return self.client.post(
             url,
-            data=self.test_data[verb],
+            data=data,
             content_type="application/vnd.api+json",
             HTTP_X_FORWARDED_FOR=ip or self.test_ip
         )
@@ -99,3 +103,26 @@ class TestEditDocumentWebhook(TestCase):
         self.assertLess(delete_document.created_at, self.test_start_time)
         self.assertGreater(delete_document.modified_at, self.test_start_time)
         self.assertEqual(delete_document.properties["state"], "deleted")
+
+    def test_create_no_language(self):
+        self.assertIsNone(
+            Document.objects.filter(reference="3e45b9e3-ba76-4200-a927-2902177f1f6c").last(),
+            "Document with external_id 3e45b9e3-ba76-4200-a927-2902177f1f6c should not exist before the test"
+        )
+        create_response = self.call_webhook(self.webhook_url, overrides={"language": None})
+        self.assertEqual(create_response.status_code, 200)
+        create_document = Document.objects.filter(reference="3e45b9e3-ba76-4200-a927-2902177f1f6c").last()
+        self.assertIsNotNone(create_document)
+        self.assertGreater(create_document.created_at, self.test_start_time)
+        self.assertGreater(create_document.modified_at, self.test_start_time)
+        self.assertEqual(create_document.properties["language"], {"metadata": "unk"})
+
+    def test_update_no_language(self):
+        update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
+        self.assertEqual(update_response.status_code, 200)
+        update_document = Document.objects.filter(reference="5be6dfeb-b9ad-41a8-b4f5-94b9438e4257").last()
+        self.assertIsNotNone(update_document)
+        self.assertLess(update_document.created_at, self.test_start_time)
+        self.assertGreater(update_document.modified_at, self.test_start_time)
+        self.assertEqual(update_document.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
+        self.assertEqual(update_document.properties["language"], {"metadata": "en"})
