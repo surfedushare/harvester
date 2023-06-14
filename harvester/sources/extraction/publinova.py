@@ -95,6 +95,7 @@ class PublinovaMetadataExtraction(ExtractProcessor):
         for author in authors:
             external_id = author.pop("id")
             author["external_id"] = external_id
+            author.pop("about", None)
         return authors
 
     @classmethod

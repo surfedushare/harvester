@@ -25,65 +25,72 @@ class TestGetHarvestSeedsPublinova(TestCase):
 
     def test_get_id(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["external_id"], "0bd5a2c2-5621-454a-8a4e-f48d4d1c59ea")
+        self.assertEqual(seeds[0]["external_id"], "0b8efc72-a7a8-4635-9de9-84010e996b9e")
 
     def test_get_files(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [])
-        self.assertEqual(seeds[1]["files"], [
+        self.assertEqual(seeds[0]["files"], [
             {
-                "mime_type": "application/pdf",
                 "url": "https://api.publinova.acc.surf.zooma.cloud/api/products/"
-                       "191ba2b9-da90-4c11-aa1e-0b221c6e2d42/download/184e5d6e-8bec-42dc-9a4d-034b27b9fad9",
-                "hash": "805592bebcba0d98795fca7792c2d9c3fb33218b",
-                "title": "Test-document-SP.pdf"
+                       "0b8efc72-a7a8-4635-9de9-84010e996b9e/download/41ab630b-fce0-431a-a523-078ca000c1c4",
+                "title": "Circel.jpg",
+                "mime_type": "image/jpeg",
+                "hash": "b1e07b1c3e68ae63abf8da023169609d50266a01",
+                "copyright": None,
+                "access_rights": "OpenAccess"
             }
         ])
 
     def test_get_url(self):
         seeds = self.seeds
-        self.assertIsNone(seeds[0]["url"])
         self.assertEqual(
-            seeds[1]["url"],
+            seeds[0]["url"],
             "https://api.publinova.acc.surf.zooma.cloud/api/products/"
-            "191ba2b9-da90-4c11-aa1e-0b221c6e2d42/download/184e5d6e-8bec-42dc-9a4d-034b27b9fad9"
+            "0b8efc72-a7a8-4635-9de9-84010e996b9e/download/41ab630b-fce0-431a-a523-078ca000c1c4"
         )
 
     def test_get_mime_type(self):
         seeds = self.seeds
-        self.assertIsNone(seeds[0]["mime_type"])
-        self.assertEqual(seeds[1]["mime_type"], "application/pdf")
+        self.assertEqual(seeds[0]["mime_type"], "image/jpeg")
+        self.assertIsNone(seeds[1]["mime_type"])
 
     def test_get_technical_type(self):
         seeds = self.seeds
-        self.assertIsNone(seeds[0]["technical_type"])
-        self.assertEqual(seeds[1]["technical_type"], "document")
+        self.assertEqual(seeds[0]["technical_type"], "image")
+        self.assertIsNone(seeds[1]["technical_type"])
 
     def test_analysis_allowed(self):
         seeds = self.seeds
         self.assertTrue(seeds[0]["analysis_allowed"])
-        self.assertFalse(seeds[2]["analysis_allowed"])
 
-    # def test_get_language(self):
-    #     seeds = self.seeds
-    #     self.assertEqual(seeds[0]["language"], {"metadata": "en"})
-    #     self.assertEqual(seeds[10]["language"], {"metadata": "nl"})
+    def test_get_language(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["language"], {"metadata": "unk"})
 
     def test_get_keywords(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["keywords"], [])
-        self.assertEqual(seeds[5]["keywords"], ["<script>alert('keyword script');</script>"])
+        self.assertEqual(seeds[8]["keywords"], ["<script>alert('keyword script');</script>"])
 
-    def test_authors_property(self):
+    def test_get_authors(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
             {
-                'name': 'Steef Beef', 'email': "steef-beef@radicalen.nl",
-                'external_id': "c9991f99-e69f-4c82-a79f-f97e21ea3d73", 'dai': None, 'orcid': None, 'isni': None
-            },
+                "name": "Support 1 SURF", "email": "s1@surf.nl", "dai": None,
+                "isni": None, "orcid": None, "external_id": "a8986f6c-69e3-4c05-9f0a-903c554644f6"
+            }
         ])
-        self.assertEqual(seeds[10]['authors'], [])
 
-    # def test_publisher_year(self):
-    #     seeds = self.seeds
-    #     self.assertEqual(seeds[0]["publisher_year"], 2005)
+    def test_get_research_themes(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["research_themes"], [])
+        self.assertEqual(seeds[4]["research_themes"], ["Economie & Management"])
+
+    def test_get_parties(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["parties"], [])
+        self.assertEqual(seeds[3]["parties"], ["SURF"])
+
+    def test_get_publisher_year(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_year"], 2023)
