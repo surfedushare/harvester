@@ -21,6 +21,7 @@ harvester:
     han: null
     hva: null
     hanze: null
+    publinova: null
 
 postgres:
   database: "harvester"
@@ -63,4 +64,6 @@ secrets:
   hva:
     api_key: null
   buas:
+    api_key: null
+  publinova:
     api_key: null

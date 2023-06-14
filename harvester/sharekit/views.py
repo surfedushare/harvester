@@ -13,6 +13,14 @@ from core.models import DatasetVersion
 from sharekit.extraction import SharekitMetadataExtraction, create_objective
 
 
+def get_seed_operation(seed, collection):
+    if seed["state"] == "deleted":
+        return "delete"
+    if collection.document_set.filter(reference=seed["external_id"]).exists():
+        return "update"
+    return "create"
+
+
 @csrf_exempt
 def edit_document_webhook(request, channel, secret):
     # Webhook validation
@@ -32,19 +40,20 @@ def edit_document_webhook(request, channel, secret):
     # Patches data coming from Sharekit to be consistent
     if isinstance(data["attributes"], list):
         data["attributes"] = {}
+    # Fetches relevant containers from the database
+    dataset_version = DatasetVersion.objects.get_current_version()
+    collection = dataset_version.collection_set.filter(name=channel).last()
     # Processing of incoming data
     extract_config = create_config("extract_processor", {
         "objective": create_objective(root="$")
     })
     prc = SharekitMetadataExtraction(config=extract_config)
     seed = next(prc.extract("application/json", data))
-    if seed["state"] != "deleted" and seed["language"] is None:
-        capture_message("edit_document_webhook received 'null' as a language for non-deleted document", level="warning")
-        return HttpResponse(status=400, reason="Invalid language")
+    operation = get_seed_operation(seed, collection)
+    if operation == "create" and seed["language"] is None:
+        seed["language"] = "unk"
     prepare_seed(seed)
     # Commit changes to the database
-    dataset_version = DatasetVersion.objects.get_current_version()
-    collection = dataset_version.collection_set.filter(name=channel).last()
     collection.update([seed], "external_id")
     # Finish webhook request
     logger = HarvestLogger(dataset_version.dataset.name, "edit_document_webhook", {})

@@ -79,5 +79,8 @@ AWS_SECRET_CONFIGURATIONS = {
     },
     "google": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/google"
+    },
+    "publinova": {
+        "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/publinova"
     }
 }

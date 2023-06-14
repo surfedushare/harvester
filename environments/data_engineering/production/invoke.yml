@@ -22,6 +22,7 @@ harvester:
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: null
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
 
 postgres:
   host: "surfpol-edushare.cef190hciiol.eu-central-1.rds.amazonaws.com"

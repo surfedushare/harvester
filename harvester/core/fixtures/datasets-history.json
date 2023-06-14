@@ -161,9 +161,7 @@
         "authors": [],
         "keywords": ["exercise"],
         "language": {
-          "metadata": "en",
-          "from_text": "en",
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-nc-40",
         "technical_type": "document",
@@ -239,9 +237,7 @@
         "authors": [],
         "keywords": ["Video", "Practicum clip", "Instructie clip"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "nl"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "technical_type": "website",
@@ -342,9 +338,7 @@
           "structuur"
         ],
         "language": {
-          "metadata": "nl",
-          "from_text": null,
-          "from_title": "nl"
+          "metadata": "nl"
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "app",
@@ -418,9 +412,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc", "explanation of big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [
@@ -502,9 +494,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -581,9 +571,7 @@
         "authors": [{ "name": "Esther Quaedackers" }, { "name": "Robbert Dijkgraaf" }],
         "keywords": ["mooc", "explanation big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -660,9 +648,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc", "big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -742,9 +728,7 @@
         "authors": [],
         "keywords": ["instructie", "Praktische muzieknotatie en audiobewerking"],
         "language": {
-          "metadata": "nl",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "nl"
         },
         "copyright": "cc-by-nc-40",
         "technical_type": "website",
@@ -816,9 +800,7 @@
         "authors": [{ "name": "Ning Ding" }],
         "keywords": ["macroeconomics"],
         "language": {
-          "metadata": null,
-          "from_text": null,
-          "from_title": null
+          "metadata": null
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "unknown",
@@ -916,9 +898,7 @@
         "authors": [{ "name": "Ning Ding" }],
         "keywords": ["economics", "Macro economics", "micro economics", "economic structure", "labour market"],
         "language": {
-          "metadata": "de",
-          "from_text": "de",
-          "from_title": "de"
+          "metadata": "de"
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "document",
@@ -992,9 +972,7 @@
         "authors": [{ "name": "Fred Spier" }, { "name": "Esther Quaedackers" }],
         "keywords": ["Video", "mooc", "Big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -1071,9 +1049,7 @@
         "authors": [{ "name": "Fred Spier" }, { "name": "Esther Quaedackers" }],
         "keywords": ["Video", "mooc", "Big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
