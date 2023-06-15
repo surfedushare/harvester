@@ -23,6 +23,13 @@ harvester:
     hva: "https://pure.hva.nl"
     hanze: "https://hanzetest.azure-api.net"
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
+  webhook_allowed_ips:
+    sharekit:
+      - "20.56.15.206"  # production
+      - "20.56.8.62"  # acceptance
+    publinova:
+      - "83.96.213.17"  # production
+      - "83.96.203.224"  # acceptance
 
 postgres:
   host: "surfpol-edushare.c85na2fjlzol.eu-central-1.rds.amazonaws.com"
@@ -38,11 +45,6 @@ opensearch:
   decompound_word_lists:
     dutch: "analyzers/F133444250"
   domain_name: "surfpol-main"
-
-sharekit:
-  webhook_allowed_ips:
-    - "20.56.15.206"
-    - "20.56.8.62"
 
 aws:
   is_aws: true

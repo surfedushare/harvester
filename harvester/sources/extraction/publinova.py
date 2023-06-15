@@ -196,3 +196,15 @@ PUBLINOVA_EXTRACTION_OBJECTIVE = {
     "lom_educational_level": lambda node: None,
     "lowest_educational_level": lambda node: 2,
 }
+
+
+def create_objective(root=None):
+    objective = {
+        "@": "$.data",
+        "external_id": "$.id",
+        "state": PublinovaMetadataExtraction.get_record_state
+    }
+    objective.update(PUBLINOVA_EXTRACTION_OBJECTIVE)
+    if root:
+        objective["@"] = root
+    return objective

@@ -8,12 +8,18 @@ from django.utils.timezone import now
 from core.models import Document
 from sharekit.tests.factories import SharekitMetadataHarvestFactory
 
+TEST_WEBHOOK_SECRET = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+TEST_WEBHOOK_IP = "20.56.15.206"
+WEBHOOKS = {
+   "edusources": {
+       "secret": TEST_WEBHOOK_SECRET,
+       "allowed_ips": [TEST_WEBHOOK_IP]
+   }
+}
 
-TEST_HARVESTER_WEBHOOK_SECRET = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 
-
-@override_settings(HARVESTER_WEBHOOK_SECRET=TEST_HARVESTER_WEBHOOK_SECRET)
-class TestEditDocumentWebhook(TestCase):
+@override_settings(WEBHOOKS=WEBHOOKS)
+class TestSharekitDocumentWebhook(TestCase):
 
     fixtures = ["datasets-history"]
 
@@ -32,9 +38,9 @@ class TestEditDocumentWebhook(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.test_start_time = now()
-        cls.webhook_secret = TEST_HARVESTER_WEBHOOK_SECRET
-        cls.webhook_url = reverse("edit-document-webhook", args=("edusources", cls.webhook_secret,))
-        cls.test_ip = "20.56.15.206"
+        cls.webhook_secret = TEST_WEBHOOK_SECRET
+        cls.webhook_url = reverse("sharekit-document-webhook", args=("edusources", cls.webhook_secret,))
+        cls.test_ip = TEST_WEBHOOK_IP
         cls.test_data = cls.load_sharekit_test_data()
 
     def call_webhook(self, url, ip=None, verb="create", overrides=None):

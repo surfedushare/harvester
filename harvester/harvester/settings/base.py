@@ -496,16 +496,10 @@ DATA_RETENTION_PURGE_AFTER = environment.harvester.data_retention.purge_after or
 DATA_RETENTION_KEEP_VERSIONS = environment.harvester.data_retention.keep_versions
 
 
-# Internal credentials
-
-HARVESTER_WEBHOOK_SECRET = environment.secrets.harvester.webhook_secret
-
-
 # Sharekit
 
 SHAREKIT_API_KEY = getattr(environment.secrets.sharekit, environment.project.name)
 SHAREKIT_BASE_URL = environment.harvester.repositories.sharekit
-SHAREKIT_WEBHOOK_ALLOWED_IPS = environment.sharekit.webhook_allowed_ips
 SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings
 
 
@@ -587,4 +581,22 @@ SOURCES = {
         "endpoint": environment.harvester.repositories.publinova,
         "api_key": environment.secrets.publinova.api_key
     },
+}
+
+
+# Webhooks
+
+WEBHOOKS = {
+    "edusources": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
+    "nppo": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
+    "publinova": {
+        "secret": environment.secrets.harvester.publinova_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
+    }
 }
