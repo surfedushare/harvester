@@ -14,7 +14,8 @@ def get_private_network_configuration(aws_session):
     subnets_response = ec2_client.describe_subnets()
     vpc_id, private_subnet = next(
         ((subnet["VpcId"], subnet["SubnetId"],)
-         for subnet in subnets_response["Subnets"] if not subnet["MapPublicIpOnLaunch"])
+         for subnet in subnets_response["Subnets"]
+         if next((tag for tag in subnet["Tags"] if "surfpol-private" in tag["Value"]), None))
     )
     print("Acquiring security groups")
     security_groups_response = ec2_client.describe_security_groups(
