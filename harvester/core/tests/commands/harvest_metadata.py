@@ -285,8 +285,6 @@ class TestMetadataHarvestWithHistory(TestCase):
             )
 
     def test_handle_deletion_seeds(self):
-        if self.spec_set == "edusources":
-            self.skipTest("Deletion not supported by Sharekit backend")
         dataset_version = DatasetVersion.objects.last()
         collection = Collection.objects.get(name=self.spec_set, dataset_version=dataset_version)
         command = self.get_command_instance()
