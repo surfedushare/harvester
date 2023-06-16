@@ -25,7 +25,7 @@ class TestGetHarvestSeedsPublinova(TestCase):
 
     def test_get_id(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["external_id"], "0b8efc72-a7a8-4635-9de9-84010e996b9e")
+        self.assertEqual(seeds[0]["external_id"], "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257")
 
     def test_get_files(self):
         seeds = self.seeds
