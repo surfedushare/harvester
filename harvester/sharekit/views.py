@@ -14,9 +14,12 @@ from sharekit.extraction import SharekitMetadataExtraction, create_objective
 
 
 def get_seed_operation(seed, collection):
-    if seed["state"] == "deleted":
+    document_exists = collection.document_set.filter(reference=seed["external_id"]).exists()
+    if seed["state"] == "deleted" and document_exists:
         return "delete"
-    if collection.document_set.filter(reference=seed["external_id"]).exists():
+    elif seed["state"] == "deleted":
+        return "ignore"
+    elif document_exists:
         return "update"
     return "create"
 
@@ -54,6 +57,8 @@ def edit_document_webhook(request, channel, secret):
         seed["language"] = "unk"
     prepare_seed(seed)
     # Commit changes to the database
+    if operation == "ignore":
+        return HttpResponse("ignored")
     collection.update([seed], "external_id")
     # Finish webhook request
     logger = HarvestLogger(dataset_version.dataset.name, "edit_document_webhook", {})
