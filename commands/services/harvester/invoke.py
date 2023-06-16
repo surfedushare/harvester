@@ -86,6 +86,23 @@ def load_data(ctx, mode, source, dataset, download_edurep=False, wipe_data=True)
 
 
 @task(help={
+    "mode": "Mode you want to load metadata for: localhost, development, acceptance or production. "
+            "Must match APPLICATION_MODE",
+    "source": "Source you want to import from: development, acceptance or production."
+})
+def load_metadata(ctx, mode, source):
+    """
+    Loads the production database and sets up Open Search data on localhost or an AWS cluster
+    """
+    if ctx.config.service.env == "production":
+        raise Exit("Cowardly refusing to use production as a destination environment")
+
+    command = ["python", "manage.py", "load_metadata", f"--source={source}"]
+
+    run_harvester_task(ctx, mode, command)
+
+
+@task(help={
     "mode": "Mode you want to migrate: localhost, development, acceptance or production. Must match APPLICATION_MODE",
     "reset": "Whether to reset the active datasets before harvesting",
     "no_promote": "Whether you want to create new indices without adjusting latest aliases",

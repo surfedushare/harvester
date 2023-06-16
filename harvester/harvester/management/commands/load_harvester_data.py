@@ -19,7 +19,7 @@ logger = logging.getLogger("harvester")
 
 class Command(base.LabelCommand):
     """
-    A temporary command to load data from S3 bucket as long as harvester can't generate all production data
+    A command to load data from S3 bucket
     """
 
     resources = [

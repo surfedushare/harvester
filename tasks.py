@@ -14,7 +14,7 @@ from commands.services.service.invoke import (import_snapshot, sync_upload_media
 from commands.services.harvester.invoke import (load_data, harvest, clean_data, index_dataset_version,
                                                 dump_data, sync_harvest_content, generate_previews,
                                                 promote_dataset_version, extend_resource_cache, sync_preview_media,
-                                                sync_metadata, harvester_migrate)
+                                                sync_metadata, harvester_migrate, load_metadata)
 
 
 service_environment, _ = service_configuration_and_session(service="service")
@@ -28,7 +28,7 @@ harvester_collection = Collection("hrv", setup_postgres_localhost, harvest, clea
                                   index_dataset_version, dump_data, sync_harvest_content, promote_dataset_version,
                                   create_decompound_dictionary, push_decompound_dictionary, generate_previews,
                                   extend_resource_cache, sync_preview_media, sync_metadata, push_indices_template,
-                                  harvester_migrate)
+                                  harvester_migrate, load_metadata)
 harvester_collection.configure(harvester_environment)
 
 
