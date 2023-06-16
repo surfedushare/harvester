@@ -27,6 +27,15 @@ harvester:
     hva: "https://accpure.hva.nl"
     hanze: "https://hanzetest.azure-api.net"
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
+  webhook_allowed_ips:
+    sharekit:
+      - "20.56.15.206"  # production
+      - "20.56.8.62"  # acceptance
+      - "127.0.0.1"
+    publinova:
+      - "83.96.213.17"  # production
+      - "83.96.203.224"  # acceptance
+      - "127.0.0.1"
 
 postgres:
   host: "postgres"
@@ -44,12 +53,6 @@ opensearch:
     dutch: "decompound_word_list.nl.txt"
   domain_name: null
 
-sharekit:
-  webhook_allowed_ips:
-    - "20.56.15.206"
-    - "20.56.8.62"
-    - "127.0.0.1"
-
 aws:
   is_aws: false
   load_secrets: true
@@ -65,4 +68,5 @@ secrets:
     admin_password: "qwerty"
   harvester:
     api_key: "123abc"
-    webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    sharekit_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    publinova_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"

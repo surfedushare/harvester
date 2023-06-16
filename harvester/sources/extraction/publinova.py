@@ -15,7 +15,7 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_record_state(cls, node):
-        return "active"
+        return node.get("state", "active")
 
     #############################
     # GENERIC
@@ -33,12 +33,12 @@ class PublinovaMetadataExtraction(ExtractProcessor):
     def get_files(cls, node):
         return [
             cls._parse_file(file_object)
-            for file_object in node["files"]
+            for file_object in node.get("files", [])
         ]
 
     @classmethod
     def get_language(cls, node):
-        language = node["language"]
+        language = node.get("language", None)
         if not language:
             return "unk"
         capture_message(f"Received a language from Publinova: {language}", level="warning")
@@ -74,12 +74,12 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_copyright(cls, node):
-        return node["copyright"]
+        return node.get("copyright", None)
 
     @classmethod
     def get_keywords(cls, node):
         return [
-            keyword["label"] for keyword in node["keywords"]
+            keyword["label"] for keyword in node.get("keywords", [])
         ]
 
     @classmethod
@@ -91,7 +91,7 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_authors(cls, node):
-        authors = node["authors"]
+        authors = node.get("authors", [])
         for author in authors:
             external_id = author.pop("id")
             author["external_id"] = external_id
@@ -123,7 +123,7 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_publisher_year(cls, node):
-        published_at = node["published_at"]
+        published_at = node.get("published_at", None)
         if published_at is None:
             return
         datetime = date_parser(published_at)
@@ -148,11 +148,11 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_research_themes(cls, node):
-        return [theme["label"] for theme in node["research_themes"] or []]
+        return [theme["label"] for theme in node.get("research_themes", None) or []]
 
     @classmethod
     def get_parties(cls, node):
-        return [party["name"] for party in node["parties"] or []]
+        return [party["name"] for party in node.get("parties", []) or []]
 
 
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
@@ -196,3 +196,15 @@ PUBLINOVA_EXTRACTION_OBJECTIVE = {
     "lom_educational_level": lambda node: None,
     "lowest_educational_level": lambda node: 2,
 }
+
+
+def create_objective(root=None):
+    objective = {
+        "@": "$.data",
+        "external_id": "$.id",
+        "state": PublinovaMetadataExtraction.get_record_state
+    }
+    objective.update(PUBLINOVA_EXTRACTION_OBJECTIVE)
+    if root:
+        objective["@"] = root
+    return objective

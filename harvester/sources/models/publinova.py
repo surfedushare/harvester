@@ -8,7 +8,7 @@ from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
 
 from core.models import HarvestHttpResource
-from sources.extraction.publinova import PublinovaMetadataExtraction, PUBLINOVA_EXTRACTION_OBJECTIVE
+from sources.extraction.publinova import create_objective
 
 
 logger = logging.getLogger("harvester")
@@ -23,14 +23,8 @@ class PublinovaMetadataResourceManager(models.Manager):
             is_extracted=False
         )
 
-        metadata_objective = {
-            "@": "$.data",
-            "external_id": "$.id",
-            "state": PublinovaMetadataExtraction.get_record_state
-        }
-        metadata_objective.update(PUBLINOVA_EXTRACTION_OBJECTIVE)
         extract_config = create_config("extract_processor", {
-            "objective": metadata_objective
+            "objective": create_objective()
         })
         prc = ExtractProcessor(config=extract_config)
 

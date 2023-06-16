@@ -2,45 +2,39 @@ import json
 from copy import deepcopy
 
 from django.test import TestCase, override_settings
-from django.urls import reverse
-from django.utils.timezone import now
 
 from core.models import Document
-from sharekit.tests.factories import SharekitMetadataHarvestFactory
 
 
-TEST_HARVESTER_WEBHOOK_SECRET = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+TEST_WEBHOOK_SECRET = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+TEST_WEBHOOK_IP = "20.56.15.206"
+WEBHOOKS = {
+   "edusources": {
+       "secret": TEST_WEBHOOK_SECRET,
+       "allowed_ips": [TEST_WEBHOOK_IP]
+   }
+}
 
 
-@override_settings(HARVESTER_WEBHOOK_SECRET=TEST_HARVESTER_WEBHOOK_SECRET)
+@override_settings(WEBHOOKS=WEBHOOKS)
 class TestEditDocumentWebhook(TestCase):
 
     fixtures = ["datasets-history"]
 
-    @classmethod
-    def load_sharekit_test_data(cls):
-        delta_response = SharekitMetadataHarvestFactory.create(is_initial=False, number=0)
-        content_type, delta = delta_response.content
-        delta_records = delta["data"]
-        return {
-            "create": delta_records[2],
-            "update": delta_records[0],
-            "delete": delta_records[1]
-        }
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.test_start_time = now()
-        cls.webhook_secret = TEST_HARVESTER_WEBHOOK_SECRET
-        cls.webhook_url = reverse("edit-document-webhook", args=("edusources", cls.webhook_secret,))
-        cls.test_ip = "20.56.15.206"
-        cls.test_data = cls.load_sharekit_test_data()
+    webhook_secret = TEST_WEBHOOK_SECRET
+    test_ip = TEST_WEBHOOK_IP
+    test_start_time = None
+    webhook_url = None
+    data_key = None
+    test_data = None
 
     def call_webhook(self, url, ip=None, verb="create", overrides=None):
         data = deepcopy(self.test_data[verb])
         if isinstance(overrides, dict):
-            data["attributes"].update(overrides)
+            if self.data_key is not None:
+                data[self.data_key].update(overrides)
+            else:
+                data.update(overrides)
         return self.client.post(
             url,
             data=data,
