@@ -38,12 +38,12 @@ class Command(base.BaseCommand):
             "Expected a harvest source argument for a localhost environment"
         if source != "localhost":
             source_environment = create_configuration(source) if source else environment
-            logger.info(f"Downloading dump file for metadata")
+            logger.info("Downloading dump file for metadata")
             ctx = Context(environment)
             harvester_data_bucket = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester/metadata/"
             ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}/metadata", echo=True)
 
-        logger.info(f"Importing metadata")
+        logger.info("Importing metadata")
         # Delete old data
         for resource_model in self.metadata_models:
             print(f"Deleting resource {resource_model}")
