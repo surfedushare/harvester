@@ -29,7 +29,6 @@ class TestGetHarvestSeedsEdurep(TestCase):
         self.assertEqual(seeds[0]["consortium"], "HBK Verpleegkunde")
         self.assertEqual(seeds[1]["consortium"], None)
 
-
     def test_state_education_level(self):
         seeds = self.seeds
 
