@@ -17,7 +17,7 @@ class EdurepJsonSearchResourceManager(models.Manager):
         )
 
         metadata_objective = {
-            "@": "$.items",
+            "@": "$.response.items",
             "external_id": "$.@id",
             "state": EdurepMetadataExtraction.get_record_state
         }
