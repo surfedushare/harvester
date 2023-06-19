@@ -30,6 +30,8 @@ harvester:
     publinova:
       - "83.96.213.17"  # production
       - "83.96.203.224"  # acceptance
+      - "217.138.215.165"  # Zooma
+      - "145.90.232.124"  # one EduVPN IP not the range!
 
 postgres:
   host: "surfpol-edushare.c85na2fjlzol.eu-central-1.rds.amazonaws.com"
