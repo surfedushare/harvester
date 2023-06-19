@@ -311,7 +311,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
         edu_alignment = node.get("schema:educationalAlignment", None)
         vocabularies = []
         if not edu_alignment:
-            return
+            return []
         if not isinstance(edu_alignment, list):
             if edu_alignment["schema:educationalFramework"] == 'http://purl.edustandaard.nl/concept':
                 vocabularies.append(edu_alignment["@id"])
