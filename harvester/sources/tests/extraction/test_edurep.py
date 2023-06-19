@@ -24,6 +24,11 @@ class TestGetHarvestSeedsEdurep(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["external_id"], "jsonld-from-lom:wikiwijsmaken:41156")
 
+    def test_consortium(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["consortium"], "HBK Verpleegkunde")
+        self.assertEqual(seeds[1]["consortium"], None)
+
     def test_state_education_level(self):
         seeds = self.seeds
 

@@ -104,6 +104,12 @@ class EdurepMetadataExtraction(ExtractProcessor):
         return
 
     @classmethod
+    def get_consortium(cls, node):
+        hbovpk_keywords = [keyword for keyword in cls.get_keywords(node) if "hbovpk" in keyword.lower()]
+        if hbovpk_keywords:
+            return "HBK Verpleegkunde"
+
+    @classmethod
     def get_copyright(cls, node):
         copyright = node.get("lom:copyrightAndOtherRestrictions", None)
         if copyright is not None and isinstance(copyright, str):
@@ -305,7 +311,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
         edu_alignment = node.get("schema:educationalAlignment", None)
         vocabularies = []
         if not edu_alignment:
-            return
+            return []
         if not isinstance(edu_alignment, list):
             if edu_alignment["schema:educationalFramework"] == 'http://purl.edustandaard.nl/concept':
                 vocabularies.append(edu_alignment["@id"])
@@ -347,7 +353,7 @@ EDUREP_EXTRACTION_OBJECTIVE = {
     "has_parts": lambda node: [],
     "copyright_description": EdurepMetadataExtraction.get_copyright_description,
     "learning_material_disciplines": lambda node: [],
-    "consortium": lambda node: None,
+    "consortium": EdurepMetadataExtraction.get_consortium,
     "lowest_educational_level": EdurepMetadataExtraction.get_lowest_educational_level,
     "study_vocabulary": EdurepMetadataExtraction.get_study_vocabulary
 }
