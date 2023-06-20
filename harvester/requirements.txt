@@ -2,7 +2,7 @@
 django==3.2.16
 djangorestframework==3.11.2
 django-cors-headers==3.4.0
-whitenoise==5.1.0
+whitenoise==5.3.0
 psycopg2-binary==2.9.6
 requests==2.27.1
 Pillow==9.4.0
