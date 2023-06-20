@@ -27,7 +27,7 @@ django-storages==1.12.3
 # Tools
 ipython==8.12.0
 jedi==0.17.2
-tqdm==4.50.2
+tqdm==4.65.0
 invoke==1.7.0
 fabric==2.7.0
 ipdb==0.13.3
