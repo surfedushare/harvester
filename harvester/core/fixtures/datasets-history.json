@@ -92,12 +92,12 @@
       "is_addition": false,
       "properties": {
         "external_id": "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
-        "authors": [{ "name": "The Extension Man" }],
-        "keywords": [{ "label": "exercise" }, { "label": "extended" }],
-        "themes": [{ "label": "theme" }, { "label": "extended" }],
-        "children": ["part", "child"],
-        "parents": ["parent"],
-        "parties": [{ "name": "The Extension Party" }]
+        "authors": [{"name": "The Extension Man"}],
+        "keywords": ["exercise", "extended"],
+        "research_themes": ["theme", "extended"],
+        "has_parts": ["part", "child"],
+        "is_part_of": ["parent"],
+        "parties": ["The Extension Party"]
       }
     }
   },
@@ -115,12 +115,12 @@
         "state": "active",
         "external_id": "custom-extension",
         "title": "New! New! New! Extended titles!",
-        "authors": [{ "name": "The Extension Man" }],
-        "keywords": [{ "label": "exercise" }, { "label": "extended" }],
-        "themes": [{ "label": "theme" }, { "label": "extended" }],
-        "children": ["part", "child"],
-        "parents": ["parent"],
-        "parties": [{ "name": "The Extension Party" }]
+        "authors": [{"name": "The Extension Man"}],
+        "keywords": ["exercise", "extended"],
+        "research_themes": ["theme", "extended"],
+        "has_parts": ["part", "child"],
+        "is_part_of": ["parent"],
+        "parties": ["The Extension Party"]
       }
     }
   },
@@ -161,9 +161,7 @@
         "authors": [],
         "keywords": ["exercise"],
         "language": {
-          "metadata": "en",
-          "from_text": "en",
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-nc-40",
         "technical_type": "document",
@@ -171,6 +169,12 @@
         "has_parts": ["part"],
         "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "is_part_of": ["part"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "publishers": ["SURFnet"],
         "organizations": {
           "root": {
@@ -233,9 +237,7 @@
         "authors": [],
         "keywords": ["Video", "Practicum clip", "Instructie clip"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "nl"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "technical_type": "website",
@@ -244,6 +246,12 @@
         "mime_type": "text/html",
         "is_part_of": ["part"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -330,9 +338,7 @@
           "structuur"
         ],
         "language": {
-          "metadata": "nl",
-          "from_text": null,
-          "from_title": "nl"
+          "metadata": "nl"
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "app",
@@ -341,6 +347,12 @@
         "mime_type": "application/x-zip",
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -400,9 +412,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc", "explanation of big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [
@@ -416,6 +426,12 @@
         "material_types": [],
         "is_part_of": ["b5a91d32-66f4-4c12-8795-c427fe47ed97"],
         "publishers": ["Stimuleringsregeling Open en Online Onderwijs"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "Stimuleringsregeling Open en Online Onderwijs",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -478,9 +494,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -489,6 +503,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -551,9 +571,7 @@
         "authors": [{ "name": "Esther Quaedackers" }, { "name": "Robbert Dijkgraaf" }],
         "keywords": ["mooc", "explanation big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -562,6 +580,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -624,9 +648,7 @@
         "authors": [{ "name": "Esther Quaedackers" }],
         "keywords": ["mooc", "big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -635,6 +657,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -700,9 +728,7 @@
         "authors": [],
         "keywords": ["instructie", "Praktische muzieknotatie en audiobewerking"],
         "language": {
-          "metadata": "nl",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "nl"
         },
         "copyright": "cc-by-nc-40",
         "technical_type": "website",
@@ -711,6 +737,12 @@
         "mime_type": "text/html",
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -768,9 +800,7 @@
         "authors": [{ "name": "Ning Ding" }],
         "keywords": ["macroeconomics"],
         "language": {
-          "metadata": null,
-          "from_text": null,
-          "from_title": null
+          "metadata": null
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "unknown",
@@ -792,6 +822,12 @@
         "mime_type": null,
         "is_part_of": ["da4ab96b-bee8-40fc-beed-62fc784b6bfc"],
         "publishers": ["Stimuleringsregeling Open en Online Onderwijs"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "Stimuleringsregeling Open en Online Onderwijs",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -862,9 +898,7 @@
         "authors": [{ "name": "Ning Ding" }],
         "keywords": ["economics", "Macro economics", "micro economics", "economic structure", "labour market"],
         "language": {
-          "metadata": "de",
-          "from_text": "de",
-          "from_title": "de"
+          "metadata": "de"
         },
         "copyright": "cc-by-sa-40",
         "technical_type": "document",
@@ -873,6 +907,12 @@
         "mime_type": "application/pdf",
         "is_part_of": ["0937a9fa-e368-4227-aa9e-d36afdffdd72"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -932,9 +972,7 @@
         "authors": [{ "name": "Fred Spier" }, { "name": "Esther Quaedackers" }],
         "keywords": ["Video", "mooc", "Big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -943,6 +981,12 @@
         "material_types": [],
         "is_part_of": ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,
@@ -1005,9 +1049,7 @@
         "authors": [{ "name": "Fred Spier" }, { "name": "Esther Quaedackers" }],
         "keywords": ["Video", "mooc", "Big history"],
         "language": {
-          "metadata": "en",
-          "from_text": null,
-          "from_title": "en"
+          "metadata": "en"
         },
         "copyright": "cc-by-40",
         "has_parts": [],
@@ -1016,6 +1058,12 @@
         "material_types": [],
         "is_part_of": [],
         "publishers": ["SURFnet"],
+        "provider": {
+          "id": null,
+          "slug": null,
+          "name": "SURFnet",
+          "external_id": null
+        },
         "organizations": {
           "root": {
             "id": null,

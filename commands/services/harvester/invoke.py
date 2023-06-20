@@ -2,19 +2,55 @@ import os
 from invoke import task, Exit
 
 from commands import HARVESTER_DIR
-from commands.aws.ecs import run_task
-from environments.project.configuration import create_configuration
+from commands.aws.ecs import run_data_engineering_task
+from environments.data_engineering.configuration import create_configuration
 
 
-def run_harvester_task(ctx, mode, command, **kwargs):
+def run_harvester_task(ctx, mode, command, environment=None):
     # On localhost we call the command directly and exit
-    if ctx.config.env == "localhost":
+    if ctx.config.service.env == "localhost":
         with ctx.cd(HARVESTER_DIR):
             ctx.run(" ".join(command), echo=True)
         return
-
+    # For remotes we need to determine which target(s) we want to run commands for
+    target_input = input("Which projects do you want to run this command for (e)dusources, (p)ublinova or (b)oth? ")
+    targets = []
+    match target_input:
+        case "e":
+            targets.append("edusources")
+        case "p":
+            targets.append("publinova")
+        case "b":
+            targets += ["edusources", "publinova"]
+        case _:
+            raise Exit("Aborted running harvester command, because of invalid target input", code=1)
     # On AWS we trigger a harvester task on the container cluster to run the command for us
-    run_task(ctx, "harvester", mode, command, is_harvester_command=True, **kwargs)
+    for target in targets:
+        run_data_engineering_task(ctx, target, mode, command, environment)
+
+
+@task(
+    name="migrate",
+    help={
+        "mode": "Mode you want to migrate: development, acceptance or production. Must match APPLICATION_MODE"
+    }
+)
+def harvester_migrate(ctx, mode):
+    """
+    Executes migration task on container cluster for development, acceptance or production environment on AWS
+    """
+    command = ["python", "manage.py", "migrate"]
+    environment = [
+        {
+            "name": "POL_POSTGRES_USER",
+            "value": f"{ctx.config.postgres.user}"
+        },
+        {
+            "name": "POL_SECRETS_POSTGRES_PASSWORD",
+            "value": f"{ctx.config.aws.postgres_password_arn}"
+        },
+    ]
+    run_harvester_task(ctx, mode, command, environment)
 
 
 @task(help={
@@ -22,13 +58,14 @@ def run_harvester_task(ctx, mode, command, **kwargs):
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
     "dataset": "The name of the greek letter that represents the dataset you want to import",
-    "download_edurep": "If edurep should be downloaded, defaults to False"
+    "download_edurep": "If edurep should be downloaded, defaults to False",
+    "wipe_data": "Whether old data should be deleted before load, defaults to True"
 })
-def load_data(ctx, mode, source, dataset, download_edurep=False):
+def load_data(ctx, mode, source, dataset, download_edurep=False, wipe_data=True):
     """
     Loads the production database and sets up Open Search data on localhost or an AWS cluster
     """
-    if ctx.config.env == "production":
+    if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
 
     command = ["python", "manage.py", "load_harvester_data", dataset, f"--harvest-source={source}", "--index"]
@@ -40,6 +77,27 @@ def load_data(ctx, mode, source, dataset, download_edurep=False):
     if source == "localhost":
         print(f"Will try to import {dataset} using pre-downloaded files")
         command += ["--skip-download"]
+
+    if wipe_data:
+        print("Will wipe data before loading")
+        command += ["--wipe-data"]
+
+    run_harvester_task(ctx, mode, command)
+
+
+@task(help={
+    "mode": "Mode you want to load metadata for: localhost, development, acceptance or production. "
+            "Must match APPLICATION_MODE",
+    "source": "Source you want to import from: development, acceptance or production."
+})
+def load_metadata(ctx, mode, source):
+    """
+    Loads the production database and sets up Open Search data on localhost or an AWS cluster
+    """
+    if ctx.config.service.env == "production":
+        raise Exit("Cowardly refusing to use production as a destination environment")
+
+    command = ["python", "manage.py", "load_metadata", f"--source={source}"]
 
     run_harvester_task(ctx, mode, command)
 
@@ -59,7 +117,7 @@ def harvest(ctx, mode, reset=False, no_promote=False):
     if no_promote:
         command += ["--no-promote"]
 
-    run_harvester_task(ctx, mode, command, extra_workers=reset)
+    run_harvester_task(ctx, mode, command)
 
 
 @task(help={
@@ -69,8 +127,7 @@ def harvest(ctx, mode, reset=False, no_promote=False):
 })
 def generate_previews(ctx, mode, dataset):
     command = ["python", "manage.py", "generate_previews", f"--dataset={dataset}"]
-
-    run_harvester_task(ctx, mode, command, extra_workers=True)
+    run_harvester_task(ctx, mode, command)
 
 
 @task(name="sync_preview_media", help={
@@ -81,16 +138,17 @@ def sync_preview_media(ctx, source="production"):
     Performs a sync between the preview media buckets of two environments.
     APPLICATION_MODE determines the destination environment.
     """
-    if ctx.config.env == "production":
+    if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
 
     local_directory = os.path.join("media", "harvester")
-    source_config = create_configuration(source, service="service", context="host")
+    source_config = create_configuration(source, context="host")
     source = source_config.aws.harvest_content_bucket
     source = "s3://" + source if source is not None else local_directory
     destination = ctx.config.aws.harvest_content_bucket
     destination = "s3://" + destination if destination is not None else local_directory
-    profile_name = ctx.config.aws.profile_name if not ctx.config.env == "localhost" else source_config.aws.profile_name
+    profile_name = ctx.config.aws.profile_name if not ctx.config.service.env == "localhost" else \
+        source_config.aws.profile_name
     for path in ["thumbnails", os.path.join("core", "previews")]:
         source_path = os.path.join(source, path)
         destination_path = os.path.join(destination, path)
@@ -187,7 +245,7 @@ def sync_harvest_content(ctx, source, path="core"):
     Performs a sync between the harvest content buckets of two environments
     """
     local_directory = os.path.join("media", "harvester")
-    source_config = create_configuration(source, service="harvester", context="host")
+    source_config = create_configuration(source, context="host")
     source = source_config.aws.harvest_content_bucket
     if source is None:
         source = local_directory

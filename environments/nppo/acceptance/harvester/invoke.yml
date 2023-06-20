@@ -1,24 +1,27 @@
 service:
   name: "harvester"
+  directory: "harvester"
 
 django:
   domain: "harvester.acc.publinova.nl"
-  directory: "harvester"
   fixtures:
-    - "core/fixtures/initial-nppo.json"
-    - "metadata/fixtures/initial-metadata-nppo.json"
+    - "core/fixtures/initial-publinova.json"
+    - "metadata/fixtures/initial-metadata-publinova.json"
+  sentry:
+    dsn: "https://13ca8b29c8384e57b7294280117728f1@o1143393.ingest.sentry.io/6208201"
+
+harvester:
   data_retention:
     purge_after:
       days: 5
     keep_versions: 2
   repositories:
     edurep: "https://wszoeken.edurep.kennisnet.nl"
-    sharekit: "https://api.acc.surfsharekit.nl"
+    sharekit: "https://api.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://hanzetest.azure-api.net"
-  sentry:
-    dsn: "https://13ca8b29c8384e57b7294280117728f1@o1143393.ingest.sentry.io/6208201"
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
 
 postgres:
   database: "harvester"
@@ -62,3 +65,5 @@ secrets:
     api_key: "arn:aws:secretsmanager:eu-central-1:825135206789:secret:credentials/hva"
   buas:
     api_key: "arn:aws:secretsmanager:eu-central-1:825135206789:secret:credentials/buas"
+  publinova:
+    api_key: null

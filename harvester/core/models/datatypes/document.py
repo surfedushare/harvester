@@ -14,7 +14,6 @@ class DocumentManager(models.Manager):
 
     def build_from_seed(self, seed, collection=None, metadata_pipeline_key=None):
         properties = copy(seed)  # TODO: use setters that update the pipeline?
-        properties["id"] = seed["external_id"]
 
         metadata_pipeline = properties.pop(metadata_pipeline_key, None)
         document = Document(properties=properties, collection=collection, pipeline={"metadata": metadata_pipeline})
@@ -80,36 +79,26 @@ class Document(DocumentBase):
         }
         return extras
 
-    def get_extension_extras(self):
-        extension_data = copy(self.extension.properties)
+    def get_extension_extras(self, merge_extension):
+        extension_data = copy(self.extension.properties) if merge_extension else {}
         extension_data["extension"] = {
             "id": self.extension.id,
             "is_addition": self.extension.is_addition
         }
-        if "keywords" in extension_data:
-            extension_data["keywords"] = [entry["label"] for entry in extension_data["keywords"]]
-        themes = extension_data.pop("themes", None)
-        if themes:
-            extension_data["research_themes"] = [entry["label"] for entry in themes]
-        parents = extension_data.pop("parents", None)
-        if parents:
-            is_part_of = self.properties.get("is_part_of", [])
-            is_part_of += parents
-            is_part_of = list(set(is_part_of))
-            extension_data["is_part_of"] = is_part_of
-        children = extension_data.pop("children", None)
-        if children:
-            has_parts = self.properties.get("has_parts", [])
-            has_parts += children
-            has_parts = list(set(has_parts))
-            extension_data["has_parts"] = has_parts
+        if self.extension.is_addition and merge_extension:
+            extension_data["provider"] = {
+                "ror": None,
+                "external_id": None,
+                "name": "Publinova",
+                "slug": None
+            }
         return extension_data
 
-    def to_search(self):
+    def to_search(self, merge_extension=True):
         # Get the basic document information including from document extensions
         search_base = copy(self.properties)
         if self.extension:
-            extension_details = self.get_extension_extras()
+            extension_details = self.get_extension_extras(merge_extension)
             search_base.update(extension_details)
         else:
             search_base["extension"] = None

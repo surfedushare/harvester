@@ -20,8 +20,9 @@ from sentry_sdk.integrations.logging import ignore_logger
 
 from celery.schedules import crontab
 
-from project import create_configuration_and_session, MODE, CONTEXT, PROJECT
+from data_engineering.configuration import create_configuration_and_session, MODE, CONTEXT, PROJECT
 from utils.packaging import get_package_info
+from search_client.version import VERSION as SEARCH_CLIENT_VERSION
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,12 +30,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # Then we read some variables from the (build) environment
 PACKAGE_INFO = get_package_info()
+PACKAGE_INFO["versions"]["search-client"] = SEARCH_CLIENT_VERSION
 GIT_COMMIT = PACKAGE_INFO.get("commit", "unknown-git-commit")
 VERSION = PACKAGE_INFO.get("versions").get("harvester", "0.0.0")
-environment, session = create_configuration_and_session(service='harvester')
+environment, session = create_configuration_and_session()
 credentials = session.get_credentials()
 IS_AWS = environment.aws.is_aws
-ENVIRONMENT = environment.env
+ENVIRONMENT = environment.service.env
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -60,7 +62,7 @@ PROTOCOL = environment.django.protocol
 
 # Detect our own IP address
 try:
-    response = requests.get("https://api.ipify.org/?format=json")
+    response = requests.get("https://api.ipify.org/?format=json", timeout=3 if DEBUG else None)
     IP = response.json()["ip"]
 except Exception:
     IP = None
@@ -272,21 +274,21 @@ LOGGING = {
         },
         'search_harvest': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'harvest-logs',
+            f'harvest-logs-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.WEEKLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
         ),
         'search_documents': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'document-logs',
+            f'document-logs-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.YEARLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
         ),
         'search_results': create_opensearch_handler(
             OPENSEARCH_HOST,
-            'harvest-results',
+            f'harvest-results-{environment.project.name}',
             OpensearchHandler.IndexNameFrequency.YEARLY,
             environment.container.id,
             OPENSEARCH_PASSWORD
@@ -329,7 +331,7 @@ if not DEBUG:
     sentry_sdk.init(
         before_send=strip_sensitive_data,
         dsn=environment.django.sentry.dsn,
-        environment=environment.env,
+        environment=environment.service.env,
         integrations=[DjangoIntegration(), CeleryIntegration()],
         send_default_pii=False  # GDPR requirement
     )
@@ -439,8 +441,9 @@ COPYRIGHT_VALUES = [
 
 CELERY_BROKER_URL = f'redis://{environment.redis.host}/0'
 CELERY_RESULT_BACKEND = f'redis://{environment.redis.host}/0'
+CELERY_TASK_DEFAULT_QUEUE = environment.project.name
 CELERY_TASK_ROUTES = {
-    'sync_indices': {'queue': 'indexing'}
+    'sync_indices': {'queue': f'{environment.project.name}-indexing'}
 }
 CELERY_BEAT_SCHEDULE = {
     'clean_data': {
@@ -489,31 +492,31 @@ if DEBUG:
 
 DATAGROWTH_DATA_DIR = os.path.join(BASE_DIR, "..", "data", "harvester")
 DATAGROWTH_BIN_DIR = os.path.join(BASE_DIR, "harvester", "bin")
-DATA_RETENTION_PURGE_AFTER = environment.django.data_retention.purge_after or {}
-DATA_RETENTION_KEEP_VERSIONS = environment.django.data_retention.keep_versions
-
-
-# Internal credentials
-
-HARVESTER_WEBHOOK_SECRET = environment.secrets.harvester.webhook_secret
+DATA_RETENTION_PURGE_AFTER = environment.harvester.data_retention.purge_after or {}
+DATA_RETENTION_KEEP_VERSIONS = environment.harvester.data_retention.keep_versions
 
 
 # Sharekit
 
-SHAREKIT_API_KEY = environment.secrets.sharekit.api_key
-SHAREKIT_BASE_URL = environment.django.repositories.sharekit
-SHAREKIT_WEBHOOK_ALLOWED_IPS = environment.sharekit.webhook_allowed_ips
+SHAREKIT_API_KEY = getattr(environment.secrets.sharekit, environment.project.name)
+SHAREKIT_BASE_URL = environment.harvester.repositories.sharekit
+SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings
 
 
 # Edurep & Eduterm
 
-EDUREP_BASE_URL = environment.django.repositories.edurep
+EDUREP_BASE_URL = environment.harvester.repositories.edurep
 EDUTERM_API_KEY = environment.secrets.eduterm.api_key
 
 
 # Deepl
 
 DEEPL_API_KEY = environment.secrets.deepl.api_key
+
+
+# Google
+
+GOOGLE_API_KEY = environment.secrets.google.api_key
 
 
 # Robots
@@ -551,11 +554,11 @@ TEAMS_HARVESTER_WEBHOOK = environment.secrets.teams_webhooks.harvester
 
 SOURCES = {
     "han": {
-        "endpoint": environment.django.repositories.han,
+        "endpoint": environment.harvester.repositories.han,
         "api_key": None
     },
     "hva": {
-        "endpoint": environment.django.repositories.hva,
+        "endpoint": environment.harvester.repositories.hva,
         "api_key": environment.secrets.hva.api_key
     },
     "hku": {
@@ -571,7 +574,29 @@ SOURCES = {
         "api_key": environment.secrets.buas.api_key
     },
     "hanze": {
-        "endpoint": environment.django.repositories.hanze,
+        "endpoint": environment.harvester.repositories.hanze,
         "api_key": environment.secrets.hanze.api_key
     },
+    "publinova": {
+        "endpoint": environment.harvester.repositories.publinova,
+        "api_key": environment.secrets.publinova.api_key
+    },
+}
+
+
+# Webhooks
+
+WEBHOOKS = {
+    "edusources": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
+    "nppo": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
+    "publinova": {
+        "secret": environment.secrets.harvester.publinova_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
+    }
 }

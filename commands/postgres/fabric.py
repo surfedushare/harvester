@@ -11,7 +11,7 @@ def setup_postgres_remote(conn):
     """
     if conn.host != conn.config.aws.bastion:
         raise Exit(f"Did not expect the host {conn.host} while the bastion is {conn.config.aws.bastion}")
-    if conn.config.env == "production":
+    if conn.config.service.env == "production":
         raise Exit("Cowardly refusing to recreate the production database")
     # Setup auto-responder
     postgres_user = conn.config.postgres.user
@@ -46,7 +46,7 @@ def setup_postgres_remote(conn):
             )
         # Migrate the application
         conn.local(
-            f"cd {conn.config.django.directory} && "
+            f"cd {conn.config.service.directory} && "
             f"AWS_PROFILE={conn.config.aws.profile_name} "
             f"POL_POSTGRES_HOST=localhost "
             f"POL_POSTGRES_PORT=1111 "
@@ -54,11 +54,15 @@ def setup_postgres_remote(conn):
             echo=True, pty=True
         )
         # Create generic superuser named supersurf and site objects
-        is_search_service = conn.config.service.name == "service"
         admin_password = conn.config.secrets.django.admin_password
         harvester_key = conn.config.secrets.harvester.api_key
-        insert_user = insert_django_user_statement("supersurf", admin_password, harvester_key, is_search_service)
-        for statement in [insert_user]:
+        insert_superuser = insert_django_user_statement("supersurf", admin_password, harvester_key)
+        insert_users = [insert_superuser]
+        for username, credential in conn.config.django.users.items():
+            insert_users.append(
+                insert_django_user_statement(username, credential, credential, configure_settings=False)
+            )
+        for statement in insert_users:
             conn.local(
                 f'psql -h localhost -p 1111 -U {postgres_user} -d {conn.config.postgres.database} -W -c "{statement}"',
                 echo=True,
@@ -69,7 +73,7 @@ def setup_postgres_remote(conn):
         # Load data fixtures to get the project going
         for fixture in conn.config.django.fixtures:
             conn.local(
-                f"cd {conn.config.django.directory} && "
+                f"cd {conn.config.service.directory} && "
                 f"AWS_PROFILE={conn.config.aws.profile_name} "
                 f"POL_POSTGRES_HOST=localhost "
                 f"POL_POSTGRES_PORT=1111 "

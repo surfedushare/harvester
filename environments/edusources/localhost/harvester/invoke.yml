@@ -1,12 +1,16 @@
 service:
   name: "harvester"
+  directory: "harvester"
 
 django:
-  directory: "harvester"
   fixtures:
     - "core/fixtures/datasets-history.json"
     - "core/fixtures/initial-edusources.json"
-    - "metadata/fixtures/initial-metadata-edusources.json"
+    - "metadata/fixtures/test-metadata-edusources.json"
+  sentry:
+    dsn: null
+
+harvester:
   data_retention:
     purge_after:
       days: 14
@@ -17,8 +21,7 @@ django:
     han: null
     hva: null
     hanze: null
-  sentry:
-    dsn: null
+    publinova: null
 
 postgres:
   database: "harvester"
@@ -61,4 +64,6 @@ secrets:
   hva:
     api_key: null
   buas:
+    api_key: null
+  publinova:
     api_key: null

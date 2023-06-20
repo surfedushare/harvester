@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 
 
 def rename_site(apps, schema_editor):
-    if settings.PROJECT == "nppo":
+    if settings.PROJECT in ["nppo", "publinova"]:
         main_name = "Publinova"
         main_domain = "harvester.publinova.nl"
     else:
@@ -17,9 +17,6 @@ def rename_site(apps, schema_editor):
         Site.objects.create(domain=main_domain, name=main_name)
     else:
         Site.objects.filter(id=1).update(domain=main_domain, name=main_name)
-    mbo_site = Site.objects.filter(id=2).last()
-    if mbo_site is None and settings.PROJECT == "edusources":
-        Site.objects.create(domain="harvester.mbo.prod.surfedushare.nl", name="MBO Edusources")
 
 
 class Migration(migrations.Migration):

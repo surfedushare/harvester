@@ -48,13 +48,6 @@ class BuasMetadataExtraction(ExtractProcessor):
             "access_rights": access_rights
         }
 
-    @staticmethod
-    def _serialize_access_rights(access_rights):
-        access_rights = access_rights.replace("Access", "")
-        access_rights = access_rights.lower()
-        access_rights += "-access"
-        return access_rights
-
     @classmethod
     def get_files(cls, node):
         if "electronicVersions" not in node:
@@ -102,11 +95,15 @@ class BuasMetadataExtraction(ExtractProcessor):
         return settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(mime_type, "unknown")
 
     @classmethod
-    def get_copyright(cls, node):
-        files = cls.get_files(node)
-        if not len(files):
-            return "closed-access"
-        return cls._serialize_access_rights(files[0]["access_rights"])
+    def get_keywords(cls, node):
+        results = []
+        for keywords in node.get("keywordGroups", []):
+            match keywords["logicalName"]:
+                case "keywordContainers":
+                    for container in keywords["keywordContainers"]:
+                        for free_keywords in container["freeKeywords"]:
+                            results += free_keywords.get("freeKeywords", [])
+        return results
 
     @classmethod
     def get_from_youtube(cls, node):
@@ -130,7 +127,7 @@ class BuasMetadataExtraction(ExtractProcessor):
             authors.append({
                 "name": full_name,
                 "email": None,
-                "external_id": person["pureId"],
+                "external_id": person.get("person", {}).get("uuid", None),
                 "dai": None,
                 "orcid": None,
                 "isni": None
@@ -182,13 +179,14 @@ BuasMetadataExtraction.OBJECTIVE = {
     # Essential NPPO properties
     "url": BuasMetadataExtraction.get_url,
     "files": BuasMetadataExtraction.get_files,
-    "copyright": BuasMetadataExtraction.get_copyright,
+    "copyright": lambda node: None,
     "title": "$.title.value",
     "language": BuasMetadataExtraction.get_language,
-    "keywords": lambda node: [],
-    "description": lambda node: None,
+    "keywords": BuasMetadataExtraction.get_keywords,
+    "description": "$.abstract.text.0.value",
     "mime_type": BuasMetadataExtraction.get_mime_type,
     "authors": BuasMetadataExtraction.get_authors,
+    "provider": BuasMetadataExtraction.get_provider,
     "organizations": BuasMetadataExtraction.get_organizations,
     "publishers": BuasMetadataExtraction.get_publishers,
     "publisher_date": lambda node: None,
@@ -209,12 +207,12 @@ BuasMetadataExtraction.OBJECTIVE = {
     "aggregation_level": lambda node: None,
     "lom_educational_levels": lambda node: [],
     "studies": lambda node: [],
+    "study_vocabulary": lambda node: [],
     "ideas": lambda node: [],
     "is_part_of": lambda node: [],
     "has_parts": lambda node: [],
     "copyright_description": lambda node: None,
     "learning_material_disciplines": lambda node: [],
     "consortium": lambda node: None,
-    "lom_educational_level": lambda node: None,
     "lowest_educational_level": lambda node: 2,
 }

@@ -1,4 +1,5 @@
 class Repositories:
+    EDUREP_JSONSEARCH = "sources.EdurepJsonSearchResource"
     EDUREP = "edurep.EdurepOAIPMH"
     SHAREKIT = "sharekit.SharekitMetadataHarvest"
     ANATOMY_TOOL = "anatomy_tool.AnatomyToolOAIPMH"
@@ -8,6 +9,7 @@ class Repositories:
     HKU = "sources.HkuMetadataResource"
     GREENI = "sources.GreeniOAIPMHResource"
     BUAS = "sources.BuasPureResource"
+    PUBLINOVA = "sources.PublinovaMetadataResource"
 
 
 def get_repository_id(repository_resource):

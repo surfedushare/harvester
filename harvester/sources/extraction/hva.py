@@ -46,13 +46,6 @@ class HvaMetadataExtraction(ExtractProcessor):
             "access_rights": access_rights
         }
 
-    @staticmethod
-    def _serialize_access_rights(access_rights):
-        access_rights = access_rights.replace("Access", "")
-        access_rights = access_rights.lower()
-        access_rights += "-access"
-        return access_rights
-
     @classmethod
     def get_files(cls, node):
         electronic_versions = node.get("electronicVersions", []) + node.get("additionalFiles", [])
@@ -99,13 +92,6 @@ class HvaMetadataExtraction(ExtractProcessor):
             return
         mime_type, encoding = guess_type(file_url)
         return settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(mime_type, "unknown")
-
-    @classmethod
-    def get_copyright(cls, node):
-        files = cls.get_files(node)
-        if not len(files):
-            return "closed-access"
-        return cls._serialize_access_rights(files[0]["access_rights"])
 
     @classmethod
     def get_from_youtube(cls, node):
@@ -191,13 +177,14 @@ HVA_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
     "url": HvaMetadataExtraction.get_url,
     "files": HvaMetadataExtraction.get_files,
-    "copyright": HvaMetadataExtraction.get_copyright,
+    "copyright": lambda node: None,
     "title": "$.title.value",
     "language": HvaMetadataExtraction.get_language,
     "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
     "description": "$.abstract.en_GB",
     "mime_type": HvaMetadataExtraction.get_mime_type,
     "authors": HvaMetadataExtraction.get_authors,
+    "provider": HvaMetadataExtraction.get_provider,
     "organizations": HvaMetadataExtraction.get_organizations,
     "publishers": HvaMetadataExtraction.get_publishers,
     "publisher_date": lambda node: None,
@@ -218,12 +205,12 @@ HVA_EXTRACTION_OBJECTIVE = {
     "aggregation_level": lambda node: None,
     "lom_educational_levels": lambda node: [],
     "studies": lambda node: [],
+    "study_vocabulary": lambda node: [],
     "ideas": lambda node: [],
     "is_part_of": lambda node: [],
     "has_parts": lambda node: [],
     "copyright_description": lambda node: None,
     "learning_material_disciplines": lambda node: [],
     "consortium": lambda node: None,
-    "lom_educational_level": lambda node: None,
     "lowest_educational_level": lambda node: 2,
 }
