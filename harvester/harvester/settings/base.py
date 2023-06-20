@@ -539,11 +539,6 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 MATOMO_API_KEY = environment.secrets.matomo.api_key
 
 
-# Hanze
-
-HANZE_API_KEY = environment.secrets.hanze.api_key
-
-
 # Teams webhooks
 
 SEND_ADMIN_NOTIFICATIONS = environment.django.send_admin_notifications
@@ -582,6 +577,7 @@ SOURCES = {
         "api_key": environment.secrets.publinova.api_key
     },
 }
+SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 
 
 # Webhooks

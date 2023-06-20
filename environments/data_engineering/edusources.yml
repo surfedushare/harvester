@@ -16,3 +16,6 @@ django:
     - "metadata/fixtures/initial-metadata-edusources.json"
   users:
     usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/edusources"
+
+harvester:
+  sources_middleware_api: null

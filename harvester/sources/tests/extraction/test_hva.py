@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.timezone import make_aware
 
 from harvester.utils.extraction import get_harvest_seeds
@@ -8,6 +8,7 @@ from core.constants import Repositories
 from sources.factories.hva.extraction import HvaPureResourceFactory, SET_SPECIFICATION
 
 
+@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestGetHarvestSeedsHva(TestCase):
 
     begin_of_time = None
@@ -29,9 +30,9 @@ class TestGetHarvestSeedsHva(TestCase):
         self.assertEqual(seeds[3]["files"], [
             {
                 "mime_type": "application/pdf",
-                "url": "https://accpure.hva.nl/ws/api/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
+                "url": "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
                        "MDIyMzRi/636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
-                "hash": "17c1945a55b6d00b0d17caed17762c94237e658d",
+                "hash": "29b015fbc72ff79b6167d87ade7086878eede928",
                 "title": "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
                 "copyright": None,
                 "access_rights": "OpenAccess"
@@ -46,7 +47,7 @@ class TestGetHarvestSeedsHva(TestCase):
         )
         self.assertEqual(
             seeds[3]["url"],
-            "https://accpure.hva.nl/ws/api/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
+            "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
             "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf"
         )
 

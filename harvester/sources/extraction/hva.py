@@ -20,9 +20,18 @@ class HvaMetadataExtraction(ExtractProcessor):
     #############################
 
     @staticmethod
+    def _parse_file_url(url):
+        file_path_segment = "/ws/api/research-outputs/"
+        if file_path_segment not in url:
+            return url  # not dealing with a url we recognize as a file url
+        start = url.index(file_path_segment)
+        file_path = url[start + len(file_path_segment):]
+        return f"{settings.SOURCES_MIDDLEWARE_API}files/hva/{file_path}"
+
+    @staticmethod
     def _parse_electronic_version(electronic_version):
         if "file" in electronic_version:
-            url = electronic_version["file"]["url"]
+            url = HvaMetadataExtraction._parse_file_url(electronic_version["file"]["url"])
             file_name = electronic_version["file"]["fileName"]
             mime_type = electronic_version["file"]["mimeType"]
         elif "link" in electronic_version:
