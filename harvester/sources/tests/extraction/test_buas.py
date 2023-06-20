@@ -64,11 +64,6 @@ class TestGetHarvestSeedsBuas(TestCase):
         self.assertIsNone(seeds[0]["mime_type"])
         self.assertEqual(seeds[1]["mime_type"], "text/html")
 
-    def test_get_copyright(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["copyright"], "closed-access")
-        self.assertEqual(seeds[1]["copyright"], "open-access")
-
     def test_get_analysis_allowed(self):
         seeds = self.seeds
         self.assertFalse(seeds[0]["analysis_allowed"])
@@ -83,10 +78,29 @@ class TestGetHarvestSeedsBuas(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["title"], "Edinburgh inspiring capital : ensuring world beats a path to our doors")
 
+    def test_get_description(self):
+        seeds = self.seeds
+        self.assertEqual(
+            seeds[0]["description"],
+            "<p>Edinburgh inspiring capital : ensuring world beats a path to our doors</p>"
+        )
+        self.assertIsNone(seeds[1]["description"])
+
+    def test_get_keywords(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["keywords"], [
+            "inspiring capital",
+            "beat the world",
+        ])
+        self.assertEqual(seeds[1]["keywords"], [])
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
-            {'name': 'KJ Dinnie', 'email': None, 'external_id': 28956, 'dai': None, 'orcid': None, 'isni': None}
+            {
+                'name': 'KJ Dinnie', 'email': None, 'external_id': '6f1bbf4a-b32a-4923-9f47-bb764f3dbbde',
+                'dai': None, 'orcid': None, 'isni': None
+            }
         ])
 
     def test_publisher_year(self):

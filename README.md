@@ -1,12 +1,11 @@
-# Search Portal
+# Harvester
 
-Search service for finding open access higher education learning materials.
+Data harvester and search service for finding open access higher education learning materials.
 
-The repo consists of a frontend, a backend and a background task component.
-The frontend is called `portal` and is a Vue SPA.
-The backend is named `service`, which is mostly a REST API, but also serves the frontend SPA and Django admin pages.
-Background tasks are handled by a Celery Django app named `harvester`,
-but there is also an admin available for that part.
+The project consists of a Django Rest Framework API with an interactive documentation at /api/v1/docs/.
+Harvesting background tasks are handled by a Celery.
+There is also an admin available to manage some configuration options and inspect responses from sources
+or locally stored data.
 
 ## Prerequisites
 
@@ -33,7 +32,10 @@ When using macOS make sure you have `libmagic` installed. It can be installed us
 
 #### General setup
 
-To install the basic environment and tooling you'll need to first setup a local environment on a host machine with:
+First copy the `.env.example` file to `.env` and update the variable values to fit your system.
+For a start the default values will do.
+
+To install the basic environment and tooling you'll need to setup a local environment on a host machine with:
 
 ```bash
 python3 -m venv venv --copies --upgrade-deps
@@ -41,9 +43,6 @@ source activate.sh
 pip install -r requirements.txt
 pip install git+https://github.com/surfedushare/search-client.git@master
 ```
-
-Then copy the `.env.example` file to `.env` and update the variable values to fit your system.
-For a start the default values will do.
 
 When using vscode copy `activate.sh` to venv/bin so pylance can find it.
 
@@ -54,19 +53,30 @@ If you want to run the project outside of a container you'll need to add the fol
 127.0.0.1 opensearch
 127.0.0.1 harvester
 127.0.0.1 service
+127.0.0.1 redis
 ```
 
 This way you can reach these containers outside of the container network through their names.
 This is important for many setup commands as well as the integration tests and running the service locally.
 
-To finish the general setup you can run these commands to build all containers:
+To finish the container setup you can run these commands to build all containers:
 
 ```bash
 invoke aws.sync-repository-state
 invoke prepare-builds
-aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 017973353230.dkr.ecr.eu-central-1.amazonaws.com
-docker-compose -f docker-compose.yml up --build
+docker-compose up --build
 ```
+
+After that you can seed the database with data:
+
+```bash
+invoke hrv.setup-postgres
+invoke hrv.load-data localhost -d <latest-dataset> -s production
+```
+
+The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
+For AWS environments you can find the admin password under the Django secrets in the Secret Manager.
+
 
 ## Getting started
 
@@ -87,21 +97,15 @@ This takes care of important things like local CORS and database credentials.
 source activate.sh
 ```
 
-When you've loaded your environment you can choose to only start/stop the database and ES node by using:
-
-```bash
-make start-services
-make stop-services
-```
-
-After that you can follow the guides to [start the service](service/README.md),
-[work with the frontend](portal/README.md) or [start the harvester](harvester/README.md).
-Alternatively you can choose to run all components of the project in containers with:
+After you've loaded your environment you can run all components of the project in containers with:
 
 ```bash
 docker-compose up
 docker-compose down
 ```
+
+Alternatively you can run [processes outside of containers](harvester/README.md#running-outside-of-containers).
+It can be useful to run services outside their containers for connecting debuggers or diagnose problems with Docker.
 
 #### Available apps
 
@@ -126,15 +130,12 @@ And then follow the steps to [install the service](service/README.md#installatio
 
 ## Tests
 
-You can run all tests for the entire repo by running:
+You can run tests for the harvester by running:
 
 ```bash
-invoke test.run
+invoke test.harvester
 ```
 
-It's also possible to run tests for specific Django services.
-For more details see: [testing service](service/README.md#tests) and
-[testing harvester](harvester/README.md#tests)
 
 ## Deploy
 
@@ -147,7 +148,6 @@ Before deploying you'll want to decide on a version number.
 It's best to talk to the team about which version number you want to use for a deploy.
 To see a list of all currently available images for a project and the versions they are tagged with you can run
 the following command.
-Where `<target-project-name>` will be `harvester` or `service`.
 
 ```bash
 invoke aws.print-available-images <target-project-name>
@@ -262,7 +262,7 @@ APPLICATION_MODE=<environment> invoke hrv.deploy <environment>
 To migrate the database on AWS you can run the migration command:
 
 ```bash
-APPLICATION_MODE=<environment> invoke aws.migrate <target-project-name> <environment>
+APPLICATION_MODE=<environment> invoke hrv.migrate <environment>
 ```
 
 ## Provisioning
@@ -271,8 +271,7 @@ There are a few commands that can help to provision things like the database on 
 We're using Fabric for provisioning.
 You can run `fab -h <command>` to learn more about a particular Fabric command.
 
-For more details on how to provision things on AWS see [provisioning the service](service/README.md#provisioning) and
-[provisioning the harvester](harvester/README.md#provisioning)
+For more details on how to provision things on AWS see [provisioning the harvester](harvester/README.md#provisioning)
 
 ## Linting
 

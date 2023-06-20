@@ -22,7 +22,7 @@ class TestExtension(TestCase):
         self.assertEqual(extension_search["keywords"], ["exercise", "extended"])
         self.assertEqual(sorted(extension_search["is_part_of"]), ["parent"])
         self.assertEqual(sorted(extension_search["has_parts"]), ["child", "part"])
-        self.assertEqual(extension_search["parties"], [{"name": "The Extension Party"}])
+        self.assertEqual(extension_search["parties"], ["The Extension Party"])
         self.assertEqual(extension_search["research_themes"], ["theme", "extended"])
 
     def test_delete_addition(self):

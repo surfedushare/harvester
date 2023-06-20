@@ -23,18 +23,16 @@ class TestExtensionAPI(TestCase):
             "authors": [
                 {
                     "name": "Monty Python",
-                    "email": None
+                    "email": None,
+                    "external_id": None,
+                    "orcid": None,
+                    "dai": None,
+                    "isni": None
                 }
             ],
-            "parties": [
-                {"name": "I love the 90's"}
-            ],
-            "themes": [
-                {"label": "90's"}
-            ],
-            "keywords": [
-                {"label": "90's"}
-            ]
+            "parties": ["I love the 90's"],
+            "research_themes": ["90's"],
+            "keywords": ["90's"]
         }
 
     def setUp(self):
@@ -67,14 +65,14 @@ class TestExtensionAPI(TestCase):
         When creating an addition Extension we should be able to set properties like: title and description,
         because when an Extension is an addition there exists no Document that provides that data.
         """
-        children = [
+        parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "is_addition": True,
             "external_id": "external-id",
-            "children": children,
+            "has_parts": parts,
             **self.extension_properties,
             **self.addition_properties,
         }
@@ -83,12 +81,12 @@ class TestExtensionAPI(TestCase):
         response_data = response.json()
         self.assertIsInstance(response_data, dict)
         self.assertTrue(response_data["is_addition"])
-        self.assertEqual(response_data["properties"].pop("children"), children)
+        self.assertEqual(response_data["properties"].pop("has_parts"), parts)
         self.assert_properties(response_data["properties"], is_addition=True)
 
-    def test_create_addition_no_children(self):
+    def test_create_addition_no_parts(self):
         """
-        It should be possible to create an "addition" extension that does not have children
+        It should be possible to create an "addition" extension that does not have parts
         """
         body = {
             "is_addition": True,
@@ -105,20 +103,21 @@ class TestExtensionAPI(TestCase):
 
     def test_add_children(self):
         """
-        It should be possible to add children to a Document through extending it, or giving a Document a parent.
+        It should be possible to add "children" parts to a Document through extending it,
+        or giving a Document "parent" parts.
         """
         datetime_begin_test = now()
         external_id = "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
-        children = [
+        has_parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         ]
-        parents = [
+        is_part_of = [
             "63903863-6c93-4bda-b850-277f3c9ec00e"
         ]
         body = {
             "external_id": external_id,
-            "children": children,
-            "parents": parents,
+            "is_part_of": is_part_of,
+            "has_parts": has_parts,
             **self.extension_properties
         }
         response = self.client.post("/api/v1/extension/", body, content_type="application/json")
@@ -126,8 +125,8 @@ class TestExtensionAPI(TestCase):
         response_data = response.json()
         self.assertIsInstance(response_data, dict)
         self.assertFalse(response_data["is_addition"])
-        self.assertEqual(response_data["properties"].pop("children"), children)
-        self.assertEqual(response_data["properties"].pop("parents"), parents)
+        self.assertEqual(response_data["properties"].pop("has_parts"), has_parts)
+        self.assertEqual(response_data["properties"].pop("is_part_of"), is_part_of)
         self.assert_properties(response_data.pop("properties"), is_addition=False, external_id=external_id)
         document = Document.objects.get(reference=external_id)
         self.assertGreater(document.modified_at, datetime_begin_test,
@@ -139,14 +138,14 @@ class TestExtensionAPI(TestCase):
         There is no merging done for properties.
         """
         external_id = "custom-extension"
-        children = [
+        has_parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "external_id": external_id,
             "is_addition": True,
-            "children": children,
+            "has_parts": has_parts,
             **self.extension_properties,
             **self.addition_properties,
         }
@@ -155,7 +154,7 @@ class TestExtensionAPI(TestCase):
         response_data = response.json()
         self.assertIsInstance(response_data, dict)
         self.assertTrue(response_data["is_addition"])
-        self.assertEqual(response_data["properties"].pop("children"), children)
+        self.assertEqual(response_data["properties"].pop("has_parts"), has_parts)
         self.assert_properties(response_data["properties"], is_addition=True, external_id=external_id)
 
     def test_create(self):
@@ -165,13 +164,13 @@ class TestExtensionAPI(TestCase):
         # We first delete the existing Extension to make sure were testing correctly
         external_id = "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         Extension.objects.filter(id=external_id).last().delete()
-        children = [
+        has_parts = [
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "is_addition": False,
             "external_id": external_id,
-            "children": children,
+            "has_parts": has_parts,
             **self.extension_properties
         }
         response = self.client.post("/api/v1/extension/", body, content_type="application/json")
@@ -179,7 +178,7 @@ class TestExtensionAPI(TestCase):
         response_data = response.json()
         self.assertIsInstance(response_data, dict)
         self.assertFalse(response_data["is_addition"])
-        self.assertEqual(response_data["properties"].pop("children"), children)
+        self.assertEqual(response_data["properties"].pop("has_parts"), has_parts)
         self.assert_properties(response_data["properties"], is_addition=False, external_id=external_id)
         document = Document.objects.get(reference=external_id)
         self.assertIsNotNone(document.extension)
@@ -191,13 +190,13 @@ class TestExtensionAPI(TestCase):
         """
         datetime_begin_test = now()
         external_id = "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
-        children = [
+        has_parts = [
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "external_id": external_id,
             "is_addition": False,
-            "children": children,
+            "has_parts": has_parts,
             **self.extension_properties,
         }
         response = self.client.put(f"/api/v1/extension/{external_id}/", body, content_type="application/json")
@@ -205,7 +204,7 @@ class TestExtensionAPI(TestCase):
         response_data = response.json()
         self.assertIsInstance(response_data, dict)
         self.assertFalse(response_data["is_addition"])
-        self.assertEqual(response_data["properties"].pop("children"), children)
+        self.assertEqual(response_data["properties"].pop("has_parts"), has_parts)
         self.assert_properties(response_data["properties"], is_addition=False, external_id=external_id)
         document = Document.objects.get(reference=external_id)
         self.assertGreater(document.modified_at, datetime_begin_test,
@@ -259,7 +258,7 @@ class TestExtensionAPI(TestCase):
     def test_invalid_update_addition(self):
         """
         Once an Extension is created as addition we can't go back.
-        It is however possible to edit other properties like the children.
+        It is however possible to edit other properties like the has_parts.
         """
         external_id = "custom-extension"
         body = {
@@ -276,12 +275,12 @@ class TestExtensionAPI(TestCase):
         body = {
             "external_id": external_id,
             "is_addition": True,
-            "children": []
+            "has_parts": []
         }
         response = self.client.put(f"/api/v1/extension/{external_id}/", body, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         response_data = response.json()
-        self.assertEqual(response_data["properties"]["children"], [])
+        self.assertEqual(response_data["properties"]["has_parts"], [])
 
     def test_delete(self):
         datetime_begin_test = now()
@@ -337,19 +336,19 @@ class TestExtensionAPI(TestCase):
         response = self.client.put(f"/api/v1/extension/{external_id}/", body, content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
-    def test_invalid_parents(self):
+    def test_invalid_is_part_of(self):
         datetime_begin_test = now()
         external_id = "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
-        children = [
+        has_parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         ]
-        parents = [
+        is_part_of = [
             "does-not-exist"
         ]
         body = {
             "external_id": external_id,
-            "children": children,
-            "parents": parents,
+            "has_parts": has_parts,
+            "is_part_of": is_part_of,
             **self.extension_properties
         }
         response = self.client.post("/api/v1/extension/", body, content_type="application/json")
@@ -361,8 +360,8 @@ class TestExtensionAPI(TestCase):
         external_id = "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         body = {
             "external_id": external_id,
-            "children": children,
-            "parents": parents,
+            "has_parts": has_parts,
+            "is_part_of": is_part_of,
             **self.extension_properties
         }
         response = self.client.put(f"/api/v1/extension/{external_id}/", body, content_type="application/json")
@@ -371,19 +370,19 @@ class TestExtensionAPI(TestCase):
         self.assertLess(document.modified_at, datetime_begin_test,
                         "Expected modified_at of document to remain the same")
 
-    def test_invalid_children(self):
+    def test_invalid_has_parts(self):
         datetime_begin_test = now()
         external_id = "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
-        children = [
+        has_parts = [
             "does-not-exist"
         ]
-        parents = [
+        is_part_of = [
             "63903863-6c93-4bda-b850-277f3c9ec00e"
         ]
         body = {
             "external_id": external_id,
-            "children": children,
-            "parents": parents,
+            "has_parts": has_parts,
+            "is_part_of": is_part_of,
             **self.extension_properties
         }
         response = self.client.post("/api/v1/extension/", body, content_type="application/json")
@@ -395,8 +394,8 @@ class TestExtensionAPI(TestCase):
         external_id = "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         body = {
             "external_id": external_id,
-            "children": children,
-            "parents": parents,
+            "has_parts": has_parts,
+            "is_part_of": is_part_of,
             **self.extension_properties
         }
         response = self.client.put(f"/api/v1/extension/{external_id}/", body, content_type="application/json")
@@ -406,14 +405,14 @@ class TestExtensionAPI(TestCase):
                         "Expected modified_at of document to remain the same")
 
     def test_invalid_properties_non_addition(self):
-        children = [
+        has_parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "is_addition": False,
             "external_id": "external-id",
-            "children": children,
+            "has_parts": has_parts,
             **self.extension_properties,
             **self.addition_properties,
         }
@@ -421,14 +420,14 @@ class TestExtensionAPI(TestCase):
         self.assertEqual(response.status_code, 400)
 
         external_id = "custom-extension"
-        children = [
+        has_parts = [
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751",
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
         ]
         body = {
             "external_id": external_id,
             "is_addition": False,
-            "children": children,
+            "has_parts": has_parts,
             **self.extension_properties,
             **self.addition_properties,
         }

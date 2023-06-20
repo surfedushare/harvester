@@ -69,8 +69,7 @@ class MetadataFieldSerializer(serializers.ModelSerializer):
         return None
 
     def get_children(self, obj):
-        site_id = self.context["request"].GET.get("site_id", 1)
-        children = obj.metadatavalue_set.filter(deleted_at__isnull=True, site__id=site_id) \
+        children = obj.metadatavalue_set.filter(deleted_at__isnull=True) \
             .select_related("translation") \
             .get_cached_trees()
         children.sort(key=lambda child: child.frequency, reverse=True)

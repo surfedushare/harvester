@@ -62,8 +62,7 @@ class MetadataFieldValuesView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def filter_queryset(self, queryset):
-        site_id = self.request.GET.get("site_id", 1)
-        queryset = queryset.filter(field__name=self.kwargs["field"], site__id=site_id)
+        queryset = queryset.filter(field__name=self.kwargs["field"])
         startswith = self.kwargs.get("startswith", None)
         if startswith:
             queryset = queryset.filter(value__istartswith=startswith)

@@ -1,4 +1,3 @@
-from django.conf import settings
 from rest_framework import generics
 from rest_framework import serializers
 from rest_framework.permissions import AllowAny
@@ -24,13 +23,12 @@ class SearchStatsAPIView(generics.RetrieveAPIView):
     **documents**: The sum of documents present in Open Search
 
     """
-    document_type = settings.DOCUMENT_TYPE
     permission_classes = (AllowAny,)
     serializer_class = StatsSerializer
     schema = HarvesterSchema()
 
     def get_object(self):
-        client = get_search_client(self.document_type)
+        client = get_search_client()
         return {
             "documents": client.stats()
         }

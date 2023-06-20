@@ -21,6 +21,11 @@ class HarvesterSchema(AutoSchema):
         operation = super().get_operation(path, method)
         if path.startswith("/dataset") or path.startswith("/document"):
             operation["tags"] = ["Download data"]
+            for parameter in operation["parameters"]:
+                if parameter["name"] == "page":
+                    parameter["schema"]["default"] = 1
+                if parameter["name"] == "page_size":
+                    parameter["schema"]["default"] = 10
         elif path.startswith("/extension"):
             operation["tags"] = ["Extending data"]
         elif path.startswith("/search") or path.startswith("/find"):
@@ -100,29 +105,6 @@ class HarvesterSchema(AutoSchema):
                             'type': 'string',
                         }
                     },
-                    {
-                        "name": "site_id",
-                        "in": "query",
-                        "required": False,
-                        "description": "Specifies which site to get filters for",
-                        "default": 1,
-                        'schema': {
-                            'type': 'string',
-                        }
-                    }
-                ]
-            if "field-values" in path:
-                operation["parameters"] += [
-                    {
-                        "name": "site_id",
-                        "in": "query",
-                        "required": False,
-                        "description": "Specifies which site to get filters for",
-                        "default": 1,
-                        'schema': {
-                            'type': 'string',
-                        }
-                    }
                 ]
         else:
             operation["tags"] = ["default"]

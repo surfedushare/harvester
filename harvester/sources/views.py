@@ -1,0 +1,1 @@
+from sources.webhooks.publinova import edit_document_webhook as publinova_document_webhook

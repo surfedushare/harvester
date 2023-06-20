@@ -2,15 +2,27 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password
 
 
-def insert_django_user_statement(username, raw_password, api_key, is_search_service=False):
-    settings.configure()
+def insert_django_user_statement(username, raw_password, api_key, is_search_service=False, configure_settings=True):
+    # Determine user status and username based on input
+    if username.endswith("/superuser"):
+        is_superuser = True
+        username = username.replace("/superuser", "")
+    else:
+        is_superuser = username == "supersurf"
+    is_staff = "@surf.nl" in username or "@zooma.nl" in username or is_superuser
+    email = username if "@" in username else ""
+    # Configure Django during first run to be able to generate passwords hashes
+    if configure_settings:
+        settings.configure()
+    # Generate password hashes
     hash_password = make_password(raw_password)
     escaped_password = hash_password.replace("$", r"\$")
+    # Insert user and token into correct table
     user_table = "users_user" if is_search_service else "auth_user"
     user_insert = (
         f"INSERT INTO {user_table} "
         "(password, is_superuser, is_staff, is_active, username, first_name, last_name, email, date_joined) "
-        f"VALUES ('{escaped_password}', true, true, true, '{username}', '', '', '', NOW())"
+        f"VALUES ('{escaped_password}', {is_superuser}, {is_staff}, true, '{username}', '', '', '{email}', NOW())"
     )
     if is_search_service:
         return (

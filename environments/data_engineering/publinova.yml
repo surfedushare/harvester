@@ -1,0 +1,18 @@
+aws:
+  harvest_content_bucket: "publinova-harvester-content-{environment_code}"
+
+postgres:
+  database: "harvester_publinova"
+  user: "harvester_publinova"
+  application_user: "harvester_publinova"
+
+opensearch:
+  alias_prefix: "publinova"
+
+django:
+  domain: "harvester.{environment_code}.publinova.nl"
+  fixtures:
+    - "core/fixtures/initial-publinova.json"
+    - "metadata/fixtures/initial-metadata-publinova.json"
+  users:
+    usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/publinova"

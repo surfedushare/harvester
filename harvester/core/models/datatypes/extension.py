@@ -62,6 +62,12 @@ class Extension(DocumentBase):
                 "departments": [],
                 "associates": []
             },
+            "provider": {
+                "ror": None,
+                "external_id": None,
+                "name": None,
+                "slug": None
+            },
             'publishers': [],
             'research_object_type': None,
             'technical_type': None,
@@ -73,13 +79,6 @@ class Extension(DocumentBase):
             'learning_material_themes_normalized': [],
             'consortium': None
         }
-        if "keywords" in search_base:
-            search_base["keywords"] = [entry["label"] for entry in search_base["keywords"]]
-        themes = search_base.pop("themes", None)
-        if themes:
-            search_base["research_themes"] = [entry["label"] for entry in themes]
-        search_base["is_part_of"] = search_base.pop("parents", [])
-        search_base["has_parts"] = search_base.pop("children", [])
         search_defaults.update(search_base)
         yield search_defaults
 

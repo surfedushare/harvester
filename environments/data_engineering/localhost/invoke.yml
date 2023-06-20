@@ -1,0 +1,72 @@
+# NB: This file is committed in a public repo. DO NOT COMMIT REAL SECRETS!
+# It uses low security passwords and secrets for a local setup
+# Make sure your local setup is shielded from the internet
+
+# NB: When making changes restart your container or development server to load the update
+
+django:
+  debug: true
+  protocol: "http"
+  domain: "localhost"
+  logging:
+    level: "DEBUG"
+    is_opensearch: false
+  send_admin_notifications: false
+  sentry:
+    dsn: null
+
+harvester:
+  data_retention:
+    purge_after:
+      days: 14
+    keep_versions: 1
+  repositories:
+    edurep: "https://staging.edurep.kennisnet.nl"
+    sharekit: "https://api.acc.surfsharekit.nl"
+    han: "https://repository.han.nl"
+    hva: "https://accpure.hva.nl"
+    hanze: "https://hanzetest.azure-api.net"
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
+  webhook_allowed_ips:
+    sharekit:
+      - "20.56.15.206"  # production
+      - "20.56.8.62"  # acceptance
+      - "127.0.0.1"
+    publinova:
+      - "83.96.213.17"  # production
+      - "83.96.203.224"  # acceptance
+      - "127.0.0.1"
+
+postgres:
+  host: "postgres"
+  port: 5432
+
+redis:
+  host: "redis:6379"
+
+opensearch:
+  host: "http://opensearch:9200"
+  verify_certs: true  # ignored as long as protocol is http
+  enable_decompound_analyzers: true
+  alias_prefix: "test"
+  decompound_word_lists:
+    dutch: "decompound_word_list.nl.txt"
+  domain_name: null
+
+aws:
+  is_aws: false
+  load_secrets: true
+
+secrets:
+  postgres:
+    password: "qwerty"
+    application_password: "qwerty"
+  opensearch:
+    password: "qwerty"
+  django:
+    secret_key: "development-secret-key--do-not-use"
+    admin_password: "qwerty"
+  harvester:
+    api_key: "123abc"
+    sharekit_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    publinova_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"

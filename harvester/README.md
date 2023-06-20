@@ -2,34 +2,29 @@ Harvester
 =========
 
 A Django project made to run long-running tasks.
-It will connect over OAI-PMH to different repositories and index learning materials from these repositories
+It will connect to different repositories and index learning materials from these repositories
 in an Open Search instance.
 
 
-Installation
-------------
-
-After the [initial Python/machine installation](../README.md#installation)
-and following the [getting started guide](../README.md#getting-started)
-you can further setup your Django database for the harvester with the following commands.
-
-```bash
-invoke hrv.setup-postgres
-```
-
-Last but not least you'll need to add this to your hosts file to make Redis work outside of containers:
-
-```
-127.0.0.1       redis
-```
-
-
-Getting started
----------------
+Running outside of containers
+-----------------------------
 
 There are two ways to get the ``harvester`` component started.
-You can either start all services as explained in the [general getting started guide](../README.md#getting-started).
-Or you can start services manually with the following commands:
+You can either start all services as explained in the [getting started guide](../README.md#getting-started).
+Or you can start services manually with the commands described below.
+It can be useful to run these services outside their containers for connecting debuggers
+or diagnose problems with Docker.
+
+##### Supporting services
+
+You can start/stop supporting services like Postgres, Redis and Open Search with the following:
+
+```bash
+docker-compose -f docker-compose.yml up
+docker-compose -f docker-compose.yml down
+```
+
+When these supporting services run you can run the processes described below one-by-one outside of containers.
 
 ##### The Django development server for the admin
 
@@ -42,9 +37,6 @@ This makes the admin available at:
 ```
 http://localhost:8888/admin/
 ```
-
-The setup command will have created a superuser called supersurf. On localhost the password is "qwerty".
-For AWS environments you can find the admin password under the Django secrets in the Secret Manager.
 
 
 ##### A Celery development worker for processing background tasks
