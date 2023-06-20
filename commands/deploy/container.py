@@ -48,24 +48,6 @@ def prepare_builds(ctx, commit=None):
 @task(help={
     "docker_login": "Specify this flag to login to AWS registry. Needed only once per session"
 })
-def publish_runner_image(ctx, docker_login=False):
-    """
-    Uses Docker to build and push an image to use as Gitlab pipeline image
-    """
-
-    ctx.run("docker build --platform=linux/amd64 -f Dockerfile-runner -t gitlab-runner .", pty=True, echo=True)
-
-    # Login with Docker on AWS
-    if docker_login:
-        aws_docker_login(ctx)
-
-    ctx.run(f"docker tag gitlab-runner:latest {ctx.config.aws.production.registry}/gitlab-runner:latest", echo=True)
-    ctx.run(f"docker push {ctx.config.aws.production.registry}/gitlab-runner:latest", echo=True, pty=True)
-
-
-@task(help={
-    "docker_login": "Specify this flag to login to AWS registry. Needed only once per session"
-})
 def publish_tika_image(ctx, docker_login=False):
     """
     Uses Docker to build and push an image to use as tika image with configuration
