@@ -39,8 +39,8 @@ class EdurepMetadataExtraction(ExtractProcessor):
         # For now the quick fix is to pick the first type from the list,
         # in the future edurep should provide clear promises on how to deal with this.
         mime_type = node["schema:encodingFormat"][0] \
-            if isinstance(node["schema:encodingFormat"], list) \
-            else node["schema:encodingFormat"]
+            if isinstance(node.get("schema:encodingFormat", None), list) \
+            else node.get("schema:encodingFormat", None)
 
         if isinstance(node["schema:url"], list):
             documents = []
