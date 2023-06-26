@@ -1,0 +1,6 @@
+name: harvester
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.4
+  - django
