@@ -42,11 +42,11 @@ def harvester_migrate(ctx, mode):
     command = ["python", "manage.py", "migrate"]
     environment = [
         {
-            "name": "POL_POSTGRES_USER",
+            "name": "DET_POSTGRES_USER",
             "value": f"{ctx.config.postgres.user}"
         },
         {
-            "name": "POL_SECRETS_POSTGRES_PASSWORD",
+            "name": "DET_SECRETS_POSTGRES_PASSWORD",
             "value": f"{ctx.config.aws.postgres_password_arn}"
         },
     ]

@@ -17,9 +17,9 @@ jobs:
       AWS_DEFAULT_REGION: "eu-central-1"
       APPLICATION_CONTEXT: unprivileged
       APPLICATION_MODE: localhost
-      POL_POSTGRES_HOST: 127.0.0.1
-      POL_POSTGRES_USER: postgres
-      POL_OPENSEARCH_HOST: http://localhost:9200
+      DET_POSTGRES_HOST: 127.0.0.1
+      DET_POSTGRES_USER: postgres
+      DET_OPENSEARCH_HOST: http://localhost:9200
 
     services:
       postgres:

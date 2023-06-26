@@ -8,9 +8,9 @@ The first specifies a mode like "production", "acceptance" or "development".
 The second specifies where the code is run either "host" or "container"
 The third indicates which project specific configuration to load.
 
-Any configuration that you want to override can be set by using environment variables prefixed with "POL_".
-For instance: if you want to override the django.debug configuration set POL_DJANGO_DEBUG=0.
-If you leave empty any POL environment variables they are assumed to be unset. Use "0" for a False value.
+Any configuration that you want to override can be set by using environment variables prefixed with "DET_".
+For instance: if you want to override the django.debug configuration set DET_DJANGO_DEBUG=0.
+If you leave empty any DET environment variables they are assumed to be unset. Use "0" for a False value.
 
 Parts of the configuration is identical across environments
 except for the environment prefix like "dev", "acc" and "prod" or the Amazon account id.
@@ -39,10 +39,10 @@ PROJECT = os.environ.get("APPLICATION_PROJECT", "edusources")
 TEAM = os.environ.get("APPLICATION_TEAM", "web")
 ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
 
-PREFIX = "POL"
+PREFIX = "DET"
 
 
-# Now we'll delete any items that are POL variables, but with empty values
+# Now we'll delete any items that are DET variables, but with empty values
 # Use a value of "0" for a Boolean instead of an empty string
 invalid_keys = []
 for key, value in os.environ.items():
@@ -53,7 +53,7 @@ for key in invalid_keys:
 
 
 # Using a custom configuration class
-class POLConfig(Config):
+class DETConfig(Config):
     env_prefix = PREFIX
 
     def load_project(self, merge=True):
@@ -84,7 +84,7 @@ def build_configuration_defaults(environment):
     environment_code = ENVIRONMENT_NAMES_TO_CODES[environment]
     account_id = ENVIRONMENT_NAMES_TO_ACCOUNT_IDS[environment]
     # Computing and updating various default values including configuration template strings
-    defaults = POLConfig.global_defaults()
+    defaults = DETConfig.global_defaults()
     defaults.update({
         "project": {
             "name": PROJECT
@@ -154,7 +154,7 @@ def create_configuration(mode=None, context="container"):
     """
     mode = mode or MODE
     configuration_directory = os.path.join(ENVIRONMENTS, "data_engineering")
-    config = POLConfig(
+    config = DETConfig(
         defaults=build_configuration_defaults(mode),
         system_prefix=os.path.join(configuration_directory, mode) + os.path.sep,
         lazy=True
