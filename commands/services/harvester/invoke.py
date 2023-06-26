@@ -3,7 +3,7 @@ from invoke import task, Exit
 
 from commands import HARVESTER_DIR
 from commands.aws.ecs import run_data_engineering_task
-from environments.data_engineering.configuration import create_configuration
+from environments.system_configuration.main import create_configuration
 
 
 def run_harvester_task(ctx, mode, command, environment=None):

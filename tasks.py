@@ -1,6 +1,6 @@
 from invoke import Collection
 
-from environments.data_engineering.configuration import create_configuration_and_session
+from environments.system_configuration.main import create_configuration_and_session
 from commands.postgres.invoke import setup_postgres_localhost
 from commands.opensearch.tasks import create_decompound_dictionary, push_decompound_dictionary, push_indices_template
 from commands.aws.ecs import cleanup_ecs_artifacts

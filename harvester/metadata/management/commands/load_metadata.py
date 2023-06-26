@@ -7,7 +7,7 @@ from django.core.management import base, call_command
 from django.apps import apps
 
 from datagrowth.utils import get_dumps_path
-from data_engineering.configuration import create_configuration
+from system_configuration.main import create_configuration
 from harvester.settings import environment
 
 

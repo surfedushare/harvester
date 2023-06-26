@@ -29,8 +29,9 @@ import sys
 ENVIRONMENTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ENVIRONMENTS)
 
-from data_engineering.aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS, AWS_SECRET_CONFIGURATIONS,
-                                  ENVIRONMENT_NAMES_TO_CODES, ENVIRONMENT_NAMES_TO_ACCOUNT_IDS)
+from system_configuration.aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS,
+                                      AWS_SECRET_CONFIGURATIONS, ENVIRONMENT_NAMES_TO_CODES,
+                                      ENVIRONMENT_NAMES_TO_ACCOUNT_IDS)
 
 
 MODE = os.environ.get("APPLICATION_MODE", "production")
@@ -153,7 +154,7 @@ def create_configuration(mode=None, context="container"):
     :return: invoke configuration
     """
     mode = mode or MODE
-    configuration_directory = os.path.join(ENVIRONMENTS, "data_engineering")
+    configuration_directory = os.path.join(ENVIRONMENTS)
     config = DETConfig(
         defaults=build_configuration_defaults(mode),
         system_prefix=os.path.join(configuration_directory, mode) + os.path.sep,

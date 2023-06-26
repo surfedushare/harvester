@@ -20,7 +20,7 @@ from sentry_sdk.integrations.logging import ignore_logger
 
 from celery.schedules import crontab
 
-from data_engineering.configuration import create_configuration_and_session, MODE, CONTEXT, PROJECT
+from system_configuration.main import create_configuration_and_session, MODE, PROJECT
 from utils.packaging import get_package_info
 from search_client.version import VERSION as SEARCH_CLIENT_VERSION
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler

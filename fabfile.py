@@ -1,5 +1,5 @@
 from invoke import Collection
-from environments.data_engineering.configuration import create_configuration_and_session
+from environments.system_configuration.main import create_configuration_and_session
 from commands.postgres.fabric import setup_postgres_remote
 from commands.services.harvester.fabric import connect_with_shell
 
