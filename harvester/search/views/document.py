@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.shortcuts import Http404
@@ -141,7 +143,8 @@ class DocumentSearchDetailAPIView(GenericAPIView):
 
     def get_object(self):
         client = get_search_client()
-        response = client.get_documents_by_id([self.kwargs["external_id"]])
+        reference = unquote(self.kwargs["external_id"])
+        response = client.get_documents_by_id([reference])
         records = response.get("results", [])
         if not records:
             raise Http404()
