@@ -56,4 +56,4 @@ jobs:
         invoke aws.sync-repository-state --no-profile
     - name: Run tests
       run:
-        invoke test.harvester
+        invoke test.run
