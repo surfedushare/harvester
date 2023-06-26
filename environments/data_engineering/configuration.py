@@ -24,6 +24,11 @@ import json
 from invoke.config import Config
 import boto3
 import requests
+import sys
+
+ENVIRONMENTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ENVIRONMENTS)
+
 from data_engineering.aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS, AWS_SECRET_CONFIGURATIONS,
                                   ENVIRONMENT_NAMES_TO_CODES, ENVIRONMENT_NAMES_TO_ACCOUNT_IDS)
 
@@ -35,7 +40,6 @@ TEAM = os.environ.get("APPLICATION_TEAM", "web")
 ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
 
 PREFIX = "POL"
-ENVIRONMENTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Now we'll delete any items that are POL variables, but with empty values

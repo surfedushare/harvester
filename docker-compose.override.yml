@@ -27,7 +27,7 @@ services:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/data_engineering/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
       - ../search-client:/usr/src/search_client
     depends_on:
       - postgres
@@ -50,7 +50,7 @@ services:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/data_engineering/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
     command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A harvester worker --loglevel=INFO
     healthcheck:
       test: celery -A harvester inspect ping
@@ -77,7 +77,7 @@ services:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/data_engineering/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
     command: celery -A harvester flower --url_prefix=flower
     ports:
       - "127.0.0.1:5555:5555"

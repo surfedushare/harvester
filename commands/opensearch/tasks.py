@@ -1,13 +1,8 @@
 import os
 import json
-from collections import defaultdict
-from invoke import task, Exit
-from opensearchpy import OpenSearch
-from opensearchpy.helpers import streaming_bulk
+from invoke import task
 
 from commands.opensearch.utils import get_remote_search_client
-from search_client.constants import LANGUAGES, DocumentTypes
-from search_client.opensearch.configuration import create_open_search_index_configuration
 
 
 @task(help={

@@ -32,12 +32,10 @@ def prepare_builds(ctx, commit=None):
     """
     commit = commit or get_commit_hash()
 
-    service_package = TARGETS["service"]
     harvester_package = TARGETS["harvester"]
     info = {
         "commit": commit,
         "versions": {
-            "service": service_package["version"],
             "harvester": harvester_package["version"]
         }
     }
