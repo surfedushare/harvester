@@ -143,6 +143,21 @@ class TestDocumentFindView(DocumentAPITestCase):
         data = response.json()
         self.assert_result_properties(data)
 
+    def test_find_quoted_id(self):
+        """
+        This test checks whether Documents can be found with "/" or other URL characters in their external_id.
+        When making detail requests to find such Documents the client should URL encode the external_id.
+        """
+        self.index_document(
+            self.document_type, is_last_document=True,
+            external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
+        )
+        search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",))
+        response = self.client.get(search_url, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assert_result_properties(data)
+
     def test_not_found(self):
         search_url = reverse("v1:search:find-document-detail", args=("does-not-exist",))
         response = self.client.get(search_url, content_type="application/json")
