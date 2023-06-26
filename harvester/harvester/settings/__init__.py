@@ -6,7 +6,7 @@ import sys
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(BASE_DIR, "..", "environments"))
-from project import PROJECT
+from data_engineering.configuration import PROJECT
 
 # We could specify the settings file with DJANGO_SETTINGS_MODULE environment variable,
 # but that wouldn't load other environment variables that load through the invoke library.
