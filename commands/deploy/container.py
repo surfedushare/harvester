@@ -62,11 +62,10 @@ def publish_tika_image(ctx, docker_login=False):
 
 
 @task(help={
-    "target": "Name of the project you want to build: service or harvester",
     "commit": "The commit hash a new build should include in its info.json. Will also be used to tag the new image.",
     "docker_login": "Specify this flag to login to AWS registry. Needed only once per session"
 })
-def build(ctx, target, commit=None, docker_login=False):
+def build(ctx, commit=None, docker_login=False):
     """
     Uses Docker to build an image for a Django project
     """
@@ -74,22 +73,18 @@ def build(ctx, target, commit=None, docker_login=False):
 
     prepare_builds(ctx, commit)
 
-    # Check the input for validity
-    if target not in TARGETS:
-        raise Exit(f"Unknown target: {target}", code=1)
-
     # Login with Docker on AWS
     if docker_login:
         aws_docker_login(ctx)
 
     # Gather necessary info and call Docker to build
-    target_info = TARGETS[target]
+    target_info = TARGETS["harvester"]
     name = target_info['name']
     # TODO: remove later: latest_remote_image = f"{REPOSITORY}/{name}:latest"
     ctx.run(
         f"docker build "
         f"--progress=plain "
-        f"--platform=linux/amd64 -f {target}/Dockerfile -t {name}:{commit} .",
+        f"--platform=linux/amd64 -f harvester/Dockerfile -t {name}:{commit} .",
         pty=True,
         echo=True
     )
@@ -101,23 +96,19 @@ def build(ctx, target, commit=None, docker_login=False):
 
 
 @task(help={
-    "target": "Name of the project you want to push to AWS registry: service or harvester",
     "commit": "The commit hash that the image to be pushed is tagged with.",
     "docker_login": "Specify this flag to login to AWS registry. Needed only once per session",
     "push_latest": "Makes the command push a latest tag to use these layers later."
 })
-def push(ctx, target, commit=None, docker_login=False, push_latest=False):
+def push(ctx, commit=None, docker_login=False, push_latest=False):
     """
     Pushes a previously made Docker image to the AWS container registry, that's shared between environments
     """
     commit = commit or get_commit_hash()
     registry = ctx.config.aws.production.registry
 
-    # Check the input for validity
-    if target not in TARGETS:
-        raise Exit(f"Unknown target: {target}", code=1)
     # Load info
-    target_info = TARGETS[target]
+    target_info = TARGETS["harvester"]
     name = target_info["name"]
 
     # Login with Docker on AWS
@@ -144,7 +135,6 @@ def push(ctx, target, commit=None, docker_login=False, push_latest=False):
 
 @task(
     help={
-        "target": "Name of the project you want to promote: service or harvester",
         "commit": "The commit hash that the image to be promoted is tagged with",
         "docker_login": "Specify this flag to login to AWS registry. Needed only once per session",
         "version": "Which version to promote. Defaults to version specified in package.py.",
@@ -153,20 +143,18 @@ def push(ctx, target, commit=None, docker_login=False, push_latest=False):
     },
     iterable=["exclude"]
 )
-def promote(ctx, target, commit=None, docker_login=False, version=None, exclude=None):
+def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
     """
     Adds deploy tags to a previously pushed Docker image in the AWS container registry.
     """
     # Check the input for validity
-    if target not in TARGETS:
-        raise Exit(f"Unknown target: {target}", code=1)
     if commit and version:
         raise Exit("Can't promote a version and commit at the same time.")
     if ctx.config.service.env == "localhost":
         raise Exit("Can't promote for localhost environment")
 
     # Load info variables
-    target_info = TARGETS[target]
+    target_info = TARGETS["harvester"]
     name = target_info["name"]
     commit = commit or get_commit_hash()
     is_version_promotion = bool(version)
@@ -209,20 +197,14 @@ def promote(ctx, target, commit=None, docker_login=False, version=None, exclude=
         ctx.run(f"docker push {registry}/{name}-nginx:{promote_tag}", echo=True, pty=True)
 
 
-@task(help={
-    "target": "Name of the project you want to list images for: service or harvester",
-})
-def print_available_images(ctx, target):
+@task()
+def print_available_images(ctx):
     """
     Retrieves some images from AWS and prints them in version order.
     Possibly misses versions if it's not part of the first images batch from AWS.
     """
-    # Check the input for validity
-    if target not in TARGETS:
-        raise Exit(f"Unknown target: {target}", code=1)
-
     # Load info
-    target_info = TARGETS[target]
+    target_info = TARGETS["harvester"]
     name = target_info["name"]
 
     # Start boto
