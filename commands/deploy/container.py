@@ -155,7 +155,7 @@ def push(ctx, target, commit=None, docker_login=False, push_latest=False):
 )
 def promote(ctx, target, commit=None, docker_login=False, version=None, exclude=None):
     """
-    Pushes a previously made Docker image to the AWS container registry, that's shared between environments
+    Adds deploy tags to a previously pushed Docker image in the AWS container registry.
     """
     # Check the input for validity
     if target not in TARGETS:
@@ -213,6 +213,10 @@ def promote(ctx, target, commit=None, docker_login=False, version=None, exclude=
     "target": "Name of the project you want to list images for: service or harvester",
 })
 def print_available_images(ctx, target):
+    """
+    Retrieves some images from AWS and prints them in version order.
+    Possibly misses versions if it's not part of the first images batch from AWS.
+    """
     # Check the input for validity
     if target not in TARGETS:
         raise Exit(f"Unknown target: {target}", code=1)

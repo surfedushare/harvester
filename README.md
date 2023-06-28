@@ -133,7 +133,7 @@ And then follow the steps to [install the service](service/README.md#installatio
 You can run tests for the harvester by running:
 
 ```bash
-invoke test.harvester
+invoke test.run
 ```
 
 
@@ -153,8 +153,7 @@ the following command.
 invoke aws.print-available-images <target-project-name>
 ```
 
-Make sure that the version inside of `harvester/package.py` and `service/package.py`
-is different from any other version in the AWS image registries (both service and harvester registry).
+Make sure that the version inside of `harvester/package.py` is different from any other version in the AWS registries.
 Commit a version change if this is not the case.
 Then push to do the Gitlab remote and wait until the pipeline completes.
 The final pipeline job is manual.

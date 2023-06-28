@@ -4,6 +4,9 @@ from invoke import Collection
 
 @task
 def run(ctx):
+    """
+    Runs the tests for the harvester
+    """
     with ctx.cd("harvester"):
         ctx.run("python manage.py test", echo=True, pty=True)
 
