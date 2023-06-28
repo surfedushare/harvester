@@ -24,16 +24,12 @@ import json
 from invoke.config import Config
 import boto3
 import requests
-import sys
+
+from .aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS, AWS_SECRET_CONFIGURATIONS,
+                  ENVIRONMENT_NAMES_TO_CODES, ENVIRONMENT_NAMES_TO_ACCOUNT_IDS)
+
 
 ENVIRONMENTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ENVIRONMENTS)
-
-from system_configuration.aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS,
-                                      AWS_SECRET_CONFIGURATIONS, ENVIRONMENT_NAMES_TO_CODES,
-                                      ENVIRONMENT_NAMES_TO_ACCOUNT_IDS)
-
-
 MODE = os.environ.get("APPLICATION_MODE", "production")
 CONTEXT = os.environ.get("APPLICATION_CONTEXT", "container")
 PROJECT = os.environ.get("APPLICATION_PROJECT", "edusources")
