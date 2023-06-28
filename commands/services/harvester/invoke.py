@@ -3,7 +3,7 @@ from invoke import task, Exit
 
 from commands import HARVESTER_DIR
 from commands.aws.ecs import run_data_engineering_task
-from environments.data_engineering.configuration import create_configuration
+from environments.system_configuration.main import create_configuration
 
 
 def run_harvester_task(ctx, mode, command, environment=None):
@@ -42,11 +42,11 @@ def harvester_migrate(ctx, mode):
     command = ["python", "manage.py", "migrate"]
     environment = [
         {
-            "name": "POL_POSTGRES_USER",
+            "name": "DET_POSTGRES_USER",
             "value": f"{ctx.config.postgres.user}"
         },
         {
-            "name": "POL_SECRETS_POSTGRES_PASSWORD",
+            "name": "DET_SECRETS_POSTGRES_PASSWORD",
             "value": f"{ctx.config.aws.postgres_password_arn}"
         },
     ]

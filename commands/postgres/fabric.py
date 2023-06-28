@@ -48,8 +48,8 @@ def setup_postgres_remote(conn):
         conn.local(
             f"cd {conn.config.service.directory} && "
             f"AWS_PROFILE={conn.config.aws.profile_name} "
-            f"POL_POSTGRES_HOST=localhost "
-            f"POL_POSTGRES_PORT=1111 "
+            f"DET_POSTGRES_HOST=localhost "
+            f"DET_POSTGRES_PORT=1111 "
             f"python manage.py migrate",
             echo=True, pty=True
         )
@@ -75,8 +75,8 @@ def setup_postgres_remote(conn):
             conn.local(
                 f"cd {conn.config.service.directory} && "
                 f"AWS_PROFILE={conn.config.aws.profile_name} "
-                f"POL_POSTGRES_HOST=localhost "
-                f"POL_POSTGRES_PORT=1111 "
+                f"DET_POSTGRES_HOST=localhost "
+                f"DET_POSTGRES_PORT=1111 "
                 f"python manage.py loaddata {fixture}",
                 echo=True, pty=True
             )

@@ -9,7 +9,7 @@ from django.apps import apps
 from django.db import connection
 
 from datagrowth.utils import get_dumps_path, objects_from_disk
-from data_engineering.configuration import create_configuration
+from system_configuration.main import create_configuration
 from harvester.settings import environment
 from core.models import Dataset, DatasetVersion, Extension, HarvestSource, ElasticIndex
 

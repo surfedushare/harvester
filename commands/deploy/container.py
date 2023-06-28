@@ -32,35 +32,15 @@ def prepare_builds(ctx, commit=None):
     """
     commit = commit or get_commit_hash()
 
-    service_package = TARGETS["service"]
     harvester_package = TARGETS["harvester"]
     info = {
         "commit": commit,
         "versions": {
-            "service": service_package["version"],
             "harvester": harvester_package["version"]
         }
     }
     with open(os.path.join("environments", "info.json"), "w") as info_file:
         json.dump(info, info_file)
-
-
-@task(help={
-    "docker_login": "Specify this flag to login to AWS registry. Needed only once per session"
-})
-def publish_runner_image(ctx, docker_login=False):
-    """
-    Uses Docker to build and push an image to use as Gitlab pipeline image
-    """
-
-    ctx.run("docker build --platform=linux/amd64 -f Dockerfile-runner -t gitlab-runner .", pty=True, echo=True)
-
-    # Login with Docker on AWS
-    if docker_login:
-        aws_docker_login(ctx)
-
-    ctx.run(f"docker tag gitlab-runner:latest {ctx.config.aws.production.registry}/gitlab-runner:latest", echo=True)
-    ctx.run(f"docker push {ctx.config.aws.production.registry}/gitlab-runner:latest", echo=True, pty=True)
 
 
 @task(help={

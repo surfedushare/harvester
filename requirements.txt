@@ -37,5 +37,4 @@ factory-boy==3.2.0
 beautifulsoup4==4.12.2
 webdriver-manager==3.5.4
 
--r service/dependencies.txt
 -r harvester/dependencies.txt

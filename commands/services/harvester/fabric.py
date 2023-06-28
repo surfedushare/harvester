@@ -16,8 +16,8 @@ def connect_with_shell(conn):
         conn.local(
             f"cd {conn.config.service.directory} && "
             f"AWS_PROFILE={conn.config.aws.profile_name} "
-            f"POL_POSTGRES_HOST=localhost "
-            f"POL_POSTGRES_PORT=5433 "
+            f"DET_POSTGRES_HOST=localhost "
+            f"DET_POSTGRES_PORT=5433 "
             f"python manage.py shell",
             echo=True, pty=True
         )
