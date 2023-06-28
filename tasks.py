@@ -1,6 +1,7 @@
 from invoke import Collection
 
 from environments.system_configuration.main import create_configuration_and_session
+from commands.utils import assert_repo_root_directory
 from commands.postgres.invoke import setup_postgres_localhost
 from commands.opensearch.tasks import search_collection
 from commands.aws.ecs import cleanup_ecs_artifacts
@@ -11,6 +12,9 @@ from commands.services.harvester.invoke import (load_data, harvest, clean_data, 
                                                 dump_data, sync_harvest_content, generate_previews,
                                                 promote_dataset_version, extend_resource_cache, sync_preview_media,
                                                 sync_metadata, harvester_migrate, load_metadata)
+
+
+assert_repo_root_directory()
 
 
 harvester_collection = Collection("hrv", setup_postgres_localhost, harvest, clean_data, load_data,
