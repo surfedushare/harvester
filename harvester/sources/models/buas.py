@@ -50,8 +50,8 @@ class BuasPureResource(HarvestHttpResource):
     set_specification = models.CharField(max_length=255, blank=True, null=False, default="buas")
     use_multiple_sets = False
 
-    URI_TEMPLATE = settings.SOURCES["buas"]["endpoint"] + "/ws/api/523/research-outputs" \
-        if settings.SOURCES["buas"]["endpoint"] else "/ws/api/523/research-outputs"
+    URI_TEMPLATE = settings.SOURCES["buas"]["endpoint"] + "/ws/api/524/research-outputs" \
+        if settings.SOURCES["buas"]["endpoint"] else "/ws/api/524/research-outputs"
 
     HEADERS = {
         "accept": "application/json"
