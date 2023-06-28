@@ -4,7 +4,7 @@ from fabric import task
 from commands.postgres.sql import insert_django_user_statement, setup_database_statements
 
 
-@task(name="setup_postgres")
+@task(name="setup")
 def setup_postgres_remote(conn):
     """
     Sets up databases and roles with correct permissions inside AWS through a bastion host

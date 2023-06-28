@@ -1,6 +1,6 @@
 import os
 import json
-from invoke import task
+from invoke import task, Collection
 
 from commands.opensearch.utils import get_remote_search_client
 
@@ -80,3 +80,11 @@ def push_indices_template(ctx):
             "number_of_replicas": 0
         }
     })
+
+
+search_collection = Collection(
+    "search",
+    create_decompound_dictionary,
+    push_decompound_dictionary,
+    push_indices_template
+)
