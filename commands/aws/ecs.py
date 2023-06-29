@@ -4,7 +4,7 @@ import boto3
 from collections import defaultdict
 from math import ceil
 
-from system_configuration.main import MODE
+from environments.system_configuration.main import MODE
 from commands import TARGETS
 
 
