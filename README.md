@@ -21,6 +21,7 @@ External services like the database run in containers, so it's always necessary 
 
 #### Mac OS setup
 
+If you have a M1 or M2 macBook, use the installation guide [here](#m1-setup)
 We recommend installing Python through pyenv:
 
 ```
@@ -77,6 +78,15 @@ invoke hrv.load-data localhost -d <latest-dataset> -s production
 The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
 For AWS environments you can find the admin password under the Django secrets in the Secret Manager.
 
+### M1 setup
+
+M1 chips run very slow when using pyenv. You can instead opt to use miniforge.
+```
+brew install miniforge
+conda env create -f environment.yml
+conda activate harvester
+```
+after this you may follow the [general setup](#general-setup)
 
 ## Getting started
 

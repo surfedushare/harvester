@@ -7,7 +7,7 @@ from sources.models import EdurepJsonSearchResource
 
 SLUG = "edurep"
 SET_SPECIFICATION = "edurep"
-ENDPOINT = EdurepJsonSearchResource.URI_TEMPLATE.replace("https://", "")
+ENDPOINT = EdurepJsonSearchResource.URI_TEMPLATE.replace("https://", "").split("?", 1)
 
 
 class EdurepJsonSearchResourceFactory(factory.django.DjangoModelFactory):
@@ -29,7 +29,8 @@ class EdurepJsonSearchResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        return ENDPOINT.format(self.set_specification)
+        number = self.number
+        return f"{ENDPOINT[0]}?page={number}&{ENDPOINT[1]}".format(self.set_specification)
 
     @factory.lazy_attribute
     def request(self):
