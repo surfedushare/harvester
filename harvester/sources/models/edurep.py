@@ -53,7 +53,7 @@ class EdurepJsonSearchResource(HarvestHttpResource):
 
     def next_parameters(self):
         content_type, data = self.content
-        page = data["response"].get("next", []).get("page", None)
+        page = data["response"].get("next", {}).get("page", None)
         if not page:
             return {}
         return {
