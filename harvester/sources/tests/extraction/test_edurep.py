@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from django.test import TestCase
 from django.utils.timezone import make_aware
 
@@ -196,3 +195,8 @@ class TestGetHarvestSeedsEdurep(TestCase):
             'isni': None
           }
         ])
+
+    def test_next_parameters(self):
+        seeds = self.seeds
+        self.assertEqual(len(seeds), 7,
+                         "The combined fixtures should have a total count of 7")
