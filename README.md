@@ -175,7 +175,7 @@ After you have created the image you can push it to AWS.
 This command will push to a registry that's available to all environments on AWS:
 
 ```bash
-invoke container.push
+invoke container.push --docker-login
 ```
 
 When an image is pushed to the registry you need to promote it for the environment you desire:
@@ -187,7 +187,7 @@ APPLICATION_MODE=<environment> invoke container.promote
 To change the running containers on AWS you then need to deploy for the environment you have updated images for:
 
 ```bash
-APPLICATION_MODE=<environment> invoke container.deploy
+APPLICATION_MODE=<environment> invoke container.deploy <environment>
 ```
 
 This last deploy command will wait until all containers in the AWS cluster have been switched to the new version.
