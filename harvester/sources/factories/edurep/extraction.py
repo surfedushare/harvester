@@ -9,6 +9,7 @@ SLUG = "edurep"
 SET_SPECIFICATION = "edurep"
 ENDPOINT = EdurepJsonSearchResource.URI_TEMPLATE.replace("https://", "").split("?", 1)
 
+
 class EdurepJsonSearchResourceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
