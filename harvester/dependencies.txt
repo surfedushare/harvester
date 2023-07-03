@@ -5,7 +5,7 @@ watchdog==2.3.1
 # Harvester Celery
 celery==5.2.7
 celery[redis]
-redis==4.3.4
+redis==4.6.0
 flower==1.2.0
 
 # Harvester other
