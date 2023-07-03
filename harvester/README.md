@@ -122,19 +122,6 @@ https://harvester.<environment>.surfedushare.nl/flower/
 Where environment can be one of: dev, acc or prod.
 
 
-Tests
------
-
-In order to test your work in combination with search service code as well as frontend code.
-It's recommended to [run your tests from the repo root](../README.md#tests).
-
-To only test the harvester you can run standard Django tests:
-
-```bash
-python manage.py test
-```
-
-
 Provisioning
 ------------
 
@@ -144,7 +131,7 @@ To setup the database on an AWS environment run:
 > If you setup the database in this way all data is irreversibly destroyed
 
 ```bash
-APPLICATION_MODE=<environment> fab -H <bastion-host-domain> hrv.setup-postgres
+APPLICATION_MODE=<environment> fab -H <bastion-host-domain> db.setup
 ```
 
 To load the latest production data into the database and push that data to Open Search on an AWS environment run:

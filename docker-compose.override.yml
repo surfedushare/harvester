@@ -17,7 +17,7 @@ services:
       - DJANGO_SETTINGS_MODULE=harvester.settings
       - APPLICATION_MODE=${APPLICATION_MODE}
       - APPLICATION_PROJECT=${APPLICATION_PROJECT}
-      - POL_DJANGO_DEBUG=${POL_DJANGO_DEBUG}
+      - DET_DJANGO_DEBUG=${DET_DJANGO_DEBUG}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_PROFILE=${AWS_PROFILE}
     ports:
@@ -27,7 +27,7 @@ services:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
       - ../search-client:/usr/src/search_client
     depends_on:
       - postgres
@@ -43,14 +43,14 @@ services:
       - COLUMNS=80
       - PYTHONUNBUFFERED=1
       - APPLICATION_MODE=${APPLICATION_MODE}
-      - POL_DJANGO_DEBUG=${POL_DJANGO_DEBUG}
+      - DET_DJANGO_DEBUG=${DET_DJANGO_DEBUG}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_PROFILE=${AWS_PROFILE}
     volumes:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
     command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A harvester worker --loglevel=INFO
     healthcheck:
       test: celery -A harvester inspect ping
@@ -70,14 +70,14 @@ services:
       - PYTHONIOENCODING=UTF-8
       - PYTHONUNBUFFERED=1
       - APPLICATION_MODE=${APPLICATION_MODE}
-      - POL_DJANGO_DEBUG=${POL_DJANGO_DEBUG}
+      - DET_DJANGO_DEBUG=${DET_DJANGO_DEBUG}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_PROFILE=${AWS_PROFILE}
     volumes:
       - ${HOME}/.aws:/home/app/.aws
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
-      - ./environments/${APPLICATION_PROJECT}/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ./environments/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
     command: celery -A harvester flower --url_prefix=flower
     ports:
       - "127.0.0.1:5555:5555"

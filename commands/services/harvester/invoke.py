@@ -3,7 +3,7 @@ from invoke import task, Exit
 
 from commands import HARVESTER_DIR
 from commands.aws.ecs import run_data_engineering_task
-from environments.data_engineering.configuration import create_configuration
+from environments.system_configuration.main import create_configuration
 
 
 def run_harvester_task(ctx, mode, command, environment=None):
@@ -42,11 +42,11 @@ def harvester_migrate(ctx, mode):
     command = ["python", "manage.py", "migrate"]
     environment = [
         {
-            "name": "POL_POSTGRES_USER",
+            "name": "DET_POSTGRES_USER",
             "value": f"{ctx.config.postgres.user}"
         },
         {
-            "name": "POL_SECRETS_POSTGRES_PASSWORD",
+            "name": "DET_SECRETS_POSTGRES_PASSWORD",
             "value": f"{ctx.config.aws.postgres_password_arn}"
         },
     ]
@@ -92,7 +92,7 @@ def load_data(ctx, mode, source, dataset, download_edurep=False, wipe_data=True)
 })
 def load_metadata(ctx, mode, source):
     """
-    Loads the production database and sets up Open Search data on localhost or an AWS cluster
+    Loads the metadata models from source and loads them into Postgres.
     """
     if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
@@ -126,6 +126,9 @@ def harvest(ctx, mode, reset=False, no_promote=False):
     "dataset": "Name of the dataset (a Greek letter) that you want to generate previews for"
 })
 def generate_previews(ctx, mode, dataset):
+    """
+    Starts a task on AWS container cluster or localhost that will generate previews.
+    """
     command = ["python", "manage.py", "generate_previews", f"--dataset={dataset}"]
     run_harvester_task(ctx, mode, command)
 
@@ -266,6 +269,9 @@ def sync_harvest_content(ctx, source, path="core"):
             "Must match APPLICATION_MODE"
 })
 def sync_metadata(ctx, mode):
+    """
+    Starts a task on the AWS container cluster or localhost to sync metadata instances with Open Search data.
+    """
     command = ["python", "manage.py", "sync_metadata"]
 
     run_harvester_task(ctx, mode, command)

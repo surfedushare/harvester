@@ -64,14 +64,14 @@ To finish the container setup you can run these commands to build all containers
 
 ```bash
 invoke aws.sync-repository-state
-invoke prepare-builds
+invoke container.prepare-builds
 docker-compose up --build
 ```
 
 After that you can seed the database with data:
 
 ```bash
-invoke hrv.setup-postgres
+invoke db.setup
 invoke hrv.load-data localhost -d <latest-dataset> -s production
 ```
 
@@ -143,16 +143,15 @@ And then follow the steps to [install the service](service/README.md#installatio
 You can run tests for the harvester by running:
 
 ```bash
-invoke test.harvester
+invoke test.run
 ```
 
 
 ## Deploy
 
+Once your tests pass you can make a new build for the project you want to deploy.
 This section outlines the most common options for deployment.
 Use `invoke -h <command>` to learn more about any invoke command.
-
-The pipelines on gitlab use a [gitlab runner image](Dockerfile-runner) where all requirements are pre-installed, if you update a dependency you should run `invoke aws.publish-runner-image --docker-login`
 
 Before deploying you'll want to decide on a version number.
 It's best to talk to the team about which version number you want to use for a deploy.
@@ -160,37 +159,46 @@ To see a list of all currently available images for a project and the versions t
 the following command.
 
 ```bash
-invoke aws.print-available-images <target-project-name>
+invoke aws.print-available-images
 ```
 
-Make sure that the version inside of `harvester/package.py` and `service/package.py`
-is different from any other version in the AWS image registries (both service and harvester registry).
+Make sure that the version inside of `harvester/package.py` is different from any other version in the AWS registries.
 Commit a version change if this is not the case.
-Then push to do the Gitlab remote and wait until the pipeline completes.
-The final pipeline job is manual.
-It will tag the image the pipeline has build with the version number from the package files if you run it.
 
-When an image is build with the pipeline and tagged with the version you can deploy the service with:
+You can build the harvester and nginx container by running the following command:
 
 ```bash
-APPLICATION_MODE=<environment> invoke srv.deploy <environment>
+invoke container.build
 ```
 
-And the harvester with:
+After you have created the image you can push it to AWS.
+This command will push to a registry that's available to all environments on AWS:
 
 ```bash
-APPLICATION_MODE=<environment> invoke hrv.deploy <environment>
+invoke container.push
 ```
 
-These last deploy commands will wait until all containers in the AWS cluster have been switched to the new version.
+When an image is pushed to the registry you need to promote it for the environment you desire:
+
+```bash
+APPLICATION_MODE=<environment> invoke container.promote
+```
+
+To change the running containers on AWS you then need to deploy for the environment you have updated images for:
+
+```bash
+APPLICATION_MODE=<environment> invoke container.deploy
+```
+
+This last deploy command will wait until all containers in the AWS cluster have been switched to the new version.
 This may take some time and the command will indicate that it is waiting to complete.
 If you do not want to wait you can `CTRL+C` in the terminal safely. This cancels the waiting, not the deploy itself.
+
 
 #### Release
 
 A special case of deploying is releasing. You should take the following steps during releasing:
 
-- Create a PR from `acceptance` to the `edusources` or `nppo` branch (depending on which project you want to release)
 - There are a few things that you should check in a release PR, because it influences the release steps:
   - Are there any database migrations?
   - Are there changes to Open Search indices?
@@ -206,19 +214,16 @@ A special case of deploying is releasing. You should take the following steps du
 - With complicated changes we prefer to try them on development
   and we create the release plan when putting the changes on acceptance.
   When we release to production following the plan should be sufficient to make a smooth release.
-- When dealing with breaking changes we make a release tag on the `edusources` branch.
+- When dealing with breaking changes we make a release tag on the default branch.
   The tag is equal to the release version prefixed with a "v" so for instance: v0.0.1
   This allows us to easily jump back to a version without these breaking changes through git.
 - Once the release plan is executed on production and a tag for the previous release is created when necessary then
   we merge the release PR into its branch.
-- After de pipeline has finished, run
-  APPLICATION_MODE=production invoke srv.deploy production
-  APPLICATION_MODE=production invoke hrv.deploy production
-- check https://edusources.nl/health/ for the right version
+- Execute the necessary deploy commands described above.
 - check https://harvester.prod.surfedushare.nl/ for the right version
+- check https://harvester.prod.publinova.nl/ for the right version
 
-This completes the release, which we mark in Pivotal by "finishing" the release ticket.
-We also post a message into Teams if people are waiting for certain features.
+This completes the release. Post a message into Teams if people are waiting for certain features.
 
 As you can see the release may consist of many steps and release plans can become elaborate.
 Here is an overview of commands that are regularly used during a release and their relevant documentation:
@@ -231,40 +236,25 @@ Here is an overview of commands that are regularly used during a release and the
 
 #### Rollback
 
-There are two ways to rollback. One is to revert changes in GIT and then push them to the remote.
-From there you can do a normal [release](#Release).
-This method is good because of its simplicity and it also permanently takes care of the problem.
-
-However sometimes you may want to keep your changes in GIT and rollback nonetheless.
-Or it can be hard to find the cause of a problem, while you do want to rollback fast to a previously working version.
-To facilitate this you can "promote" a previous version and then deploy it.
-The rest of this section explains how to achieve such a rollback.
-
-First of all you need to list all versions that are available with the following command
+To execute a rollback you need to "promote" a previous version and then deploy it.
+First of all you need to list all versions that are available with the following command.
 
 ```bash
 invoke aws.print-available-images <target-project-name>
 ```
 
-Where `<target-project-name>` will be `harvester` or `service`.
 You can pick a `<rollback-version>` from the command output.
 Then depending on the `<environment>` you want to rollback for: `production`, `acceptance` or `development`.
 You can run the following commands to rollback to the version you want.
 
 ```
-APPLICATION_MODE=<environment> invoke aws.promote <target-project-name> --version=<rollback-version>
+APPLICATION_MODE=<environment> invoke container.promote --version=<rollback-version>
 ```
 
-And if `<target-project-name>` is `service`:
+And after that you need to deploy the containers on AWS Fargate:
 
 ```
-APPLICATION_MODE=<environment> invoke srv.deploy <environment>
-```
-
-Or when it is `harvester`:
-
-```
-APPLICATION_MODE=<environment> invoke hrv.deploy <environment>
+APPLICATION_MODE=<environment> invoke container.deploy <environment>
 ```
 
 #### Migrate
@@ -272,7 +262,7 @@ APPLICATION_MODE=<environment> invoke hrv.deploy <environment>
 To migrate the database on AWS you can run the migration command:
 
 ```bash
-APPLICATION_MODE=<environment> invoke hrv.migrate <environment>
+APPLICATION_MODE=<environment> invoke db.migrate <environment>
 ```
 
 ## Provisioning

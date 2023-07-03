@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password
 
 
-def insert_django_user_statement(username, raw_password, api_key, is_search_service=False, configure_settings=True):
+def insert_django_user_statement(username, raw_password, api_key, configure_settings=True):
     # Determine user status and username based on input
     if username.endswith("/superuser"):
         is_superuser = True
@@ -18,34 +18,21 @@ def insert_django_user_statement(username, raw_password, api_key, is_search_serv
     hash_password = make_password(raw_password)
     escaped_password = hash_password.replace("$", r"\$")
     # Insert user and token into correct table
-    user_table = "users_user" if is_search_service else "auth_user"
     user_insert = (
-        f"INSERT INTO {user_table} "
+        "INSERT INTO auth_user "
         "(password, is_superuser, is_staff, is_active, username, first_name, last_name, email, date_joined) "
         f"VALUES ('{escaped_password}', {is_superuser}, {is_staff}, true, '{username}', '', '', '{email}', NOW())"
     )
-    if is_search_service:
-        return (
-            "WITH user_insert AS ("
-            f"  {user_insert}"
-            "   RETURNING id"
-            ")"
-            f"INSERT INTO users_sessiontoken "
-            " (key, created, user_id) "
-            f"VALUES ('{api_key}', NOW(), (SELECT id FROM user_insert))"
+    return (
+        "WITH user_insert AS ("
+        f"  {user_insert}"
+        "   RETURNING id"
+        ")"
+        f"INSERT INTO authtoken_token "
+        " (key, created, user_id) "
+        f"VALUES ('{api_key}', NOW(), (SELECT id FROM user_insert))"
 
-        )
-    else:
-        return (
-            "WITH user_insert AS ("
-            f"  {user_insert}"
-            "   RETURNING id"
-            ")"
-            f"INSERT INTO authtoken_token "
-            " (key, created, user_id) "
-            f"VALUES ('{api_key}', NOW(), (SELECT id FROM user_insert))"
-
-        )
+    )
 
 
 def setup_database_statements(database_name, root_user, application_user, application_password, allow_tests=False):

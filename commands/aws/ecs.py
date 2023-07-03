@@ -4,7 +4,7 @@ import boto3
 from collections import defaultdict
 from math import ceil
 
-from environments.project import MODE
+from environments.system_configuration.main import MODE
 from commands import TARGETS
 
 
@@ -226,6 +226,9 @@ def _cleanup_ecr_images(ctx, ecr_client, version_cutoff):
     "version_cutoff": "When specified any images with versions below this major and minor version will get deleted",
 })
 def cleanup_ecs_artifacts(ctx, mode, version_cutoff=None):
+    """
+    Removes old task definitions and possibly images from AWS
+    """
     if version_cutoff:
         version_cutoff = float(version_cutoff)
     # Setup the AWS SDK
