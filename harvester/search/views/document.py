@@ -40,6 +40,7 @@ class DocumentSearchSerializer(serializers.Serializer):
             field_id = metadata_filter.get("external_id", None)
             if field_id not in filter_fields:
                 raise ValidationError(detail=f"Invalid external_id for metadata field in filter '{field_id}'")
+        return filters
 
 
 class LearningMaterialSearchSerializer(DocumentSearchSerializer):
