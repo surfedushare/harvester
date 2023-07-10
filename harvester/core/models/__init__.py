@@ -7,11 +7,11 @@ from .resources.youtube_thumbnail import YoutubeThumbnailResource
 from .resources.pdf_thumbnail import PdfThumbnailResource
 from .resources.matomo import MatomoVisitsResource
 
-from .datatypes.dataset import Dataset, DatasetVersion
-from .datatypes.collection import Collection
-from .datatypes.document import Document
-from .datatypes.pipeline import Batch, ProcessResult
-from .datatypes.extension import Extension
+from .legacy.dataset import Dataset, DatasetVersion
+from .legacy.collection import Collection
+from .legacy.document import Document
+from .legacy.pipeline import Batch, ProcessResult
+from .legacy.extension import Extension
 
 from .harvest import Harvest, HarvestSource
 

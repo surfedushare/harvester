@@ -4,7 +4,7 @@ from django.utils.timezone import datetime, make_aware, timedelta
 
 from core.constants import (HarvestStages, HARVEST_STAGE_CHOICES, REPOSITORY_CHOICES, DeletePolicies,
                             DELETE_POLICY_CHOICES)
-from core.models.datatypes.dataset import Dataset
+from core.models.legacy.dataset import Dataset
 
 
 def thirty_days_default():

@@ -13,8 +13,8 @@ PRIVATE_PROPERTIES = ["from_youtube", "lowest_educational_level"]
 class DocumentManager(models.Manager):
 
     def build_from_seed(self, seed, collection=None, metadata_pipeline_key=None):
-        properties = copy(seed)  # TODO: use setters that update the pipeline?
-
+        # TODO: this should take / and . in keys into account
+        properties = copy(seed)
         metadata_pipeline = properties.pop(metadata_pipeline_key, None)
         document = Document(properties=properties, collection=collection, pipeline={"metadata": metadata_pipeline})
         if collection:
@@ -40,6 +40,9 @@ class Document(DocumentBase):
     def update(self, data, commit=True, validate=True):
         if "language" in self.properties:
             data.pop("language", None)
+        # this should reset pipeline and derivatives fields
+        # this should calculate a hash based on properties
+        # this should update created_at, modified_at and deleted_at values
         super().update(data, commit=commit, validate=validate)
 
     def get_language(self):
@@ -50,6 +53,7 @@ class Document(DocumentBase):
 
     def get_search_document_extras(self, reference_id, title, text, video, material_types,
                                    learning_material_disciplines):
+        # TODO: rewrite this to derivatives
         suggest_completion = []
         if title:
             suggest_completion += title.split(" ")
@@ -110,6 +114,7 @@ class Document(DocumentBase):
             }
             return
         # Transform the data to the structure we actually want for search engine
+        # TODO: large parts of code below should go to derivatives
         search_base.pop("language", None)
         text = search_base.pop("text", None)
         if text and len(text) >= 1000000:
