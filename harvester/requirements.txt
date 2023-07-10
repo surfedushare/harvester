@@ -60,5 +60,3 @@ sentry-sdk==1.0.0
 # Patched packages
 youtube-dl@git+https://github.com/ytdl-org/youtube-dl.git@master
 git+https://github.com/fako/django-json-field.git
-
--r dependencies.txt
