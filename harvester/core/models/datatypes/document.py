@@ -94,14 +94,14 @@ class Document(DocumentBase):
             }
         return extension_data
 
-    def to_search(self, merge_extension=True):
+    def to_data(self):
+        data = copy(self.properties)
+        data["extension"] = None
+        return data
+
+    def to_search(self):
         # Get the basic document information including from document extensions
-        search_base = copy(self.properties)
-        if self.extension:
-            extension_details = self.get_extension_extras(merge_extension)
-            search_base.update(extension_details)
-        else:
-            search_base["extension"] = None
+        search_base = self.to_data()
         # Decide whether to delete or not from the index
         if search_base["state"] != "active":
             yield {
