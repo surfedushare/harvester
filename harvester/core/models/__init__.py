@@ -13,7 +13,7 @@ from .legacy.document import Document
 from .legacy.pipeline import Batch, ProcessResult
 from .legacy.extension import Extension
 
-from .harvest import Harvest, HarvestSource
+from .legacy.harvest import Harvest, HarvestSource
 
 from .search import ElasticIndex, ElasticIndexSerializer, Query
 
