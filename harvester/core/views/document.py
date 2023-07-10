@@ -133,7 +133,7 @@ class SearchDocumentListView(SearchDocumentGenericViewMixin, DatasetVersionDocum
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
-            objects = [list(doc.to_search(merge_extension=False))[0] for doc in args[0]]
+            objects = [list(doc.to_search())[0] for doc in args[0]]
             args = (objects, *args[1:])
         return super().get_serializer(*args, **kwargs)
 
@@ -200,6 +200,6 @@ class SearchDocumentDetailView(SearchDocumentGenericViewMixin, DatasetVersionDoc
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
-            obj = list(args[0].to_search(merge_extension=False))[0]
+            obj = list(args[0].to_search())[0]
             args = (obj, *args[1:])
         return super().get_serializer(*args, **kwargs)

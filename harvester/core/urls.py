@@ -14,6 +14,7 @@ deprecated_api_patterns = [
     path('dataset/<int:pk>/', views.DatasetDetailView.as_view(), name="dataset-detail"),
     path('dataset/', views.DatasetListView.as_view(), name="datasets"),
     path('extension/<str:external_id>/', views.ExtensionDetailView.as_view(), name="extension-detail"),
+    path('extension/', views.ExtensionListView.as_view(), name="extensions"),
     path(
         'dataset/metadata-documents/', views.DatasetMetadataDocumentsView.as_view(),
         name="dataset-metadata-documents", kwargs={"pk": None}

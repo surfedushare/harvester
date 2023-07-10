@@ -43,6 +43,8 @@ class TestDocument(TestCase):
         self.assertEqual(search_document["has_parts"], ["part"])
         self.assertEqual(search_document["parties"], [])
         self.assertEqual(search_document["research_themes"], ["research"])
+
+        self.skipTest("Extensions are deprecated")
         extended_search_document_generator = self.extended_document.to_search()
         self.assertIsInstance(extended_search_document_generator, Generator)
         extended_search_document = list(extended_search_document_generator)[0]
@@ -63,6 +65,7 @@ class TestDocument(TestCase):
         self.assertEqual(search_document["_op_type"], "delete")
 
     def test_to_search_preexisting_extension(self):
+        self.skipTest("Extensions are deprecated")
         document, _ = self.create_extended_document()
         search_document_generator = document.to_search()
         self.assertIsInstance(search_document_generator, Generator)
@@ -73,6 +76,7 @@ class TestDocument(TestCase):
                          "Expected description to be taken from Document")
 
     def test_to_search_inactive_extension(self):
+        self.skipTest("Extensions are deprecated")
         document, extension = self.create_extended_document()
         extension.properties["state"] = Document.States.INACTIVE
         extension.save()

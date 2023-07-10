@@ -198,6 +198,7 @@
         "lom_educational_levels": ["HBO"],
         "lowest_educational_level": 2,
         "consortium": null,
+        "parties": [],
         "learning_material_disciplines": []
       },
       "dataset_version": 1

@@ -8,8 +8,6 @@ from django.db import models, transaction
 from datagrowth.datatypes import CollectionBase, DocumentCollectionMixin
 from datagrowth.utils import ibatch
 
-from core.models.datatypes.extension import Extension
-
 
 class Dataset(DocumentCollectionMixin, CollectionBase):
     """
@@ -151,19 +149,12 @@ class DatasetVersion(models.Model):
 
     def get_search_documents_by_language(self, **filters):
         by_language = defaultdict(list)
-        documents = self.document_set \
-            .select_related("extension") \
-            .filter(**filters)
+        documents = self.document_set.filter(**filters)
         for document in documents:
             language = document.get_language()
             if language not in settings.OPENSEARCH_ANALYSERS:
                 language = "unk"
             by_language[language] += list(document.to_search())
-        for extension in Extension.objects.filter(is_addition=True):
-            language = extension.get_language()
-            if language not in settings.OPENSEARCH_ANALYSERS:
-                language = "unk"
-            by_language[language] += list(extension.to_search())
         return by_language
 
     def set_current(self):

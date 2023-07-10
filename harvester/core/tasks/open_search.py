@@ -11,7 +11,7 @@ from datagrowth.utils.iterators import ibatch
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.logging import HarvestLogger
-from core.models import ElasticIndex, DatasetVersion, Extension, Harvest
+from core.models import ElasticIndex, DatasetVersion, Harvest
 from core.constants import EXCLUDED_COLLECTIONS_BY_DOMAIN
 
 
@@ -46,14 +46,6 @@ def sync_indices(**kwargs):
                             elif language and language not in settings.OPENSEARCH_ANALYSERS and index.language == "unk":
                                 docs.append(doc.to_search())
                         errors = index.push(chain(*docs), recreate=False)
-                        logger.open_search_errors(errors)
-                    extensions_queryset = Extension.objects.filter(
-                        modified_at__gte=index.pushed_at,
-                        is_addition=True
-                    )
-                    for ext_batch in ibatch(extensions_queryset, batch_size=32):
-                        exts = [ext.to_search() for ext in ext_batch if ext.get_language() == index.language]
-                        errors = index.push(chain(*exts), recreate=False)
                         logger.open_search_errors(errors)
                     index.pushed_at = current_time
                     index.save()

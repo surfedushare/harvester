@@ -1,3 +1,5 @@
+from unittest import skip
+
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -221,6 +223,7 @@ class TestMetadataDocumentView(TestDocumentView):
     }
 
 
+@skip("Extensions are deprecated")
 @override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
 class TestExtendedDocumentView(TestCase):
 
