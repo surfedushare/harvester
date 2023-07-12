@@ -1,15 +1,12 @@
-from copy import copy
 from invoke import Context
 
 from django.conf import settings
 from django.core.management import CommandError, call_command
-from django.contrib.sites.models import Site
 
 from core.constants import HarvestStages, Repositories
 from core.logging import HarvestLogger
 from core.models import Dataset, Harvest, DatasetVersion
 from core.utils.harvest import prepare_harvest
-from core.constants import MINIMAL_EDUCATIONAL_LEVEL_BY_DOMAIN
 from harvester.celery import app
 from harvester.settings import environment
 
@@ -53,13 +50,7 @@ def harvest(reset=False, no_promote=False, report_dataset_version=False):
             index_command += ["--no-promote"]
         if reset:
             index_command += ["--skip-evaluation"]
-        for site in Site.objects.all():
-            site_index_command = copy(index_command)
-            site_index_command.append(f"--site={site.id}")
-            educational_level = MINIMAL_EDUCATIONAL_LEVEL_BY_DOMAIN[site.domain]
-            if educational_level:
-                site_index_command.append(f"--educational-level={educational_level}")
-            call_command(*site_index_command)
+        call_command(*index_command)
 
     # When dealing with a harvest on AWS seeds need to get copied to S3.
     # Localhost can use these copies instead of getting the seeds from behind Edurep's firewall.

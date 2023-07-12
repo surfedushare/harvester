@@ -79,20 +79,8 @@ HIGHER_EDUCATION_LEVELS = {
 }
 
 
-MINIMAL_EDUCATIONAL_LEVEL_BY_DOMAIN = {
-    "harvester.prod.surfedushare.nl": 2,
-    "harvester.mbo.prod.surfedushare.nl": 1,
-    "harvester.publinova.nl": None,
-}
-
 SITE_SHORTHAND_BY_DOMAIN = {
     "harvester.prod.surfedushare.nl": "edusources",
     "harvester.mbo.prod.surfedushare.nl": "mbo",
     "harvester.publinova.nl": "publinova",
-}
-
-EXCLUDED_COLLECTIONS_BY_DOMAIN = {
-    "harvester.prod.surfedushare.nl": ["edusourcesmbo", "edusourcesmboprivate"],
-    "harvester.mbo.prod.surfedushare.nl": [],
-    "harvester.publinova.nl": [],
 }
