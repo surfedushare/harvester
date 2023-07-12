@@ -56,18 +56,6 @@ HARVEST_STAGE_CHOICES = [
 ]
 
 
-PLAIN_TEXT_MIME_TYPES = [
-    "text/html",
-    "application/msword",
-    "application/octet-stream",
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    "application/xhtml+xml",
-    "application/vnd.ms-powerpoint",
-]
-
-
 HIGHER_EDUCATION_LEVELS = {
     "BVE": 1,
     "HBO": 2,
