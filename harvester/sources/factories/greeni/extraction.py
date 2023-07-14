@@ -30,7 +30,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     since = factory.Maybe(
         "is_initial",
         make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
+        make_aware(datetime(year=2020, month=2, day=10))
     )
     set_specification = SET_SPECIFICATION
     status = 200
@@ -40,7 +40,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        from_param = f"from={self.since:%Y-%m-%dT%H:%M:%SZ}"
+        from_param = f"from={self.since:%Y-%m-%d}"
         identity = quote(f"{from_param}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}", safe="=&") \
             if not self.resumption else f"resumptionToken={quote(self.resumption)}"
         return f"{ENDPOINT}?{identity}&verb=ListRecords"

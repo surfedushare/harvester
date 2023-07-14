@@ -55,12 +55,14 @@ class HanOAIPMHResource(HarvestHttpResource):
 
     objects = HanOAIPMHManager()
 
-    URI_TEMPLATE = settings.SOURCES["han"]["endpoint"] + "/hanoai/request" \
-        if settings.SOURCES["han"]["endpoint"] else "/hanoai/request"
+    URI_TEMPLATE = settings.SOURCES["han"]["endpoint"] + "/hanoai/request?set={}&from={}" \
+        if settings.SOURCES["han"]["endpoint"] else "/hanoai/request?set={}&from={}"
     PARAMETERS = {
         "verb": "ListRecords",
         "metadataPrefix": "nl_didl"
     }
+
+    use_multiple_sets = True
 
     def next_parameters(self):
         content_type, soup = self.content
