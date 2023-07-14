@@ -67,7 +67,11 @@ class SharekitMetadataExtraction(ExtractProcessor):
         files = cls.get_files(node)
         if not files:
             return
-        return files[0]["url"].strip()
+        # We'll temporarily patch a link that for some reason is missing a starting "h"
+        url = files[0]["url"].strip()
+        if url.startswith("ttp"):
+            url = "h" + url
+        return url
 
     @classmethod
     def get_mime_type(cls, node):
