@@ -576,6 +576,10 @@ SOURCES = {
         "endpoint": environment.harvester.repositories.publinova,
         "api_key": environment.secrets.publinova.api_key
     },
+    "saxion": {
+        "endpoint": "https://dataaccess.saxion.nl",
+        "api_key": None
+    }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 
