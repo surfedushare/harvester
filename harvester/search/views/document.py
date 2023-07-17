@@ -26,6 +26,7 @@ class DocumentSearchSerializer(serializers.Serializer):
 
     search_text = serializers.CharField(required=True, allow_blank=True, write_only=True)
     filters = DocumentSearchFilterSerializer(many=True, write_only=True, default=[])
+    ordering = serializers.CharField(required=False, allow_blank=True, default=None, allow_null=True, write_only=True)
 
     page = serializers.IntegerField(required=False, default=1, validators=[MinValueValidator(1)])
     page_size = serializers.IntegerField(required=False, default=10, validators=[MinValueValidator(0)])
@@ -74,6 +75,11 @@ class DocumentSearchAPIView(GenericAPIView):
     Filters under the same "field" filter category will function as an OR filter.
     While multiple filter category items across "field" filter categories function as AND filters.
 
+    **ordering**: The external_id of a filter category to order results by (for instance: "publisher_date").
+    This will ignore relevance of results and order by the specified property.
+    By default ordering is ascending.
+    If you specify the minus sign (for instance: "-publisher_date") the ordering will be descending.
+
     ## Response body
 
     **results**: An array containing the search results.
@@ -100,7 +106,7 @@ class DocumentSearchAPIView(GenericAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["filter_fields"] = MetadataField.objects.exclude(is_manual=True).values_list("name", flat=True)
+        context["filter_fields"] = MetadataField.objects.all().values_list("name", flat=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -110,7 +116,9 @@ class DocumentSearchAPIView(GenericAPIView):
         data = serializer.validated_data
         include_filter_counts = request.GET.get("include_filter_counts", None)
         if include_filter_counts == "1":
-            data["drilldown_names"] = serializer.context["filter_fields"]
+            data["drilldown_names"] = serializer.context["filter_fields"].exclude(name="publisher_date")
+        if not data["search_text"] and not data["ordering"]:
+            data["ordering"] = "-publisher_date"
         # Execute search and return results
         client = get_search_client()
         response = client.search(**data)

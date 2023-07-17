@@ -59,7 +59,7 @@ class OpenSearchTestCaseMixin(object):
         cls.index_document(cls.document_type)
         cls.index_document(
             cls.document_type, is_last_document=True,
-            external_id="abc", title=f"Nog een {cls.document_type}"
+            external_id="abc", title=f"Nog een {cls.document_type}", publisher_date="2020-03-18"
         )
         # Create a SURF SearchClient
         cls.instance = SearchClient(settings.OPENSEARCH_HOST, cls.document_type, cls.alias_prefix)
