@@ -13,3 +13,5 @@ SHAREKIT_TEST_ORGANIZATION = "Publinova test"
 # To do this we need to loosen IP restrictions. We want to prevent leaking debug information to the world.
 if environment.service.env == "development":
     DEBUG = False
+
+THUMBNAIL_FORCE_PNG_EXTENSION = True

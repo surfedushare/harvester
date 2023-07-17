@@ -604,3 +604,8 @@ WEBHOOKS = {
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
+
+
+# Thumbnails
+
+THUMBNAIL_FORCE_PNG_EXTENSION = False
