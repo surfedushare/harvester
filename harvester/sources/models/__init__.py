@@ -6,3 +6,4 @@ from .buas import BuasPureResource
 from .hanze import HanzeResearchObjectResource
 from .edurep import EdurepJsonSearchResource
 from .publinova import PublinovaMetadataResource
+from .saxion import SaxionOAIPMHResource

@@ -52,12 +52,23 @@ class GreeniOAIPMHResource(HarvestHttpResource):
 
     objects = GreeniOAIPMHResourceManager()
 
-    URI_TEMPLATE = settings.SOURCES["greeni"]["endpoint"] + "/webopac/oai2.CSP?set={}" \
-        if settings.SOURCES["greeni"]["endpoint"] else "/webopac/oai2.CSP?set={}"
+    URI_TEMPLATE = settings.SOURCES["greeni"]["endpoint"] + "/webopac/oai2.CSP?set={}&from={}" \
+        if settings.SOURCES["greeni"]["endpoint"] else "/webopac/oai2.CSP?set={}&from={}"
     PARAMETERS = {
         "verb": "ListRecords",
         "metadataPrefix": "didl"
     }
+
+    use_multiple_sets = True
+
+    def variables(self, *args):
+        # Here we're casting the last element of the URL variables to a date string,
+        # because Greeni doesn't handle times with timezones and we don't want to pass a long dubious time strings,
+        # with possibly vague bugs as a consequence
+        variables = super().variables(*args)
+        variables["url"] = list(variables["url"])
+        variables["url"][-1] = variables["since"].strftime("%Y-%m-%d")
+        return variables
 
     def next_parameters(self):
         content_type, soup = self.content

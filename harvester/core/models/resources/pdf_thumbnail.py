@@ -3,6 +3,7 @@ from io import BytesIO
 from urllib.parse import urlparse, urljoin
 from datetime import datetime
 
+from django.conf import settings
 from django.dispatch import receiver
 from django.db import models
 
@@ -35,7 +36,7 @@ class PdfThumbnailResource(HttpFileResource):
         if not head:
             head = "index.png"
         name, extension = os.path.splitext(head)
-        if not extension:
+        if not extension or settings.THUMBNAIL_FORCE_PNG_EXTENSION:
             extension = ".png"
         now = datetime.utcnow()
         if len(name) > 60:

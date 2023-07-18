@@ -10,6 +10,7 @@ class Repositories:
     GREENI = "sources.GreeniOAIPMHResource"
     BUAS = "sources.BuasPureResource"
     PUBLINOVA = "sources.PublinovaMetadataResource"
+    SAXION = "sources.SaxionOAIPMHResource"
 
 
 def get_repository_id(repository_resource):

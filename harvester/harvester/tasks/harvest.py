@@ -25,7 +25,7 @@ def harvest(reset=False, no_promote=False, report_dataset_version=False):
         repositories = [
             Repositories.EDUREP, Repositories.SHAREKIT, Repositories.ANATOMY_TOOL,
             Repositories.HANZE, Repositories.HAN, Repositories.HKU, Repositories.GREENI, Repositories.HVA,
-            Repositories.BUAS, Repositories.EDUREP_JSONSEARCH, Repositories.PUBLINOVA
+            Repositories.BUAS, Repositories.EDUREP_JSONSEARCH, Repositories.PUBLINOVA, Repositories.SAXION
         ]
         for repository in repositories:
             try:

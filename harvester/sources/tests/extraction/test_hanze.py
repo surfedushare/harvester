@@ -149,5 +149,5 @@ class TestGetHarvestSeedsHanze(TestCase):
 
     def test_research_theme(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["research_themes"], [])
-        self.assertEqual(seeds[14]["research_themes"], ["techniek"])
+        self.assertEqual(seeds[0]["research_themes"], ["techniek"])
+        self.assertEqual(seeds[14]["research_themes"], ["economie_management", "ruimtelijkeordening_planning"])

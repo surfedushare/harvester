@@ -576,6 +576,10 @@ SOURCES = {
         "endpoint": environment.harvester.repositories.publinova,
         "api_key": environment.secrets.publinova.api_key
     },
+    "saxion": {
+        "endpoint": "https://dataaccess.saxion.nl",
+        "api_key": None
+    }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 
@@ -600,3 +604,8 @@ WEBHOOKS = {
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
+
+
+# Thumbnails
+
+THUMBNAIL_FORCE_PNG_EXTENSION = False

@@ -7,7 +7,7 @@ from django.conf import settings
 
 from datagrowth.processors import ExtractProcessor
 
-from sources.extraction.hanze.research_themes import FOCUS_AREA_TO_RESEARCH_THEME
+from sources.extraction.hanze.research_themes import ASJC_TO_RESEARCH_THEME
 
 
 class HanzeResourceObjectExtraction(ExtractProcessor):
@@ -264,10 +264,12 @@ class HanzeResourceObjectExtraction(ExtractProcessor):
     def get_research_themes(cls, node):
         research_themes = []
         for keywords in node.get("keywordGroups", []):
-            if keywords["logicalName"] == "research_focus_areas":
-                for classification in keywords["classifications"]:
-                    if classification["uri"] in FOCUS_AREA_TO_RESEARCH_THEME.keys():
-                        research_themes.append(FOCUS_AREA_TO_RESEARCH_THEME[classification["uri"]])
+            if keywords["logicalName"] == "ASJCSubjectAreas":
+                asjc_identifiers = [
+                    classification["uri"].replace("/dk/atira/pure/subjectarea/asjc/", "")
+                    for classification in keywords["classifications"]
+                ]
+                research_themes += [ASJC_TO_RESEARCH_THEME[identifier] for identifier in asjc_identifiers]
         return research_themes
 
 

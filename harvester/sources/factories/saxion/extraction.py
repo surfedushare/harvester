@@ -6,20 +6,20 @@ from urllib.parse import quote
 from django.conf import settings
 from django.utils.timezone import make_aware
 
-from sources.models import GreeniOAIPMHResource
+from sources.models import SaxionOAIPMHResource
 
 
-SLUG = "greeni"
-ENDPOINT = GreeniOAIPMHResource.URI_TEMPLATE.replace("https://", "")
-SET_SPECIFICATION = "PUBVHL"
-METADATA_PREFIX = "didl"
-RESUMPTION_TOKEN = "MToxMDB8Mjp8Mzp8NDp8NTpubF9kaWRs"
+SLUG = "saxion"
+ENDPOINT = SaxionOAIPMHResource.URI_TEMPLATE.replace("https://", "")
+SET_SPECIFICATION = "kenniscentra"
+METADATA_PREFIX = "oai_mods"
+RESUMPTION_TOKEN = "5608392947620842476"
 
 
-class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
+class SaxionOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
-        model = GreeniOAIPMHResource
+        model = SaxionOAIPMHResource
         strategy = factory.BUILD_STRATEGY
 
     class Params:
@@ -30,7 +30,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     since = factory.Maybe(
         "is_initial",
         make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10))
+        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
     )
     set_specification = SET_SPECIFICATION
     status = 200
@@ -40,9 +40,10 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        from_param = f"from={self.since:%Y-%m-%d}"
-        identity = quote(f"{from_param}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}", safe="=&") \
-            if not self.resumption else f"resumptionToken={quote(self.resumption)}"
+        from_param = f"from={self.since:%Y-%m-%dT%H:%M:%SZ}"
+        identity = quote(f"{from_param}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}", safe="=&")
+        if self.resumption:
+            identity += f"&resumptionToken={quote(self.resumption)}"
         return f"{ENDPOINT}?{identity}&verb=ListRecords"
 
     @factory.lazy_attribute

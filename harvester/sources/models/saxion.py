@@ -2,19 +2,18 @@ import logging
 
 from django.conf import settings
 from django.db import models
-from urlobject import URLObject
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
 
 from core.models import HarvestHttpResource
-from sources.extraction.han import HanDataExtraction, HAN_EXTRACTION_OBJECTIVE
+from sources.extraction.saxion import SaxionDataExtraction, SAXION_EXTRACTION_OBJECTIVE
 
 
 logger = logging.getLogger("harvester")
 
 
-class HanOAIPMHManager(models.Manager):
+class SaxionOAIPMHResourceManager(models.Manager):
 
     def extract_seeds(self, set_specification, latest_update):
         queryset = self.get_queryset().filter(
@@ -25,11 +24,11 @@ class HanOAIPMHManager(models.Manager):
         )
 
         oaipmh_objective = {
-            "@": HanDataExtraction.get_oaipmh_records,
-            "external_id": HanDataExtraction.get_oaipmh_external_id,
-            "state": HanDataExtraction.get_oaipmh_record_state
+            "@": SaxionDataExtraction.get_oaipmh_records,
+            "external_id": SaxionDataExtraction.get_oaipmh_external_id,
+            "state": SaxionDataExtraction.get_oaipmh_record_state
         }
-        oaipmh_objective.update(HAN_EXTRACTION_OBJECTIVE)
+        oaipmh_objective.update(SAXION_EXTRACTION_OBJECTIVE)
         extract_config = create_config("extract_processor", {
             "objective": oaipmh_objective
         })
@@ -42,27 +41,22 @@ class HanOAIPMHManager(models.Manager):
                 "id": harvest.id,
                 "success": True
             }
-            try:
-                for seed in prc.extract_from_resource(harvest):
-                    seed["seed_resource"] = seed_resource
-                    results.append(seed)
-            except ValueError as exc:
-                logger.warning("Invalid XML:", exc, harvest.uri)
+            for seed in prc.extract_from_resource(harvest):
+                seed["seed_resource"] = seed_resource
+                results.append(seed)
         return results
 
 
-class HanOAIPMHResource(HarvestHttpResource):
+class SaxionOAIPMHResource(HarvestHttpResource):
 
-    objects = HanOAIPMHManager()
+    objects = SaxionOAIPMHResourceManager()
 
-    URI_TEMPLATE = settings.SOURCES["han"]["endpoint"] + "/hanoai/request?set={}&from={}" \
-        if settings.SOURCES["han"]["endpoint"] else "/hanoai/request?set={}&from={}"
+    URI_TEMPLATE = settings.SOURCES["saxion"]["endpoint"] + "/harvester?set={}" \
+        if settings.SOURCES["saxion"]["endpoint"] else "/harvester?set={}"
     PARAMETERS = {
         "verb": "ListRecords",
-        "metadataPrefix": "nl_didl"
+        "metadataPrefix": "oai_mods"
     }
-
-    use_multiple_sets = True
 
     def next_parameters(self):
         content_type, soup = self.content
@@ -74,15 +68,6 @@ class HanOAIPMHResource(HarvestHttpResource):
             "resumptionToken": resumption_token.text
         }
 
-    def create_next_request(self):
-        next_request = super().create_next_request()
-        if not next_request:
-            return
-        url = URLObject(next_request.get("url"))
-        url = url.without_query().set_query_params(**self.next_parameters())
-        next_request["url"] = str(url)
-        return next_request
-
     class Meta:
-        verbose_name = "HAN OAIPMH harvest"
-        verbose_name_plural = "HAN OAIPMH harvests"
+        verbose_name = "Saxion OAIPMH harvest"
+        verbose_name_plural = "Saxion OAIPMH harvests"
