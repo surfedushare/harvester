@@ -70,6 +70,7 @@ class TestDocumentSearchView(DocumentAPITestCase):
             "page_size": 10
         }
         response = self.client.post(search_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(len(data["results"]), 2)
         self.assertEqual(data["results_total"], {"value": 2, "is_precise": True})
@@ -88,12 +89,26 @@ class TestDocumentSearchView(DocumentAPITestCase):
         }
         response = self.client.post(search_url, data=post_data, content_type="application/json")
         data = response.json()
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(data["results"]), 2)
         self.assertEqual(data["results_total"], {"value": 2, "is_precise": True})
         self.assertEqual(data["results"][0]["published_at"], "2017-04-16T22:35:09+02:00")
         self.assertEqual(data["page"], 1)
         self.assertEqual(data["page_size"], 10)
         self.assertIsNone(data["filter_counts"])
+
+    def test_search_invalid_ordering(self):
+        search_url = reverse("v1:search:search-documents")
+        post_data = {
+            "search_text": "",
+            "ordering": "invalid",
+            "page": 1,
+            "page_size": 10
+        }
+        response = self.client.post(search_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        data = response.json()
+        self.assertEqual(data["ordering"], ["Invalid value for ordering: 'invalid'"])
 
     def test_search_recent_documents(self):
         search_url = reverse("v1:search:search-documents")
@@ -109,6 +124,7 @@ class TestDocumentSearchView(DocumentAPITestCase):
             "page_size": 10
         }
         response = self.client.post(search_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(len(data["results"]), 1)
         self.assertEqual(data["results_total"], {"value": 1, "is_precise": True})
@@ -179,13 +195,15 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         data = response.json()
         self.assertEqual(data, {
             "filters": [
-                "Invalid external_id for metadata field in filter 'learning_material'"
+                "Invalid external_id for metadata field in filter: 'learning_material'"
             ]
         })
 
 
 @override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
+
+    fixtures = ["initial-metadata-publinova"]
     document_type = DocumentTypes.RESEARCH_PRODUCT
 
 

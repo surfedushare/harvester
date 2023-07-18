@@ -120,7 +120,7 @@
         "updated_at": "2022-01-11T10:08:21.811Z",
         "translation": 2012,
         "is_hidden": false,
-        "is_manual": true,
+        "is_manual": false,
         "english_as_dutch": false
     }
 },

@@ -34,14 +34,23 @@ class DocumentSearchSerializer(serializers.Serializer):
     results_total = serializers.DictField(read_only=True)
 
     def validate_filters(self, filters):
-        filter_fields = self.context.get("filter_fields", None)
-        if not filter_fields:
+        if not filters:
             return filters
+        filter_fields = self.context.get("filter_fields", None)
         for metadata_filter in filters:
             field_id = metadata_filter.get("external_id", None)
             if field_id not in filter_fields:
-                raise ValidationError(detail=f"Invalid external_id for metadata field in filter '{field_id}'")
+                raise ValidationError(detail=f"Invalid external_id for metadata field in filter: '{field_id}'")
         return filters
+
+    def validate_ordering(self, ordering):
+        if not ordering:
+            return
+        filter_fields = self.context.get("filter_fields", [])
+        ordering_field = ordering[1:] if ordering.startswith("-") else ordering
+        if ordering_field not in filter_fields:
+            raise ValidationError(detail=f"Invalid value for ordering: '{ordering}'")
+        return ordering
 
 
 class LearningMaterialSearchSerializer(DocumentSearchSerializer):
