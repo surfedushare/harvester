@@ -76,16 +76,20 @@ class DocumentSearchAPIView(GenericAPIView):
     **page**: A page number within the paginated result set.
 
     **filters**: Filters consist of an array of objects that specify an external_id and an items property.
-    The external_id should be the value of a "field" filter category (for instance: "technical_type").
-    See the filter categories endpoint described below for more details on filter categories.
+    The external_id should be the value of a MetadataField (for instance: "technical_type").
+    See the metadata tree endpoint for more details on MetadataField and their values.
     Next to the external_id you should specify an array under the items property.
-    Elements in this array should only consist of values from category filter objects (for instance: "video").
+    Elements in this array should only consist of values from MetadataValue nodes (for instance: "video").
+    Again see the metadata tree endpoint for more details on MetadataValue.
 
-    Filters under the same "field" filter category will function as an OR filter.
-    While multiple filter category items across "field" filter categories function as AND filters.
+    Filters using the same MetadataField, by specifying multiple values in the items array,
+    will function as OR filters.
+    While specifying multiple MetadataValues, in the items arrays across different MetadataFields,
+    function as AND filters.
 
-    **ordering**: The external_id of a filter category to order results by (for instance: "publisher_date").
-    This will ignore relevance of results and order by the specified property.
+    **ordering**: The value of a MetadataField to order results by (for instance: "publisher_date").
+    See the metadata tree endpoint for more details on MetadataField and their values.
+    Ordering results like this will mostly ignore relevance of results and order by the specified field.
     By default ordering is ascending.
     If you specify the minus sign (for instance: "-publisher_date") the ordering will be descending.
 
