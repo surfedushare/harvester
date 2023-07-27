@@ -69,6 +69,14 @@ class Command(BaseCommand):
             "value": "verpleegkunde",
             "name": "verpleegkunde",
             "language": "nl"
+        },
+        "ziezo-meten": {
+            "path": "ziezo-meten/ziezo-meten-2022.skos.json",
+            "nl": "Ziezo Meten",
+            "en": "Ziezo Meten",
+            "value": "ziezo-meten",
+            "name": "ziezo-meten",
+            "language": "nl"
         }
     }
 
