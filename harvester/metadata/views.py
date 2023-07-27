@@ -15,13 +15,17 @@ class MetadataTreeView(generics.ListAPIView):
 
     There are two types of nodes in the metadata tree.
     The root metadata nodes have a **field** value of null.
-    These nodes are all returned in the main array of the response and they represent fields that you can filter on.
+    These nodes are all returned in the main array of the response and their type is MetadataField.
+    You can filter and order search results on the value of a MetadataField.
 
-    Other nodes are returned as the children of the "field" nodes. The values of these nodes can be filtered on.
-    Typically you'll send the value of a "field" node
-    together with a number of values from nodes you want to filter on to the search endpoint.
+    Other nodes are returned as the children of the MetadataField nodes.
+    The type of these nodes is MetadataValue.
+    You can use the value of these nodes as values you want to filter search results on.
+    Typically for filtering search results you'll send the value of a MetadataField node,
+    together with a number of values from MetadataValue nodes that are children of the chosen MetadataField,
+    to the search endpoint.
 
-    When filtering take note that if somebody selects a non-field node that has children,
+    When filtering take note that if somebody selects a MetadataValue node that has children,
     then you'll want to send the values of these children together with the value of the parent
     as filter values in the search request. Failing to do this will yield unexpected results.
 
