@@ -87,6 +87,14 @@ class DocumentSearchAPIView(GenericAPIView):
     While specifying multiple MetadataValues, in the items arrays across different MetadataFields,
     function as AND filters.
 
+    The only exception to the above is how filtering works for a date range.
+    When you specify "publisher_date" as the external_id of a filter,
+    then the first item in the items array is a lower bound.
+    While the second item is the upper bound.
+    For each boundary it's possible to specify a null value meaning that there is no boundary.
+    If you specify ["1970-01-01", null] it will filter the search to results with a **publisher_date** after 01-01-1970
+    and until the present day. Anything lacking a **publisher_date** will be filtered out.
+
     **ordering**: The value of a MetadataField to order results by (for instance: "publisher_date").
     See the metadata tree endpoint for more details on MetadataField and their values.
     Ordering results like this will mostly ignore relevance of results and order by the specified field.
