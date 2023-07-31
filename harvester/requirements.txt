@@ -14,7 +14,7 @@ django-debug-toolbar==2.2.1
 pymsteams==0.2.2
 django-admin-confirm==0.2.5
 django-log-formatter-json==0.2.0
-ujson==3.1.0  # implicit dependency of django-log-formatter-json
+ujson==3.2.0  # implicit dependency of django-log-formatter-json
 
 # Harvester Celery
 celery==5.3.1
