@@ -59,9 +59,6 @@ class TestGetHarvestSeedsHan(TestCase):
         self.assertEqual(seeds[0]["mime_type"], "application/pdf")
         self.assertIsNone(seeds[2]["mime_type"], "Expected deleted record to have no mime_type")
 
-    def test_get_language(self):
-        self.skipTest("Not implemented yet, but seems essential for the system to function")
-
     def test_get_title(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["title"], "'Dat kan beter, ja...' : Webcare en het voorkomen van reputatieschade")
