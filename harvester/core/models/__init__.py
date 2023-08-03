@@ -3,9 +3,8 @@ from .ims import CommonCartridge
 from .resources.harvest import HarvestHttpResource
 from .resources.basic import HttpTikaResource, ExtructResource
 from .resources.youtube_dl import YouTubeDLResource
-from .resources.youtube_thumbnail import YoutubeThumbnailResource
-from .resources.pdf_thumbnail import PdfThumbnailResource
 from .resources.matomo import MatomoVisitsResource
+from .resources.thumbnails import YoutubeThumbnailResource, PdfThumbnailResource  # legacy models
 
 from .legacy.dataset import Dataset, DatasetVersion
 from .legacy.collection import Collection

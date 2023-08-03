@@ -1,10 +1,9 @@
 from django.contrib import admin
 
-from datagrowth.admin import HttpResourceAdmin, ShellResourceAdmin
+from datagrowth.admin import HttpResourceAdmin
 
 from core.models import (Dataset, DatasetVersion, Collection, Document, HarvestSource, HttpTikaResource, ElasticIndex,
-                         ExtructResource, YoutubeThumbnailResource, PdfThumbnailResource, Query, Extension,
-                         MatomoVisitsResource)
+                         ExtructResource, Query, Extension, MatomoVisitsResource)
 from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, DocumentAdmin, ExtensionAdmin, CollectionAdmin
 from core.admin.harvest import HarvestSourceAdmin
 from core.admin.search import ElasticIndexAdmin
@@ -21,6 +20,4 @@ admin.site.register(ElasticIndex, ElasticIndexAdmin)
 admin.site.register(ExtructResource, HttpResourceAdmin)
 admin.site.register(MatomoVisitsResource, HttpResourceAdmin)
 admin.site.register(Extension, ExtensionAdmin)
-admin.site.register(YoutubeThumbnailResource, ShellResourceAdmin)
-admin.site.register(PdfThumbnailResource, HttpResourceAdmin)
 admin.site.register(Query, QueryAdmin)
