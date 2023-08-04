@@ -190,7 +190,7 @@ class SaxionDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": None,
+                "external_id": 'saxion:' + SaxionDataExtraction.get_provider(soup, el)["slug"] + ":" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
