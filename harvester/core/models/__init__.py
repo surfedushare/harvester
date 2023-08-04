@@ -1,8 +1,8 @@
 from .resources.harvest import HarvestHttpResource
-from .resources.basic import HttpTikaResource, ExtructResource
 from .resources.matomo import MatomoVisitsResource
 
 # Start legacy models
+from .resources.basic import HttpTikaResource, ExtructResource
 from .resources.thumbnails import YoutubeThumbnailResource, PdfThumbnailResource
 from .legacy.dataset import Dataset, DatasetVersion
 from .legacy.collection import Collection
