@@ -28,3 +28,8 @@ class CoreConfig(AppConfig):
             "to_property": None,
             "apply_resource_to": []
         })
+        register_defaults("seeding_processor", {
+            "phase": "initial",
+            "phases": [],
+            "identifier": "srn"  # SURF Resource Name
+        })
