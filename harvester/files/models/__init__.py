@@ -1,4 +1,4 @@
-from core.models.harvest import HarvestState
+from files.models.harvest import HarvestState
 
 from files.models.datatypes.containers import Dataset, DatasetVersion, Set
 from files.models.datatypes.file import FileDocument, Overwrite

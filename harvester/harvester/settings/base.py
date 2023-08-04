@@ -91,6 +91,8 @@ INSTALLED_APPS = [
     'search',
     'sources',
 
+    'files',
+
     'edurep',
     'sharekit',
     'anatomy_tool',
