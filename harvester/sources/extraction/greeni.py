@@ -193,7 +193,10 @@ class GreeniDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": 'greeni:' + GreeniDataExtraction.get_provider(soup, el)["slug"] + ":" + sha1(name.encode('utf-8')).hexdigest(),
+                "external_id":
+                    GreeniDataExtraction.get_provider(soup, el)["slug"] +
+                    ":" + name.replace(" ", "") + ":" +
+                    sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,

@@ -9,7 +9,6 @@ from django.utils.text import slugify
 
 
 class SaxionDataExtraction(object):
-
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
                               re.IGNORECASE)
@@ -94,11 +93,11 @@ class SaxionDataExtraction(object):
         url = element["ref"]
         match resource_type:
             case "file":
-                title = f"Attachment {ix+1}"
+                title = f"Attachment {ix + 1}"
                 access_rights_node = item.find("accessRights")
                 _, access_rights = os.path.split(access_rights_node.text.strip())
             case "link":
-                title = f"URL {ix+1}"
+                title = f"URL {ix + 1}"
                 access_rights = "OpenAccess"
             case _:
                 title = None
@@ -190,7 +189,9 @@ class SaxionDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": 'saxion:' + SaxionDataExtraction.get_provider(soup, el)["slug"] + ":" + sha1(name.encode('utf-8')).hexdigest(),
+                "external_id":
+                    SaxionDataExtraction.get_provider(soup, el)["slug"] + ":" + name.replace(" ", "") + ":" +
+                    sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
