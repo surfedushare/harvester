@@ -190,8 +190,8 @@ class SaxionDataExtraction(object):
                 "name": name,
                 "email": None,
                 "external_id":
-                    SaxionDataExtraction.get_provider(soup, el)["slug"] + ":" + name.replace(" ", "") + ":" +
-                    sha1(name.encode('utf-8')).hexdigest(),
+                    SaxionDataExtraction.get_provider(soup, el)["slug"] +
+                    ":person:" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
