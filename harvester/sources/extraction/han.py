@@ -173,7 +173,9 @@ class HanDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": None,
+                "external_id":
+                    HanDataExtraction.get_provider(soup, el)["slug"] +
+                    ":person:" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,

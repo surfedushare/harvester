@@ -75,8 +75,18 @@ class TestGetHarvestSeedsGreeni(TestCase):
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
-            {'name': 'W. Timmermans', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
-            {'name': 'J. Jonkhof', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
+            {'name': 'W. Timmermans',
+             'email': None,
+             'external_id': "PUBVHL:person:c2608093b5888169d775d89cef451807826ae380",
+             'dai': None,
+             'orcid': None,
+             'isni': None},
+            {'name': 'J. Jonkhof',
+             'email': None,
+             'external_id': "PUBVHL:person:a93b9d1a8e05abc28253b2b667f562ab91e65448",
+             'dai': None,
+             'orcid': None,
+             'isni': None},
         ])
 
     def test_get_provider(self):
