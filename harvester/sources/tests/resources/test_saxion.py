@@ -18,8 +18,8 @@ class TestSaxionResource(TestCase):
         # Check all parameters in request URL
         request = self.instance.create_next_request()
         self.assertIn(f"resumptionToken={RESUMPTION_TOKEN}", request["url"])
-        self.assertIn(f"verb=ListRecords", request["url"])
-        self.assertIn(f"metadataPrefix=oai_mods", request["url"])
+        self.assertIn("verb=ListRecords", request["url"])
+        self.assertIn("metadataPrefix=oai_mods", request["url"])
 
     def test_next_request_none(self):
         instance = SaxionOAIPMHResourceFactory.create(is_initial=True, number=1)
