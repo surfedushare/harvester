@@ -125,9 +125,9 @@ class HvaMetadataExtraction(ExtractProcessor):
             authors.append({
                 "name": full_name,
                 "email": None,
-                "external_id":person_data.get("uuid",
-                                              f"{HvaMetadataExtraction.get_provider(node)['slug']}:person:"
-                                              f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
+                "external_id": person_data.get("uuid",
+                                               f"{HvaMetadataExtraction.get_provider(node)['slug']}:person:"
+                                               f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
                 "dai": None,
                 "orcid": None,
                 "isni": None
