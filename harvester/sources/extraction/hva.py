@@ -120,12 +120,13 @@ class HvaMetadataExtraction(ExtractProcessor):
                 case {"lastName": last_name}:
                     full_name = last_name
                 case _:
-                    full_name = None
+                    raise ValueError("Author does not have a name")
             person_data = person.get("person", person.get("externalPerson", {}))
             authors.append({
                 "name": full_name,
                 "email": None,
-                "external_id": person_data.get("uuid", f"hva:person:{person['pureId']}"),
+                "external_id": f"{HvaMetadataExtraction.get_provider(node)['slug']}:person:" +
+                               person_data.get("uuid", sha1(full_name.encode('utf-8')).hexdigest()),
                 "dai": None,
                 "orcid": None,
                 "isni": None
