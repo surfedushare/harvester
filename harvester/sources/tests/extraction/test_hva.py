@@ -84,7 +84,7 @@ class TestGetHarvestSeedsHva(TestCase):
         self.assertEqual(seeds[0]['authors'], [
             {
                 'name': 'Ruben Fukkink', 'email': None,
-                'external_id': "hva:person:c16dbff7-4c77-463a-9d91-933bf59bbc53",
+                'external_id': "c16dbff7-4c77-463a-9d91-933bf59bbc53",
                 'dai': None, 'orcid': None, 'isni': None
             },
             {
