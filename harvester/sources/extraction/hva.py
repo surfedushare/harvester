@@ -120,7 +120,10 @@ class HvaMetadataExtraction(ExtractProcessor):
                 case {"lastName": last_name}:
                     full_name = last_name
                 case _:
-                    raise ValueError("Author does not have a name")
+                    # Contributors with the type: ExternalContributorAssociation
+                    # do not yield any name or other identity information.
+                    # We skip the (useless) data silently
+                    continue
             person_data = person.get("person", person.get("externalPerson", {}))
             authors.append({
                 "name": full_name,
