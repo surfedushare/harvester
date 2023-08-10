@@ -120,12 +120,17 @@ class HvaMetadataExtraction(ExtractProcessor):
                 case {"lastName": last_name}:
                     full_name = last_name
                 case _:
-                    full_name = None
+                    # Contributors with the type: ExternalContributorAssociation
+                    # do not yield any name or other identity information.
+                    # We skip the (useless) data silently
+                    continue
             person_data = person.get("person", person.get("externalPerson", {}))
             authors.append({
                 "name": full_name,
                 "email": None,
-                "external_id": person_data.get("uuid", f"hva:person:{person['pureId']}"),
+                "external_id": person_data.get("uuid",
+                                               f"{HvaMetadataExtraction.get_provider(node)['slug']}:person:"
+                                               f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
                 "dai": None,
                 "orcid": None,
                 "isni": None

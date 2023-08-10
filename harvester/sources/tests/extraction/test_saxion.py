@@ -97,7 +97,12 @@ class TestGetHarvestSeedsSaxion(TestCase):
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
-            {'name': 'C (Costa) Tsunami', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
+            {'name': 'C (Costa) Tsunami',
+             'email': None,
+             'external_id': 'saxion:person:31d9369d11cfacc54d4df014572268b114c50f7c',
+             'dai': None,
+             'orcid': None,
+             'isni': None},
         ])
         self.assertEqual(self.deleted["authors"], [])
 

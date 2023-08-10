@@ -12,6 +12,7 @@ from sources.factories.hva.extraction import HvaPureResourceFactory, SET_SPECIFI
 class TestGetHarvestSeedsHva(TestCase):
 
     begin_of_time = None
+    maxDiff = None
 
     @classmethod
     def setUpClass(cls):
@@ -82,23 +83,28 @@ class TestGetHarvestSeedsHva(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
             {
-                'name': 'Ruben Fukkink', 'email': None, 'external_id': "c16dbff7-4c77-463a-9d91-933bf59bbc53",
+                'name': 'Ruben Fukkink', 'email': None,
+                'external_id': "c16dbff7-4c77-463a-9d91-933bf59bbc53",
                 'dai': None, 'orcid': None, 'isni': None
             },
             {
-                'name': 'Sandra van Otterloo', 'email': None, 'external_id': "hva:person:140057",
+                'name': 'Sandra van Otterloo', 'email': None,
+                'external_id': "hva:person:effd42a504e9a5d3963603848288d13af3188cc5",
                 'dai': None, 'orcid': None, 'isni': None
             },
             {
-                'name': 'Lotje Cohen', 'email': None, 'external_id': "hva:person:140058",
+                'name': 'Lotje Cohen', 'email': None,
+                'external_id': "hva:person:412ed1fc512e775ddca58e0655220b44c50a8b20",
                 'dai': None, 'orcid': None, 'isni': None
             },
             {
-                'name': 'Merel van der Wouden', 'email': None, 'external_id': "hva:person:140059",
+                'name': 'Merel van der Wouden', 'email': None,
+                'external_id': "hva:person:e3a6d0b12c0e42a2afd2811d65f512b11f947d6f",
                 'dai': None, 'orcid': None, 'isni': None
             },
             {
-                'name': 'Bonne Zijlstra', 'email': None, 'external_id': "hva:person:140060",
+                'name': 'Bonne Zijlstra', 'email': None,
+                'external_id': "hva:person:45fec1047bbfe2dda5d740d7c4b046e85af084ae",
                 'dai': None, 'orcid': None, 'isni': None
             }
         ])

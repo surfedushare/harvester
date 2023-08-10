@@ -9,7 +9,6 @@ from django.utils.text import slugify
 
 
 class SaxionDataExtraction(object):
-
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
                               re.IGNORECASE)
@@ -78,33 +77,33 @@ class SaxionDataExtraction(object):
         elif len(resources) > 1:
             raise AssertionError(f"Unexpected length for metadata resource: {len(resources)}")
         metadata = resources[0]
-        item = next((parent for parent in metadata.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in metadata.parents if parent.name == "Item"), None)
         if not item:
             raise AssertionError("Metadata descriptor did not have an item as parent")
-        return item.find("didl:resource")
+        return item.find("Resource")
 
     @classmethod
     def _extract_file(cls, resource_type, resource, ix, default_copyright):
-        item = next((parent for parent in resource.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in resource.parents if parent.name == "Item"), None)
         if not item:
             return
-        element = item.find("didl:resource")
+        element = item.find("Resource")
         if not element:
             return
         url = element["ref"]
         match resource_type:
             case "file":
-                title = f"Attachment {ix+1}"
-                access_rights_node = item.find("dcterms:accessrights")
+                title = f"Attachment {ix + 1}"
+                access_rights_node = item.find("accessRights")
                 _, access_rights = os.path.split(access_rights_node.text.strip())
             case "link":
-                title = f"URL {ix+1}"
+                title = f"URL {ix + 1}"
                 access_rights = "OpenAccess"
             case _:
                 title = None
                 access_rights = None
         return {
-            "mime_type": element.get("mimetype", None),
+            "mime_type": element.get("mimeType", None),
             "url": url,
             "hash": sha1(url.encode("utf-8")).hexdigest(),
             "title": title,
@@ -145,26 +144,26 @@ class SaxionDataExtraction(object):
 
     @classmethod
     def get_copyright_description(cls, soup, el):
-        copyright_desciption = el.find("dc:rights")
+        copyright_desciption = el.find("rights")
         if not copyright_desciption:
             return
         return copyright_desciption.text.strip()
 
     @classmethod
     def get_language(cls, soup, el):
-        language_term = el.find("mods:languageterm")
+        language_term = el.find("languageTerm")
         if not language_term:
             return "unk"
         return language_term.text.strip()
 
     @classmethod
     def get_title(cls, soup, el):
-        node = el.find('mods:title')
+        node = el.find('title')
         return node.text.strip() if node else None
 
     @classmethod
     def get_description(cls, soup, el):
-        node = el.find('mods:abstract')
+        node = el.find('abstract')
         return node.text if node else None
 
     @classmethod
@@ -174,11 +173,11 @@ class SaxionDataExtraction(object):
             return []
         authors = []
         for role in roles:
-            author = role.find_parent('mods:name')
+            author = role.find_parent('name')
             if not author:
                 continue
-            given_name = author.find('mods:namepart', attrs={"type": "given"})
-            family_name = author.find('mods:namepart', attrs={"type": "family"})
+            given_name = author.find('namePart', attrs={"type": "given"})
+            family_name = author.find('namePart', attrs={"type": "family"})
             if not given_name and not family_name:
                 continue
             elif not given_name:
@@ -190,7 +189,9 @@ class SaxionDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": None,
+                "external_id":
+                    SaxionDataExtraction.get_provider(soup, el)["slug"] +
+                    ":person:" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
@@ -217,12 +218,12 @@ class SaxionDataExtraction(object):
 
     @classmethod
     def get_publishers(cls, soup, el):
-        publisher = el.find("mods:publisher")
+        publisher = el.find("publisher")
         return [publisher.text.strip()] if publisher else []
 
     @classmethod
     def get_publisher_date(cls, soup, el):
-        date_issued = el.find("mods:dateissued")
+        date_issued = el.find("dateIssued")
         if not date_issued:
             return
         return date_issued.text.strip()

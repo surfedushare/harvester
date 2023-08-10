@@ -111,7 +111,7 @@ def harvest(ctx, mode, reset=False, no_promote=False):
     """
     Starts a harvest tasks on the AWS container cluster or localhost
     """
-    command = ["python", "manage.py", "run_harvest"]
+    command = ["python", "manage.py", "run_legacy_harvest"]
     if reset:
         command += ["--reset"]
     if no_promote:

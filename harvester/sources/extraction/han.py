@@ -77,24 +77,24 @@ class HanDataExtraction(object):
         elif len(resources) > 1:
             raise AssertionError(f"Unexpected length for metadata resource: {len(resources)}")
         metadata = resources[0]
-        item = next((parent for parent in metadata.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in metadata.parents if parent.name == "Item"), None)
         if not item:
             raise AssertionError("Metadata descriptor did not have an item as parent")
         return item.find("didl:resource")
 
     @classmethod
     def _extract_file(cls, resource_type, resource, ix):
-        item = next((parent for parent in resource.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in resource.parents if parent.name == "Item"), None)
         if not item:
             return
-        element = item.find("didl:resource")
+        element = item.find("Resource")
         if not element:
             return
         url = element["ref"]
         match resource_type:
             case "file":
                 title = f"Attachment {ix+1}"
-                access_rights_node = item.find("dcterms:accessrights")
+                access_rights_node = item.find("accessRights")
                 _, access_rights = os.path.split(access_rights_node.text.strip())
             case "link":
                 title = f"URL {ix+1}"
@@ -103,7 +103,7 @@ class HanDataExtraction(object):
                 title = None
                 access_rights = None
         return {
-            "mime_type": element.get("mimetype", None),
+            "mime_type": element.get("mimeType", None),
             "url": url,
             "hash": sha1(url.encode("utf-8")).hexdigest(),
             "title": title,
@@ -142,12 +142,12 @@ class HanDataExtraction(object):
 
     @classmethod
     def get_title(cls, soup, el):
-        node = el.find('mods:title')
+        node = el.find('title')
         return node.text.strip() if node else None
 
     @classmethod
     def get_description(cls, soup, el):
-        node = el.find('mods:abstract')
+        node = el.find('abstract')
         return node.text if node else None
 
     @classmethod
@@ -157,11 +157,11 @@ class HanDataExtraction(object):
             return []
         authors = []
         for role in roles:
-            author = role.find_parent('mods:name')
+            author = role.find_parent('name')
             if not author:
                 continue
-            given_name = author.find('mods:namepart', attrs={"type": "given"})
-            family_name = author.find('mods:namepart', attrs={"type": "family"})
+            given_name = author.find('namePart', attrs={"type": "given"})
+            family_name = author.find('namePart', attrs={"type": "family"})
             if not given_name and not family_name:
                 continue
             elif not given_name:
@@ -173,7 +173,9 @@ class HanDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": None,
+                "external_id":
+                    HanDataExtraction.get_provider(soup, el)["slug"] +
+                    ":person:" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
@@ -204,7 +206,7 @@ class HanDataExtraction(object):
 
     @classmethod
     def get_publisher_year(cls, soup, el):
-        year = el.find("mods:dateissued")
+        year = el.find("dateIssued")
         return int(year.text.strip()) if year else None
 
     @classmethod
@@ -240,14 +242,14 @@ class HanDataExtraction(object):
 
     @classmethod
     def get_research_object_type(cls, soup, el):
-        genre = el.find("mods:genre")
+        genre = el.find("genre")
         return genre.text.strip() if genre else None
 
     @classmethod
     def get_doi(cls, soup, el):
         dois = [
             url_identifier.text.strip()
-            for url_identifier in el.find_all("mods:identifier", attrs={"type": "uri"})
+            for url_identifier in el.find_all("identifier", attrs={"type": "uri"})
             if "doi.org" in url_identifier.text
         ]
         return dois[0] if len(dois) else None

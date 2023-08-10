@@ -10,6 +10,7 @@ import logging
 from django.core.files import File
 from django.db import models
 from django.dispatch import receiver
+from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.fields import VersatileImageField
 from versatileimagefield.utils import build_versatileimagefield_url_set
@@ -20,9 +21,11 @@ from datagrowth.resources import ShellResource
 logger = logging.getLogger("harvester")
 
 
-class YoutubeThumbnailResource(ShellResource):
+def get_preview_file_path(instance, file_name):
+    return os.path.join("", "previews", "youtube")
 
-    preview = VersatileImageField(upload_to=os.path.join("core", "previews", "youtube"), null=True, blank=True)
+
+class BaseYoutubeThumbnailResource(ShellResource):
 
     CMD_TEMPLATE = [
         "youtube-dl",
@@ -106,6 +109,18 @@ class YoutubeThumbnailResource(ShellResource):
             metadata = json.loads(self.stdout)
             extension = os.path.splitext(metadata["thumbnail"])[1]
             return extension.split("?")[0]
+
+    class Meta:
+        abstract = True
+
+
+class YoutubeThumbnailResource(BaseYoutubeThumbnailResource):
+
+    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "youtube"), null=True, blank=True)
+    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+
+    class Meta:
+        app_label = "files"
 
 
 @receiver(models.signals.post_delete, sender=YoutubeThumbnailResource)

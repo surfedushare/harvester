@@ -13,8 +13,7 @@ PRIVATE_PROPERTIES = ["from_youtube", "lowest_educational_level"]
 class DocumentManager(models.Manager):
 
     def build_from_seed(self, seed, collection=None, metadata_pipeline_key=None):
-        properties = copy(seed)  # TODO: use setters that update the pipeline?
-
+        properties = copy(seed)
         metadata_pipeline = properties.pop(metadata_pipeline_key, None)
         document = Document(properties=properties, collection=collection, pipeline={"metadata": metadata_pipeline})
         if collection:

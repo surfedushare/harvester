@@ -68,7 +68,7 @@ class AnatomyToolOAIPMH(HarvestHttpResource):
 
     def next_parameters(self):
         content_type, soup = self.content
-        resumption_token = soup.find("resumptiontoken")
+        resumption_token = soup.find("resumptionToken")
         if not resumption_token or not resumption_token.text:
             return {}
         return {

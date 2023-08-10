@@ -3,8 +3,8 @@ from django.contrib import admin
 from datagrowth.admin import HttpResourceAdmin, ShellResourceAdmin
 
 from core.models import (Dataset, DatasetVersion, Collection, Document, HarvestSource, HttpTikaResource, ElasticIndex,
-                         ExtructResource, YoutubeThumbnailResource, PdfThumbnailResource, Query, Extension,
-                         MatomoVisitsResource)
+                         ExtructResource, Query, Extension, MatomoVisitsResource)
+from core.models import YoutubeThumbnailResource, PdfThumbnailResource
 from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, DocumentAdmin, ExtensionAdmin, CollectionAdmin
 from core.admin.harvest import HarvestSourceAdmin
 from core.admin.search import ElasticIndexAdmin

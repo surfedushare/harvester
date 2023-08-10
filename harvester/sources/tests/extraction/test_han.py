@@ -59,9 +59,6 @@ class TestGetHarvestSeedsHan(TestCase):
         self.assertEqual(seeds[0]["mime_type"], "application/pdf")
         self.assertIsNone(seeds[2]["mime_type"], "Expected deleted record to have no mime_type")
 
-    def test_get_language(self):
-        self.skipTest("Not implemented yet, but seems essential for the system to function")
-
     def test_get_title(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["title"], "'Dat kan beter, ja...' : Webcare en het voorkomen van reputatieschade")
@@ -75,8 +72,18 @@ class TestGetHarvestSeedsHan(TestCase):
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
-            {'name': 'R.G. van Os', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
-            {'name': 'Daphne Hachmang', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
+            {'name': 'R.G. van Os',
+             'email': None,
+             'external_id': "han:person:68032ff81ed6fcbc63cadeacf1cc03c1bbae6d1d",
+             'dai': None,
+             'orcid': None,
+             'isni': None},
+            {'name': 'Daphne Hachmang',
+             'email': None,
+             'external_id': "han:person:467baafc5ac0c3ebbeb337d9c9644569908506f6",
+             'dai': None,
+             'orcid': None,
+             'isni': None},
         ])
         self.assertEqual(seeds[2]["authors"], [], "Expected deleted record to have no authors")
 

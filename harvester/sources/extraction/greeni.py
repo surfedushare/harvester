@@ -88,24 +88,24 @@ class GreeniDataExtraction(object):
         elif len(resources) > 1:
             raise AssertionError(f"Unexpected length for metadata resource: {len(resources)}")
         metadata = resources[0]
-        item = next((parent for parent in metadata.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in metadata.parents if parent.name == "Item"), None)
         if not item:
             raise AssertionError("Metadata descriptor did not have an item as parent")
-        return item.find("didl:resource")
+        return item.find("Resource")
 
     @classmethod
     def _extract_file(cls, resource_type, resource, ix):
-        item = next((parent for parent in resource.parents if parent.name == "didl:item"), None)
+        item = next((parent for parent in resource.parents if parent.name == "Item"), None)
         if not item:
             return
-        element = item.find("didl:resource")
+        element = item.find("Resource")
         if not element:
             return
         url = element["ref"]
         match resource_type:
             case "file":
                 title = f"Attachment {ix+1}"
-                access_rights_node = item.find("dcterms:accessrights")
+                access_rights_node = item.find("accessRights")
                 _, access_rights = os.path.split(access_rights_node.text.strip())
             case "link":
                 title = f"URL {ix+1}"
@@ -114,7 +114,7 @@ class GreeniDataExtraction(object):
                 title = None
                 access_rights = None
         return {
-            "mime_type": element.get("mimetype", None),
+            "mime_type": element.get("mimeType", None),
             "url": url,
             "hash": sha1(url.encode("utf-8")).hexdigest(),
             "title": title,
@@ -152,7 +152,7 @@ class GreeniDataExtraction(object):
         metadata = cls.find_metadata(el)
         if not metadata:
             return
-        language_term = metadata.find("languageterm")
+        language_term = metadata.find("languageTerm")
         language_code = language_term.text.strip()
         if language_code == "dut":
             return "nl"
@@ -180,8 +180,8 @@ class GreeniDataExtraction(object):
             author = role.find_parent('name')
             if not author:
                 continue
-            given_name = author.find('namepart', attrs={"type": "given"})
-            family_name = author.find('namepart', attrs={"type": "family"})
+            given_name = author.find('namePart', attrs={"type": "given"})
+            family_name = author.find('namePart', attrs={"type": "family"})
             if not given_name and not family_name:
                 continue
             elif not given_name:
@@ -193,7 +193,9 @@ class GreeniDataExtraction(object):
             authors.append({
                 "name": name,
                 "email": None,
-                "external_id": None,
+                "external_id":
+                    GreeniDataExtraction.get_provider(soup, el)["slug"] +
+                    ":person:" + sha1(name.encode('utf-8')).hexdigest(),
                 "dai": None,
                 "orcid": None,
                 "isni": None,
@@ -202,7 +204,7 @@ class GreeniDataExtraction(object):
 
     @classmethod
     def get_provider(cls, soup, el):
-        set_specs = [set_spec.text.strip() for set_spec in el.find_all("setspec")]
+        set_specs = [set_spec.text.strip() for set_spec in el.find_all("setSpec")]
         for set_spec in set_specs:
             if set_spec in SET_SPEC_TO_PROVIDER:
                 return SET_SPEC_TO_PROVIDER[set_spec]
@@ -228,7 +230,7 @@ class GreeniDataExtraction(object):
 
     @classmethod
     def get_publisher_year(cls, soup, el):
-        date_issued = el.find("dateissued")
+        date_issued = el.find("dateIssued")
         if not date_issued:
             return
         datetime = None
