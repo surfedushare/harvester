@@ -5,11 +5,11 @@ from django.db import models
 
 from datagrowth.datatypes import CollectionBase, DocumentCollectionMixin
 
-from core.models.datatypes.base import simple_metadata_default
+from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.document import HarvestDocument
 
 
-class HarvestSet(DocumentCollectionMixin, CollectionBase):
+class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
     """
     Represents a set as used by the OAI-PMH protocol.
     These sets are logically collections of documents.

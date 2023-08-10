@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.timezone import now
 
 from datagrowth.datatypes import DocumentBase
+from core.models.datatypes.base import HarvestObjectMixin
 
 
 def document_metadata_default() -> dict:
@@ -45,7 +46,7 @@ class HarvestDocumentManager(models.Manager):
         pass
 
 
-class HarvestDocument(DocumentBase):
+class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     # NB: These foreign keys are app agnostic and point to different models in different apps
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
@@ -63,10 +64,6 @@ class HarvestDocument(DocumentBase):
 
     state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE)
     metadata = models.JSONField(default=document_metadata_default, blank=True)
-    pipeline = models.JSONField(default=dict, blank=True)
-    conditions = models.JSONField(default=dict, blank=True)
-    derivatives = models.JSONField(default=dict, blank=True)
-    pending_at = models.DateTimeField(default=now)
 
     def update(self, data: Any, commit: bool = True, validate: bool = True) -> None:
         super().update(data, commit=commit, validate=validate)

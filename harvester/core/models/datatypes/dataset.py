@@ -10,7 +10,7 @@ from django.db import models, transaction
 from django.db.models.manager import QuerySet
 
 from datagrowth.utils import ibatch
-from core.models.datatypes.base import simple_metadata_default
+from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.set import HarvestSet
 from core.models.datatypes.document import HarvestDocument
 from core.models.harvest import HarvestState
@@ -135,7 +135,7 @@ class HarvestDatasetVersionManager(models.Manager):
         ]
 
 
-class HarvestDatasetVersion(models.Model):
+class HarvestDatasetVersion(HarvestObjectMixin):
 
     objects = HarvestDatasetVersionManager()
 
@@ -144,11 +144,6 @@ class HarvestDatasetVersion(models.Model):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True)
-
-    metadata = models.JSONField(default=simple_metadata_default, blank=True)
-    pipeline = models.JSONField(default=dict, blank=True)
-    conditions = models.JSONField(default=dict, blank=True)
-    derivatives = models.JSONField(default=dict, blank=True)
 
     @property
     def documents(self) -> HarvestDocument.objects | QuerySet:
