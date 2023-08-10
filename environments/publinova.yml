@@ -19,3 +19,5 @@ django:
 
 harvester:
   sources_middleware_api: "https://sources.{environment_code}.publinova.nl/api/v1/"
+  repositories:
+    sharekit: "https://api.acc.surfsharekit.nl"
