@@ -1,4 +1,5 @@
 from files.models.harvest import HarvestState
+from files.models.pipeline import Batch, ProcessResult
 
 from files.models.datatypes.containers import Dataset, DatasetVersion, Set
 from files.models.datatypes.file import FileDocument, Overwrite

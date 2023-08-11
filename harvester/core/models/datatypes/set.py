@@ -17,11 +17,6 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
 
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
 
-    metadata = models.JSONField(default=simple_metadata_default, blank=True)
-    pipeline = models.JSONField(default=dict, blank=True)
-    conditions = models.JSONField(default=dict, blank=True)
-    derivatives = models.JSONField(default=dict, blank=True)
-
     @classmethod
     def get_document_model(cls) -> HarvestDocument:
         app = cls._meta.app_label
