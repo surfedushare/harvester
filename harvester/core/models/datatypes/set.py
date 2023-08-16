@@ -19,9 +19,9 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
 
     @classmethod
     def get_document_model(cls) -> HarvestDocument:
-        app = cls._meta.app_label
-        app_config = apps.get_app_config(app)
-        return apps.get_model(app_config.document_model)
+        app_label = cls._meta.app_label
+        app_config = apps.get_app_config(app_label)
+        return apps.get_model(f"{app_label}.{app_config.document_model}")
 
     def init_document(self, data: dict, collection: HarvestSet = None) -> HarvestDocument:
         doc = super().init_document(data, collection=collection or self)
