@@ -16,17 +16,29 @@ class HarvestObjectMixin(models.Model):
     pipeline = models.JSONField(default=dict, blank=True)
     tasks = models.JSONField(default=dict, blank=True)
     derivatives = models.JSONField(default=dict, blank=True)
-    pending_at = models.DateTimeField(default=now)
+    pending_at = models.DateTimeField(default=now, null=True, blank=True)
+
+    def reset_task_results(self):  # TODO: test this
+        self.pipeline = {}
+        self.tasks = self._meta.get_field("tasks").default()
+        self.derivatives = {}
+        self.pending_at = None
+        self.clean()
+        self.save()
 
     def get_pending_tasks(self) -> list[str]:
         pending_tasks = []
         for task_name, conditions in self.tasks.items():
-            is_pass_checks = all(
-                getattr(self, check)
-                for check in conditions["checks"]
-            )
-            has_run = task_name in self.pipeline
-            if is_pass_checks and not has_run:
+            is_pending_task = False
+            for check in conditions["checks"]:
+                negate = check.startswith("!")
+                check_attribute = getattr(self, check if not negate else check[1:])
+                if not check_attribute and not negate or check_attribute and negate:
+                    break
+            else:
+                is_pending_task = True
+            is_success = self.pipeline.get(task_name, {}).get("success", False)
+            if is_pending_task and not is_success:
                 pending_tasks.append(task_name)
         return pending_tasks
 

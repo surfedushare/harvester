@@ -86,10 +86,12 @@ OBJECTIVE = {
     "access_rights": SharekitFileExtraction.get_access_rights,
     "product_id": lambda node: node["product"]["product_id"],
     "is_link": lambda node: node["is_link"],
+    "harvest_source": lambda node: "sharekit",
+    "provider": lambda node: node["product"]["provider"]
 }
 
 
-PHASES = [
+SEEDING_PHASES = [
     {
         "phase": "publications",
         "strategy": "initial",

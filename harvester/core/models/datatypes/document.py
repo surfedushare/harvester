@@ -68,6 +68,9 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     def update(self, data: Any, commit: bool = True, validate: bool = True) -> None:
         super().update(data, commit=commit, validate=validate)
 
+    def apply_resource(self, resource):
+        pass
+
     def get_derivatives_data(self) -> dict:
         data = {}
         for base, derivatives in self.derivatives.items():

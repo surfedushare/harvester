@@ -3,7 +3,7 @@ from django.test import TestCase
 from core.processors import HttpSeedingProcessor
 from sharekit.tests.factories import SharekitMetadataHarvestFactory
 from files.models import Set as FileSet, FileDocument
-from files.sources.sharekit import PHASES
+from files.sources.sharekit import SEEDING_PHASES
 
 
 class TestHttpSeedingProcessorFiles(TestCase):
@@ -19,7 +19,7 @@ class TestHttpSeedingProcessorFiles(TestCase):
 
     def test_initial_seeding_files(self):
         processor = HttpSeedingProcessor(self.set, {
-            "phases": PHASES
+            "phases": SEEDING_PHASES
         })
 
         files = processor("edusources", "1970-01-01T00:00:00Z")

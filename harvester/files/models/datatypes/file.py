@@ -5,8 +5,11 @@ from mimetypes import guess_type
 from django.db import models
 from django.conf import settings
 
+from datagrowth.resources.base import Resource
+
 from core.models.datatypes.document import HarvestDocument
 from core.models.datatypes.overwrite import HarvestOverwrite
+from files.models.resources.metadata import HttpTikaResource
 
 
 def default_document_tasks():
@@ -17,11 +20,11 @@ def default_document_tasks():
         },
         "extruct": {
             "depends_on": ["url"],
-            "checks": ["!is_not_found"]
+            "checks": ["!is_not_found", "is_youtube_video"]
         },
         "pdf_thumbnail": {
             "depends_on": ["url"],
-            "checks": ["!is_not_found"]
+            "checks": ["!is_not_found", "is_pdf"]
         },
         "video_thumbnail": {
             "depends_on": ["url"],
@@ -48,19 +51,28 @@ class FileDocument(HarvestDocument):
     type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown")
     is_not_found = models.BooleanField(default=False)
 
+    def apply_resource(self, resource: Resource):
+        if isinstance(resource, HttpTikaResource):
+            if resource.status == 404:
+                self.is_not_found = True
+                self.pending_at = None
+
     @property
     def is_youtube_video(self):
+        if not self.domain:
+            return False
         return youtube_domain_regex.match(self.domain)
 
     @property
     def is_video(self):
-        return self.is_youtube_video
+        return self.is_youtube_video or self.type == "video"
 
     @property
     def is_pdf(self):
         return self.mime_type in ["application/pdf", "application/x-pdf"]
 
     def clean(self):
+        super().clean()
         url = self.properties.get("url", None)
         if url:
             url_info = urlparse(url)
@@ -70,7 +82,7 @@ class FileDocument(HarvestDocument):
             mime_type, encoding = guess_type(url)
         self.mime_type = mime_type
         if self.mime_type:
-            self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE[self.mime_type]
+            self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
 
 
 class Overwrite(HarvestOverwrite):
