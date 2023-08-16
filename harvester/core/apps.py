@@ -9,7 +9,9 @@ class CoreConfig(AppConfig):
     def ready(self):
 
         register_defaults("global", {
+            "batch_size": 100,
             "purge_after": {"days": 30},
+            "pipeline_depends_on": None,
             "pipeline_app_label": None,
             "pipeline_models": {
                 "document": "Document",
@@ -18,9 +20,11 @@ class CoreConfig(AppConfig):
             },
         })
         register_defaults("http_resource", {
-            "method": "get"
+            "method": "get",
+            "continuation_limit": 9999  # an arbitrary large number to never hit this limit
         })
         register_defaults("extract_processor", {
             "extractor": "ExtractProcessor.extract_from_resource",
-            "to_property": None
+            "to_property": None,
+            "apply_resource_to": []
         })
