@@ -19,4 +19,4 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Load task modules from all registered Django app configs.
 application = get_wsgi_application()  # load the apps
 
-app.autodiscover_tasks(lambda: [cfg.name for cfg in apps.get_app_configs()])
+app.autodiscover_tasks(lambda: [cfg.name for cfg in apps.get_app_configs()], force=True)
