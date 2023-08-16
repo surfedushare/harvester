@@ -462,7 +462,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute=30)
     },
 }
-CELERY_WORKER_HIJACK_ROOT_LOGGER = False
+CELERY_WORKER_HIJACK_ROOT_LOGGER = not environment.aws.is_aws
 CELERY_WORKER_MAX_TASKS_PER_CHILD = 50
 
 
