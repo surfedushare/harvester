@@ -29,6 +29,7 @@ class TestHttpSeedingProcessorFiles(TestCase):
                 self.assertIsInstance(file_, FileDocument)
                 self.assertIsNotNone(file_.identity)
                 self.assertTrue(file_.properties)
+                self.assertTrue(file_.pending_at)
         self.assertEqual(
             self.set.documents.count(), 5 + 8,
             "Expected 5 files to get added and 8 links"

@@ -1,4 +1,5 @@
-from typing import Type
+from typing import Type, Any
+from importlib import import_module
 from collections import defaultdict
 
 from django.apps import apps
@@ -8,8 +9,8 @@ from celery.canvas import Signature  # for type checking only
 from core.models.datatypes.base import HarvestObjectMixin as HarvestObject
 
 
-def load_harvest_models(app_label: str):
-    models = ["Dataset", "DatasetVersion", "Set"]
+def load_harvest_models(app_label: str) -> dict[str, Any]:
+    models = ["Dataset", "DatasetVersion", "Set", "HarvestState"]
     app_config = apps.get_app_config(app_label)
     models = {
         model_name: apps.get_model(f"{app_label}.{model_name}")
@@ -19,16 +20,25 @@ def load_harvest_models(app_label: str):
     return models
 
 
-def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None) -> list[HarvestObject] | HarvestObject:
+def load_source_configuration(app_label: str, source: str) -> dict[str, Any]:
+    module = import_module(f"{app_label}.sources.{source}")
+    return {
+        "objective": module.OBJECTIVE,
+        "seeding_phases": module.SEEDING_PHASES
+    }
+
+
+def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
+                                   as_list: bool = False) -> list[HarvestObject] | HarvestObject:
     if not args:
         raise ValueError("load_pending_harvest_instances expects at least one model id or model instance")
     # We check that we didn't get already loaded instances and return them if we do
     if isinstance(args[0], model):
-        if len(args) == 1:
+        if len(args) == 1 and not as_list:
             return args[0] if args[0].pending_at else None
         return [instance for instance in args if instance.is_pending]
     # When getting ids we load them from the database
-    if len(args) == 1:
+    if len(args) == 1 and not as_list:
         return model.objects.filter(id=args[0], pending_at__isnull=False).first()
     return list(model.objects.filter(id__in=args, pending_at__isnull=False))
 

@@ -15,7 +15,7 @@ def harvest_documents(app_label: str, set_instance: int | HarvestSet, documents:
         raise RecursionError("Maximum harvest_documents recursion reached")
     models = load_harvest_models(app_label)
     set_instance = load_pending_harvest_instances(set_instance, model=models["Set"])
-    documents = load_pending_harvest_instances(*documents, model=models["Document"])
+    documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
     pending = validate_pending_harvest_instances(documents, model=models["Document"])
     if len(pending):
         recursive_callback_signature = harvest_documents.si(

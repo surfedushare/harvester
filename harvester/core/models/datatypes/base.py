@@ -37,8 +37,8 @@ class HarvestObjectMixin(models.Model):
                     break
             else:
                 is_pending_task = True
-            is_success = self.pipeline.get(task_name, {}).get("success", False)
-            if is_pending_task and not is_success:
+            has_run = self.pipeline.get(task_name, False)
+            if is_pending_task and not has_run:
                 pending_tasks.append(task_name)
         return pending_tasks
 
