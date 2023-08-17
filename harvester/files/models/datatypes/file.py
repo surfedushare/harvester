@@ -22,11 +22,11 @@ def default_document_tasks():
             "depends_on": ["url"],
             "checks": ["!is_not_found", "is_youtube_video"]
         },
-        "pdf_thumbnail": {
+        "pdf_preview": {
             "depends_on": ["url"],
             "checks": ["!is_not_found", "is_pdf"]
         },
-        "video_thumbnail": {
+        "video_preview": {
             "depends_on": ["url"],
             "checks": ["!is_not_found", "is_video"]
         }
@@ -65,7 +65,11 @@ class FileDocument(HarvestDocument):
 
     @property
     def is_video(self):
-        return self.is_youtube_video or self.type == "video"
+        """
+        This property controls whether we'll be dispatching the video_preview task.
+        We only make previews for a very limited amount of video sources at the moment.
+        """
+        return self.is_youtube_video or self.domain.startswith("vimeo.com")
 
     @property
     def is_pdf(self):

@@ -44,3 +44,4 @@ class HarvestEntity(models.Model):
 
     class Meta:
         unique_together = ("source", "type",)
+        verbose_name_plural = "harvest entities"

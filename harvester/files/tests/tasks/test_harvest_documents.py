@@ -29,7 +29,7 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["tika"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["tika", "extruct", "video_thumbnail"])
+        self.assertEqual(youtube_tasks, ["tika", "extruct", "video_preview"])
 
     def test_reset_harvest_results(self):
         # Modify a document with some fake harvest data

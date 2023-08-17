@@ -5,6 +5,7 @@ from django.db import models
 
 from datagrowth.datatypes import CollectionBase, DocumentCollectionMixin
 
+from sources.constants import DELETE_POLICY_CHOICES
 from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.document import HarvestDocument
 
@@ -16,6 +17,7 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
     """
 
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
+    delete_policy = models.CharField(max_length=50, choices=DELETE_POLICY_CHOICES, null=True, blank=True)
 
     @classmethod
     def get_document_model(cls) -> HarvestDocument:

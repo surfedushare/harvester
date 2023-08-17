@@ -28,7 +28,7 @@ class HarvestState(models.Model):
 
     def clean(self) -> None:
         if not self.purge_after:
-            self.purge_after = make_aware(datetime.now()) + timedelta(**self.source.purge_interval)
+            self.purge_after = make_aware(datetime.now()) + timedelta(**self.entity.purge_interval)
 
     def should_purge(self) -> bool:
         return self.entity.delete_policy == DeletePolicies.NO or \
