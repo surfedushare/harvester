@@ -49,7 +49,13 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
     finished = []
     pending = []
     for instance in instances:
-        if not instance.get_pending_tasks() or instance.pending_at is None:
+        # We skip any containers that have pending content
+        if hasattr(instance, "documents") and instance.documents.filter(pending_at__isnull=False).exists():
+            continue
+        elif hasattr(instance, "collections") and instance.collections.filter(pending_at__isnull=False).exists():
+            continue
+        # Then we check if the instance is done or is pending
+        elif not instance.get_pending_tasks():
             finished.append(instance)
             instance.pending_at = None
         else:
