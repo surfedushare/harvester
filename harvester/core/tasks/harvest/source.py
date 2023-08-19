@@ -23,10 +23,6 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
         return
 
     current_time = now()
-    state_set.pending_at = current_time
-    state_set.clean()
-    state_set.save()
-
     seeding_processor = HttpSeedingProcessor(state_set, {
         "phases": configuration["seeding_phases"]
     })
@@ -36,6 +32,9 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
         has_seeds = True
         harvest_documents(app_label, state_set.id, [doc.id for doc in documents], asynchronous=asynchronous)
     else:
+        state_set.pending_at = current_time
+        state_set.clean()
+        state_set.save()
         harvest_set(app_label, state_set.id, asynchronous=asynchronous)
 
     if not has_seeds:
