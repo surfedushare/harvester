@@ -6,8 +6,8 @@ from core.models.datatypes import HarvestDataset, HarvestDatasetVersion, Harvest
 class Set(HarvestSet):
 
     class Meta:
-        verbose_name = "file overwrite"
-        verbose_name_plural = "file overwrites"
+        verbose_name = "file set"
+        verbose_name_plural = "file set"
 
 
 class Dataset(HarvestDataset):
