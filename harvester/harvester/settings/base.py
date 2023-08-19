@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'sources',
 
     'files',
+    'testing',
 
     'edurep',
     'sharekit',
