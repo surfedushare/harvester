@@ -7,8 +7,7 @@ from django.conf import settings
 
 from datagrowth.resources.base import Resource
 
-from core.models.datatypes.document import HarvestDocument
-from core.models.datatypes.overwrite import HarvestOverwrite
+from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.models.resources.metadata import HttpTikaResource
 
 

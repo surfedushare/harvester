@@ -1,7 +1,6 @@
 from django.db import models
 
-from core.models.datatypes.set import HarvestSet
-from core.models.datatypes.dataset import HarvestDataset, HarvestDatasetVersion
+from core.models.datatypes import HarvestDataset, HarvestDatasetVersion, HarvestSet
 
 
 class Set(HarvestSet):

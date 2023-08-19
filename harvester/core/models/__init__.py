@@ -15,8 +15,3 @@ from .legacy.harvest import Harvest, HarvestSource
 from .search import ElasticIndex, ElasticIndexSerializer, Query
 
 from .choices import EducationalLevels
-
-from .datatypes.document import HarvestDocument
-from .datatypes.overwrite import HarvestOverwrite
-from .datatypes.set import HarvestSet
-from .datatypes.dataset import HarvestDataset, HarvestDatasetVersion
