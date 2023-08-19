@@ -21,10 +21,12 @@ def load_harvest_models(app_label: str) -> dict[str, Any]:
 
 
 def load_source_configuration(app_label: str, source: str) -> dict[str, Any]:
-    module = import_module(f"{app_label}.sources.{source}")
+    source_module = import_module(f"{app_label}.sources.{source}")
+    contants_module = import_module(f"{app_label}.constants")
     return {
-        "objective": module.OBJECTIVE,
-        "seeding_phases": module.SEEDING_PHASES
+        "objective": source_module.OBJECTIVE,
+        "seeding_phases": source_module.SEEDING_PHASES,
+        "seed_defaults": contants_module.SEED_DEFAULTS
     }
 
 

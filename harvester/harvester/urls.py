@@ -55,6 +55,7 @@ api_urlpatterns = [
 ]
 
 urlpatterns = [
+    path('', include('testing.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include((api_urlpatterns, "v1",))),
     path(
