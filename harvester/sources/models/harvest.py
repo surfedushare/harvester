@@ -36,6 +36,10 @@ class HarvestEntity(models.Model):
     is_manual = models.BooleanField(default=False)
     allows_update = models.BooleanField(default=False)
 
+    set_specification = models.CharField(
+        max_length=255,
+        help_text="The slug for the 'set' you want to harvest"
+    )
     delete_policy = models.CharField(max_length=50, choices=DELETE_POLICY_CHOICES, default=DeletePolicies.TRANSIENT)
     purge_interval = models.JSONField(default=thirty_days_default)
 
