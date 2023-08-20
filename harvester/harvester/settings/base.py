@@ -370,7 +370,7 @@ MIME_TYPE_TO_TECHNICAL_TYPE = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'document',
     'text/rtf': 'document',
     'application/xhtml+xml': 'website',
-    'application/postscript': '?',
+    'application/postscript': 'app',
     'application/vnd.ms-publisher': 'document',
     'text/xml': 'website',
     'application/vnd.oasis.opendocument.spreadsheet': 'spreadsheet',

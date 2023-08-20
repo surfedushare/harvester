@@ -35,10 +35,10 @@ def default_document_tasks():
 youtube_domain_regex = re.compile(r".*(youtube\.com|youtu\.be)", re.IGNORECASE)
 
 
-TECHNICAL_TYPE_CHOICES = [
+TECHNICAL_TYPE_CHOICES = sorted([
     (technical_type, technical_type.capitalize())
     for technical_type in set(settings.MIME_TYPE_TO_TECHNICAL_TYPE.values())
-]
+], key=lambda choice: choice[1])
 
 
 class FileDocument(HarvestDocument):
