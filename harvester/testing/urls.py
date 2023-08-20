@@ -6,7 +6,7 @@ from testing import views
 
 app_name = 'testing'
 urlpatterns = [
-    path('mocks/entity/project-ids/', views.EntityMockIdListAPIView.as_view(), kwargs={"entity": "simple"}),
-    path('mocks/entity/project-ids/<str:pk>/', views.EntityMockDetailAPIView.as_view(), kwargs={"entity": "simple"}),
+    path('mocks/entity/merge/', views.EntityMockIdListAPIView.as_view(), kwargs={"entity": "simple"}),
+    path('mocks/entity/merge/<str:pk>/', views.EntityMockDetailAPIView.as_view(), kwargs={"entity": "simple"}),
     path('mocks/entity/<str:entity>/', views.EntityMockAPIView.as_view()),
 ]

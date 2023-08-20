@@ -30,11 +30,35 @@ class ResourceSeedingProcessor(Processor):
     def build_seed_iterator(self, phase, *args, **kwargs):
         resource_config = phase["retrieve"]
         if not len(self.batch):
+            # This is the initial case where there is no input from a buffer.
+            # So we just use args and kwargs as given to the call to the processor.
             args_list = [args]
             kwargs_list = [kwargs]
         else:
-            args_list = [args]
-            kwargs_list = [kwargs]
+            # Here we have input from the batch as well as args and kwargs from the call to the processor.
+            # Together these inputs need to be given to the Resource as configured by retrieve_data.
+            # First we interpret the args and kwargs given to the retrieve_data configuration,
+            # using the args and kwargs from call to the processor, but only for keys starting with "#".
+            args, kwargs = self.Document.output_from_content(
+                {
+                    "args": args,
+                    "kwargs": kwargs
+                },
+                resource_config.args, resource_config.kwargs,
+                replacement_character="#"
+            )
+            # Then we use the interpreted args and kwargs from retrieve_data to built args and kwargs,
+            # that can be given to the Resource, for all content in the batch.
+            # Here we replace args and kwargs values coming through the processor call,
+            # for data coming from the batch if a value starts with "$".
+            args_list = []
+            kwargs_list = []
+            for content in self.batch:
+                content_args, content_kwargs = self.Document.output_from_content(content, args, kwargs)
+                args_list.append(content_args)
+                kwargs_list.append(content_kwargs)
+
+        # Sending the parsed args and kwargs, possibly with batch data to the Resource
         resource_iterator = send_serie_iterator(
             args_list, kwargs_list,
             method=resource_config.method,
@@ -42,7 +66,7 @@ class ResourceSeedingProcessor(Processor):
         )
         seed_iterator = content_iterator(resource_iterator, phase["contribute"].objective)
         batch_size = phase["phase"].batch_size
-        return ibatch(seed_iterator, batch_size=batch_size) if batch_size else seed_iterator
+        return ibatch(seed_iterator, batch_size=batch_size)
 
     def flush_buffer(self, phase, force=False):
         if not self.buffer and not force:
@@ -52,7 +76,13 @@ class ResourceSeedingProcessor(Processor):
             case "initial" | "replace":
                 self.batch = deepcopy(self.buffer)
             case "merge":
-                raise NotImplementedError("Merge strategy not implemented")
+                merge_on = phase["contribute"].merge_on
+                buffer = {
+                    content[merge_on]: content
+                    for content in self.buffer
+                }
+                for content in self.batch:
+                    content.update(buffer.get(content[merge_on], {}))
 
         self.buffer = []
 
@@ -111,7 +141,11 @@ class ResourceSeedingProcessor(Processor):
                             # And retry phases before this phase (if any)
                             break
                     case "merge":
-                        self.buffer = list(self.build_seed_iterator(phase, *args, **kwargs))
+                        self.buffer = [
+                            content
+                            for batch in self.build_seed_iterator(phase, *args, **kwargs)
+                            for content in batch
+                        ]
                 self.flush_buffer(phase)
             if not self.batch:
                 return

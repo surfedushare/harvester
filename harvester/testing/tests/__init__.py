@@ -1,0 +1,2 @@
+from testing.tests.seeding.simple import TestSimpleHttpSeedingProcessor
+from testing.tests.seeding.merge import TestMergeHttpSeedingProcessor
