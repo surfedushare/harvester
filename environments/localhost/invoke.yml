@@ -25,7 +25,7 @@ harvester:
     sharekit: "https://api.acc.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://accpure.hva.nl"
-    hanze: "https://hanzetest.azure-api.net"
+    hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
   webhook_allowed_ips:
     sharekit:

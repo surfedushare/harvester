@@ -21,7 +21,7 @@ harvester:
     sharekit: "https://api.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
-    hanze: null
+    hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.nl"
   webhook_allowed_ips:
     sharekit:

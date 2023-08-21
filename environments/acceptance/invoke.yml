@@ -21,7 +21,7 @@ harvester:
     sharekit: "https://api.surfsharekit.nl"  # overwritten for Publinova, because they often want acc here
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
-    hanze: "https://hanzetest.azure-api.net"
+    hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
   webhook_allowed_ips:
     sharekit:
