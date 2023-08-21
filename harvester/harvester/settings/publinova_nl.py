@@ -9,9 +9,4 @@ LOWEST_EDUCATIONAL_LEVEL = -1  # will ignore lowest educational level requiremen
 
 SHAREKIT_TEST_ORGANIZATION = "Publinova test"
 
-# While Zooma develops against our development environment we switch to DEBUG=False
-# To do this we need to loosen IP restrictions. We want to prevent leaking debug information to the world.
-if environment.service.env == "development":
-    DEBUG = False
-
 THUMBNAIL_FORCE_PNG_EXTENSION = True
