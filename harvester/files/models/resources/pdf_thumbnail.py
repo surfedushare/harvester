@@ -35,8 +35,7 @@ class BasePdfThumbnailResource(HttpFileResource):
         if not head:
             head = "index.png"
         name, extension = os.path.splitext(head)
-        if not extension or settings.THUMBNAIL_FORCE_PNG_EXTENSION:
-            extension = ".png"
+        extension = ".png"
         now = datetime.utcnow()
         if len(name) > 60:
             name = name[len(name) - 60:]
