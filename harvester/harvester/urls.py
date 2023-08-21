@@ -58,11 +58,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include((api_urlpatterns, "v1",))),
     path(
-        'sharekit/edit-document/<str:channel>/<uuid:secret>/', sharekit_views.edit_document_webhook,
+        'sharekit/edit-document/<str:channel>/<uuid:secret>/', sharekit_views.legacy_edit_document_webhook,
         name="sharekit-document-webhook"
     ),
     path(
-        'publinova/edit-document/<str:channel>/<uuid:secret>/', sources_views.publinova_document_webhook,
+        'publinova/edit-document/<str:channel>/<uuid:secret>/', sources_views.legacy_publinova_document_webhook,
         name="publinova-document-webhook"
     ),
     path('', core_views.health_check, name="health-check")

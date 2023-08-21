@@ -1,1 +1,1 @@
-from sources.webhooks.publinova import edit_document_webhook as publinova_document_webhook
+from sources.webhooks.publinova import legacy_edit_document_webhook as legacy_publinova_document_webhook
