@@ -26,7 +26,10 @@ class ResourcePipelineProcessor(PipelineProcessor):
     def filter_documents(self, queryset):
         depends_on = self.config.pipeline_depends_on
         pipeline_phase = self.config.pipeline_phase
-        filters = Q(**{f"pipeline__{depends_on}__success": True}) | Q(**{f"pipeline__{pipeline_phase}__success": False})
+        filters = Q(**{f"pipeline__{pipeline_phase}__success": False})
+        filters |= Q(**{f"pipeline__{pipeline_phase}__isnull": True})
+        if depends_on:
+            filters |= Q(**{f"pipeline__{depends_on}__success": True})
         return queryset.filter(filters)
 
     def process_batch(self, batch):
@@ -48,7 +51,6 @@ class ResourcePipelineProcessor(PipelineProcessor):
             process_result.result_id = result_id
             updates.append(process_result)
             for result_id in results:
-                # TODO: create docs here where necessary
                 creates.append(
                     self.ProcessResult(document=process_result.document, batch=batch,
                                        result_id=result_id, result_type=resource_type)
@@ -61,7 +63,11 @@ class ResourcePipelineProcessor(PipelineProcessor):
         pipeline_phase = self.config.pipeline_phase
         config = create_config("extract_processor", self.config.contribute_data)
         contribution_processor = config.extractor
+        contribution_field = "properties"
         contribution_property = config.to_property
+        if contribution_property and "/" in contribution_property:
+            contribution_field, contribution_property = contribution_property.split("/")
+            contribution_property = contribution_property or None
 
         attempts = 0
         while attempts < 3:
@@ -75,6 +81,9 @@ class ResourcePipelineProcessor(PipelineProcessor):
                     "resource": f"{result._meta.app_label}.{result._meta.model_name}",
                     "id": result.id
                 }
+                # Possibly "apply" the Resource to the Document to allow custom updates
+                if config.apply_resource_to:
+                    process_result.document.apply_resource(process_result.result)
 
                 documents.append(process_result.document)
                 # Write data to the Document
@@ -83,14 +92,13 @@ class ResourcePipelineProcessor(PipelineProcessor):
                 extractor = extractor_class(config)
                 extractor_method = getattr(extractor, method_name)
                 contributions = list(extractor_method(result)) if not self.resource_is_empty(result) else []
-                if not len(contributions):
-                    continue
-                contribution = contributions.pop(0)
-                # TODO: create docs here where necessary
-                if contribution_property is None:
-                    process_result.document.properties.update(contribution)
-                else:
-                    process_result.document.properties[contribution_property] = contribution
+                if len(contributions):
+                    contribution = contributions.pop(0)
+                    field_attribute = getattr(process_result.document, contribution_field)
+                    if contribution_property is None:
+                        field_attribute.update(contribution)
+                    else:
+                        field_attribute[contribution_property] = contribution
 
             # We'll be locking the Documents for update to prevent accidental overwrite of parallel results
             with transaction.atomic():
@@ -106,7 +114,8 @@ class ResourcePipelineProcessor(PipelineProcessor):
                     capture_message(warning, level="warning")
                     sleep(5)
                     continue
-                self.Document.objects.bulk_update(documents, ["pipeline", "properties"])
+                fields = ["pipeline", contribution_field] + config.apply_resource_to
+                self.Document.objects.bulk_update(documents, fields)
                 break
 
 

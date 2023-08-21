@@ -45,10 +45,6 @@ class Dataset(DocumentCollectionMixin, CollectionBase):
 
         return new_version
 
-    def get_earliest_harvest_date(self):
-        latest_harvest = self.harvest_set.order_by("harvested_at").first()
-        return latest_harvest.harvested_at if latest_harvest else None
-
     def evaluate_dataset_version(self, new_version):
         current_version = self.versions.get_current_version()
         if not current_version or not new_version:

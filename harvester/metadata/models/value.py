@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -88,6 +89,8 @@ class MetadataValueSerializer(serializers.ModelSerializer):
         return len(obj.get_children())
 
     def get_frequency(self, obj):
+        if obj.field.name in settings.SIMPLE_METADATA_FREQUENCY_FIELDS:
+            return obj.frequency
         aggregation = obj.get_children().filter(deleted_at__isnull=True).aggregate(models.Sum("frequency"))
         return obj.frequency + (aggregation["frequency__sum"] or 0)
 

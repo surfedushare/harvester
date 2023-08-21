@@ -16,7 +16,7 @@ class TestHttpPipelineProcessor(TestCase):
     def setUp(self):
         super().setUp()
         self.collection = Collection.objects.get(id=171)
-        self.ignored_document = DocumentFactory.create(collection=self.collection, pipeline={})
+        self.ignored_document = DocumentFactory.create(collection=self.collection, url=None)
 
     @patch("core.models.resources.basic.HttpTikaResource._send")
     def test_synchronous_tika_pipeline(self, send_mock):
@@ -100,7 +100,8 @@ class TestHttpPipelineProcessor(TestCase):
         for ix, signature in enumerate(chord_call_args[0]):
             self.assertIsInstance(signature, Signature)
             self.assertEqual(signature.name, "pipeline_process_and_merge")
-            self.assertEqual(signature.args, (ix+1,))
+            for arg in signature.args:
+                self.assertIsInstance(arg, int, "Expected a batch id as an argument in the signature")
             self.assertIn("config", signature.kwargs)
         self.assertEqual(chord_mock_result.call_count, 1)
         chord_result_call = chord_mock_result.call_args_list[0]

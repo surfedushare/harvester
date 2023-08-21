@@ -36,6 +36,9 @@ class Document(DocumentBase):
     extension = models.ForeignKey("core.Extension", null=True, blank=True, on_delete=models.SET_NULL)
     # NB: Collection foreign key is added by the base class
 
+    def apply_resource(self, resource):
+        pass
+
     def update(self, data, commit=True, validate=True):
         if "language" in self.properties:
             data.pop("language", None)

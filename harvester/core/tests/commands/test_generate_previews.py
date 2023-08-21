@@ -31,9 +31,13 @@ class TestGeneratePreviews(TestCase):
                                from_youtube=True)
         DocumentFactory.create(dataset_version=dataset_version, mime_type="application/pdf", analysis_allowed=False)
         DocumentFactory.create(dataset_version=dataset_version, mime_type="foo/bar")
+        # Reset mocks
+        shell_mock_result.reset_mock()
+        http_mock_result.reset_mock()
 
     @patch(SHELL_PIPELINE_PROCESSOR_TARGET, return_value=shell_mock_result)
-    def test_generate_youtube_previews(self, pipeline_processor_target):
+    @patch(HTTP_PIPELINE_PROCESSOR_TARGET, return_value=http_mock_result)
+    def test_generate_youtube_previews(self, _, pipeline_processor_target):
 
         call_command("generate_previews", f"--dataset={self.dataset.name}")
 
@@ -75,7 +79,8 @@ class TestGeneratePreviews(TestCase):
         self.assertEqual(self.harvest.stage, HarvestStages.COMPLETE)
 
     @patch(HTTP_PIPELINE_PROCESSOR_TARGET, return_value=http_mock_result)
-    def test_generate_pdf_previews(self, pipeline_processor_target):
+    @patch(SHELL_PIPELINE_PROCESSOR_TARGET, return_value=shell_mock_result)
+    def test_generate_pdf_previews(self, _, pipeline_processor_target):
 
         call_command("generate_previews", f"--dataset={self.dataset.name}")
 

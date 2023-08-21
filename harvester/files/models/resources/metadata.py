@@ -1,4 +1,3 @@
-import boto3
 import logging
 from json import JSONDecodeError
 
@@ -6,7 +5,6 @@ from datagrowth.resources import HttpResource, URLResource
 import extruct
 
 
-s3_client = boto3.client("s3")
 logger = logging.getLogger("harvester")
 
 
