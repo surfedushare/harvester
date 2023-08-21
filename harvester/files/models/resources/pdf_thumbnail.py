@@ -3,7 +3,6 @@ from io import BytesIO
 from urllib.parse import urlparse, urljoin
 from datetime import datetime
 
-from django.conf import settings
 from django.dispatch import receiver
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
