@@ -88,7 +88,7 @@ class ResourceSeedingProcessor(Processor):
 
     def batch_to_documents(self):
         documents = [
-            self.Document.build(seed)
+            self.Document.build(seed, collection=self.collection)
             for seed in self.batch
         ]
         return self.collection.update_batches(documents, self.collection.identifier)

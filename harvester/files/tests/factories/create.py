@@ -7,7 +7,7 @@ from files.tests.factories.tika import HttpTikaResourceFactory
 def create_file_document_set(set_specification, docs, tikas=None):
     pending_at = now()
     dataset_version = DatasetVersionFactory.create(pending_at=pending_at)
-    dataset_set = SetFactory.create(dataset_version=dataset_version, name=set_specification, pending_at=pending_at)
+    dataset_set = SetFactory.create(dataset_version=dataset_version, name=set_specification)
     documents = []
     for doc in docs:
         document = FileDocumentFactory.build(

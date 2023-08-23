@@ -65,6 +65,13 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE)
     metadata = models.JSONField(default=document_metadata_default, blank=True)
 
+    @classmethod
+    def build(cls, data, collection=None):
+        instance = super().build(data, collection)
+        instance.dataset_version = collection.dataset_version
+        instance.clean()
+        return instance
+
     def update(self, data: Any, commit: bool = True, validate: bool = True) -> None:
         super().update(data, commit=commit, validate=validate)
 
