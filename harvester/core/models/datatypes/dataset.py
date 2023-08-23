@@ -23,9 +23,15 @@ class HarvestDataset(models.Model):
     Meaning that any key in a HarvestDocument's properties will be present in
     any other HarvestDocument of the same Dataset.
     """
+
+    class IndexingOptions(models.TextChoices):
+        NO = "no", "No"
+        INDEX_ONLY = "index_only", "Index only"
+        INDEX_AND_PROMOTE = "index_and_promote", "Index and promote"
+
     name = models.CharField(max_length=255, null=True, blank=True)
-    is_active = models.BooleanField(default=False)
-    is_latest = models.BooleanField(default=False)
+    is_harvested = models.BooleanField(default=False)
+    indexing = models.CharField(max_length=50, choices=IndexingOptions.choices, default=IndexingOptions.NO)
 
     def __str__(self) -> str:
         return "{} (id={})".format(self.name, self.id)
@@ -135,15 +141,34 @@ class HarvestDatasetVersionManager(models.Manager):
         ]
 
 
+def default_dataset_version_tasks():
+    return {
+        "push_to_index": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
+        }
+    }
+
+
 class HarvestDatasetVersion(HarvestObjectMixin):
 
     objects = HarvestDatasetVersionManager()
 
     dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE, null=False, blank=False,
                                 related_name="versions")
+    index = models.ForeignKey(
+        "search.OpenSearchIndex",
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        related_name="+"
+    )
+    historic_sets = models.ManyToManyField(to="Set")
+
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True)
+    tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
 
     @property
     def documents(self) -> HarvestDocument.objects | QuerySet:

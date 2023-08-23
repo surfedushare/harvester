@@ -16,7 +16,7 @@ def build_file_seed(**kwargs):
 class DatasetFactory(factory.django.DjangoModelFactory):
 
     name = "test"
-    is_active = True
+    is_harvested = True
 
     class Meta:
         model = Dataset

@@ -1,12 +1,12 @@
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 
 
-class TestingDocument(HarvestDocument):
+class TestDocument(HarvestDocument):
     pass
 
 
 class Overwrite(HarvestOverwrite):
 
     class Meta:
-        verbose_name = "testing overwrite"
-        verbose_name_plural = "testing overwrites"
+        verbose_name = "test overwrite"
+        verbose_name_plural = "test overwrites"

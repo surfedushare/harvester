@@ -28,6 +28,7 @@ class HarvestEntity(models.Model):
     class EntityType(models.TextChoices):
         PRODUCT = "products", "Product"
         FILE = "files", "File"
+        TEST = "testing", "Test"
 
     source = models.ForeignKey(HarvestSource, on_delete=models.CASCADE)
     type = models.CharField(choices=EntityType.choices, max_length=50)

@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class TestingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'testing'
-    document_model = 'TestingDocument'
+    document_model = 'TestDocument'

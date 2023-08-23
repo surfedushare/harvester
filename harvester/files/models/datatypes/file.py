@@ -14,20 +14,24 @@ from files.models.resources.metadata import HttpTikaResource
 def default_document_tasks():
     return {
         "tika": {
-            "depends_on": ["url"],
-            "checks": []
+            "depends_on": ["$.url"],
+            "checks": [],
+            "resources": ["files.HttpTikaResource"]
         },
         "extruct": {
-            "depends_on": ["url"],
-            "checks": ["!is_not_found", "is_youtube_video"]
+            "depends_on": ["$.url"],
+            "checks": ["!is_not_found", "is_youtube_video"],
+            "resources": ["files.ExtructResource"]
         },
         "pdf_preview": {
-            "depends_on": ["url"],
-            "checks": ["!is_not_found", "is_pdf"]
+            "depends_on": ["$.url"],
+            "checks": ["!is_not_found", "is_pdf"],
+            "resources": ["files.PdfThumbnailResource"]
         },
         "video_preview": {
-            "depends_on": ["url"],
-            "checks": ["!is_not_found", "is_video"]
+            "depends_on": ["$.url"],
+            "checks": ["!is_not_found", "is_video"],
+            "resources": ["files.YoutubeThumbnailResource"]
         }
     }
 

@@ -35,7 +35,7 @@ class TestHarvestObjectFileDocument(TestCase):
         # Modify a document with some fake harvest data
         self.document_1.tasks = {
             "test": {
-                "depends_on": ["url"],
+                "depends_on": ["$.url"],
                 "checks": []
             }
         }
@@ -96,8 +96,8 @@ class TestSimpleHarvestDocuments(TestCase):
         self.assertTrue(not_found.is_not_found)
         self.assertFalse(not_found.pending_at, "Expected Document to indicate it is no longer pending for tasks")
         self.assertEqual(
-            not_found.get_pending_tasks(), ["tika"],
-            "Expected 404 to register a pending tasks for the future"
+            not_found.get_pending_tasks(), [],
+            "Expected 404 to register a no pending tasks until the pipeline field gets a reset"
         )
         # Check container datatypes
         document_set = Set.objects.get(id=self.set.id)

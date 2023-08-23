@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from testing.constants import SEED_DEFAULTS
-from testing.models import Set, TestingDocument
+from testing.models import Set, TestDocument
 
 
 class HttpSeedingProcessorTestCase(TestCase):
@@ -9,7 +9,7 @@ class HttpSeedingProcessorTestCase(TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.set = Set.objects.create(name="test", identifier="srn")
-        self.ignored_document = TestingDocument.objects.create(
+        self.ignored_document = TestDocument.objects.create(
             collection=self.set,
             pipeline={},
             properties={},
@@ -21,7 +21,7 @@ class HttpSeedingProcessorTestCase(TestCase):
         for batch in results:
             self.assertIsInstance(batch, list)
             for result in batch:
-                self.assertIsInstance(result, TestingDocument)
+                self.assertIsInstance(result, TestDocument)
                 self.assertIsNotNone(result.id, "Expected a TestingDocument saved to the database")
                 self.assertEqual(
                     result.collection_id, self.set.id,
@@ -39,7 +39,7 @@ class HttpSeedingProcessorTestCase(TestCase):
             "Expected 20 generated simple data structures and one pre-existing unchanged document"
         )
         # Pre-existing documents that are not in the harvest data should be left alone
-        ignored_document = TestingDocument.objects.get(id=self.ignored_document.id)
+        ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
         self.assertFalse(ignored_document.identity)
         self.assertFalse(ignored_document.pipeline)
         self.assertFalse(ignored_document.properties)
