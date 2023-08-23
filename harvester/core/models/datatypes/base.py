@@ -37,8 +37,12 @@ class HarvestObjectMixin(models.Model):
                     break
             else:
                 is_pending_task = True
+            dependencies_are_success = all([
+                dependency for dependency in conditions["depends_on"]
+                if self.pipeline.get(dependency, {}).get("success")
+            ])
             has_run = self.pipeline.get(task_name, False)
-            if is_pending_task and not has_run:
+            if is_pending_task and dependencies_are_success and not has_run:
                 pending_tasks.append(task_name)
         return pending_tasks
 

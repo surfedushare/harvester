@@ -2,11 +2,13 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.processors import HttpPipelineProcessor, ShellPipelineProcessor
-from files.models import FileDocument
+from core.tasks.harvest.base import load_harvest_models
 
 
 @app.task(name="video_preview", base=DatabaseConnectionResetTask)
-def video_preview(document_ids: list[int]):
+def video_preview(app_label: str, document_ids: list[int]):
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
     youtube_dl_processor = ShellPipelineProcessor({
         "pipeline_app_label": "files",
         "pipeline_models": {
@@ -35,7 +37,9 @@ def video_preview(document_ids: list[int]):
 
 
 @app.task(name="pdf_preview", base=DatabaseConnectionResetTask)
-def pdf_preview(document_ids: list[int]):
+def pdf_preview(app_label: str, document_ids: list[int]):
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
     pdf_processor = HttpPipelineProcessor({
         "pipeline_app_label": "files",
         "pipeline_models": {

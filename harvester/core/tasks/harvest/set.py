@@ -17,11 +17,12 @@ def harvest_set(app_label: str, set_instance: int | HarvestSet, asynchronous: bo
     if len(pending):
         recursive_callback_signature = harvest_set.si(
             app_label,
-            harvest_set.id,
+            set_instance.id,
             asynchronous=asynchronous,
             recursion_depth=recursion_depth+1
         )
         dispatch_harvest_object_tasks(
+            app_label,
             *pending,
             callback=recursive_callback_signature,
             asynchronous=asynchronous
@@ -34,7 +35,8 @@ def harvest_set(app_label: str, set_instance: int | HarvestSet, asynchronous: bo
             recursion_depth=recursion_depth+1
         )
         dispatch_harvest_object_tasks(
-            *pending,
+            app_label,
+            set_instance.dataset_version,
             callback=dataset_version_callback_signature,
             asynchronous=asynchronous
         )

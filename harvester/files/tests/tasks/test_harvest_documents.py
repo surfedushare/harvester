@@ -73,7 +73,7 @@ class TestSimpleHarvestDocuments(TestCase):
 
     @patch("files.models.resources.metadata.HttpTikaResource._send")
     def test_harvest_documents_synchronous(self, send_mock):
-        harvest_documents("files", self.set.id, [doc.id for doc in self.documents], asynchronous=False)
+        harvest_documents("files", [doc.id for doc in self.documents], asynchronous=False)
         # Assert documents in general
         for doc in FileDocument.objects.all():
             self.assertEqual(doc.domain, "example.com")
@@ -98,12 +98,4 @@ class TestSimpleHarvestDocuments(TestCase):
         self.assertEqual(
             not_found.get_pending_tasks(), [],
             "Expected 404 to register a no pending tasks until the pipeline field gets a reset"
-        )
-        # Check container datatypes
-        document_set = Set.objects.get(id=self.set.id)
-        self.assertIsNone(document_set.pending_at, "Expected Set to indicate it is no longer pending for tasks")
-        dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
-        self.assertIsNone(
-            dataset_version.pending_at,
-            "Expected DatasetVersion to indicate it is no longer pending for tasks"
         )

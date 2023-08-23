@@ -22,6 +22,7 @@ def harvest_dataset_version(app_label: str, dataset_version: int | DatasetVersio
             recursion_depth=recursion_depth+1
         )
         dispatch_harvest_object_tasks(
+            app_label,
             *pending,
             callback=recursive_callback_signature,
             asynchronous=asynchronous

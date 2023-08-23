@@ -2,11 +2,13 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.processors import HttpPipelineProcessor
-from files.models import FileDocument
+from core.tasks.harvest.base import load_harvest_models
 
 
 @app.task(name="tika", base=DatabaseConnectionResetTask)
-def tika_task(document_ids: list[int]) -> None:
+def tika_task(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
 
     def texts_extraction(results):
         return [
@@ -43,7 +45,9 @@ def tika_task(document_ids: list[int]) -> None:
 
 
 @app.task(name="extruct", base=DatabaseConnectionResetTask)
-def extruct_task(document_ids: list[int]) -> None:
+def extruct_task(app_label, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
     extruct_processor = HttpPipelineProcessor({
         "pipeline_app_label": "files",
         "pipeline_models": {

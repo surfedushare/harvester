@@ -53,27 +53,30 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
     for instance in instances:
         # We skip any containers that have pending content
         if hasattr(instance, "documents") and instance.documents.filter(pending_at__isnull=False).exists():
+            print("pending docs")
             continue
         elif hasattr(instance, "collections") and instance.collections.filter(pending_at__isnull=False).exists():
+            print("pending collections")
             continue
         # Then we check if the instance is done or is pending
         elif not instance.get_pending_tasks():
             finished.append(instance)
             instance.pending_at = None
         else:
+            print("has pending tasks!", instance.get_pending_tasks())
             pending.append(instance)
     model.objects.bulk_update(finished, ["pending_at"])
     return pending
 
 
-def dispatch_harvest_object_tasks(*args, callback=Signature, asynchronous=True) -> Signature | None:
+def dispatch_harvest_object_tasks(app_label: str, *args, callback=Signature, asynchronous=True) -> Signature | None:
     pending_tasks = defaultdict(list)
     for obj in args:
         for pending_task in obj.get_pending_tasks():
             pending_tasks[pending_task].append(obj.id)
     if not pending_tasks:
         return
-    task_signatures = [signature(task_name, args=(document_ids,)) for task_name, document_ids in pending_tasks.items()]
+    task_signatures = [signature(task_name, args=(app_label, obj_ids,)) for task_name, obj_ids in pending_tasks.items()]
     if asynchronous:
         return chord(task_signatures)(callback)
     for task in task_signatures:
