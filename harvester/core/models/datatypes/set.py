@@ -31,7 +31,12 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
     These sets are logically collections of documents.
     """
 
-    dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
+    dataset_version = models.ForeignKey(
+        "DatasetVersion",
+        blank=True, null=True,
+        on_delete=models.CASCADE,
+        related_name="sets"
+    )
     delete_policy = models.CharField(max_length=50, choices=DELETE_POLICY_CHOICES, null=True, blank=True)
 
     tasks = models.JSONField(default=default_set_tasks, blank=True)

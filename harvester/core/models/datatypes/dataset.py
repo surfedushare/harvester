@@ -177,10 +177,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     def documents(self) -> HarvestDocument.objects | QuerySet:
         return self.document_set
 
-    @property
-    def sets(self) -> HarvestSet.objects | QuerySet:
-        return self.collection_set
-
     def __str__(self):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
 
