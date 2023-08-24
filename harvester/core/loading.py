@@ -1,10 +1,17 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from core.models.datatypes.base import HarvestObjectMixin as HarvestObject
+    from core.models.datatypes.dataset import HarvestDataset
+    from core.models.harvest import HarvestState
+
 from typing import Any
 from importlib import import_module
 
 from django.apps import apps
 
 
-def load_harvest_models(app_label: str) -> dict[str, Any]:  # TODO: limit any here?
+def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
     models = ["Dataset", "DatasetVersion", "Set", "HarvestState"]
     app_config = apps.get_app_config(app_label)
     models = {
