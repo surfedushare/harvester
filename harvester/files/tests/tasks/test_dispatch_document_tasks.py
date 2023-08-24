@@ -3,9 +3,9 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.utils.timezone import now
 
-from core.tasks.harvest import harvest_documents
+from core.tasks import dispatch_document_tasks
 from files.tests.factories import create_file_document_set
-from files.models import FileDocument, Set, DatasetVersion
+from files.models import FileDocument
 from files.models.datatypes.file import default_document_tasks
 
 
@@ -29,7 +29,7 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["tika"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["tika", "extruct", "video_preview"])
+        self.assertEqual(youtube_tasks, ["tika", "extruct", "video_preview"])  # TODO: this is wrong?!
 
     def test_reset_harvest_results(self):
         # Modify a document with some fake harvest data
@@ -54,7 +54,7 @@ class TestHarvestObjectFileDocument(TestCase):
         self.assertIsNone(self.document_1.pending_at)
 
 
-class TestSimpleHarvestDocuments(TestCase):
+class TestSimpleDispatchDocumentTasks(TestCase):
 
     dataset_version = None
     set = None
@@ -72,8 +72,8 @@ class TestSimpleHarvestDocuments(TestCase):
         cls.success, cls.not_found = cls.documents
 
     @patch("files.models.resources.metadata.HttpTikaResource._send")
-    def test_harvest_documents_synchronous(self, send_mock):
-        harvest_documents("files", [doc.id for doc in self.documents], asynchronous=False)
+    def test_dispatch_document_tasks_synchronous(self, send_mock):
+        dispatch_document_tasks("files", [doc.id for doc in self.documents], asynchronous=False)
         # Assert documents in general
         for doc in FileDocument.objects.all():
             self.assertEqual(doc.domain, "example.com")

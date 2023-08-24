@@ -7,15 +7,15 @@ from core.tasks.harvest.base import (load_harvest_models, load_pending_harvest_i
 
 
 @app.task(name="harvest_documents", base=DatabaseConnectionResetTask)
-def harvest_documents(app_label: str, documents: list[int | HarvestDocument],
-                      asynchronous: bool = True, recursion_depth: int = 0):
+def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocument], asynchronous: bool = True,
+                            recursion_depth: int = 0) -> None:
     if recursion_depth >= 10:
         raise RecursionError("Maximum harvest_documents recursion reached")
     models = load_harvest_models(app_label)
     documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
     pending = validate_pending_harvest_instances(documents, model=models["Document"])
     if len(pending):
-        recursive_callback_signature = harvest_documents.si(
+        recursive_callback_signature = dispatch_document_tasks.si(
             app_label,
             [doc.id for doc in documents],
             asynchronous=asynchronous,

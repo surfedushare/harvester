@@ -3,8 +3,8 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.tasks.harvest.base import load_harvest_models, load_source_configuration
-from core.tasks.harvest.document import harvest_documents
-from core.tasks.harvest.set import harvest_set
+from core.tasks.harvest.document import dispatch_document_tasks
+from core.tasks.harvest.set import dispatch_set_tasks
 from core.processors.seed.resource import HttpSeedingProcessor
 
 
@@ -15,7 +15,7 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
     harvest_state = models["HarvestState"].objects \
         .select_related("entity", "entity__source", "harvest_set") \
         .get(entity__source__module=source, entity__type=app_label)
-    state_set = harvest_state.harvest_set
+    harvest_set = harvest_state.harvest_set
 
     if harvest_state.entity.is_manual:
         return
@@ -23,22 +23,22 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
         return
 
     current_time = now()
-    seeding_processor = HttpSeedingProcessor(state_set, {
+    seeding_processor = HttpSeedingProcessor(harvest_set, {
         "phases": configuration["seeding_phases"]
     })
     has_seeds = False
     harvest_from = f"{harvest_state.harvested_at:%Y-%m-%dT%H:%M:%SZ}"
     for documents in seeding_processor(harvest_state.entity.set_specification, harvest_from):
         has_seeds = True
-        harvest_documents(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
+        dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
     else:
-        state_set.pending_at = current_time
-        state_set.clean()
-        state_set.save()
-        harvest_set(app_label, state_set.id, asynchronous=asynchronous)
+        harvest_set.pending_at = current_time
+        harvest_set.clean()
+        harvest_set.save()
+        dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
 
     if not has_seeds:
-        state_set.pending_at = None
+        harvest_set.pending_at = None
 
     harvest_state.harvested_at = current_time
     harvest_state.clean()
