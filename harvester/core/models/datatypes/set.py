@@ -5,7 +5,7 @@ from django.db import models
 
 from datagrowth.datatypes import CollectionBase, DocumentCollectionMixin
 
-from sources.constants import DELETE_POLICY_CHOICES
+from core.constants import DELETE_POLICY_CHOICES
 from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.document import HarvestDocument
 

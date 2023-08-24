@@ -1,8 +1,8 @@
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
+from core.loading import load_harvest_models
 from core.processors import HttpPipelineProcessor, ShellPipelineProcessor
-from core.tasks.harvest.base import load_harvest_models
 
 
 @app.task(name="video_preview", base=DatabaseConnectionResetTask)

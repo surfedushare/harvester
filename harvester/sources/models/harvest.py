@@ -1,6 +1,7 @@
 from django.db import models
 
-from sources.constants import DeletePolicies, DELETE_POLICY_CHOICES
+from core.loading import load_source_configuration
+from core.constants import DeletePolicies, DELETE_POLICY_CHOICES
 
 
 def thirty_days_default():

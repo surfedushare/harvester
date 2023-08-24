@@ -3,9 +3,8 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.utils.timezone import make_aware
 
-from datagrowth.configuration import ConfigurationField
-
-from sources.constants import DeletePolicies
+from core.constants import DeletePolicies
+from core.models.datatypes.set import HarvestSet
 
 
 class HarvestState(models.Model):
@@ -14,7 +13,6 @@ class HarvestState(models.Model):
     dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE)
     harvest_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True, blank=True)
 
-    config = ConfigurationField()
     harvested_at = models.DateTimeField(blank=True, default=make_aware(datetime(year=1970, month=1, day=1)))
     purge_after = models.DateTimeField(null=True, blank=True)
 

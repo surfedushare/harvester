@@ -2,7 +2,7 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.processors import HttpPipelineProcessor
-from core.tasks.harvest.base import load_harvest_models
+from core.loading import load_harvest_models
 
 
 @app.task(name="tika", base=DatabaseConnectionResetTask)

@@ -1,8 +1,9 @@
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
-from core.models.datatypes import HarvestDocument, HarvestSet
-from core.tasks.harvest.base import (load_harvest_models, load_pending_harvest_instances, dispatch_harvest_object_tasks,
+from core.loading import load_harvest_models
+from core.models.datatypes import HarvestDocument
+from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_harvest_object_tasks,
                                      validate_pending_harvest_instances)
 
 

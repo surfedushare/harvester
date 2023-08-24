@@ -2,7 +2,7 @@ from django.utils.timezone import now
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
-from core.tasks.harvest.base import load_harvest_models, load_source_configuration
+from core.loading import load_harvest_models, load_source_configuration
 from core.tasks.harvest.document import dispatch_document_tasks
 from core.tasks.harvest.set import dispatch_set_tasks
 from core.processors.seed.resource import HttpSeedingProcessor
