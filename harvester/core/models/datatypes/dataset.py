@@ -151,12 +151,15 @@ def default_dataset_version_tasks():
     }
 
 
+def version_default():
+    return settings.VERSION
+
+
 class HarvestDatasetVersion(HarvestObjectMixin):
 
     objects = HarvestDatasetVersionManager()
 
-    dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE, null=False, blank=False,
-                                related_name="versions")
+    dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE, null=False, blank=False, related_name="versions")
     index = models.ForeignKey(
         "search.OpenSearchIndex",
         on_delete=models.SET_NULL,
@@ -167,7 +170,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
 
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    version = models.CharField(max_length=50, null=False, blank=True)
+    version = models.CharField(max_length=50, null=False, blank=True, default=version_default)
     tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
 
     @property
