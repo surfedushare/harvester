@@ -19,7 +19,7 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
 
     if harvest_state.entity.is_manual:
         return
-    elif harvest_state.pending_at is not None:
+    elif harvest_set.pending_at is not None:
         return
 
     current_time = now()
