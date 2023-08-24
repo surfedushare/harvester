@@ -13,7 +13,6 @@ from datagrowth.utils import ibatch
 from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.set import HarvestSet
 from core.models.datatypes.document import HarvestDocument
-from core.models.harvest import HarvestState
 
 
 class HarvestDataset(models.Model):
@@ -39,33 +38,6 @@ class HarvestDataset(models.Model):
     @classmethod
     def get_name(cls) -> str:  # adheres to Datagrowth protocol for easy data loads
         return f"{cls._meta.app_label}dataset"
-
-    @property
-    def harvests(self) -> HarvestState.objects | QuerySet:
-        raise NotImplementedError(
-            "The harvests property is not implemented by the concrete Dataset class. "
-            "Add a ManyToMany field to HarvestSource through HarvestState on the Dataset "
-            "and return the related manager from harvests property."
-        )
-
-    @transaction.atomic
-    def create_new_version(self, excluded_specs: list[str] = None) -> HarvestDatasetVersion:
-        excluded_specs = excluded_specs or []
-        current_version = HarvestDatasetVersion.objects.get_current_version()
-        new_version = self.versions.create(version=settings.VERSION, is_current=False)
-
-        for harvest in self.harvests.all():
-            if current_version and harvest.source.set_specification not in excluded_specs and \
-                    not harvest.should_purge():
-                collection = current_version.sets.filter(name=harvest.source.set_specification).last()
-                if collection:
-                    new_version.copy_collection(collection)
-
-        return new_version
-
-    def get_earliest_harvest_date(self) -> datetime:
-        latest_harvest = self.harvests.order_by("harvested_at").first()
-        return latest_harvest.harvested_at if latest_harvest else None
 
     def evaluate_dataset_version(self, new_version: HarvestDatasetVersion) -> list[HarvestSet]:
         current_version = self.versions.get_current_version()

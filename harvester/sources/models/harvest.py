@@ -45,6 +45,13 @@ class HarvestEntity(models.Model):
     delete_policy = models.CharField(max_length=50, choices=DELETE_POLICY_CHOICES, default=DeletePolicies.TRANSIENT)
     purge_interval = models.JSONField(default=thirty_days_default)
 
+    def get_seeding_resources(self):
+        configuration = load_source_configuration(self.type, self.source.module)
+        return [
+            phase.get("retrieve_data").get("resource")
+            for phase in configuration["seeding_phases"] if phase.get("retrieve_data", None)
+        ]
+
     def __str__(self) -> str:
         return f"{self.source}.{self.type}"
 

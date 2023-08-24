@@ -11,6 +11,17 @@
         }
     },
     {
+        "model": "sources.harvestsource",
+        "pk": 2,
+        "fields": {
+            "name": "Merge test data",
+            "module": "merge",
+            "is_repository": false,
+            "created_at": "2023-08-17T08:33:18.338Z",
+            "modified_at": "2023-08-17T08:33:18.338Z"
+        }
+    },
+    {
         "model": "sources.harvestentity",
         "pk": 1,
         "fields": {
@@ -19,8 +30,24 @@
             "is_available": true,
             "is_manual": false,
             "allows_update": false,
-            "set_specification": "simple",
+            "set_specification": "simple_set",
             "delete_policy": "transient",
+            "purge_interval": {
+                "days": 30
+            }
+        }
+    },
+    {
+        "model": "sources.harvestentity",
+        "pk": 2,
+        "fields": {
+            "source": 2,
+            "type": "testing",
+            "is_available": true,
+            "is_manual": false,
+            "allows_update": false,
+            "set_specification": "merge_set",
+            "delete_policy": "no",
             "purge_interval": {
                 "days": 30
             }
