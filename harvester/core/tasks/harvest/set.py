@@ -1,3 +1,4 @@
+from django.db.transaction import atomic
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -40,3 +41,27 @@ def harvest_set(app_label: str, set_instance: int | HarvestSet, asynchronous: bo
             callback=dataset_version_callback_signature,
             asynchronous=asynchronous
         )
+
+
+@app.task(name="apply_set_deletes", base=DatabaseConnectionResetTask)
+@atomic()
+def apply_set_deletes(app_label: str, set_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Set = models["Set"]
+    for set_instance in Set.objects.filter(id__in=set_ids).select_for_update():
+        set_instance.pipeline["apply_set_deletes"] = {
+            "success": True
+        }
+        set_instance.save()
+
+
+@app.task(name="check_set_integrity", base=DatabaseConnectionResetTask)
+@atomic()
+def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Set = models["Set"]
+    for set_instance in Set.objects.filter(id__in=set_ids).select_for_update():
+        set_instance.pipeline["check_set_integrity"] = {
+            "success": True
+        }
+        set_instance.save()

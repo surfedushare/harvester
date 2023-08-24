@@ -97,5 +97,5 @@ class TestSimpleHarvestDocuments(TestCase):
         self.assertFalse(not_found.pending_at, "Expected Document to indicate it is no longer pending for tasks")
         self.assertEqual(
             not_found.get_pending_tasks(), [],
-            "Expected 404 to register a no pending tasks until the pipeline field gets a reset"
+            "Expected 404 to register no pending tasks until the pipeline field gets a reset"
         )

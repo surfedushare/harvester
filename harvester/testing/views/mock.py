@@ -5,16 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from testing.utils.generators import seed_generator
-
-
-ENTITY_SEQUENCE_PROPERTIES = {
-    "simple": {
-        "srn": "surf:testing:{ix}",
-        "external_id": "{ix}",  # will be cast to an int
-        "url": "http://localhost:8888/file/{ix}",
-        "title": "title for {ix}"
-    }
-}
+from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 
 
 class EntityMockAPIView(APIView):

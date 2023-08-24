@@ -8,7 +8,7 @@ from core.tasks.harvest.base import load_harvest_models
 @app.task(name="tika", base=DatabaseConnectionResetTask)
 def tika_task(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    Document = models["Document"]
 
     def texts_extraction(results):
         return [
@@ -17,9 +17,9 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
         ]
 
     tika_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
+        "pipeline_app_label": app_label,
         "pipeline_models": {
-            "document": "FileDocument",
+            "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
@@ -41,7 +41,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
             }
         }
     })
-    tika_processor(FileDocument.objects.filter(id__in=document_ids))
+    tika_processor(Document.objects.filter(id__in=document_ids))
 
 
 @app.task(name="extruct", base=DatabaseConnectionResetTask)

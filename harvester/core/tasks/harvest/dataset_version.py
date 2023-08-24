@@ -1,3 +1,4 @@
+from django.db.transaction import atomic
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -13,7 +14,7 @@ def harvest_dataset_version(app_label: str, dataset_version: int | DatasetVersio
         raise RecursionError("Maximum harvest_dataset_version recursion reached")
     models = load_harvest_models(app_label)
     dataset_version = load_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
-    pending = validate_pending_harvest_instances(dataset_version, model=models["Set"])
+    pending = validate_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
     if len(pending):
         recursive_callback_signature = harvest_dataset_version.si(
             app_label,
@@ -27,3 +28,15 @@ def harvest_dataset_version(app_label: str, dataset_version: int | DatasetVersio
             callback=recursive_callback_signature,
             asynchronous=asynchronous
         )
+
+
+@app.task(name="push_to_index", base=DatabaseConnectionResetTask)
+@atomic
+def push_to_index(app_label, dataset_version_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    DatasetVersion = models["DatasetVersion"]
+    for dataset_version in DatasetVersion.objects.filter(id__in=dataset_version_ids).select_for_update():
+        dataset_version.pipeline["push_to_index"] = {
+            "success": True
+        }
+        dataset_version.save()

@@ -63,7 +63,6 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
             finished.append(instance)
             instance.pending_at = None
         else:
-            print("has pending tasks!", instance.get_pending_tasks())
             pending.append(instance)
     model.objects.bulk_update(finished, ["pending_at"])
     return pending

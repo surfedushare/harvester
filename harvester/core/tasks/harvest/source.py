@@ -40,6 +40,6 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
     if not has_seeds:
         state_set.pending_at = None
 
-    state_set.harvested_at = current_time
-    state_set.clean()
-    state_set.save()
+    harvest_state.harvested_at = current_time
+    harvest_state.clean()
+    harvest_state.save()
