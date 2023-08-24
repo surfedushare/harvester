@@ -25,11 +25,23 @@ class TestHarvestObjectFileDocument(TestCase):
         )
         cls.document_1, cls.document_2, cls.youtube = cls.documents
 
-    def test_get_pending_tasks(self):
+    def test_get_primary_pending_tasks(self):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["tika"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["tika", "extruct", "video_preview"])  # TODO: this is wrong?!
+        self.assertEqual(youtube_tasks, ["tika"])
+
+    def test_get_secondary_pending_tasks(self):
+        # Set Tika task as completed
+        self.document_1.pipeline["tika"] = {"success": True}
+        self.document_1.save()
+        self.youtube.pipeline["tika"] = {"success": True}
+        self.youtube.save()
+        # Assert that tasks depending on Tika have become pending
+        pending_tasks_1 = self.document_1.get_pending_tasks()
+        self.assertEqual(pending_tasks_1, [])
+        youtube_tasks = self.youtube.get_pending_tasks()
+        self.assertEqual(youtube_tasks, ["extruct", "video_preview"])
 
     def test_reset_harvest_results(self):
         # Modify a document with some fake harvest data
