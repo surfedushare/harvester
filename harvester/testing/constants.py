@@ -12,5 +12,8 @@ ENTITY_SEQUENCE_PROPERTIES = {
         "external_id": "{ix}",  # will be cast to an int
         "url": "http://localhost:8888/file/{ix}",
         "title": "title for {ix}"
+    },
+    "nested": {
+        "srn": "surf:testing:{ix}"
     }
 }

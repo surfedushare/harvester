@@ -18,7 +18,8 @@ class HttpSeedingProcessorTestCase(TestCase):
             pending_at=None
         )
 
-    def assert_results(self, results):
+    def assert_results(self, results, extra_keys=None):
+        extra_keys = extra_keys or []
         # Assert results
         for batch in results:
             self.assertIsInstance(batch, list)
@@ -30,7 +31,7 @@ class HttpSeedingProcessorTestCase(TestCase):
                     "Expected a TestingDocument as part of test Set (aka Collection)"
                 )
                 self.assertIsNotNone(result.identity, "Expected Set to prescribe the identity for TestDocument")
-                self.assertTrue(sorted(result.properties.keys()), sorted(SEED_DEFAULTS.keys()))
+                self.assertEqual(sorted(result.properties.keys()), sorted(list(SEED_DEFAULTS.keys()) + extra_keys))
                 self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
                 self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
                 self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
@@ -41,10 +42,10 @@ class HttpSeedingProcessorTestCase(TestCase):
                     "Expected TestDocument to specify the DatasetVersion"
                 )
 
-    def assert_documents(self):
+    def assert_documents(self, expected_documents=20):
         self.assertEqual(
-            self.set.documents.count(), 20 + 1,
-            "Expected 20 generated simple data structures and one pre-existing unchanged document"
+            self.set.documents.count(), expected_documents + 1,
+            f"Expected {expected_documents} generated simple data structures and one pre-existing unchanged document"
         )
         # Pre-existing documents that are not in the harvest data should be left alone
         ignored_document = TestDocument.objects.get(id=self.ignored_document.id)

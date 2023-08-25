@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.shortcuts import Http404
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
@@ -13,9 +15,24 @@ class EntityMockAPIView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, entity):
+        # Generate the basic seeds
         size = int(request.GET.get("size", 20))
         sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
         seeds = list(seed_generator(entity, size, sequence_properties))
+
+        # Generate some nested seeds if required and divide those among the main generated seeds
+        nested_entity = request.GET.get("nested", None)
+        if nested_entity:
+            nested_sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
+            nested_seeds = list(seed_generator(nested_entity, size, nested_sequence_properties))
+            for ix, seed in enumerate(seeds):
+                nested = []
+                nested_length = ix % 3
+                for _ in range(0, nested_length):
+                    nested.append(nested_seeds.pop(0))
+                seed[f"{nested_entity}s"] = deepcopy(nested)
+
+        # Return the paginator
         paginator = PageNumberPagination()
         paginator.page_size_query_param = "page_size"
         page_data = paginator.paginate_queryset(seeds, request, view=self)
