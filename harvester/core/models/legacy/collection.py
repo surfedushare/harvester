@@ -14,8 +14,8 @@ class Collection(DocumentCollectionMixin, CollectionBase):
 
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
 
-    def init_document(self, data, collection=None):
-        doc = super().init_document(data, collection=collection or self)
+    def build_document(self, data, collection=None):
+        doc = super().build_document(data, collection=collection or self)
         doc.dataset_version = self.dataset_version
         return doc
 

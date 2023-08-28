@@ -39,10 +39,10 @@ class Document(DocumentBase):
     def apply_resource(self, resource):
         pass
 
-    def update(self, data, commit=True, validate=True):
+    def update(self, data, commit=True):
         if "language" in self.properties:
             data.pop("language", None)
-        super().update(data, commit=commit, validate=validate)
+        super().update(data, commit=commit)
 
     def get_language(self):
         language = self.properties.get('language', None)
