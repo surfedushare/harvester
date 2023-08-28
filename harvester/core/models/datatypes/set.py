@@ -48,10 +48,16 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
         app_config = apps.get_app_config(app_label)
         return apps.get_model(f"{app_label}.{app_config.document_model}")
 
-    def init_document(self, data: dict, collection: HarvestSet = None) -> HarvestDocument:
-        doc = super().init_document(data, collection=collection or self)
+    def build_document(self, data, collection=None):
+        doc = super().build_document(data, collection=collection or self)
         doc.dataset_version = self.dataset_version
         return doc
+
+    @property
+    def document_update_fields(self) -> list[str]:
+        fields = super().document_update_fields
+        fields.append("metadata")
+        return fields
 
     def __str__(self) -> str:
         return "{} (id={})".format(self.name, self.id)
