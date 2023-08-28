@@ -6,6 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from core.models.datatypes.document import HarvestDocument
 from testing.utils.generators import seed_generator
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 
@@ -20,12 +21,22 @@ class EntityMockAPIView(APIView):
         sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
         seeds = list(seed_generator(entity, size, sequence_properties))
 
+        # Delete some seeds if necessary
+        deletes = int(request.GET.get("deletes", 0))
+        if deletes:
+            for ix, seed in enumerate(seeds):
+                if not ix % deletes:
+                    seed["state"] = HarvestDocument.States.DELETED.value
+                    print("delete!")
+
         # Generate some nested seeds if required and divide those among the main generated seeds
         nested_entity = request.GET.get("nested", None)
         if nested_entity:
             nested_sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
             nested_seeds = list(seed_generator(nested_entity, size, nested_sequence_properties))
             for ix, seed in enumerate(seeds):
+                if seed["state"] == HarvestDocument.States.DELETED.value:
+                    continue
                 nested = []
                 nested_length = ix % 3
                 for _ in range(0, nested_length):

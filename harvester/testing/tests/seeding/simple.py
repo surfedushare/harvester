@@ -1,10 +1,11 @@
 from datetime import datetime
+from unittest.mock import patch
 
 from django.utils.timezone import make_aware
 
 from core.processors import HttpSeedingProcessor
 from testing.tests.seeding.base import HttpSeedingProcessorTestCase
-from testing.models import MockHarvestResource
+from testing.models import MockHarvestResource, TestDocument
 from testing.sources.simple import SEEDING_PHASES
 
 
@@ -25,3 +26,102 @@ class TestSimpleHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             self.assertTrue(resource.success)
             self.assertEqual(resource.request["args"], ["simple", "1970-01-01T00:00:00Z"])
             self.assertEqual(resource.since, make_aware(datetime(year=1970, month=1, day=1)))
+
+
+UPDATE_PARAMETERS = {
+    "size": 20,
+    "page_size": 10,
+    "deletes": 3  # deletes the 1st seed and every 3rd seed after that
+}
+
+
+class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.deleted_document = TestDocument.objects.create(
+            dataset_version=self.dataset_version,
+            collection=self.set,
+            pipeline={},
+            properties={
+                "state": "active",
+                "srn": "surf:testing:0",
+                "external_id": 0,
+                "url": "http://localhost:8888/file/0",
+                "title": "title for 0"
+            },
+            pending_at=None
+        )
+        self.updated_document = TestDocument.objects.create(
+            dataset_version=self.dataset_version,
+            collection=self.set,
+            pipeline={},
+            properties={
+                "state": "active",
+                "srn": "surf:testing:1",
+                "external_id": 1,
+                "url": "http://localhost:8888/file/1",
+                "title": "title for 1 before update"  # this is the important part that will change during the update
+            },
+            pending_at=None
+        )
+        self.ignored_document = TestDocument.objects.create(
+            dataset_version=self.dataset_version,
+            collection=self.set,
+            identity="surf:testing:2",
+            pipeline={
+                "tika": {
+                    "success": True
+                }
+            },
+            properties={
+                "state": "active",
+                "srn": "surf:testing:2",
+                "external_id": 2,
+                "url": "http://localhost:8888/file/2",
+                "title": "title for 2"
+            },
+            pending_at=None
+        )
+
+    @patch.object(MockHarvestResource, "PARAMETERS", UPDATE_PARAMETERS)
+    def test_seeding(self):
+        processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+        results = processor("simple", "1970-01-01T00:00:00Z")
+
+        self.assert_results(results, preexisting_document_ids=[self.ignored_document.id])
+        self.assert_documents()
+
+        # Assert delete document
+        deleted_document = TestDocument.objects.get(id=self.deleted_document.id)
+        deleted_at = deleted_document.metadata["deleted_at"]
+        self.assertIsNotNone(deleted_at)
+        self.assertNotEqual(deleted_at, deleted_document.metadata["created_at"])
+        self.assertEqual(deleted_at, deleted_document.metadata["modified_at"])
+
+        # Assert update document
+        updated_document = TestDocument.objects.get(id=self.updated_document.id)
+        updated_at = updated_document.metadata["modified_at"]
+        self.assertIsNotNone(updated_at)
+        self.assertNotEqual(updated_at, updated_document.metadata["created_at"])
+        self.assertIsNone(updated_document.metadata["deleted_at"])
+        self.assertEqual(updated_document.properties["title"], "title for 1")
+
+        # Assert ignored document
+        ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
+        self.assertEqual(
+            ignored_document.metadata["created_at"].replace(microsecond=0),
+            ignored_document.metadata["modified_at"].replace(microsecond=0)
+        )
+        self.assertIsNone(ignored_document.metadata["deleted_at"])
+        self.assertEqual(ignored_document.properties["title"], "title for 2")
+        self.assertFalse(
+            ignored_document.pending_at,
+            "Expected pre-existing document without update to not become pending"
+        )
+        self.assertIn(
+            "tika", ignored_document.pipeline,
+            "Expected pre-existing document without update to keep any pipeline state"
+        )

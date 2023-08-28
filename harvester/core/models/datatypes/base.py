@@ -2,17 +2,8 @@ from django.db import models
 from django.utils.timezone import now
 
 
-def simple_metadata_default() -> dict:
-    return {
-        "created_at": None,
-        "modified_at": None,
-        "deleted_at": None
-    }
-
-
 class HarvestObjectMixin(models.Model):
 
-    metadata = models.JSONField(default=simple_metadata_default, blank=True)
     pipeline = models.JSONField(default=dict, blank=True)
     tasks = models.JSONField(default=dict, blank=True)
     derivatives = models.JSONField(default=dict, blank=True)

@@ -18,8 +18,9 @@ class HttpSeedingProcessorTestCase(TestCase):
             pending_at=None
         )
 
-    def assert_results(self, results, extra_keys=None):
+    def assert_results(self, results, extra_keys=None, preexisting_document_ids=None):
         extra_keys = extra_keys or []
+        preexisting_document_ids = preexisting_document_ids or []
         # Assert results
         for batch in results:
             self.assertIsInstance(batch, list)
@@ -32,9 +33,10 @@ class HttpSeedingProcessorTestCase(TestCase):
                 )
                 self.assertIsNotNone(result.identity, "Expected Set to prescribe the identity for TestDocument")
                 self.assertEqual(sorted(result.properties.keys()), sorted(list(SEED_DEFAULTS.keys()) + extra_keys))
-                self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
-                self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
-                self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
+                if result.id not in preexisting_document_ids:
+                    self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
+                    self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
+                    self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
                 self.assertEqual(result.collection.id, self.set.id, "Expected TestDocument to use Set as collection")
                 self.assertEqual(
                     result.dataset_version.id,
@@ -49,8 +51,8 @@ class HttpSeedingProcessorTestCase(TestCase):
         )
         # Pre-existing documents that are not in the harvest data should be left alone
         ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
-        self.assertFalse(ignored_document.identity)
-        self.assertFalse(ignored_document.pipeline)
-        self.assertFalse(ignored_document.properties)
-        self.assertFalse(ignored_document.derivatives)
+        self.assertEqual(ignored_document.identity, self.ignored_document.identity)
+        self.assertEqual(ignored_document.pipeline, self.ignored_document.pipeline)
+        self.assertEqual(ignored_document.properties, self.ignored_document.properties)
+        self.assertEqual(ignored_document.derivatives, self.ignored_document.derivatives)
         self.assertIsNone(ignored_document.pending_at)

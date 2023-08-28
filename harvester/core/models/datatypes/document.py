@@ -1,15 +1,20 @@
 from typing import Any
 from copy import copy
+import json
+from hashlib import sha1
 from sentry_sdk import capture_message
 
 from django.db import models
+from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 
 from datagrowth.datatypes import DocumentBase
 from core.models.datatypes.base import HarvestObjectMixin
+from core.utils.decoders import HarvesterJSONDecoder
 
 
 def document_metadata_default() -> dict:
+    now_datetime = now()
     return {
         "srn": None,
         "provider": {
@@ -18,8 +23,9 @@ def document_metadata_default() -> dict:
             "slug": None,
             "ror": None
         },
-        "created_at": None,
-        "modified_at": None,
+        "hash": None,
+        "created_at": now_datetime,
+        "modified_at": now_datetime,
         "deleted_at": None
     }
 
@@ -63,7 +69,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     objects = HarvestDocumentManager()
 
     state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE)
-    metadata = models.JSONField(default=document_metadata_default, blank=True)
+    metadata = models.JSONField(
+        default=document_metadata_default, blank=True,
+        encoder=DjangoJSONEncoder, decoder=HarvesterJSONDecoder
+    )
 
     @classmethod
     def build(cls, data, collection=None):
@@ -72,8 +81,24 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         instance.clean()
         return instance
 
-    def update(self, data: Any, commit: bool = True, validate: bool = True) -> None:
-        super().update(data, commit=commit, validate=validate)
+    def update(self, data: Any, commit: bool = True) -> None:
+        content = data.properties if isinstance(data, DocumentBase) else data
+        for key, value in content.items():
+            pass
+        # Updates properties unless state is deleted
+        if content.get("state") == self.States.DELETED.value:
+            super().update({"state": self.States.DELETED.value}, commit=commit)
+            self.metadata["deleted_at"] = now()
+        else:
+            super().update(data, commit=commit)
+            self.metadata["deleted_at"] = None
+        # Calculates the new properties hash and sets fields accordingly
+        properties_string = json.dumps(self.properties, sort_keys=True, default=str)
+        properties_hash = sha1(properties_string.encode("utf-8")).hexdigest()
+        if properties_hash != self.metadata["hash"]:
+            self.pending_at = now()
+            self.metadata["hash"] = properties_hash
+            self.metadata["modified_at"] = now()
 
     def apply_resource(self, resource):
         pass
