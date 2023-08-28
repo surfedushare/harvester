@@ -156,9 +156,10 @@ class PublinovaMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_doi(cls, node):
-        if not node["doi"]:
+        doi = node.get("doi", None)
+        if not doi:
             return
-        return "10." + node["doi"].split("10.", 1)[1].replace(" ", "")
+        return "10." + doi.split("10.", 1)[1].replace(" ", "")
 
 
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
