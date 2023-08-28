@@ -160,6 +160,7 @@ class PublinovaMetadataExtraction(ExtractProcessor):
             return
         return "10." + node["doi"].split("10.", 1)[1].replace(" ", "")
 
+
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
     "url": PublinovaMetadataExtraction.get_url,
