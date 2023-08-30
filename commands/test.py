@@ -16,7 +16,7 @@ def run(ctx, start_server=True, test_case=None):
         if start_server:
             print("Starting development server ...")
             ctx.run("python manage.py runserver", echo=True, asynchronous=True)
-            sleep(5)
+            sleep(120)
             print("Done starting development server!")
         test_case = test_case if test_case else ""
         ctx.run(f"python manage.py test {test_case}", echo=True, pty=True)
