@@ -1,4 +1,7 @@
+from typing import Iterator
 from hashlib import sha1
+
+from files.models import Set, FileDocument
 
 
 def get_file_seeds(sharekit_products_data: dict):
@@ -21,6 +24,7 @@ def get_file_seeds(sharekit_products_data: dict):
             # Anything without a URL can not be processed
             if not product_file.get("url", None):
                 continue
+            product_file["state"] = sharekit_product.get("meta", {}).get("state", "active")
             # We add some product metadata, because unfortunately the product supplies defaults
             product_file["product"] = {
                 "provider": "sharekit",
@@ -35,6 +39,7 @@ def get_file_seeds(sharekit_products_data: dict):
             # Anything without a URL can not be processed
             if not product_link.get("url", None):
                 continue
+            product_link["state"] = sharekit_product.get("meta", {}).get("state", "active")
             product_link["product"] = {
                 "provider": "sharekit",
                 "product_id": product_id,
@@ -44,6 +49,15 @@ def get_file_seeds(sharekit_products_data: dict):
             # We indicate that the URL points to a webpage
             product_link["is_link"] = True
             yield product_link
+
+
+def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
+    if not seed["state"] == FileDocument.States.DELETED.value:
+        yield seed
+        return
+    for doc in harvest_set.documents.filter(properties__product_id=seed["product_id"]):
+        doc.properties["state"] = FileDocument.States.DELETED.value
+        yield doc.properties
 
 
 class SharekitFileExtraction(object):
@@ -77,6 +91,7 @@ class SharekitFileExtraction(object):
 
 OBJECTIVE = {
     "@": get_file_seeds,
+    "state": lambda node: node["state"],
     "srn": SharekitFileExtraction.get_srn,
     "url": lambda node: node["url"],
     "hash": SharekitFileExtraction.get_hash,
@@ -104,6 +119,14 @@ SEEDING_PHASES = [
         },
         "contribute_data": {
             "objective": OBJECTIVE
+        }
+    },
+    {
+        "phase": "deletes",
+        "strategy": "back_fill",
+        "batch_size": 5,
+        "contribute_data": {
+            "callback": back_fill_deletes
         }
     }
 ]

@@ -1,5 +1,6 @@
 from typing import Iterator
-from core.models.datatypes import HarvestSet
+
+from core.models.datatypes import HarvestSet, HarvestDocument
 from testing.constants import SEED_DEFAULTS
 
 
@@ -17,11 +18,11 @@ def get_nested_seeds(nested_data: dict) -> Iterator[dict]:
 
 
 def back_fill_deletes(seed: dict, harvest_set: HarvestSet) -> Iterator[dict]:
-    if not seed["state"] == "deleted":
+    if not seed["state"] == HarvestDocument.States.DELETED.value:
         yield seed
         return
     for doc in harvest_set.documents.filter(properties__parent_id=seed["parent_id"]):
-        doc.properties["state"] = "deleted"
+        doc.properties["state"] = HarvestDocument.States.DELETED.value
         yield doc.properties
 
 
