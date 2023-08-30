@@ -6,7 +6,7 @@ from functools import reduce
 from datetime import datetime
 
 from django.conf import settings
-from django.db import models, transaction
+from django.db import models
 from django.db.models.manager import QuerySet
 
 from datagrowth.utils import ibatch
