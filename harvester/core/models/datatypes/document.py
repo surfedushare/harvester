@@ -14,7 +14,7 @@ from core.utils.decoders import HarvesterJSONDecoder
 
 
 def document_metadata_default() -> dict:
-    now_datetime = now()
+    current_time = now()
     return {
         "srn": None,
         "provider": {
@@ -24,8 +24,8 @@ def document_metadata_default() -> dict:
             "ror": None
         },
         "hash": None,
-        "created_at": now_datetime,
-        "modified_at": now_datetime,
+        "created_at": current_time,
+        "modified_at": current_time,
         "deleted_at": None
     }
 
@@ -88,17 +88,28 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         # Updates properties unless state is deleted
         if content.get("state") == self.States.DELETED.value:
             super().update({"state": self.States.DELETED.value}, commit=commit)
-            self.metadata["deleted_at"] = now()
         else:
             super().update(data, commit=commit)
+
+    def clean(self):
+        super().clean()
+        current_time = now()
+        # Update metadata about deletion
+        state = self.properties.get("state", None)
+        if state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
+            self.metadata["deleted_at"] = current_time
+            self.metadata["modified_at"] = current_time
+        else:
             self.metadata["deleted_at"] = None
-        # Calculates the new properties hash and sets fields accordingly
+        # Calculates the properties hash and (re)sets it.
+        # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)
         properties_hash = sha1(properties_string.encode("utf-8")).hexdigest()
-        if properties_hash != self.metadata["hash"]:
-            self.pending_at = now()
+        if self.metadata.get("hash", None) is None:
             self.metadata["hash"] = properties_hash
-            self.metadata["modified_at"] = now()
+        elif properties_hash != self.metadata["hash"]:
+            self.metadata["hash"] = properties_hash
+            self.metadata["modified_at"] = current_time
 
     def apply_resource(self, resource):
         pass
@@ -136,6 +147,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             }
             return
         yield search_data
+
+    def __eq__(self, other):
+        content_hash = self.metadata.get("hash", None)
+        return content_hash and content_hash == other.metadata.get("hash", None)
 
     class Meta:
         abstract = True

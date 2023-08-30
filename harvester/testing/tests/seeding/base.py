@@ -11,12 +11,17 @@ class HttpSeedingProcessorTestCase(TestCase):
         self.dataset = Dataset.objects.create(name="test", is_harvested=True)
         self.dataset_version = DatasetVersion.objects.create(dataset=self.dataset)
         self.set = Set.objects.create(name="test", identifier="srn", dataset_version=self.dataset_version)
-        self.ignored_document = TestDocument.objects.create(
+        self.ignored_document = TestDocument(
             collection=self.set,
             pipeline={},
             properties={},
             pending_at=None
         )
+        self.ignored_document.clean()
+        self.ignored_document.save()
+        # We reload the ignored_document here, because Django will cause very minor updates while reloading,
+        # that we want to ignore for the tests
+        self.ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
 
     def assert_results(self, results, extra_keys=None, preexisting_document_ids=None):
         extra_keys = extra_keys or []
@@ -51,6 +56,7 @@ class HttpSeedingProcessorTestCase(TestCase):
         )
         # Pre-existing documents that are not in the harvest data should be left alone
         ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
+        self.assertEqual(ignored_document.metadata, self.ignored_document.metadata)
         self.assertEqual(ignored_document.identity, self.ignored_document.identity)
         self.assertEqual(ignored_document.pipeline, self.ignored_document.pipeline)
         self.assertEqual(ignored_document.properties, self.ignored_document.properties)

@@ -39,7 +39,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self.deleted_document = TestDocument.objects.create(
+        self.deleted_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
             pipeline={},
@@ -52,6 +52,8 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             },
             pending_at=None
         )
+        self.deleted_document.clean()
+        self.deleted_document.save()
         self.updated_document = TestDocument.objects.create(
             dataset_version=self.dataset_version,
             collection=self.set,
@@ -65,7 +67,9 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             },
             pending_at=None
         )
-        self.ignored_document = TestDocument.objects.create(
+        self.updated_document.clean()
+        self.updated_document.save()
+        self.unchanged_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
             identity="surf:testing:2",
@@ -83,6 +87,8 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             },
             pending_at=None
         )
+        self.unchanged_document.clean()
+        self.unchanged_document.save()
 
     @patch.object(MockHarvestResource, "PARAMETERS", UPDATE_PARAMETERS)
     def test_seeding(self):
@@ -91,7 +97,15 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         })
         results = processor("simple", "1970-01-01T00:00:00Z")
 
-        self.assert_results(results, preexisting_document_ids=[self.ignored_document.id])
+        self.assert_results(
+            results,
+            preexisting_document_ids=[
+                self.ignored_document.id,
+                self.deleted_document.id,
+                self.updated_document.id,
+                self.unchanged_document.id
+            ]
+        )
         self.assert_documents()
 
         # Assert delete document
@@ -109,19 +123,16 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.assertIsNone(updated_document.metadata["deleted_at"])
         self.assertEqual(updated_document.properties["title"], "title for 1")
 
-        # Assert ignored document
-        ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
-        self.assertEqual(
-            ignored_document.metadata["created_at"].replace(microsecond=0),
-            ignored_document.metadata["modified_at"].replace(microsecond=0)
-        )
-        self.assertIsNone(ignored_document.metadata["deleted_at"])
-        self.assertEqual(ignored_document.properties["title"], "title for 2")
+        # Assert unchanged document
+        unchanged_document = TestDocument.objects.get(id=self.unchanged_document.id)
+        self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"])
+        self.assertIsNone(unchanged_document.metadata["deleted_at"])
+        self.assertEqual(unchanged_document.properties["title"], "title for 2")
         self.assertFalse(
-            ignored_document.pending_at,
+            unchanged_document.pending_at,
             "Expected pre-existing document without update to not become pending"
         )
         self.assertIn(
-            "tika", ignored_document.pipeline,
+            "tika", unchanged_document.pipeline,
             "Expected pre-existing document without update to keep any pipeline state"
         )

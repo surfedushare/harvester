@@ -27,7 +27,6 @@ class EntityMockAPIView(APIView):
             for ix, seed in enumerate(seeds):
                 if not ix % deletes:
                     seed["state"] = HarvestDocument.States.DELETED.value
-                    print("delete!")
 
         # Generate some nested seeds if required and divide those among the main generated seeds
         nested_entity = request.GET.get("nested", None)
@@ -35,13 +34,12 @@ class EntityMockAPIView(APIView):
             nested_sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
             nested_seeds = list(seed_generator(nested_entity, size, nested_sequence_properties))
             for ix, seed in enumerate(seeds):
-                if seed["state"] == HarvestDocument.States.DELETED.value:
-                    continue
                 nested = []
                 nested_length = ix % 3
                 for _ in range(0, nested_length):
                     nested.append(nested_seeds.pop(0))
-                seed[f"{nested_entity}s"] = deepcopy(nested)
+                seed[f"{nested_entity}s"] = deepcopy(nested) if seed["state"] != HarvestDocument.States.DELETED.value \
+                    else []
 
         # Return the paginator
         paginator = PageNumberPagination()

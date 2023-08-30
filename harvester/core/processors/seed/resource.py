@@ -1,3 +1,4 @@
+from typing import Iterator
 from copy import deepcopy
 from collections import OrderedDict
 
@@ -27,7 +28,7 @@ class ResourceSeedingProcessor(Processor):
         highest_content_phase = max(self.contents.keys())
         return phase["phase"].index < highest_content_phase
 
-    def build_seed_iterator(self, phase, *args, **kwargs):
+    def build_seed_iterator(self, phase, *args, **kwargs) -> Iterator:
         resource_config = phase["retrieve"]
         if not len(self.batch):
             # This is the initial case where there is no input from a buffer.
@@ -68,12 +69,17 @@ class ResourceSeedingProcessor(Processor):
         batch_size = phase["phase"].batch_size
         return ibatch(seed_iterator, batch_size=batch_size)
 
-    def flush_buffer(self, phase, force=False):
+    def build_callback_iterator(self, phase, *args) -> Iterator:
+        callback = phase["contribute"].callback
+        for seed in self.batch:
+            yield callback(seed, *args)
+
+    def flush_buffer(self, phase, force=False) -> None:
         if not self.buffer and not force:
             raise ValueError(f"Did not expect to encounter an empty buffer with strategy for phase {phase['phase']}")
 
         match phase["phase"].strategy:
-            case "initial" | "replace":
+            case "initial" | "replace" | "back_fill":
                 self.batch = deepcopy(self.buffer)
             case "merge":
                 merge_on = phase["contribute"].merge_on
@@ -86,14 +92,14 @@ class ResourceSeedingProcessor(Processor):
 
         self.buffer = []
 
-    def batch_to_documents(self):
+    def batch_to_documents(self) -> Iterator:
         documents = [
             self.Document.build(seed, collection=self.collection)
             for seed in self.batch
         ]
         return self.collection.update_batches(documents, self.collection.identifier)
 
-    def __init__(self, collection: CollectionBase, config: ConfigurationType | dict, initial: bool = None):
+    def __init__(self, collection: CollectionBase, config: ConfigurationType | dict, initial: bool = None) -> None:
         super().__init__(config)
         assert len(self.config.phases), \
             "ResourceSeedingProcessor needs at least one phase to be able to retrieve seed data"
@@ -110,10 +116,10 @@ class ResourceSeedingProcessor(Processor):
         for ix, phase in enumerate(self.config.phases):
             phase = deepcopy(phase)
             phase["index"] = ix
-            retrieve_data = phase.pop("retrieve_data")
+            retrieve_data = phase.pop("retrieve_data", None)
             contribute_data = phase.pop("contribute_data")
             phase_config = create_config("seeding_processor", phase)
-            retrieve_config = create_config(self.resource_type, retrieve_data)
+            retrieve_config = create_config(self.resource_type, retrieve_data) if retrieve_data else None
             contribute_config = create_config(self.contribute_type, contribute_data)
             self.phases[phase_config.phase] = {
                 "phase": phase_config,
@@ -121,7 +127,7 @@ class ResourceSeedingProcessor(Processor):
                 "contribute": contribute_config
             }
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> Iterator:
         while self.contents or self.buffer is None:
             for phase_index, phase in enumerate(self.phases.values()):
                 if self.should_skip_phase(phase):
@@ -144,6 +150,12 @@ class ResourceSeedingProcessor(Processor):
                         self.buffer = [
                             content
                             for batch in self.build_seed_iterator(phase, *args, **kwargs)
+                            for content in batch
+                        ]
+                    case "back_fill":
+                        self.buffer = [
+                            content
+                            for batch in self.build_callback_iterator(phase, self.collection)
                             for content in batch
                         ]
                 self.flush_buffer(phase)
