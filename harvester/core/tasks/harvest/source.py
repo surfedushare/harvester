@@ -28,7 +28,7 @@ def harvest_source(app_label: str, source: str, asynchronous=True):
     })
     has_seeds = False
     harvest_from = f"{harvest_state.harvested_at:%Y-%m-%dT%H:%M:%SZ}"
-    for documents in seeding_processor(harvest_state.entity.set_specification, harvest_from):
+    for documents in seeding_processor(harvest_state.set_specification, harvest_from):
         has_seeds = True
         dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
     else:

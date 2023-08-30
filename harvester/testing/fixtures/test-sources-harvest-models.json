@@ -30,8 +30,8 @@
             "is_available": true,
             "is_manual": false,
             "allows_update": false,
-            "set_specification": "simple_set",
-            "delete_policy": "transient",
+            "set_specifications": ["simple_set"],
+            "delete_policy": "no",
             "purge_interval": {
                 "days": 30
             }
@@ -46,8 +46,8 @@
             "is_available": true,
             "is_manual": false,
             "allows_update": false,
-            "set_specification": "merge_set",
-            "delete_policy": "no",
+            "set_specifications": ["merge_set"],
+            "delete_policy": "transient",
             "purge_interval": {
                 "days": 30
             }

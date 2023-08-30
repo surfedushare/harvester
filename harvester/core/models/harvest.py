@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 from django.apps import apps
 from django.db import models
-from django.utils.timezone import make_aware
+from django.utils.timezone import make_aware, now
 
+from datagrowth.utils import ibatch
 from core.loading import load_harvest_models
-from core.constants import DeletePolicies
 from core.models.datatypes import HarvestDatasetVersion, HarvestSet
 
 
@@ -15,6 +15,10 @@ class HarvestState(models.Model):
     dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE)
     harvest_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True, blank=True)
 
+    set_specification = models.CharField(
+        max_length=255,
+        help_text="The slug for the 'set' you want to harvest"
+    )
     harvested_at = models.DateTimeField(blank=True, default=make_aware(datetime(year=1970, month=1, day=1)))
     purge_after = models.DateTimeField(null=True, blank=True)
 
@@ -24,12 +28,10 @@ class HarvestState(models.Model):
 
     @property
     def set_name(self):
-        return f"{self.entity.source.module}:{self.entity.set_specification}"
+        return f"{self.entity.source.module}:{self.set_specification}"
 
     def should_purge(self) -> bool:
-        return self.entity.delete_policy == DeletePolicies.NO or \
-            (self.entity.delete_policy == DeletePolicies.TRANSIENT and self.purge_after and
-             self.purge_after < make_aware(datetime.now()))
+        return self.purge_after and self.purge_after < now()
 
     def reset(self, dataset_version: HarvestDatasetVersion) -> HarvestSet:
         data_models = load_harvest_models(self.entity.type)
@@ -45,8 +47,33 @@ class HarvestState(models.Model):
         self.save()
         return self.harvest_set
 
-    def prepare_using_set(self, harvest_set: HarvestSet) -> HarvestSet:
-        raise NotImplementedError("Not implemented yet")
+    def prepare_using_set(self, dataset_version: HarvestDatasetVersion, harvest_set: HarvestSet) -> HarvestSet:
+        current_time = now()
+        data_models = load_harvest_models(self.entity.type)
+        self.harvest_set = data_models["Set"].objects.create(
+            name=self.set_name,
+            dataset_version=dataset_version,
+            identifier="srn",
+            delete_policy=self.entity.delete_policy
+        )
+        self.clean()
+        self.save()
+        for batch in ibatch(harvest_set.documents.all(), batch_size=100):
+            documents = []
+            for document in batch:
+                for task, result in list(document.pipeline.items()):
+                    if not result.get("success", False):
+                        del document.pipeline[task]
+                        del document.derivatives[task]
+                        document.pending_at = current_time
+                document.pk = None
+                document.id = None
+                document.collection = self.harvest_set
+                document.dataset_version = dataset_version
+                document.clean()
+                documents.append(document)
+            data_models["Document"].objects.bulk_create(documents)
+        return self.harvest_set
 
     def clear_resources(self):
         for resource_name in self.entity.get_seeding_resources():

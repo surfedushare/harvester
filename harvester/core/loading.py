@@ -12,7 +12,7 @@ from django.apps import apps
 
 
 def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
-    models = ["Dataset", "DatasetVersion", "Set", "HarvestState"]
+    models = ["Dataset", "DatasetVersion", "Set", "HarvestState", "Batch", "ProcessResult"]
     app_config = apps.get_app_config(app_label)
     models = {
         model_name: apps.get_model(f"{app_label}.{model_name}")

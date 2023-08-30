@@ -1,9 +1,11 @@
 from collections import defaultdict
+from sentry_sdk import capture_message
 
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
+from core.constants import DeletePolicies
 from core.tasks.harvest.source import harvest_source
 from sources.models.harvest import HarvestEntity
 
@@ -20,18 +22,39 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
         Dataset = models["Dataset"]
         HarvestState = models["HarvestState"]
         for dataset in Dataset.objects.filter(is_harvested=True):
-            state, created = HarvestState.objects.get_or_create(entity=entity, dataset=dataset)
-            datasets[dataset].append(state)
+            for set_specification in entity.set_specifications:
+                state, created = HarvestState.objects.get_or_create(
+                    entity=entity,
+                    dataset=dataset,
+                    set_specification=set_specification
+                )
+                datasets[dataset].append(state)
 
     for dataset, states in datasets.items():
+        # Check if there are any process_result leftovers from a previous harvest process.
+        # We report these occurrences, because it may indicate a problem.
+        models = load_harvest_models(dataset._meta.app_label)
+        logged_result_types = set()
+        for process_result in models["ProcessResult"].objects.all():
+            if process_result.result_type not in logged_result_types:
+                capture_message(
+                    f"Found unexpected process results for result type: {process_result.result_type}",
+                    level="warning"
+                )
+                logged_result_types.add(process_result.result_type)
+
+        # Copy data from previous harvests and delete Resources where needed.
+        # After that we harvest_source to start fetching metadata.
         current_version = dataset.versions.get_current_version()
         new_version = dataset.versions.create()
         for state in states:
-            if reset or not current_version:
+            if reset or not current_version or state.should_purge():
                 state.clear_resources()
                 state.reset(new_version)
             else:
-                current_set = current_version.collections.get(name=state.set_name)
+                current_set = current_version.sets.get(name=state.set_name)
                 new_version.historic_sets.add(current_set)
-                state.prepare_using_set(current_set)
+                state.prepare_using_set(new_version, current_set)
+                if state.entity.delete_policy == DeletePolicies.NO:
+                    state.clear_resources()
             harvest_source(state.entity.type, state.entity.source.module, asynchronous=asynchronous)

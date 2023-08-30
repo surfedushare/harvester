@@ -45,7 +45,8 @@ class TestInitialHarvestSource(TestCase):
         self.state = HarvestState.objects.create(
             dataset=self.dataset,
             harvest_set=self.set,
-            entity=self.harvest_entity
+            entity=self.harvest_entity,
+            set_specification="simple_set"
         )
         self.sequence_properties = copy(ENTITY_SEQUENCE_PROPERTIES["simple"])
         for seed in seed_generator("simple", 20, self.sequence_properties):
