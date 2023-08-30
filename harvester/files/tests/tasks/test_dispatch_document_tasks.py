@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.utils.timezone import now
 
+from datagrowth.configuration import register_defaults
 from core.tasks import dispatch_document_tasks
 from files.tests.factories import create_file_document_set
 from files.models import FileDocument
@@ -76,12 +77,22 @@ class TestSimpleDispatchDocumentTasks(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             "test",
             [{"url": "https://example.com/1"}, {"url": "https://example.com/2"}],
             [{"url": "https://example.com/1"}, {"url": "https://example.com/2", "status": 404}],
         )
         cls.success, cls.not_found = cls.documents
+
+    @classmethod
+    def tearDownClass(cls):
+        register_defaults("global", {
+            "cache_only": False
+        })
+        super().tearDownClass()
 
     @patch("files.models.resources.metadata.HttpTikaResource._send")
     def test_dispatch_document_tasks_synchronous(self, send_mock):
