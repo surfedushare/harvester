@@ -44,28 +44,6 @@ class TestHarvestObjectFileDocument(TestCase):
         youtube_tasks = self.youtube.get_pending_tasks()
         self.assertEqual(youtube_tasks, ["extruct", "video_preview"])
 
-    def test_reset_harvest_results(self):
-        # Modify a document with some fake harvest data
-        self.document_1.tasks = {
-            "test": {
-                "depends_on": ["$.url"],
-                "checks": []
-            }
-        }
-        self.document_1.derivatives = {"test": "test"}
-        self.document_1.pipeline = {
-            "test": {
-                "success": True
-            }
-        }
-        self.document_1.pending_at = now()
-        # Reset and assert that correct defaults are in place
-        self.document_1.reset_task_results()
-        self.assertEqual(self.document_1.tasks, default_document_tasks())
-        self.assertEqual(self.document_1.derivatives, {})
-        self.assertEqual(self.document_1.pipeline, {})
-        self.assertIsNone(self.document_1.pending_at)
-
 
 class TestSimpleDispatchDocumentTasks(TestCase):
 

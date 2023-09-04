@@ -37,26 +37,6 @@ class HarvestDataset(models.Model):
     def get_name(cls) -> str:  # adheres to Datagrowth protocol for easy data loads
         return f"{cls._meta.app_label}dataset"
 
-    def evaluate_dataset_version(self, new_version: HarvestDatasetVersion) -> list[HarvestSet]:
-        current_version = self.versions.get_current_version()
-        if not current_version or not new_version:
-            return []
-        fallback_collections = []
-        current_aggregates = current_version.aggregate()
-        new_aggregates = new_version.aggregate()
-        for collection_name, collection_info in current_aggregates.items():
-            document_count = collection_info["document_count"]
-            if not document_count:
-                continue
-            if collection_name not in new_aggregates:
-                fallback_collections.append(collection_info["collection"])
-                continue
-            new_count = new_aggregates[collection_name]["document_count"]
-            count_diff = document_count - new_count
-            if count_diff and count_diff / document_count >= 0.05 and document_count > 50:
-                fallback_collections.append(collection_info["collection"])
-        return fallback_collections
-
     class Meta:
         abstract = True
 
@@ -176,15 +156,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         HarvestDatasetVersion.objects.all().update(is_current=False)
         self.is_current = True
         self.save()
-
-    def aggregate(self) -> dict[str, dict[str, HarvestSet | int]]:
-        return {
-            collection.name: {
-                "collection": collection,
-                "document_count": collection.document_set.filter(dataset_version=self).count()
-            }
-            for collection in self.sets.all()
-        }
 
     class Meta:
         abstract = True

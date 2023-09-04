@@ -9,14 +9,6 @@ class HarvestObjectMixin(models.Model):
     derivatives = models.JSONField(default=dict, blank=True)
     pending_at = models.DateTimeField(default=now, null=True, blank=True)
 
-    def reset_task_results(self) -> None:
-        self.pipeline = {}
-        self.tasks = self._meta.get_field("tasks").default()
-        self.derivatives = {}
-        self.pending_at = None
-        self.clean()
-        self.save()
-
     def get_pending_tasks(self) -> list[str]:
         pending_tasks = []
         for task_name, conditions in self.tasks.items():
