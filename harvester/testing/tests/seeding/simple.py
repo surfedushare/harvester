@@ -54,10 +54,14 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         )
         self.deleted_document.clean()
         self.deleted_document.save()
-        self.updated_document = TestDocument.objects.create(
+        self.updated_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={},
+            pipeline={
+                "tika": {
+                    "success": True
+                }
+            },
             properties={
                 "state": "active",
                 "srn": "surf:testing:1",
@@ -121,16 +125,24 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.assertIsNotNone(updated_at)
         self.assertNotEqual(updated_at, updated_document.metadata["created_at"])
         self.assertIsNone(updated_document.metadata["deleted_at"])
-        self.assertEqual(updated_document.properties["title"], "title for 1")
+        self.assertEqual(updated_document.properties["title"], "title for 1", "Expected the title to get updated")
+        self.assertFalse(
+            updated_document.pending_at,
+            "Expected pre-existing document without relevant update to not become pending for tasks"
+        )
+        self.assertIn(
+            "tika", updated_document.pipeline,
+            "Expected pre-existing document without relevant update to keep any pipeline state"
+        )
 
         # Assert unchanged document
         unchanged_document = TestDocument.objects.get(id=self.unchanged_document.id)
         self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"])
         self.assertIsNone(unchanged_document.metadata["deleted_at"])
-        self.assertEqual(unchanged_document.properties["title"], "title for 2")
+        self.assertEqual(unchanged_document.properties["title"], "title for 2", "Expected the title to remain as-is")
         self.assertFalse(
             unchanged_document.pending_at,
-            "Expected pre-existing document without update to not become pending"
+            "Expected pre-existing document without update to not become pending for tasks"
         )
         self.assertIn(
             "tika", unchanged_document.pipeline,

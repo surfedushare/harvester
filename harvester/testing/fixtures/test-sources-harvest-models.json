@@ -31,7 +31,7 @@
             "is_manual": false,
             "allows_update": false,
             "set_specifications": ["simple_set"],
-            "delete_policy": "no",
+            "delete_policy": "transient",
             "purge_interval": {
                 "days": 30
             }
@@ -47,7 +47,7 @@
             "is_manual": false,
             "allows_update": false,
             "set_specifications": ["merge_set"],
-            "delete_policy": "transient",
+            "delete_policy": "no",
             "purge_interval": {
                 "days": 30
             }

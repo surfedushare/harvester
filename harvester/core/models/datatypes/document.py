@@ -99,7 +99,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         if state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
-        else:
+        elif state != self.States.DELETED.value:
             self.metadata["deleted_at"] = None
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
@@ -150,7 +150,9 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     def __eq__(self, other):
         content_hash = self.metadata.get("hash", None)
-        return content_hash and content_hash == other.metadata.get("hash", None)
+        deleted_at = self.metadata.get("deleted_at", None)
+        return content_hash and content_hash == other.metadata.get("hash", None) and \
+            deleted_at == other.metadata.get("deleted_at", None)
 
     class Meta:
         abstract = True

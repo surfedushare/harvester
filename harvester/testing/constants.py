@@ -18,5 +18,12 @@ ENTITY_SEQUENCE_PROPERTIES = {
         "external_id": "{ix}",  # will be cast to an int
         "url": "http://localhost:8888/file/{ix}",
         "title": "title for {ix}"
+    },
+    "merge": {
+        "state": "deleted",  # to create pre-existing documents for delete_policy=no sources
+        "srn": "surf:testing:{ix}",
+        "external_id": "{ix}",  # will be cast to an int
+        "url": "http://localhost:8888/file/{ix}",
+        "title": "title for {ix}"
     }
 }

@@ -161,7 +161,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             "Expected resources for 'simple' entity to get deleted because of delete_policy=no"
         )
         self.assertEqual(
-            MockDetailResource.objects.all().count(), 1,
+            MockDetailResource.objects.all().count(), 0,
             "Expected resources for 'merge' entity to remain where possible because of delete_policy=transient"
         )
         # Assert documents

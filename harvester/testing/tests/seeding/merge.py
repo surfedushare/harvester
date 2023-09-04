@@ -1,11 +1,13 @@
 from datetime import datetime
-
+from unittest.mock import patch
 
 from django.utils.timezone import make_aware
 
 from core.processors import HttpSeedingProcessor
+from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.tests.seeding.base import HttpSeedingProcessorTestCase
-from testing.models import MockHarvestResource, MockDetailResource
+from testing.utils.generators import document_generator
+from testing.models import TestDocument, MockHarvestResource, MockDetailResource
 from testing.sources.merge import SEEDING_PHASES
 
 
@@ -37,3 +39,80 @@ class TestMergeHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         for ix, resource in enumerate(MockDetailResource.objects.all()):
             self.assertTrue(resource.success)
             self.assertEqual(resource.request["args"], ["merge", ix])
+
+
+UPDATE_PARAMETERS = {
+    "size": 20,
+    "page_size": 10,
+    "deletes": 3  # deletes the 1st seed and every 3rd seed after that
+}
+
+
+class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
+    """
+    The setup of this test will use a generator that creates deleted documents.
+    When running the seeder this should un-delete almost all seeds and
+    shouldn't update the metadata from generated documents, unless real updates came through the seeder.
+    """
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.documents = list(
+            document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"])
+        )
+        self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")
+        self.updated_document.properties["title"] = "title for 1 before update"
+        self.updated_document.save()
+        self.unchanged_document = TestDocument.objects.get(properties__srn="surf:testing:2")
+        self.unchanged_document.metadata["hash"] = "960140b6e7b8decb044f606b472db54fa17d182c"
+        self.unchanged_document.pending_at = None
+        self.unchanged_document.pipeline["tika"] = {"success": True}
+        self.unchanged_document.save()
+
+    @patch.object(MockHarvestResource, "PARAMETERS", UPDATE_PARAMETERS)
+    def test_seeding(self):
+        processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+        results = processor("merge", "1970-01-01T00:00:00Z")
+
+        self.assert_results(
+            results,
+            preexisting_document_ids=[
+                self.ignored_document.id,
+                *[doc.id for batch in self.documents for doc in batch]
+            ]
+        )
+        self.assert_documents()
+
+        # Assert delete document
+        deleted_document = TestDocument.objects.get(identity="surf:testing:0")
+        deleted_at = deleted_document.metadata["deleted_at"]
+        self.assertIsNotNone(deleted_at)
+        self.assertEqual(
+            deleted_at, deleted_document.metadata["created_at"],
+            "Due to testing setup we create the documents in deleted state"
+        )
+        self.assertEqual(deleted_at, deleted_document.metadata["modified_at"])
+
+        # Assert update document
+        updated_document = TestDocument.objects.get(identity="surf:testing:1")
+        updated_at = updated_document.metadata["modified_at"]
+        self.assertIsNotNone(updated_at)
+        self.assertNotEqual(updated_at, updated_document.metadata["created_at"])
+        self.assertIsNone(updated_document.metadata["deleted_at"])
+        self.assertEqual(updated_document.properties["title"], "title for 1", "Expected the title to get updated")
+
+        # Assert unchanged document
+        unchanged_document = TestDocument.objects.get(identity="surf:testing:2")
+        self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"])
+        self.assertIsNone(unchanged_document.metadata["deleted_at"])
+        self.assertEqual(unchanged_document.properties["title"], "title for 2", "Expected the title to remain as-is")
+        self.assertFalse(
+            unchanged_document.pending_at,
+            "Expected pre-existing document without update to not become pending"
+        )
+        self.assertIn(
+            "tika", unchanged_document.pipeline,
+            "Expected pre-existing document without update to keep any pipeline state"
+        )

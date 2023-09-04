@@ -56,7 +56,15 @@ class EntityMockIdListAPIView(APIView):
         size = int(request.GET.get("size", 20))
         sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
         seeds = list(seed_generator(entity, size, sequence_properties))
-        return Response([{"id": obj["external_id"]} for obj in seeds])
+        delete_ids = []
+
+        deletes = int(request.GET.get("deletes", 0))
+        if deletes:
+            for ix, seed in enumerate(seeds):
+                if not ix % deletes:
+                    delete_ids.append(seed["external_id"])
+
+        return Response([{"id": obj["external_id"]} for obj in seeds if obj["external_id"] not in delete_ids])
 
 
 class EntityMockDetailAPIView(APIView):
