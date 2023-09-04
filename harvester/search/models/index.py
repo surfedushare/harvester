@@ -4,14 +4,10 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
-from django.contrib.sites.models import Site
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
-from rest_framework import serializers
 
 from search_client.opensearch.configuration import create_open_search_index_configuration
-from core.models import DatasetVersion
-from core.models.choices import EducationalLevels
 from search.clients import get_opensearch_client
 from core.constants import SITE_SHORTHAND_BY_DOMAIN
 
