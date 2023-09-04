@@ -78,6 +78,10 @@ class TestInitialHarvestEntities(HarvestEntitiesTestCase):
             "Expected two harvest_set instances based on two sources in the fixtures"
         )
         for harvest_set in Set.objects.all():
+            self.assertIsNone(
+                harvest_set.pending_at,
+                "Expected new Set not to be pending until harvest_source is done with collecting metadata"
+            )
             self.assert_harvest_set(harvest_set, historic_docs=0)
         # Assert DatasetVersion
         self.assertEqual(
@@ -85,6 +89,10 @@ class TestInitialHarvestEntities(HarvestEntitiesTestCase):
             "Expected a single DatasetVersion to get created for an initial harvest"
         )
         for dataset_version in DatasetVersion.objects.all():
+            self.assertIsNotNone(
+                dataset_version.pending_at,
+                "Expected new DatasetVersion to be pending if harvest_source doesn't run"
+            )
             self.assert_dataset_version(dataset_version, historic_sets=0)
         # Assert resources
         self.assertEqual(
@@ -149,6 +157,10 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             "Expected two new harvest_set instances based on two sources in the fixtures and two historic harvest_sets"
         )
         for harvest_set in Set.objects.exclude(dataset_version=self.dataset_version):  # excludes historic sets
+            self.assertIsNone(
+                harvest_set.pending_at,
+                "Expected new Set not to be pending until harvest_source is done with collecting metadata"
+            )
             self.assert_harvest_set(harvest_set, historic_docs=5)
         # Assert DatasetVersion
         self.assertEqual(
@@ -156,6 +168,10 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             "Expected a single DatasetVersion to get created and one historic DatasetVersion to exist"
         )
         for dataset_version in DatasetVersion.objects.exclude(id=self.dataset_version.id):  # excludes historic data
+            self.assertIsNotNone(
+                dataset_version.pending_at,
+                "Expected new DatasetVersion to be pending if harvest_source doesn't run"
+            )
             self.assert_dataset_version(dataset_version, historic_sets=2)
         # Assert resources
         self.assertEqual(

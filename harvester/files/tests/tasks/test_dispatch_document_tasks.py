@@ -1,13 +1,11 @@
 from unittest.mock import patch
 
 from django.test import TestCase
-from django.utils.timezone import now
 
 from datagrowth.configuration import register_defaults
 from core.tasks import dispatch_document_tasks
 from files.tests.factories import create_file_document_set
 from files.models import FileDocument
-from files.models.datatypes.file import default_document_tasks
 
 
 class TestHarvestObjectFileDocument(TestCase):
