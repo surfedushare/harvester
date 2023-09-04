@@ -82,8 +82,8 @@ class TestInitialHarvestSource(TestCase):
         # Assert DatasetVersion state
         dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
-        self.assertEqual(list(dataset_version.pipeline.keys()), ["push_to_index"])
-        self.assertTrue(dataset_version.pipeline["push_to_index"]["success"])
+        self.assertEqual(list(dataset_version.pipeline.keys()), ["testing_after_dataset_version"])
+        self.assertTrue(dataset_version.pipeline["testing_after_dataset_version"]["success"])
 
 
 class TestDeltaHarvestSource(TestCase):

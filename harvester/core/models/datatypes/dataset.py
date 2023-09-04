@@ -89,16 +89,6 @@ class HarvestDatasetVersionManager(models.Manager):
         ]
 
 
-def default_dataset_version_tasks():
-    return {
-        "push_to_index": {
-            "depends_on": [],
-            "checks": [],
-            "resources": []
-        }
-    }
-
-
 def version_default():
     return settings.VERSION
 
@@ -119,7 +109,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True, default=version_default)
-    tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
 
     def __str__(self):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)

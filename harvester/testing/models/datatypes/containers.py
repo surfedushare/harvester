@@ -19,7 +19,19 @@ class Dataset(HarvestDataset):
         verbose_name_plural = "testing datasets"
 
 
+def default_dataset_version_tasks():
+    return {
+        "testing_after_dataset_version": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
+        }
+    }
+
+
 class DatasetVersion(HarvestDatasetVersion):
+
+    tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
 
     class Meta:
         verbose_name = "testing dataset version"
