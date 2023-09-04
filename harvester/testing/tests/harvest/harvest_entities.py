@@ -4,6 +4,7 @@ from datetime import datetime
 from django.test import TestCase
 from django.utils.timezone import make_aware, now
 
+from core.constants import DeletePolicies
 from sources.tasks.entities import harvest_entities
 from sources.models.harvest import HarvestEntity
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
@@ -110,6 +111,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             "testing", self.set_names,
             self.seeds, 5
         )
+        self.merge_document = next((doc for doc in self.documents if doc.collection.name == "merge:merge_set"))
         self.failed_document = self.documents[0]
         self.failed_document.pipeline = {
             "tika": {"success": False}
@@ -158,11 +160,11 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         # Assert resources
         self.assertEqual(
             MockHarvestResource.objects.all().count(), 0,
-            "Expected resources for 'simple' entity to get deleted because of delete_policy=no"
+            "Expected resources for 'merge' entity to get deleted because of delete_policy=no"
         )
         self.assertEqual(
             MockDetailResource.objects.all().count(), 0,
-            "Expected resources for 'merge' entity to remain where possible because of delete_policy=transient"
+            "Expected resources for 'merge' entity to get deleted because of delete_policy=no"
         )
         # Assert documents
         self.assertEqual(TestDocument.objects.all().count(), 20)
@@ -193,3 +195,40 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         self.assertTrue(success_document.properties, "Expected properties to remain intact")
         self.assertIsNone(success_document.pending_at, "Expected document not to become pending automatically")
+        merge_document = TestDocument.objects \
+            .exclude(dataset_version=self.dataset_version) \
+            .filter(identity=self.merge_document.identity) \
+            .last()
+        self.assertIsNotNone(
+            merge_document.metadata["deleted_at"],
+            "Expected document coming from delete_policy=no to always get deleted before harvesting starts"
+        )
+
+    @patch("sources.tasks.entities.harvest_source")
+    def test_keep_resources(self, harvest_source_mock):
+        """
+        Testing whether resources can be re-used during harvest process.
+
+        We'll swap delete policies for Simple and Merge entities.
+        Then we should keep MockDetailResource, because Merge now indicates it wants to re-use them,
+        with its new transient delete policy.
+        """
+        self.simple_entity.delete_policy = DeletePolicies.NO
+        self.simple_entity.save()
+        self.merge_entity.delete_policy = DeletePolicies.TRANSIENT
+        self.merge_entity.save()
+        # Making the test call
+        harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        # Assert call to harvest_source
+        self.assertEqual(harvest_source_mock.call_count, 2)
+        harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "merge", asynchronous=False)
+        # Assert resources
+        self.assertEqual(
+            MockHarvestResource.objects.all().count(), 0,
+            "Expected resources for 'simple' entity to get deleted because of delete_policy=no"
+        )
+        self.assertEqual(
+            MockDetailResource.objects.all().count(), 1,
+            "Expected resources for 'merge' entity to remain where possible because of delete_policy=transient"
+        )

@@ -17,7 +17,11 @@ def create_datatype_models(app_label: str, set_names: list[str], seeds: list[dic
     sets = []
     documents = []
     for set_name in set_names:
-        harvest_set = models["Set"](dataset_version=dataset_version, name=set_name, identifier="srn")
+        harvest_set = models["Set"](
+            dataset_version=dataset_version,
+            name=set_name,
+            identifier="srn"
+        )
         harvest_set.clean()
         harvest_set.save()
         sets.append(harvest_set)

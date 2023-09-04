@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.timezone import make_aware, now
 
 from datagrowth.utils import ibatch
+from core.constants import DeletePolicies
 from core.loading import load_harvest_models
 from core.models.datatypes import HarvestDatasetVersion, HarvestSet
 
@@ -70,6 +71,8 @@ class HarvestState(models.Model):
                 document.id = None
                 document.collection = self.harvest_set
                 document.dataset_version = dataset_version
+                if self.entity.delete_policy == DeletePolicies.NO:
+                    document.properties["state"] = document.States.DELETED
                 document.clean()
                 documents.append(document)
             data_models["Document"].objects.bulk_create(documents)
