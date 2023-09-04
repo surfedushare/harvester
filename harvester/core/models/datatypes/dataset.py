@@ -7,12 +7,10 @@ from datetime import datetime
 
 from django.conf import settings
 from django.db import models
-from django.db.models.manager import QuerySet
 
 from datagrowth.utils import ibatch
 from core.models.datatypes.base import HarvestObjectMixin
 from core.models.datatypes.set import HarvestSet
-from core.models.datatypes.document import HarvestDocument
 
 
 class HarvestDataset(models.Model):
@@ -144,10 +142,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True, default=version_default)
     tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
-
-    @property
-    def documents(self) -> HarvestDocument.objects | QuerySet:
-        return self.document_set
 
     def __str__(self):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)

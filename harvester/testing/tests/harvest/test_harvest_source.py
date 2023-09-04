@@ -2,15 +2,19 @@ from unittest.mock import patch
 from copy import copy
 
 from django.test import TestCase
+from django.utils.timezone import now
 
 from datagrowth.configuration import register_defaults
+from datagrowth.utils import ibatch
 
+from core.constants import DeletePolicies
 from core.tasks.harvest.source import harvest_source
 from sources.models.harvest import HarvestEntity
+from files.tests.factories.tika import HttpTikaResourceFactory
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.utils.generators import seed_generator, document_generator
+from testing.utils.factories import create_datatype_models
 from testing.models import Dataset, DatasetVersion, HarvestState, Set
-from files.tests.factories.tika import HttpTikaResourceFactory
 
 
 class TestInitialHarvestSource(TestCase):
@@ -75,11 +79,61 @@ class TestInitialHarvestSource(TestCase):
         # Assert Set state
         set_instance = Set.objects.get(id=self.set.id)
         self.assertIsNone(set_instance.pending_at)
-        self.assertEqual(list(set_instance.pipeline.keys()), ["apply_set_deletes", "check_set_integrity"])
-        self.assertTrue(set_instance.pipeline["apply_set_deletes"]["success"])
+        self.assertEqual(list(set_instance.pipeline.keys()), ["check_set_integrity"])
         self.assertTrue(set_instance.pipeline["check_set_integrity"]["success"])
         # Assert DatasetVersion state
         dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
         self.assertEqual(list(dataset_version.pipeline.keys()), ["push_to_index"])
         self.assertTrue(dataset_version.pipeline["push_to_index"]["success"])
+
+
+class TestDeltaHarvestSource(TestCase):
+
+    fixtures = ["test-sources-harvest-models"]
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.current_time = now()
+        self.sequence_properties = ENTITY_SEQUENCE_PROPERTIES["simple"]
+        self.set_names = ["simple:simple_set", "merge:merge_set"]
+        self.seeds = list(seed_generator("simple", 100, self.sequence_properties))
+        self.dataset, self.historic_dataset_version, self.historic_sets, self.historic_documents = \
+            create_datatype_models("testing", self.set_names, self.seeds, 50)
+        self.dataset_version = DatasetVersion.objects.create(dataset=self.dataset)
+        for historic_set in self.historic_sets:
+            self.dataset_version.historic_sets.add(historic_set)
+        for seed in seed_generator("simple", 50, self.sequence_properties):
+            HttpTikaResourceFactory.create(url=seed["url"])
+
+    def test_invalid_set_outcome(self):
+        harvest_entity = HarvestEntity.objects.get(source__module="merge")
+        harvest_set = Set.objects.create(
+            name="merge:merge_set",
+            pending_at=None,  # HarvestSet does not become pending until all data from source has been pulled
+            identifier="srn",
+            dataset_version=self.dataset_version
+        )
+        HarvestState.objects.create(
+            dataset=self.dataset,
+            harvest_set=harvest_set,
+            entity=harvest_entity,
+            set_specification="merge_set"
+        )
+        seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
+        seeding_patch_value = document_generator("merge", 44, 10, harvest_set, self.sequence_properties)
+        with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
+            harvest_source("testing", "merge", asynchronous=False)
+        # Assert call to seeder
+        seeding_processor_call.assert_called_with("merge_set", "1970-01-01T00:00:00Z")
+        # Assert Set
+        self.assertEqual(self.dataset_version.sets.count(), 1)
+        for result_set in self.dataset_version.sets.all():
+            self.assertNotEquals(
+                harvest_set.id, result_set.id,
+                "Expected a completely new Set copy for the historic data"
+            )
+            self.assertEqual(
+                result_set.documents.exclude(pending_at=None).count(), 0,
+                "Expected all historic Documents to not be pending"
+            )

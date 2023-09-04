@@ -12,13 +12,8 @@ from core.models.datatypes.document import HarvestDocument
 
 def default_set_tasks():
     return {
-        "apply_set_deletes": {
-            "depends_on": [],
-            "checks": [],
-            "resources": []
-        },
         "check_set_integrity": {
-            "depends_on": ["apply_set_deletes"],
+            "depends_on": [],
             "checks": [],
             "resources": []
         },

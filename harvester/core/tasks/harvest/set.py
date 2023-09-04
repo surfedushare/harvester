@@ -45,24 +45,24 @@ def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchrono
         )
 
 
-@app.task(name="apply_set_deletes", base=DatabaseConnectionResetTask)
-@atomic()
-def apply_set_deletes(app_label: str, set_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Set = models["Set"]
-    for harvest_set in Set.objects.filter(id__in=set_ids).select_for_update():
-        harvest_set.pipeline["apply_set_deletes"] = {
-            "success": True
-        }
-        harvest_set.save()
-
-
 @app.task(name="check_set_integrity", base=DatabaseConnectionResetTask)
 @atomic()
 def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Set = models["Set"]
     for harvest_set in Set.objects.filter(id__in=set_ids).select_for_update():
+        # Historic data needs to be larger than 50 documents
+        historic_set = harvest_set.dataset_version.historic_sets.filter(name=harvest_set.name).last()
+        if historic_set is not None and historic_set.documents.count() >= 50:
+            historic_count = historic_set.documents.filter(metadata__deleted_at=None).count()
+            current_count = harvest_set.documents.filter(metadata__deleted_at=None).count()
+            count_diff = historic_count - current_count
+            # If historic data is 5% larger than new data the data is considered invalid
+            if count_diff > 0 and count_diff / current_count >= 0.05:
+                harvest_set.dataset_version.copy_set(historic_set)
+                harvest_set.dataset_version = None
+                harvest_set.save()
+        # For all sets we mark this task as completed to continue the harvesting process
         harvest_set.pipeline["check_set_integrity"] = {
             "success": True
         }

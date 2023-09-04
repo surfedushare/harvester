@@ -55,7 +55,8 @@ class HarvestDocumentManager(models.Manager):
 class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     # NB: These foreign keys are app agnostic and point to different models in different apps
-    dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE)
+    dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE,
+                                        related_name="documents")
     collection = models.ForeignKey("Set", blank=True, null=True,
                                    on_delete=models.CASCADE, related_name="document_set")
     overwrite = models.ForeignKey("Overwrite", null=True, blank=True, on_delete=models.SET_NULL)

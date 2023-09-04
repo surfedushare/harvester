@@ -24,6 +24,8 @@ def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
 
 def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestObject,
                                        model: Type[HarvestObject]) -> list[HarvestObject]:
+    if instances is None:
+        return []
     instances = instances if isinstance(instances, list) else [instances]
     finished = []
     pending = []
