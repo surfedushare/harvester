@@ -59,9 +59,7 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
             count_diff = historic_count - current_count
             # If historic data is 5% larger than new data the data is considered invalid
             if count_diff > 0 and count_diff / current_count >= 0.05:
-                harvest_set.dataset_version.copy_set(historic_set)
-                harvest_set.dataset_version = None
-                harvest_set.save()
+                harvest_set.copy_documents(historic_set)
         # For all sets we mark this task as completed to continue the harvesting process
         harvest_set.pipeline["check_set_integrity"] = {
             "success": True

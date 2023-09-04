@@ -8,9 +8,7 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 
-from datagrowth.utils import ibatch
 from core.models.datatypes.base import HarvestObjectMixin
-from core.models.datatypes.set import HarvestSet
 
 
 class HarvestDataset(models.Model):
@@ -125,22 +123,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
 
     def __str__(self):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
-
-    def copy_set(self, source_set: HarvestSet) -> HarvestSet:
-        Document = source_set.get_document_model()
-        source_id = source_set.id
-        source_set.pk = None
-        source_set.id = None
-        source_set.dataset_version = self
-        source_set.save()
-        for batch in ibatch(Document.objects.filter(collection_id=source_id), batch_size=100):
-            for doc in batch:
-                doc.collection_id = source_set.id
-                doc.dataset_version = self
-                doc.pk = None
-                doc.id = None
-            Document.objects.bulk_create(batch)
-        return source_set
 
     def get_search_documents_by_language(self, **filters) -> dict[str, list]:
         by_language = defaultdict(list)

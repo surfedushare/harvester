@@ -4,6 +4,7 @@ from django.apps import apps
 from django.db import models
 
 from datagrowth.datatypes import CollectionBase, DocumentCollectionMixin
+from datagrowth.utils import ibatch
 
 from core.constants import DELETE_POLICY_CHOICES
 from core.models.datatypes.base import HarvestObjectMixin
@@ -53,6 +54,16 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
         fields = super().document_update_fields
         fields.append("metadata")
         return fields
+
+    def copy_documents(self, source_set: HarvestSet):
+        Document = self.get_document_model()
+        for batch in ibatch(Document.objects.filter(collection_id=source_set.id), batch_size=100):
+            for doc in batch:
+                doc.collection_id = self.id
+                doc.dataset_version = self.dataset_version
+                doc.pk = None
+                doc.id = None
+            Document.objects.bulk_create(batch)
 
     def __str__(self) -> str:
         return "{} (id={})".format(self.name, self.id)

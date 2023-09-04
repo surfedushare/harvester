@@ -125,15 +125,15 @@ class TestDeltaHarvestSource(TestCase):
         # Assert call to seeder
         seeding_processor_call.assert_called_with("merge_set", "1970-01-01T00:00:00Z")
         # Assert DatasetVersion
-        dataset_version = DatasetVersion.objects.get(self.dataset_version.id)
+        dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
         # Assert Set
         self.assertEqual(self.dataset_version.sets.count(), 1)
         for result_set in self.dataset_version.sets.all():
             self.assertIsNone(result_set.pending_at)
-            self.assertNotEquals(
+            self.assertEquals(
                 harvest_set.id, result_set.id,
-                "Expected a completely new Set copy for the historic data"
+                "Expected the existing Set to copy Documents to keep propagating harvester tasks"
             )
             self.assertEqual(
                 result_set.documents.exclude(pending_at=None).count(), 0,
