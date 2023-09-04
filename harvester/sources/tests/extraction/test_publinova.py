@@ -98,6 +98,10 @@ class TestGetHarvestSeedsPublinova(TestCase):
     def test_get_doi(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["doi"], "10.5117/THRM2019.3.VETH")
-        self.assertEqual(seeds[1]["doi"], "10.1002/14651858.CD010412.pub2")
+        self.assertEqual(seeds[1]["doi"], "10.1002/+14651858.CD010412.pub2",
+                         "Output should be without prefix or whitespace in doi")
         self.assertEqual(seeds[2]["doi"], "10.1016/j.apenergy.2014.11.071")
-        self.assertEqual(seeds[3]["doi"], None)
+        self.assertEqual(seeds[3]["doi"], None,
+                         "strings without 10. should return NoneType")
+        self.assertEqual(seeds[4]["doi"], None)
+
