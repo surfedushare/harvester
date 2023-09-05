@@ -26,6 +26,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: qwerty
+          POSTGRES_DB: harvester_edusources
         ports:
           - 5432:5432
         options: >-
