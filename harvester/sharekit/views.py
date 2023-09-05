@@ -8,7 +8,7 @@ from sharekit.extraction import SharekitMetadataExtraction, create_objective
 
 
 @csrf_exempt
-def edit_document_webhook(request, channel, secret):
+def legacy_edit_document_webhook(request, channel, secret):
     # Webhook validation
     data, configuration = validate_webhook_data(request, channel, secret)
     if isinstance(data, HttpResponse):

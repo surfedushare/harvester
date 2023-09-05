@@ -310,7 +310,7 @@ LOGGING = {
             'level': _log_level,
             'propagate': True,
         },
-        'datagrowth.command': {
+        'datagrowth': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True

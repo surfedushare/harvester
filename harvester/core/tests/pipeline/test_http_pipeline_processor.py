@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import MagicMock, patch
 
 from celery.canvas import Signature
@@ -6,12 +7,23 @@ from core.processors import HttpPipelineProcessor
 from core.tests.factories import DocumentFactory
 from django.test import TestCase
 
+
 chord_mock_result = MagicMock()
 
 
 class TestHttpPipelineProcessor(TestCase):
 
     fixtures = ["datasets-history", "resources-basic-initial", "resources-basic-delta"]
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        logging.disable(logging.DEBUG)
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        logging.disable(logging.NOTSET)
 
     def setUp(self):
         super().setUp()
@@ -42,8 +54,8 @@ class TestHttpPipelineProcessor(TestCase):
         })
 
         processor(self.collection.documents.exclude(properties__url=None))
-        self.assertEqual(Batch.objects.count(), 3)
-        self.assertEqual(ProcessResult.objects.count(), 0)
+        self.assertEqual(Batch.objects.count(), 0, "Expected batches to get deleted after use")
+        self.assertEqual(ProcessResult.objects.count(), 0, "Expected ProcessResults to get deleted after use")
         self.assertEqual(self.collection.documents.count(), 13)
         for document in self.collection.documents.all():
             if "metadata" not in document.pipeline:
