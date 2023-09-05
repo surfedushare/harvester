@@ -89,6 +89,16 @@ class HarvestDatasetVersionManager(models.Manager):
         ]
 
 
+def default_dataset_version_tasks():
+    return {
+        "create_opensearch_index": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
+        }
+    }
+
+
 def version_default() -> str:
     return settings.VERSION
 
@@ -109,9 +119,14 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True, default=version_default)
+    tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
 
     def __str__(self) -> str:
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
+
+    @property
+    def natural_key(self) -> tuple[str, int]:
+        return f"{self._meta.app_label}.{self._meta.model_name}", self.id,
 
     def get_search_documents_by_language(self, **filters) -> dict[str, list]:
         by_language = defaultdict(list)

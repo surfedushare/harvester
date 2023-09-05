@@ -92,15 +92,18 @@ class OpenSearchIndex(models.Model):
     def promote_to_latest(self, language: str) -> None:
         alias_prefix, dataset_info = self.name.split("--")
         alias = f"{alias_prefix}-{language}"
+        legacy_alias = f"{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
         # The index pattern should target all datasets and versions,
         # but stay clear from deleting cross project and cross language indices to prevent data loss
         # as well as targeting protected AWS indices to prevent errors
         index_pattern = f"{alias_prefix}--*-*-{language}"
         try:
             self.client.indices.delete_alias(index=index_pattern, name=alias)
+            self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
         except NotFoundError:
             pass
         self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
+        self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
 
     def clean(self) -> None:
         if not self.configuration:

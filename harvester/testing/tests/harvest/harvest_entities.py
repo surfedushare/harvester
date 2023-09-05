@@ -60,7 +60,17 @@ class TestInitialHarvestEntities(HarvestEntitiesTestCase):
 
     @patch("sources.tasks.entities.harvest_source")
     def test_harvest_entities(self, harvest_source_mock):
-        harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        dataset_versions = harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        self.assertIsInstance(dataset_versions, list)
+        self.assertEqual(len(dataset_versions), 1)
+        self.assertEqual(
+            dataset_versions[0][0], "testing.datasetversion",
+            "Expected app_label and model_name as part of output about dataset versions"
+        )
+        self.assertGreater(
+            dataset_versions[0][1], 0,
+            "Expected an id integer as part of output about dataset versions"
+        )
         # Assert call to harvest_source
         self.assertEqual(harvest_source_mock.call_count, 2)
         harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)
@@ -139,7 +149,17 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
 
     @patch("sources.tasks.entities.harvest_source")
     def test_harvest_entities(self, harvest_source_mock):
-        harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        dataset_versions = harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        self.assertIsInstance(dataset_versions, list)
+        self.assertEqual(len(dataset_versions), 1)
+        self.assertEqual(
+            dataset_versions[0][0], "testing.datasetversion",
+            "Expected app_label and model_name as part of output about dataset versions"
+        )
+        self.assertGreater(
+            dataset_versions[0][1], 0,
+            "Expected an id integer as part of output about dataset versions"
+        )
         # Assert call to harvest_source
         self.assertEqual(harvest_source_mock.call_count, 2)
         harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)

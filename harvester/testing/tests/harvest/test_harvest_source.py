@@ -36,7 +36,11 @@ class TestInitialHarvestSource(TestCase):
     def setUp(self):
         super().setUp()
         self.harvest_entity = HarvestEntity.objects.get(source__module="simple")
-        self.dataset = Dataset.objects.create(name="test", is_harvested=True)
+        self.dataset = Dataset.objects.create(
+            name="test",
+            is_harvested=True,
+            indexing=Dataset.IndexingOptions.INDEX_AND_PROMOTE
+        )
         self.dataset_version = DatasetVersion.objects.create(dataset=self.dataset)
         self.set = Set.objects.create(
             name="simple",
@@ -82,8 +86,9 @@ class TestInitialHarvestSource(TestCase):
         # Assert DatasetVersion state
         dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
-        self.assertEqual(list(dataset_version.pipeline.keys()), ["testing_after_dataset_version"])
-        self.assertTrue(dataset_version.pipeline["testing_after_dataset_version"]["success"])
+        self.assertEqual(list(dataset_version.pipeline.keys()), ["create_opensearch_index"])
+        self.assertTrue(dataset_version.pipeline["create_opensearch_index"]["success"])
+        self.assertIsNotNone(dataset_version.index)
 
 
 class TestDeltaHarvestSource(TestCase):

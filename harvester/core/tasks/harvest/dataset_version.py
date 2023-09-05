@@ -1,3 +1,5 @@
+from django.apps import apps
+from django.db.transaction import atomic
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -28,3 +30,21 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | Datase
             callback=recursive_callback_signature,
             asynchronous=asynchronous
         )
+
+
+@app.task(name="create_opensearch_index", base=DatabaseConnectionResetTask)
+@atomic
+def create_opensearch_index(app_label: str, dataset_version_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    DatasetVersion = models["DatasetVersion"]
+    OpenSearchIndex = apps.get_model("search.OpenSearchIndex")
+    for dataset_version in DatasetVersion.objects.filter(id__in=dataset_version_ids).select_for_update():
+        if dataset_version.dataset.indexing != models["Dataset"].IndexingOptions.NO:
+            dataset_version.index = OpenSearchIndex.build(
+                app_label,
+                dataset_version.dataset.name,
+                dataset_version.version
+            )
+            dataset_version.index.save()
+        dataset_version.pipeline["create_opensearch_index"] = {"success": True}
+        dataset_version.save()

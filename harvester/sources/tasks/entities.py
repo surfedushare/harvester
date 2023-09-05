@@ -11,7 +11,7 @@ from sources.models.harvest import HarvestEntity
 
 
 @app.task(name="harvest_entities", base=DatabaseConnectionResetTask)
-def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool = True) -> None:
+def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool = True) -> list[tuple[str, int]]:
     if entity:
         entities = HarvestEntity.objects.select_related("source").filter(type=entity, is_available=True)
     else:
@@ -30,6 +30,7 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
                 )
                 datasets[dataset].append(state)
 
+    dataset_versions = []
     for dataset, states in datasets.items():
         # Check if there are any process_result leftovers from a previous harvest process.
         # We report these occurrences, because it may indicate a problem.
@@ -47,6 +48,7 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
         # After that we harvest_source to start fetching metadata.
         current_version = dataset.versions.get_current_version()
         new_version = dataset.versions.create()
+        dataset_versions.append(new_version.natural_key)
         for state in states:
             if reset or not current_version or state.should_purge():
                 state.clear_resources()
@@ -58,3 +60,5 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
                 if state.entity.delete_policy == DeletePolicies.NO:
                     state.clear_resources()
             harvest_source(state.entity.type, state.entity.source.module, asynchronous=asynchronous)
+
+    return dataset_versions
