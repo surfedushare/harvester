@@ -117,4 +117,4 @@ class TestGetHarvestSeedsGreeni(TestCase):
     def test_get_doi(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["doi"], "DOI might not be specified")
-        self.assertEqual(seeds[3]["doi"], "doi:10.31715/2018.6")
+        self.assertEqual(seeds[3]["doi"], "10.31715/2+018.6")

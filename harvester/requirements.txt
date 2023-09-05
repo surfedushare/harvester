@@ -4,7 +4,7 @@ djangorestframework==3.14.0
 django-cors-headers==3.14.0
 whitenoise==5.3.0
 psycopg2-binary==2.9.7
-Pillow==9.4.0
+Pillow==9.5.0
 python-dateutil==2.8.2
 uritemplate==3.0.1
 Jinja2==3.1.2
@@ -52,7 +52,7 @@ django-storages==1.13.2
 # Tools
 watchdog==2.3.1
 ipython==8.14.0
-tqdm==4.65.0
+tqdm==4.66.1
 invoke==1.7.3
 ipdb==0.13.13
 sentry-sdk==1.29.2

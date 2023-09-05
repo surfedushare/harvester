@@ -120,4 +120,4 @@ class TestGetHarvestSeedsHva(TestCase):
     def test_doi(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["doi"])
-        self.assertEqual(seeds[5]["doi"], "10.1088/0031-9120/50/5/573")
+        self.assertEqual(seeds[5]["doi"], "10.1088/0031-+9120/+50/5/573")

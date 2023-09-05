@@ -252,7 +252,12 @@ class HanDataExtraction(object):
             for url_identifier in el.find_all("identifier", attrs={"type": "uri"})
             if "doi.org" in url_identifier.text
         ]
-        return dois[0] if len(dois) else None
+        if not len(dois):
+            return None
+        try:
+            return "10." + dois[0].split("10.", 1)[1].replace(" ", "+")
+        except IndexError:
+            return None
 
 
 HAN_EXTRACTION_OBJECTIVE = {

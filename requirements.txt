@@ -1,10 +1,10 @@
 # Development
 gitpython==3.1.32
 flake8==4.0.1
-wheel==0.41.0
+wheel==0.41.2
 
 # Tools
-factory-boy==3.2.0
+factory-boy==3.3.0
 fabric==2.7.1
 
 -r harvester/requirements.txt

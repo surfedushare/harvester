@@ -153,6 +153,8 @@ Once your tests pass you can make a new build for the project you want to deploy
 This section outlines the most common options for deployment.
 Use `invoke -h <command>` to learn more about any invoke command.
 
+**When you want to deploy the development image to acceptance, or acceptance to production you can skip the container.build and push commands.**
+
 Before deploying you'll want to decide on a version number.
 It's best to talk to the team about which version number you want to use for a deploy.
 To see a list of all currently available images for a project and the versions they are tagged with you can run
@@ -183,6 +185,8 @@ When an image is pushed to the registry you need to promote it for the environme
 ```bash
 APPLICATION_MODE=<environment> invoke container.promote
 ```
+
+When promoting a existing image (for instance the image already running on development or acceptance), add `--version=<version_number>`. 
 
 To change the running containers on AWS you then need to deploy for the environment you have updated images for:
 
