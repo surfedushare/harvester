@@ -279,7 +279,12 @@ class GreeniDataExtraction(object):
     @classmethod
     def get_doi(cls, soup, el):
         identifier = el.find("identifier", attrs={"type": "doi"})
-        return identifier.text.strip() if identifier else None
+        if not identifier:
+            return None
+        try:
+            return "10." + identifier.text.strip().split("10.", 1)[1].replace(" ", "+")
+        except IndexError:
+            return None
 
 
 GREENI_EXTRACTION_OBJECTIVE = {
