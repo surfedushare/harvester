@@ -100,5 +100,5 @@ class TestGetHarvestSeedsHan(TestCase):
     def test_get_doi(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["doi"], "DOI might not be specified")
-        self.assertEqual(seeds[1]["doi"], "https://doi.org/10.18352/jsi.546")
+        self.assertEqual(seeds[1]["doi"], "10.18352/jsi+.546")
         self.assertIsNone(seeds[2]["doi"], "Expected deleted record to have no doi")
