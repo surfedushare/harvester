@@ -145,7 +145,7 @@ class TestGetHarvestSeedsHanze(TestCase):
     def test_doi(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["doi"])
-        self.assertEqual(seeds[12]["doi"], "10.1016/j.rser.2014.10.089")
+        self.assertEqual(seeds[12]["doi"], "10.1016/+j+.rser.2014.10.089")
 
     def test_research_theme(self):
         seeds = self.seeds
