@@ -54,6 +54,10 @@ jobs:
     - name: Setup repository
       run: |
         invoke aws.sync-repository-state --no-profile
+        invoke container.prepare-builds
     - name: Run tests
-      run:
-        invoke test.run
+      run: |
+        cd harvester
+        python manage.py runserver 8888 &
+        sleep 120
+        python manage.py test
