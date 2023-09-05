@@ -104,4 +104,3 @@ class TestGetHarvestSeedsPublinova(TestCase):
         self.assertEqual(seeds[3]["doi"], None,
                          "strings without 10. should return NoneType")
         self.assertEqual(seeds[4]["doi"], None)
-
