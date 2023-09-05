@@ -27,6 +27,9 @@ class TestDocument(HarvestDocument):
                 self.is_not_found = True
                 self.pending_at = None
 
+    def get_language(self):
+        return self.properties.get("language", None)
+
 
 class Overwrite(HarvestOverwrite):
 

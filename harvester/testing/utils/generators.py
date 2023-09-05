@@ -1,10 +1,12 @@
 from copy import copy
 
+from django.conf import settings
+
 from datagrowth.utils import ibatch
 from core.loading import load_harvest_models, load_source_configuration
 
 
-def seed_generator(source: str, size: int, sequence_properties=None) -> list[dict]:
+def seed_generator(source: str, size: int, sequence_properties=None, has_language: bool = False) -> list[dict]:
     sequence_properties = sequence_properties or {}
     configuration = load_source_configuration("testing", source)
     for ix in range(0, size):
@@ -14,6 +16,8 @@ def seed_generator(source: str, size: int, sequence_properties=None) -> list[dic
             for key, value in sequence_properties.items()
         }
         seed.update(sequenced)
+        if has_language:
+            seed["language"] = settings.OPENSEARCH_LANGUAGE_CODES[ix % len(settings.OPENSEARCH_LANGUAGE_CODES)]
         yield seed
 
 

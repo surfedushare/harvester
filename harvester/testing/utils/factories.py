@@ -8,7 +8,11 @@ def create_datatype_models(app_label: str, set_names: list[str], seeds: list[dic
         -> tuple[HarvestDataset, HarvestDatasetVersion, list[HarvestSet], list[HarvestDocument]]:
     models = load_harvest_models(app_label)
     pending_at = now()
-    dataset = models["Dataset"](name="test", is_harvested=True)
+    dataset = models["Dataset"](
+        name="test",
+        is_harvested=True,
+        indexing=models["Dataset"].IndexingOptions.INDEX_AND_PROMOTE
+    )
     dataset.clean()
     dataset.save()
     dataset_version = models["DatasetVersion"](dataset=dataset, pending_at=pending_at, is_current=True)
