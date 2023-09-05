@@ -49,8 +49,17 @@ class DatasetVersionAdmin(AdminConfirmMixin, admin.ModelAdmin):
 
 class DocumentAdmin(DatagrowthDocumentAdmin):
     list_display = ['__str__', 'reference', 'dataset_version', 'collection', 'created_at', 'modified_at']
-    list_filter = ('dataset_version__is_current', 'collection__name', 'dataset_version',)
+    list_filter = ('dataset_version__is_current', 'collection__name',)
     readonly_fields = ("created_at", "modified_at",)
+
+    def changelist_view(self, request, extra_context=None):
+        # Filter on current dataset version if no filter is being used
+        if not request.GET and "?" not in request.META['REQUEST_URI']:
+            parameters = request.GET.copy()
+            parameters["dataset_version__is_current__exact"] = "1"
+            request.GET = parameters
+            request.META['QUERY_STRING'] = request.GET.urlencode()
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 def trash_extensions(modeladmin, request, queryset):
@@ -96,8 +105,18 @@ class CollectionAdmin(DataStorageAdmin):
         '__str__', 'created_at', 'modified_at',
         'active_document_count', 'deleted_document_count', 'inactive_document_count'
     ]
+    list_filter = ('dataset_version__is_current',)
     ordering = ('-created_at',)
     list_per_page = 10
+
+    def changelist_view(self, request, extra_context=None):
+        # Filter on current dataset version if no filter is being used
+        if not request.GET and "?" not in request.META['REQUEST_URI']:
+            parameters = request.GET.copy()
+            parameters["dataset_version__is_current__exact"] = "1"
+            request.GET = parameters
+            request.META['QUERY_STRING'] = request.GET.urlencode()
+        return super().changelist_view(request, extra_context=extra_context)
 
     def active_document_count(self, obj):
         return obj.document_set.filter(properties__state="active").count()
