@@ -185,7 +185,13 @@ class HvaMetadataExtraction(ExtractProcessor):
             (electronic_version for electronic_version in node["electronicVersions"] if "doi" in electronic_version),
             None
         )
-        return doi_version["doi"] if doi_version else None
+        if not doi_version:
+            return None
+        doi = doi_version["doi"]
+        try:
+            return "10." + doi.split("10.", 1)[1].replace(" ", "+")
+        except IndexError:
+            return None
 
 
 HVA_EXTRACTION_OBJECTIVE = {

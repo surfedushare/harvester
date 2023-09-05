@@ -154,6 +154,16 @@ class PublinovaMetadataExtraction(ExtractProcessor):
     def get_parties(cls, node):
         return [party["name"] for party in node.get("parties", []) or []]
 
+    @classmethod
+    def get_doi(cls, node):
+        doi = node.get("doi", None)
+        if not doi:
+            return
+        try:
+            return "10." + doi.split("10.", 1)[1].replace(" ", "+")
+        except IndexError:
+            return None
+
 
 PUBLINOVA_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
@@ -180,7 +190,7 @@ PUBLINOVA_EXTRACTION_OBJECTIVE = {
     "research_object_type": "$.research_object_type",
     "research_themes": PublinovaMetadataExtraction.get_research_themes,
     "parties": PublinovaMetadataExtraction.get_parties,
-    "doi": "$.doi",
+    "doi": PublinovaMetadataExtraction.get_doi,
 
     # Non-essential Edusources properties (for compatibility reasons)
     "material_types": lambda node: None,
