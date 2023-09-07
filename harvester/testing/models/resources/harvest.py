@@ -7,7 +7,7 @@ from core.models.resources.harvest import HarvestHttpResource
 class MockHarvestResource(HarvestHttpResource):
     is_extracted = None  # legacy field which will disappear so we exclude it here
 
-    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}"
+    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}/"
 
     PARAMETERS = {
         "size": 20,
@@ -29,7 +29,7 @@ class MockHarvestResource(HarvestHttpResource):
 
 class MockDetailResource(HttpResource):
 
-    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}/{}"
+    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}/{}/"
 
     PARAMETERS = {
         "size": 20,
