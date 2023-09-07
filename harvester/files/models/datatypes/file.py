@@ -72,7 +72,7 @@ class FileDocument(HarvestDocument):
         This property controls whether we'll be dispatching the video_preview task.
         We only make previews for a very limited amount of video sources at the moment.
         """
-        return self.is_youtube_video or self.domain.startswith("vimeo.com")
+        return self.is_youtube_video or (self.domain and self.domain.startswith("vimeo.com"))
 
     @property
     def is_pdf(self):
