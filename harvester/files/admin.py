@@ -1,10 +1,25 @@
 from django.contrib import admin
 
-from datagrowth.admin import HttpResourceAdmin, ShellResourceAdmin
+from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, DocumentAdmin
+from core.admin.resources import HarvesterHttpResourcesAdmin, HarvesterShellResourceAdmin
+from core.admin.harvest import HarvestStateAdmin
+from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState,
+                          HttpTikaResource, ExtructResource, YoutubeThumbnailResource, PdfThumbnailResource)
 
-from files.models import HttpTikaResource, ExtructResource, YoutubeThumbnailResource, PdfThumbnailResource
 
-admin.site.register(HttpTikaResource, HttpResourceAdmin)
-admin.site.register(ExtructResource, HttpResourceAdmin)
-admin.site.register(YoutubeThumbnailResource, ShellResourceAdmin)
-admin.site.register(PdfThumbnailResource, HttpResourceAdmin)
+class FileDocumentAdmin(DocumentAdmin):
+    list_display = DocumentAdmin.list_display + ("type", "is_not_found",)
+    list_filter = DocumentAdmin.list_filter + ("type", "mime_type", "is_not_found",)
+
+
+admin.site.register(Dataset, DatasetAdmin)
+admin.site.register(DatasetVersion, DatasetVersionAdmin)
+admin.site.register(Set, SetAdmin)
+admin.site.register(FileDocument, FileDocumentAdmin)
+
+admin.site.register(HarvestState, HarvestStateAdmin)
+
+admin.site.register(HttpTikaResource, HarvesterHttpResourcesAdmin)
+admin.site.register(ExtructResource, HarvesterHttpResourcesAdmin)
+admin.site.register(YoutubeThumbnailResource, HarvesterShellResourceAdmin)
+admin.site.register(PdfThumbnailResource, HarvesterHttpResourcesAdmin)
