@@ -19,7 +19,8 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
         with atomic():
             index = OpenSearchIndex.objects.select_for_update(nowait=True).get(id=dataset_version.index.id)
             current_time = make_aware(datetime.now())
-            search_documents = dataset_version.get_search_documents_by_language(modified_at__gte=index.pushed_at)
+            filters = {"modified_at__gte": index.pushed_at} if index.pushed_at else {}
+            search_documents = dataset_version.get_search_documents_by_language(**filters)
             if not search_documents:
                 return
             errors = index.push(search_documents, recreate=False)
@@ -69,6 +70,6 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
         # Acquire lock and push recently modified documents to the index
         index = _push_dataset_version_to_index(dataset_version, logger)
         # Switch the aliases to the new indices if required
-        if dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
+        if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             for language in settings.OPENSEARCH_LANGUAGE_CODES:
                 index.promote_to_latest(language)

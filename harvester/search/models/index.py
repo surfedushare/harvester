@@ -46,6 +46,12 @@ class OpenSearchIndex(models.Model):
         name = f"{self.name}-{language}"
         return name.replace(".", "")
 
+    def get_remote_names(self) -> list[str]:
+        return [
+            self.get_remote_name(language)
+            for language in settings.OPENSEARCH_LANGUAGE_CODES
+        ]
+
     def check_remote_exists(self, language: str) -> bool:
         if not self.id:
             raise ValueError("Can't check for existence with an unsaved object")
@@ -102,8 +108,9 @@ class OpenSearchIndex(models.Model):
             self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
         except NotFoundError:
             pass
-        self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
-        self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
+        if self.check_remote_exists(language):
+            self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
+            self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
 
     def clean(self) -> None:
         if not self.configuration:
