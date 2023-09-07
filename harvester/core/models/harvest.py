@@ -14,7 +14,7 @@ class HarvestState(models.Model):
 
     entity = models.ForeignKey("sources.HarvestEntity", on_delete=models.CASCADE, related_name="+")
     dataset = models.ForeignKey("Dataset", on_delete=models.CASCADE)
-    harvest_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True, blank=True)
+    harvest_set = models.ForeignKey("Set", on_delete=models.SET_NULL, null=True, blank=True)
 
     set_specification = models.CharField(
         max_length=255,
