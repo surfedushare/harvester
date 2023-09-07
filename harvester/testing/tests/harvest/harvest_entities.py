@@ -73,8 +73,8 @@ class TestInitialHarvestEntities(HarvestEntitiesTestCase):
         )
         # Assert call to harvest_source
         self.assertEqual(harvest_source_mock.call_count, 2)
-        harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)
-        harvest_source_mock.assert_any_call("testing", "merge", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "simple", "simple_set", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "merge", "merge_set", asynchronous=False)
         # Assert HarvestState
         self.assertEqual(
             HarvestState.objects.all().count(), 2,
@@ -162,8 +162,8 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         # Assert call to harvest_source
         self.assertEqual(harvest_source_mock.call_count, 2)
-        harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)
-        harvest_source_mock.assert_any_call("testing", "merge", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "simple", "simple_set", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "merge", "merge_set", asynchronous=False)
         # Assert HarvestState
         self.assertEqual(
             HarvestState.objects.all().count(), 2,
@@ -257,8 +257,8 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
         # Assert call to harvest_source
         self.assertEqual(harvest_source_mock.call_count, 2)
-        harvest_source_mock.assert_any_call("testing", "simple", asynchronous=False)
-        harvest_source_mock.assert_any_call("testing", "merge", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "simple", "simple_set", asynchronous=False)
+        harvest_source_mock.assert_any_call("testing", "merge", "merge_set", asynchronous=False)
         # Assert resources
         self.assertEqual(
             MockHarvestResource.objects.all().count(), 0,

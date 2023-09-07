@@ -62,7 +62,7 @@ class TestInitialHarvestSource(TestCase):
         seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
         seeding_patch_value = document_generator("simple", 20, 10, self.set, self.sequence_properties)
         with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
-            harvest_source("testing", "simple", asynchronous=False)
+            harvest_source("testing", "simple", "simple_set", asynchronous=False)
         # Assert call to seeder
         seeding_processor_call.assert_called_with("simple_set", "1970-01-01T00:00:00Z")
         # Assert document state
@@ -126,7 +126,7 @@ class TestDeltaHarvestSource(TestCase):
         seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
         seeding_patch_value = document_generator("merge", 44, 10, harvest_set, self.sequence_properties)
         with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
-            harvest_source("testing", "merge", asynchronous=False)
+            harvest_source("testing", "merge", "merge_set", asynchronous=False)
         # Assert call to seeder
         seeding_processor_call.assert_called_with("merge_set", "1970-01-01T00:00:00Z")
         # Assert DatasetVersion

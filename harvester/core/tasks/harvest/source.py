@@ -9,12 +9,12 @@ from core.processors.seed.resource import HttpSeedingProcessor
 
 
 @app.task(name="harvest_source", base=DatabaseConnectionResetTask)
-def harvest_source(app_label: str, source: str, asynchronous=True):
+def harvest_source(app_label: str, source: str, set_specification: str, asynchronous=True) -> None:
     models = load_harvest_models(app_label)
     configuration = load_source_configuration(app_label, source)
     harvest_state = models["HarvestState"].objects \
         .select_related("entity", "entity__source", "harvest_set") \
-        .get(entity__source__module=source, entity__type=app_label)
+        .get(entity__source__module=source, entity__type=app_label, set_specification=set_specification)
     harvest_set = harvest_state.harvest_set
 
     if harvest_state.entity.is_manual:
