@@ -151,7 +151,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     def __eq__(self, other):
         if not isinstance(other, HarvestDocument):
-            raise NotImplemented()
+            return NotImplemented()
         content_hash = self.metadata.get("hash", None)
         deleted_at = self.metadata.get("deleted_at", None)
         return content_hash and content_hash == other.metadata.get("hash", None) and \
