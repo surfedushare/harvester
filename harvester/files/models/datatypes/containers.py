@@ -12,7 +12,7 @@ class Set(HarvestSet):
 
 class Dataset(HarvestDataset):
 
-    entities = models.ManyToManyField("sources.HarvestEntity", through="HarvestState")
+    entities = models.ManyToManyField("sources.HarvestEntity", through="HarvestState", related_name="+")
 
     class Meta:
         verbose_name = "file dataset"

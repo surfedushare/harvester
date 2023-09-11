@@ -1,6 +1,6 @@
 SEED_DEFAULTS = {
     "srn": None,
-    "state": None,
+    "state": "active",
     "url": None,
     "hash": None,
     "mime_type": None,

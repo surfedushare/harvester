@@ -14,7 +14,9 @@ class HttpSeedingProcessorTestCase(TestCase):
         self.ignored_document = TestDocument(
             collection=self.set,
             pipeline={},
-            properties={},
+            properties={
+                "state": "active"
+            },
             pending_at=None
         )
         self.ignored_document.clean()
