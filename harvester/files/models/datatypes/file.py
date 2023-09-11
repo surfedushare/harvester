@@ -53,6 +53,7 @@ class FileDocument(HarvestDocument):
     mime_type = models.CharField(max_length=256, null=True, blank=True)
     type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown")
     is_not_found = models.BooleanField(default=False)
+    is_analysis_allowed = models.BooleanField(null=True, blank=True)
 
     def apply_resource(self, resource: Resource):
         if isinstance(resource, HttpTikaResource):
@@ -78,6 +79,16 @@ class FileDocument(HarvestDocument):
     def is_pdf(self):
         return self.mime_type in ["application/pdf", "application/x-pdf"]
 
+    def get_analysis_allowed(self) -> bool:
+        match self.properties.get("access_rights", None), self.properties.get("copyright", None):
+            case "OpenAccess", _:
+                return True
+            case "RestrictedAccess", copyright_:
+                return copyright_ and copyright_ not in ["yes", "unknown"] and "nd" not in copyright_
+            case "ClosedAccess", _:
+                return False
+        return False
+
     def clean(self):
         super().clean()
         url = self.properties.get("url", None)
@@ -90,6 +101,7 @@ class FileDocument(HarvestDocument):
         self.mime_type = mime_type
         if self.mime_type:
             self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
+        self.is_analysis_allowed = self.get_analysis_allowed()
 
 
 class Overwrite(HarvestOverwrite):
