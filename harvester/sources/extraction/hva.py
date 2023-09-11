@@ -193,6 +193,20 @@ class HvaMetadataExtraction(ExtractProcessor):
         except IndexError:
             return None
 
+    @classmethod
+    def get_publisher_date(cls, node):
+        current_publication = next(
+            (publication for publication in node["publicationStatuses"] if publication["current"]),
+            None
+        )
+        if not current_publication:
+            return
+        publication_date = current_publication["publicationDate"]
+        year = publication_date["year"]
+        month = publication_date.get("month", 1)
+        day = publication_date.get("day", 1)
+        return f"{year}-{month:02}-{day:02}"
+
 
 HVA_EXTRACTION_OBJECTIVE = {
     # Essential NPPO properties
@@ -208,7 +222,7 @@ HVA_EXTRACTION_OBJECTIVE = {
     "provider": HvaMetadataExtraction.get_provider,
     "organizations": HvaMetadataExtraction.get_organizations,
     "publishers": HvaMetadataExtraction.get_publishers,
-    "publisher_date": lambda node: None,
+    "publisher_date": HvaMetadataExtraction.get_publisher_date,
     "publisher_year": "$.publicationStatuses.0.publicationDate.year",
 
     # Non-essential NPPO properties

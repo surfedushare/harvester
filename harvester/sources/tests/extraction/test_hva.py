@@ -121,3 +121,9 @@ class TestGetHarvestSeedsHva(TestCase):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["doi"])
         self.assertEqual(seeds[5]["doi"], "10.1088/0031-+9120/+50/5/573")
+
+    def test_publisher_date(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_date"], "2016-01-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2016-02-01")
+        self.assertIsNone(seeds[5]["publisher_date"])
