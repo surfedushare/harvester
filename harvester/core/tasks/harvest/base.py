@@ -7,6 +7,10 @@ from celery.canvas import Signature  # for type checking only
 from core.models.datatypes.base import HarvestObjectMixin as HarvestObject
 
 
+class PendingHarvestObjects(Exception):
+    pass
+
+
 def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
                                    as_list: bool = False) -> list[HarvestObject] | HarvestObject:
     if not args:
@@ -32,11 +36,9 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
     for instance in instances:
         # We skip any containers that have pending content
         if hasattr(instance, "documents") and instance.documents.filter(pending_at__isnull=False).exists():
-            print("pending docs")
-            continue
+            raise PendingHarvestObjects()
         elif hasattr(instance, "collections") and instance.collections.filter(pending_at__isnull=False).exists():
-            print("pending collections")
-            continue
+            raise PendingHarvestObjects()
         # Then we check if the instance is done or is pending
         elif not instance.get_pending_tasks():
             finished.append(instance)

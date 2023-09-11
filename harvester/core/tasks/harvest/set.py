@@ -5,11 +5,16 @@ from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
 from core.models.datatypes import HarvestSet
 from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_harvest_object_tasks,
-                                     validate_pending_harvest_instances)
+                                     validate_pending_harvest_instances, PendingHarvestObjects)
 from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
 
 
-@app.task(name="dispatch_set_tasks", base=DatabaseConnectionResetTask)
+@app.task(
+    name="dispatch_set_tasks",
+    base=DatabaseConnectionResetTask,
+    autoretry_for=(PendingHarvestObjects,),
+    retry_kwargs={"max_retries": 3}
+)
 def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchronous: bool = True,
                        recursion_depth: int = 0) -> None:
     if recursion_depth >= 10:
