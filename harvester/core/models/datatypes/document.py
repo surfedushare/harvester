@@ -69,7 +69,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     objects = HarvestDocumentManager()
 
-    state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE)
+    state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE, db_index=True)
     metadata = models.JSONField(
         default=document_metadata_default, blank=True,
         encoder=DjangoJSONEncoder, decoder=HarvesterJSONDecoder
@@ -96,11 +96,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         super().clean()
         current_time = now()
         # Update metadata about deletion
-        state = self.properties.get("state", None)
-        if state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
+        self.state = self.properties.get("state", None)
+        if self.state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
-        elif state != self.States.DELETED.value:
+        elif self.state != self.States.DELETED.value:
             self.metadata["deleted_at"] = None
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.

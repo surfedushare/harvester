@@ -11,7 +11,7 @@ def thirty_days_default():
 class HarvestSource(models.Model):
 
     name = models.CharField(max_length=50, help_text="Human readable name")
-    module = models.CharField(max_length=50, help_text="Name of Python modules related to this source")
+    module = models.CharField(max_length=50, help_text="Name of Python modules related to this source", db_index=True)
     is_repository = models.BooleanField(
         default=False,
         help_text="Enable when source is a repository for multiple providers"
@@ -32,7 +32,7 @@ class HarvestEntity(models.Model):
         TEST = "testing", "Test"
 
     source = models.ForeignKey(HarvestSource, on_delete=models.CASCADE)
-    type = models.CharField(choices=EntityType.choices, max_length=50)
+    type = models.CharField(choices=EntityType.choices, max_length=50, db_index=True)
 
     is_available = models.BooleanField(default=False)
     is_manual = models.BooleanField(default=False)

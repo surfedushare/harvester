@@ -114,7 +114,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         null=True, blank=True,
         related_name="+"
     )
-    historic_sets = models.ManyToManyField(to="Set")
+    historic_sets = models.ManyToManyField(to="Set", blank=True)
 
     is_current = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

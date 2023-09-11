@@ -18,10 +18,15 @@ class HarvestState(models.Model):
 
     set_specification = models.CharField(
         max_length=255,
-        help_text="The slug for the 'set' you want to harvest"
+        help_text="The slug for the 'set' you want to harvest",
+        db_index=True
     )
-    harvested_at = models.DateTimeField(blank=True, default=make_aware(datetime(year=1970, month=1, day=1)))
-    purge_after = models.DateTimeField(null=True, blank=True)
+    harvested_at = models.DateTimeField(
+        blank=True,
+        default=make_aware(datetime(year=1970, month=1, day=1)),
+        db_index=True
+    )
+    purge_after = models.DateTimeField(null=True, blank=True, db_index=True)
 
     def clean(self) -> None:
         if not self.purge_after:
