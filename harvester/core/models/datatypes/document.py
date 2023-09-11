@@ -31,28 +31,6 @@ def document_metadata_default() -> dict:
     }
 
 
-class HarvestDocumentManager(models.Manager):
-
-    def build_from_seed(self, seed, collection=None, metadata_pipeline_key=None):
-        properties = copy(seed)
-        metadata_pipeline = properties.pop(metadata_pipeline_key, None)
-        document = HarvestDocument(
-            properties=properties,
-            collection=collection,
-            pipeline={"metadata": metadata_pipeline}
-        )
-        if collection:
-            document.dataset_version = collection.dataset_version
-        document.clean()
-        return document
-
-    def batches_from_seeds(self, seeds):
-        pass
-
-    def get_from_seed(self, seed):
-        pass
-
-
 class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     # NB: These foreign keys are app agnostic and point to different models in different apps
@@ -67,8 +45,6 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         DELETED = "deleted", "Deleted"
         INACTIVE = "inactive", "In-active"
         SKIPPED = "skipped", "Skipped"
-
-    objects = HarvestDocumentManager()
 
     state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE, db_index=True)
     metadata = models.JSONField(
