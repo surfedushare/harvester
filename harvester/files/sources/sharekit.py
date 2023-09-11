@@ -18,6 +18,8 @@ def get_file_seeds(sharekit_products_data: dict):
         product_id = sharekit_product["id"]
         product_attributes = sharekit_product["attributes"]
         product_copyright = product_attributes.get("termsOfUse", None)
+        product_publishers = product_attributes.get("publishers", []) or []
+        product_provider_name = product_publishers[0] if len(product_publishers) else "sharekit"
         product_files = product_attributes.get("files", []) or []
         product_links = product_attributes.get("links", []) or []
         for product_file in product_files:
@@ -27,7 +29,7 @@ def get_file_seeds(sharekit_products_data: dict):
             product_file["state"] = sharekit_product.get("meta", {}).get("state", "active")
             # We add some product metadata, because unfortunately the product supplies defaults
             product_file["product"] = {
-                "provider": "sharekit",
+                "provider": product_provider_name,
                 "product_id": product_id,
                 "copyright": product_copyright,
                 "type": "file"
@@ -110,7 +112,7 @@ SEEDING_PHASES = [
     {
         "phase": "publications",
         "strategy": "initial",
-        "batch_size": 5,
+        "batch_size": 25,
         "retrieve_data": {
             "resource": "sharekit.sharekitmetadataharvest",
             "method": "get",
@@ -124,7 +126,7 @@ SEEDING_PHASES = [
     {
         "phase": "deletes",
         "strategy": "back_fill",
-        "batch_size": 5,
+        "batch_size": 25,
         "contribute_data": {
             "callback": back_fill_deletes
         }
