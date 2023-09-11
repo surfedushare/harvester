@@ -8,6 +8,7 @@ from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 
+from datagrowth.utils import reach
 from datagrowth.datatypes import DocumentBase
 from core.models.datatypes.base import HarvestObjectMixin
 from core.utils.decoders import HarvesterJSONDecoder
@@ -82,14 +83,34 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         instance.clean()
         return instance
 
+    @staticmethod
+    def parse_seed_data(data: dict) -> dict:
+        output = {}
+        for key, value in data.items():
+            if "." in key:
+                parent_key, child_key = key.split(".")
+                if parent_key not in output:
+                    output[parent_key] = {}
+                output[parent_key][child_key] = value
+            else:
+                output[key] = value
+        return output
+
     def update(self, data: Any, commit: bool = True) -> None:
+        current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
-        for key, value in content.items():
-            pass
+        # See if pipeline task need to re-run due to changes
+        for dependency_key, task_names in self.get_property_dependencies().items():
+            current_value = reach(dependency_key, self.properties)
+            update_value = reach(dependency_key, content)
+            if current_value != update_value:
+                for task in task_names:
+                    self.invalidate_task(task, current_time=current_time)
         # Updates properties unless state is deleted
         if content.get("state") == self.States.DELETED.value:
             super().update({"state": self.States.DELETED.value}, commit=commit)
         else:
+            data = self.parse_seed_data(data)
             super().update(data, commit=commit)
 
     def clean(self):

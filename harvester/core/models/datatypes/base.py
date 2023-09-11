@@ -1,3 +1,6 @@
+from collections import defaultdict
+from datetime import datetime
+
 from django.db import models
 from django.utils.timezone import now
 
@@ -37,6 +40,25 @@ class HarvestObjectMixin(models.Model):
             if not has_run and is_pending_task and has_met_dependencies:
                 pending_tasks.append(task_name)
         return pending_tasks
+
+    def get_property_dependencies(self) -> dict:
+        property_dependencies = defaultdict(list)
+        for task_name, conditions in self.tasks.items():
+            for dependency in conditions.get("depends_on", []):
+                if dependency.startswith("$"):
+                    property_dependencies[dependency].append(task_name)
+        return property_dependencies
+
+    def invalidate_task(self, task_name: str, current_time: datetime = None) -> None:
+        is_invalidated = False
+        if task_name in self.pipeline:
+            is_invalidated = True
+            del self.pipeline[task_name]
+            is_invalidated = True
+        if task_name in self.derivatives:
+            del self.derivatives[task_name]
+        if is_invalidated:
+            self.pending_at = current_time or now()
 
     class Meta:
         abstract = True

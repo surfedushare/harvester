@@ -69,9 +69,7 @@ class HarvestState(models.Model):
             for document in batch:
                 for task, result in list(document.pipeline.items()):
                     if not result.get("success", False):
-                        del document.pipeline[task]
-                        del document.derivatives[task]
-                        document.pending_at = current_time
+                        document.invalidate_task(task, current_time=current_time)
                 document.pk = None
                 document.id = None
                 document.collection = self.harvest_set
