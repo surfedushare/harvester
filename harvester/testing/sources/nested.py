@@ -8,11 +8,11 @@ def get_nested_seeds(nested_data: dict) -> Iterator[dict]:
     for parent_seed in nested_data["results"]:
         if not parent_seed["simples"] and parent_seed["state"] == "deleted":
             yield {
-                "parent_id": parent_seed["srn"],
+                "parent_id": f"{parent_seed['set']}:{parent_seed['external_id']}",
                 "state": parent_seed["state"]
             }
         for nested_seed in parent_seed["simples"]:
-            nested_seed["parent_id"] = parent_seed["srn"]
+            nested_seed["parent_id"] = f"{parent_seed['set']}:{parent_seed['external_id']}"
             nested_seed["state"] = parent_seed["state"]
             yield nested_seed
 

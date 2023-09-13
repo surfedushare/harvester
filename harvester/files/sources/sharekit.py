@@ -1,6 +1,7 @@
 from typing import Iterator
 from hashlib import sha1
 
+from sources.utils.sharekit import extract_channel
 from files.models import Set, FileDocument
 
 
@@ -14,6 +15,7 @@ def get_file_seeds(sharekit_products_data: dict):
     :param sharekit_products_data: a parsed Sharekit publication API response
     :return: yields file objects
     """
+    channel = extract_channel(sharekit_products_data)
     for sharekit_product in sharekit_products_data["data"]:
         product_id = sharekit_product["id"]
         product_attributes = sharekit_product["attributes"]
@@ -27,6 +29,7 @@ def get_file_seeds(sharekit_products_data: dict):
             if not product_file.get("url", None):
                 continue
             product_file["state"] = sharekit_product.get("meta", {}).get("state", "active")
+            product_file["set"] = channel
             # We add some product metadata, because unfortunately the product supplies defaults
             product_file["product"] = {
                 "provider": product_provider_name,
@@ -42,6 +45,7 @@ def get_file_seeds(sharekit_products_data: dict):
             if not product_link.get("url", None):
                 continue
             product_link["state"] = sharekit_product.get("meta", {}).get("state", "active")
+            product_link["set"] = channel
             product_link["product"] = {
                 "provider": "sharekit",
                 "product_id": product_id,
@@ -92,9 +96,12 @@ class SharekitFileExtraction(object):
 
 
 OBJECTIVE = {
+    # Essential objective keys for system functioning
     "@": get_file_seeds,
     "state": lambda node: node["state"],
-    "srn": SharekitFileExtraction.get_srn,
+    "external_id": SharekitFileExtraction.get_hash,
+    "set": lambda node: node["set"],
+    # Generic metadata
     "url": lambda node: node["url"],
     "hash": SharekitFileExtraction.get_hash,
     "mime_type": SharekitFileExtraction.get_mime_type,

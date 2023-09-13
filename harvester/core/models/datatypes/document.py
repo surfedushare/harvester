@@ -54,6 +54,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     @classmethod
     def build(cls, data, collection=None):
+        data["srn"] = f"{data['set']}:{data['external_id']}"
         instance = super().build(data, collection)
         instance.dataset_version = collection.dataset_version
         instance.clean()

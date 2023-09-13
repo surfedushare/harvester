@@ -27,6 +27,7 @@ class HttpSeedingProcessorTestCase(TestCase):
 
     def assert_results(self, results, extra_keys=None, preexisting_document_ids=None):
         extra_keys = extra_keys or []
+        extra_keys.append("srn")
         preexisting_document_ids = preexisting_document_ids or []
         # Assert results
         for batch in results:

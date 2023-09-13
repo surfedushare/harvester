@@ -1,6 +1,9 @@
 SEED_DEFAULTS = {
-    "srn": None,
+    # Essential keys for functioning of the system
     "state": None,
+    "set": None,
+    "external_id": None,
+    # Generic metadata
     "files": [],
     "title": None,
     "language": None,
@@ -17,6 +20,7 @@ SEED_DEFAULTS = {
     "is_part_of": [],
     "has_parts": [],
     "doi": None,
+    # Learning material metadata
     "learning_material": {
         "material_types": [],
         "aggregation_level": None,
@@ -27,6 +31,7 @@ SEED_DEFAULTS = {
         "disciplines": [],
         "consortium": None
     },
+    # Research product metadata
     "research_product": {
         "research_object_type": None,
         "research_themes": [],

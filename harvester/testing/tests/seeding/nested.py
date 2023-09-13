@@ -54,8 +54,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             pipeline={},
             properties={
                 "state": "active",
-                "srn": "surf:testing:1",
+                "set": "surf:testing",
                 "external_id": 1,
+                "srn": "surf:testing:1",
                 "parent_id": "surf:testing:2",
                 "url": "http://localhost:8888/file/1",
                 "title": "title for 1 before update"  # this is the important part that will change during the update
@@ -75,8 +76,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             },
             properties={
                 "state": "active",
-                "srn": "surf:testing:2",
+                "set": "surf:testing",
                 "external_id": 2,
+                "srn": "surf:testing:2",
                 "parent_id": "surf:testing:2",
                 "url": "http://localhost:8888/file/2",
                 "title": "title for 2"
@@ -91,8 +93,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             pipeline={},
             properties={
                 "state": "active",
-                "srn": "surf:testing:3",
+                "set": "surf:testing",
                 "external_id": 3,
+                "srn": "surf:testing:3",
                 "parent_id": "surf:testing:4",
                 "url": "http://localhost:8888/file/3",
                 "title": "title for 3"

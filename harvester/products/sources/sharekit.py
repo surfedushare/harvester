@@ -4,12 +4,18 @@ from itertools import chain
 
 from datagrowth.processors import ExtractProcessor
 
+from sources.utils.sharekit import extract_channel
+
 
 class SharekitMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_record_state(cls, node):
         return node.get("meta", {}).get("status", "active")
+
+    @classmethod
+    def get_channel(cls, data):
+        return extract_channel(data)
 
     #############################
     # GENERIC
@@ -165,17 +171,18 @@ class SharekitMetadataExtraction(ExtractProcessor):
 
 
 OBJECTIVE = {
+    # Essential objective keys for system functioning
     "@": "$.data",
     "state": SharekitMetadataExtraction.get_record_state,
-    "srn": SharekitMetadataExtraction.get_srn,
-
+    "external_id": "$.id",
+    "#set": SharekitMetadataExtraction.get_channel,
+    # Generic metadata
     "doi": "$.attributes.doi",
     "files": SharekitMetadataExtraction.get_files,
     "title": "$.attributes.title",
     "language": "$.attributes.language",
     "keywords": "$.attributes.keywords",
     "description": "$.attributes.abstract",
-
     "copyright": SharekitMetadataExtraction.get_copyright,
     "copyright_description": lambda node: None,
     "authors": SharekitMetadataExtraction.get_authors,
@@ -186,7 +193,7 @@ OBJECTIVE = {
     "publisher_year": SharekitMetadataExtraction.get_publisher_year,
     "is_part_of": "$.attributes.partOf",
     "has_parts": "$.attributes.hasParts",
-
+    # Learning material metadata
     "learning_material.aggregation_level": "$.attributes.aggregationlevel",
     "learning_material.material_types": SharekitMetadataExtraction.get_material_types,
     "learning_material.lom_educational_levels": SharekitMetadataExtraction.get_lom_educational_levels,
@@ -195,7 +202,7 @@ OBJECTIVE = {
     "learning_material.study_vocabulary": SharekitMetadataExtraction.get_study_vocabulary,
     "learning_material.disciplines": SharekitMetadataExtraction.get_learning_material_disciplines,
     "learning_material.consortium": SharekitMetadataExtraction.get_consortium,
-
+    # Research product metadata
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,
     "research_product.parties": lambda node: [],

@@ -1,6 +1,9 @@
 SEED_DEFAULTS = {
-    "srn": None,
+    # Essential keys for functioning of the system
     "state": "active",
+    "set": None,
+    "external_id": None,
+    # Generic metadata
     "url": None,
     "hash": None,
     "mime_type": None,
