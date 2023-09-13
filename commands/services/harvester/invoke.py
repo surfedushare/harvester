@@ -105,17 +105,22 @@ def load_metadata(ctx, mode, source):
 @task(help={
     "mode": "Mode you want to migrate: localhost, development, acceptance or production. Must match APPLICATION_MODE",
     "reset": "Whether to reset the active datasets before harvesting",
-    "no_promote": "Whether you want to create new indices without adjusting latest aliases",
+    "legacy": "Whether to run the legacy harvest process (no by default)",
+    "asynchronous": "Whether to run harvester tasks asynchronously (non-legacy only)",
+    "no_promote": "Whether you want to create new indices without adjusting latest aliases (legacy only)",
 })
-def harvest(ctx, mode, reset=False, no_promote=False):
+def harvest(ctx, mode, reset=False, legacy=False, asynchronous=True, no_promote=False):
     """
     Starts a harvest tasks on the AWS container cluster or localhost
     """
-    command = ["python", "manage.py", "run_legacy_harvest"]
+    command_name = "run_legacy_harvest" if legacy else "run_harvest"
+    command = ["python", "manage.py", command_name]
     if reset:
         command += ["--reset"]
-    if no_promote:
+    if legacy and no_promote:
         command += ["--no-promote"]
+    if not legacy and asynchronous:
+        command += ["--asynchronous"]
 
     run_harvester_task(ctx, mode, command)
 
