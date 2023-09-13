@@ -59,9 +59,15 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
                 state.prepare_using_set(new_version, current_set)
                 if state.entity.delete_policy == DeletePolicies.NO:
                     state.clear_resources()
-            harvest_source(
-                state.entity.type, state.entity.source.module, state.set_specification,
-                asynchronous=asynchronous
-            )
+            if asynchronous:
+                harvest_source.delay(
+                    state.entity.type, state.entity.source.module, state.set_specification,
+                    asynchronous=asynchronous
+                )
+            else:
+                harvest_source(
+                    state.entity.type, state.entity.source.module, state.set_specification,
+                    asynchronous=asynchronous
+                )
 
     return dataset_versions

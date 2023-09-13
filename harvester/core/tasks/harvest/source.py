@@ -30,12 +30,18 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
     harvest_from = f"{harvest_state.harvested_at:%Y-%m-%dT%H:%M:%SZ}"
     for documents in seeding_processor(harvest_state.set_specification, harvest_from):
         has_seeds = True
-        dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
+        if asynchronous:
+            dispatch_document_tasks.delay(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
+        else:
+            dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
     else:
         harvest_set.pending_at = current_time
         harvest_set.clean()
         harvest_set.save()
-        dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
+        if asynchronous:
+            dispatch_set_tasks.delay(app_label, harvest_set.id, asynchronous=asynchronous)
+        else:
+            dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
 
     if not has_seeds:
         harvest_set.pending_at = None

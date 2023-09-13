@@ -95,6 +95,11 @@ def default_dataset_version_tasks():
             "depends_on": [],
             "checks": [],
             "resources": []
+        },
+        "set_current_dataset_version": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
         }
     }
 

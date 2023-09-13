@@ -13,7 +13,7 @@ from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
     name="dispatch_set_tasks",
     base=DatabaseConnectionResetTask,
     autoretry_for=(PendingHarvestObjects,),
-    retry_kwargs={"max_retries": 3}
+    retry_kwargs={"max_retries": 3, "countdown": 5 * 60}
 )
 def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchronous: bool = True,
                        recursion_depth: int = 0) -> None:
@@ -21,6 +21,8 @@ def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchrono
         raise RecursionError("Maximum harvest_set recursion reached")
     models = load_harvest_models(app_label)
     harvest_set = load_pending_harvest_instances(harvest_set, model=models["Set"])
+    if harvest_set is None:  # parallel tasks may already picked-up this dispatch
+        return
     pending = validate_pending_harvest_instances(harvest_set, model=models["Set"])
     if len(pending):
         recursive_callback_signature = dispatch_set_tasks.si(
