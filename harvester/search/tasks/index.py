@@ -73,3 +73,4 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             for language in settings.OPENSEARCH_LANGUAGE_CODES:
                 index.promote_to_latest(language)
+            dataset_version.set_index_promoted()

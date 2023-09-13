@@ -16,10 +16,10 @@ class DatasetAdmin(DataStorageAdmin):
 
 class DatasetVersionAdmin(AdminConfirmMixin, admin.ModelAdmin):
 
-    list_display = ('__str__', 'is_current', "created_at", "harvest_count", "index_count",)
+    list_display = ('__str__', 'is_current', "is_index_promoted", "created_at", "harvest_count", "index_count",)
     list_per_page = 10
-    actions = ["promote_dataset_version"]
-    readonly_fields = ("is_current",)
+    actions = ["promote_dataset_version_index"]
+    readonly_fields = ("is_current", "is_index_promoted",)
 
     def harvest_count(self, obj):
         return obj.documents.filter(properties__state="active", dataset_version=obj).count()
@@ -36,7 +36,7 @@ class DatasetVersionAdmin(AdminConfirmMixin, admin.ModelAdmin):
         return counts.get("count", 0)
 
     @confirm_action
-    def promote_dataset_version(self, request, queryset):
+    def promote_dataset_version_index(self, request, queryset):
         if queryset.count() > 1:
             messages.error(request, "Can't promote more than one dataset version at a time")
             return

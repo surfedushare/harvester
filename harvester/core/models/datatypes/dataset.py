@@ -117,6 +117,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     historic_sets = models.ManyToManyField(to="Set", blank=True)
 
     is_current = models.BooleanField(default=False)
+    is_index_promoted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True, default=version_default)
     tasks = models.JSONField(default=default_dataset_version_tasks, blank=True)
@@ -139,8 +140,13 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         return by_language
 
     def set_current(self) -> None:
-        HarvestDatasetVersion.objects.all().update(is_current=False)
+        type(self).objects.all().update(is_current=False)
         self.is_current = True
+        self.save()
+
+    def set_index_promoted(self) -> None:
+        type(self).objects.all().update(is_index_promoted=False)
+        self.is_index_promoted = True
         self.save()
 
     class Meta:

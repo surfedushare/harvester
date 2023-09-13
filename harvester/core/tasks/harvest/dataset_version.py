@@ -35,6 +35,9 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | Datase
             callback=recursive_callback_signature,
             asynchronous=asynchronous
         )
+    elif not dataset_version.is_current:
+        dataset_version.set_current()
+        dataset_version.save()
 
 
 @app.task(name="create_opensearch_index", base=DatabaseConnectionResetTask)
