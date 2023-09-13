@@ -91,16 +91,16 @@ class HarvestDatasetVersionManager(models.Manager):
 
 def default_dataset_version_tasks():
     return {
-        "create_opensearch_index": {
-            "depends_on": [],
-            "checks": [],
-            "resources": []
-        },
         "set_current_dataset_version": {
             "depends_on": [],
             "checks": [],
             "resources": []
-        }
+        },
+        "create_opensearch_index": {
+            "depends_on": ["set_current_dataset_version"],
+            "checks": [],
+            "resources": []
+        },
     }
 
 
