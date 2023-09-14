@@ -13,7 +13,7 @@ def prepare_seed(seed):
     if seed["state"] == "deleted":
         return
     if settings.SHAREKIT_TEST_ORGANIZATION in seed["publishers"] and \
-            settings.ENVIRONMENT in ["acceptance", "production"]:
+            settings.ENVIRONMENT in ["production"]:
         seed["state"] = "skipped"
 
 
