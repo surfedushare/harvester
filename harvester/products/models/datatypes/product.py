@@ -58,7 +58,10 @@ class ProductDocument(HarvestDocument):
         main_file_info = {
             "url": first_file_document["url"],
             "mime_type": first_file_document["mime_type"],
-            "technical_type": first_file_document["type"]
+            "technical_type": first_file_document["type"],
+            "text": first_file_document.get("text", None),
+            "previews": first_file_document.get("previews", None),
+            "video": first_file_document.get("video", None),
         }
         data.update(main_file_info)
         links_in_order = [
@@ -70,6 +73,8 @@ class ProductDocument(HarvestDocument):
             file_info = files_by_identity.get(file_identity, None)
             if not file_info:
                 continue
+            if "text" in file_info:
+                del file_info["text"]
             if file_info["is_link"] and not file_info["title"]:
                 links_index = links_in_order.index(file_identity)
                 file_info["title"] = f"URL {links_index+1}"

@@ -13,7 +13,7 @@ from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
     name="dispatch_set_tasks",
     base=DatabaseConnectionResetTask,
     autoretry_for=(PendingHarvestObjects,),
-    retry_kwargs={"max_retries": 3, "countdown": 5 * 60}
+    retry_kwargs={"max_retries": 5, "countdown": 5 * 60}
 )
 def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchronous: bool = True,
                        recursion_depth: int = 0) -> None:
