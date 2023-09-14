@@ -8,9 +8,9 @@ from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestSta
 
 
 class FileDocumentAdmin(DocumentAdmin):
-    list_display = DocumentAdmin.list_display + ("type", "is_not_found", "is_analysis_allowed",)
-    list_filter = DocumentAdmin.list_filter + ("type", "mime_type", "is_not_found", "is_analysis_allowed",)
-    readonly_fields = DocumentAdmin.readonly_fields + ("is_not_found", "is_analysis_allowed")
+    list_display = DocumentAdmin.list_display + ("type", "is_not_found", "is_analysis_allowed", "is_invalid",)
+    list_filter = DocumentAdmin.list_filter + ("is_not_found", "is_analysis_allowed", "is_invalid",)
+    readonly_fields = DocumentAdmin.readonly_fields + ("is_not_found", "is_analysis_allowed", "is_invalid",)
 
 
 admin.site.register(Dataset, DatasetAdmin)

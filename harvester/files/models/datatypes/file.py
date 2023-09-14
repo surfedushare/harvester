@@ -15,7 +15,7 @@ def default_document_tasks():
     return {
         "tika": {
             "depends_on": ["$.url"],
-            "checks": [],
+            "checks": ["!is_invalid"],
             "resources": ["files.HttpTikaResource"]
         },
         "extruct": {
@@ -59,6 +59,7 @@ class FileDocument(HarvestDocument):
     type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown")
     is_not_found = models.BooleanField(default=False)
     is_analysis_allowed = models.BooleanField(null=True, blank=True)
+    is_invalid = models.BooleanField(default=False)
 
     def apply_resource(self, resource: Resource):
         if isinstance(resource, HttpTikaResource):
@@ -97,9 +98,13 @@ class FileDocument(HarvestDocument):
     def clean(self):
         super().clean()
         url = self.properties.get("url", None)
-        if url:
+        if url and not url.startswith("http"):
+            self.is_invalid = True
+        elif url:
             url_info = urlparse(url)
             self.domain = url_info.hostname
+        else:
+            self.is_invalid = True
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
             mime_type, encoding = guess_type(url)

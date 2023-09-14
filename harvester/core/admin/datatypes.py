@@ -48,7 +48,7 @@ class DatasetVersionAdmin(AdminConfirmMixin, admin.ModelAdmin):
 
 
 class DocumentAdmin(DatagrowthDocumentAdmin):
-    list_display = ('identity', 'collection', 'state', 'modified_at',)
+    list_display = ('identity', 'state', 'modified_at',)
     list_per_page = 10
     list_filter = ('dataset_version__is_current', 'collection__name', 'state',)
     readonly_fields = ("created_at", "modified_at",)
