@@ -45,6 +45,11 @@ TECHNICAL_TYPE_CHOICES = sorted([
 ], key=lambda choice: choice[1])
 
 
+WHITELISTED_OUTPUT_FIELDS = {
+    "srn", "url", "hash", "state", "title", "type", "is_link", "copyright", "mime_type", "access_rights"
+}
+
+
 class FileDocument(HarvestDocument):
 
     tasks = models.JSONField(default=default_document_tasks, blank=True)
@@ -101,7 +106,23 @@ class FileDocument(HarvestDocument):
         self.mime_type = mime_type
         if self.mime_type:
             self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
+            self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
+
+    def to_data(self, merge_derivatives: bool = True) -> dict:
+        data = {
+            key: value
+            for key, value in super().to_data(merge_derivatives=False).items() if key in WHITELISTED_OUTPUT_FIELDS
+        }
+        if "tika" in self.derivatives:
+            data["text"] = self.derivatives["tika"]["texts"][0]  # TODO: allow all Tika output
+        if "extruct" in self.derivatives:
+            data["video"] = self.derivatives["extruct"]
+        if "pdf_preview" in self.derivatives:
+            data["previews"] = self.derivatives["pdf_preview"]
+        elif "video_preview" in self.derivatives:
+            data["previews"] = self.derivatives["video_preview"]
+        return data
 
 
 class Overwrite(HarvestOverwrite):

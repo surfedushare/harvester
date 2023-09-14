@@ -4,7 +4,7 @@ from itertools import chain
 
 from datagrowth.processors import ExtractProcessor
 
-from sources.utils.sharekit import extract_channel
+from sources.utils.sharekit import extract_channel, parse_url
 
 
 class SharekitMetadataExtraction(ExtractProcessor):
@@ -28,18 +28,12 @@ class SharekitMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_files(cls, node):
-        provider = SharekitMetadataExtraction.get_provider(node)["name"]
         files = node["attributes"].get("files", []) or []
         links = node["attributes"].get("links", []) or []
-        output = [
-            f"sharekit:{provider}:{sha1(file['url'].encode('utf-8')).hexdigest()}" for file in files
-            if file.get("url", None)
-        ]
-        output += [
-            f"sharekit:{provider}:{sha1(link['url'].encode('utf-8')).hexdigest()}" for link in links
-            if link.get("url", None)
-        ]
-        return output
+        urls = []
+        urls += [parse_url(file_["url"]) for file_ in files if file_.get("url", None)]
+        urls += [parse_url(link["url"]) for link in links if link.get("url", None)]
+        return urls
 
     @classmethod
     def get_material_types(cls, node):

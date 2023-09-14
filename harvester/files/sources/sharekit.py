@@ -1,7 +1,7 @@
 from typing import Iterator
 from hashlib import sha1
 
-from sources.utils.sharekit import extract_channel
+from sources.utils.sharekit import extract_channel, parse_url
 from files.models import Set, FileDocument
 
 
@@ -70,12 +70,8 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_hash(cls, node: dict) -> str:
-        return sha1(node["url"].encode("utf-8")).hexdigest()
-
-    @classmethod
-    def get_srn(cls, node: dict) -> str:
-        identifier = cls.get_hash(node)
-        return f"sharekit:{node['product']['provider']}:{identifier}"
+        url = parse_url(node["url"])
+        return sha1(url.encode("utf-8")).hexdigest()
 
     @classmethod
     def get_mime_type(cls, node: dict) -> str:
@@ -102,7 +98,7 @@ OBJECTIVE = {
     "external_id": SharekitFileExtraction.get_hash,
     "set": lambda node: node["set"],
     # Generic metadata
-    "url": lambda node: node["url"],
+    "url": lambda node: parse_url(node["url"]),
     "hash": SharekitFileExtraction.get_hash,
     "mime_type": SharekitFileExtraction.get_mime_type,
     "title": lambda node: node.get("fileName", node.get("urlName", None)),
