@@ -12,8 +12,6 @@ def prepare_seed(seed):
     seed["language"] = {"metadata": language} if language else None
     if seed["state"] == "deleted":
         return
-    if seed["lowest_educational_level"] < settings.LOWEST_EDUCATIONAL_LEVEL:
-        seed["state"] = "inactive"
     if settings.SHAREKIT_TEST_ORGANIZATION in seed["publishers"] and \
             settings.ENVIRONMENT in ["acceptance", "production"]:
         seed["state"] = "skipped"

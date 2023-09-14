@@ -13,6 +13,9 @@ from django.utils.text import slugify
 logger = logging.getLogger("harvester")
 
 
+LOWEST_EDUCATIONAL_LEVEL = 2  # HBO
+
+
 class EdurepDataExtraction(object):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
@@ -61,6 +64,9 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_oaipmh_record_state(cls, soup, el):
+        lowest_educational_level = cls.get_lowest_educational_level(soup, el)
+        if lowest_educational_level < LOWEST_EDUCATIONAL_LEVEL:
+            return "inactive"
         header = el.find('header')
         return header.get("status", "active")
 
