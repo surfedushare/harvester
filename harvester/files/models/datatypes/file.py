@@ -15,7 +15,7 @@ def default_document_tasks():
     return {
         "tika": {
             "depends_on": ["$.url"],
-            "checks": ["!is_invalid"],
+            "checks": ["!is_invalid", "is_analysis_allowed"],
             "resources": ["files.HttpTikaResource"]
         },
         "extruct": {

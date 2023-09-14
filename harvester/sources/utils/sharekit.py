@@ -14,5 +14,5 @@ def parse_url(url: str) -> str:
     url = url.strip()
     if url.startswith("ttp"):
         url = "h" + url
-    url = url.replace(" ", "+")
+    url = url.replace(" ", "%20")
     return url

@@ -29,20 +29,23 @@ class ProductDocument(HarvestDocument):
     tasks = models.JSONField(default=default_document_tasks, blank=True)
 
     @property
-    def has_study_vocabulary(self):
+    def has_study_vocabulary(self) -> bool:
         study_vocabulary_ids = self.properties.get("learning_material", {}).get("study_vocabulary", [])
         if not study_vocabulary_ids:
             return False
         return MetadataValue.objects.filter(field__name="study_vocabulary", value__in=study_vocabulary_ids).exists()
 
     @property
-    def has_disciplines(self):
+    def has_disciplines(self) -> bool:
         discipline_ids = self.properties.get("learning_material", {}).get("disciplines", [])
         if not discipline_ids:
             return False
         return MetadataValue.objects \
             .filter(field__name="learning_material_disciplines_normalized", value__in=discipline_ids) \
             .exists()
+
+    def get_language(self) -> str:
+        return self.properties.get("language", "unk")
 
     @staticmethod
     def update_files_data(data: dict) -> dict:
@@ -86,6 +89,12 @@ class ProductDocument(HarvestDocument):
         data = super().to_data(merge_derivatives)
         if len(data["files"]):
             data = self.update_files_data(data)
+        learning_material = data.pop("learning_material", None)
+        if learning_material:
+            data.update(learning_material)
+        research_product = data.pop("research_product", None)
+        if research_product:
+            data.update(research_product)
         return data
 
 

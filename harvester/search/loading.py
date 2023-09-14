@@ -7,6 +7,7 @@ from core.models.datatypes.dataset import HarvestDataset, HarvestDatasetVersion
 
 def load_data_models(dataset_version_model, dataset_version_id) \
         -> tuple[Type[HarvestDataset], Type[HarvestDatasetVersion], HarvestDatasetVersion]:
+    dataset_version_model = dataset_version_model.lower()
     DatasetVersion = apps.get_model(dataset_version_model)
     Dataset = apps.get_model(dataset_version_model.replace("datasetversion", "dataset"))
     dataset_version = DatasetVersion.objects.select_related("dataset").filter(id=dataset_version_id).last()
