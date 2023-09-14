@@ -33,7 +33,7 @@ class HarvestDataset(models.Model):
 
     @classmethod
     def get_name(cls) -> str:  # adheres to Datagrowth protocol for easy data loads
-        return f"{cls._meta.app_label}dataset"
+        return f"{cls._meta.app_label}.dataset"
 
     class Meta:
         abstract = True
