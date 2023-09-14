@@ -3,7 +3,7 @@
         "model": "core.httptikaresource",
         "pk": 10,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:56.538Z",
@@ -13,7 +13,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
                 "args": [
                     "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7"
                 ],

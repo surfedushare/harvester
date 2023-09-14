@@ -53,6 +53,9 @@ opensearch:
     dutch: "decompound_word_list.nl.txt"
   domain_name: null
 
+tika:
+  host: "http://tika:9998"
+
 aws:
   is_aws: false
   load_secrets: true
