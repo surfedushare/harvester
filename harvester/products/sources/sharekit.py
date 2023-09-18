@@ -1,17 +1,16 @@
-from hashlib import sha1
 from dateutil.parser import parse as date_parser
 from itertools import chain
 
 from datagrowth.processors import ExtractProcessor
 
-from sources.utils.sharekit import extract_channel, parse_url
+from sources.utils.sharekit import extract_channel, parse_url, extract_state
 
 
 class SharekitMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_record_state(cls, node):
-        return node.get("meta", {}).get("status", "active")
+        return extract_state(node)
 
     @classmethod
     def get_channel(cls, data):

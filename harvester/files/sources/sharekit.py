@@ -1,7 +1,7 @@
 from typing import Iterator
 from hashlib import sha1
 
-from sources.utils.sharekit import extract_channel, parse_url
+from sources.utils.sharekit import extract_channel, parse_url, extract_state
 from files.models import Set, FileDocument
 
 
@@ -28,7 +28,7 @@ def get_file_seeds(sharekit_products_data: dict):
             # Anything without a URL can not be processed
             if not product_file.get("url", None):
                 continue
-            product_file["state"] = sharekit_product.get("meta", {}).get("state", "active")
+            product_file["state"] = extract_state(sharekit_product)
             product_file["set"] = channel
             # We add some product metadata, because unfortunately the product supplies defaults
             product_file["product"] = {
@@ -44,7 +44,7 @@ def get_file_seeds(sharekit_products_data: dict):
             # Anything without a URL can not be processed
             if not product_link.get("url", None):
                 continue
-            product_link["state"] = sharekit_product.get("meta", {}).get("state", "active")
+            product_link["state"] = extract_state(sharekit_product)
             product_link["set"] = channel
             product_link["product"] = {
                 "provider": "sharekit",
