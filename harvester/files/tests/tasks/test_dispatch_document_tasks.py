@@ -20,7 +20,11 @@ class TestHarvestObjectFileDocument(TestCase):
         super().setUpClass()
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             "test",
-            [{"url": "https://example.com/1"}, {"url": "https://example.com/2"}, {"url": "https://youtu.be/3"}],
+            [
+                {"url": "https://example.com/1"},
+                {"url": "https://example.com/2", "access_rights": "RestrictedAccess", "copyright": "yes"},
+                {"url": "https://youtu.be/3"}
+            ],
         )
         cls.document_1, cls.document_2, cls.youtube = cls.documents
 
@@ -41,6 +45,10 @@ class TestHarvestObjectFileDocument(TestCase):
         self.assertEqual(pending_tasks_1, [])
         youtube_tasks = self.youtube.get_pending_tasks()
         self.assertEqual(youtube_tasks, ["extruct", "video_preview"])
+
+    def test_get_analysis_disallowed(self):
+        pending_tasks_2 = self.document_2.get_pending_tasks()
+        self.assertEqual(pending_tasks_2, [], "Expected no tasks to execute when analysis is disallowed")
 
 
 class TestSimpleDispatchDocumentTasks(TestCase):

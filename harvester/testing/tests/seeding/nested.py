@@ -59,7 +59,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "srn": "surf:testing:1",
                 "parent_id": "surf:testing:2",
                 "url": "http://localhost:8888/file/1",
-                "title": "title for 1 before update"  # this is the important part that will change during the update
+                "title": "title for 1 before update",  # this is the important part that will change during the update
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )
@@ -81,7 +83,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "srn": "surf:testing:2",
                 "parent_id": "surf:testing:2",
                 "url": "http://localhost:8888/file/2",
-                "title": "title for 2"
+                "title": "title for 2",
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )
@@ -98,7 +102,9 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "srn": "surf:testing:3",
                 "parent_id": "surf:testing:4",
                 "url": "http://localhost:8888/file/3",
-                "title": "title for 3"
+                "title": "title for 3",
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )

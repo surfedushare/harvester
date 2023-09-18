@@ -5,7 +5,9 @@ SEED_DEFAULTS = {
     "set": "surf:testing",
     # Generic metadata
     "url": None,
-    "title": None
+    "title": None,
+    "access_rights": "OpenAccess",
+    "copyright": None
 }
 
 ENTITY_SEQUENCE_PROPERTIES = {

@@ -86,7 +86,10 @@ class TestInitialHarvestSource(TestCase):
         # Assert DatasetVersion state
         dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
-        self.assertEqual(list(dataset_version.pipeline.keys()), ["create_opensearch_index"])
+        self.assertEqual(
+            list(dataset_version.pipeline.keys()),
+            ["create_opensearch_index", "set_current_dataset_version"]
+        )
         self.assertTrue(dataset_version.pipeline["create_opensearch_index"]["success"])
         self.assertIsNotNone(dataset_version.index)
 

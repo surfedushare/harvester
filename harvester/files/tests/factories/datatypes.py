@@ -53,6 +53,8 @@ class FileDocumentFactory(factory.django.DjangoModelFactory):
         url = "https://maken.wikiwijs.nl/124977/Zorgwekkend_gedrag___kopie_1"
         mime_type = None
         title = "Zorgwekkend gedrag"
+        access_rights = "OpenAccess"
+        copyright = "cc-by-40"
 
     dataset_version = factory.SubFactory(DatasetVersionFactory)
     collection = factory.SubFactory(SetFactory)

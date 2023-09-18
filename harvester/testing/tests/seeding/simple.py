@@ -49,7 +49,9 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 0,
                 "srn": "surf:testing:0",
                 "url": "http://localhost:8888/file/0",
-                "title": "title for 0"
+                "title": "title for 0",
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )
@@ -69,7 +71,9 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 1,
                 "srn": "surf:testing:1",
                 "url": "http://localhost:8888/file/1",
-                "title": "title for 1 before update"  # this is the important part that will change during the update
+                "title": "title for 1 before update",  # this is the important part that will change during the update
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )
@@ -90,7 +94,9 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 2,
                 "srn": "surf:testing:2",
                 "url": "http://localhost:8888/file/2",
-                "title": "title for 2"
+                "title": "title for 2",
+                "access_rights": "OpenAccess",
+                "copyright": None,
             },
             pending_at=None
         )

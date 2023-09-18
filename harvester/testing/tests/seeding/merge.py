@@ -64,7 +64,7 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.updated_document.properties["title"] = "title for 1 before update"
         self.updated_document.save()
         self.unchanged_document = TestDocument.objects.get(properties__srn="surf:testing:2")
-        self.unchanged_document.metadata["hash"] = "aa03ca6af3dd59b3856f978f52e9ef61935ebd34"
+        self.unchanged_document.metadata["hash"] = "3ab3f0fdaa5625237031f72277dd43723b0b774d"
         self.unchanged_document.pending_at = None
         self.unchanged_document.pipeline["tika"] = {"success": True}
         self.unchanged_document.save()

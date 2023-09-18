@@ -19,7 +19,7 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def uri(self):
         fetch_key = quote(self.url, safe="")
-        return f"localhost:9998/rmeta/text?fetchKey={fetch_key}&fetcherName=http"
+        return f"tika:9998/rmeta/text?fetchKey={fetch_key}&fetcherName=http"
 
     @factory.lazy_attribute
     def request(self):
