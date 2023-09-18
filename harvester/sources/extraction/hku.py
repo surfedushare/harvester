@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from mimetypes import guess_type
 from hashlib import sha1
 from dateutil.parser import parse as date_parser
@@ -154,8 +155,16 @@ class HkuMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_publisher_year(cls, node):
-        datetime = date_parser(node["date"])
-        return datetime.year
+        date = date_parser(node["date"])
+        return date.year
+
+    @classmethod
+    def get_publisher_date(cls, node):
+        publisher_date = node.get("date", None)
+        if not publisher_date:
+            return
+        publisher_datetime = date_parser(publisher_date, default=datetime(year=1970, month=1, day=1))
+        return publisher_datetime.strftime("%Y-%m-%d")
 
     @classmethod
     def get_provider(cls, node):
@@ -212,7 +221,7 @@ HKU_EXTRACTION_OBJECTIVE = {
     "provider": HkuMetadataExtraction.get_provider,
     "organizations": HkuMetadataExtraction.get_organizations,
     "publishers": HkuMetadataExtraction.get_publishers,
-    "publisher_date": lambda node: None,
+    "publisher_date": HkuMetadataExtraction.get_publisher_date,
     "publisher_year": HkuMetadataExtraction.get_publisher_year,
 
     # Non-essential NPPO properties
