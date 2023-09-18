@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from mimetypes import guess_type
 from hashlib import sha1
 from core.constants import HIGHER_EDUCATION_LEVELS
@@ -272,7 +273,7 @@ class EdurepMetadataExtraction(ExtractProcessor):
         date_string = cls.get_publisher_date(node)
         if not date_string:
             return
-        date = date_parser(date_string, dayfirst=True)
+        date = date_parser(date_string, dayfirst=True, default=datetime(year=1970, month=1, day=1))
         return date.strftime('%Y-%m-%d')
 
     @classmethod
