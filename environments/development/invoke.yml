@@ -48,6 +48,9 @@ opensearch:
     dutch: "analyzers/F133444250"
   domain_name: "surfpol-main"
 
+tika:
+  host: "http://localhost:9998"
+
 aws:
   is_aws: true
   load_secrets: true

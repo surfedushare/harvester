@@ -243,6 +243,11 @@ OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = environment.opensearch.alias_prefix
 
 
+# Tika
+
+TIKA_HOST = environment.tika.host
+
+
 # Logging
 # https://docs.djangoproject.com/en/2.2/topics/logging/
 # https://docs.sentry.io/

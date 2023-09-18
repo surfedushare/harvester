@@ -8,6 +8,9 @@ from datagrowth.processors import ExtractProcessor
 from django.utils.text import slugify
 
 
+LOWEST_EDUCATIONAL_LEVEL = 2  # HBO
+
+
 class EdurepMetadataExtraction(ExtractProcessor):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
@@ -17,6 +20,9 @@ class EdurepMetadataExtraction(ExtractProcessor):
 
     @classmethod
     def get_record_state(cls, node):
+        lowest_educational_level = cls.get_lowest_educational_level(node)
+        if lowest_educational_level < LOWEST_EDUCATIONAL_LEVEL:
+            return "inactive"
         return "active"
 
     #############################

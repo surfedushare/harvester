@@ -3,7 +3,7 @@
         "model": "core.httptikaresource",
         "pk": 1,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=http%3A%2F%2Fonline.codarts.nl%2Fmod%2Fpage%2Fview.php%3Fid%3D313&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=http%3A%2F%2Fonline.codarts.nl%2Fmod%2Fpage%2Fview.php%3Fid%3D313&fetcherName=http",
             "status": 500,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:55.240Z",
@@ -13,7 +13,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=http%3A%2F%2Fonline.codarts.nl%2Fmod%2Fpage%2Fview.php%3Fid%3D313&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=http%3A%2F%2Fonline.codarts.nl%2Fmod%2Fpage%2Fview.php%3Fid%3D313&fetcherName=http",
                 "args": [
                     "http://online.codarts.nl/mod/page/view.php?id=313"
                 ],
@@ -40,7 +40,7 @@
         "model": "core.httptikaresource",
         "pk": 2,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
             "status": 404,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:56.538Z",
@@ -50,7 +50,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2F182216be-31a2-43c3-b7de-e5dd355b09f7&fetcherName=http",
                 "args": [
                     "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7"
                 ],
@@ -80,7 +80,7 @@
         "model": "core.httptikaresource",
         "pk": 3,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DZl59P5ZNX3M&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DZl59P5ZNX3M&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:57.146Z",
@@ -90,7 +90,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DZl59P5ZNX3M&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DZl59P5ZNX3M&fetcherName=http",
                 "args": [
                     "https://www.youtube.com/watch?v=Zl59P5ZNX3M"
                 ],
@@ -120,7 +120,7 @@
         "model": "core.httptikaresource",
         "pk": 4,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fmaken.wikiwijs.nl%2F94812%2FMacro_meso_micro&fetcherName=http#!page-2935729",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fmaken.wikiwijs.nl%2F94812%2FMacro_meso_micro&fetcherName=http#!page-2935729",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:57.318Z",
@@ -130,7 +130,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fmaken.wikiwijs.nl%2F94812%2FMacro_meso_micro&fetcherName=http#!page-2935729",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fmaken.wikiwijs.nl%2F94812%2FMacro_meso_micro&fetcherName=http#!page-2935729",
                 "args": [
                     "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729"
                 ],
@@ -160,7 +160,7 @@
         "model": "core.httptikaresource",
         "pk": 5,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fyoutu.be%2FD6_p6y3dvXw&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fyoutu.be%2FD6_p6y3dvXw&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:57.899Z",
@@ -170,7 +170,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fyoutu.be%2FD6_p6y3dvXw&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fyoutu.be%2FD6_p6y3dvXw&fetcherName=http",
                 "args": [
                     "https://youtu.be/D6_p6y3dvXw"
                 ],
@@ -200,7 +200,7 @@
         "model": "core.httptikaresource",
         "pk": 6,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DwVxZDVriTZc&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DwVxZDVriTZc&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:58.453Z",
@@ -210,7 +210,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DwVxZDVriTZc&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DwVxZDVriTZc&fetcherName=http",
                 "args": [
                     "https://www.youtube.com/watch?v=wVxZDVriTZc"
                 ],
@@ -240,7 +240,7 @@
         "model": "core.httptikaresource",
         "pk": 7,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DHx0kUX7MZ7g&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DHx0kUX7MZ7g&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:58.950Z",
@@ -250,7 +250,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DHx0kUX7MZ7g&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DHx0kUX7MZ7g&fetcherName=http",
                 "args": [
                     "https://www.youtube.com/watch?v=Hx0kUX7MZ7g"
                 ],
@@ -280,7 +280,7 @@
         "model": "core.httptikaresource",
         "pk": 8,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DD4w-EClY664&fetcherName=http&t=8s",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DD4w-EClY664&fetcherName=http&t=8s",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:26:59.537Z",
@@ -290,7 +290,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DD4w-EClY664&t=8s&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DD4w-EClY664&t=8s&fetcherName=http",
                 "args": [
                     "https://www.youtube.com/watch?v=D4w-EClY664&t=8s"
                 ],
@@ -320,7 +320,7 @@
         "model": "core.httptikaresource",
         "pk": 9,
         "fields": {
-            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D21v9IYUcruI&fetcherName=http",
+            "uri": "tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D21v9IYUcruI&fetcherName=http",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2023-01-12T15:27:00.148Z",
@@ -330,7 +330,7 @@
             "retainer_id": null,
             "data_hash": "",
             "request": {
-                "url": "http://localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D21v9IYUcruI&fetcherName=http",
+                "url": "http://tika:9998/rmeta/text?fetchKey=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D21v9IYUcruI&fetcherName=http",
                 "args": [
                     "https://www.youtube.com/watch?v=21v9IYUcruI"
                 ],

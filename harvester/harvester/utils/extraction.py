@@ -12,13 +12,8 @@ def prepare_seed(seed):
     seed["language"] = {"metadata": language} if language else None
     if seed["state"] == "deleted":
         return
-    if not settings.ALLOW_CLOSED_ACCESS_DOCUMENTS and \
-            (not seed["copyright"] or seed["copyright"] in ["yes", "closed-access", "unknown"]):
-        seed["state"] = "inactive"
-    if seed["lowest_educational_level"] < settings.LOWEST_EDUCATIONAL_LEVEL:
-        seed["state"] = "inactive"
     if settings.SHAREKIT_TEST_ORGANIZATION in seed["publishers"] and \
-            settings.ENVIRONMENT in ["acceptance", "production"]:
+            settings.ENVIRONMENT in ["production"]:
         seed["state"] = "skipped"
 
 

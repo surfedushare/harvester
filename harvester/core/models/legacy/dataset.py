@@ -124,6 +124,14 @@ class DatasetVersion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     version = models.CharField(max_length=50, null=False, blank=True)
 
+    @property
+    def documents(self):
+        return self.document_set
+
+    @property
+    def sets(self):
+        return self.collection_set
+
     def __str__(self):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
 

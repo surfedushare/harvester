@@ -1,6 +1,8 @@
 import logging
 from json import JSONDecodeError
 
+from django.conf import settings
+
 from datagrowth.resources import HttpResource, URLResource
 import extruct
 
@@ -10,7 +12,7 @@ logger = logging.getLogger("harvester")
 
 class HttpTikaResourceBase(HttpResource):
 
-    URI_TEMPLATE = "http://localhost:9998/rmeta/text?fetchKey={}"
+    URI_TEMPLATE = settings.TIKA_HOST + "/rmeta/text?fetchKey={}"
     PARAMETERS = {
         "fetcherName": "http"
     }

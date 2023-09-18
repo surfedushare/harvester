@@ -55,6 +55,7 @@ If you want to run the project outside of a container you'll need to add the fol
 127.0.0.1 harvester
 127.0.0.1 service
 127.0.0.1 redis
+127.0.0.1 tika
 ```
 
 This way you can reach these containers outside of the container network through their names.
