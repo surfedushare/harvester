@@ -112,6 +112,7 @@ class ResourceSeedingProcessor(Processor):
         self.resources = {}
         self.buffer = None  # NB: "None" ensures the forever while loop runs at least once
         self.batch = initial or []
+        self.contents = {}
         self.phases = OrderedDict()
         for ix, phase in enumerate(self.config.phases):
             phase = deepcopy(phase)
