@@ -20,7 +20,7 @@ class OpenSearchIndex(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    pushed_at = models.DateTimeField(null=True)
+    pushed_at = models.DateTimeField(null=True, blank=True)
 
     @classmethod
     def build(cls, app_label: str, dataset: str, version: str) -> OpenSearchIndex:
