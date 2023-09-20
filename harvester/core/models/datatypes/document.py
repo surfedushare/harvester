@@ -137,9 +137,6 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         return data
 
     def to_search(self) -> list[dict]:
-        # Get the basic document information including from document overwrites
-        search_data = self.to_data()
-        search_data["_id"] = self.properties["srn"]
         # Decide whether to delete or not from the index
         if self.state != "active":
             yield {
@@ -147,6 +144,9 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 "_op_type": "delete"
             }
             return
+        # Get the basic document information including from document overwrites
+        search_data = self.to_data()
+        search_data["_id"] = self.properties["srn"]
         yield search_data
 
     def __eq__(self, other):

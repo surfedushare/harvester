@@ -1,3 +1,5 @@
+import re
+from unidecode import unidecode
 from hashlib import sha1
 
 from django.db import models
@@ -49,6 +51,7 @@ class ProductDocument(HarvestDocument):
 
     @staticmethod
     def update_files_data(data: dict) -> dict:
+        # Prepare lookups
         file_identities = [
             f"{data['set']}:{sha1(url.encode('utf-8')).hexdigest()}"
             for url in data["files"]
@@ -57,6 +60,8 @@ class ProductDocument(HarvestDocument):
             file_document.identity: file_document.to_data()
             for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False)
         }
+        # Get the first file and merge its info into the product
+        # If the product sets a technical_type we ignore the file technical_type
         first_file_document = files_by_identity[file_identities[0]]
         main_file_info = {
             "url": first_file_document["url"],
@@ -66,7 +71,10 @@ class ProductDocument(HarvestDocument):
             "previews": first_file_document.get("previews", None),
             "video": first_file_document.get("video", None),
         }
+        if data.get("technical_type", None):
+            main_file_info.pop("technical_type")
         data.update(main_file_info)
+        # Clean the file data a bit and set titles for links
         links_in_order = [
             file_identity for file_identity in file_identities
             if files_by_identity[file_identity]["is_link"]
@@ -82,19 +90,54 @@ class ProductDocument(HarvestDocument):
                 links_index = links_in_order.index(file_identity)
                 file_info["title"] = f"URL {links_index+1}"
             files.append(file_info)
+        # Return the product with updated files data
         data["files"] = files
         return data
 
-    def to_data(self, merge_derivatives: bool = True) -> dict:
+    @staticmethod
+    def get_suggest_completion(title: str, text: str) -> list[str]:
+        suggest_completion = []
+        if title:
+            suggest_completion += title.split(" ")
+        if text:
+            suggest_completion += text.split(" ")[:1000]
+        alpha_pattern = re.compile("[^a-zA-Z]+")
+        return [  # removes reading signs and acutes for autocomplete suggestions
+            alpha_pattern.sub("", unidecode(word))
+            for word in suggest_completion
+        ]
+
+    def transform_search_data(self, data: dict) -> dict:
+        text = data.pop("text", None)
+        if text and len(text) >= 1000000:
+            text = " ".join(text.split(" ")[:10000])
+        data["text"] = text
+        data["suggest_phrase"] = text
+        data["suggest_completion"] = self.get_suggest_completion(data["title"], text)
+        return data
+
+    def get_derivatives_data(self) -> dict:
+        data = super().get_derivatives_data()
+        if "learning_material_disciplines_normalized" not in data:
+            data["learning_material_disciplines_normalized"] = []
+        return data
+
+    def to_data(self, merge_derivatives: bool = True, for_search: bool = True) -> dict:
         data = super().to_data(merge_derivatives)
+        source, set_name = data["set"].split(":")
+        data["harvest_source"] = set_name
         if len(data["files"]):
             data = self.update_files_data(data)
         learning_material = data.pop("learning_material", None)
         if learning_material:
+            learning_material["learning_material_disciplines"] = learning_material["disciplines"]
+            learning_material["material_types"] = learning_material["material_types"] or ["unknown"]
             data.update(learning_material)
         research_product = data.pop("research_product", None)
         if research_product:
             data.update(research_product)
+        if for_search:
+            data = self.transform_search_data(data)
         return data
 
 
