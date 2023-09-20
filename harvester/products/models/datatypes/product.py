@@ -62,22 +62,26 @@ class ProductDocument(HarvestDocument):
         }
         # Get the first file and merge its info into the product
         # If the product sets a technical_type we ignore the file technical_type
-        first_file_document = files_by_identity[file_identities[0]]
-        main_file_info = {
-            "url": first_file_document["url"],
-            "mime_type": first_file_document["mime_type"],
-            "technical_type": first_file_document["type"],
-            "text": first_file_document.get("text", None),
-            "previews": first_file_document.get("previews", None),
-            "video": first_file_document.get("video", None),
-        }
-        if data.get("technical_type", None):
-            main_file_info.pop("technical_type")
-        data.update(main_file_info)
+        first_file_document = next(
+            (files_by_identity[identity] for identity in file_identities if identity in files_by_identity),
+            None
+        )
+        if first_file_document:
+            main_file_info = {
+                "url": first_file_document["url"],
+                "mime_type": first_file_document["mime_type"],
+                "technical_type": first_file_document["type"],
+                "text": first_file_document.get("text", None),
+                "previews": first_file_document.get("previews", None),
+                "video": first_file_document.get("video", None),
+            }
+            if data.get("technical_type", None):
+                main_file_info.pop("technical_type")
+            data.update(main_file_info)
         # Clean the file data a bit and set titles for links
         links_in_order = [
             file_identity for file_identity in file_identities
-            if files_by_identity[file_identity]["is_link"]
+            if file_identity in files_by_identity and files_by_identity[file_identity]["is_link"]
         ]
         files = []
         for file_identity in file_identities:
