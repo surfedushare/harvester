@@ -26,6 +26,6 @@ def extract_state(node: dict) -> str:
     if attributes:
         provider_name = attributes.get("owner", {}).get("name", None)
         if provider_name and provider_name in settings.SHAREKIT_TEST_ORGANIZATION and \
-                settings.ENVIRONMENT in ["production"]:
+                settings.ENVIRONMENT in ["acceptance", "production"]:
             default_state = "skipped"
     return node.get("meta", {}).get("status", default_state)
