@@ -54,8 +54,8 @@ class HarvestObjectMixin(models.Model):
         if task_name in self.pipeline:
             is_invalidated = True
             del self.pipeline[task_name]
-            is_invalidated = True
         if task_name in self.derivatives:
+            is_invalidated = True
             del self.derivatives[task_name]
         if is_invalidated:
             self.pending_at = current_time or now()
