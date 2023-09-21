@@ -1,6 +1,7 @@
 import os
 import re
 from hashlib import sha1
+from datetime import datetime
 from dateutil.parser import ParserError, parse as date_parser
 
 import vobject
@@ -226,7 +227,7 @@ class SaxionDataExtraction(object):
         date_issued = el.find("dateIssued")
         if not date_issued:
             return
-        return date_issued.text.strip()
+        return date_parser(date_issued.text.strip(), default=datetime(year=1970, month=1, day=1)).strftime("%Y-%m-%d")
 
     @classmethod
     def get_publisher_year(cls, soup, el):

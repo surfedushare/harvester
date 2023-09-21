@@ -109,6 +109,11 @@ class TestGetHarvestSeedsGreeni(TestCase):
         self.assertEqual(seeds[1]["publisher_year"], 2012)
         self.assertIsNone(seeds[2]["publisher_year"], "Expected parse errors to be ignored")
 
+    def test_publisher_date(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_date"], "2010-01-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2012-11-02")
+
     def test_research_object_type(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["research_object_type"], "info:eu-repo/semantics/book")

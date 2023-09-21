@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from mimetypes import guess_type
 from hashlib import sha1
 from dateutil.parser import parse as date_parser
@@ -126,8 +127,16 @@ class PublinovaMetadataExtraction(ExtractProcessor):
         published_at = node.get("published_at", None)
         if published_at is None:
             return
-        datetime = date_parser(published_at)
-        return datetime.year
+        date = date_parser(published_at)
+        return date.year
+
+    @classmethod
+    def get_publisher_date(cls, node):
+        published_at = node.get("published_at", None)
+        if published_at is None:
+            return
+        date = date_parser(published_at, default=datetime(year=1970, month=1, day=1))
+        return date.strftime('%Y-%m-%d')
 
     @classmethod
     def get_is_restricted(cls, node):
@@ -179,7 +188,7 @@ PUBLINOVA_EXTRACTION_OBJECTIVE = {
     "provider": PublinovaMetadataExtraction.get_provider,
     "organizations": PublinovaMetadataExtraction.get_organizations,
     "publishers": PublinovaMetadataExtraction.get_publishers,
-    "publisher_date": "$.published_at",
+    "publisher_date": PublinovaMetadataExtraction.get_publisher_date,
     "publisher_year": PublinovaMetadataExtraction.get_publisher_year,
 
     # # Non-essential NPPO properties

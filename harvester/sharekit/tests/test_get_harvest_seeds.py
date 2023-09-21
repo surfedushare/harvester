@@ -207,3 +207,9 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publisher_year"], 1970)
         self.assertIsNone(seeds[8]["publisher_year"], "Expected deleted material to have no publisher year")
+
+    def test_get_publisher_date(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
+        self.assertIsNone(seeds[6]["publisher_date"])
+        self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")

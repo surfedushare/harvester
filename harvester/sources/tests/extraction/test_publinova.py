@@ -95,6 +95,11 @@ class TestGetHarvestSeedsPublinova(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publisher_year"], 2023)
 
+    def test_get_publisher_date(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_date"], "2023-03-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2022-09-24")
+
     def test_get_doi(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["doi"], "10.5117/THRM2019.3.VETH")

@@ -109,6 +109,7 @@ class TestGetHarvestSeedsSaxion(TestCase):
     def test_publisher_date(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publisher_date"], "2020-01-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2020-01-01")
         self.assertIsNone(self.deleted["publisher_date"])
 
     def test_publisher_year(self):

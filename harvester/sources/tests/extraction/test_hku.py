@@ -109,3 +109,8 @@ class TestGetHarvestSeedsHku(TestCase):
     def test_publisher_year(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publisher_year"], 2014)
+
+    def test_get_publisher_date(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publisher_date"], "2014-04-14")
+        self.assertEqual(seeds[7]["publisher_date"], "2008-04-01")

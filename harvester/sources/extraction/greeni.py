@@ -1,6 +1,7 @@
 import os
 import re
 from hashlib import sha1
+from datetime import datetime
 from dateutil.parser import ParserError, parse as date_parser
 
 import vobject
@@ -229,6 +230,15 @@ class GreeniDataExtraction(object):
         return [publisher.text.strip()] if publisher else []
 
     @classmethod
+    def get_publisher_date(cls, soup, el):
+        date_issued = el.find("dateIssued")
+        if not date_issued:
+            return
+        return \
+            date_parser(date_issued.text.strip().strip("[]"), default=datetime(year=1970, month=1, day=1))\
+            .strftime("%Y-%m-%d")
+
+    @classmethod
     def get_publisher_year(cls, soup, el):
         date_issued = el.find("dateIssued")
         if not date_issued:
@@ -301,7 +311,7 @@ GREENI_EXTRACTION_OBJECTIVE = {
     "provider": GreeniDataExtraction.get_provider,
     "organizations": GreeniDataExtraction.get_organizations,
     "publishers": GreeniDataExtraction.get_publishers,
-    "publisher_date": lambda soup, el: None,
+    "publisher_date": GreeniDataExtraction.get_publisher_date,
     "publisher_year": GreeniDataExtraction.get_publisher_year,
 
     # Non-essential NPPO properties
