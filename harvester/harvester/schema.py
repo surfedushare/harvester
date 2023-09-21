@@ -19,8 +19,9 @@ class HarvesterSchema(AutoSchema):
 
     def get_operation(self, path, method):
         operation = super().get_operation(path, method)
-        if path.startswith("/dataset") or path.startswith("/document"):
-            operation["tags"] = ["Download data"]
+        if path.startswith("/product") or path.startswith("/document"):
+            entity = "products" if path.startswith("/product") else "documents"
+            operation["tags"] = [f"Download {entity}"]
             for parameter in operation["parameters"]:
                 if parameter["name"] == "page":
                     parameter["schema"]["default"] = 1
