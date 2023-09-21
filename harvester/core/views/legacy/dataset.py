@@ -6,7 +6,7 @@ from datagrowth.datatypes.views import CollectionBaseSerializer
 from harvester.pagination import HarvesterPageNumberPagination
 from harvester.schema import HarvesterSchema
 from core.models import Dataset
-from core.views.document import DocumentSerializer, MetadataDocumentSerializer
+from core.views.legacy.document import DocumentSerializer, MetadataDocumentSerializer
 
 
 class DatasetDetailSerializer(CollectionBaseSerializer):
