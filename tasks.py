@@ -11,7 +11,7 @@ from commands.test import test_collection
 from commands.services.harvester.invoke import (load_data, harvest, clean_data, index_dataset_version,
                                                 dump_data, sync_harvest_content, generate_previews,
                                                 promote_dataset_version, extend_resource_cache, sync_preview_media,
-                                                sync_metadata, harvester_migrate, load_metadata)
+                                                sync_metadata, harvester_migrate, load_metadata, load_fixture)
 
 
 assert_repo_root_directory()
@@ -21,7 +21,7 @@ harvester_collection = Collection("hrv", setup_postgres_localhost, harvest, clea
                                   index_dataset_version, dump_data, sync_harvest_content, promote_dataset_version,
                                   generate_previews, extend_resource_cache, sync_preview_media, sync_metadata,
                                   load_metadata)
-database_collection = Collection("db", setup_postgres_localhost, harvester_migrate)
+database_collection = Collection("db", setup_postgres_localhost, harvester_migrate, load_fixture)
 container_collection = Collection("container", build, push, promote, deploy, prepare_builds)
 aws_collection = Collection("aws", print_available_images, sync_repository_state, cleanup_ecs_artifacts,
                             publish_tika_image)

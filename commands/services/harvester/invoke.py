@@ -103,6 +103,27 @@ def load_metadata(ctx, mode, source):
 
 
 @task(help={
+    "mode": "Mode you want to load metadata for: localhost, development, acceptance or production. "
+            "Must match APPLICATION_MODE",
+    "fixture_file_path": "File path of the fixture you want to load relative to the harvester directory."
+})
+def load_fixture(ctx, mode, fixture_file_path):
+    """
+    Loads a fixture from the file system into the database.
+    """
+    if ctx.config.service.env == "production":
+        raise Exit("Cowardly refusing to use production as a destination environment")
+
+    file_path = os.path.join("harvester", fixture_file_path)
+    if not os.path.exists(file_path):
+        raise Exit(f"Fixture with file path {fixture_file_path} does not exist")
+
+    command = ["python", "manage.py", "loaddata", fixture_file_path]
+
+    run_harvester_task(ctx, mode, command)
+
+
+@task(help={
     "mode": "Mode you want to migrate: localhost, development, acceptance or production. Must match APPLICATION_MODE",
     "reset": "Whether to reset the active datasets before harvesting",
     "legacy": "Whether to run the legacy harvest process (no by default)",

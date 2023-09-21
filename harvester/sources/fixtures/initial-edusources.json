@@ -1,0 +1,40 @@
+[
+{
+    "model": "sources.harvestentity",
+    "pk": 1,
+    "fields": {
+        "source": 1,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "edusources",
+            "edusourcesprivate"
+        ],
+        "delete_policy": "transient",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 2,
+    "fields": {
+        "source": 1,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "edusources",
+            "edusourcesprivate"
+        ],
+        "delete_policy": "transient",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+}
+]
