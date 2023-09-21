@@ -2,6 +2,8 @@ import logging
 from json import JSONDecodeError
 
 from django.conf import settings
+from django.db import models
+from django.contrib.contenttypes.models import ContentType
 
 from datagrowth.resources import HttpResource, URLResource
 import extruct
@@ -66,10 +68,16 @@ class ExtructResourceBase(URLResource):
 
 
 class HttpTikaResource(HttpTikaResourceBase):
+
+    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+
     class Meta:
         app_label = "files"
 
 
 class ExtructResource(ExtructResourceBase):
+
+    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+
     class Meta:
         app_label = "files"

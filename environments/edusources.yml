@@ -14,6 +14,10 @@ django:
   fixtures:
     - "core/fixtures/initial-edusources.json"
     - "metadata/fixtures/initial-metadata-edusources.json"
+    - "sources/fixtures/initial-common.json"
+    - "sources/fixtures/initial-edusources.json"
+    - "products/fixtures/initial-common.json"
+    - "files/fixtures/initial-common.json"
   users:
     usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/edusources"
 

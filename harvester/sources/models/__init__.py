@@ -7,3 +7,4 @@ from .hanze import HanzeResearchObjectResource
 from .edurep import EdurepJsonSearchResource
 from .publinova import PublinovaMetadataResource
 from .saxion import SaxionOAIPMHResource
+from .harvest import HarvestSource, HarvestEntity

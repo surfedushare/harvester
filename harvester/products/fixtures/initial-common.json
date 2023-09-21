@@ -1,0 +1,11 @@
+[
+{
+    "model": "products.dataset",
+    "pk": 1,
+    "fields": {
+        "name": "epsilon",
+        "is_harvested": true,
+        "indexing": "index"
+    }
+}
+]

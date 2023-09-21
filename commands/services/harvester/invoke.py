@@ -103,19 +103,45 @@ def load_metadata(ctx, mode, source):
 
 
 @task(help={
+    "mode": "Mode you want to load metadata for: localhost, development, acceptance or production. "
+            "Must match APPLICATION_MODE",
+    "fixture_file_path": "File path of the fixture you want to load relative to the harvester directory."
+})
+def load_fixture(ctx, mode, fixture_file_path):
+    """
+    Loads a fixture from the file system into the database.
+    """
+    if ctx.config.service.env == "production":
+        raise Exit("Cowardly refusing to use production as a destination environment")
+
+    file_path = os.path.join("harvester", fixture_file_path)
+    if not os.path.exists(file_path):
+        raise Exit(f"Fixture with file path {fixture_file_path} does not exist")
+
+    command = ["python", "manage.py", "loaddata", fixture_file_path]
+
+    run_harvester_task(ctx, mode, command)
+
+
+@task(help={
     "mode": "Mode you want to migrate: localhost, development, acceptance or production. Must match APPLICATION_MODE",
     "reset": "Whether to reset the active datasets before harvesting",
-    "no_promote": "Whether you want to create new indices without adjusting latest aliases",
+    "legacy": "Whether to run the legacy harvest process (no by default)",
+    "asynchronous": "Whether to run harvester tasks asynchronously (non-legacy only)",
+    "no_promote": "Whether you want to create new indices without adjusting latest aliases (legacy only)",
 })
-def harvest(ctx, mode, reset=False, no_promote=False):
+def harvest(ctx, mode, reset=False, legacy=False, asynchronous=True, no_promote=False):
     """
     Starts a harvest tasks on the AWS container cluster or localhost
     """
-    command = ["python", "manage.py", "run_legacy_harvest"]
+    command_name = "run_legacy_harvest" if legacy else "run_harvest"
+    command = ["python", "manage.py", command_name]
     if reset:
         command += ["--reset"]
-    if no_promote:
+    if legacy and no_promote:
         command += ["--no-promote"]
+    if not legacy and asynchronous:
+        command += ["--asynchronous"]
 
     run_harvester_task(ctx, mode, command)
 

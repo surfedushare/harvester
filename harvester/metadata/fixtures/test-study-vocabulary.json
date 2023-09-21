@@ -1,0 +1,1126 @@
+[
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 19,
+    "fields": {
+        "created_at": "2022-01-12T12:14:02.948Z",
+        "updated_at": "2022-01-12T12:14:02.948Z",
+        "nl": "1795",
+        "en": "1795",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9192,
+    "fields": {
+        "created_at": "2023-05-09T01:01:27.301Z",
+        "updated_at": "2023-05-09T01:01:27.302Z",
+        "nl": "vakvocabulaire",
+        "en": "study_vocabulary",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9367,
+    "fields": {
+        "created_at": "2023-05-09T01:02:16.575Z",
+        "updated_at": "2023-05-09T01:02:16.575Z",
+        "nl": "informatievaardigheid",
+        "en": "information literacy",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9368,
+    "fields": {
+        "created_at": "2023-05-09T01:02:16.866Z",
+        "updated_at": "2023-05-09T01:02:16.866Z",
+        "nl": "Publiceren en communiceren",
+        "en": "Publishing and communication",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9369,
+    "fields": {
+        "created_at": "2023-05-09T01:02:17.089Z",
+        "updated_at": "2023-05-09T01:02:17.089Z",
+        "nl": "Publiceren (van eindproduct)",
+        "en": "Publishing (of finished product)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9370,
+    "fields": {
+        "created_at": "2023-05-09T01:02:17.325Z",
+        "updated_at": "2023-05-09T01:02:17.325Z",
+        "nl": "Valoriseren van bevindingen (outreach)",
+        "en": "Valorize findings (outreach)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9371,
+    "fields": {
+        "created_at": "2023-05-09T01:02:17.557Z",
+        "updated_at": "2023-05-09T01:02:17.557Z",
+        "nl": "Communiceren (van eindproduct)",
+        "en": "Communicating (from final product)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9372,
+    "fields": {
+        "created_at": "2023-05-09T01:02:17.781Z",
+        "updated_at": "2023-05-09T01:02:17.781Z",
+        "nl": "Organiseren en verwerken",
+        "en": "Organizing and processing",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9373,
+    "fields": {
+        "created_at": "2023-05-09T01:02:18.016Z",
+        "updated_at": "2023-05-09T01:02:18.016Z",
+        "nl": "Gebruik en verwerken van informatie (ethisch)",
+        "en": "Using and processing information (ethical)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9374,
+    "fields": {
+        "created_at": "2023-05-09T01:02:18.241Z",
+        "updated_at": "2023-05-09T01:02:18.241Z",
+        "nl": "Privacygevoelige informatie",
+        "en": "Privacy-sensitive information",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9375,
+    "fields": {
+        "created_at": "2023-05-09T01:02:18.432Z",
+        "updated_at": "2023-05-09T01:02:18.432Z",
+        "nl": "Auteursrecht",
+        "en": "Copyright",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9376,
+    "fields": {
+        "created_at": "2023-05-09T01:02:18.681Z",
+        "updated_at": "2023-05-09T01:02:18.681Z",
+        "nl": "Bronvermelding",
+        "en": "Source",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9377,
+    "fields": {
+        "created_at": "2023-05-09T01:02:18.934Z",
+        "updated_at": "2023-05-09T01:02:18.934Z",
+        "nl": "Synthetiseren of creëren van nieuwe informatie",
+        "en": "Synthesizing or creating new information",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9378,
+    "fields": {
+        "created_at": "2023-05-09T01:02:19.138Z",
+        "updated_at": "2023-05-09T01:02:19.138Z",
+        "nl": "Samenwerken (in teams)",
+        "en": "Collaboration (in teams)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9379,
+    "fields": {
+        "created_at": "2023-05-09T01:02:19.402Z",
+        "updated_at": "2023-05-09T01:02:19.402Z",
+        "nl": "Manage proces en zoekresultaten",
+        "en": "Manage process and search results",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9380,
+    "fields": {
+        "created_at": "2023-05-09T01:02:19.642Z",
+        "updated_at": "2023-05-09T01:02:19.642Z",
+        "nl": "Analyseren van zoekresultaten (informatieanalyse)",
+        "en": "Analyzing search results (information analysis)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9381,
+    "fields": {
+        "created_at": "2023-05-09T01:02:19.827Z",
+        "updated_at": "2023-05-09T01:02:19.827Z",
+        "nl": "Plannen en zoeken",
+        "en": "Planning and searching",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9382,
+    "fields": {
+        "created_at": "2023-05-09T01:02:20.065Z",
+        "updated_at": "2023-05-09T01:02:20.065Z",
+        "nl": "Selecteren informatiebronnen en zoeksystemen",
+        "en": "Selecting information sources and search systems",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9383,
+    "fields": {
+        "created_at": "2023-05-09T01:02:20.395Z",
+        "updated_at": "2023-05-09T01:02:20.395Z",
+        "nl": "Zoeken naar informatie",
+        "en": "Search for information",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9384,
+    "fields": {
+        "created_at": "2023-05-09T01:02:20.584Z",
+        "updated_at": "2023-05-09T01:02:20.584Z",
+        "nl": "Selecteren zoektermen",
+        "en": "Selecting search terms",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9385,
+    "fields": {
+        "created_at": "2023-05-09T01:02:20.819Z",
+        "updated_at": "2023-05-09T01:02:20.819Z",
+        "nl": "Oriënteren en specificeren",
+        "en": "Orienting and specifying",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9386,
+    "fields": {
+        "created_at": "2023-05-09T01:02:21.047Z",
+        "updated_at": "2023-05-09T01:02:21.047Z",
+        "nl": "Formuleren van onderzoeksvraag",
+        "en": "Formulating research question",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9387,
+    "fields": {
+        "created_at": "2023-05-09T01:02:21.281Z",
+        "updated_at": "2023-05-09T01:02:21.281Z",
+        "nl": "Zoeken ter oriëntatie",
+        "en": "Search for orientation",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9388,
+    "fields": {
+        "created_at": "2023-05-09T01:02:21.478Z",
+        "updated_at": "2023-05-09T01:02:21.478Z",
+        "nl": "Oriënteren op informatielandschap",
+        "en": "Orienting to information landscape",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9389,
+    "fields": {
+        "created_at": "2023-05-09T01:02:21.754Z",
+        "updated_at": "2023-05-09T01:02:21.754Z",
+        "nl": "Aard en verschijningsvormen van informatie/data",
+        "en": "Nature and manifestations of information/data",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9390,
+    "fields": {
+        "created_at": "2023-05-09T01:02:21.943Z",
+        "updated_at": "2023-05-09T01:02:21.943Z",
+        "nl": "Rol en totstandkoming van netwerken",
+        "en": "Role and creation of networks",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9391,
+    "fields": {
+        "created_at": "2023-05-09T01:02:22.175Z",
+        "updated_at": "2023-05-09T01:02:22.175Z",
+        "nl": "Werking en structuur van het internet",
+        "en": "Operation and structure of the Internet",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9392,
+    "fields": {
+        "created_at": "2023-05-09T01:02:22.391Z",
+        "updated_at": "2023-05-09T01:02:22.391Z",
+        "nl": "Individu in het informatielandschap",
+        "en": "Individual in the information landscape",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9393,
+    "fields": {
+        "created_at": "2023-05-09T01:02:22.615Z",
+        "updated_at": "2023-05-09T01:02:22.615Z",
+        "nl": "Waarde van informatie/data",
+        "en": "Value of information/data",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9394,
+    "fields": {
+        "created_at": "2023-05-09T01:02:22.800Z",
+        "updated_at": "2023-05-09T01:02:22.800Z",
+        "nl": "Identificeren van informatiebehoefte",
+        "en": "Identifying information needs",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9395,
+    "fields": {
+        "created_at": "2023-05-09T01:02:23.015Z",
+        "updated_at": "2023-05-09T01:02:23.015Z",
+        "nl": "Kritisch beoordelen",
+        "en": "Critically evaluate",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9396,
+    "fields": {
+        "created_at": "2023-05-09T01:02:23.256Z",
+        "updated_at": "2023-05-09T01:02:23.256Z",
+        "nl": "Evalueren van zoekproces (kritisch)",
+        "en": "Evaluating search process (critical)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9397,
+    "fields": {
+        "created_at": "2023-05-09T01:02:23.487Z",
+        "updated_at": "2023-05-09T01:02:23.487Z",
+        "nl": "Beoordelen van resultaten (kritisch)",
+        "en": "Assessing results (critical)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9398,
+    "fields": {
+        "created_at": "2023-05-09T01:02:23.687Z",
+        "updated_at": "2023-05-09T01:02:23.687Z",
+        "nl": "Beoordelingscriteria (relevantie/betrouwbaarheid)",
+        "en": "Assessment criteria (relevance/reliability).",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 9399,
+    "fields": {
+        "created_at": "2023-05-09T01:02:23.958Z",
+        "updated_at": "2023-05-09T01:02:23.958Z",
+        "nl": "Informatieverwerking (lezen, luisteren e.d.)",
+        "en": "Information processing (reading, listening, etc.)",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9331,
+    "fields": {
+        "name": "informatievaardigheid",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:16.620Z",
+        "updated_at": "2023-09-20T08:19:01.172Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "informatievaardigheid",
+        "translation": 9367,
+        "frequency": 0,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 66,
+        "tree_id": 1581,
+        "level": 0
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9332,
+    "fields": {
+        "name": "Publiceren en communiceren",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:16.873Z",
+        "updated_at": "2023-09-20T08:18:52.867Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea",
+        "translation": 9368,
+        "frequency": 12,
+        "parent": 9331,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 58,
+        "rght": 65,
+        "tree_id": 1581,
+        "level": 1
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9333,
+    "fields": {
+        "name": "Publiceren (van eindproduct)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:17.096Z",
+        "updated_at": "2023-09-20T08:18:52.869Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/8f984395-e090-41be-96df-503f53ddaa09",
+        "translation": 9369,
+        "frequency": 9,
+        "parent": 9332,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 61,
+        "rght": 62,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9334,
+    "fields": {
+        "name": "Valoriseren van bevindingen (outreach)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:17.335Z",
+        "updated_at": "2023-09-20T08:18:52.871Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/14dd511c-1b60-4970-8b3c-bcc77a6f0177",
+        "translation": 9370,
+        "frequency": 5,
+        "parent": 9332,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 63,
+        "rght": 64,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9335,
+    "fields": {
+        "name": "Communiceren (van eindproduct)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:17.566Z",
+        "updated_at": "2023-09-20T08:18:52.868Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/62575053-9688-4f60-878b-97de17e5c109",
+        "translation": 9371,
+        "frequency": 1,
+        "parent": 9332,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 59,
+        "rght": 60,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9336,
+    "fields": {
+        "name": "Organiseren en verwerken",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:17.790Z",
+        "updated_at": "2023-09-20T08:18:52.840Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8",
+        "translation": 9372,
+        "frequency": 69,
+        "parent": 9331,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 12,
+        "rght": 29,
+        "tree_id": 1581,
+        "level": 1
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9337,
+    "fields": {
+        "name": "Gebruik en verwerken van informatie (ethisch)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:18.024Z",
+        "updated_at": "2023-09-20T08:18:52.842Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/eb779bda-3d03-4c85-b11a-6c3274d43a05",
+        "translation": 9373,
+        "frequency": 14,
+        "parent": 9336,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 15,
+        "rght": 22,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9338,
+    "fields": {
+        "name": "Privacygevoelige informatie",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:18.249Z",
+        "updated_at": "2023-09-20T08:18:52.846Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/323ccd74-ca00-4be6-aa71-2a3a8c304321",
+        "translation": 9374,
+        "frequency": 8,
+        "parent": 9337,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 20,
+        "rght": 21,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9339,
+    "fields": {
+        "name": "Auteursrecht",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:18.442Z",
+        "updated_at": "2023-09-20T08:18:52.843Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/a975b13a-e2bb-498c-b0e2-1491c24d0aa9",
+        "translation": 9375,
+        "frequency": 10,
+        "parent": 9337,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 16,
+        "rght": 17,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9340,
+    "fields": {
+        "name": "Bronvermelding",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:18.691Z",
+        "updated_at": "2023-09-20T08:18:52.845Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/0ef1cc7c-dc9a-44cc-852a-954cf3627a60",
+        "translation": 9376,
+        "frequency": 71,
+        "parent": 9337,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 18,
+        "rght": 19,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9341,
+    "fields": {
+        "name": "Synthetiseren of creëren van nieuwe informatie",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:18.944Z",
+        "updated_at": "2023-09-20T08:18:52.849Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/21b77733-0bf3-4a33-b436-7adf5435e6f8",
+        "translation": 9377,
+        "frequency": 9,
+        "parent": 9336,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 27,
+        "rght": 28,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9342,
+    "fields": {
+        "name": "Samenwerken (in teams)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:19.147Z",
+        "updated_at": "2023-09-20T08:18:52.848Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/5273fae8-2571-43a0-9942-93aaea79053c",
+        "translation": 9378,
+        "frequency": 1,
+        "parent": 9336,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 25,
+        "rght": 26,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9343,
+    "fields": {
+        "name": "Manage proces en zoekresultaten",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:19.411Z",
+        "updated_at": "2023-09-20T08:18:52.847Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/77297d60-714c-4cd1-9129-3e9267463a63",
+        "translation": 9379,
+        "frequency": 34,
+        "parent": 9336,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 23,
+        "rght": 24,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9344,
+    "fields": {
+        "name": "Analyseren van zoekresultaten (informatieanalyse)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:19.652Z",
+        "updated_at": "2023-09-20T08:18:52.841Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/44ac0fe3-a4cb-436c-9df4-a3d241f4538d",
+        "translation": 9380,
+        "frequency": 6,
+        "parent": 9336,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 13,
+        "rght": 14,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9345,
+    "fields": {
+        "name": "Plannen en zoeken",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:19.837Z",
+        "updated_at": "2023-09-20T08:18:52.862Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe",
+        "translation": 9381,
+        "frequency": 102,
+        "parent": 9331,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 50,
+        "rght": 57,
+        "tree_id": 1581,
+        "level": 1
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9346,
+    "fields": {
+        "name": "Selecteren informatiebronnen en zoeksystemen",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:20.106Z",
+        "updated_at": "2023-09-20T08:18:52.863Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/6ff965a6-48e2-4fdd-a69f-e87ddf316c76",
+        "translation": 9382,
+        "frequency": 47,
+        "parent": 9345,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 51,
+        "rght": 52,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9347,
+    "fields": {
+        "name": "Zoeken naar informatie",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:20.405Z",
+        "updated_at": "2023-09-20T08:18:52.866Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/a3d62ae7-04ab-43a8-ade5-86978bf4e7b5",
+        "translation": 9383,
+        "frequency": 63,
+        "parent": 9345,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 55,
+        "rght": 56,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9348,
+    "fields": {
+        "name": "Selecteren zoektermen",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:20.594Z",
+        "updated_at": "2023-09-20T08:18:52.865Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/c5688c4a-3ed2-4676-9388-6dcecc74ea3f",
+        "translation": 9384,
+        "frequency": 27,
+        "parent": 9345,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 53,
+        "rght": 54,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9349,
+    "fields": {
+        "name": "Oriënteren en specificeren",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:20.828Z",
+        "updated_at": "2023-09-20T08:18:52.850Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001",
+        "translation": 9385,
+        "frequency": 111,
+        "parent": 9331,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 30,
+        "rght": 49,
+        "tree_id": 1581,
+        "level": 1
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9350,
+    "fields": {
+        "name": "Formuleren van onderzoeksvraag",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:21.054Z",
+        "updated_at": "2023-09-20T08:18:52.851Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/309cfd60-4e65-447c-8614-364d6e9ef764",
+        "translation": 9386,
+        "frequency": 10,
+        "parent": 9349,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 31,
+        "rght": 32,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9351,
+    "fields": {
+        "name": "Zoeken ter oriëntatie",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:21.290Z",
+        "updated_at": "2023-09-20T08:18:52.861Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/30babed7-1c3d-44f4-a85a-cdd532d2891f",
+        "translation": 9387,
+        "frequency": 15,
+        "parent": 9349,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 47,
+        "rght": 48,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9352,
+    "fields": {
+        "name": "Oriënteren op informatielandschap",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:21.487Z",
+        "updated_at": "2023-09-20T08:18:52.853Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa",
+        "translation": 9388,
+        "frequency": 7,
+        "parent": 9349,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 35,
+        "rght": 46,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9353,
+    "fields": {
+        "name": "Aard en verschijningsvormen van informatie/data",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:21.762Z",
+        "updated_at": "2023-09-20T08:18:52.854Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/dc330ebd-4899-4d6c-af7b-50a0e6abfbd4",
+        "translation": 9389,
+        "frequency": 12,
+        "parent": 9352,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 36,
+        "rght": 37,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9354,
+    "fields": {
+        "name": "Rol en totstandkoming van netwerken",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:21.952Z",
+        "updated_at": "2023-09-20T08:18:52.857Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/70d1b5e1-1ac0-43a2-aba3-39e6d25c75fb",
+        "translation": 9390,
+        "frequency": 1,
+        "parent": 9352,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 40,
+        "rght": 41,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9355,
+    "fields": {
+        "name": "Werking en structuur van het internet",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:22.184Z",
+        "updated_at": "2023-09-20T08:18:52.859Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/3d65c3de-c6ab-4267-b852-ff425a5dafe3",
+        "translation": 9391,
+        "frequency": 1,
+        "parent": 9352,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 44,
+        "rght": 45,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9356,
+    "fields": {
+        "name": "Individu in het informatielandschap",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:22.402Z",
+        "updated_at": "2023-09-20T08:18:52.856Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/0c8a7a84-4572-488e-858e-38b6b125b689",
+        "translation": 9392,
+        "frequency": 2,
+        "parent": 9352,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 38,
+        "rght": 39,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9357,
+    "fields": {
+        "name": "Waarde van informatie/data",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:22.625Z",
+        "updated_at": "2023-09-20T08:18:52.858Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/c2d0aee0-19be-47f0-85b0-90ac17cd22c5",
+        "translation": 9393,
+        "frequency": 1,
+        "parent": 9352,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 42,
+        "rght": 43,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9358,
+    "fields": {
+        "name": "Identificeren van informatiebehoefte",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:22.810Z",
+        "updated_at": "2023-09-20T08:18:52.852Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/9805b56e-4fe8-46b2-9fb0-76ee2026d47b",
+        "translation": 9394,
+        "frequency": 16,
+        "parent": 9349,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 33,
+        "rght": 34,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9359,
+    "fields": {
+        "name": "Kritisch beoordelen",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:23.026Z",
+        "updated_at": "2023-09-20T08:18:52.827Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877",
+        "translation": 9395,
+        "frequency": 36,
+        "parent": 9331,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 2,
+        "rght": 11,
+        "tree_id": 1581,
+        "level": 1
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9360,
+    "fields": {
+        "name": "Evalueren van zoekproces (kritisch)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:23.265Z",
+        "updated_at": "2023-09-20T08:18:52.839Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/8be85f45-bbc3-48e5-ab27-a11745509e13",
+        "translation": 9396,
+        "frequency": 14,
+        "parent": 9359,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 9,
+        "rght": 10,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9361,
+    "fields": {
+        "name": "Beoordelen van resultaten (kritisch)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:23.497Z",
+        "updated_at": "2023-09-20T08:18:52.836Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/54442802-9865-4492-8358-d4bacaa62296",
+        "translation": 9397,
+        "frequency": 6,
+        "parent": 9359,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 3,
+        "rght": 8,
+        "tree_id": 1581,
+        "level": 2
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9362,
+    "fields": {
+        "name": "Beoordelingscriteria (relevantie/betrouwbaarheid)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:23.715Z",
+        "updated_at": "2023-09-20T08:18:52.837Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/f17690ae-2304-44c8-bc0a-a07f4c7789c6",
+        "translation": 9398,
+        "frequency": 32,
+        "parent": 9361,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 9363,
+    "fields": {
+        "name": "Informatieverwerking (lezen, luisteren e.d.)",
+        "site": 1,
+        "created_at": "2023-05-09T01:02:23.976Z",
+        "updated_at": "2023-09-20T08:18:52.838Z",
+        "deleted_at": null,
+        "field": 19,
+        "value": "http://purl.edustandaard.nl/concept/f33ecc26-b9cf-4714-b8f7-216081453a2e",
+        "translation": 9399,
+        "frequency": 11,
+        "parent": 9361,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 1581,
+        "level": 3
+    }
+},
+{
+    "model": "metadata.metadatafield",
+    "pk": 19,
+    "fields": {
+        "name": "study_vocabulary",
+        "created_at": "2023-05-09T01:01:27.397Z",
+        "updated_at": "2023-05-11T10:36:29.325Z",
+        "translation": 9192,
+        "is_hidden": true,
+        "is_manual": false,
+        "english_as_dutch": false
+    }
+}
+]

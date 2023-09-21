@@ -5,7 +5,8 @@ from datagrowth.admin import HttpResourceAdmin, ShellResourceAdmin
 from core.models import (Dataset, DatasetVersion, Collection, Document, HarvestSource, HttpTikaResource, ElasticIndex,
                          ExtructResource, Query, Extension, MatomoVisitsResource)
 from core.models import YoutubeThumbnailResource, PdfThumbnailResource
-from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, DocumentAdmin, ExtensionAdmin, CollectionAdmin
+from core.admin.legacy_datatypes import (DatasetAdmin, DatasetVersionAdmin, DocumentAdmin, ExtensionAdmin,
+                                         CollectionAdmin)
 from core.admin.harvest import HarvestSourceAdmin
 from core.admin.search import ElasticIndexAdmin
 from core.admin.query import QueryAdmin

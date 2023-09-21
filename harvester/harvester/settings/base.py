@@ -91,6 +91,10 @@ INSTALLED_APPS = [
     'search',
     'sources',
 
+    'products',
+    'files',
+    'testing',
+
     'edurep',
     'sharekit',
     'anatomy_tool',
@@ -237,6 +241,7 @@ OPENSEARCH_ANALYSERS = {
     'nl': 'dutch',
     'unk': 'standard'
 }
+OPENSEARCH_LANGUAGE_CODES = list(OPENSEARCH_ANALYSERS.keys())
 OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS = environment.opensearch.enable_decompound_analyzers
 OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
@@ -319,7 +324,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True
-        }
+        },
     },
 }
 
@@ -367,7 +372,7 @@ MIME_TYPE_TO_TECHNICAL_TYPE = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'document',
     'text/rtf': 'document',
     'application/xhtml+xml': 'website',
-    'application/postscript': '?',
+    'application/postscript': 'app',
     'application/vnd.ms-publisher': 'document',
     'text/xml': 'website',
     'application/vnd.oasis.opendocument.spreadsheet': 'spreadsheet',
