@@ -1,6 +1,7 @@
 from collections import defaultdict
 from sentry_sdk import capture_message
 
+from django.db.models import Count
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -43,6 +44,8 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
                     level="warning"
                 )
                 logged_result_types.add(process_result.result_type)
+        # Deleting batches from previous harvests that are empty
+        models["Batch"].objects.annotate(doc_count=Count("documents")).filter(doc_count=0).delete()
 
         # Copy data from previous harvests and delete Resources where needed.
         # After that we harvest_source to start fetching metadata.

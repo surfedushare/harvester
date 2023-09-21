@@ -54,7 +54,10 @@ class TestHttpPipelineProcessor(TestCase):
         })
 
         processor(self.collection.documents.exclude(properties__url=None))
-        self.assertEqual(Batch.objects.count(), 0, "Expected batches to get deleted after use")
+        self.assertEqual(
+            Batch.objects.count(), 3,
+            "Expected batches to remain after use, because deleting in async environment leads to race conditions"
+        )
         self.assertEqual(ProcessResult.objects.count(), 0, "Expected ProcessResults to get deleted after use")
         self.assertEqual(self.collection.documents.count(), 13)
         for document in self.collection.documents.all():

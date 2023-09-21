@@ -1,5 +1,4 @@
 from django.apps import apps
-from django.db.models import Count
 from django.contrib.contenttypes.models import ContentType
 from celery import current_app as app, chord
 from celery.exceptions import SoftTimeLimitExceeded
@@ -75,7 +74,6 @@ class PipelineProcessor(Processor):
 
     def full_merge(self, queryset):
         self.ProcessResult.objects.filter(document__in=queryset).delete()
-        self.Batch.objects.annotate(doc_count=Count("documents")).filter(doc_count=0).delete()
 
     def _dispatch_tasks(self, tasks, finish, asynchronous=True):
         if not tasks:
