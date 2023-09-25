@@ -107,7 +107,7 @@ class OpenSearchIndex(models.Model):
         # but stay clear from deleting cross project and cross language indices to prevent data loss
         # as well as targeting protected AWS indices to prevent errors
         index_pattern = f"{alias_prefix}--*-*-{language}"
-        legacy_pattern = f"*-*-*-{alias_prefix}-{language}"
+        legacy_pattern = f"*-*-*-{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
         try:
             self.client.indices.delete_alias(index=index_pattern, name=alias)
             self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
