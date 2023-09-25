@@ -6,10 +6,10 @@ from django.conf import settings
 
 class YoutubeAPIResource(HttpResource):
 
-    url_regex = re.compile(r"^.*youtu.be\/|v\/|\/u\/\w\/|embed\/|watch\?\??v?=?([^#&?]*).*", re.IGNORECASE)
+    url_regex = re.compile(r".*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*", re.IGNORECASE)
 
     URI_TEMPLATE = \
-        "https://youtube.googleapis.com/youtube/v3/videos?part=snippet,player" \
+        "https://youtube.googleapis.com/youtube/v3/videos?part=snippet,player&" \
         "id=" + "{}"
 
     def url_to_id(self, url: str):
