@@ -81,21 +81,24 @@ def extruct_task(app_label, document_ids: list[int]) -> None:
 def get_embed_url(node):
     html = node["player"]["embedHtml"]
     url_regex = re.match(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
+    if not url_regex:
+        return
     return url_regex.group(1)
 
 
 def get_previews(node):
     thumbnails = node["snippet"]["thumbnails"]
     return {
-        "full_size": node["maxres"]["url"],
-        "preview": node["high"]["url"],
-        "preview_small": node["medium"]["url"]
+        "full_size": thumbnails["maxres"]["url"],
+        "preview": thumbnails["high"]["url"],
+        "preview_small": thumbnails["medium"]["url"]
     }
 
 
 @app.task(name="youtube_api", base=DatabaseConnectionResetTask)
 def youtube_api_task(app_label, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
+    print(document_ids)
     FileDocument = models["Document"]
     youtube_api_processor = HttpPipelineProcessor({
         "pipeline_app_label": "files",
@@ -119,7 +122,7 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
                 "@": "$.items.0",
                 "description": "$.snippet.description",
                 "duration": "$.contentDetails.duration",
-                "definition": "$.contentDetails.duration",
+                "definition": "$.contentDetails.definition",
                 "license": "$.status.license",
                 "embed_url": get_embed_url,
                 "previews": get_previews
