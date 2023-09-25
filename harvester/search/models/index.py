@@ -111,12 +111,15 @@ class OpenSearchIndex(models.Model):
         try:
             self.client.indices.delete_alias(index=index_pattern, name=alias)
             self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
-            self.client.indices.delete_alias(index=legacy_pattern, name=legacy_alias)
         except NotFoundError:
             pass
         if self.check_remote_exists(language):
             self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
             self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
+            try:
+                self.client.indices.delete_alias(index=legacy_pattern, name=legacy_alias)
+            except NotFoundError:
+                pass
 
     def clean(self) -> None:
         if not self.configuration:

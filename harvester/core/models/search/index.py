@@ -100,6 +100,9 @@ class ElasticIndex(models.Model):
         new_pattern = f"{alias_prefix}-products--*-*-{self.language}"
         try:
             self.client.indices.delete_alias(index=index_pattern, name=alias)
+        except NotFoundError:
+            pass
+        try:
             self.client.indices.delete_alias(index=new_pattern, name=alias)
         except NotFoundError:
             pass
