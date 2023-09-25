@@ -10,6 +10,7 @@ from admin_confirm.admin import confirm_action
 from datagrowth.admin import DataStorageAdmin, DocumentAdmin as DatagrowthDocumentAdmin
 
 from search.clients import get_opensearch_client
+from core.tasks.commands import promote_dataset_version
 
 
 class HarvestObjectMixinAdmin(object):
@@ -65,8 +66,8 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
         if queryset.count() > 1:
             messages.error(request, "Can't promote more than one dataset version at a time")
             return
-        # dataset_version = queryset.first()
-        # promote_dataset_version.delay(dataset_version.id)
+        dataset_version = queryset.first()
+        promote_dataset_version.delay(dataset_version.id, dataset_version._meta.app_label)
         messages.info(request, "A job to switch the dataset version has been dispatched. "
                                "Please refresh the page in a couple of minutes to see the results.")
 

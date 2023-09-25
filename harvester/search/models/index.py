@@ -95,6 +95,10 @@ class OpenSearchIndex(models.Model):
         self.save()
         return errors
 
+    def promote_all_to_latest(self) -> None:
+        for language in settings.OPENSEARCH_LANGUAGE_CODES:
+            self.promote_to_latest(language)
+
     def promote_to_latest(self, language: str) -> None:
         alias_prefix, dataset_info = self.name.split("--")
         alias = f"{alias_prefix}-{language}"

@@ -12,12 +12,26 @@ from django.apps import apps
 
 
 def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
-    models = ["Dataset", "DatasetVersion", "Set", "HarvestState", "Batch", "ProcessResult"]
+    """
+    A convenience function that loads relevant harvester models for a Django app.
+    The function will work for the "core" app to provide backwards compatability.
+    However the "core" loaded models may not work as expected, because they do not inherit from HarvestObject.
+
+    :param app_label: the app model you want to load harvester models for
+    :return: (dict) models
+    """
+    model_names = ["Dataset", "DatasetVersion", "HarvestState", "Batch", "ProcessResult"]
+    if app_label == "core":
+        model_names.append("Collection")
+    else:
+        model_names.append("Set")
     app_config = apps.get_app_config(app_label)
-    models = {
-        model_name: apps.get_model(f"{app_label}.{model_name}")
-        for model_name in models
-    }
+    models = {}
+    for model_name in model_names:
+        try:
+            models[model_name] = apps.get_model(f"{app_label}.{model_name}")
+        except LookupError:  # only here catch HarvestState which core will never have
+            models[model_name] = None
     models["Document"] = apps.get_model(f"{app_label}.{app_config.document_model}")
     return models
 

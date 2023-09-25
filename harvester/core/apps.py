@@ -5,6 +5,7 @@ from datagrowth.configuration import register_defaults
 
 class CoreConfig(AppConfig):
     name = 'core'
+    document_model = 'Document'
 
     def ready(self):
 
