@@ -7,10 +7,10 @@ from django.shortcuts import HttpResponse
 from datagrowth.configuration import create_config
 from harvester.utils.extraction import prepare_seed
 from core.logging import HarvestLogger
-from core.models import DatasetVersion
+from core.loading import load_harvest_models
 
 
-def get_seed_operation(seed, collection):
+def get_legacy_seed_operation(seed, collection):
     document_exists = collection.document_set.filter(reference=seed["external_id"]).exists()
     if seed["state"] == "deleted" and document_exists:
         return "delete"
@@ -21,7 +21,7 @@ def get_seed_operation(seed, collection):
     return "create"
 
 
-def validate_webhook_data(request, set_specification, secret_key):
+def validate_webhook_data(request, set_name, secret_key):
     """
     This function takes a webhook request and validates the source by looking at a secret
     and the IP addresses of the sender.
@@ -29,40 +29,43 @@ def validate_webhook_data(request, set_specification, secret_key):
     If the request is invalid it will return a response with an appropriate message.
 
     :param request: the webhook request
-    :param set_specification: the set specification that the webhook wants to update
+    :param set_name: the set name that the webhook wants to update
     :param secret_key: the secret key from the request to identify the source
     :return: raw data or error response
     """
-    configuration = settings.WEBHOOKS[set_specification]
+    configuration = settings.WEBHOOKS[set_name]
     if str(secret_key) != configuration["secret"]:
         return HttpResponse(status=403, reason="Webhook not allowed in this environment"), configuration
     if request.META["HTTP_X_FORWARDED_FOR"] not in configuration["allowed_ips"]:
         capture_message(
-            f"edit_document_webhook called from invalid IP: {request.META['HTTP_X_FORWARDED_FOR']}",
+            f"Webhook called from invalid IP: {request.META['HTTP_X_FORWARDED_FOR']}",
             level="warning"
         )
         return HttpResponse(status=403, reason="Webhook not allowed from source"), configuration
     try:
         return json.loads(request.body), configuration
     except json.decoder.JSONDecodeError:
-        capture_message("edit_document_webhook received invalid JSON", level="warning")
+        capture_message("Webhook received invalid JSON", level="warning")
         return HttpResponse(status=400, reason="Invalid JSON"), configuration
 
 
-def get_webhook_destination(set_specification):
+def get_webhook_destination(set_name, app_label="core"):
     """
     Retrieves the relevant Collection and current DatasetVersion for a given set_specification.
     These instances can be used to update the Document with the webhook data.
 
-    :param set_specification: the set specification that the webhook wants to update
-    :return: dataset_version and collection
+    :param set_name: the set name that the webhook wants to update
+    :param app_label: the app label of the entity that the webhook wants to update (default is core)
+    :return: dataset_version and the set (previously collection)
     """
+    models = load_harvest_models(app_label)
+    DatasetVersion = models["DatasetVersion"]
     dataset_version = DatasetVersion.objects.get_current_version()
-    collection = dataset_version.collection_set.filter(name=set_specification).last()
-    return dataset_version, collection
+    set_instance = dataset_version.sets.filter(name=set_name).last()
+    return dataset_version, set_instance
 
 
-def extract_webhook_seed(extractor, objective, collection, data):
+def extract_legacy_webhook_seed(extractor, objective, collection, data):
     """
     Extracts the relevant data from the raw data
 
@@ -77,7 +80,7 @@ def extract_webhook_seed(extractor, objective, collection, data):
     })
     prc = extractor(config=extract_config)
     seed = next(prc.extract("application/json", data))
-    operation = get_seed_operation(seed, collection)
+    operation = get_legacy_seed_operation(seed, collection)
     if operation == "create" and seed["language"] is None:
         seed["language"] = "unk"
     prepare_seed(seed)

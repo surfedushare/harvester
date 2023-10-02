@@ -598,23 +598,28 @@ SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 # Webhooks
 
 WEBHOOKS = {
-    "edusources": {
+    "sharekit:edusources": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "edusourcesprivate": {
+    "sharekit:edusourcesprivate": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "nppo": {
+    "sharekit:nppo": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "publinova": {
+    "publinova:publinova": {
         "secret": environment.secrets.harvester.publinova_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
+# Legacy webhook set definitions for backward compatability
+WEBHOOKS["edusources"] = WEBHOOKS["sharekit:edusources"]
+WEBHOOKS["edusourcesprivate"] = WEBHOOKS["sharekit:edusourcesprivate"]
+WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
+WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
 # Thumbnails

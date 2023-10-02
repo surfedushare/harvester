@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 
 from sharekit.tests.factories import SharekitMetadataHarvestFactory
-from sources.tests.webhooks import base as webhook_test_base
+from testing.cases.webhooks import legacy as webhook_test_base
 
 
 WEBHOOKS = {
