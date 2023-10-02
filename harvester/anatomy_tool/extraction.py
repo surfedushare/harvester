@@ -235,7 +235,8 @@ class AnatomyToolExtraction(object):
         datetime = contribution.find('datetime')
         if not datetime:
             return
-        return datetime.text.strip()
+        datetime = date_parser(datetime.text)
+        return datetime.strftime("%Y-%m-%d")
 
     @classmethod
     def get_publisher_year(cls, soup, el):
