@@ -20,6 +20,6 @@ class TestYoutubeAPIResource(TestCase):
         ]
 
         for url in urls:
-            resource = YoutubeAPIResource().get(url)
+            resource = YoutubeAPIResource().get(url, "videos")
             self.assertEqual(resource.request_without_auth()["url"],
-                             "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cplayer&id=dQw4w9WgXcQ")
+                             "https://youtube.googleapis.com/youtube/v3/videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus")
