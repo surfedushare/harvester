@@ -1,3 +1,5 @@
+import re
+
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -74,3 +76,55 @@ def extruct_task(app_label, document_ids: list[int]) -> None:
         }
     })
     extruct_processor(FileDocument.objects.filter(id__in=document_ids))
+
+
+def get_embed_url(node):
+    html = node["player"]["embedHtml"]
+    url_regex = re.match(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
+    return url_regex.group(1)
+
+
+def get_previews(node):
+    thumbnails = node["snippet"]["thumbnails"]
+    return {
+        "full_size": node["maxres"]["url"],
+        "preview": node["high"]["url"],
+        "preview_small": node["medium"]["url"]
+    }
+
+
+@app.task(name="youtube_api", base=DatabaseConnectionResetTask)
+def youtube_api_task(app_label, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
+    youtube_api_processor = HttpPipelineProcessor({
+        "pipeline_app_label": "files",
+        "pipeline_models": {
+            "document": "FileDocument",
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "pipeline_phase": "youtube_api",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.youtubeapiresource",
+            "method": "get",
+            "args": ["$.url", "videos"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "to_property": "derivatives/youtube_api",
+            "objective": {
+                "@": "$.items.0",
+                "description": "$.snippet.description",
+                "duration": "$.contentDetails.duration",
+                "definition": "$.contentDetails.duration",
+                "license": "$.status.license",
+                "embed_url": get_embed_url,
+                "previews": get_previews
+            }
+        }
+    })
+    youtube_api_processor(FileDocument.objects.filter(id__in=document_ids))
+

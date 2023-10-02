@@ -18,20 +18,15 @@ def default_document_tasks():
             "checks": ["!is_not_found", "is_analysis_allowed"],
             "resources": ["files.HttpTikaResource"]
         },
-        "extruct": {
-            "depends_on": ["tika"],
-            "checks": ["is_youtube_video"],
-            "resources": ["files.ExtructResource"]
-        },
         "pdf_preview": {
             "depends_on": ["tika"],
             "checks": ["is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
-        "video_preview": {
+        "youtube_api": {
             "depends_on": ["tika"],
-            "checks": ["is_video"],
-            "resources": ["files.YoutubeThumbnailResource"]
+            "checks": ["is_youtube_video"],
+            "resources": ["files.YoutubeAPIResource"]
         }
     }
 
