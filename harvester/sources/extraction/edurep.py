@@ -272,7 +272,8 @@ class EdurepMetadataExtraction(ExtractProcessor):
             date = node.get("schema:publisherDate", None)
         if date is None:
             return None
-        return date
+        date = date_parser(date)
+        return date.strftime("%Y-%m-%d")
 
     @classmethod
     def get_date_string(cls, node):
