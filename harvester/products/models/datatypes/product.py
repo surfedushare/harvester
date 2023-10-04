@@ -136,6 +136,7 @@ class ProductDocument(HarvestDocument):
         if learning_material:
             learning_material["learning_material_disciplines"] = learning_material["disciplines"]
             learning_material["material_types"] = learning_material["material_types"] or ["unknown"]
+            learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
             data.update(learning_material)
         research_product = data.pop("research_product", None)
         if research_product:
