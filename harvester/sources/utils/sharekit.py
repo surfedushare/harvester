@@ -12,11 +12,11 @@ def extract_channel(response_data: dict) -> str | None:
     return f"sharekit:{channel}"
 
 
-def parse_url(url: str) -> str:
+def parse_url(url: str) -> str | None:
+    if not url:
+        return
     url = url.strip()
-    if url.startswith("ttp"):
-        url = "h" + url
-    url = url.replace(" ", "%20")
+    url = url.replace(" ", "+")
     return url
 
 
