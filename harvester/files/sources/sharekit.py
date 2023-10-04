@@ -1,7 +1,7 @@
 from typing import Iterator
 from hashlib import sha1
 
-from sources.utils.sharekit import extract_channel, parse_url, extract_state
+from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 from files.models import Set, FileDocument
 
 
@@ -24,6 +24,18 @@ def get_file_seeds(sharekit_products_data: dict):
         product_provider_name = product_publishers[0] if len(product_publishers) else "sharekit"
         product_files = product_attributes.get("files", []) or []
         product_links = product_attributes.get("links", []) or []
+        if not product_files and not product_links:
+            yield {
+                "url": None,
+                "state": "deleted",
+                "set": channel,
+                "product": {
+                    "provider": product_provider_name,
+                    "product_id": product_id,
+                    "copyright": product_copyright
+                }
+            }
+            return
         for product_file in product_files:
             # Anything without a URL can not be processed
             if not product_file.get("url", None):
@@ -34,8 +46,7 @@ def get_file_seeds(sharekit_products_data: dict):
             product_file["product"] = {
                 "provider": product_provider_name,
                 "product_id": product_id,
-                "copyright": product_copyright,
-                "type": "file"
+                "copyright": product_copyright
             }
             # We indicate we're not dealing with a webpage URL
             product_file["is_link"] = False
@@ -49,8 +60,7 @@ def get_file_seeds(sharekit_products_data: dict):
             product_link["product"] = {
                 "provider": "sharekit",
                 "product_id": product_id,
-                "copyright": product_copyright,
-                "type": "link"
+                "copyright": product_copyright
             }
             # We indicate that the URL points to a webpage
             product_link["is_link"] = True
@@ -69,20 +79,24 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
 class SharekitFileExtraction(object):
 
     @classmethod
-    def get_hash(cls, node: dict) -> str:
+    def get_hash(cls, node: dict) -> str | None:
         url = parse_url(node["url"])
+        if not url:
+            return
         return sha1(url.encode("utf-8")).hexdigest()
 
     @classmethod
     def get_mime_type(cls, node: dict) -> str:
         mime_type = node.get("resourceMimeType", None)
-        if mime_type is None and node["is_link"]:
+        if mime_type is None and node.get("is_link", None):
             mime_type = "text/html"
         return mime_type
 
     @classmethod
-    def get_access_rights(cls, node: dict) -> str:
-        access_rights = node["accessRight"]
+    def get_access_rights(cls, node: dict) -> str | None:
+        access_rights = node.get("accessRight", None)
+        if not access_rights:
+            return
         if access_rights[0].isupper():  # value according to standard; no parsing necessary
             return access_rights
         access_rights = access_rights.replace("access", "")
@@ -105,7 +119,7 @@ OBJECTIVE = {
     "copyright": lambda node: node["product"]["copyright"],
     "access_rights": SharekitFileExtraction.get_access_rights,
     "product_id": lambda node: node["product"]["product_id"],
-    "is_link": lambda node: node["is_link"],
+    "is_link": lambda node: node.get("is_link", None),
     "provider": lambda node: node["product"]["provider"]
 }
 
@@ -131,6 +145,10 @@ SEEDING_PHASES = [
         "batch_size": 25,
         "contribute_data": {
             "callback": back_fill_deletes
-        }
+        },
+        "is_post_initialization": True
     }
 ]
+
+
+WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer

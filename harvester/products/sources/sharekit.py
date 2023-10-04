@@ -1,12 +1,10 @@
 from dateutil.parser import parse as date_parser
 from itertools import chain
 
-from datagrowth.processors import ExtractProcessor
-
-from sources.utils.sharekit import extract_channel, parse_url, extract_state
+from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 
 
-class SharekitMetadataExtraction(ExtractProcessor):
+class SharekitMetadataExtraction(object):
 
     @classmethod
     def get_record_state(cls, node):
@@ -33,6 +31,13 @@ class SharekitMetadataExtraction(ExtractProcessor):
         urls += [parse_url(file_["url"]) for file_ in files if file_.get("url", None)]
         urls += [parse_url(link["url"]) for link in links if link.get("url", None)]
         return urls
+
+    @classmethod
+    def get_language(cls, node):
+        language = node["attributes"].get("language")
+        if not language:
+            return "unk"
+        return language
 
     @classmethod
     def get_material_types(cls, node):
@@ -173,7 +178,7 @@ OBJECTIVE = {
     "doi": "$.attributes.doi",
     "files": SharekitMetadataExtraction.get_files,
     "title": "$.attributes.title",
-    "language": "$.attributes.language",
+    "language": SharekitMetadataExtraction.get_language,
     "keywords": "$.attributes.keywords",
     "description": "$.attributes.abstract",
     "copyright": SharekitMetadataExtraction.get_copyright,
@@ -218,3 +223,6 @@ SEEDING_PHASES = [
         }
     }
 ]
+
+
+WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer

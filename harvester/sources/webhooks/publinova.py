@@ -2,7 +2,7 @@ from django.shortcuts import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
-from sources.webhooks.utils import (validate_webhook_data, get_webhook_destination, extract_webhook_seed,
+from sources.webhooks.utils import (validate_webhook_data, get_webhook_destination, extract_legacy_webhook_seed,
                                     commit_webhook_seed)
 from sources.extraction.publinova import PublinovaMetadataExtraction, create_objective
 
@@ -17,7 +17,7 @@ def legacy_edit_document_webhook(request, channel, secret):
     dataset_version, collection = get_webhook_destination(channel)
     objective = create_objective(root="$")
     # Processing of incoming data
-    seed, operation = extract_webhook_seed(PublinovaMetadataExtraction, objective, collection, data)
+    seed, operation = extract_legacy_webhook_seed(PublinovaMetadataExtraction, objective, collection, data)
     if operation == "ignore":
         return HttpResponse("ignored")
     # Commit changes to the database and add to log

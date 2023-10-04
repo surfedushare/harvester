@@ -33,6 +33,8 @@ def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestData
         except LookupError:  # only here catch HarvestState which core will never have
             models[model_name] = None
     models["Document"] = apps.get_model(f"{app_label}.{app_config.document_model}")
+    if "Collection" in models:
+        models["Set"] = models["Collection"]
     return models
 
 
@@ -42,5 +44,6 @@ def load_source_configuration(app_label: str, source: str) -> dict[str, Any]:
     return {
         "objective": source_module.OBJECTIVE,
         "seeding_phases": source_module.SEEDING_PHASES,
-        "seed_defaults": contants_module.SEED_DEFAULTS
+        "webhook_data_transformer": getattr(source_module, "WEBHOOK_DATA_TRANSFORMER", None),
+        "seed_defaults": contants_module.SEED_DEFAULTS,
     }
