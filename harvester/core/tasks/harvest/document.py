@@ -10,6 +10,8 @@ from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_ha
 @app.task(name="harvest_documents", base=DatabaseConnectionResetTask)
 def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocument], asynchronous: bool = True,
                             recursion_depth: int = 0) -> None:
+    if not len(documents):
+        return
     if recursion_depth >= 10:
         raise RecursionError("Maximum harvest_documents recursion reached")
     models = load_harvest_models(app_label)

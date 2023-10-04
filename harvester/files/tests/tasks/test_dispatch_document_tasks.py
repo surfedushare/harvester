@@ -106,3 +106,6 @@ class TestSimpleDispatchDocumentTasks(TestCase):
             not_found.get_pending_tasks(), [],
             "Expected 404 to register no pending tasks until the pipeline field gets a reset"
         )
+
+    def test_dispatch_document_tasks_no_documents(self):
+        dispatch_document_tasks("files", [], asynchronous=False)
