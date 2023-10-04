@@ -47,7 +47,9 @@ pip install git+https://github.com/surfedushare/search-client.git@master
 
 When using vscode copy `activate.sh` to venv/bin so pylance can find it.
 
-If you want to run the project outside of a container you'll need to add the following to your hosts file:
+If you want to run the project outside of a container you'll need to add the following to your hosts file.
+It's strongly recommended to update your ``/etc/hosts`` immediately,
+to prevent weird error messages if you ever run the project outside of its containers.
 
 ```
 127.0.0.1 postgres
@@ -59,7 +61,7 @@ If you want to run the project outside of a container you'll need to add the fol
 ```
 
 This way you can reach these containers outside of the container network through their names.
-This is important for many setup commands as well as the integration tests and running the service locally.
+This is important for many setup commands as well as running tests during development.
 
 To finish the container setup you can run these commands to build all containers:
 
@@ -102,7 +104,7 @@ Similar to how the Django developer server prints to the terminal.
 > As explained below.
 
 With any setup it's always required to use the activate.sh script to **load your environment**.
-This takes care of important things like local CORS and database credentials.
+This takes care of important things like database and (external) API credentials as well as AWS access.
 
 ```bash
 source activate.sh

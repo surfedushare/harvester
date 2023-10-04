@@ -50,7 +50,7 @@ class Document(DocumentBase):
             return
         return language.get("metadata", "unk")
 
-    def get_search_document_extras(self, reference_id, title, text, video, material_types,
+    def get_search_document_extras(self, reference_id, title, text, video, material_types, study_vocabulary,
                                    learning_material_disciplines):
         suggest_completion = []
         if title:
@@ -67,6 +67,18 @@ class Document(DocumentBase):
             for metadata_value in MetadataValue.objects.filter(value__in=learning_material_disciplines,
                                                                field__name="learning_material_disciplines")
         ])
+        study_vocabulary_terms = []
+        if study_vocabulary:
+            study_vocabulary_metadata_values = MetadataValue.objects.filter(
+                value__in=study_vocabulary,
+                field__name="study_vocabulary"
+            )
+            study_vocabulary_terms = set()
+            for metadata_value in study_vocabulary_metadata_values:
+                for ancestor in metadata_value.get_ancestors(include_self=True):
+                    study_vocabulary_terms.add(ancestor.value)
+            study_vocabulary_terms = list(study_vocabulary_terms)
+            study_vocabulary_terms.sort()
         extras = {
             '_id': reference_id,
             "language": self.get_language(),
@@ -77,7 +89,8 @@ class Document(DocumentBase):
             'video': video,
             'material_types': material_types,
             'learning_material_disciplines_normalized': list(learning_material_disciplines_normalized),
-            'learning_material_themes_normalized': list(learning_material_disciplines_normalized)
+            'learning_material_themes_normalized': list(learning_material_disciplines_normalized),
+            'study_vocabulary': study_vocabulary_terms
         }
         return extras
 
@@ -120,6 +133,7 @@ class Document(DocumentBase):
             search_base.pop(private_property, False)
         video = search_base.pop("video", None)
         material_types = search_base.pop("material_types", None) or ["unknown"]
+        study_vocabulary = search_base.pop("study_vocabulary", None)
         search_base["disciplines"] = search_base.get("studies", [])
         search_details = self.get_search_document_extras(
             self.properties["external_id"],
@@ -127,6 +141,7 @@ class Document(DocumentBase):
             text,
             video,
             material_types=material_types,
+            study_vocabulary=study_vocabulary,
             learning_material_disciplines=search_base.get("learning_material_disciplines", [])
         )
         search_details.update(search_base)
