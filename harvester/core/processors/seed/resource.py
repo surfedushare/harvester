@@ -99,10 +99,11 @@ class ResourceSeedingProcessor(Processor):
         ]
         return self.collection.update_batches(documents, self.collection.identifier)
 
-    def __init__(self, collection: CollectionBase, config: ConfigurationType | dict, initial: bool = None) -> None:
+    def __init__(self, collection: CollectionBase, config: ConfigurationType | dict,
+                 initial: list[dict] = None) -> None:
         super().__init__(config)
         assert len(self.config.phases), \
-            "ResourceSeedingProcessor needs at least one phase to be able to retrieve seed data"
+            "ResourceSeedingProcessor needs at least one phase configured to be able to retrieve seed data"
         assert collection.identifier, (
             "ResourceSeedingProcessor expects a Collection with the identifier set to a Document property "
             "that has a unique value across Documents in the Collection."
@@ -113,8 +114,12 @@ class ResourceSeedingProcessor(Processor):
         self.buffer = None  # NB: "None" ensures the forever while loop runs at least once
         self.batch = initial or []
         self.contents = {}
+        if not initial:
+            phases_selection = self.config.phases
+        else:
+            phases_selection = [phase for phase in self.config.phases if phase.get("is_post_initialization", False)]
         self.phases = OrderedDict()
-        for ix, phase in enumerate(self.config.phases):
+        for ix, phase in enumerate(phases_selection):
             phase = deepcopy(phase)
             phase["index"] = ix
             retrieve_data = phase.pop("retrieve_data", None)
@@ -130,6 +135,7 @@ class ResourceSeedingProcessor(Processor):
 
     def __call__(self, *args, **kwargs) -> Iterator:
         while self.contents or self.buffer is None:
+            self.buffer = self.batch  # prevents forever loop when initial seeds are set for webhooks
             for phase_index, phase in enumerate(self.phases.values()):
                 if self.should_skip_phase(phase):
                     continue
