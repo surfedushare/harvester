@@ -47,7 +47,7 @@ class ProductDocument(HarvestDocument):
             .exists()
 
     def get_language(self) -> str:
-        return self.properties.get("language", "unk")
+        return self.metadata["language"]
 
     @staticmethod
     def update_files_data(data: dict) -> dict:
@@ -143,6 +143,14 @@ class ProductDocument(HarvestDocument):
         if for_search:
             data = self.transform_search_data(data)
         return data
+
+    def clean(self) -> None:
+        super().clean()
+        language = self.metadata.get("language", None)
+        if language is None:
+            source_language = self.properties.get("language", None)
+            language_codes = settings.OPENSEARCH_LANGUAGE_CODES
+            self.metadata["language"] = source_language if source_language in language_codes else "unk"
 
 
 class Overwrite(HarvestOverwrite):
