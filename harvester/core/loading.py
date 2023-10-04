@@ -44,5 +44,6 @@ def load_source_configuration(app_label: str, source: str) -> dict[str, Any]:
     return {
         "objective": source_module.OBJECTIVE,
         "seeding_phases": source_module.SEEDING_PHASES,
-        "seed_defaults": contants_module.SEED_DEFAULTS
+        "webhook_data_transformer": getattr(source_module, "WEBHOOK_DATA_TRANSFORMER", None),
+        "seed_defaults": contants_module.SEED_DEFAULTS,
     }

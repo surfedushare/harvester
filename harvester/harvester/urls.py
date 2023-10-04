@@ -24,7 +24,7 @@ from core import views as core_views
 from core.urls import public_api_patterns as core_public
 from metadata.urls import public_api_patterns as metadata_public
 from search.urls import public_api_patterns as search_public
-from products.urls import public_api_patterns as products_public
+from products.urls import public_api_patterns as products_public, webhook_urlpatterns as products_webhooks
 from sharekit import views as sharekit_views
 from sources import views as sources_views
 
@@ -68,6 +68,7 @@ urlpatterns = [
         'publinova/edit-document/<str:channel>/<uuid:secret>/', sources_views.legacy_publinova_document_webhook,
         name="publinova-document-webhook"
     ),
+    *products_webhooks,
     path('', core_views.health_check, name="health-check")
 ]
 

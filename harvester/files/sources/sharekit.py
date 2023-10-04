@@ -1,7 +1,7 @@
 from typing import Iterator
 from hashlib import sha1
 
-from sources.utils.sharekit import extract_channel, parse_url, extract_state
+from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 from files.models import Set, FileDocument
 
 
@@ -145,6 +145,10 @@ SEEDING_PHASES = [
         "batch_size": 25,
         "contribute_data": {
             "callback": back_fill_deletes
-        }
+        },
+        "is_post_initialization": True
     }
 ]
+
+
+WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer

@@ -29,3 +29,21 @@ def extract_state(node: dict) -> str:
                 settings.ENVIRONMENT in ["acceptance", "production"]:
             default_state = "skipped"
     return node.get("meta", {}).get("status", default_state)
+
+
+def webhook_data_transformer(webhook_data: dict, set_name: str):
+    # Patches data coming from Sharekit webhook to be consistent
+    # Deleted products will have an empty Array in the JSON instead of an Object
+    if isinstance(webhook_data["attributes"], list):
+        webhook_data["attributes"] = {}
+    # Through the webhook we always only get one product,
+    # while the extraction objectives also expect set_name information through the links property
+    provider, channel_name = set_name.split(":")
+    return {
+        "links": {
+            "self": f"/api/jsonapi/channel/v1/{channel_name}/webhook"
+        },
+        "data": [
+            webhook_data
+        ]
+    }

@@ -1,12 +1,10 @@
 from dateutil.parser import parse as date_parser
 from itertools import chain
 
-from datagrowth.processors import ExtractProcessor
-
-from sources.utils.sharekit import extract_channel, parse_url, extract_state
+from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 
 
-class SharekitMetadataExtraction(ExtractProcessor):
+class SharekitMetadataExtraction(object):
 
     @classmethod
     def get_record_state(cls, node):
@@ -225,3 +223,6 @@ SEEDING_PHASES = [
         }
     }
 ]
+
+
+WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer

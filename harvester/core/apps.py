@@ -32,5 +32,6 @@ class CoreConfig(AppConfig):
         register_defaults("seeding_processor", {
             "phase": "initial",
             "phases": [],
-            "identifier": "srn"  # SURF Resource Name
+            "identifier": "srn",  # SURF Resource Name
+            "is_post_initialization": False
         })
