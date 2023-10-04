@@ -8,5 +8,8 @@ def clean_data():
 
 
 @app.task(name="promote_dataset_version")
-def promote_dataset_version(dataset_version_id):
-    call_command("promote_dataset_version", f"--dataset-version-id={dataset_version_id}")
+def promote_dataset_version(dataset_version_id, app_label="core"):
+    call_command(
+        "promote_dataset_version",
+        f"--dataset-version-id={dataset_version_id}", f"--app-label={app_label}"
+    )

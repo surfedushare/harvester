@@ -95,6 +95,10 @@ class OpenSearchIndex(models.Model):
         self.save()
         return errors
 
+    def promote_all_to_latest(self) -> None:
+        for language in settings.OPENSEARCH_LANGUAGE_CODES:
+            self.promote_to_latest(language)
+
     def promote_to_latest(self, language: str) -> None:
         alias_prefix, dataset_info = self.name.split("--")
         alias = f"{alias_prefix}-{language}"
@@ -103,6 +107,7 @@ class OpenSearchIndex(models.Model):
         # but stay clear from deleting cross project and cross language indices to prevent data loss
         # as well as targeting protected AWS indices to prevent errors
         index_pattern = f"{alias_prefix}--*-*-{language}"
+        legacy_pattern = f"*-*-*-{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
         try:
             self.client.indices.delete_alias(index=index_pattern, name=alias)
             self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
@@ -111,6 +116,10 @@ class OpenSearchIndex(models.Model):
         if self.check_remote_exists(language):
             self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
             self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
+            try:
+                self.client.indices.delete_alias(index=legacy_pattern, name=legacy_alias)
+            except NotFoundError:
+                pass
 
     def clean(self) -> None:
         if not self.configuration:

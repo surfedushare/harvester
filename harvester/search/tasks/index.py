@@ -28,6 +28,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
             index.pushed_at = current_time
             index.save()
     except DatabaseError:
+        index = None
         logger.warning("Unable to acquire a database lock for sync_opensearch_indices")
     return index
 
