@@ -33,6 +33,8 @@ def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestData
         except LookupError:  # only here catch HarvestState which core will never have
             models[model_name] = None
     models["Document"] = apps.get_model(f"{app_label}.{app_config.document_model}")
+    if "Collection" in models:
+        models["Set"] = models["Collection"]
     return models
 
 
