@@ -66,8 +66,8 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         else:
             response_sequence = 0
             response_type = "delta"
-        response_file = f"sharekit-api.{response_type}.{response_sequence}.json"
-        response_file_path = os.path.join(settings.BASE_DIR, "sharekit", "fixtures", response_file)
+        response_file = f"fixture.sharekit.{response_type}.{response_sequence}.json"
+        response_file_path = os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures", response_file)
         with open(response_file_path, "r") as response:
             return response.read()
 
