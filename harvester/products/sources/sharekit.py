@@ -1,3 +1,4 @@
+from datetime import datetime
 from dateutil.parser import parse as date_parser
 from itertools import chain
 
@@ -126,6 +127,14 @@ class SharekitMetadataExtraction(object):
         return publisher_datetime.year
 
     @classmethod
+    def get_publisher_date(cls, node):
+        publisher_date = node["attributes"].get("publishedAt", None)
+        if not publisher_date:
+            return
+        publisher_datetime = date_parser(publisher_date, default=datetime(year=1970, month=1, day=1))
+        return publisher_datetime.strftime("%Y-%m-%d")
+
+    @classmethod
     def get_lom_educational_levels(cls, node):
         educational_levels = node["attributes"].get("educationalLevels", [])
         if not educational_levels:
@@ -187,7 +196,7 @@ OBJECTIVE = {
     "provider": SharekitMetadataExtraction.get_provider,
     "organizations": SharekitMetadataExtraction.get_organizations,
     "publishers": SharekitMetadataExtraction.get_publishers,
-    "publisher_date": "$.attributes.publishedAt",
+    "publisher_date": SharekitMetadataExtraction.get_publisher_date,
     "publisher_year": SharekitMetadataExtraction.get_publisher_year,
     "is_part_of": "$.attributes.partOf",
     "has_parts": "$.attributes.hasParts",
