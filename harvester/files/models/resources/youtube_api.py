@@ -17,7 +17,7 @@ class YoutubeAPIResource(HttpResource):
         return url_match[0]
 
     def auth_parameters(self):
-        return {"key": "AIzaSyCub88yzCt4Xd-Sg79ThvA-jv2ip1WV_9k"}
+        return {"key": settings.GOOGLE_API_KEY}
 
     def variables(self, *args):
         return {
