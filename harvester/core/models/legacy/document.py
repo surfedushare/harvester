@@ -134,6 +134,11 @@ class Document(DocumentBase):
         video = search_base.pop("video", None)
         material_types = search_base.pop("material_types", None) or ["unknown"]
         study_vocabulary = search_base.pop("study_vocabulary", None)
+        if not study_vocabulary:
+            study_vocabulary = [
+                "http://purl.edustandaard.nl/concept/" + study
+                for study in search_base.get("studies", [])
+            ]
         search_base["disciplines"] = search_base.get("studies", [])
         search_details = self.get_search_document_extras(
             self.properties["external_id"],
