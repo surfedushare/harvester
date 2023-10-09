@@ -65,7 +65,9 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
             current_count = harvest_set.documents.filter(metadata__deleted_at=None).count()
             count_diff = historic_count - current_count
             # If historic data is 5% larger than new data the data is considered invalid
+            # We'll use the historic data instead of the new data
             if count_diff > 0 and count_diff / current_count >= 0.05:
+                harvest_set.documents.all().delete()
                 harvest_set.copy_documents(historic_set)
         # For all sets we mark this task as completed to continue the harvesting process
         harvest_set.pipeline["check_set_integrity"] = {
