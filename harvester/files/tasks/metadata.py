@@ -80,10 +80,10 @@ def extruct_task(app_label, document_ids: list[int]) -> None:
 
 def get_embed_url(node):
     html = node["player"]["embedHtml"]
-    url_regex = re.match(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
+    url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
     if not url_regex:
         return
-    return url_regex.group(1)
+    return url_regex[0]
 
 
 def get_previews(node):
@@ -98,7 +98,6 @@ def get_previews(node):
 @app.task(name="youtube_api", base=DatabaseConnectionResetTask)
 def youtube_api_task(app_label, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
-    print(document_ids)
     FileDocument = models["Document"]
     youtube_api_processor = HttpPipelineProcessor({
         "pipeline_app_label": "files",
