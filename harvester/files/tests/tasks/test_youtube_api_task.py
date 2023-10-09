@@ -6,7 +6,6 @@ from datagrowth.configuration import register_defaults
 from files.models import FileDocument
 from files.tasks.metadata import youtube_api_task
 from files.tests.factories import create_file_document_set
-from files.models.resources.youtube_api import YoutubeAPIResource
 
 
 class TestYoutubeAPITask(TestCase):
@@ -24,11 +23,13 @@ class TestYoutubeAPITask(TestCase):
         })
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             set_specification="test",
-            docs=[{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}, {"url": "https://www.youtube.com/watch?v=3kwDVw0u4Kw"}, {"url": "https://www.youtube.com/watch?v=0JUN9aDxVmI"}],
+            docs=[{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"},
+                  {"url": "https://www.youtube.com/watch?v=3kwDVw0u4Kw"}],
             tikas=None,
-            youtubes=[{"id": "dQw4w9WgXcQ", "type": "videos"}, {"id": "3kwDVw0u4Kw", "type": "videos"}, {"id": "0JUN9aDxVmI", "type": "videos"}]
+            youtubes=[{"id": "dQw4w9WgXcQ", "type": "videos"},
+                      {"id": "wrongIdHere", "type": "videos"}]
         )
-        cls.success, cls.not_found, cls.blablabla = cls.documents
+        cls.success, cls.fail, = cls.documents
 
     @classmethod
     def tearDownClass(cls):

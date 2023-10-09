@@ -94,7 +94,9 @@ class HttpYoutubeResourceFactory(factory.django.DjangoModelFactory):
                         "license": "youtube",
                     },
                     "player": {
-                        "embedHtml": f"<iframe width=\"480\" height=\"270\" src=\"//www.youtube.com/embed/{id}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+                        "embedHtml": f"<iframe width=\"480\" height=\"270\" src=\"//www.youtube.com/embed/{id}\" "
+                                     f"frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encryp"
+                                     f"ted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
                     }
                 }
             ]
