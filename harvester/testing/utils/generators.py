@@ -27,5 +27,6 @@ def document_generator(source: str, size: int, batch_size: int, set_instance, se
         models["Document"].build(seed, collection=set_instance)
         for seed in seed_generator(source, size, sequence_properties)
     ]
-    documents = models["Document"].objects.bulk_create(documents)
-    return ibatch(documents, batch_size=batch_size)
+    for batch in ibatch(documents, batch_size=batch_size):
+        models["Document"].objects.bulk_create(batch)
+        yield batch
