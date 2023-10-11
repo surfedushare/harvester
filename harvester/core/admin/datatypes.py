@@ -90,7 +90,7 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
 
 class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
     list_display = [
-        '__str__', 'pipeline_info', 'created_at', 'pending_at',
+        '__str__', 'pipeline_info', 'created_at', 'finished_at',
         'active_document_count', 'deleted_document_count', 'inactive_document_count'
     ]
     list_filter = ('dataset_version__is_current',)
