@@ -34,7 +34,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
         },
         "contribute_data": {
             "to_property": "derivatives/tika",
-            "apply_resource_to": ["is_not_found", "pending_at"],
+            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
             "objective": {
                 "@": "$",
                 "#texts": texts_extraction,

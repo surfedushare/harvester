@@ -1,10 +1,16 @@
 from django.test import TestCase
+from django.utils.timezone import now
 
 from testing.constants import SEED_DEFAULTS
 from testing.models import Dataset, DatasetVersion, Set, TestDocument
 
 
 class HttpSeedingProcessorTestCase(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.current_time = now()
 
     def setUp(self) -> None:
         super().setUp()
@@ -17,7 +23,8 @@ class HttpSeedingProcessorTestCase(TestCase):
             properties={
                 "state": "active"
             },
-            pending_at=None
+            pending_at=None,
+            finished_at=self.current_time
         )
         self.ignored_document.clean()
         self.ignored_document.save()
@@ -45,6 +52,7 @@ class HttpSeedingProcessorTestCase(TestCase):
                     self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
                     self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
                     self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
+                    self.assertIsNone(result.finished_at, "Expected new TestDocuments to not be finished")
                 self.assertEqual(result.collection.id, self.set.id, "Expected TestDocument to use Set as collection")
                 self.assertEqual(
                     result.dataset_version.id,
@@ -65,3 +73,4 @@ class HttpSeedingProcessorTestCase(TestCase):
         self.assertEqual(ignored_document.properties, self.ignored_document.properties)
         self.assertEqual(ignored_document.derivatives, self.ignored_document.derivatives)
         self.assertIsNone(ignored_document.pending_at)
+        self.assertIsNotNone(ignored_document.finished_at)

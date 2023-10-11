@@ -23,10 +23,11 @@ def seed_generator(source: str, size: int, sequence_properties=None, has_languag
 
 def document_generator(source: str, size: int, batch_size: int, set_instance, sequence_properties=None):
     models = load_harvest_models("testing")
+    Document = models["Document"]
     documents = [
-        models["Document"].build(seed, collection=set_instance)
+        Document.build(seed, collection=set_instance)
         for seed in seed_generator(source, size, sequence_properties)
     ]
     for batch in ibatch(documents, batch_size=batch_size):
-        models["Document"].objects.bulk_create(batch)
+        Document.objects.bulk_create(batch)
         yield batch

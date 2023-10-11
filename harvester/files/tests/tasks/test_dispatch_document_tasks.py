@@ -95,6 +95,7 @@ class TestSimpleDispatchDocumentTasks(TestCase):
         self.assertEqual(success.derivatives["tika"], {"texts": ["Tika content for https://example.com/1"]})
         self.assertFalse(success.is_not_found)
         self.assertIsNone(success.pending_at, "Expected Document to indicate it is no longer pending for tasks")
+        self.assertIsNotNone(success.finished_at, "Expected Document to indicate it is finished")
         self.assertEqual(success.get_pending_tasks(), [], "Expected simple tasks to complete, leaving no pending tasks")
         # Assert the not found document
         not_found = FileDocument.objects.get(id=self.not_found.id)
@@ -102,6 +103,7 @@ class TestSimpleDispatchDocumentTasks(TestCase):
         self.assertNotIn("tika", not_found.derivatives)
         self.assertTrue(not_found.is_not_found)
         self.assertFalse(not_found.pending_at, "Expected Document to indicate it is no longer pending for tasks")
+        self.assertIsNotNone(not_found.finished_at, "Expected Document to indicate it is finished")
         self.assertEqual(
             not_found.get_pending_tasks(), [],
             "Expected 404 to register no pending tasks until the pipeline field gets a reset"

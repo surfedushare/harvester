@@ -7,13 +7,14 @@ from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models, load_source_configuration
 from core.logging import HarvestLogger
 from core.tasks.harvest.document import dispatch_document_tasks
-from core.tasks.harvest.set import dispatch_set_tasks
+from core.tasks.harvest.set import dispatch_set_tasks, start_set_processing, finish_set_processing
 from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
 from core.processors.seed.resource import HttpSeedingProcessor
 
 
 @app.task(name="harvest_source", base=DatabaseConnectionResetTask)
 def harvest_source(app_label: str, source: str, set_specification: str, asynchronous=True) -> None:
+    current_time = now()
     models = load_harvest_models(app_label)
     configuration = load_source_configuration(app_label, source)
     logger = HarvestLogger(app_label, "harvest_source", {
@@ -27,12 +28,12 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
 
     if harvest_state.entity.is_manual:
         logger.info(f"The '{harvest_state.entity}' operates in manual mode and won't be harvested")
+        finish_set_processing(app_label, harvest_set, current_time, asynchronous=asynchronous)
         return
     elif harvest_set.pending_at is not None:
         logger.warning(f"Set '{harvest_set.name}' is already pending since: {harvest_set.pending_at}")
         return
 
-    current_time = now()
     has_pending_documents = False
 
     # Process any documents that already have a pending state due to previous task failures
@@ -59,20 +60,10 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
         else:
             dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
     else:
-        harvest_set.pending_at = current_time if has_pending_documents else None
-        harvest_set.clean()
-        harvest_set.save()
-        if not has_pending_documents:
-            if asynchronous:
-                dispatch_dataset_version_tasks.delay(app_label, harvest_set.dataset_version_id,
-                                                     asynchronous=asynchronous)
-            else:
-                dispatch_dataset_version_tasks(app_label, harvest_set.dataset_version_id, asynchronous=asynchronous)
+        if has_pending_documents:
+            start_set_processing(app_label, harvest_set, current_time, asynchronous=asynchronous)
         else:
-            if asynchronous:
-                dispatch_set_tasks.delay(app_label, harvest_set.id, asynchronous=asynchronous)
-            else:
-                dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
+            finish_set_processing(app_label, harvest_set, current_time, asynchronous=asynchronous)
 
     harvest_state.harvested_at = current_time
     harvest_state.clean()

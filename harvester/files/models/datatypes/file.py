@@ -4,6 +4,7 @@ from mimetypes import guess_type
 
 from django.db import models
 from django.conf import settings
+from django.utils.timezone import now
 
 from datagrowth.resources.base import Resource
 
@@ -65,6 +66,7 @@ class FileDocument(HarvestDocument):
             if resource.status == 404:
                 self.is_not_found = True
                 self.pending_at = None
+                self.finished_at = now()
 
     @property
     def is_youtube_video(self):

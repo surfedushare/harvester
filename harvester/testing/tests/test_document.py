@@ -1,6 +1,7 @@
 from copy import copy
 
 from django.test import TestCase
+from django.utils.timezone import now
 
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.models import Dataset, DatasetVersion, Set, TestDocument
@@ -53,8 +54,13 @@ class TestDocumentModel(TestCase):
             self.document.pending_at,
             "Expected document to become pending after invalidating a task"
         )
+        self.assertIsNone(
+            self.document.finished_at,
+            "Expected document to be unfinished after invalidating a task"
+        )
         # Remove the pending state
         self.document.pending_at = None
+        self.document.finished_at = now()
         self.document.save()
         # Invalidate a non existing task
         self.document.invalidate_task("does_not_exist")
@@ -62,18 +68,25 @@ class TestDocumentModel(TestCase):
         self.assertEqual(self.document.pipeline["other"], {"success": False})
         self.assertEqual(self.document.derivatives["other"], {"texts": ["I will remain"]})
         self.assertIsNone(self.document.pending_at, "Expected document to remain un-pending if task didn't exist")
+        self.assertIsNotNone(
+            self.document.finished_at,
+            "Expected document to remain finished if task didn't exist"
+        )
 
     def test_update_url(self):
         # Setup the document to reflect that pipeline tasks have run
         self.document.pipeline["tika"] = {"success": True}
         self.document.derivatives["tika"] = {"texts": ["I will disappear"]}
         self.document.pending_at = None
+        self.document.finished_at = now()
         self.document.save()
         # Update the document
         self.document.update({"url": None})
         # Assert the document
         self.assertNotIn("tika", self.document.pipeline)
         self.assertNotIn("tika", self.document.derivatives)
+        self.assertIsNotNone(self.document.pending_at, "Expected Document to become pending after updating URL")
+        self.assertIsNone(self.document.finished_at, "Expected Document to not be finished after updating URL")
 
     def test_update_nested(self):
         self.document.update({

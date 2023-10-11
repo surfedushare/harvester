@@ -1,6 +1,7 @@
 from typing import Type
 from collections import defaultdict
 
+from django.utils.timezone import now
 from celery import signature, chord
 from celery.canvas import Signature  # for type checking only
 
@@ -43,9 +44,10 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
         elif not instance.get_pending_tasks():
             finished.append(instance)
             instance.pending_at = None
+            instance.finished_at = now()
         else:
             pending.append(instance)
-    model.objects.bulk_update(finished, ["pending_at"])
+    model.objects.bulk_update(finished, ["pending_at", "finished_at"])
     return pending
 
 

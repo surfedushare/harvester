@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 from datagrowth.resources.base import Resource
 
@@ -26,6 +27,7 @@ class TestDocument(HarvestDocument):
             if resource.status == 404:
                 self.is_not_found = True
                 self.pending_at = None
+                self.finished_at = now()
 
     def get_language(self):
         return self.properties.get("language", None)

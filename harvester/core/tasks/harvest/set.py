@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.transaction import atomic
 from celery import current_app as app
 
@@ -50,6 +52,30 @@ def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchrono
             callback=dataset_version_callback_signature,
             asynchronous=asynchronous
         )
+
+
+def start_set_processing(app_label: str, harvest_set: HarvestSet, start_time: datetime,
+                         asynchronous: bool = True) -> None:
+    harvest_set.pending_at = start_time
+    harvest_set.clean()
+    harvest_set.save()
+    if asynchronous:
+        dispatch_set_tasks.delay(app_label, harvest_set.id, asynchronous=asynchronous)
+    else:
+        dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
+
+
+def finish_set_processing(app_label: str, harvest_set: HarvestSet, finish_time: datetime,
+                          asynchronous: bool = True) -> None:
+    if not harvest_set.finished_at:
+        harvest_set.finished_at = finish_time
+    harvest_set.pending_at = None
+    harvest_set.clean()
+    harvest_set.save()
+    if asynchronous:
+        dispatch_dataset_version_tasks.delay(app_label, harvest_set.dataset_version_id, asynchronous=asynchronous)
+    else:
+        dispatch_dataset_version_tasks(app_label, harvest_set.dataset_version, asynchronous=asynchronous)
 
 
 @app.task(name="check_set_integrity", base=DatabaseConnectionResetTask)
