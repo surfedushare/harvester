@@ -129,7 +129,7 @@ class TestDeltaHarvestSource(TestCase):
         )
         for historic_set in self.historic_sets:
             self.dataset_version.historic_sets.add(historic_set)
-            if historic_set.name == "simple:simple_set":  # simple_set has delete_policy=transcient
+            if historic_set.name == "simple:simple_set":  # simple_set has delete_policy=transient
                 self.simple_set.copy_documents(historic_set)
         for seed in seed_generator("simple", 100, self.sequence_properties):
             HttpTikaResourceFactory.create(url=seed["url"])
@@ -207,10 +207,53 @@ class TestDeltaHarvestSource(TestCase):
         self.assert_harvest_state(harvest_state_id=harvest_state.id, document_count=50)
 
     def test_delta_pending_set(self):
-        self.skipTest("to be tested")
+        # Setup data for this test
+        harvest_entity = HarvestEntity.objects.get(source__module="simple")
+        self.simple_set.pending_at = self.current_time
+        self.simple_set.save()
+        harvest_state = HarvestState.objects.create(
+            dataset=self.dataset,
+            harvest_set=self.simple_set,
+            entity=harvest_entity,
+            set_specification="simple_set",
+            harvested_at=make_aware(datetime(year=2000, month=1, day=1)),
+        )
+        # Call the harvest_source task with patched HttpSeedingProcessor output
+        seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
+        seeding_patch_value = document_generator("simple", 11, 10, self.simple_set, self.sequence_properties)
+        with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
+            harvest_source("testing", "simple", "simple_set", asynchronous=False)
+        # Assert that seeding_processor was never called
+        self.assertEqual(seeding_processor_call.call_count, 0)
+        # Assert data
+        # Sets and DatasetVersion should remain pending and HarvestState.harvested_at should not update
+        harvest_state = HarvestState.objects.get(id=harvest_state.id)
+        self.assertEqual(harvest_state.harvested_at, make_aware(datetime(year=2000, month=1, day=1)))
+        self.assertIsNotNone(harvest_state.harvest_set.pending_at)
+        self.assertIsNotNone(harvest_state.harvest_set.dataset_version.pending_at)
 
     def test_delta_manual(self):
-        self.skipTest("to be tested")
+        # Setup data for this test
+        harvest_entity = HarvestEntity.objects.get(source__module="simple")
+        harvest_entity.is_manual = True
+        harvest_entity.save()
+        harvest_state = HarvestState.objects.create(
+            dataset=self.dataset,
+            harvest_set=self.simple_set,
+            entity=harvest_entity,
+            set_specification="simple_set",
+            harvested_at=make_aware(datetime(year=2000, month=1, day=1)),
+        )
+        # Call the harvest_source task with patched HttpSeedingProcessor output
+        seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
+        seeding_patch_value = document_generator("simple", 11, 10, self.simple_set, self.sequence_properties)
+        with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
+            harvest_source("testing", "simple", "simple_set", asynchronous=False)
+        # Assert that seeding_processor was never called
+        self.assertEqual(seeding_processor_call.call_count, 0)
+        # Assert data
+        # HarvestState.harvested_at should not get updated
+        self.assert_harvest_state(harvest_state.id, should_update_harvested_at=False, document_count=50)
 
     def test_delta_failing_set_integrity_check(self):
         # Setup data for this test
