@@ -57,8 +57,8 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
         else:
             dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
     else:
-        logger.info(f"Finished seeding for: {harvest_set.name}")
-        logger.report_collection(harvest_set, source)
+        logger.info(f"Finished seeding for: {app_label}, {harvest_set.name}")
+        logger.report_collection(harvest_set, app_label)
         start_set_processing(harvest_set, current_time, asynchronous=asynchronous)
 
     harvest_state.harvested_at = current_time
