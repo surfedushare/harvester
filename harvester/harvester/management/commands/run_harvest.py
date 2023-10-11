@@ -48,3 +48,5 @@ class Command(BaseCommand):
                 DatasetVersion = apps.get_model(dataset_version_model)
                 dataset_version = DatasetVersion.objects.get(id=dataset_version_id)
                 logger.report_dataset_version(dataset_version)
+
+        logger.info("Finished harvest command")

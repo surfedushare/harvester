@@ -47,9 +47,14 @@ def sync_opensearch_indices(app_label: str) -> None:
         return
 
     # Prepare the logger
-    logger = HarvestLogger(dataset_version.dataset.name, "sync_opensearch_indices", {
-        "app_label": app_label
-    })
+    logger = HarvestLogger(
+        dataset_version.dataset.name,
+        "sync_opensearch_indices",
+        command_options={
+            "app_label": app_label
+        },
+        warn_delete_does_not_exist=False
+    )
 
     # Acquire lock and push recently modified documents to the index
     _push_dataset_version_to_index(dataset_version, logger)
@@ -63,15 +68,22 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
         if dataset_version is None or dataset_version.index is None:
             continue
         # Prepare the logger
-        logger = HarvestLogger(dataset_version.dataset.name, "index_dataset_versions", {
-            "app_label": DatasetVersion._meta.app_label,
-            "model_name": DatasetVersion._meta.model_name,
-            "instance_id": dataset_version_id
-        })
+        app_label = DatasetVersion._meta.app_label
+        logger = HarvestLogger(
+            dataset_version.dataset.name, "index_dataset_versions",
+            command_options={
+                "app_label": app_label,
+                "model_name": DatasetVersion._meta.model_name,
+                "instance_id": dataset_version_id
+            },
+            warn_delete_does_not_exist=False
+        )
         # Acquire lock and push recently modified documents to the index
         index = _push_dataset_version_to_index(dataset_version, logger)
+        logger.info(f"Pushing index for: {app_label}")
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             for language in settings.OPENSEARCH_LANGUAGE_CODES:
+                logger.info(f"Promoting to latest: {app_label}, {language}")
                 index.promote_to_latest(language)
             dataset_version.set_index_promoted()
