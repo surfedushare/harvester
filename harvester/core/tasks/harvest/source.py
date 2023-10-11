@@ -7,8 +7,7 @@ from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models, load_source_configuration
 from core.logging import HarvestLogger
 from core.tasks.harvest.document import dispatch_document_tasks
-from core.tasks.harvest.set import dispatch_set_tasks, start_set_processing, finish_set_processing
-from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
+from core.tasks.harvest.set import start_set_processing, finish_set_processing
 from core.processors.seed.resource import HttpSeedingProcessor
 
 
