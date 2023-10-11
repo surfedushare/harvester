@@ -54,28 +54,23 @@ def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchrono
         )
 
 
-def start_set_processing(app_label: str, harvest_set: HarvestSet, start_time: datetime,
-                         asynchronous: bool = True) -> None:
+def start_set_processing(harvest_set: HarvestSet, start_time: datetime, asynchronous: bool = True) -> None:
+    """
+    A convenience function that sets the state of Set to pending and starts background task dispatcher.
+
+    :param harvest_set: the Set that should start processing tasks
+    :param start_time: the time the Set should be considered pending
+    :param asynchronous: whether to process the set asynchronously
+    :return: None
+    """
     harvest_set.pending_at = start_time
     harvest_set.clean()
     harvest_set.save()
+    app_label = harvest_set._meta.app_label
     if asynchronous:
         dispatch_set_tasks.delay(app_label, harvest_set.id, asynchronous=asynchronous)
     else:
         dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
-
-
-def finish_set_processing(app_label: str, harvest_set: HarvestSet, finish_time: datetime,
-                          asynchronous: bool = True) -> None:
-    if not harvest_set.finished_at:
-        harvest_set.finished_at = finish_time
-    harvest_set.pending_at = None
-    harvest_set.clean()
-    harvest_set.save()
-    if asynchronous:
-        dispatch_dataset_version_tasks.delay(app_label, harvest_set.dataset_version_id, asynchronous=asynchronous)
-    else:
-        dispatch_dataset_version_tasks(app_label, harvest_set.dataset_version, asynchronous=asynchronous)
 
 
 @app.task(name="check_set_integrity", base=DatabaseConnectionResetTask)
