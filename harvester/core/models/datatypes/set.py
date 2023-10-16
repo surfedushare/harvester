@@ -53,7 +53,7 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
     @property
     def document_update_fields(self) -> list[str]:
         fields = super().document_update_fields
-        fields.append("metadata")
+        fields += ["state", "pipeline", "derivatives", "pending_at", "finished_at", "metadata"]
         return fields
 
     def copy_documents(self, source_set: HarvestSet):

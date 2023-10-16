@@ -8,6 +8,7 @@ from core.models.datatypes import HarvestDataset, HarvestDatasetVersion, Harvest
 
 def create_datatype_models(app_label: str, set_names: list[str], seeds: list[dict], docs_per_set: int) \
         -> tuple[HarvestDataset, HarvestDatasetVersion, list[HarvestSet], list[HarvestDocument]]:
+    seeds.reverse()
     models = load_harvest_models(app_label)
     Dataset, DatasetVersion, Set, Document = itemgetter("Dataset", "DatasetVersion", "Set", "Document")(models)
     finished_at = now()

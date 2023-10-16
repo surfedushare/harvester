@@ -3,6 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 
 from core.loading import load_source_configuration
+from core.logging import HarvestLogger
+from core.models.datatypes.document import HarvestDocument
+from core.tasks.harvest.document import dispatch_document_tasks
 from sources.webhooks.utils import validate_webhook_data, get_webhook_destination, commit_webhook_seeds
 
 
@@ -21,9 +24,18 @@ def product_webhook(request: HttpRequest, source: str, set_specification: str, s
             return HttpResponse("No current dataset version", status=417)  # expectation failed
         configuration = load_source_configuration(entity_type, source)
         objective = configuration["objective"]
+        logger = HarvestLogger(dataset_version.dataset.name, "product_webhook", {})
         # Processing and storage of incoming data
-        commit_webhook_seeds(objective, data, set_instance, configuration)  # TODO: this returns documents
-        # TODO: call dispatch documents
-        # TODO: call reporting
+        documents = commit_webhook_seeds(objective, data, set_instance, configuration)
+        dispatch_document_tasks.delay(
+            entity_type,
+            [doc.id for doc in documents if doc.state != HarvestDocument.States.DELETED]
+        )
+        for document in documents:
+            logger.report_material(
+                document.identity,
+                state=document.state,
+                title=document.properties.get("title", None)
+            )
     # Finish webhook request
     return HttpResponse("ok")
