@@ -1,6 +1,7 @@
 # Harvester
 
-Data harvester and search service for finding open access higher education learning materials.
+Data harvester and search API for finding (open access) higher education "products" like:
+learning materials and research output.
 
 The project consists of a Django Rest Framework API with an interactive documentation at /api/v1/docs/.
 Harvesting background tasks are handled by a Celery.
@@ -55,7 +56,6 @@ to prevent weird error messages if you ever run the project outside of its conta
 127.0.0.1 postgres
 127.0.0.1 opensearch
 127.0.0.1 harvester
-127.0.0.1 service
 127.0.0.1 redis
 127.0.0.1 tika
 ```
