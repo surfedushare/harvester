@@ -27,6 +27,7 @@ harvester:
     sharekit:
       - "20.56.15.206"  # production
       - "20.56.8.62"  # acceptance
+      - "145.90.232.169"    # one EduVPN IP not the range!
     publinova:
       - "83.96.213.17"  # production
       - "83.96.203.224"  # acceptance
