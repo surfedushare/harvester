@@ -9,6 +9,7 @@ from rest_framework.status import HTTP_417_EXPECTATION_FAILED
 from harvester.schema import HarvesterSchema
 from harvester.pagination import HarvesterPageNumberPagination
 from core.loading import load_harvest_models
+from core.models.datatypes import HarvestDocument
 
 
 class NoCurrentDatasetVersionException(Exception):
@@ -18,6 +19,7 @@ class NoCurrentDatasetVersionException(Exception):
 class DatasetVersionDocumentBaseView(generics.GenericAPIView):
 
     schema = HarvesterSchema()
+    exclude_deletes = False
 
     def get_queryset(self):
         if not self.request.resolver_match:
@@ -30,7 +32,11 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
         dataset_version = models["DatasetVersion"].objects.get_current_version()
         if not dataset_version:
             raise NoCurrentDatasetVersionException()
-        return dataset_version.documents.all()
+        if self.exclude_deletes:
+            queryset = dataset_version.documents.exclude(state=HarvestDocument.States.DELETED)
+        else:
+            queryset = dataset_version.documents.all()
+        return queryset
 
 
 class DatasetVersionDocumentListView(ListModelMixin, DatasetVersionDocumentBaseView):

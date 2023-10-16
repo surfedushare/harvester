@@ -54,6 +54,7 @@ class MetadataProductListView(DatasetVersionDocumentListView):
     This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProductDocumentSerializer
+    exclude_deletes = True
 
 
 class RawProductDetailView(DatasetVersionDocumentDetailView):
@@ -71,6 +72,7 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
     but it only returns the metadata. This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProductDocumentSerializer
+    exclude_deletes = True
 
 
 class SearchProductGenericViewMixin(object):
