@@ -7,6 +7,7 @@ from django.conf import settings
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from metadata.models import MetadataValue
+from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
 
 
@@ -29,6 +30,8 @@ def default_document_tasks():
 class ProductDocument(HarvestDocument):
 
     tasks = models.JSONField(default=default_document_tasks, blank=True)
+
+    property_defaults = SEED_DEFAULTS
 
     @property
     def has_study_vocabulary(self) -> bool:

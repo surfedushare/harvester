@@ -1,5 +1,5 @@
 from typing import Any
-from copy import copy
+from copy import copy, deepcopy
 import json
 from hashlib import sha1
 from sentry_sdk import capture_message
@@ -52,6 +52,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         encoder=DjangoJSONEncoder, decoder=HarvesterJSONDecoder
     )
 
+    property_defaults = {}
+
     @classmethod
     def build(cls, data, collection=None):
         data = cls.parse_seed_data(data)
@@ -101,6 +103,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             self.metadata["modified_at"] = current_time
         elif self.state != self.States.DELETED.value:
             self.metadata["deleted_at"] = None
+        # Sets defaults for properties
+        for key, value in self.property_defaults.items():
+            if key not in self.properties:
+                self.properties[key] = value
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)

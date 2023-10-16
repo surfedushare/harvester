@@ -96,3 +96,13 @@ class TestDocumentModel(TestCase):
         self.assertEqual(self.document.properties["title"], "main title")
         self.assertIsInstance(self.document.properties["nested"], dict, "Expected nested dict to get created")
         self.assertEqual(self.document.properties["nested"]["title"], "nested title")
+
+    def test_default_properties(self):
+        # Remove some properties from a seed
+        seed = self.document.properties
+        seed.pop("title")
+        seed.pop("access_rights")
+        # Assert that defaults get included with an incomplete seed
+        document = TestDocument.build(seed, collection=self.set)
+        self.assertIsNone(document.properties["title"])
+        self.assertEqual(document.properties["access_rights"], "OpenAccess")

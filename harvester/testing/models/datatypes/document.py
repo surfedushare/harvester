@@ -5,6 +5,7 @@ from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.models.resources.metadata import HttpTikaResource
+from testing.constants import SEED_DEFAULTS
 
 
 def default_document_tasks():
@@ -21,6 +22,8 @@ class TestDocument(HarvestDocument):
 
     tasks = models.JSONField(default=default_document_tasks, blank=True)
     is_not_found = models.BooleanField(default=False)
+
+    property_defaults = SEED_DEFAULTS
 
     def apply_resource(self, resource: Resource):
         if isinstance(resource, HttpTikaResource):
