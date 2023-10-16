@@ -471,6 +471,11 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'sync_metadata',
         'schedule': crontab(minute=30)
     },
+    'sync_product_indices': {
+        'task': 'sync_opensearch_indices',
+        'schedule': 30,
+        'args': ('products',)
+    }
 }
 CELERY_WORKER_HIJACK_ROOT_LOGGER = not environment.aws.is_aws
 CELERY_WORKER_MAX_TASKS_PER_CHILD = 50
