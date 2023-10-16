@@ -1,3 +1,5 @@
+import logging
+
 from django.apps import AppConfig
 
 from datagrowth.configuration import register_defaults
@@ -19,6 +21,7 @@ class CoreConfig(AppConfig):
                 "process_result": "ProcessResult",
                 "batch": "Batch"
             },
+            "resource_exception_log_level": logging.WARNING
         })
         register_defaults("http_resource", {
             "method": "get",
