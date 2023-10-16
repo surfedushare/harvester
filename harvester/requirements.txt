@@ -1,5 +1,5 @@
 # Harvester web
-django==3.2.20
+django==3.2.22
 djangorestframework==3.14.0
 django-cors-headers==3.14.0
 whitenoise==5.3.0
@@ -23,7 +23,7 @@ redis==4.6.0
 flower==1.2.0
 
 # Harvester search
-opensearch-py==2.3.1
+opensearch-py==2.3.2
 
 # Harvester other
 vobject==0.9.6.1
@@ -44,14 +44,14 @@ pandas==1.5.3
 beautifulsoup4==4.12.2
 
 # AWS
-awscli==1.29.49
-boto3==1.28.30
+awscli==1.29.63
+boto3==1.28.63
 requests-aws4auth==1.2.3
 django-storages==1.14
 
 # Tools
 watchdog==2.3.1
-ipython==8.14.0
+ipython==8.16.1
 tqdm==4.66.1
 invoke==1.7.3
 ipdb==0.13.13
