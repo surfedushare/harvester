@@ -31,7 +31,7 @@ class ResourceSeedingProcessor(Processor):
 
     def get_resource_iterator(self, args_list: list[Any], kwargs_list: list[dict],
                               resource_config: ConfigurationType) -> Iterator:
-        raise NotImplemented("ResourceSeedingProcessor does not implement get_resource_iterator")
+        raise NotImplementedError("ResourceSeedingProcessor does not implement get_resource_iterator")
 
     def build_seed_iterator(self, phase: dict, *args, **kwargs) -> Iterator:
         resource_config = phase["retrieve"]

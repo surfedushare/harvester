@@ -1,5 +1,5 @@
 from typing import Any
-from copy import copy, deepcopy
+from copy import copy
 import json
 from hashlib import sha1
 from sentry_sdk import capture_message
