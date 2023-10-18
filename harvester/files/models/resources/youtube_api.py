@@ -12,6 +12,12 @@ class YoutubeAPIResource(HttpResource):
     URI_TEMPLATE = \
         "https://youtube.googleapis.com/youtube/v3/{}"
 
+    def handle_errors(self):
+        content_type, data = self.content
+        if not len(data['items']):
+            self.status = 404
+        return super().handle_errors()
+
     def url_to_id(self, url: str):
         url_match = self.url_regex.findall(url)
         return url_match[0]
