@@ -23,7 +23,11 @@ class TestYoutubeAPIResource(TestCase):
         ]
 
         for url in urls:
-            resource = YoutubeAPIResource().get(url, "videos")
+            resource = YoutubeAPIResource(
+                body=json.dumps({"items": []}),
+                head={"content-type": "application/json"},
+                status=200,
+            ).get(url, "videos")
             self.assertEqual(resource.request_without_auth()["url"],
                              "https://youtube.googleapis.com/youtube/v3/"
                              "videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus")
