@@ -28,7 +28,7 @@ class HttpYoutubeResourceFactory(factory.django.DjangoModelFactory):
         url = "http://" + self.uri
         return {
             "url": url,
-            "args": [self.id],
+            "args": [self.id, self.type],
             "data": {},
             "kwargs": {},
             "method": "get",
@@ -57,32 +57,35 @@ class HttpYoutubeResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        if self.status < 200 >= 300:
-            return ""
-        id = quote(self.id, safe="")
+        if self.id == "wrongIdHere":
+            output = {
+                "items": []
+            }
+            return json.dumps(output)
+        id_ = quote(self.id, safe="")
         output = {
             "items": [
                 {
                     "kind": "youtube#video",
-                    "id": f"{id}",
+                    "id": f"{id_}",
                     "snippet": {
                         "publishedAt": "2009-10-25T06:57:33Z",
                         "description": "this is a description",
                         "thumbnails": {
                             "default": {
-                                "url": f"https://i.ytimg.com/vi/{id}/default.jpg",
+                                "url": f"https://i.ytimg.com/vi/{id_}/default.jpg",
                             },
                             "medium": {
-                                "url": f"https://i.ytimg.com/vi/{id}/mqdefault.jpg",
+                                "url": f"https://i.ytimg.com/vi/{id_}/mqdefault.jpg",
                             },
                             "high": {
-                                "url": f"https://i.ytimg.com/vi/{id}/hqdefault.jpg",
+                                "url": f"https://i.ytimg.com/vi/{id_}/hqdefault.jpg",
                             },
                             "standard": {
-                                "url": f"https://i.ytimg.com/vi/{id}/sddefault.jpg",
+                                "url": f"https://i.ytimg.com/vi/{id_}/sddefault.jpg",
                             },
                             "maxres": {
-                                "url": f"https://i.ytimg.com/vi/{id}/maxresdefault.jpg",
+                                "url": f"https://i.ytimg.com/vi/{id_}/maxresdefault.jpg",
                             }
                         }
                     },
@@ -94,7 +97,7 @@ class HttpYoutubeResourceFactory(factory.django.DjangoModelFactory):
                         "license": "youtube",
                     },
                     "player": {
-                        "embedHtml": f"<iframe width=\"480\" height=\"270\" src=\"//www.youtube.com/embed/{id}\" "
+                        "embedHtml": f"<iframe width=\"480\" height=\"270\" src=\"//www.youtube.com/embed/{id_}\" "
                                      f"frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encryp"
                                      f"ted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
                     }

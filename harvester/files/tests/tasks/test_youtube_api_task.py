@@ -24,10 +24,10 @@ class TestYoutubeAPITask(TestCase):
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             set_specification="test",
             docs=[{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-                  {"url": "https://www.youtube.com/watch?v=3kwDVw0u4Kw"}],
+                  {"url": "https://www.youtube.com/watch?v=wrongIdHere"}],
             tikas=None,
             youtubes=[{"id": "dQw4w9WgXcQ", "type": "videos"},
-                      {"id": "wrongIdHere", "type": "videos"}]
+                      {"id": "wrongIdHere", "type": "videos", "status": 404}]
         )
         cls.success, cls.fail, = cls.documents
 
@@ -46,6 +46,7 @@ class TestYoutubeAPITask(TestCase):
             self.assertIn("success", doc.pipeline["youtube_api"])
         # Assert the success document
         success = FileDocument.objects.get(id=self.success.id)
+        fail = FileDocument.objects.get(id=self.fail.id)
         self.assertTrue(success.pipeline["youtube_api"]["success"])
         self.assertIn("youtube_api", success.derivatives)
         self.assertEqual(success.derivatives["youtube_api"],
@@ -60,3 +61,5 @@ class TestYoutubeAPITask(TestCase):
                           'definition': 'hd',
                           'description': 'this is a description'})
         self.assertFalse(success.is_not_found)
+        self.assertFalse(fail.pipeline["youtube_api"]["success"])
+        self.assertNotIn("youtube_api", fail.derivatives)
