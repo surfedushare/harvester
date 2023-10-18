@@ -1,3 +1,6 @@
+import json
+
+import datagrowth.exceptions
 from django.test import TestCase
 from unittest.mock import patch
 
@@ -24,3 +27,15 @@ class TestYoutubeAPIResource(TestCase):
             self.assertEqual(resource.request_without_auth()["url"],
                              "https://youtube.googleapis.com/youtube/v3/"
                              "videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus")
+
+    @patch("files.models.resources.youtube_api.YoutubeAPIResource._send")
+    def test_handle_errors(self, send_mock):
+        resource = YoutubeAPIResource(
+            body=json.dumps({"items": []}),
+            head={"content-type": "application/json"},
+            status=200,
+        )
+
+        self.assertRaises(datagrowth.exceptions.DGHttpError40X, resource.handle_errors)
+        self.assertFalse(resource.success)
+        self.assertEqual(resource.status, 404)
