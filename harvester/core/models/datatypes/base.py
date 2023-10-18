@@ -11,6 +11,7 @@ class HarvestObjectMixin(models.Model):
     tasks = models.JSONField(default=dict, blank=True)
     derivatives = models.JSONField(default=dict, blank=True)
     pending_at = models.DateTimeField(default=now, null=True, blank=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
 
     def get_pending_tasks(self) -> list[str]:
         pending_tasks = []
@@ -59,6 +60,7 @@ class HarvestObjectMixin(models.Model):
             del self.derivatives[task_name]
         if is_invalidated:
             self.pending_at = current_time or now()
+            self.finished_at = None
 
     class Meta:
         abstract = True

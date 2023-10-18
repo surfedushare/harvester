@@ -1,14 +1,12 @@
-import logging
 from time import sleep
 
+from django.apps import apps
 from django.core.management.base import BaseCommand
 
+from core.logging import HarvestLogger
 from sources.tasks import harvest_entities
 from search.loading import dataset_versions_are_ready
 from search.tasks import index_dataset_versions
-
-
-logger = logging.getLogger("harvester")
 
 
 class Command(BaseCommand):
@@ -30,6 +28,7 @@ class Command(BaseCommand):
         reset = options["reset"]
         asynchronous = options["asynchronous"]
         report_dataset_version = options["report_dataset_version"]
+        logger = HarvestLogger("general", "run_harvest", command_options=options)
 
         logger.info(
             f"Running harvest command; "
@@ -41,4 +40,13 @@ class Command(BaseCommand):
         while not ready:
             ready = dataset_versions_are_ready(dataset_versions)
             sleep(10)
+
         index_dataset_versions(dataset_versions)
+
+        if report_dataset_version:
+            for dataset_version_model, dataset_version_id in dataset_versions:
+                DatasetVersion = apps.get_model(dataset_version_model)
+                dataset_version = DatasetVersion.objects.get(id=dataset_version_id)
+                logger.report_dataset_version(dataset_version)
+
+        logger.info("Finished harvest command")

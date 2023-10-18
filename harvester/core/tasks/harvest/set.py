@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.transaction import atomic
 from celery import current_app as app
 
@@ -52,6 +54,25 @@ def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchrono
         )
 
 
+def start_set_processing(harvest_set: HarvestSet, start_time: datetime, asynchronous: bool = True) -> None:
+    """
+    A convenience function that sets the state of Set to pending and starts background task dispatcher.
+
+    :param harvest_set: the Set that should start processing tasks
+    :param start_time: the time the Set should be considered pending
+    :param asynchronous: whether to process the set asynchronously
+    :return: None
+    """
+    harvest_set.pending_at = start_time
+    harvest_set.clean()
+    harvest_set.save()
+    app_label = harvest_set._meta.app_label
+    if asynchronous:
+        dispatch_set_tasks.delay(app_label, harvest_set.id, asynchronous=asynchronous)
+    else:
+        dispatch_set_tasks(app_label, harvest_set.id, asynchronous=asynchronous)
+
+
 @app.task(name="check_set_integrity", base=DatabaseConnectionResetTask)
 @atomic()
 def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
@@ -65,7 +86,9 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
             current_count = harvest_set.documents.filter(metadata__deleted_at=None).count()
             count_diff = historic_count - current_count
             # If historic data is 5% larger than new data the data is considered invalid
+            # We'll use the historic data instead of the new data
             if count_diff > 0 and count_diff / current_count >= 0.05:
+                harvest_set.documents.all().delete()
                 harvest_set.copy_documents(historic_set)
         # For all sets we mark this task as completed to continue the harvesting process
         harvest_set.pipeline["check_set_integrity"] = {

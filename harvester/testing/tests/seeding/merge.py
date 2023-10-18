@@ -60,12 +60,12 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.documents = list(
             document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"])
         )
+        TestDocument.objects.all().update(finished_at=self.current_time, pending_at=None)
         self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")
         self.updated_document.properties["title"] = "title for 1 before update"
         self.updated_document.save()
         self.unchanged_document = TestDocument.objects.get(properties__srn="surf:testing:2")
         self.unchanged_document.metadata["hash"] = "3ab3f0fdaa5625237031f72277dd43723b0b774d"
-        self.unchanged_document.pending_at = None
         self.unchanged_document.pipeline["tika"] = {"success": True}
         self.unchanged_document.save()
 
@@ -102,15 +102,24 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.assertNotEqual(updated_at, updated_document.metadata["created_at"])
         self.assertIsNone(updated_document.metadata["deleted_at"])
         self.assertEqual(updated_document.properties["title"], "title for 1", "Expected the title to get updated")
+        self.assertIsNone(updated_document.pending_at, "Did not expect title change to set Document as pending")
+        self.assertEqual(
+            updated_document.finished_at, self.current_time,
+            "Expected title change not to change finished_at value"
+        )
 
         # Assert unchanged document
         unchanged_document = TestDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"])
         self.assertIsNone(unchanged_document.metadata["deleted_at"])
         self.assertEqual(unchanged_document.properties["title"], "title for 2", "Expected the title to remain as-is")
-        self.assertFalse(
+        self.assertIsNone(
             unchanged_document.pending_at,
             "Expected pre-existing document without update to not become pending"
+        )
+        self.assertEqual(
+            unchanged_document.finished_at, self.current_time,
+            "Expected unchanged document to keep finished_at same as at start of test"
         )
         self.assertIn(
             "tika", unchanged_document.pipeline,

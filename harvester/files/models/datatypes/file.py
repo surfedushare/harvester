@@ -4,10 +4,12 @@ from mimetypes import guess_type
 
 from django.db import models
 from django.conf import settings
+from django.utils.timezone import now
 
 from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
+from files.constants import SEED_DEFAULTS
 from files.models.resources.metadata import HttpTikaResource
 
 
@@ -55,11 +57,14 @@ class FileDocument(HarvestDocument):
     is_not_found = models.BooleanField(default=False)
     is_analysis_allowed = models.BooleanField(null=True, blank=True)
 
+    property_defaults = SEED_DEFAULTS
+
     def apply_resource(self, resource: Resource):
         if isinstance(resource, HttpTikaResource):
             if resource.status == 404:
                 self.is_not_found = True
                 self.pending_at = None
+                self.finished_at = now()
 
     @property
     def is_youtube_video(self):

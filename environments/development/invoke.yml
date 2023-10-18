@@ -18,7 +18,7 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://staging.edurep.kennisnet.nl"
-    sharekit: "https://api.surfsharekit.nl"
+    sharekit: "https://api.acc.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
@@ -27,6 +27,7 @@ harvester:
     sharekit:
       - "20.56.15.206"  # production
       - "20.56.8.62"  # acceptance
+      - "145.90.232.169"    # one EduVPN IP not the range!
     publinova:
       - "83.96.213.17"  # production
       - "83.96.203.224"  # acceptance

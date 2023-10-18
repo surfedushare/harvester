@@ -41,7 +41,7 @@ class DatasetAdmin(DataStorageAdmin):
 
 class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.ModelAdmin):
 
-    list_display = ('__str__', "pipeline_info", "created_at", "pending_at", 'is_current', "is_index_promoted",
+    list_display = ('__str__', "pipeline_info", "created_at", "finished_at", 'is_current', "is_index_promoted",
                     "harvest_count", "index_count",)
     list_per_page = 10
     actions = ["promote_dataset_version_index"]
@@ -73,7 +73,7 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
 
 
 class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
-    list_display = ('identity', 'state', 'pipeline_info', 'modified_at', "pending_at",)
+    list_display = ('identity', 'state', 'pipeline_info', 'modified_at', "finished_at",)
     list_per_page = 10
     list_filter = ('dataset_version__is_current', 'collection__name', 'state',)
     readonly_fields = ("created_at", "modified_at",)
@@ -90,7 +90,7 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
 
 class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
     list_display = [
-        '__str__', 'pipeline_info', 'created_at', 'pending_at',
+        '__str__', 'pipeline_info', 'created_at', 'finished_at',
         'active_document_count', 'deleted_document_count', 'inactive_document_count'
     ]
     list_filter = ('dataset_version__is_current',)

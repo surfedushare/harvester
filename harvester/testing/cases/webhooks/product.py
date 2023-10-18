@@ -1,9 +1,12 @@
 import json
 from copy import deepcopy
+from unittest.mock import patch, call
 
 from django.test import TestCase, override_settings
 
 from core.loading import load_harvest_models
+from products.models import ProductDocument
+from files.models import FileDocument
 
 
 TEST_WEBHOOK_SECRET = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -24,7 +27,8 @@ class TestProductWebhookTestCase(TestCase):
     test_start_time = None
     webhook_url = None
     data_key = None
-    test_data = None
+    test_data = {}
+    test_product_ids = {}
     entity_type = None
     set_names = None
 
@@ -47,6 +51,76 @@ class TestProductWebhookTestCase(TestCase):
             content_type="application/vnd.api+json",
             HTTP_X_FORWARDED_FOR=ip or self.test_ip
         )
+
+    def assert_create_models_dont_exist(self):
+        create_id = self.test_product_ids["create"]
+        self.assertIsNone(
+            ProductDocument.objects.filter(identity=create_id).last(),
+            f"ProductDocument with external_id {create_id} should not exist before the test"
+        )
+
+    def reload_document_models(self, test_type):
+        product_id = self.test_product_ids[test_type]
+        product_document = ProductDocument.objects.filter(properties__external_id=product_id).last()
+        file_document = FileDocument.objects.filter(properties__product_id=product_id).last()
+        return product_document, file_document
+
+    def assert_create_models(self):
+        create_product, create_file = self.reload_document_models("create")
+        # Product asserts
+        self.assertIsNotNone(create_product)
+        self.assertEqual(create_product.state, "active")
+        self.assertGreater(create_product.created_at, self.test_start_time)
+        self.assertGreater(create_product.modified_at, self.test_start_time)
+        # File asserts
+        self.assertIsNotNone(create_file)
+        self.assertEqual(create_file.state, "active")
+        self.assertGreater(create_file.created_at, self.test_start_time)
+        self.assertGreater(create_file.modified_at, self.test_start_time)
+        return create_product, create_file
+
+    def assert_update_models(self):
+        update_product, update_file = self.reload_document_models("update")
+        # Product asserts
+        self.assertIsNotNone(update_product)
+        self.assertEqual(update_product.state, "active")
+        self.assertLess(update_product.created_at, self.test_start_time)
+        self.assertGreater(update_product.modified_at, self.test_start_time)
+        self.assertEqual(update_product.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
+        # Check that applied-science gets replaced and will re-trigger task
+        self.assertEqual(
+            update_product.properties["learning_material"]["study_vocabulary"],
+            ["http://purl.edustandaard.nl/concept/7aae4604-bdf4-40ab-81e9-673c697595f9"],
+            "Expected applied-science term to be replaced with id for 'DNA Sequencing'"
+        )
+        self.assertIsNotNone(update_product.pending_at)
+        self.assertIsNone(update_product.finished_at)
+        self.assertEqual(
+            update_product.pipeline, {},
+            "Expected tasks to get reset because of new study_vocabulary term"
+        )
+        # File asserts
+        self.assertIsNotNone(update_file)
+        self.assertEqual(update_file.state, "active")
+        self.assertLess(update_file.created_at, self.test_start_time)
+        self.assertGreater(update_file.modified_at, self.test_start_time)
+        return update_product, update_file
+
+    def assert_delete_models(self):
+        delete_product, delete_file = self.reload_document_models("delete")
+        # Product asserts
+        self.assertIsNotNone(delete_product)
+        self.assertEqual(delete_product.state, "deleted")
+        self.assertLess(delete_product.created_at, self.test_start_time)
+        self.assertGreater(delete_product.modified_at, self.test_start_time)
+        self.assertEqual(delete_product.properties["state"], "deleted")
+        # File asserts
+        self.assertIsNotNone(delete_file)
+        self.assertEqual(delete_product.state, "deleted")
+        self.assertLess(delete_file.created_at, self.test_start_time)
+        self.assertGreater(delete_file.modified_at, self.test_start_time)
+        self.assertEqual(delete_file.properties["state"], "deleted")
+        return delete_product, delete_file
 
     def test_invalid_secret(self):
         no_uuid_secret_url = self.webhook_url.replace(self.webhook_secret, "invalid")
@@ -74,71 +148,59 @@ class TestProductWebhookTestCase(TestCase):
         self.assertEqual(invalid_data_response.status_code, 400)
         self.assertEqual(invalid_data_response.reason_phrase, "Invalid JSON")
 
-    def test_create(self):
-        self.assertIsNone(
-            self.Document.objects.filter(properties__external_id="3e45b9e3-ba76-4200-a927-2902177f1f6c").last(),
-            "Document with external_id 3e45b9e3-ba76-4200-a927-2902177f1f6c should not exist before the test"
-        )
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_create(self, dispatch_mock):
+        self.assert_create_models_dont_exist()
         create_response = self.call_webhook(self.webhook_url)
         self.assertEqual(create_response.status_code, 200)
-        create_document = self.Document.objects \
-            .filter(properties__external_id="3e45b9e3-ba76-4200-a927-2902177f1f6c") \
-            .last()
-        self.assertIsNotNone(create_document)
-        self.assertGreater(create_document.created_at, self.test_start_time)
-        self.assertGreater(create_document.modified_at, self.test_start_time)
+        create_product, create_file = self.assert_create_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", [create_product.id]),
+            call("files", [create_file.id])
+        ])
 
-    def test_update(self):
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_update(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
-        update_document = self.Document.objects \
-            .filter(properties__external_id="5be6dfeb-b9ad-41a8-b4f5-94b9438e4257") \
-            .last()
-        self.assertIsNotNone(update_document)
-        self.assertLess(update_document.created_at, self.test_start_time)
-        self.assertGreater(update_document.modified_at, self.test_start_time)
-        self.assertEqual(update_document.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
+        update_product, update_file = self.assert_update_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", [update_product.id]),
+            call("files", [update_file.id])
+        ])
 
-    def test_delete(self):
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_delete(self, dispatch_mock):
         delete_response = self.call_webhook(self.webhook_url, verb="delete")
         self.assertEqual(delete_response.status_code, 200)
-        delete_document = self.Document.objects \
-            .filter(properties__external_id="63903863-6c93-4bda-b850-277f3c9ec00e") \
-            .last()
-        self.assertIsNotNone(delete_document)
-        self.assertLess(delete_document.created_at, self.test_start_time)
-        self.assertGreater(delete_document.modified_at, self.test_start_time)
-        self.assertEqual(delete_document.properties["state"], "deleted")
+        self.assert_delete_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", []),
+            call("files", [])
+        ])
 
-    def test_create_no_language(self):
-        self.assertIsNone(
-            self.Document.objects.filter(properties__external_id="3e45b9e3-ba76-4200-a927-2902177f1f6c").last(),
-            "Document with external_id 3e45b9e3-ba76-4200-a927-2902177f1f6c should not exist before the test"
-        )
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_create_no_language(self, dispatch_mock):
+        self.assert_create_models_dont_exist()
         create_response = self.call_webhook(self.webhook_url, overrides={"language": None})
         self.assertEqual(create_response.status_code, 200)
-        create_document = self.Document.objects \
-            .filter(properties__external_id="3e45b9e3-ba76-4200-a927-2902177f1f6c") \
-            .last()
-        self.assertIsNotNone(create_document)
-        self.assertGreater(create_document.created_at, self.test_start_time)
-        self.assertGreater(create_document.modified_at, self.test_start_time)
-        self.assertEqual(
-            create_document.get_language(), "unk",
-            "Expected language to become 'unk' if source indicates None"
-        )
+        create_product, create_file = self.assert_create_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", [create_product.id]),
+            call("files", [create_file.id])
+        ])
 
-    def test_update_no_language(self):
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_update_no_language(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
         self.assertEqual(update_response.status_code, 200)
-        update_document = self.Document.objects \
-            .filter(properties__external_id="5be6dfeb-b9ad-41a8-b4f5-94b9438e4257") \
-            .last()
-        self.assertIsNotNone(update_document)
-        self.assertLess(update_document.created_at, self.test_start_time)
-        self.assertGreater(update_document.modified_at, self.test_start_time)
-        self.assertEqual(update_document.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
-        self.assertEqual(update_document.get_language(), "en", "Expected language to never change")
-
-    def test_tasks_reset(self):
-        self.skipTest("Test should assert that setting certain properties will re-run tasks")
+        update_product, update_file = self.assert_update_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", [update_product.id]),
+            call("files", [update_file.id])
+        ])
