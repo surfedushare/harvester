@@ -63,3 +63,4 @@ class TestYoutubeAPITask(TestCase):
         self.assertFalse(success.is_not_found)
         self.assertFalse(fail.pipeline["youtube_api"]["success"])
         self.assertNotIn("youtube_api", fail.derivatives)
+        self.assertTrue(fail.is_not_found)

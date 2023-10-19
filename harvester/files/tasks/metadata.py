@@ -117,6 +117,7 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
         },
         "contribute_data": {
             "to_property": "derivatives/youtube_api",
+            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
             "objective": {
                 "@": "$.items.0",
                 "description": "$.snippet.description",

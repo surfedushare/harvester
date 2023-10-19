@@ -10,6 +10,7 @@ from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.constants import SEED_DEFAULTS
+from files.models.resources.youtube_api import YoutubeAPIResource
 from files.models.resources.metadata import HttpTikaResource
 
 
@@ -60,7 +61,7 @@ class FileDocument(HarvestDocument):
     property_defaults = SEED_DEFAULTS
 
     def apply_resource(self, resource: Resource):
-        if isinstance(resource, HttpTikaResource):
+        if isinstance(resource, (HttpTikaResource, YoutubeAPIResource)):
             if resource.status == 404:
                 self.is_not_found = True
                 self.pending_at = None
