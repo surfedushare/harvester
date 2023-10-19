@@ -27,7 +27,7 @@ def default_document_tasks():
             "resources": ["files.PdfThumbnailResource"]
         },
         "youtube_api": {
-            "depends_on": [],
+            "depends_on": ["$.url"],
             "checks": ["is_youtube_video"],
             "resources": ["files.YoutubeAPIResource"]
         }
