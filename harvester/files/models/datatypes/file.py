@@ -26,7 +26,7 @@ def default_document_tasks():
             "resources": ["files.PdfThumbnailResource"]
         },
         "youtube_api": {
-            "depends_on": ["tika"],
+            "depends_on": [],
             "checks": ["is_youtube_video"],
             "resources": ["files.YoutubeAPIResource"]
         }
