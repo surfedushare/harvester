@@ -3,7 +3,7 @@ from django.contrib import admin
 from datagrowth.admin import HttpResourceAdmin
 from sources.models import (HanOAIPMHResource, HvaPureResource, HkuMetadataResource, GreeniOAIPMHResource,
                             BuasPureResource, HanzeResearchObjectResource, PublinovaMetadataResource,
-                            EdurepJsonSearchResource, SaxionOAIPMHResource)
+                            EdurepJsonSearchResource, SaxionOAIPMHResource, EdurepOAIPMH)
 from sources.models.harvest import HarvestSource, HarvestEntity
 
 
@@ -25,6 +25,7 @@ admin.site.register(HanzeResearchObjectResource, HttpResourceAdmin)
 admin.site.register(PublinovaMetadataResource, HttpResourceAdmin)
 admin.site.register(EdurepJsonSearchResource, HttpResourceAdmin)
 admin.site.register(SaxionOAIPMHResource, HttpResourceAdmin)
+admin.site.register(EdurepOAIPMH, HttpResourceAdmin)
 
 admin.site.register(HarvestSource, HarvestSourceAdmin)
 admin.site.register(HarvestEntity, HarvestEntityAdmin)
