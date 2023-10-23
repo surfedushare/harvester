@@ -45,7 +45,7 @@ beautifulsoup4==4.12.2
 
 # AWS
 awscli==1.29.63
-boto3==1.28.63
+boto3==1.28.68
 requests-aws4auth==1.2.3
 django-storages==1.14
 
