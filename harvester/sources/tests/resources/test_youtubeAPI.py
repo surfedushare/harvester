@@ -18,8 +18,8 @@ class TestYoutubeAPIResource(TestCase):
             "https://www.youtube.com/watch?v=dQw4w9WgXcQ#t=0m10s",
             "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
             "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            "https://youtu.be/dQw4w9WgXcQ"
-
+            "https://youtu.be/dQw4w9WgXcQ",
+            "https://www.youtube.com/watch?annotation_id=annotation_123&feature=iv&src_vid=oI5-Cl-jvSs&v=dQw4w9WgXcQ",
         ]
 
         for url in urls:
