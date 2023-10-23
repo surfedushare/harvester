@@ -6,7 +6,7 @@ from urllib.parse import quote
 from django.conf import settings
 from django.utils.timezone import make_aware
 
-from edurep.models import EdurepOAIPMH
+from sources.models import EdurepOAIPMH
 
 
 class EdurepOAIPMHFactory(factory.django.DjangoModelFactory):
@@ -52,13 +52,13 @@ class EdurepOAIPMHFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def body(self):
         response_type = "initial" if self.is_initial else "delta"
-        response_file = f"edurep-oaipmh.{response_type}.{self.number}.xml"
-        response_file_path = os.path.join(settings.BASE_DIR, "edurep", "fixtures", response_file)
+        response_file = f"fixture.edurep.{response_type}.{self.number}.xml"
+        response_file_path = os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures", response_file)
         with open(response_file_path, "r") as response:
             return response.read()
 
     @classmethod
-    def create_common_edurep_responses(cls, include_delta=False):
+    def create_common_responses(cls, include_delta=False):
         cls.create(is_initial=True, number=0)
         cls.create(is_initial=True, number=1, resumption="c1576069959151499|u|f1970-01-01T00:00:00Z|mlom|ssurf")
         if include_delta:
