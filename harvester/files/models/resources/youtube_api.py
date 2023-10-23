@@ -14,7 +14,7 @@ class YoutubeAPIResource(HttpResource):
 
     def handle_errors(self):
         content_type, data = self.content
-        if not len(data['items']):
+        if data and not len(data['items']):
             self.status = 404
         return super().handle_errors()
 

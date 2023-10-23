@@ -32,14 +32,22 @@ class TestYoutubeAPIResource(TestCase):
                              "https://youtube.googleapis.com/youtube/v3/"
                              "videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus")
 
-    @patch("files.models.resources.youtube_api.YoutubeAPIResource._send")
-    def test_handle_errors(self, send_mock):
+    def test_handle_errors_no_items(self):
         resource = YoutubeAPIResource(
             body=json.dumps({"items": []}),
             head={"content-type": "application/json"},
             status=200,
         )
-
         self.assertRaises(datagrowth.exceptions.DGHttpError40X, resource.handle_errors)
         self.assertFalse(resource.success)
         self.assertEqual(resource.status, 404)
+
+    def test_handle_errors_forbidden(self):
+        resource = YoutubeAPIResource(
+            body="",
+            head={"content-type": "application/json"},
+            status=403,
+        )
+        self.assertRaises(datagrowth.exceptions.DGHttpError40X, resource.handle_errors)
+        self.assertFalse(resource.success)
+        self.assertEqual(resource.status, 403)
