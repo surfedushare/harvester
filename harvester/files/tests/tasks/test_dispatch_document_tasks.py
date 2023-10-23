@@ -32,7 +32,7 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["tika"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["tika"])
+        self.assertEqual(youtube_tasks, ['youtube_api'])
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed
@@ -44,7 +44,7 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, [])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["extruct", "video_preview"])
+        self.assertEqual(youtube_tasks, ["youtube_api"])
 
     def test_get_analysis_disallowed(self):
         pending_tasks_2 = self.document_2.get_pending_tasks()

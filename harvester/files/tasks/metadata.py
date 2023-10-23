@@ -1,3 +1,5 @@
+import re
+
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -74,3 +76,57 @@ def extruct_task(app_label, document_ids: list[int]) -> None:
         }
     })
     extruct_processor(FileDocument.objects.filter(id__in=document_ids))
+
+
+def get_embed_url(node):
+    html = node["player"]["embedHtml"]
+    url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
+    if not url_regex:
+        return
+    return url_regex[0]
+
+
+def get_previews(node):
+    thumbnails = node["snippet"]["thumbnails"]
+    return {
+        "full_size": thumbnails["maxres"]["url"],
+        "preview": thumbnails["high"]["url"],
+        "preview_small": thumbnails["medium"]["url"]
+    }
+
+
+@app.task(name="youtube_api", base=DatabaseConnectionResetTask)
+def youtube_api_task(app_label, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
+    youtube_api_processor = HttpPipelineProcessor({
+        "pipeline_app_label": "files",
+        "pipeline_models": {
+            "document": "FileDocument",
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "pipeline_phase": "youtube_api",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.youtubeapiresource",
+            "method": "get",
+            "args": ["$.url", "videos"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "to_property": "derivatives/youtube_api",
+            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
+            "objective": {
+                "@": "$.items.0",
+                "description": "$.snippet.description",
+                "duration": "$.contentDetails.duration",
+                "definition": "$.contentDetails.definition",
+                "license": "$.status.license",
+                "embed_url": get_embed_url,
+                "previews": get_previews
+            }
+        }
+    })
+    youtube_api_processor(FileDocument.objects.filter(id__in=document_ids))
