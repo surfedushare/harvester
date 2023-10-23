@@ -18,7 +18,7 @@ def default_document_tasks():
     return {
         "tika": {
             "depends_on": ["$.url"],
-            "checks": ["!is_not_found", "is_analysis_allowed"],
+            "checks": ["!is_not_found", "is_analysis_allowed", "!is_youtube_video"],
             "resources": ["files.HttpTikaResource"]
         },
         "pdf_preview": {
