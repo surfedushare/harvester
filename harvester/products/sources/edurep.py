@@ -6,6 +6,7 @@ from dateutil.parser import parse as date_parser
 from django.utils.text import slugify
 
 from core.constants import HIGHER_EDUCATION_LEVELS
+from sources.utils.sharekit import webhook_data_transformer
 
 logger = logging.getLogger("harvester")
 
@@ -359,3 +360,23 @@ OBJECTIVE = {
     # "research_product.research_themes": ,
     # "research_product.parties": ,
 }
+
+SEEDING_PHASES = [
+    {
+        "phase": "publications",
+        "strategy": "initial",
+        "batch_size": 25,
+        "retrieve_data": {
+            "resource": "sources.EdurepOAIPMH",
+            "method": "get",
+            "args": [],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "objective": OBJECTIVE
+        }
+    }
+]
+
+
+WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer
