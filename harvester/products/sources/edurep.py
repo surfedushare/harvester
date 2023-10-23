@@ -1,13 +1,10 @@
 import logging
 import re
-from datetime import datetime
 
 from vobject.base import ParseError, readOne
 from dateutil.parser import parse as date_parser
 from django.utils.text import slugify
 
-from core.constants import HIGHER_EDUCATION_LEVELS
-from sources.utils.sharekit import webhook_data_transformer
 
 logger = logging.getLogger("harvester")
 
@@ -69,10 +66,6 @@ class EdurepDataExtraction(object):
         header = el.find('header')
         return header.get("status", "active")
 
-    @classmethod
-    def get_set(cls, soup, el):
-        return el.find('setSpec').text.strip()
-
     #############################
     # GENERIC
     #############################
@@ -91,10 +84,7 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_files(cls, soup, el):
-        files = []
-        for file in el.find_all('czp:location'):
-            files.append(file.text.strip())
-        return files
+        return el.find_all('czp:location')
 
 
     @classmethod
@@ -242,12 +232,7 @@ class EdurepDataExtraction(object):
             return publisher_datetime
         provider = el.find(string='content provider')
         provider_datetime = cls.find_role_datetime(provider)
-        if provider_datetime is None:
-            return
-        return date_parser(
-            provider_datetime,
-            default=datetime(year=1970, month=1, day=1)).strftime("%Y-%m-%d")
-
+        return provider_datetime
 
     @classmethod
     def get_publisher_year(cls, soup, el):
@@ -277,35 +262,29 @@ class EdurepDataExtraction(object):
         return list(set([block.find('czp:langstring').text.strip() for block in blocks]))
 
     @classmethod
-    def get_lowest_educational_level(cls, soup, el):
-        educational_levels = cls.get_educational_levels(soup, el)
-        current_numeric_level = 3 if len(educational_levels) else -1
-        for education_level in educational_levels:
-            for higher_education_level, numeric_level in HIGHER_EDUCATION_LEVELS.items():
-                if not education_level.startswith(higher_education_level):
-                    continue
-                # One of the records education levels matches a higher education level.
-                # We re-assign current level and stop processing this education level,
-                # as it shouldn't match multiple higher education levels
-                current_numeric_level = min(current_numeric_level, numeric_level)
-                break
-            else:
-                # No higher education level found inside current education level.
-                # Dealing with an "other" means a lower education level than we're interested in.
-                # So this record has the lowest possible level. We're done processing this seed.
-                current_numeric_level = 0
-                break
-        return current_numeric_level
-
-    @classmethod
     def get_studies(cls, soup, el):
         blocks = cls.find_all_classification_blocks(el, "discipline", "czp:id")
         return list(set([block.text.strip() for block in blocks]))
 
     @classmethod
-    def get_study_vocabulary(cls, soup, el):
-        blocks = cls.find_all_classification_blocks(el, "idea", "czp:id")
-        return list(set([block.text.strip() for block in blocks]))
+    def get_ideas(cls, soup, el):
+        external_id = cls.get_oaipmh_external_id(soup, el)
+        if not external_id.startswith("surfsharekit"):
+            return []
+        blocks = cls.find_all_classification_blocks(el, "idea", "czp:entry")
+        compound_ideas = list(set([block.find('czp:langstring').text.strip() for block in blocks]))
+        ideas = []
+        for compound_idea in compound_ideas:
+            ideas += compound_idea.split(" - ")
+        return list(set(ideas))
+
+    @classmethod
+    def get_is_part_of(cls, soup, el):
+        return []  # not supported for now
+
+    @classmethod
+    def get_has_parts(cls, soup, el):
+        return []  # not supported for now
 
     @classmethod
     def get_copyright_description(cls, soup, el):
@@ -323,6 +302,8 @@ OBJECTIVE = {
     "external_id": EdurepDataExtraction.get_oaipmh_external_id,
     "set": EdurepDataExtraction.get_set,
     # Generic metadata
+    # "doi": ,
+    # toDo: Update fixture to check if these values exist in data.
     "files": EdurepDataExtraction.get_files,
     "title": EdurepDataExtraction.get_title,
     "language": EdurepDataExtraction.get_language,
@@ -336,32 +317,19 @@ OBJECTIVE = {
     "publishers": EdurepDataExtraction.get_publishers,
     "publisher_date": EdurepDataExtraction.get_publisher_date,
     "publisher_year": EdurepDataExtraction.get_publisher_year,
+    "is_part_of": EdurepDataExtraction.get_is_part_of,
+    "has_parts": EdurepDataExtraction.get_has_parts,
     # Learning material metadata
     "learning_material.aggregation_level": EdurepDataExtraction.get_aggregation_level,
     "learning_material.material_types": EdurepDataExtraction.get_material_types,
     "learning_material.lom_educational_levels": EdurepDataExtraction.get_educational_levels,
     "learning_material.studies": EdurepDataExtraction.get_studies,
-    "learning_material.study_vocabulary": EdurepDataExtraction.get_study_vocabulary,
+    "learning_material.ideas": EdurepDataExtraction.get_ideas,
+    "learning_material.study_vocabulary": lambda soup, el: [],
     "learning_material.disciplines": EdurepDataExtraction.get_studies,
     "learning_material.consortium": EdurepDataExtraction.get_consortium,
+    # Research product metadata
+    # "research_product.research_object_type": ,
+    # "research_product.research_themes": ,
+    # "research_product.parties": ,
 }
-
-SEEDING_PHASES = [
-    {
-        "phase": "publications",
-        "strategy": "initial",
-        "batch_size": 25,
-        "retrieve_data": {
-            "resource": "sources.EdurepOAIPMH",
-            "method": "get",
-            "args": [],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "objective": OBJECTIVE
-        }
-    }
-]
-
-
-WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer
