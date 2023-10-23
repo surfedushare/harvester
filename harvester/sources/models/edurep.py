@@ -1,12 +1,20 @@
+import logging
+from urlobject import URLObject
+
+from django.conf import settings
 from django.db import models
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
+
 from core.models import HarvestHttpResource
-from sources.extraction.edurep import EdurepMetadataExtraction, EDUREP_EXTRACTION_OBJECTIVE
+from edurep.extraction import EdurepDataExtraction, EDUREP_EXTRACTION_OBJECTIVE
 
 
-class EdurepJsonSearchResourceManager(models.Manager):
+logger = logging.getLogger("harvester")
+
+
+class EdurepOAIPMHManager(models.Manager):
 
     def extract_seeds(self, set_specification, latest_update):
         queryset = self.get_queryset().filter(
@@ -16,14 +24,14 @@ class EdurepJsonSearchResourceManager(models.Manager):
             is_extracted=False
         )
 
-        metadata_objective = {
-            "@": "$.response.items",
-            "external_id": "$.@id",
-            "state": EdurepMetadataExtraction.get_record_state
+        oaipmh_objective = {
+            "@": EdurepDataExtraction.get_oaipmh_records,
+            "external_id": EdurepDataExtraction.get_oaipmh_external_id,
+            "state": EdurepDataExtraction.get_oaipmh_record_state
         }
-        metadata_objective.update(EDUREP_EXTRACTION_OBJECTIVE)
+        oaipmh_objective.update(EDUREP_EXTRACTION_OBJECTIVE)
         extract_config = create_config("extract_processor", {
-            "objective": metadata_objective
+            "objective": oaipmh_objective
         })
         prc = ExtractProcessor(config=extract_config)
 
@@ -34,28 +42,66 @@ class EdurepJsonSearchResourceManager(models.Manager):
                 "id": harvest.id,
                 "success": True
             }
-            for seed in prc.extract_from_resource(harvest):
-                seed["seed_resource"] = seed_resource
-                results.append(seed)
+            try:
+                for seed in prc.extract_from_resource(harvest):
+                    seed["seed_resource"] = seed_resource
+                    results.append(seed)
+            except ValueError as exc:
+                logger.warning("Invalid XML:", exc, harvest.uri)
         return results
 
 
-class EdurepJsonSearchResource(HarvestHttpResource):
-    objects = EdurepJsonSearchResourceManager()
+class EdurepOAIPMH(HarvestHttpResource):
 
-    uri = models.CharField(max_length=512, db_index=True, default=None)
-    URI_TEMPLATE = "https://wszoeken.edurep.kennisnet.nl/jsonsearch?" \
-                   "query=%2A%20AND%20about.repository%20exact%20" \
-                   + "{}" + \
-                   "%20AND%20%28schema%3AeducationalLevel.schema%3AtermCode%20exact%20" \
-                   "bbbd99c6-cf49-4980-baed-12388f8dcff4%20OR%20schema%3AeducationalLevel.schema%3A" \
-                   "termCode%20exact%20be140797-803f-4b9e-81cc-5572c711e09c%29"
+    objects = EdurepOAIPMHManager()
+
+    URI_TEMPLATE = settings.EDUREP_BASE_URL + "/edurep/oai?set={}&from={}"
+    PARAMETERS = {
+        "verb": "ListRecords",
+        "metadataPrefix": "lom"
+    }
 
     def next_parameters(self):
-        content_type, data = self.content
-        page = data["response"].get("next", {}).get("page", None)
-        if not page:
+        content_type, soup = self.content
+        resumption_token = soup.find("resumptionToken")
+        if not resumption_token or not resumption_token.text:
             return {}
         return {
-            "page": page,
+            "verb": "ListRecords",
+            "resumptionToken": resumption_token.text
         }
+
+    def create_next_request(self):
+        next_request = super().create_next_request()
+        if not next_request:
+            return
+        url = URLObject(next_request.get("url"))
+        url = url.without_query().set_query_params(**self.next_parameters())
+        next_request["url"] = str(url)
+        return next_request
+
+    def handle_errors(self):
+        content_type, soup = self.content
+        # If there is no response at all we indicate a service not available
+        # Note that the IP might be blocked by Edurep
+        if soup is None:
+            self.status = 503
+            super().handle_errors()
+            return
+        # Edurep always responds with a 200, but it may contain an error tag
+        # If not we're fine and done handling errors
+        error = soup.find("error")
+        if error is None:
+            return
+        # If an error was found we translate it into an appropriate code
+        status = error["code"]
+        if status == "badArgument":
+            self.status = 400
+        elif status == "noRecordsMatch":
+            self.status = 204
+        # And we raise proper exceptions for the system to pick up
+        super().handle_errors()
+
+    class Meta:
+        verbose_name = "Edurep OAIPMH harvest"
+        verbose_name_plural = "Edurep OAIPMH harvests"
