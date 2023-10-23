@@ -3,6 +3,8 @@ from urlobject import URLObject
 
 from django.conf import settings
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
@@ -51,7 +53,7 @@ class EdurepOAIPMHManager(models.Manager):
         return results
 
 
-class EdurepOAIPMH(HarvestHttpResource):
+class EdurepOAIPMHBase(HarvestHttpResource):
 
     objects = EdurepOAIPMHManager()
 
@@ -105,3 +107,11 @@ class EdurepOAIPMH(HarvestHttpResource):
     class Meta:
         verbose_name = "Edurep OAIPMH harvest"
         verbose_name_plural = "Edurep OAIPMH harvests"
+        abstract = True
+
+
+class EdurepOAIPMH(EdurepOAIPMHBase):
+    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+
+    class Meta:
+        app_label = "sources"
