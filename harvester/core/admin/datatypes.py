@@ -76,7 +76,7 @@ trash_extensions.short_description = "Trash selected %(verbose_name_plural)s"
 restore_extensions.short_description = "Restore selected %(verbose_name_plural)s"
 
 
-class ExtensionAdmin(DocumentAdmin):
+class ExtensionAdmin(DatagrowthDocumentAdmin):
     list_display = ['__str__', 'reference', 'dataset_version', 'collection', 'created_at', 'modified_at', 'deleted_at']
     list_filter = ('dataset_version', TrashListFilter)
     readonly_fields = ("created_at", "modified_at", "deleted_at",)
