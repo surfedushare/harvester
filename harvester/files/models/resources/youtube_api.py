@@ -23,9 +23,10 @@ class YoutubeAPIResource(HttpResource):
             self.status = 404
         return super().handle_errors()
 
-    def url_to_id(self, url: str):
-        url_match = self.url_regex.findall(url)
-        return url_match[0]
+    @classmethod
+    def url_to_id(cls, url: str):
+        url_match = cls.url_regex.findall(url)
+        return url_match[0] if url_match else None
 
     def auth_parameters(self):
         return {"key": settings.GOOGLE_API_KEY}

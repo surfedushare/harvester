@@ -69,9 +69,10 @@ class FileDocument(HarvestDocument):
 
     @property
     def is_youtube_video(self):
-        if not self.domain:
+        url = self.properties.get("url")
+        if not self.domain or not url:
             return False
-        return youtube_domain_regex.match(self.domain)
+        return youtube_domain_regex.match(self.domain) and YoutubeAPIResource.url_to_id(url)
 
     @property
     def is_video(self):
