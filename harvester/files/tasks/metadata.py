@@ -88,8 +88,9 @@ def get_embed_url(node):
 
 def get_previews(node):
     thumbnails = node["snippet"]["thumbnails"]
+    full_size_key = "maxres" if "maxres" in thumbnails else "standard"
     return {
-        "full_size": thumbnails["maxres"]["url"],
+        "full_size": thumbnails[full_size_key]["url"],
         "preview": thumbnails["high"]["url"],
         "preview_small": thumbnails["medium"]["url"]
     }
