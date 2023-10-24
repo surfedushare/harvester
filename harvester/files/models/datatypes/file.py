@@ -26,6 +26,11 @@ def default_document_tasks():
             "checks": ["is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
+        "video_preview": {  # Other than Youtube like Vimeo
+            "depends_on": ["tika"],
+            "checks": ["is_video", "!is_youtube_video"],
+            "resources": ["files.YoutubeThumbnailResource"]
+        },
         "youtube_api": {
             "depends_on": ["$.url"],
             "checks": ["is_youtube_video"],
