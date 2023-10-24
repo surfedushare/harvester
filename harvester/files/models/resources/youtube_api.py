@@ -1,8 +1,9 @@
 import re
 from copy import copy
 
-from datagrowth.resources import HttpResource
 from django.conf import settings
+
+from datagrowth.resources import HttpResource
 
 
 class YoutubeAPIResource(HttpResource):
@@ -11,6 +12,10 @@ class YoutubeAPIResource(HttpResource):
 
     URI_TEMPLATE = \
         "https://youtube.googleapis.com/youtube/v3/{}"
+
+    HEADERS = {
+        "Referer": f"https://{settings.DOMAIN}"
+    }
 
     def handle_errors(self):
         content_type, data = self.content
