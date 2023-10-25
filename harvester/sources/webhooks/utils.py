@@ -140,7 +140,5 @@ def commit_webhook_seed(dataset_version, collection, seed):
         seed["external_id"],
         state=seed["state"],
         title=seed["title"],
-        url=seed["url"],
-        copyright=seed["copyright"],
-        lowest_educational_level=seed["lowest_educational_level"]
+        url=seed["url"]
     )
