@@ -16,10 +16,11 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
     current_time = now()
     models = load_harvest_models(app_label)
     configuration = load_source_configuration(app_label, source)
-    logger = HarvestLogger(app_label, "harvest_source", {
+    logger_options = {
         "source": source,
         "set_specification": set_specification
-    })
+    }
+    logger = HarvestLogger(app_label, "harvest_source", logger_options, is_legacy_logger=False)
     harvest_state = models["HarvestState"].objects \
         .select_related("entity", "entity__source", "harvest_set") \
         .get(entity__source__module=source, entity__type=app_label, set_specification=set_specification)

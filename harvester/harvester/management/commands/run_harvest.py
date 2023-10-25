@@ -28,7 +28,7 @@ class Command(BaseCommand):
         reset = options["reset"]
         asynchronous = options["asynchronous"]
         report_dataset_version = options["report_dataset_version"]
-        logger = HarvestLogger("general", "run_harvest", command_options=options)
+        logger = HarvestLogger("general", "run_harvest", command_options=options, is_legacy_logger=False)
 
         logger.info(
             f"Running harvest command; "

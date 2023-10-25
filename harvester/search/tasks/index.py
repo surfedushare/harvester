@@ -53,6 +53,7 @@ def sync_opensearch_indices(app_label: str) -> None:
         command_options={
             "app_label": app_label
         },
+        is_legacy_logger=False,
         warn_delete_does_not_exist=False
     )
 
@@ -76,6 +77,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
                 "model_name": DatasetVersion._meta.model_name,
                 "instance_id": dataset_version_id
             },
+            is_legacy_logger=False,
             warn_delete_does_not_exist=False
         )
         # Acquire lock and push recently modified documents to the index

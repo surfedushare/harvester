@@ -24,7 +24,7 @@ def product_webhook(request: HttpRequest, source: str, set_specification: str, s
             return HttpResponse("No current dataset version", status=417)  # expectation failed
         configuration = load_source_configuration(entity_type, source)
         objective = configuration["objective"]
-        logger = HarvestLogger(dataset_version.dataset.name, "product_webhook", {})
+        logger = HarvestLogger(dataset_version.dataset.name, "product_webhook", {}, is_legacy_logger=False)
         # Processing and storage of incoming data
         documents = commit_webhook_seeds(objective, data, set_instance, configuration)
         dispatch_document_tasks.delay(
