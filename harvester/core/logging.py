@@ -15,10 +15,11 @@ class HarvestLogger(object):
     command = None
     command_options = None
 
-    def __init__(self, dataset, command, command_options):
+    def __init__(self, dataset, command, command_options, is_legacy_logger=True):
         self.dataset = dataset
         self.command = command
         self.command_options = command_options
+        self.is_legacy_logger = is_legacy_logger
 
     def _get_extra_info(self, phase=None, progress=None, material=None, result=None):
         return {
@@ -30,7 +31,8 @@ class HarvestLogger(object):
             "phase": phase,
             "progress": progress,
             "material": material,
-            "result": result or {}
+            "result": result or {},
+            "legacy_logger": self.is_legacy_logger
         }
 
     def debug(self, message):
