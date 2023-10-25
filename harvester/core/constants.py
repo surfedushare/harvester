@@ -58,18 +58,18 @@ HARVEST_STAGE_CHOICES = [
 
 
 HIGHER_EDUCATION_LEVELS = {
-    "BVE": 1,
     "HBO": 2,
-    "HBO - Bachelor": 2,
-    "HBO - Master": 2,
     "WO": 3,
-    "WO - Bachelor": 3,
-    "WO - Master": 3,
 }
 
+MBO_EDUCATIONAL_LEVELS = {
+    "BVE",
+    "MBO",
+    "Beroepsonderwijs en Volwasseneneducatie",
+    "Volwasseneneducatie",
+}
 
 SITE_SHORTHAND_BY_DOMAIN = {
     "harvester.prod.surfedushare.nl": "edusources",
-    "harvester.mbo.prod.surfedushare.nl": "mbo",
     "harvester.publinova.nl": "publinova",
 }
