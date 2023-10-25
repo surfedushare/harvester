@@ -114,9 +114,7 @@ class Command(PipelineCommand):
             for seed in seeds:
                 self.logger.report_material(
                     seed["external_id"],
-                    state=seed["state"],
-                    copyright=seed.get("copyright", None),
-                    lowest_educational_level=seed.get("lowest_educational_level", None)
+                    state=seed["state"]
                 )
             ids = [seed["external_id"] for seed in seeds]
             delete_total, delete_details = collection.documents.filter(reference__in=ids).delete()

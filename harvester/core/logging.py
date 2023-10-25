@@ -15,10 +15,11 @@ class HarvestLogger(object):
     command = None
     command_options = None
 
-    def __init__(self, dataset, command, command_options):
+    def __init__(self, dataset, command, command_options, is_legacy_logger=True):
         self.dataset = dataset
         self.command = command
         self.command_options = command_options
+        self.is_legacy_logger = is_legacy_logger
 
     def _get_extra_info(self, phase=None, progress=None, material=None, result=None):
         return {
@@ -30,7 +31,8 @@ class HarvestLogger(object):
             "phase": phase,
             "progress": progress,
             "material": material,
-            "result": result or {}
+            "result": result or {},
+            "legacy_logger": self.is_legacy_logger
         }
 
     def debug(self, message):
@@ -69,18 +71,12 @@ class HarvestLogger(object):
         })
         harvester.info(f"Ending: {phase}", extra=extra)
 
-    def report_material(self, external_id, title=None, url=None, pipeline=None, state="upsert", copyright=None,
-                        lowest_educational_level=None):
+    def report_material(self, external_id, title=None, url=None, pipeline=None, state="upsert"):
         material_info = {
             "external_id": external_id,
             "title": title,
             "url": url
         }
-        if state == "inactive":
-            material_info.update({
-                "copyright": copyright,
-                "lowest_educational_level": lowest_educational_level
-            })
         pipeline = pipeline or {}
         # Report on pipeline steps
         for step, result in pipeline.items():
@@ -112,16 +108,11 @@ class HarvestLogger(object):
 
     def _get_document_counts(self, document_queryset):
         total = document_queryset.count()
-        inactive_educational_level_count = document_queryset \
-            .filter(properties__state="inactive", properties__lowest_educational_level__lt=1) \
-            .count()
-        inactive_copyright_count = \
-            document_queryset.filter(properties__state="inactive").count() - inactive_educational_level_count
+        inactive_count = document_queryset.filter(properties__state="inactive").count()
         deleted_count = document_queryset.filter(properties__state="deleted").count()
         return {
-            "total": total - inactive_educational_level_count - inactive_copyright_count - deleted_count,
-            "inactive_educational_level_count": inactive_educational_level_count,
-            "inactive_copyright_count": inactive_copyright_count,
+            "total": total - inactive_count - deleted_count,
+            "inactive_count": inactive_count,
             "deleted_count": deleted_count
         }
 
@@ -132,10 +123,7 @@ class HarvestLogger(object):
             "repository": repository,
             "total": document_counts["total"],
             "deleted": document_counts["deleted_count"],
-            "inactive": {
-                "educational_level": document_counts["inactive_educational_level_count"],
-                "copyright": document_counts["inactive_copyright_count"]
-            }
+            "inactive": document_counts["inactive_count"]
         })
         results.info(f"{collection.name} ({repository}) => {document_counts['total']}", extra=extra)
 
@@ -156,10 +144,7 @@ class HarvestLogger(object):
             "repository": None,
             "total": document_counts["total"],
             "deleted": document_counts["deleted_count"],
-            "inactive": {
-                "educational_level": document_counts["inactive_educational_level_count"],
-                "copyright": document_counts["inactive_copyright_count"]
-            }
+            "inactive": document_counts["inactive_count"]
         })
         results.info(f"{dataset_version} => {document_counts['total']}", extra=extra)
 
