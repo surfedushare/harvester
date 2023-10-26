@@ -18,7 +18,7 @@ class TestHttpPipelineProcessor(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        logging.disable(logging.DEBUG)
+        logging.disable(logging.WARNING)
 
     @classmethod
     def tearDownClass(cls):
