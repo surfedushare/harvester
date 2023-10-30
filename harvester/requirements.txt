@@ -47,7 +47,7 @@ beautifulsoup4==4.12.2
 awscli==1.29.70
 boto3==1.28.70
 requests-aws4auth==1.2.3
-django-storages==1.14
+django-storages==1.14.2
 
 # Tools
 watchdog==2.3.1
