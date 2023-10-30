@@ -90,7 +90,10 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_files(cls, soup, el):
-        return el.find_all('czp:location')
+        files = []
+        for file in el.find_all('czp:location'):
+            files.append(file.text.strip())
+        return files
 
 
     @classmethod
@@ -306,14 +309,6 @@ class EdurepDataExtraction(object):
         return list(set(ideas))
 
     @classmethod
-    def get_is_part_of(cls, soup, el):
-        return []  # not supported for now
-
-    @classmethod
-    def get_has_parts(cls, soup, el):
-        return []  # not supported for now
-
-    @classmethod
     def get_copyright_description(cls, soup, el):
         node = el.find('czp:rights')
         if not node:
@@ -344,8 +339,6 @@ OBJECTIVE = {
     "publishers": EdurepDataExtraction.get_publishers,
     "publisher_date": EdurepDataExtraction.get_publisher_date,
     "publisher_year": EdurepDataExtraction.get_publisher_year,
-    "is_part_of": EdurepDataExtraction.get_is_part_of,
-    "has_parts": EdurepDataExtraction.get_has_parts,
     # Learning material metadata
     "learning_material.aggregation_level": EdurepDataExtraction.get_aggregation_level,
     "learning_material.material_types": EdurepDataExtraction.get_material_types,
