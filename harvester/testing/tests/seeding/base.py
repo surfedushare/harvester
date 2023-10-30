@@ -51,8 +51,12 @@ class HttpSeedingProcessorTestCase(TestCase):
                 if result.id not in preexisting_document_ids:
                     self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
                     self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
-                    self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
-                    self.assertIsNone(result.finished_at, "Expected new TestDocuments to not be finished")
+                    if result.state == TestDocument.States.ACTIVE:
+                        self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
+                        self.assertIsNone(result.finished_at, "Expected new TestDocuments to not be finished")
+                    else:
+                        self.assertIsNone(result.pending_at, "Expected non-active TestDocuments to be finished")
+                        self.assertTrue(result.finished_at, "Expected non-active TestDocuments to be finished")
                 self.assertEqual(result.collection.id, self.set.id, "Expected TestDocument to use Set as collection")
                 self.assertEqual(
                     result.dataset_version.id,

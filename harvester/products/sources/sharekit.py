@@ -191,7 +191,6 @@ OBJECTIVE = {
     "keywords": "$.attributes.keywords",
     "description": "$.attributes.abstract",
     "copyright": SharekitMetadataExtraction.get_copyright,
-    "copyright_description": lambda node: None,
     "authors": SharekitMetadataExtraction.get_authors,
     "provider": SharekitMetadataExtraction.get_provider,
     "organizations": SharekitMetadataExtraction.get_organizations,
@@ -204,7 +203,6 @@ OBJECTIVE = {
     "learning_material.aggregation_level": "$.attributes.aggregationlevel",
     "learning_material.material_types": SharekitMetadataExtraction.get_material_types,
     "learning_material.lom_educational_levels": SharekitMetadataExtraction.get_lom_educational_levels,
-    "learning_material.studies": lambda node: [],
     "learning_material.ideas": SharekitMetadataExtraction.get_ideas,
     "learning_material.study_vocabulary": SharekitMetadataExtraction.get_study_vocabulary,
     "learning_material.disciplines": SharekitMetadataExtraction.get_learning_material_disciplines,
@@ -212,7 +210,6 @@ OBJECTIVE = {
     # Research product metadata
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,
-    "research_product.parties": lambda node: [],
 }
 
 

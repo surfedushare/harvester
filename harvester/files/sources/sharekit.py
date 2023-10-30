@@ -24,6 +24,7 @@ def get_file_seeds(sharekit_products_data: dict):
         product_provider_name = product_publishers[0] if len(product_publishers) else "sharekit"
         product_files = product_attributes.get("files", []) or []
         product_links = product_attributes.get("links", []) or []
+        # Yield delete data if files and links are missing
         if not product_files and not product_links:
             yield {
                 "url": None,
@@ -35,7 +36,7 @@ def get_file_seeds(sharekit_products_data: dict):
                     "copyright": product_copyright
                 }
             }
-            return
+        # Yield files data
         for product_file in product_files:
             # Anything without a URL can not be processed
             if not product_file.get("url", None):
@@ -51,6 +52,7 @@ def get_file_seeds(sharekit_products_data: dict):
             # We indicate we're not dealing with a webpage URL
             product_file["is_link"] = False
             yield product_file
+        # Yield links data
         for product_link in product_links:
             # Anything without a URL can not be processed
             if not product_link.get("url", None):

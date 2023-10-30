@@ -101,6 +101,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         if self.state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
+            self.finish_processing(current_time, commit=False)
         elif self.state != self.States.DELETED.value:
             self.metadata["deleted_at"] = None
         # Sets defaults for properties
