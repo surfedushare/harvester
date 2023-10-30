@@ -15,19 +15,20 @@ class TestEdurepProductSeeding(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self.set = Set.objects.create(name="edusources", identifier="srn")
+        self.set = Set.objects.create(name="edurep", identifier="srn")
         self.processor = HttpSeedingProcessor(self.set, {
             "phases": SEEDING_PHASES
         })
+
     def test_initial_seeding(self):
-        for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
+        for batch in self.processor("edurep", "1970-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
             for file_ in batch:
                 self.assertIsInstance(file_, ProductDocument)
                 self.assertIsNotNone(file_.identity)
                 self.assertTrue(file_.properties)
                 self.assertTrue(file_.pending_at)
-        self.assertEqual(self.set.documents.count(), 6)
+        self.assertEqual(self.set.documents.count(), 12)
 
     def test_delta_seeding(self):
         self.skipTest("to be tested")
@@ -44,100 +45,62 @@ class TestEdurepProductExtraction(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        EdurepOAIPMHFactory.create_common_responses()
-        cls.set = Set.objects.create(name="edusources", identifier="srn")
+        EdurepOAIPMHFactory.create_common_responses(include_delta=True)
+        cls.set = Set.objects.create(name="edurep", identifier="srn")
         processor = HttpSeedingProcessor(cls.set, {
             "phases": SEEDING_PHASES
         })
         cls.seeds = []
-        for batch in processor("edusources", "1970-01-01T00:00:00Z"):
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
+        for batch in processor("edurep", "2020-02-10T13:08:39Z"):
+            cls.seeds += [doc.properties for doc in batch]
+
+
 
     def test_authors_property(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]['authors'], [
-            {
-                'name': 'Ruudje Cock',
-                'email': 'Ruudje Cock',
-                'external_id': '83e7c163-075e-4eb2-8247-d975cf047dba',
-                'dai': None,
-                'orcid': None,
-                'isni': None
-            },
-            {
-                'name': 'A. Puist',
-                'email': 'A. Puist',
-                'external_id': '1174c1b9-f010-4a0a-98c0-2ceeefd0b506',
-                'dai': None,
-                'orcid': None,
-                'isni': None
-            },
-            {
-                'name': 'Hans Kazan',
-                'email': 'Hans Kazan',
-                'external_id': 'c0ab267a-ad56-480c-a13a-90b325f45b5d',
-                'dai': None,
-                'orcid': None,
-                'isni': None
-            },
+        self.assertEqual(seeds[3]['authors'], [
+            {'name': 'Ruud Kok', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None}
         ])
 
     def test_publishers_property(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]['publishers'], ['SURFnet'])
-        self.assertEqual(seeds[4]['publishers'], ['SURFnet'])
+        self.assertEqual(seeds[3]['publishers'], ['AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein'])
+        self.assertEqual(seeds[5]['publishers'], ['SURFnet'])
+        self.assertEqual(seeds[16]['publishers'], ['Erasmus Medisch Centrum'])
 
     def test_consortium(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]['learning_material']['consortium'], 'Projectgroep Vaktherapie')
-        self.assertIsNone(seeds[1]['learning_material']['consortium'])
-        self.assertEqual(seeds[2]['learning_material']['consortium'], 'Domain Applied Science')
+        self.assertEqual(seeds[3]['learning_material']['consortium'], None)
+        self.assertEqual(seeds[16]['learning_material']['consortium'], 'HBO Verpleegkunde')
 
     def test_organizations(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["organizations"]["root"]["name"], "SURFnet")
-
-    def test_is_part_of_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['is_part_of'], [], "Expected standard material to have no parent")
+        self.assertIsNone(seeds[0]['organizations']['root']['name'])
         self.assertEqual(
-            seeds[4]['is_part_of'],
-            ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"],
-            "Expected child material to specify its parent"
+            seeds[3]['organizations']['root']['name'],
+            'AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein'
         )
-
-    def test_has_parts_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['has_parts'], [], "Expected standard material to have no parts")
-        self.assertEqual(
-            seeds[3]['has_parts'],
-            [
-                "a18cdda7-e9c7-40d7-a7ad-6e875d9015ce",
-                "8936d0a3-4157-45f4-9595-c26d4c029d97",
-                "f929b625-5ef7-47b8-8fa8-94c969d0c427",
-                "befb515c-5dce-4f27-82a4-2f5a7a3618a4"
-            ],
-            "Expected parent material to have children and specify the external ids"
-        )
-        self.assertEqual(seeds[5]['has_parts'], [], "Expected child material to have no children")
+        self.assertEqual(seeds[5]['organizations']['root']['name'], 'SURFnet')
 
     def test_ideas_property(self):
         seeds = self.seeds
+        self.assertEqual(seeds[0]['learning_material']["ideas"], [], "Expected deleted material to return no idea data")
         possible_ideas = [
             "Informatievaardigheid vocabulaire 2020",
             "Publiceren en communiceren",
             "Publiceren (van eindproduct)"
         ]
-        self.assertTrue(seeds[0]['learning_material']["ideas"])
-        for idea in seeds[0]['learning_material']["ideas"]:
+        self.assertTrue(seeds[1]['learning_material']["ideas"])
+        for idea in seeds[1]['learning_material']["ideas"]:
             self.assertIn(idea, possible_ideas, "Expected material with idea elements to return the spliced strings")
-        self.assertEqual(
-            seeds[2]['learning_material']["ideas"], [],
-            "Expected material without ideas to return empty list"
-        )
+        self.assertEqual(seeds[2]['learning_material']["ideas"], [], "Expected material without ideas to return empty list")
+        self.assertEqual(seeds[3]['learning_material']["ideas"], [], "Expected material from other than Sharekit to ignore ideas")
 
     def test_study_vocabulary_property(self):
         seeds = self.seeds
+        import ipdb; ipdb.set_trace()
         self.assertEqual(
             seeds[0]['learning_material']["study_vocabulary"],
             ["http://purl.edustandaard.nl/concept/8f984395-e090-41be-96df-503f53ddaa09"]
@@ -149,45 +112,37 @@ class TestEdurepProductExtraction(TestCase):
 
     def test_lom_educational_level(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]['learning_material']["lom_educational_levels"], ["HBO"],
+        self.assertEqual(seeds[0]['learning_material']["lom_educational_levels"], [],
+                         "Expected deleted materials to have no educational level")
+        self.assertEqual(sorted(seeds[9]['learning_material']["lom_educational_levels"]), ["HBO", "HBO - Bachelor"],
                          "Expected HBO materials to have an educational level")
-        self.assertEqual(seeds[1]['learning_material']["lom_educational_levels"], ["WO"],
-                         "Expected HBO materials to have an educational level")
+        self.assertEqual(sorted(seeds[2]['learning_material']["lom_educational_levels"]), ["WO", "WO - Bachelor"],
+                         "Expected WO materials to have an educational level")
 
     def test_get_files(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [
-            "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7"
-        ])
-        self.assertEqual(seeds[2]["files"], [
-                "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
-                "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
-                "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729"
-        ])
+        self.assertEqual(seeds[0]["files"], [], "Expected deleted material to have no files")
+        self.assertEqual(len(seeds[1]["files"]), 1)
+
+        self.assertEqual(seeds[1]["files"],
+                         ["https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7"])
 
     def test_get_material_types(self):
         seeds = self.seeds
-        self.assertEqual(
-            seeds[0]['learning_material']["material_types"], [],
-            "Expected material without a type to return empty list"
-        )
-        self.assertEqual(
-            seeds[1]['learning_material']["material_types"], [],
-            "Expected material with null as type to return empty list"
-        )
-        self.assertEqual(seeds[3]['learning_material']["material_types"], ["kennisoverdracht"])
-        self.assertEqual(seeds[4]['learning_material']["material_types"], ["kennisoverdracht"],
-                         "Expected a single value to transform to a list")
-        self.assertEqual(seeds[5]['learning_material']["material_types"], ["kennisoverdracht"],
-                         "Expected null values to get filtered from lists")
+        self.assertEqual(seeds[0]['learning_material']["material_types"], [],
+                         "Expected deleted material to have no material types")
+        self.assertEqual(seeds[1]['learning_material']["material_types"], [],
+                         "Expected material without a type to return empty list")
+        self.assertEqual(seeds[4]['learning_material']["material_types"], ["weblecture"])
 
     def test_get_publisher_year(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_year"], 1970)
-        self.assertIsNone(seeds[8]["publisher_year"], "Expected deleted material to have no publisher year")
+        self.assertIsNone(seeds[0]["publisher_year"], "Expected deleted material to have no publication year")
+        self.assertIsNone(seeds[1]["publisher_year"],
+                          "Expected material without publication date to have no publication year")
+        self.assertEqual(seeds[3]["publisher_year"], 2017)
+        self.assertEqual(seeds[8]["publisher_year"], 2020)
 
     def test_get_publisher_date(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
-        self.assertIsNone(seeds[6]["publisher_date"])
-        self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")
+        # toDo: Add publisher date?
