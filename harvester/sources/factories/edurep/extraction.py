@@ -25,7 +25,7 @@ class EdurepOAIPMHFactory(factory.django.DjangoModelFactory):
         make_aware(datetime(year=1970, month=1, day=1)),
         make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
     )
-    set_specification = "surfsharekit"
+    set_specification = "edurep"
     status = 200
     head = {
         "content-type": "text/xml"
