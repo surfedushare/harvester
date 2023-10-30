@@ -1,4 +1,4 @@
-from typing import Any, Iterator
+from typing import Any, Iterator, List, Dict, Union
 from copy import deepcopy
 from collections import OrderedDict
 from requests import Session
@@ -23,17 +23,17 @@ class ResourceSeedingProcessor(Processor):
     buffer = []
     batch = []
 
-    def should_skip_phase(self, phase: dict) -> bool:
+    def should_skip_phase(self, phase: Dict) -> bool:
         if not self.contents:
             return False
         highest_content_phase = max(self.contents.keys())
         return phase["phase"].index < highest_content_phase
 
-    def get_resource_iterator(self, args_list: list[Any], kwargs_list: list[dict],
+    def get_resource_iterator(self, args_list: List[Any], kwargs_list: List[Dict],
                               resource_config: ConfigurationType) -> Iterator:
-        raise NotImplementedError("ResourceSeedingProcessor does not implement get_resource_iterator")
+        raise NotImplemented("ResourceSeedingProcessor does not implement get_resource_iterator")
 
-    def build_seed_iterator(self, phase: dict, *args, **kwargs) -> Iterator:
+    def build_seed_iterator(self, phase: Dict, *args, **kwargs) -> Iterator:
         resource_config = phase["retrieve"]
         if not len(self.batch):
             # This is the initial case where there is no input from a buffer.
@@ -70,26 +70,27 @@ class ResourceSeedingProcessor(Processor):
         batch_size = phase["phase"].batch_size
         return ibatch(seed_iterator, batch_size=batch_size)
 
-    def build_callback_iterator(self, phase: dict, *args) -> Iterator:
+    def build_callback_iterator(self, phase: Dict, *args) -> Iterator:
         callback = phase["contribute"].callback
         for seed in self.batch:
             yield callback(seed, *args)
 
-    def flush_buffer(self, phase: dict, force=False) -> None:
+    def flush_buffer(self, phase: Dict, force: bool = False) -> None:
         if not self.buffer and not force:
             raise ValueError(f"Did not expect to encounter an empty buffer with strategy for phase {phase['phase']}")
 
-        match phase["phase"].strategy:
-            case "initial" | "replace" | "back_fill":
-                self.batch = deepcopy(self.buffer)
-            case "merge":
-                merge_on = phase["contribute"].merge_on
-                buffer = {
-                    content[merge_on]: content
-                    for content in self.buffer
-                }
-                for content in self.batch:
-                    content.update(buffer.get(content[merge_on], {}))
+        strategy = phase["phase"].strategy
+
+        if strategy in ["initial", "replace", "back_fill"]:
+            self.batch = deepcopy(self.buffer)
+        elif strategy == "merge":
+            merge_on = phase["contribute"].merge_on
+            buffer = {
+                content[merge_on]: content
+                for content in self.buffer
+            }
+            for content in self.batch:
+                content.update(buffer.get(content[merge_on], {}))
 
         self.buffer = []
 
@@ -100,8 +101,8 @@ class ResourceSeedingProcessor(Processor):
         ]
         return self.collection.update_batches(documents, self.collection.identifier)
 
-    def __init__(self, collection: CollectionBase, config: ConfigurationType | dict,
-                 initial: list[dict] = None) -> None:
+    def __init__(self, collection: CollectionBase, config: Union[ConfigurationType, Dict],
+                 initial: List[Dict] = None) -> None:
         super().__init__(config)
         assert len(self.config.phases), \
             "ResourceSeedingProcessor needs at least one phase configured to be able to retrieve seed data"
@@ -143,32 +144,32 @@ class ResourceSeedingProcessor(Processor):
             for phase_index, phase in enumerate(self.phases.values()):
                 if self.should_skip_phase(phase):
                     continue
-                match phase["phase"].strategy:
-                    case "initial" | "replace":
-                        if phase_index not in self.contents:
-                            self.contents[phase_index] = self.build_seed_iterator(phase, *args, **kwargs)
-                        try:
-                            self.buffer = next(self.contents[phase_index])
-                        except StopIteration:
-                            # The contents iterator is exhausted.
-                            # We'll flush the currently empty buffer
-                            self.flush_buffer(phase, force=True)
-                            # We remove the iterator from memory
-                            del self.contents[phase_index]
-                            # And retry phases before this phase (if any)
-                            break
-                    case "merge":
-                        self.buffer = [
-                            content
-                            for batch in self.build_seed_iterator(phase, *args, **kwargs)
-                            for content in batch
-                        ]
-                    case "back_fill":
-                        self.buffer = [
-                            content
-                            for batch in self.build_callback_iterator(phase, self.collection)
-                            for content in batch
-                        ]
+                strategy = phase["phase"].strategy
+                if strategy in ["initial", "replace"]:
+                    if phase_index not in self.contents:
+                        self.contents[phase_index] = self.build_seed_iterator(phase, *args, **kwargs)
+                    try:
+                        self.buffer = next(self.contents[phase_index])
+                    except StopIteration:
+                        # The contents iterator is exhausted.
+                        # We'll flush the currently empty buffer
+                        self.flush_buffer(phase, force=True)
+                        # We remove the iterator from memory
+                        del self.contents[phase_index]
+                        # And retry phases before this phase (if any)
+                        break
+                elif strategy == "merge":
+                    self.buffer = [
+                        content
+                        for batch in self.build_seed_iterator(phase, *args, **kwargs)
+                        for content in batch
+                    ]
+                elif strategy == "back_fill":
+                    self.buffer = [
+                        content
+                        for batch in self.build_callback_iterator(phase, self.collection)
+                        for content in batch
+                    ]
                 self.flush_buffer(phase)
             if not self.batch:
                 return
@@ -182,7 +183,7 @@ class HttpSeedingProcessor(ResourceSeedingProcessor):
     def get_session(self) -> Session:
         return Session()
 
-    def get_resource_iterator(self, args_list: list[Any], kwargs_list: list[dict],
+    def get_resource_iterator(self, args_list: List[Any], kwargs_list: List[Dict],
                               resource_config: ConfigurationType) -> Iterator:
         return send_serie_iterator(
             args_list, kwargs_list,
