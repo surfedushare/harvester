@@ -1,26 +1,32 @@
 import re
 from copy import copy
 
-from datagrowth.resources import HttpResource
 from django.conf import settings
+
+from datagrowth.resources import HttpResource
 
 
 class YoutubeAPIResource(HttpResource):
 
-    url_regex = re.compile(r".*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*", re.IGNORECASE)
+    url_regex = re.compile(r".*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?.*v=)([^#\&\?]*).*", re.IGNORECASE)
 
     URI_TEMPLATE = \
         "https://youtube.googleapis.com/youtube/v3/{}"
 
+    HEADERS = {
+        "Referer": f"https://{settings.DOMAIN}"
+    }
+
     def handle_errors(self):
         content_type, data = self.content
-        if not len(data['items']):
+        if data and not len(data['items']):
             self.status = 404
         return super().handle_errors()
 
-    def url_to_id(self, url: str):
-        url_match = self.url_regex.findall(url)
-        return url_match[0]
+    @classmethod
+    def url_to_id(cls, url: str):
+        url_match = cls.url_regex.findall(url)
+        return url_match[0] if url_match else None
 
     def auth_parameters(self):
         return {"key": settings.GOOGLE_API_KEY}
