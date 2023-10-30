@@ -39,16 +39,6 @@ class TestGetHarvestSeedsEdurep(TestCase):
             else:
                 self.assertEqual(state, "active")
 
-    def test_lowest_education_level(self):
-        seeds = self.seeds
-
-        self.assertEqual(seeds[0]["lowest_educational_level"], 1,
-                         "Expected file with MBO to have lowest educational level 1")
-        self.assertEqual(seeds[1]["lowest_educational_level"], 1,
-                         "Expected file with MBO to have lowest educational level 1")
-        self.assertEqual(seeds[2]["lowest_educational_level"], 2,
-                         "Expected file with HBO to have lowest educational level 2")
-
     def test_keywords(self):
         seeds = self.seeds
         self.assertTrue("asperge" in seeds[0]["keywords"])

@@ -37,7 +37,7 @@ class TestGetHarvestSeedsEdurep(SeedExtractionTestCase):
 
     def test_get_complete_set_without_deletes(self):
         seeds = get_harvest_seeds(Repositories.EDUREP, self.set_spec, self.begin_of_time, include_deleted=False)
-        self.assertEqual(len(seeds), 9)
+        self.assertEqual(len(seeds), 7)
         self.check_seed_integrity(seeds, include_deleted=False)
 
     def test_get_partial_set_without_deletes(self):
@@ -119,19 +119,10 @@ class TestGetHarvestSeedsEdurep(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["lom_educational_levels"], [],
                          "Expected deleted materials to have no educational level")
-        self.assertEqual(sorted(seeds[1]["lom_educational_levels"]), ["HBO", "HBO - Bachelor"],
+        self.assertEqual(sorted(seeds[9]["lom_educational_levels"]), ["HBO", "HBO - Bachelor"],
                          "Expected HBO materials to have an educational level")
-        self.assertEqual(sorted(seeds[2]["lom_educational_levels"]), ["WO", "WO - Bachelor"],
-                         "Expected HBO materials to have an educational level")
-
-    def test_lowest_educational_level(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["lowest_educational_level"], -1,
-                         "Expected deleted materials to have negative educational level")
-        self.assertEqual(seeds[1]["lowest_educational_level"], 2,
-                         "Expected HBO materials to have an educational level of 2")
-        self.assertEqual(seeds[2]["lowest_educational_level"], 3,
-                         "Expected HBO materials to have an educational level of 3")
+        self.assertEqual(sorted(seeds[13]["lom_educational_levels"]), ["WO", "WO - Bachelor"],
+                         "Expected WO materials to have an educational level")
 
     def test_get_files(self):
         seeds = self.seeds
@@ -200,3 +191,12 @@ class TestGetHarvestSeedsEdurep(SeedExtractionTestCase):
                           "Expected material without publication date to have no publication year")
         self.assertEqual(seeds[3]["publisher_year"], 2017)
         self.assertEqual(seeds[8]["publisher_year"], 2020)
+
+    def test_get_oaipmh_record_state(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["state"], "deleted", "Expected deleted material to have state deleted")
+        self.assertEqual(seeds[1]["state"], "active", "Expected MBO level with HBO level to be active")
+        self.assertEqual(seeds[2]["state"], "inactive", "Expected Groep 3 level to always be inactive")
+        self.assertEqual(seeds[3]["state"], "inactive", "Expected MBO level to be inactive without any higher levels")
+        self.assertEqual(seeds[9]["state"], "active", "Expected HBO level to be active")
+        self.assertEqual(seeds[13]["state"], "active", "Expected WO level to be active")

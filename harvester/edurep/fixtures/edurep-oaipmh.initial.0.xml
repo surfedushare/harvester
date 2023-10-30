@@ -139,9 +139,9 @@
                                 </czp:entry>
                             </czp:taxon>
                             <czp:taxon>
-                                <czp:id>f33b30ee-3c82-4ead-bc20-4255be9ece2d</czp:id>
+                                <czp:id>f35b30ee-3c82-4ead-bc20-4255be9ece2d</czp:id>
                                 <czp:entry>
-                                    <czp:langstring xml:lang="nl">HBO - Bachelor</czp:langstring>
+                                    <czp:langstring xml:lang="nl">MBO</czp:langstring>
                                 </czp:entry>
                             </czp:taxon>
                         </czp:taxonpath>
@@ -340,9 +340,9 @@
                                 </czp:entry>
                             </czp:taxon>
                             <czp:taxon>
-                                <czp:id>18656a7c-95a5-4831-8085-020d3151aceb</czp:id>
+                                <czp:id>aaaaaa7c-95a5-4831-8085-020d3151aceb</czp:id>
                                 <czp:entry>
-                                    <czp:langstring xml:lang="nl">WO - Bachelor</czp:langstring>
+                                    <czp:langstring xml:lang="nl">Groep 3</czp:langstring>
                                 </czp:entry>
                             </czp:taxon>
                         </czp:taxonpath>
@@ -604,15 +604,9 @@ END:VCARD</czp:vcard></czp:centity>
                                 </czp:langstring>
                             </czp:source>
                             <czp:taxon>
-                                <czp:id>be140797-803f-4b9e-81cc-5572c711e09c</czp:id>
+                                <czp:id>f35b30ee-3c82-4ead-bc20-4255be9ece2d</czp:id>
                                 <czp:entry>
-                                    <czp:langstring xml:lang="nl">HBO</czp:langstring>
-                                </czp:entry>
-                            </czp:taxon>
-                            <czp:taxon>
-                                <czp:id>f33b30ee-3c82-4ead-bc20-4255be9ece2d</czp:id>
-                                <czp:entry>
-                                    <czp:langstring xml:lang="nl">HBO - Bachelor</czp:langstring>
+                                    <czp:langstring xml:lang="nl">MBO</czp:langstring>
                                 </czp:entry>
                             </czp:taxon>
                         </czp:taxonpath>

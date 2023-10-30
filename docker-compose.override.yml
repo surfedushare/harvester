@@ -7,6 +7,9 @@ services:
     build:
       dockerfile: "harvester/Dockerfile"
       context: .
+      args:  # notice that localhost builds end up in production, but production ignores special UID/GID values
+        - UID=${HOST_UID}
+        - GID=${HOST_GID}
     command: uwsgi --ini uwsgi/emperor.ini --vassals-include=uwsgi/development.ini
     stdin_open: true
     tty: true
@@ -36,6 +39,9 @@ services:
     build:
       dockerfile: "harvester/Dockerfile"
       context: .
+      args: # notice that localhost builds end up in production, but production ignores special UID/GID values
+        - UID=${HOST_UID}
+        - GID=${HOST_GID}
     stdin_open: true
     tty: true
     environment:
@@ -64,6 +70,9 @@ services:
     build:
       dockerfile: "harvester/Dockerfile"
       context: .
+      args: # notice that localhost builds end up in production, but production ignores special UID/GID values
+        - UID=${HOST_UID}
+        - GID=${HOST_GID}
     stdin_open: true
     tty: true
     environment:
