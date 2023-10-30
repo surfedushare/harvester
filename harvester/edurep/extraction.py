@@ -4,7 +4,7 @@ from hashlib import sha1
 from mimetypes import guess_type
 
 from vobject.base import ParseError, readOne
-from core.constants import HIGHER_EDUCATION_LEVELS
+from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
 from dateutil.parser import parse as date_parser
 from django.conf import settings
 from django.utils.text import slugify
@@ -63,12 +63,44 @@ class EdurepDataExtraction(object):
         return el.find('identifier').text.strip()
 
     @classmethod
-    def get_oaipmh_record_state(cls, soup, el):
-        lowest_educational_level = cls.get_lowest_educational_level(soup, el)
-        if lowest_educational_level < LOWEST_EDUCATIONAL_LEVEL:
+    def _get_educational_level_state(cls, soup, el):
+        """
+        Returns the desired state of the record based on (non NL-LOM) educational levels
+        """
+        educational_levels = cls.get_educational_levels(soup, el)
+        if not len(educational_levels):
             return "inactive"
+        has_higher_level = False
+        has_lower_level = False
+        for education_level in educational_levels:
+            is_higher_level = False
+            is_lower_level = False
+            for higher_education_level in HIGHER_EDUCATION_LEVELS.keys():
+                if education_level.startswith(higher_education_level):
+                    is_higher_level = True
+                    break
+            for mbo_education_level in MBO_EDUCATIONAL_LEVELS:
+                if education_level.startswith(mbo_education_level):
+                    break
+            else:
+                # The level is not MBO ... so it has to be lower level if it's not higher level
+                is_lower_level = not is_higher_level
+            # If any education_level matches against higher than HBO or lower than MBO
+            # Then we mark the material as higher_level and/or lower_level
+            has_higher_level = has_higher_level or is_higher_level
+            has_lower_level = has_lower_level or is_lower_level
+        # A record needs to have at least one "higher education" level
+        # and should not have any "children education" levels
+        return "active" if has_higher_level and not has_lower_level else "inactive"
+
+    @classmethod
+    def get_oaipmh_record_state(cls, soup, el):
+        """
+        Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
+        """
+        educational_level_state = cls._get_educational_level_state(soup, el)
         header = el.find('header')
-        return header.get("status", "active")
+        return header.get("status", educational_level_state)
 
     #############################
     # GENERIC
@@ -302,20 +334,6 @@ class EdurepDataExtraction(object):
             return
         datetime = date_parser(publisher_date)
         return datetime.year
-
-    @classmethod
-    def get_lom_educational_levels(cls, soup, el):
-        educational = el.find('czp:educational')
-        if not educational:
-            return []
-        contexts = educational.find_all('czp:context')
-        if not contexts:
-            return []
-        educational_levels = [
-            edu.find('czp:value').find('czp:langstring').text.strip()
-            for edu in contexts
-        ]
-        return list(set(educational_levels))
 
     @classmethod
     def get_educational_levels(cls, soup, el):
