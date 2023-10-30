@@ -23,18 +23,57 @@ class TestSharekitProductSeeding(TestCase):
     def test_initial_seeding(self):
         for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
-            for file_ in batch:
-                self.assertIsInstance(file_, ProductDocument)
-                self.assertIsNotNone(file_.identity)
-                self.assertTrue(file_.properties)
-                self.assertTrue(file_.pending_at)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
         self.assertEqual(self.set.documents.count(), 11)
 
     def test_delta_seeding(self):
-        self.skipTest("to be tested")
+        # Load the initial data, set all tasks as completed and create delta Resource
+        initial_documents = []
+        for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.finish_processing()
+                initial_documents.append(doc)
+        SharekitMetadataHarvestFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",  # Changed study_vocabulary by the delta
+            # Documents added by the delta
+            "sharekit:edusources:3e45b9e3-ba76-4200-a927-2902177f1f6c",
+            "sharekit:edusources:4842596f-fe60-40ef-8c06-4d3d6e296ba4",
+            "sharekit:edusources:f4e867ba-0bd0-489a-824a-752038dfee63",
+        }
+        # Load the delta data and see if updates have taken place
+        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+            self.assertIsInstance(batch, list)
+            self.assertTrue(batch, "Expected delta batches to yield multiple ProductDocuments")
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 14, "Expected 11 initial Documents and 3 delta Documents")
 
     def test_empty_seeding(self):
-        self.skipTest("to be tested")
+        SharekitMetadataHarvestFactory.create(is_initial=False, number=0, is_empty=True)  # delta without results
+        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
 
 
 class TestSharekitProductExtraction(TestCase):
