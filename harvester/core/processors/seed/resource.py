@@ -175,6 +175,9 @@ class ResourceSeedingProcessor(Processor):
                 return
             for batch in self.batch_to_documents():
                 yield batch
+        # Resets object state to allow multiple calls to the processor
+        self.buffer = None
+        self.batch = []
 
 
 class HttpSeedingProcessor(ResourceSeedingProcessor):
