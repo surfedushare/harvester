@@ -54,6 +54,7 @@ class TestSharekitProductSeeding(TestCase):
             "sharekit:edusources:f4e867ba-0bd0-489a-824a-752038dfee63",
         }
         # Load the delta data and see if updates have taken place
+        documents = []
         for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
             self.assertIsInstance(batch, list)
             self.assertTrue(batch, "Expected delta batches to yield multiple ProductDocuments")
@@ -67,7 +68,9 @@ class TestSharekitProductSeeding(TestCase):
                 else:
                     self.assertIsNone(product.pending_at)
                     self.assertTrue(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 14, "Expected 11 initial Documents and 3 delta Documents")
+                documents.append(product)
+        self.assertEqual(len(documents), 3 + 1 + 2, "Expected three additions, one deletion and two updates")
+        self.assertEqual(self.set.documents.count(), 14, "Expected 11 initial Documents and 3 delta additions")
 
     def test_empty_seeding(self):
         SharekitMetadataHarvestFactory.create(is_initial=False, number=0, is_empty=True)  # delta without results
