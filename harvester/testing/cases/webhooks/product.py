@@ -32,6 +32,8 @@ class TestProductWebhookTestCase(TestCase):
     entity_type = None
     set_names = None
 
+    update_document = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -197,6 +199,22 @@ class TestProductWebhookTestCase(TestCase):
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_update_no_language(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
+        self.assertEqual(update_response.status_code, 200)
+        update_product, update_file = self.assert_update_models()
+        # Dispatch asserts
+        dispatch_mock.assert_has_calls([
+            call("products", [update_product.id]),
+            call("files", [update_file.id])
+        ])
+
+    @patch("products.views.webhook.dispatch_document_tasks.delay")
+    def test_update_deleted(self, dispatch_mock):
+        # Prepare update Document
+        self.update_document.state = ProductDocument.States.DELETED
+        self.update_document.properties["state"] = ProductDocument.States.DELETED
+        self.update_document.save()
+        # Execute the webhook
+        update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
         update_product, update_file = self.assert_update_models()
         # Dispatch asserts

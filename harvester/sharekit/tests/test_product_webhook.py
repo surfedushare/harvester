@@ -67,9 +67,9 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
         cls.files_dataset, cls.files_dataset_version, cls.files_sets, cls.files_documents = (
             create_datatype_models("files", cls.set_names, cls.file_seeds, 2)
         )
-        update_document = cls.product_documents[0]
-        update_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
-        update_document.save()
+        cls.update_document = cls.product_documents[0]
+        cls.update_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
+        cls.update_document.save()
 
     @classmethod
     def load_sharekit_test_data(cls):
