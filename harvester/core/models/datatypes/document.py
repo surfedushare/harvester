@@ -79,6 +79,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     def update(self, data: Any, commit: bool = True) -> None:
         current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
+        # Deletes shouldn't update anything but state information
+        if content.get("state") == self.States.DELETED.value:
+            super().update({"state": self.States.DELETED.value}, commit=commit)
+            return
         # See if pipeline task need to re-run due to changes
         for dependency_key, task_names in self.get_property_dependencies().items():
             current_value = reach(dependency_key, self.properties)
@@ -86,12 +90,9 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             if current_value != update_value:
                 for task in task_names:
                     self.invalidate_task(task, current_time=current_time)
-        # Updates properties unless state is deleted
-        if content.get("state") == self.States.DELETED.value:
-            super().update({"state": self.States.DELETED.value}, commit=commit)
-        else:
-            data = self.parse_seed_data(data)
-            super().update(data, commit=commit)
+        # Update as normal, but parse special keys
+        data = self.parse_seed_data(data)
+        super().update(data, commit=commit)
 
     def clean(self):
         super().clean()

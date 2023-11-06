@@ -42,7 +42,10 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
                 "set": "sharekit:edusources",
                 "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
                 "title": "To be deleted",
-                "language": "nl"
+                "language": "nl",
+                "learning_material": {
+                    "study_vocabulary": ["applied-science"]  # remains intact
+                }
             }
         ]
         cls.file_seeds = [
@@ -70,6 +73,9 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
         cls.update_document = cls.product_documents[0]
         cls.update_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
         cls.update_document.save()
+        delete_document = cls.product_documents[1]
+        delete_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
+        delete_document.save()
 
     @classmethod
     def load_sharekit_test_data(cls):

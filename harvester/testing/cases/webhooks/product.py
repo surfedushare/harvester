@@ -116,6 +116,10 @@ class TestProductWebhookTestCase(TestCase):
         self.assertLess(delete_product.created_at, self.test_start_time)
         self.assertGreater(delete_product.modified_at, self.test_start_time)
         self.assertEqual(delete_product.properties["state"], "deleted")
+        self.assertEqual(delete_product.properties["title"], "To be deleted",
+                         "Expected properties of deleted products to remain intact")
+        self.assertEqual(delete_product.pipeline, {"lookup_study_vocabulary_parents": {"success": True}},
+                         "Expected tasks to remain valid after deletion")
         # File asserts
         self.assertIsNotNone(delete_file)
         self.assertEqual(delete_product.state, "deleted")
