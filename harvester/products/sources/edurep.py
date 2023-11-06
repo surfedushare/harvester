@@ -1,5 +1,6 @@
 import logging
 import re
+from datetime import datetime
 
 from vobject.base import ParseError, readOne
 from dateutil.parser import parse as date_parser
@@ -241,7 +242,12 @@ class EdurepDataExtraction(object):
             return publisher_datetime
         provider = el.find(string='content provider')
         provider_datetime = cls.find_role_datetime(provider)
-        return provider_datetime
+        if provider_datetime is None:
+            return
+        return date_parser(
+            provider_datetime,
+            default=datetime(year=1970, month=1, day=1)).strftime("%Y-%m-%d")
+
 
     @classmethod
     def get_publisher_year(cls, soup, el):
@@ -297,16 +303,9 @@ class EdurepDataExtraction(object):
         return list(set([block.text.strip() for block in blocks]))
 
     @classmethod
-    def get_ideas(cls, soup, el):
-        external_id = cls.get_oaipmh_external_id(soup, el)
-        if not external_id.startswith("surfsharekit"):
-            return []
-        blocks = cls.find_all_classification_blocks(el, "idea", "czp:entry")
-        compound_ideas = list(set([block.find('czp:langstring').text.strip() for block in blocks]))
-        ideas = []
-        for compound_idea in compound_ideas:
-            ideas += compound_idea.split(" - ")
-        return list(set(ideas))
+    def get_study_vocabulary(cls, soup, el):
+        blocks = cls.find_all_classification_blocks(el, "idea", "czp:id")
+        return list(set([block.text.strip() for block in blocks]))
 
     @classmethod
     def get_copyright_description(cls, soup, el):
@@ -324,8 +323,6 @@ OBJECTIVE = {
     "external_id": EdurepDataExtraction.get_oaipmh_external_id,
     "set": EdurepDataExtraction.get_set,
     # Generic metadata
-    # "doi": ,
-    # toDo: Update fixture to check if these values exist in data.
     "files": EdurepDataExtraction.get_files,
     "title": EdurepDataExtraction.get_title,
     "language": EdurepDataExtraction.get_language,
@@ -344,14 +341,9 @@ OBJECTIVE = {
     "learning_material.material_types": EdurepDataExtraction.get_material_types,
     "learning_material.lom_educational_levels": EdurepDataExtraction.get_educational_levels,
     "learning_material.studies": EdurepDataExtraction.get_studies,
-    "learning_material.ideas": EdurepDataExtraction.get_ideas,
-    "learning_material.study_vocabulary": lambda soup, el: [],
+    "learning_material.study_vocabulary": EdurepDataExtraction.get_study_vocabulary,
     "learning_material.disciplines": EdurepDataExtraction.get_studies,
     "learning_material.consortium": EdurepDataExtraction.get_consortium,
-    # Research product metadata
-    # "research_product.research_object_type": ,
-    # "research_product.research_themes": ,
-    # "research_product.parties": ,
 }
 
 SEEDING_PHASES = [
