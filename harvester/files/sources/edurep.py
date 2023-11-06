@@ -153,12 +153,7 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
         yield doc.properties
 
 
-class EdurepFileExtraction(object):
-
-    @classmethod
-    def get_state(cls, soup, el) -> str | None:
-        state = el["state"]
-        return state
+class SharekitFileExtraction(object):
 
     @classmethod
     def get_hash(cls, soup, el) -> str | None:
@@ -190,16 +185,16 @@ class EdurepFileExtraction(object):
 OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": get_file_seeds,
-    "state": EdurepFileExtraction.get_state,
-    "external_id": EdurepFileExtraction.get_hash,
+    # "state": lambda node: node["state"],
+    "external_id": SharekitFileExtraction.get_hash,
     # "set": lambda node: node["set"],
     # # Generic metadata
     # "url": lambda node: parse_url(node["url"]),
-    # "hash": EdurepFileExtraction.get_hash,
-    # "mime_type": EdurepFileExtraction.get_mime_type,
+    # "hash": SharekitFileExtraction.get_hash,
+    # "mime_type": SharekitFileExtraction.get_mime_type,
     # "title": lambda node: node.get("fileName", node.get("urlName", None)),
     # "copyright": lambda node: node["product"]["copyright"],
-    # "access_rights": EdurepFileExtraction.get_access_rights,
+    # "access_rights": SharekitFileExtraction.get_access_rights,
     # "product_id": lambda node: node["product"]["product_id"],
     # "is_link": lambda node: node.get("is_link", None),
     # "provider": lambda node: node["product"]["provider"]
