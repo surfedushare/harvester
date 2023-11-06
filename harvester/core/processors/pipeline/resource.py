@@ -29,7 +29,7 @@ class ResourcePipelineProcessor(PipelineProcessor):
         filters = Q(**{f"pipeline__{pipeline_phase}__success": False})
         filters |= Q(**{f"pipeline__{pipeline_phase}__isnull": True})
         if depends_on:
-            filters |= Q(**{f"pipeline__{depends_on}__success": True})
+            filters &= Q(**{f"pipeline__{depends_on}__success": True})
         return queryset.filter(filters)
 
     def process_batch(self, batch):
