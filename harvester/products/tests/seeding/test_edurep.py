@@ -84,29 +84,15 @@ class TestEdurepProductExtraction(TestCase):
         )
         self.assertEqual(seeds[5]['organizations']['root']['name'], 'SURFnet')
 
-    def test_ideas_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['learning_material']["ideas"], [], "Expected deleted material to return no idea data")
-        possible_ideas = [
-            "Informatievaardigheid vocabulaire 2020",
-            "Publiceren en communiceren",
-            "Publiceren (van eindproduct)"
-        ]
-        self.assertTrue(seeds[1]['learning_material']["ideas"])
-        for idea in seeds[1]['learning_material']["ideas"]:
-            self.assertIn(idea, possible_ideas, "Expected material with idea elements to return the spliced strings")
-        self.assertEqual(seeds[2]['learning_material']["ideas"], [], "Expected material without ideas to return empty list")
-        self.assertEqual(seeds[3]['learning_material']["ideas"], [], "Expected material from other than Sharekit to ignore ideas")
 
-    def test_study_vocabulary_property(self):
+    def test_study_vocabulary(self):
         seeds = self.seeds
-        import ipdb; ipdb.set_trace()
         self.assertEqual(
-            seeds[0]['learning_material']["study_vocabulary"],
+            seeds[1]['learning_material']["study_vocabulary"],
             ["http://purl.edustandaard.nl/concept/8f984395-e090-41be-96df-503f53ddaa09"]
         )
         self.assertEqual(
-            seeds[2]['learning_material']["study_vocabulary"], [],
+            seeds[0]['learning_material']["study_vocabulary"], [],
             "Expected material without ideas to return empty list"
         )
 
@@ -145,4 +131,60 @@ class TestEdurepProductExtraction(TestCase):
 
     def test_get_publisher_date(self):
         seeds = self.seeds
-        # toDo: Add publisher date?
+        self.assertIsNone(seeds[0]["publisher_date"], "Expected deleted material to have no publication year")
+        self.assertIsNone(seeds[1]["publisher_date"],
+                          "Expected material without publication date to have no publication year")
+        self.assertEqual(seeds[3]["publisher_date"], "2017-09-27")
+        self.assertEqual(seeds[8]["publisher_date"], "2020-09-21")
+
+    def test_get_title(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["title"], "Deleted item should be None")
+        self.assertEqual(seeds[5]["title"], "01. How can we summarize 13.8 billion years in one brief course?")
+        self.assertEqual(seeds[15]["title"], "Nutr103x 7 3 4 Negative effects of heating")
+
+    def test_get_description(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["description"], "Deleted item should be None")
+        self.assertEqual(seeds[5]["description"], "Video about the question: how can we summarize 13.8")
+        self.assertEqual(seeds[15]["description"], "Video about the negative effects of heating")
+
+    def test_get_copyright(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["copyright"], 'yes', "Deleted item should be yes")
+        self.assertEqual(seeds[5]["copyright"], "cc-by-40")
+        self.assertEqual(seeds[16]["copyright"], "cc-by-nc-nd-40")
+
+    def test_get_copyright_description(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["copyright_description"], "Deleted item should be None")
+        self.assertEqual(seeds[5]["copyright_description"], 'https://creativecommons.org/licenses/by/4.0/')
+        self.assertEqual(seeds[16]["copyright_description"], 'https://creativecommons.org/licenses/by-nc-nd/4.0/')
+
+    def test_get_language(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["language"], "Deleted item should be None")
+        self.assertEqual(seeds[5]["language"], "en")
+        self.assertEqual(seeds[16]["language"], "nl")
+
+    def test_get_publishers(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["publishers"], [], "Deleted item should have empty list")
+        self.assertEqual(seeds[5]["publishers"], ['SURFnet'])
+        self.assertEqual(seeds[15]["publishers"], [])
+
+    def test_get_keywords(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
+        self.assertEqual(seeds[5]["keywords"], ['Video', 'mooc', 'Big history'])
+        self.assertEqual(seeds[15]["keywords"], ['Video', 'MOOC', 'Nutrition', 'Health', 'Food safety'])
+
+    def test_get_aggregation_level(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["learning_material"]["aggregation_level"], "Deleted item should have empty list")
+        self.assertEqual(seeds[5]["learning_material"]["aggregation_level"], '2')
+        self.assertIsNone(seeds[15]["learning_material"]["aggregation_level"], "when no level is found should be None")
+
+    def test_get_disciplines(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
