@@ -71,6 +71,21 @@ class HttpTikaResource(HttpTikaResourceBase):
 
     retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
 
+    @property
+    def URI_TEMPLATE(self):
+        return f"{settings.TIKA_HOST}/rmeta/{self.config.tika_return_type}"
+
+    def variables(self, *args):
+        return {
+            "url": [],
+            "fetch_key": args[0]
+        }
+
+    def parameters(self, fetch_key, **kwargs):
+        params = super().parameters(**kwargs)
+        params["fetchKey"] = fetch_key
+        return params
+
     class Meta:
         app_label = "files"
 
