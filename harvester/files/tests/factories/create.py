@@ -22,6 +22,8 @@ def create_file_document_set(set_specification, docs, tikas=None, youtubes=None,
     tikas = tikas or []
     for tika in tikas:
         HttpTikaResourceFactory.create(**tika)
+        tika["return_type"] = "xml"
+        HttpTikaResourceFactory.create(**tika)
     youtubes = youtubes or []
     for youtube in youtubes:
         HttpYoutubeResourceFactory.create(**youtube)

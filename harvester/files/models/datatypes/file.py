@@ -26,6 +26,11 @@ def default_document_tasks():
             "checks": ["is_analysis_possible"],
             "resources": ["files.HttpTikaResource"]
         },
+        "tika_xml": {
+            "depends_on": ["check_url"],
+            "checks": ["is_analysis_possible"],
+            "resources": ["files.HttpTikaResource"]
+        },
         "pdf_preview": {
             "depends_on": ["check_url"],
             "checks": ["is_analysis_possible", "is_pdf"],
@@ -91,6 +96,10 @@ class FileDocument(HarvestDocument):
                 self.is_not_found = True
                 self.pending_at = None
                 self.finished_at = now()
+
+    @property
+    def is_link(self):
+        return self.properties.get("is_link", False)
 
     @property
     def is_youtube_video(self):

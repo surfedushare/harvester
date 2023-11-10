@@ -12,6 +12,7 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
 
     class Params:
         url = ""
+        return_type = "text"
 
     status = 200
     data_hash = ""
@@ -19,7 +20,7 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def uri(self):
         fetch_key = quote(self.url, safe="")
-        return f"tika:9998/rmeta/text?fetchKey={fetch_key}&fetcherName=http"
+        return f"tika:9998/rmeta/{self.return_type}?fetchKey={fetch_key}&fetcherName=http"
 
     @factory.lazy_attribute
     def request(self):
