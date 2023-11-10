@@ -522,6 +522,7 @@ SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings
 # Edurep & Eduterm
 
 EDUREP_BASE_URL = environment.harvester.repositories.edurep
+EDUREP_MBO_EDUCATIONAL_LEVEL = False
 EDUTERM_API_KEY = environment.secrets.eduterm.api_key
 
 
