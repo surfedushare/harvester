@@ -71,9 +71,11 @@ class EdurepDataExtraction(object):
         if not len(educational_levels):
             return "inactive"
         has_higher_level = False
+        has_mbo_level = False
         has_lower_level = False
         for education_level in educational_levels:
             is_higher_level = False
+            is_mbo_level = False
             is_lower_level = False
             for higher_education_level in HIGHER_EDUCATION_LEVELS.keys():
                 if education_level.startswith(higher_education_level):
@@ -81,6 +83,7 @@ class EdurepDataExtraction(object):
                     break
             for mbo_education_level in MBO_EDUCATIONAL_LEVELS:
                 if education_level.startswith(mbo_education_level):
+                    is_mbo_level = True
                     break
             else:
                 # The level is not MBO ... so it has to be lower level if it's not higher level
@@ -88,10 +91,14 @@ class EdurepDataExtraction(object):
             # If any education_level matches against higher than HBO or lower than MBO
             # Then we mark the material as higher_level and/or lower_level
             has_higher_level = has_higher_level or is_higher_level
+            has_mbo_level = has_mbo_level or is_mbo_level
             has_lower_level = has_lower_level or is_lower_level
         # A record needs to have at least one "higher education" level
         # and should not have any "children education" levels
-        return "active" if has_higher_level and not has_lower_level else "inactive"
+        if settings.EDUREP_MBO_EDUCATIONAL_LEVEL:
+            return "active" if has_higher_level and not has_lower_level else "inactive"
+        else:
+            return "active" if has_higher_level and not has_lower_level and not has_mbo_level else "inactive"
 
     @classmethod
     def get_oaipmh_record_state(cls, soup, el):
