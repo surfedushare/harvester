@@ -11,24 +11,29 @@ from datagrowth.resources.base import Resource
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.constants import SEED_DEFAULTS
 from files.models.resources.youtube_api import YoutubeAPIResource
-from files.models.resources.metadata import HttpTikaResource
+from files.models.resources.metadata import CheckURLResource
 
 
 def default_document_tasks():
     return {
-        "tika": {
+        "check_url": {
             "depends_on": ["$.url"],
             "checks": ["!is_not_found", "is_analysis_allowed", "!is_youtube_video"],
+            "resources": ["files.CheckURLResource"]
+        },
+        "tika": {
+            "depends_on": ["check_url"],
+            "checks": ["is_analysis_possible"],
             "resources": ["files.HttpTikaResource"]
         },
         "pdf_preview": {
-            "depends_on": ["tika"],
-            "checks": ["is_pdf"],
+            "depends_on": ["check_url"],
+            "checks": ["is_analysis_possible", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
         "video_preview": {  # Other than Youtube like Vimeo
-            "depends_on": ["tika"],
-            "checks": ["is_video", "!is_youtube_video"],
+            "depends_on": ["check_url"],
+            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
             "resources": ["files.YoutubeThumbnailResource"]
         },
         "youtube_api": {
@@ -53,10 +58,18 @@ WHITELISTED_OUTPUT_FIELDS = {
 }
 
 
+class Redirects(models.TextChoices):
+    EXCLUSIVE_PERMANENT = "exclusive_permanent", "Exclusively permanent redirects"
+    TEMPORARY = "temporary", "At least one temporary redirect"
+    NO = "no", "No redirects"
+
+
 class FileDocument(HarvestDocument):
 
     tasks = models.JSONField(default=default_document_tasks, blank=True)
 
+    status_code = models.SmallIntegerField(default=-1)
+    redirects = models.CharField(max_length=50, choices=Redirects.choices, default=Redirects.NO)
     domain = models.CharField(max_length=256, null=True, blank=True)
     mime_type = models.CharField(max_length=256, null=True, blank=True)
     type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown")
@@ -66,7 +79,14 @@ class FileDocument(HarvestDocument):
     property_defaults = SEED_DEFAULTS
 
     def apply_resource(self, resource: Resource):
-        if isinstance(resource, (HttpTikaResource, YoutubeAPIResource)):
+        if isinstance(resource, CheckURLResource):
+            self.status_code = resource.status
+            _, content = resource.content
+            if content.get("is_temporary_redirect"):
+                self.redirects = Redirects.TEMPORARY
+            elif content.get("is_redirect"):
+                self.redirects = Redirects.EXCLUSIVE_PERMANENT
+        if isinstance(resource, (CheckURLResource, YoutubeAPIResource)):
             if resource.status == 404:
                 self.is_not_found = True
                 self.pending_at = None
@@ -90,6 +110,12 @@ class FileDocument(HarvestDocument):
     @property
     def is_pdf(self):
         return self.mime_type in ["application/pdf", "application/x-pdf"]
+
+    @property
+    def is_analysis_possible(self):
+        check_url = self.derivatives.get("check_url", {})
+        status = check_url.get("status")
+        return status is not None and 200 <= status < 209 and not check_url.get("has_redirects")
 
     def get_analysis_allowed(self) -> bool:
         match self.properties.get("access_rights", None), self.properties.get("copyright", None):

@@ -1,5 +1,5 @@
 import logging
-from json import JSONDecodeError
+import json
 
 from django.conf import settings
 from django.db import models
@@ -59,7 +59,7 @@ class ExtructResourceBase(URLResource):
             try:
                 result = extruct.extract(self.body)
                 return "application/json", result
-            except JSONDecodeError:
+            except json.JSONDecodeError:
                 pass
         return None, None
 
@@ -96,3 +96,32 @@ class ExtructResource(ExtructResourceBase):
 
     class Meta:
         app_label = "files"
+
+
+class CheckURLResource(URLResource):
+
+    def _update_from_results(self, response):
+        self.head = dict(response.headers.lower_items())
+        self.status = 0
+        has_redirect = any((res.is_redirect for res in response.history))
+        if has_redirect:
+            has_temporary_redirect = any((not res.is_permanent_redirect for res in response.history))
+        else:
+            has_temporary_redirect = False
+        response_info = {
+            "has_redirect": has_redirect,
+            "has_temporary_redirect": has_temporary_redirect,
+            "url": response.url,
+            "status": response.status_code,
+            "content_type": self.head.get("content-type", "unknown/unknown").split(';')[0]
+        }
+        self.body = json.dumps(response_info)
+
+    @property
+    def success(self):
+        return bool(self.head)
+
+    @property
+    def content(self):
+        info = json.loads(self.body) if self.body else None
+        return "application/json", info  # application/json allows ExtractorProcessor to access info as a dict
