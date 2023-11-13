@@ -85,11 +85,13 @@ class FileDocument(HarvestDocument):
 
     def apply_resource(self, resource: Resource):
         if isinstance(resource, CheckURLResource):
-            self.status_code = resource.status
             _, content = resource.content
-            if content.get("is_temporary_redirect"):
+            content = content or {}
+            if status := content.get("status"):
+                self.status_code = status or 0
+            if content.get("has_temporary_redirect"):
                 self.redirects = Redirects.TEMPORARY
-            elif content.get("is_redirect"):
+            elif content.get("has_redirect"):
                 self.redirects = Redirects.EXCLUSIVE_PERMANENT
         if isinstance(resource, (CheckURLResource, YoutubeAPIResource)):
             if resource.status == 404:
