@@ -1,6 +1,7 @@
 from collections import defaultdict
 from itertools import groupby
 from functools import reduce
+from copy import deepcopy
 
 from django.conf import settings
 from django.db import models, transaction
@@ -138,6 +139,7 @@ class DatasetVersion(models.Model):
     def copy_collection(self, collection):
         Document = collection.get_document_model()
         source_id = collection.id
+        collection = deepcopy(collection)
         collection.pk = None
         collection.id = None
         collection.dataset_version = self
