@@ -95,10 +95,12 @@ class ResourceSeedingProcessor(Processor):
         self.buffer = []
 
     def batch_to_documents(self) -> Iterator:
-        documents = [
-            self.Document.build(seed, collection=self.collection)
-            for seed in self.batch
-        ]
+        documents = []
+        for seed in self.batch:
+            doc = self.Document.build(seed, collection=self.collection)
+            if doc.identity is None:
+                continue
+            documents.append(doc)
         return self.collection.update_batches(documents, self.collection.identifier)
 
     def __init__(self, collection: CollectionBase, config: Union[ConfigurationType, Dict],

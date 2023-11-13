@@ -20,11 +20,6 @@ class SharekitMetadataExtraction(object):
     #############################
 
     @classmethod
-    def get_srn(cls, node: dict) -> str:
-        provider = SharekitMetadataExtraction.get_provider(node)["name"]
-        return f"sharekit:{provider}:{node['id']}"
-
-    @classmethod
     def get_files(cls, node):
         files = node["attributes"].get("files", []) or []
         links = node["attributes"].get("links", []) or []

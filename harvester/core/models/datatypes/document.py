@@ -56,8 +56,12 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     @classmethod
     def build(cls, data, collection=None):
+        # Parse seed data will try to parse keys to enable nested data structures
         data = cls.parse_seed_data(data)
-        data["srn"] = f"{data['set']}:{data['external_id']}"
+        # Surf Resource Name (SRN) can't always be extracted easily (looking at you Sharekit products).
+        # Instead we defer the SRN based data upon build of the Document.
+        data["srn"] = f"{data['set']}:{data['external_id']}" if data["external_id"] is not None else None
+        # Standard build stuff where we set the dataset version as well.
         instance = super().build(data, collection)
         instance.dataset_version = collection.dataset_version
         instance.clean()
