@@ -126,7 +126,7 @@ class FileDocument(HarvestDocument):
     def is_analysis_possible(self):
         check_url = self.derivatives.get("check_url", {})
         status = check_url.get("status")
-        return status is not None and 200 <= status < 209 and not check_url.get("has_redirects")
+        return status is not None and 200 <= status < 209
 
     def get_analysis_allowed(self) -> bool:
         match self.properties.get("access_rights", None), self.properties.get("copyright", None):
