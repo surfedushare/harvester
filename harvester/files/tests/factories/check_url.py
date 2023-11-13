@@ -1,36 +1,36 @@
 import json
-from urllib.parse import quote
 import factory
 
-from files.models import HttpTikaResource
+from files.models import CheckURLResource
 
 
-class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
+class CheckURLResourceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
-        model = HttpTikaResource
+        model = CheckURLResource
 
     class Params:
         url = ""
-        return_type = "text"
+        content_type = "text/html"
+        has_redirect = False
+        has_temporary_redirect = False
 
     status = 200
     data_hash = ""
 
     @factory.lazy_attribute
     def uri(self):
-        fetch_key = quote(self.url, safe="")
-        return f"tika:9998/rmeta/{self.return_type}?fetchKey={fetch_key}&fetcherName=http"
+        return CheckURLResource.uri_from_url(self.url)
 
     @factory.lazy_attribute
     def request(self):
-        url = "http://" + self.uri
+        url = "https://" + self.uri
         return {
             "url": url,
             "args": [self.url],
             "data": {},
             "kwargs": {},
-            "method": "put",
+            "method": "head",
             "headers": {
                 "Accept": "*/*",
                 "Connection": "keep-alive",
@@ -53,11 +53,10 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        if self.status < 200 >= 300:
-            return ""
-        tika_output = [
-            {
-                "X-TIKA:content": f"Tika content for {self.url}"
-            }
-        ]
-        return json.dumps(tika_output)
+        return json.dumps({
+            "url": self.url,
+            "status": self.status,
+            "content_type": self.content_type,
+            "has_redirect": self.has_redirect,
+            "has_temporary_redirect": self.has_temporary_redirect
+        })

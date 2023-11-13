@@ -7,13 +7,13 @@ from core.admin.resources import HarvesterHttpResourcesAdmin, HarvesterShellReso
 from core.admin.harvest import HarvestStateAdmin
 from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState,
                           HttpTikaResource, ExtructResource, YoutubeThumbnailResource, PdfThumbnailResource,
-                          YoutubeAPIResource)
+                          YoutubeAPIResource, CheckURLResource)
 
 
 class FileDocumentAdmin(DocumentAdmin):
     list_display = DocumentAdmin.list_display + \
         ("product_link", "is_not_found", "is_analysis_allowed",)
-    list_filter = DocumentAdmin.list_filter + ("type", "mime_type", "is_not_found", "is_analysis_allowed",)
+    list_filter = DocumentAdmin.list_filter + ("type", "mime_type", "is_not_found", "is_analysis_allowed", "redirects",)
     readonly_fields = DocumentAdmin.readonly_fields + ("is_analysis_allowed",)
 
     def product_link(self, obj):
@@ -37,3 +37,4 @@ admin.site.register(ExtructResource, HarvesterHttpResourcesAdmin)
 admin.site.register(YoutubeThumbnailResource, HarvesterShellResourceAdmin)
 admin.site.register(PdfThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(YoutubeAPIResource, HarvesterHttpResourcesAdmin)
+admin.site.register(CheckURLResource, HarvesterHttpResourcesAdmin)

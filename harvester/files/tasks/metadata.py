@@ -7,16 +7,47 @@ from core.processors import HttpPipelineProcessor
 from core.loading import load_harvest_models
 
 
+@app.task(name="check_url", base=DatabaseConnectionResetTask)
+def check_url_task(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Document = models["Document"]
+
+    check_url_processor = HttpPipelineProcessor({
+        "pipeline_app_label": app_label,
+        "pipeline_models": {
+            "document": Document._meta.model_name,
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "pipeline_phase": "check_url",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.checkurlresource",
+            "method": "head",
+            "args": ["$.url"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "to_property": "derivatives/check_url",
+            "extractor": "ExtractProcessor.pass_resource_through",
+            "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"],
+        }
+    })
+    check_url_processor(Document.objects.filter(id__in=document_ids))
+
+
+def tika_content_extraction(results):
+    return [
+        result.get("X-TIKA:content", "").strip()
+        for result in results
+    ]
+
+
 @app.task(name="tika", base=DatabaseConnectionResetTask)
 def tika_task(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Document = models["Document"]
-
-    def texts_extraction(results):
-        return [
-            result.get("X-TIKA:content", None)
-            for result in results
-        ]
 
     tika_processor = HttpPipelineProcessor({
         "pipeline_app_label": app_label,
@@ -29,6 +60,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
+            "tika_return_type": "text",
             "resource": "files.httptikaresource",
             "method": "put",
             "args": ["$.url"],
@@ -36,14 +68,46 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
         },
         "contribute_data": {
             "to_property": "derivatives/tika",
-            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
             "objective": {
                 "@": "$",
-                "#texts": texts_extraction,
+                "#texts": tika_content_extraction,
             }
         }
     })
     tika_processor(Document.objects.filter(id__in=document_ids))
+
+
+@app.task(name="tika_xml", base=DatabaseConnectionResetTask)
+def tika_xml_task(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Document = models["Document"]
+
+    tika_xml_processor = HttpPipelineProcessor({
+        "pipeline_app_label": app_label,
+        "pipeline_models": {
+            "document": Document._meta.model_name,
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "pipeline_phase": "tika_xml",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "tika_return_type": "xml",
+            "resource": "files.httptikaresource",
+            "method": "put",
+            "args": ["$.url"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "to_property": "derivatives/tika_xml",
+            "objective": {
+                "@": "$",
+                "#xmls": tika_content_extraction,
+            }
+        }
+    })
+    tika_xml_processor(Document.objects.filter(id__in=document_ids))
 
 
 @app.task(name="extruct", base=DatabaseConnectionResetTask)

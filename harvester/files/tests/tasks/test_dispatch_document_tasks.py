@@ -30,21 +30,22 @@ class TestHarvestObjectFileDocument(TestCase):
 
     def test_get_primary_pending_tasks(self):
         pending_tasks_1 = self.document_1.get_pending_tasks()
-        self.assertEqual(pending_tasks_1, ["tika"])
+        self.assertEqual(pending_tasks_1, ["check_url"])
         youtube_tasks = self.youtube.get_pending_tasks()
         self.assertEqual(youtube_tasks, ['youtube_api'])
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed
-        self.document_1.pipeline["tika"] = {"success": True}
+        self.document_1.pipeline["check_url"] = {"success": True}
+        self.document_1.derivatives["check_url"] = {"status": 200}
         self.document_1.save()
-        self.youtube.pipeline["tika"] = {"success": True}
+        self.youtube.pipeline["youtube_api"] = {"success": True}
         self.youtube.save()
         # Assert that tasks depending on Tika have become pending
         pending_tasks_1 = self.document_1.get_pending_tasks()
-        self.assertEqual(pending_tasks_1, [])
+        self.assertEqual(pending_tasks_1, ["tika", "tika_xml"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["youtube_api"])
+        self.assertEqual(youtube_tasks, [])
 
     def test_get_analysis_disallowed(self):
         pending_tasks_2 = self.document_2.get_pending_tasks()
@@ -67,7 +68,8 @@ class TestSimpleDispatchDocumentTasks(TestCase):
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             "test",
             [{"url": "https://example.com/1"}, {"url": "https://example.com/2"}],
-            [{"url": "https://example.com/1"}, {"url": "https://example.com/2", "status": 404}],
+            tikas=[{"url": "https://example.com/1"}, {"url": "https://example.com/2", "status": 404}],
+            checks=[{"url": "https://example.com/1", "status": 200}, {"url": "https://example.com/2", "status": 404}],
         )
         cls.success, cls.not_found = cls.documents
 
@@ -81,17 +83,16 @@ class TestSimpleDispatchDocumentTasks(TestCase):
     @patch("files.models.resources.metadata.HttpTikaResource._send")
     def test_dispatch_document_tasks_synchronous(self, send_mock):
         dispatch_document_tasks("files", [doc.id for doc in self.documents], asynchronous=False)
+        dispatch_document_tasks("files", [doc.id for doc in self.documents], asynchronous=False)
         # Assert documents in general
         for doc in FileDocument.objects.all():
             self.assertEqual(doc.domain, "example.com")
             self.assertIsNone(doc.mime_type)
             self.assertEqual(doc.type, "unknown")
-            self.assertIn("tika", doc.pipeline)
-            self.assertIn("success", doc.pipeline["tika"])
+            self.assertTrue(doc.pipeline["check_url"]["success"])
         # Assert the success document
         success = FileDocument.objects.get(id=self.success.id)
-        self.assertTrue(success.pipeline["tika"]["success"])
-        self.assertIn("tika", success.derivatives)
+        self.assertIn("check_url", success.derivatives)
         self.assertEqual(success.derivatives["tika"], {"texts": ["Tika content for https://example.com/1"]})
         self.assertFalse(success.is_not_found)
         self.assertIsNone(success.pending_at, "Expected Document to indicate it is no longer pending for tasks")
@@ -99,7 +100,7 @@ class TestSimpleDispatchDocumentTasks(TestCase):
         self.assertEqual(success.get_pending_tasks(), [], "Expected simple tasks to complete, leaving no pending tasks")
         # Assert the not found document
         not_found = FileDocument.objects.get(id=self.not_found.id)
-        self.assertFalse(not_found.pipeline["tika"]["success"])
+        self.assertNotIn("tika", not_found.pipeline)
         self.assertNotIn("tika", not_found.derivatives)
         self.assertTrue(not_found.is_not_found)
         self.assertFalse(not_found.pending_at, "Expected Document to indicate it is no longer pending for tasks")
