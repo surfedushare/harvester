@@ -102,7 +102,7 @@ class CheckURLResource(URLResource):
 
     def _update_from_results(self, response):
         self.head = dict(response.headers.lower_items())
-        self.status = 0
+        self.status = response.status_code
         has_redirect = any((res.is_redirect for res in response.history))
         if has_redirect:
             has_temporary_redirect = any((not res.is_permanent_redirect for res in response.history))
