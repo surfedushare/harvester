@@ -19,6 +19,7 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         set = "edusources"
         is_initial = True
         is_empty = False
+        is_deletes = False
         number = 0
 
     since = factory.Maybe(
@@ -60,6 +61,9 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         if self.is_empty:
             response_sequence = self.number
             response_type = "empty"
+        elif self.is_deletes:
+            response_sequence = self.number
+            response_type = "deletes"
         elif self.is_initial:
             response_sequence = self.number
             response_type = "initial"

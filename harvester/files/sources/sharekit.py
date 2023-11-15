@@ -34,11 +34,11 @@ def get_file_info(sharekit_products_data: dict) -> Iterator[FileInfo]:
 
 
 def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
-    if not seed["state"] == FileDocument.States.DELETED.value:
+    if not seed["state"] == FileDocument.States.DELETED:
         yield seed
         return
     for doc in harvest_set.documents.filter(properties__product_id=seed["product_id"]):
-        doc.properties["state"] = FileDocument.States.DELETED.value
+        doc.properties["state"] = FileDocument.States.DELETED
         yield doc.properties
 
 
@@ -47,7 +47,7 @@ class SharekitFileExtraction(object):
     @classmethod
     def get_state(cls, info: FileInfo) -> str:
         if not info.file:
-            return "deleted"
+            return FileDocument.States.DELETED
         return extract_state(info.product)
 
     @classmethod

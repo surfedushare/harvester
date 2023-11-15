@@ -79,6 +79,30 @@ class TestSharekitFileSeeding(TestCase):
             self.assertEqual(batch, [])
         self.assertEqual(self.set.documents.count(), 0)
 
+    def test_deletes_seeding(self):
+        SharekitMetadataHarvestFactory.create(is_initial=False, number=0, is_deletes=True)
+        # Here we expect to harvest nothing, because deletes without existing documents in the Set lead will be ignored.
+        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
+        # Now we'll create a pre-existing Document with the active state.
+        # Based on the product_id (which is the only identifier that is known for deleted files),
+        # we expect this Document to be deleted.
+        seed = {
+            "state": "active",
+            "set": "edusources",
+            "external_id": "aaa",
+            "parent_id": "d8a7a2af-b542-4f82-864b-9896addcf9c2"
+        }
+        document = FileDocument.build(seed, self.set)
+        document.save()
+        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+            self.assertEqual(len(batch), 1)
+            doc = batch[0]
+            self.assertEqual(doc.properties["state"], FileDocument.States.DELETED)
+            self.assertLess(doc.metadata["created_at"], doc.metadata["deleted_at"])
+        self.assertEqual(self.set.documents.count(), 1)
+
 
 class TestSharekitFileExtraction(TestCase):
 

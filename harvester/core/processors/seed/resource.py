@@ -170,8 +170,10 @@ class ResourceSeedingProcessor(Processor):
                     self.buffer = [
                         content
                         for batch in self.build_callback_iterator(phase, self.collection)
-                        for content in batch
+                        for content in batch if content
                     ]
+                    if not self.buffer:
+                        continue
                 self.flush_buffer(phase)
             if not self.batch:
                 return
