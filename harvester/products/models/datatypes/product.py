@@ -135,6 +135,10 @@ class ProductDocument(HarvestDocument):
         data["harvest_source"] = set_name
         if len(data["files"]):
             data = self.update_files_data(data)
+        else:
+            data.update({
+                "url": None, "mime_type": None, "technical_type": None, "text": None, "previews": None, "video": None,
+            })
         learning_material = data.pop("learning_material", None)
         if learning_material:
             learning_material["learning_material_disciplines"] = learning_material["disciplines"]

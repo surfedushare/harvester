@@ -1,0 +1,436 @@
+[
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "harvester.prod.surfedushare.nl",
+            "name": "Edusources"
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 1,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.915Z",
+            "updated_at": "2022-08-10T09:54:53.921Z",
+            "nl": "Vakgebied",
+            "en": "Discipline",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.939Z",
+            "updated_at": "2022-08-01T06:39:52.939Z",
+            "nl": "Aarde en Milieu",
+            "en": "Earth and environment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 1,
+        "fields": {
+            "name": "learning_material_disciplines",
+            "created_at": "2022-08-01T06:39:52.916Z",
+            "updated_at": "2022-08-01T06:39:52.916Z",
+            "translation": 1,
+            "is_hidden": true,
+            "is_manual": false,
+            "english_as_dutch": false
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 1,
+        "fields": {
+            "name": "aarde_milieu",
+            "site": 1,
+            "created_at": "2022-08-01T06:39:52.940Z",
+            "updated_at": "2023-09-20T07:30:00.938Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "aarde_milieu",
+            "translation": 2,
+            "frequency": 433,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 0,
+            "rght": 0,
+            "tree_id": 0,
+            "level": 0
+        }
+    },
+    {
+        "model": "core.collection",
+        "pk": 1,
+        "fields": {
+            "created_at": "2023-11-15T09:53:25.748Z",
+            "modified_at": "2023-11-15T09:53:25.748Z",
+            "name": "edusources",
+            "identifier": null,
+            "referee": "external_id",
+            "dataset_version": null
+        }
+    },
+    {
+        "model": "core.document",
+        "pk": 1,
+        "fields": {
+            "created_at": "2020-02-17T10:53:24.388Z",
+            "modified_at": "2020-02-17T10:53:24.388Z",
+            "collection": 1,
+            "identity": null,
+            "reference": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+            "pipeline": {
+                "metadata": {
+                    "success": true,
+                    "resource": "core.edurepoaipmh",
+                    "id": 1
+                }
+            },
+            "properties": {
+                "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+                "state": "active",
+                "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
+                "files": [
+                    {
+                        "mime_type": "text/html",
+                        "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
+                        "hash": "8b714937aab9bda1005d8aa76c607e629b25d89e",
+                        "title": "URL 1",
+                        "copyright": "cc-by-40",
+                        "access_rights": "OpenAccess"
+                    }
+                ],
+                "title": "Using a Vortex | Wageningen UR",
+                "keywords": [
+                    "Video",
+                    "Practicum clip",
+                    "Instructie clip"
+                ],
+                "description": "Instruction on how to use a Vortex mixer",
+                "mime_type": "text/html",
+                "technical_type": "website",
+                "material_types": [],
+                "copyright": "cc-by-40",
+                "copyright_description": null,
+                "aggregation_level": "3",
+                "authors": [],
+                "provider": {
+                    "ror": null,
+                    "external_id": null,
+                    "slug": null,
+                    "name": "SURFnet"
+                },
+                "organizations": {
+                    "root": {
+                        "ror": null,
+                        "external_id": null,
+                        "slug": null,
+                        "name": "SURFnet",
+                        "type": "unknown"
+                    },
+                    "departments": [],
+                    "associates": []
+                },
+                "publishers": [
+                    "SURFnet"
+                ],
+                "publisher_date": "2016-09-02",
+                "publisher_year": 2016,
+                "lom_educational_levels": [
+                    "WO"
+                ],
+                "lowest_educational_level": 3,
+                "studies": [],
+                "ideas": [],
+                "study_vocabulary": [],
+                "from_youtube": true,
+                "is_restricted": false,
+                "analysis_allowed": true,
+                "is_part_of": [],
+                "has_parts": [],
+                "doi": null,
+                "research_object_type": null,
+                "research_themes": [],
+                "parties": [],
+                "learning_material_disciplines": [
+                    "aarde_milieu"
+                ],
+                "consortium": null,
+                "seed_resource": {
+                    "resource": "sharekit.sharekitmetadataharvest",
+                    "id": 565,
+                    "success": true
+                },
+                "language": {
+                    "metadata": "en"
+                },
+                "text": "Fake Tika extraction",
+                "previews": {
+                    "preview": "/media/harvester/thumbnails/files/previews/youtube/Zl59P5ZNX3M-thumbnail-400x300-70.webp",
+                    "full_size": "/media/harvester/files/previews/youtube/Zl59P5ZNX3M.webp",
+                    "preview_small": "/media/harvester/thumbnails/files/previews/youtube/Zl59P5ZNX3M-thumbnail-200x150-70.webp"
+                }
+            },
+            "dataset_version": null
+        }
+    },
+    {
+        "model": "products.productdocument",
+        "pk": 1,
+        "fields": {
+            "created_at": "2023-10-17T14:36:15.604Z",
+            "modified_at": "2023-11-15T09:21:27.977Z",
+            "properties": {
+                "doi": null,
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+                "files": [
+                    "https://www.youtube.com/watch?v=Zl59P5ZNX3M"
+                ],
+                "state": "active",
+                "title": "Using a Vortex | Wageningen UR",
+                "authors": [],
+                "keywords": [
+                    "Video",
+                    "Practicum clip",
+                    "Instructie clip"
+                ],
+                "language": "en",
+                "provider": {
+                    "ror": null,
+                    "name": "SURFnet",
+                    "slug": null,
+                    "external_id": null
+                },
+                "copyright": "cc-by-40",
+                "has_parts": [],
+                "is_part_of": [],
+                "publishers": [
+                    "SURFnet"
+                ],
+                "description": "Instruction on how to use a Vortex mixer",
+                "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+                "organizations": {
+                    "root": {
+                        "ror": null,
+                        "name": "SURFnet",
+                        "slug": null,
+                        "type": "unknown",
+                        "external_id": null
+                    },
+                    "associates": [],
+                    "departments": []
+                },
+                "publisher_date": "2016-09-02",
+                "publisher_year": 2016,
+                "research_product": {
+                    "research_themes": [],
+                    "research_object_type": null
+                },
+                "learning_material": {
+                    "ideas": [],
+                    "consortium": null,
+                    "disciplines": [
+                        "aarde_milieu"
+                    ],
+                    "material_types": [],
+                    "study_vocabulary": [],
+                    "aggregation_level": "3",
+                    "lom_educational_levels": [
+                        "WO"
+                    ]
+                },
+                "copyright_description": null
+            },
+            "identity": "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+            "reference": null,
+            "pipeline": {
+                "normalize_disciplines": {
+                    "success": true
+                }
+            },
+            "derivatives": {
+                "normalize_disciplines": {
+                    "learning_material_disciplines_normalized": [
+                        "aarde_milieu"
+                    ]
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2023-11-15T09:21:27.983Z",
+            "dataset_version": null,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "123591f7a2948637433c836b4f30d6df5c635249",
+                "language": "en",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2023-10-17T14:36:15.596Z",
+                "deleted_at": null,
+                "modified_at": "2023-11-15T09:07:18.717Z"
+            },
+            "tasks": {
+                "normalize_disciplines": {
+                    "checks": [
+                        "has_disciplines"
+                    ],
+                    "resources": [],
+                    "depends_on": [
+                        "$.learning_material.disciplines"
+                    ]
+                },
+                "lookup_study_vocabulary_parents": {
+                    "checks": [
+                        "has_study_vocabulary"
+                    ],
+                    "resources": [],
+                    "depends_on": [
+                        "$.learning_material.study_vocabulary"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "model": "files.filedocument",
+        "pk": 1,
+        "fields": {
+            "created_at": "2023-09-25T08:51:46.127Z",
+            "modified_at": "2023-11-15T09:28:06.002Z",
+            "properties": {
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
+                "hash": "8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "type": "website",
+                "state": "active",
+                "title": null,
+                "is_link": true,
+                "provider": "sharekit",
+                "copyright": "cc-by-40",
+                "mime_type": "text/html",
+                "product_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+                "external_id": "8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "access_rights": "OpenAccess",
+                "harvest_source": "sharekit"
+            },
+            "identity": "sharekit:edusources:8b714937aab9bda1005d8aa76c607e629b25d89e",
+            "reference": null,
+            "pipeline": {
+                "tika": {
+                    "id": 2753,
+                    "success": true,
+                    "resource": "files.httptikaresource"
+                },
+                "extruct": {
+                    "id": 592,
+                    "success": false,
+                    "resource": "files.extructresource"
+                },
+                "video_preview": {
+                    "id": 641,
+                    "success": true,
+                    "resource": "files.youtubethumbnailresource"
+                }
+            },
+            "derivatives": {
+                "tika": {
+                    "texts": [
+                        "Fake Tika extraction"
+                    ]
+                },
+                "video_preview": {
+                    "preview": "/media/harvester/thumbnails/files/previews/youtube/Zl59P5ZNX3M-thumbnail-400x300-70.webp",
+                    "full_size": "/media/harvester/files/previews/youtube/Zl59P5ZNX3M.webp",
+                    "preview_small": "/media/harvester/thumbnails/files/previews/youtube/Zl59P5ZNX3M-thumbnail-200x150-70.webp"
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2023-11-15T09:28:01Z",
+            "dataset_version": null,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "f6944aa58e50f9ca0730eefc95e04ed2787aa370",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2023-09-25T08:51:46.122Z",
+                "deleted_at": null,
+                "modified_at": "2023-09-25T08:51:46.122Z"
+            },
+            "tasks": {
+                "tika": {
+                    "checks": [
+                        "!is_not_found",
+                        "is_analysis_allowed"
+                    ],
+                    "resources": [
+                        "files.HttpTikaResource"
+                    ],
+                    "depends_on": [
+                        "$.url"
+                    ]
+                },
+                "extruct": {
+                    "checks": [
+                        "is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.ExtructResource"
+                    ],
+                    "depends_on": [
+                        "tika"
+                    ]
+                },
+                "pdf_preview": {
+                    "checks": [
+                        "is_pdf"
+                    ],
+                    "resources": [
+                        "files.PdfThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "tika"
+                    ]
+                },
+                "video_preview": {
+                    "checks": [
+                        "is_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "tika"
+                    ]
+                }
+            },
+            "status_code": 200,
+            "redirects": "no",
+            "domain": "www.youtube.com",
+            "mime_type": "text/html",
+            "type": "website",
+            "is_not_found": false,
+            "is_analysis_allowed": true
+        }
+    }
+]
