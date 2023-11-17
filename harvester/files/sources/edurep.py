@@ -1,27 +1,21 @@
 import logging
 from typing import Iterator
 from hashlib import sha1
+from collections import namedtuple
 
 from vobject.base import ParseError, readOne
 
 from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
+from sources.utils.edurep import EdurepExtractor
 from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 from files.models import Set, FileDocument
 
 
 logger = logging.getLogger("harvester")
 
+FileInfo = namedtuple("FileInfo", ["product", "mime_type", "url"])
 
-def find_all_classification_blocks(element, classification_type, output_type):
-    assert output_type in ["czp:entry", "czp:id"]
-    entries = element.find_all(string=classification_type)
-    blocks = []
-    for entry in entries:
-        classification_element = entry.find_parent('czp:classification')
-        if not classification_element:
-            continue
-        blocks += classification_element.find_all(output_type)
-    return blocks
+
 
 def parse_vcard_element(record, external_id):
     card = "\n".join(field.strip() for field in record.text.strip().split("\n"))
@@ -54,44 +48,19 @@ def get_provider_name(product, external_id):
     return provider_name
 
 
-def _get_educational_level_state(product):
-    """
-    Returns the desired state of the record based on (non NL-LOM) educational levels
-    """
-    blocks = find_all_classification_blocks(product, "educational level", "czp:entry")
-    educational_levels = list(set([block.find('czp:langstring').text.strip() for block in blocks]))
-    if not len(educational_levels):
-        return "inactive"
-    has_higher_level = False
-    has_lower_level = False
-    for education_level in educational_levels:
-        is_higher_level = False
-        is_lower_level = False
-        for higher_education_level in HIGHER_EDUCATION_LEVELS.keys():
-            if education_level.startswith(higher_education_level):
-                is_higher_level = True
-                break
-        for mbo_education_level in MBO_EDUCATIONAL_LEVELS:
-            if education_level.startswith(mbo_education_level):
-                break
-        else:
-            # The level is not MBO ... so it has to be lower level if it's not higher level
-            is_lower_level = not is_higher_level
-        # If any education_level matches against higher than HBO or lower than MBO
-        # Then we mark the material as higher_level and/or lower_level
-        has_higher_level = has_higher_level or is_higher_level
-        has_lower_level = has_lower_level or is_lower_level
-    # A record needs to have at least one "higher education" level
-    # and should not have any "children education" levels
-    return "active" if has_higher_level and not has_lower_level else "inactive"
 
-def get_oaipmh_record_state(product):
-    """
-    Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
-    """
-    educational_level_state = _get_educational_level_state(product)
-    header = product.find('header')
-    return header.get("status", educational_level_state)
+
+def get_file_infos(edurep_soup) -> FileInfo:
+    for product in edurep_soup.find_all('record'):
+        mime_types = product.find_all('czp:format')
+        urls = product.find_all('czp:location')
+        if not urls:
+            continue
+        for mime_type, url in zip(mime_types, urls):
+            yield FileInfo(product, mime_type, url)
+
+
+
 
 def get_file_seeds(edurep_soup):
     """
@@ -106,7 +75,7 @@ def get_file_seeds(edurep_soup):
     for product in edurep_soup.find_all('record'):
         product_id = product.find('identifier').text.strip()
         product_set = product.find('setSpec').text.strip()
-        product_copyright = find_all_classification_blocks(product, "access rights", "czp:id")
+        product_copyright = EdurepExtractor.find_all_classification_blocks(product, "access rights", "czp:id")
         product_provider_name = get_provider_name(product, external_id=product_id)
         mime_types = product.find_all('czp:format')
         urls = product.find_all('czp:location')
@@ -131,7 +100,7 @@ def get_file_seeds(edurep_soup):
             if not url:
                 continue
             product_file = {}
-            product_file["state"] = get_oaipmh_record_state(product)
+            product_file["state"] = EdurepExtractor.get_oaipmh_record_state(product)
             product_file["set"] = product_set
             # We add some product metadata, because unfortunately the product supplies defaults
             product_file["product"] = {
@@ -156,16 +125,19 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
 class EdurepFileExtraction(object):
 
     @classmethod
-    def get_state(cls, soup, el) -> str | None:
-        state = el["state"]
-        return state
+    def get_state(cls, soup, info: FileInfo) -> str | None:
+        return EdurepExtractor.get_oaipmh_record_state(info.product)
 
     @classmethod
-    def get_hash(cls, soup, el) -> str | None:
-        url = parse_url(el.get("id", None))
+    def get_hash(cls, soup, info: FileInfo) -> str | None:
+        url = parse_url(info.url.text.strip())
         if not url:
             return
         return sha1(url.encode("utf-8")).hexdigest()
+
+    @classmethod
+    def get_set(cls, soup, info: FileInfo) -> str | None:
+        return info.product.find('setSpec').text.strip()
 
     @classmethod
     def get_mime_type(cls, node: dict) -> str:
@@ -186,19 +158,34 @@ class EdurepFileExtraction(object):
         access_rights += "Access"
         return access_rights
 
+    @classmethod
+    def get_url(cls, soup, info: FileInfo) -> str | None:
+        return parse_url(info.url.text.strip())
+
+    @classmethod
+    def get_mime_type(cls, soup, info: FileInfo) -> str | None:
+        return info.mime_type
+
+    @classmethod
+    def get_copyright(cls, soup, info: FileInfo) -> str | None:
+        return EdurepExtractor.get_copyright(info.product)
+
+
+
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": get_file_seeds,
+    "@": get_file_infos,
     "state": EdurepFileExtraction.get_state,
     "external_id": EdurepFileExtraction.get_hash,
-    # "set": lambda node: node["set"],
+    "set": EdurepFileExtraction.get_set,
     # # Generic metadata
-    # "url": lambda node: parse_url(node["url"]),
-    # "hash": EdurepFileExtraction.get_hash,
-    # "mime_type": EdurepFileExtraction.get_mime_type,
+    "url": EdurepFileExtraction.get_url,
+    "hash": EdurepFileExtraction.get_hash,
+    "mime_type": EdurepFileExtraction.get_mime_type,
     # "title": lambda node: node.get("fileName", node.get("urlName", None)),
-    # "copyright": lambda node: node["product"]["copyright"],
+    "copyright": EdurepFileExtraction.get_copyright,
     # "access_rights": EdurepFileExtraction.get_access_rights,
     # "product_id": lambda node: node["product"]["product_id"],
     # "is_link": lambda node: node.get("is_link", None),
