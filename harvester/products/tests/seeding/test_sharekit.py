@@ -211,11 +211,11 @@ class TestSharekitProductExtraction(TestCase):
     def test_get_material_types(self):
         seeds = self.seeds
         self.assertEqual(
-            seeds[0]['learning_material']["material_types"], [],
+            seeds[0]['learning_material']["material_types"], ["unknown"],
             "Expected material without a type to return empty list"
         )
         self.assertEqual(
-            seeds[1]['learning_material']["material_types"], [],
+            seeds[1]['learning_material']["material_types"], ["unknown"],
             "Expected material with null as type to return empty list"
         )
         self.assertEqual(seeds[3]['learning_material']["material_types"], ["kennisoverdracht"])
@@ -234,3 +234,8 @@ class TestSharekitProductExtraction(TestCase):
         self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
         self.assertIsNone(seeds[6]["publisher_date"])
         self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")
+
+    def test_technical_type(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["technical_type"], "Expected unknown technical types to be None for product")
+        self.assertEqual(seeds[3]["technical_type"], "video", "Expected technicalFormat to be used when present")

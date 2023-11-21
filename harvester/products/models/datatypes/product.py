@@ -135,10 +135,14 @@ class ProductDocument(HarvestDocument):
         data["harvest_source"] = set_name
         if len(data["files"]):
             data = self.update_files_data(data)
+        else:
+            data.update({
+                "url": None, "mime_type": None, "text": None, "previews": None, "video": None,
+                "technical_type": data.get("technical_type"),
+            })
         learning_material = data.pop("learning_material", None)
         if learning_material:
             learning_material["learning_material_disciplines"] = learning_material["disciplines"]
-            learning_material["material_types"] = learning_material["material_types"] or ["unknown"]
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
             data.update(learning_material)
         research_product = data.pop("research_product", None)

@@ -18,11 +18,11 @@ def get_nested_seeds(nested_data: dict) -> Iterator[dict]:
 
 
 def back_fill_deletes(seed: dict, harvest_set: HarvestSet) -> Iterator[dict]:
-    if not seed["state"] == HarvestDocument.States.DELETED.value:
+    if not seed["state"] == HarvestDocument.States.DELETED:
         yield seed
         return
     for doc in harvest_set.documents.filter(properties__parent_id=seed["parent_id"]):
-        doc.properties["state"] = HarvestDocument.States.DELETED.value
+        doc.properties["state"] = HarvestDocument.States.DELETED
         yield doc.properties
 
 

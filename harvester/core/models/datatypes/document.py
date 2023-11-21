@@ -1,5 +1,5 @@
 from typing import Any
-from copy import copy
+from copy import copy, deepcopy
 import json
 from hashlib import sha1
 from sentry_sdk import capture_message
@@ -56,8 +56,12 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     @classmethod
     def build(cls, data, collection=None):
+        # Parse seed data will try to parse keys to enable nested data structures
         data = cls.parse_seed_data(data)
-        data["srn"] = f"{data['set']}:{data['external_id']}"
+        # Surf Resource Name (SRN) can't always be extracted easily (looking at you Sharekit products).
+        # Instead we defer the SRN based data upon build of the Document.
+        data["srn"] = f"{data['set']}:{data['external_id']}" if data["external_id"] is not None else None
+        # Standard build stuff where we set the dataset version as well.
         instance = super().build(data, collection)
         instance.dataset_version = collection.dataset_version
         instance.clean()
@@ -108,7 +112,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         # Sets defaults for properties
         for key, value in self.property_defaults.items():
             if key not in self.properties:
-                self.properties[key] = value
+                self.properties[key] = deepcopy(value)
+            elif isinstance(value, dict):
+                for nested_key, nested_value in value.items():
+                    if nested_key not in self.properties[key]:
+                        self.properties[key][nested_key] = copy(nested_value)
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)
@@ -134,7 +142,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         return data
 
     def to_data(self, merge_derivatives: bool = True) -> dict:
-        data = copy(self.properties)
+        data = deepcopy(self.properties)
         if self.overwrite:
             data["overwrite"] = self.overwrite.id
             data.update(self.overwrite)

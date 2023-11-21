@@ -72,6 +72,8 @@ class ResourcePipelineProcessor(PipelineProcessor):
             return contribution
         elif isinstance(contribution, list):
             return contribution[0] if len(contribution) else None
+        elif contribution is None:
+            return
         else:
             raise ValueError(f"Unknown contribution type: {type(contribution)}")
 

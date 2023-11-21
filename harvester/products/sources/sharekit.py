@@ -20,11 +20,6 @@ class SharekitMetadataExtraction(object):
     #############################
 
     @classmethod
-    def get_srn(cls, node: dict) -> str:
-        provider = SharekitMetadataExtraction.get_provider(node)["name"]
-        return f"sharekit:{provider}:{node['id']}"
-
-    @classmethod
     def get_files(cls, node):
         files = node["attributes"].get("files", []) or []
         links = node["attributes"].get("links", []) or []
@@ -44,7 +39,7 @@ class SharekitMetadataExtraction(object):
     def get_material_types(cls, node):
         material_types = node["attributes"].get("typesLearningMaterial", [])
         if not material_types:
-            return []
+            return ["unknown"]
         elif isinstance(material_types, list):
             return [material_type for material_type in material_types if material_type]
         else:
@@ -186,6 +181,7 @@ OBJECTIVE = {
     # Generic metadata
     "doi": "$.attributes.doi",
     "files": SharekitMetadataExtraction.get_files,
+    "technical_type": "$.attributes.technicalFormat",
     "title": "$.attributes.title",
     "language": SharekitMetadataExtraction.get_language,
     "keywords": "$.attributes.keywords",

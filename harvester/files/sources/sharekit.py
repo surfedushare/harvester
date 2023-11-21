@@ -1,102 +1,95 @@
 from typing import Iterator
 from hashlib import sha1
+from collections import namedtuple
 
 from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
 from files.models import Set, FileDocument
 
 
-def get_file_seeds(sharekit_products_data: dict):
+FileInfo = namedtuple("FileInfo", ["product", "file", "is_link", "channel"])
+
+
+def get_file_info(sharekit_products_data: dict) -> Iterator[FileInfo]:
     """
-    This function takes a Sharekit publication API response and transforms it into file dicts.
-    File dicts have at least an "url" key that indicates where we can find the file.
-    The "srn" key contains a unique identifier for the "url".
-    The "is_link" key indicates whether we should treat the "url" as an actual link instead of a file link.
+    This function takes a Sharekit publication API response and transforms it into FileInfo tuples.
+    A FileInfo tuple holds the Product dict that contains the file.
+    As well as a file dict with some file information or None if a Product has no files.
+    FileInfo indicates if a file was originally a link by setting is_link to True.
+    Lastly FileInfo holds the channel information, which is the name of the set the files are part of.
 
     :param sharekit_products_data: a parsed Sharekit publication API response
-    :return: yields file objects
+    :return: yields FileInfo tuples
     """
     channel = extract_channel(sharekit_products_data)
-    for sharekit_product in sharekit_products_data["data"]:
-        product_id = sharekit_product["id"]
-        product_attributes = sharekit_product["attributes"]
-        product_copyright = product_attributes.get("termsOfUse", None)
-        product_publishers = product_attributes.get("publishers", []) or []
-        product_provider_name = product_publishers[0] if len(product_publishers) else "sharekit"
+    for product in sharekit_products_data["data"]:
+        product_attributes = product["attributes"]
         product_files = product_attributes.get("files", []) or []
         product_links = product_attributes.get("links", []) or []
-        # Yield delete data if files and links are missing
         if not product_files and not product_links:
-            yield {
-                "url": None,
-                "state": "deleted",
-                "set": channel,
-                "product": {
-                    "provider": product_provider_name,
-                    "product_id": product_id,
-                    "copyright": product_copyright
-                }
-            }
-        # Yield files data
+            yield FileInfo(product, None, False, channel)
         for product_file in product_files:
-            # Anything without a URL can not be processed
-            if not product_file.get("url", None):
-                continue
-            product_file["state"] = extract_state(sharekit_product)
-            product_file["set"] = channel
-            # We add some product metadata, because unfortunately the product supplies defaults
-            product_file["product"] = {
-                "provider": product_provider_name,
-                "product_id": product_id,
-                "copyright": product_copyright
-            }
-            # We indicate we're not dealing with a webpage URL
-            product_file["is_link"] = False
-            yield product_file
-        # Yield links data
+            yield FileInfo(product, product_file, False, channel)
         for product_link in product_links:
-            # Anything without a URL can not be processed
-            if not product_link.get("url", None):
-                continue
-            product_link["state"] = extract_state(sharekit_product)
-            product_link["set"] = channel
-            product_link["product"] = {
-                "provider": "sharekit",
-                "product_id": product_id,
-                "copyright": product_copyright
-            }
-            # We indicate that the URL points to a webpage
-            product_link["is_link"] = True
-            yield product_link
+            yield FileInfo(product, product_link, True, channel)
 
 
 def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
-    if not seed["state"] == FileDocument.States.DELETED.value:
+    if not seed["state"] == FileDocument.States.DELETED:
         yield seed
         return
     for doc in harvest_set.documents.filter(properties__product_id=seed["product_id"]):
-        doc.properties["state"] = FileDocument.States.DELETED.value
+        doc.properties["state"] = FileDocument.States.DELETED
         yield doc.properties
 
 
 class SharekitFileExtraction(object):
 
     @classmethod
-    def get_hash(cls, node: dict) -> str | None:
-        url = parse_url(node["url"])
+    def get_state(cls, info: FileInfo) -> str:
+        if not info.file:
+            return FileDocument.States.DELETED
+        return extract_state(info.product)
+
+    @classmethod
+    def get_url(cls, info: FileInfo) -> str | None:
+        if not info.file:
+            return
+        return parse_url(info.file["url"])
+
+    @classmethod
+    def get_hash(cls, info: FileInfo) -> str | None:
+        url = cls.get_url(info)
         if not url:
             return
         return sha1(url.encode("utf-8")).hexdigest()
 
     @classmethod
-    def get_mime_type(cls, node: dict) -> str:
-        mime_type = node.get("resourceMimeType", None)
-        if mime_type is None and node.get("is_link", None):
+    def get_mime_type(cls, info: FileInfo) -> str | None:
+        if not info.file:
+            return
+        mime_type = info.file.get("resourceMimeType", None)
+        if mime_type is None and info.is_link:
             mime_type = "text/html"
         return mime_type
 
     @classmethod
-    def get_access_rights(cls, node: dict) -> str | None:
-        access_rights = node.get("accessRight", None)
+    def get_title(cls, info: FileInfo) -> str | None:
+        if not info.file:
+            return
+        elif info.is_link:
+            return info.file.get("urlName")
+        else:
+            return info.file.get("fileName")
+
+    @classmethod
+    def get_copyright(cls, info: FileInfo) -> str | None:
+        return info.product["attributes"].get("termsOfUse")
+
+    @classmethod
+    def get_access_rights(cls, info: FileInfo) -> str | None:
+        if not info.file:
+            return
+        access_rights = info.file.get("accessRight", None)
         if not access_rights:
             return
         if access_rights[0].isupper():  # value according to standard; no parsing necessary
@@ -106,23 +99,30 @@ class SharekitFileExtraction(object):
         access_rights += "Access"
         return access_rights
 
+    @classmethod
+    def get_provider(cls, info: FileInfo) -> str | None:
+        publishers = info.product["attributes"].get("publishers", []) or []
+        if isinstance(publishers, str):
+            publishers = [publishers]
+        return publishers[0] if len(publishers) else "sharekit"
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": get_file_seeds,
-    "state": lambda node: node["state"],
+    "@": get_file_info,
+    "state": SharekitFileExtraction.get_state,
     "external_id": SharekitFileExtraction.get_hash,
-    "set": lambda node: node["set"],
+    "set": lambda info: info.channel,
     # Generic metadata
-    "url": lambda node: parse_url(node["url"]),
+    "url": SharekitFileExtraction.get_url,
     "hash": SharekitFileExtraction.get_hash,
     "mime_type": SharekitFileExtraction.get_mime_type,
-    "title": lambda node: node.get("fileName", node.get("urlName", None)),
-    "copyright": lambda node: node["product"]["copyright"],
+    "title": SharekitFileExtraction.get_title,
+    "copyright": SharekitFileExtraction.get_copyright,
     "access_rights": SharekitFileExtraction.get_access_rights,
-    "product_id": lambda node: node["product"]["product_id"],
-    "is_link": lambda node: node.get("is_link", None),
-    "provider": lambda node: node["product"]["provider"]
+    "product_id": lambda info: info.product["id"],
+    "is_link": lambda info: info.is_link,
+    "provider": SharekitFileExtraction.get_provider,
 }
 
 
