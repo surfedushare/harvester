@@ -164,7 +164,7 @@ class TestSharekitFileExtraction(TestCase):
                          "Expected restricted access to propagate")
 
     def test_product_id(self):
-        self.assertEqual(self.seeds[0]["product_id"], "3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b")
+        self.assertEqual(self.seeds[0]["product_id"], "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751")
 
     def test_is_link(self):
         self.assertFalse(self.seeds[0]["is_link"])

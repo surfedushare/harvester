@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from core.models import Document as LegacyDocument
 from products.models import ProductDocument
+from files.models import FileDocument
 
 
 class TestProductDocumentCompatability(TestCase):
@@ -21,7 +22,7 @@ class TestProductDocumentCompatability(TestCase):
         "analysis_allowed", "is_restricted", "from_youtube",  # none exposed deprecated flow control fields
         "seed_resource"  # legacy debug field
     ]
-    file_dependant_fields = ["url", "mime_type", "text", "previews"]
+    file_dependant_fields = ["url", "mime_type", "technical_type", "text", "previews"]
 
     fixtures = ["test-backward-compatability"]
     maxDiff = None
@@ -58,6 +59,7 @@ class TestProductDocumentCompatability(TestCase):
         self.product_document.properties["files"] = []
         for field in self.file_dependant_fields:
             self.legacy_document.properties[field] = None
+        FileDocument.objects.all().delete()
 
         legacy_search = list(self.legacy_document.to_search())[0]  # legacy Document doesn't provide an easier way
         product_search = self.product_document.to_data(for_search=True)
@@ -71,3 +73,23 @@ class TestProductDocumentCompatability(TestCase):
         # No files should exist in the output
         self.assertEqual(len(legacy_search["files"]), 0)
         self.assertEqual(len(product_search["files"]), 0)
+
+    def test_technical_type_overrides(self):
+        """
+        Technical type is file dependant, but we make sure that it gets inherited from ProductDocument if required
+        """
+        # Test ProductDocument override
+        self.product_document.properties["technical_type"] = "video"
+        product_search = self.product_document.to_data(for_search=True)
+        self.assertEqual(product_search["technical_type"], "video",
+                         "If set on ProductDocument the technical_type should override the FileDocument.type")
+        # Test override if there are no files at all
+        FileDocument.objects.all().delete()
+        self.product_document.properties["technical_type"] = None
+        product_search = self.product_document.to_data(for_search=True)
+        self.assertIsNone(product_search["technical_type"],
+                          "Expected technical_type to be None if there are no files and ProductDocument doesn't set it")
+        self.product_document.properties["technical_type"] = "website"
+        product_search = self.product_document.to_data(for_search=True)
+        self.assertEqual(product_search["technical_type"], "website",
+                         "Expected ProductDocument to dictate technical_type without any files present")

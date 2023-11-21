@@ -193,7 +193,7 @@
                 "files": [
                     "https://www.youtube.com/watch?v=Zl59P5ZNX3M"
                 ],
-                "technical_type": "website",
+                "technical_type": null,
                 "state": "active",
                 "title": "Using a Vortex | Wageningen UR",
                 "authors": [],
@@ -240,7 +240,7 @@
                     "disciplines": [
                         "aarde_milieu"
                     ],
-                    "material_types": [],
+                    "material_types": ["unknown"],
                     "study_vocabulary": [],
                     "aggregation_level": "3",
                     "lom_educational_levels": [
