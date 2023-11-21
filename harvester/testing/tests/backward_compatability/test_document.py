@@ -12,7 +12,7 @@ class TestProductDocumentCompatability(TestCase):
         "copyright_description", "harvest_source", "url", "mime_type", "technical_type", "ideas", "consortium",
         "material_types", "aggregation_level", "lom_educational_levels", "learning_material_disciplines",
         "research_themes", "research_object_type", "text", "suggest_phrase", "suggest_completion", "language", "video",
-        "previews",
+        "previews", "studies",
         "learning_material_disciplines_normalized",  # this is used as output for "disciplines" which itself is ignored
     ]
     removed_fields = [
@@ -21,7 +21,7 @@ class TestProductDocumentCompatability(TestCase):
         "analysis_allowed", "is_restricted", "from_youtube",  # none exposed deprecated flow control fields
         "seed_resource"  # legacy debug field
     ]
-    file_dependant_fields = ["url", "mime_type", "technical_type", "text", "previews"]
+    file_dependant_fields = ["url", "mime_type", "text", "previews"]
 
     fixtures = ["test-backward-compatability"]
     maxDiff = None

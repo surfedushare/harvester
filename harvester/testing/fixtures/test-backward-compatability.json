@@ -193,6 +193,7 @@
                 "files": [
                     "https://www.youtube.com/watch?v=Zl59P5ZNX3M"
                 ],
+                "technical_type": "website",
                 "state": "active",
                 "title": "Using a Vortex | Wageningen UR",
                 "authors": [],
@@ -244,7 +245,8 @@
                     "aggregation_level": "3",
                     "lom_educational_levels": [
                         "WO"
-                    ]
+                    ],
+                    "studies": []
                 },
                 "copyright_description": null
             },

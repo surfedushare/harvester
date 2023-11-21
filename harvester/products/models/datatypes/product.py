@@ -137,7 +137,8 @@ class ProductDocument(HarvestDocument):
             data = self.update_files_data(data)
         else:
             data.update({
-                "url": None, "mime_type": None, "technical_type": None, "text": None, "previews": None, "video": None,
+                "url": None, "mime_type": None, "text": None, "previews": None, "video": None,
+                "technical_type": data.get("technical_type"),
             })
         learning_material = data.pop("learning_material", None)
         if learning_material:

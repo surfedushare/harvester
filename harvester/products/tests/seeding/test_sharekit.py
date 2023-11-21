@@ -234,3 +234,8 @@ class TestSharekitProductExtraction(TestCase):
         self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
         self.assertIsNone(seeds[6]["publisher_date"])
         self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")
+
+    def test_technical_type(self):
+        seeds = self.seeds
+        self.assertIsNone(seeds[0]["technical_type"], "Expected unknown technical types to be None for product")
+        self.assertEqual(seeds[3]["technical_type"], "video", "Expected technicalFormat to be used when present")

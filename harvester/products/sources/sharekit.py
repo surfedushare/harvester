@@ -181,6 +181,7 @@ OBJECTIVE = {
     # Generic metadata
     "doi": "$.attributes.doi",
     "files": SharekitMetadataExtraction.get_files,
+    "technical_type": "$.attributes.technicalFormat",
     "title": "$.attributes.title",
     "language": SharekitMetadataExtraction.get_language,
     "keywords": "$.attributes.keywords",
