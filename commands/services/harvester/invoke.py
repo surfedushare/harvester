@@ -126,11 +126,11 @@ def load_fixture(ctx, mode, fixture_file_path):
 @task(help={
     "mode": "Mode you want to migrate: localhost, development, acceptance or production. Must match APPLICATION_MODE",
     "reset": "Whether to reset the active datasets before harvesting",
-    "legacy": "Whether to run the legacy harvest process (no by default)",
+    "legacy": "Whether to run the legacy harvest process (yes by default)",
     "asynchronous": "Whether to run harvester tasks asynchronously (non-legacy only)",
     "no_promote": "Whether you want to create new indices without adjusting latest aliases (legacy only)",
 })
-def harvest(ctx, mode, reset=False, legacy=False, asynchronous=True, no_promote=False):
+def harvest(ctx, mode, reset=False, legacy=True, asynchronous=True, no_promote=False):
     """
     Starts a harvest tasks on the AWS container cluster or localhost
     """

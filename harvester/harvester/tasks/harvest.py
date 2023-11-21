@@ -14,6 +14,11 @@ from harvester.settings import environment
 @app.task(name="harvest")
 def harvest(reset=False, no_promote=False, report_dataset_version=False):
 
+    if not Dataset.objects.filter(is_active=True).exists():
+        logger = HarvestLogger(None, "harvest_task", {})
+        logger.info("Skipping legacy harvest, because there are no active legacy Datasets")
+        return
+
     if reset:
         call_command("extend_resource_cache")
 
