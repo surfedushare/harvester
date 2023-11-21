@@ -12,6 +12,5 @@ SEED_DEFAULTS = {
     "access_rights": None,
     "product_id": None,
     "is_link": False,
-    "harvest_source": None,
     "provider": None,
 }

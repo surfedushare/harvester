@@ -121,8 +121,60 @@ class TestSharekitFileExtraction(TestCase):
         for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
             self.seeds += [doc.properties for doc in batch]
 
+    def test_get_state(self):
+        self.assertEqual(self.seeds[0]["state"], FileDocument.States.ACTIVE)
+
+    def test_get_url(self):
+        self.assertEqual(self.seeds[0]["url"],
+                         "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7")
+        self.assertEqual(self.seeds[1]["url"],
+                         "https://www.youtube.com/watch?v=Zl59P5ZNX3M")
+
     def test_get_hash(self):
         self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
 
     def test_get_external_id(self):
         self.assertEqual(self.seeds[0]["external_id"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
+
+    def test_get_mime_type(self):
+        self.assertEqual(
+            self.seeds[0]["mime_type"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "Expected file to copy mime_type from file data"
+        )
+        self.assertEqual(self.seeds[1]["mime_type"], "text/html", "Expected links to have HTML mime")
+
+    def test_get_title(self):
+        self.assertEqual(self.seeds[0]["title"], "40. Exercises 5.docx")
+        self.assertIsNone(self.seeds[1]["title"], "Expected links to have no title")
+
+    def test_get_copyright(self):
+        self.assertEqual(self.seeds[0]["copyright"], "cc-by-nc-40",
+                         "Expected file to take copyright from product")
+        self.assertEqual(self.seeds[1]["copyright"], "cc-by-40",
+                         "Expected link to take access_rights from product")
+        self.assertEqual(self.seeds[2]["copyright"], "cc-by-sa-40",
+                         "Expected restricted access to propagate copyright as normal")
+
+    def test_get_access_rights(self):
+        self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess",
+                         "Expected file to take access_rights from source")
+        self.assertEqual(self.seeds[1]["access_rights"], "OpenAccess",
+                         "Expected link to take access_rights from source")
+        self.assertEqual(self.seeds[2]["access_rights"], "RestrictedAccess",
+                         "Expected restricted access to propagate")
+
+    def test_product_id(self):
+        self.assertEqual(self.seeds[0]["product_id"], "3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b")
+
+    def test_is_link(self):
+        self.assertFalse(self.seeds[0]["is_link"])
+        self.assertTrue(self.seeds[1]["is_link"])
+
+    def test_get_provider(self):
+        self.assertEqual(self.seeds[0]["provider"], "SURFnet")
+        self.assertEqual(self.seeds[5]["provider"], "Stimuleringsregeling Open en Online Onderwijs")
+
+    def test_type(self):
+        self.assertEqual(self.seeds[0]["type"], "document")
+        self.assertEqual(self.seeds[1]["type"], "website", "Expected all links to be typed as website")
+        self.assertEqual(self.seeds[7]["type"], "unknown", "Expected 'unknown' for missing mime types")

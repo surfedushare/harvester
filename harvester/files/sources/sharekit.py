@@ -101,7 +101,9 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_provider(cls, info: FileInfo) -> str | None:
-        publishers = info.product.get("publishers", []) or []
+        publishers = info.product["attributes"].get("publishers", []) or []
+        if isinstance(publishers, str):
+            publishers = [publishers]
         return publishers[0] if len(publishers) else "sharekit"
 
 
