@@ -23,7 +23,7 @@ SEED_DEFAULTS = {
     "doi": None,
     # Learning material metadata
     "learning_material": {
-        "material_types": [],
+        "material_types": ["unknown"],
         "aggregation_level": None,
         "lom_educational_levels": [],
         "studies": [],
