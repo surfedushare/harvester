@@ -211,11 +211,11 @@ class TestSharekitProductExtraction(TestCase):
     def test_get_material_types(self):
         seeds = self.seeds
         self.assertEqual(
-            seeds[0]['learning_material']["material_types"], [],
+            seeds[0]['learning_material']["material_types"], ["unknown"],
             "Expected material without a type to return empty list"
         )
         self.assertEqual(
-            seeds[1]['learning_material']["material_types"], [],
+            seeds[1]['learning_material']["material_types"], ["unknown"],
             "Expected material with null as type to return empty list"
         )
         self.assertEqual(seeds[3]['learning_material']["material_types"], ["kennisoverdracht"])
