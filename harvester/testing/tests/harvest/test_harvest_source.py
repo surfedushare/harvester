@@ -96,7 +96,34 @@ class TestInitialHarvestSource(TestCase):
         self.assertIsNotNone(dataset_version.index)
 
     def test_initial_manual(self):
-        self.skipTest("to be tested")
+        # Setup data for this test
+        harvest_entity = HarvestEntity.objects.get(source__module="simple")
+        harvest_entity.is_manual = True
+        harvest_entity.save()
+        beginning_of_time = make_aware(datetime(year=1970, month=1, day=1))
+        # Call the harvest_source task with patched HttpSeedingProcessor output
+        seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
+        seeding_patch_value = document_generator("simple", 11, 10, self.set, self.sequence_properties)
+        with patch(seeding_patch_target, return_value=seeding_patch_value) as seeding_processor_call:
+            harvest_source("testing", "simple", "simple_set", asynchronous=False)
+        # Assert that seeding_processor was never called
+        self.assertEqual(seeding_processor_call.call_count, 0)
+        # Harvest state asserts
+        harvest_state = HarvestState.objects.get(id=self.state.id)
+        self.assertEqual(
+            harvest_state.harvested_at, beginning_of_time,
+            "Expected datetime value for HarvestState.harvested_at to remain the same"
+        )
+        # Assert Set
+        harvest_set = harvest_state.harvest_set
+        self.assertEqual(harvest_set.documents.all().count(), 0)
+        self.assertIsNone(harvest_set.pending_at)
+        self.assertIsNotNone(harvest_set.finished_at, "Expected manual entities to still run Set tasks")
+        # Assert DatasetVersion
+        dataset_version = harvest_set.dataset_version
+        self.assertIsNone(dataset_version.pending_at)
+        self.assertIsNotNone(dataset_version.finished_at, "Expected manual entities to still run DatasetVersion tasks")
+        self.assertEqual(dataset_version.sets.all().count(), 1)
 
 
 class TestDeltaHarvestSource(TestCase):
