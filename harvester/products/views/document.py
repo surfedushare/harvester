@@ -112,6 +112,7 @@ class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericVie
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
+    exclude_deletes = True
 
 
 class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGenericViewMixin,
@@ -141,3 +142,4 @@ class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGene
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
+    exclude_deletes = True
