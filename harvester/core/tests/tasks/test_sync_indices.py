@@ -2,7 +2,7 @@ from unittest.mock import patch
 from datetime import timedelta
 from time import sleep
 
-from django.test import TestCase
+from django.test import TestCase, tag
 
 from core.tests.factories import (DatasetFactory, DatasetVersionFactory, CollectionFactory, DocumentFactory,
                                   ElasticIndexFactory)
@@ -59,6 +59,7 @@ def create_dataset_version_indices(dataset_version):
     return pushed_at
 
 
+@tag("slow")
 class TestSyncIndices(TestCase):
 
     search_client = get_search_client_mock(has_history=True)

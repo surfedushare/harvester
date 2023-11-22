@@ -1,9 +1,11 @@
 from unittest.mock import patch
-from django.test import TestCase
+
+from django.test import TestCase, tag
 from django.core.management import call_command
 from metadata.models import MetadataValue
 
 
+@tag("slow")
 class TestHarvestStudyVocabulary(TestCase):
 
     fixtures = ["initial-study-vocabulary-resources"]

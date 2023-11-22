@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, tag
 from opensearchpy import OpenSearch
 
 from search_client import SearchClient
@@ -8,6 +8,7 @@ from search_client.opensearch.configuration import create_open_search_index_conf
 from search_client.factories import generate_nl_material, generate_nl_product
 
 
+@tag("search")
 class OpenSearchTestCaseMixin(object):
 
     search = None
