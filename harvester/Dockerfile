@@ -1,5 +1,7 @@
 FROM python:3.10-slim
 SHELL ["/bin/bash", "-c"]
+ARG UID=1000
+ARG GID=1000
 
 RUN apt-get update && \
     apt-get install -y less vim ffmpeg time dialog sox git subversion build-essential zlib1g-dev automake \
@@ -19,7 +21,7 @@ WORKDIR /usr/src/app
 # The -r options make it a system user and group.
 # The -m option forces a home folder (which Python tools rely upon rather heavily)
 # We also add default Python user path to PATH so installed binaries get found
-RUN groupadd -r app -g 1000 && useradd app -u 1000 -r -m -g app
+RUN groupadd -r app -g $GID && useradd app -u $UID -r -m -g app
 ENV PATH="/home/app/.local/bin:${PATH}"
 ENV PYTHONPATH="/usr/src/app"
 # Give access to app user
@@ -39,7 +41,7 @@ RUN pip install -U --no-cache-dir --user pip
 RUN pip install wheel
 RUN pip install --no-cache-dir --user uwsgi==2.0.21
 RUN pip install --no-cache-dir --user -r requirements.txt
-RUN pip install --no-cache-dir --user git+https://github.com/surfedushare/search-client.git@v0.4.2
+RUN pip install --no-cache-dir --user git+https://github.com/surfedushare/search-client.git@v0.4.3
 
 # Copy application
 COPY harvester /usr/src/app

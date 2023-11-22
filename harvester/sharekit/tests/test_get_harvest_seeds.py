@@ -65,24 +65,24 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(seeds[2]['authors'], [
             {
-                'name': 'Ruud Kok',
-                'email': 'Ruud Kok',
+                'name': 'Ruudje Cock',
+                'email': 'Ruudje Cock',
                 'external_id': '83e7c163-075e-4eb2-8247-d975cf047dba',
                 'dai': None,
                 'orcid': None,
                 'isni': None
             },
             {
-                'name': 'Astrid Bulte',
-                'email': 'Astrid Bulte',
+                'name': 'A. Puist',
+                'email': 'A. Puist',
                 'external_id': '1174c1b9-f010-4a0a-98c0-2ceeefd0b506',
                 'dai': None,
                 'orcid': None,
                 'isni': None
             },
             {
-                'name': 'Hans Poorthuis',
-                'email': 'Hans Poorthuis',
+                'name': 'Hans Kazan',
+                'email': 'Hans Kazan',
                 'external_id': 'c0ab267a-ad56-480c-a13a-90b325f45b5d',
                 'dai': None,
                 'orcid': None,

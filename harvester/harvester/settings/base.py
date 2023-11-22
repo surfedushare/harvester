@@ -91,6 +91,10 @@ INSTALLED_APPS = [
     'search',
     'sources',
 
+    'products',
+    'files',
+    'testing',
+
     'edurep',
     'sharekit',
     'anatomy_tool',
@@ -237,6 +241,7 @@ OPENSEARCH_ANALYSERS = {
     'nl': 'dutch',
     'unk': 'standard'
 }
+OPENSEARCH_LANGUAGE_CODES = list(OPENSEARCH_ANALYSERS.keys())
 OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS = environment.opensearch.enable_decompound_analyzers
 OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
@@ -319,7 +324,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True
-        }
+        },
     },
 }
 
@@ -367,7 +372,7 @@ MIME_TYPE_TO_TECHNICAL_TYPE = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'document',
     'text/rtf': 'document',
     'application/xhtml+xml': 'website',
-    'application/postscript': '?',
+    'application/postscript': 'app',
     'application/vnd.ms-publisher': 'document',
     'text/xml': 'website',
     'application/vnd.oasis.opendocument.spreadsheet': 'spreadsheet',
@@ -466,6 +471,11 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'sync_metadata',
         'schedule': crontab(minute=30)
     },
+    'sync_product_indices': {
+        'task': 'sync_opensearch_indices',
+        'schedule': 30,
+        'args': ('products',)
+    }
 }
 CELERY_WORKER_HIJACK_ROOT_LOGGER = not environment.aws.is_aws
 CELERY_WORKER_MAX_TASKS_PER_CHILD = 50
@@ -594,23 +604,28 @@ SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 # Webhooks
 
 WEBHOOKS = {
-    "edusources": {
+    "sharekit:edusources": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "edusourcesprivate": {
+    "sharekit:edusourcesprivate": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "nppo": {
+    "sharekit:nppo": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "publinova": {
+    "publinova:publinova": {
         "secret": environment.secrets.harvester.publinova_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
+# Legacy webhook set definitions for backward compatability
+WEBHOOKS["edusources"] = WEBHOOKS["sharekit:edusources"]
+WEBHOOKS["edusourcesprivate"] = WEBHOOKS["sharekit:edusourcesprivate"]
+WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
+WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
 # Thumbnails

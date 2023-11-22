@@ -4,7 +4,7 @@ from django.utils.timezone import now
 
 from core.models import Collection
 from sources.factories.publinova.extraction import PublinovaMetadataResourceFactory
-from sources.tests.webhooks import base as webhook_test_base
+from testing.cases.webhooks import legacy as webhook_test_base
 
 
 WEBHOOKS = {

@@ -5,31 +5,40 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 
-def get_document_texts(queryset, keys=None, unpack=None, singles=None):
+def get_document_texts(queryset, keys=None, unpack=None, singles=None, label_callback=None):
     keys = keys or []
     unpack = set(unpack) if unpack else set()
     singles = set(singles) if singles else set()
+    include_labels = bool(label_callback)
+    label_callback = label_callback or (lambda doc: None)
     assert not unpack.intersection(singles), \
         "The keys to unpack should not overlap with keys to get single values from " \
         "as these operations are mutaly exclusie"
 
     texts = []
+    labels = []
     for document in queryset.iterator():
+        label = label_callback(document)
         data = document.to_data()
         for key in keys:
             value = data.get(key)
             if key in unpack:
                 value = value or []
                 texts += value
+                labels += [label] * len(value)
             elif key in singles:
                 if not value or not isinstance(value, list):
                     continue
                 value = value[0] or ""
                 texts.append(value)
+                labels.append(label)
             else:
                 value = value or ""
                 texts.append(value)
+                labels.append(label)
 
+    if include_labels:
+        return list(zip(labels, texts))
     return texts
 
 

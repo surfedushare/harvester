@@ -1,3 +1,5 @@
+import logging
+
 from django.apps import AppConfig
 
 from datagrowth.configuration import register_defaults
@@ -5,6 +7,7 @@ from datagrowth.configuration import register_defaults
 
 class CoreConfig(AppConfig):
     name = 'core'
+    document_model = 'Document'
 
     def ready(self):
 
@@ -18,6 +21,7 @@ class CoreConfig(AppConfig):
                 "process_result": "ProcessResult",
                 "batch": "Batch"
             },
+            "resource_exception_log_level": logging.WARNING
         })
         register_defaults("http_resource", {
             "method": "get",
@@ -27,4 +31,10 @@ class CoreConfig(AppConfig):
             "extractor": "ExtractProcessor.extract_from_resource",
             "to_property": None,
             "apply_resource_to": []
+        })
+        register_defaults("seeding_processor", {
+            "phase": "initial",
+            "phases": [],
+            "identifier": "srn",  # SURF Resource Name
+            "is_post_initialization": False
         })

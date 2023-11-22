@@ -1,14 +1,16 @@
 from time import sleep
 from sentry_sdk import capture_message
+from collections.abc import Generator
 
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 
 from datagrowth.configuration import create_config
+from datagrowth.resources.base import Resource
 from datagrowth.resources.http.tasks import send
 from datagrowth.resources.shell.tasks import run
-from datagrowth.processors import Processor
+from datagrowth.processors import Processor, ExtractProcessor
 
 from core.processors.pipeline.base import PipelineProcessor
 
@@ -29,7 +31,7 @@ class ResourcePipelineProcessor(PipelineProcessor):
         filters = Q(**{f"pipeline__{pipeline_phase}__success": False})
         filters |= Q(**{f"pipeline__{pipeline_phase}__isnull": True})
         if depends_on:
-            filters |= Q(**{f"pipeline__{depends_on}__success": True})
+            filters &= Q(**{f"pipeline__{depends_on}__success": True})
         return queryset.filter(filters)
 
     def process_batch(self, batch):
@@ -58,11 +60,30 @@ class ResourcePipelineProcessor(PipelineProcessor):
             self.ProcessResult.objects.bulk_create(creates)
             self.ProcessResult.objects.bulk_update(updates, ["result_type", "result_id"])
 
-    def merge_batch(self, batch):
+    def extract_from_resource(self, extractor: ExtractProcessor, extract_method_name: str,
+                              resource: Resource) -> dict | None:
+        if self.resource_is_empty(resource):
+            return
+        extractor_method = getattr(extractor, extract_method_name)
+        contribution = extractor_method(resource)
+        if isinstance(contribution, Generator):
+            contribution = list(contribution)
+        if isinstance(contribution, dict):
+            return contribution
+        elif isinstance(contribution, list):
+            return contribution[0] if len(contribution) else None
+        elif contribution is None:
+            return
+        else:
+            raise ValueError(f"Unknown contribution type: {type(contribution)}")
 
+    def merge_batch(self, batch):
         pipeline_phase = self.config.pipeline_phase
         config = create_config("extract_processor", self.config.contribute_data)
         contribution_processor = config.extractor
+        extractor_name, method_name = Processor.get_processor_components(contribution_processor)
+        extractor_class = Processor.get_processor_class(extractor_name)
+        extractor = extractor_class(config)
         contribution_field = "properties"
         contribution_property = config.to_property
         if contribution_property and "/" in contribution_property:
@@ -87,13 +108,8 @@ class ResourcePipelineProcessor(PipelineProcessor):
 
                 documents.append(process_result.document)
                 # Write data to the Document
-                extractor_name, method_name = Processor.get_processor_components(contribution_processor)
-                extractor_class = Processor.get_processor_class(extractor_name)
-                extractor = extractor_class(config)
-                extractor_method = getattr(extractor, method_name)
-                contributions = list(extractor_method(result)) if not self.resource_is_empty(result) else []
-                if len(contributions):
-                    contribution = contributions.pop(0)
+                contribution = self.extract_from_resource(extractor, method_name, result)
+                if contribution:
                     field_attribute = getattr(process_result.document, contribution_field)
                     if contribution_property is None:
                         field_attribute.update(contribution)

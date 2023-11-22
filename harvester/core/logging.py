@@ -14,12 +14,14 @@ class HarvestLogger(object):
     dataset = None
     command = None
     command_options = None
+    warn_delete_does_not_exist = True
 
-    def __init__(self, dataset, command, command_options, is_legacy_logger=True):
+    def __init__(self, dataset, command, command_options, is_legacy_logger=True, warn_delete_does_not_exist=True):
         self.dataset = dataset
         self.command = command
         self.command_options = command_options
         self.is_legacy_logger = is_legacy_logger
+        self.warn_delete_does_not_exist = warn_delete_does_not_exist
 
     def _get_extra_info(self, phase=None, progress=None, material=None, result=None):
         return {
@@ -153,6 +155,7 @@ class HarvestLogger(object):
             if "index" in error:
                 self.error(f"Unable to index {error['index']['_id']}: {error['index']['error']}")
             elif "delete" in error and error["delete"]["result"] == "not_found":
-                self.warning(f"Unable to delete document that does not exist: {error['delete']['_id']}")
+                if self.warn_delete_does_not_exist:
+                    self.warning(f"Unable to delete document that does not exist: {error['delete']['_id']}")
             else:
                 self.error(f"Unknown open search error: {error}")

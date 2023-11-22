@@ -19,6 +19,7 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         set = "edusources"
         is_initial = True
         is_empty = False
+        is_deletes = False
         number = 0
 
     since = factory.Maybe(
@@ -60,14 +61,17 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         if self.is_empty:
             response_sequence = self.number
             response_type = "empty"
+        elif self.is_deletes:
+            response_sequence = self.number
+            response_type = "deletes"
         elif self.is_initial:
             response_sequence = self.number
             response_type = "initial"
         else:
             response_sequence = 0
             response_type = "delta"
-        response_file = f"sharekit-api.{response_type}.{response_sequence}.json"
-        response_file_path = os.path.join(settings.BASE_DIR, "sharekit", "fixtures", response_file)
+        response_file = f"fixture.sharekit.{response_type}.{response_sequence}.json"
+        response_file_path = os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures", response_file)
         with open(response_file_path, "r") as response:
             return response.read()
 

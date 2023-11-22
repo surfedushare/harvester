@@ -18,7 +18,7 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://wszoeken.edurep.kennisnet.nl"
-    sharekit: "https://api.surfsharekit.nl"  # overwritten for Publinova, because they often want acc here
+    sharekit: "https://api.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"

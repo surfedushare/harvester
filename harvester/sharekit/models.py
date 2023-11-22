@@ -1,4 +1,3 @@
-from copy import copy
 from urlobject import URLObject
 
 from django.conf import settings
@@ -47,12 +46,6 @@ class SharekitMetadataHarvest(HarvestHttpResource):
     PARAMETERS = {
         "page[size]": 25
     }
-
-    def parameters(self, **kwargs):
-        parameters = copy(self.PARAMETERS)
-        if not settings.ALLOW_CLOSED_ACCESS_DOCUMENTS:
-            parameters["filter[termsOfUse][NEQ]"] = "alle-rechten-voorbehouden"
-        return parameters
 
     def auth_headers(self):
         return {
