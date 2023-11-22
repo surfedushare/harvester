@@ -29,6 +29,7 @@ class ProductDocumentSerializer(DocumentBaseSerializer):
 
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
 
+    srn = serializers.CharField(source="identity")
     language = serializers.CharField(source="properties.language")
     created_at = serializers.DateTimeField(source="metadata.created_at")
     modified_at = serializers.DateTimeField(source="metadata.modified_at")
@@ -36,7 +37,7 @@ class MetadataProductDocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = ("id", "identity", "reference", "language", "created_at", "modified_at")
+        fields = ("id", "srn", "reference", "language", "created_at", "modified_at")
 
 
 class RawProductListView(DatasetVersionDocumentListView):
