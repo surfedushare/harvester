@@ -60,6 +60,8 @@ class TestDocumentView(TestCase):
         "publishers": [
             "SURFnet"
         ],
+        "set": None,
+        "srn": None,
         "consortium": None
     }
 
@@ -189,7 +191,9 @@ class TestResearchProductDocumentView(TestDocumentView):
         ],
         "projects": [],
         "owners": [],
-        "contacts": []
+        "contacts": [],
+        "set": None,
+        "srn": None,
     }
 
 
