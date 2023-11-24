@@ -2,7 +2,7 @@ from unittest.mock import patch
 from datetime import datetime
 
 from django.test import TestCase
-from django.utils.timezone import make_aware, now
+from django.utils.timezone import make_aware
 
 from core.constants import DeletePolicies
 from sources.tasks.entities import harvest_entities

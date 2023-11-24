@@ -1,9 +1,6 @@
 from urllib.parse import urlparse, parse_qs
 
-from urlobject import URLObject
-
-from datagrowth.resources import HttpResource, TestClientResource
-from core.models.resources.harvest import HarvestHttpResource
+from datagrowth.resources import TestClientResource
 
 
 class MockHarvestResource(TestClientResource):

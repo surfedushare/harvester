@@ -1,7 +1,4 @@
 from unittest.mock import patch
-from datetime import datetime
-
-from django.utils.timezone import make_aware
 
 from core.processors import HttpSeedingProcessor
 from testing.tests.seeding.base import HttpSeedingProcessorTestCase

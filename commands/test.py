@@ -1,5 +1,3 @@
-from time import sleep
-
 from invoke.tasks import task
 from invoke import Collection
 
@@ -39,7 +37,7 @@ def run(ctx, test_file=None, warnings=False, fast=False, parallel=False, search_
             marks_operators.append("not search")
         elif search_tests:
             marks_operators.append("search")
-        marks_flag = f'-m "{" and ".join(marks_operators)}"'
+        marks_flag = f'-m "{" and ".join(marks_operators)}"' if marks_operators else ""
 
     # Run pytest command
     with ctx.cd("harvester"):
