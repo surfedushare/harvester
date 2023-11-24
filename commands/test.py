@@ -5,21 +5,15 @@ from invoke import Collection
 
 
 @task(help={
-    "start_server": "Whether to start a development server in the background before running the tests",
     "test_file": "A path to a file containing a subset of tests to run",
     "warnings": "Whether to print warnings in the test report",
     "fast": "Whether to exclude tests marked as slow"
 })
-def run(ctx, start_server=True, test_file=None, warnings=False, fast=False):
+def run(ctx, test_file=None, warnings=False, fast=False):
     """
     Runs the tests for the harvester
     """
     with ctx.cd("harvester"):
-        if start_server:
-            print("Starting development server ...")
-            ctx.run("python manage.py runserver", echo=True, asynchronous=True)
-            sleep(120)
-            print("Done starting development server!")
         # Specify some flags we'll be passing on to pytest based on command line arguments
         test_file = test_file if test_file else ""
         warnings_flag = "--disable-warnings" if not warnings else ""
