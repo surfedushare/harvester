@@ -55,7 +55,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     property_defaults = {}
 
     @classmethod
-    def build(cls, data, collection=None):
+    def build(cls, data, collection=None, build_time=None):
         # Parse seed data will try to parse keys to enable nested data structures
         data = cls.parse_seed_data(data)
         # Surf Resource Name (SRN) can't always be extracted easily (looking at you Sharekit products).
@@ -64,7 +64,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         # Standard build stuff where we set the dataset version as well.
         instance = super().build(data, collection)
         instance.dataset_version = collection.dataset_version
-        instance.clean()
+        instance.clean(set_metadata=False)
+        instance.set_metadata(current_time=build_time, new=bool(build_time))
         return instance
 
     @staticmethod
@@ -98,25 +99,19 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         data = self.parse_seed_data(data)
         super().update(data, commit=commit)
 
-    def clean(self):
-        super().clean()
-        current_time = now()
+    def set_metadata(self, current_time=None, new=False):
+        current_time = current_time or now()
+        # Update metadata about creation
+        if new:
+            self.metadata["created_at"] = current_time
         # Update metadata about deletion
         self.state = self.properties.get("state", None)
-        if self.state == self.States.DELETED.value and not self.metadata.get("deleted_at", None):
+        if self.state == self.States.DELETED and (not self.metadata.get("deleted_at", None) or new):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
-        elif self.state != self.States.DELETED.value:
+        elif self.state != self.States.DELETED:
             self.metadata["deleted_at"] = None
-        # Sets defaults for properties
-        for key, value in self.property_defaults.items():
-            if key not in self.properties:
-                self.properties[key] = deepcopy(value)
-            elif isinstance(value, dict):
-                for nested_key, nested_value in value.items():
-                    if nested_key not in self.properties[key]:
-                        self.properties[key][nested_key] = copy(nested_value)
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)
@@ -126,6 +121,20 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         elif properties_hash != self.metadata["hash"]:
             self.metadata["hash"] = properties_hash
             self.metadata["modified_at"] = current_time
+
+    def clean(self, set_metadata=True):
+        super().clean()
+        # Sets defaults for properties
+        for key, value in self.property_defaults.items():
+            if key not in self.properties:
+                self.properties[key] = deepcopy(value)
+            elif isinstance(value, dict):
+                for nested_key, nested_value in value.items():
+                    if nested_key not in self.properties[key]:
+                        self.properties[key][nested_key] = copy(nested_value)
+        # Sets metadata properties based on "now"
+        if set_metadata:
+            self.set_metadata()
 
     def apply_resource(self, resource):
         pass

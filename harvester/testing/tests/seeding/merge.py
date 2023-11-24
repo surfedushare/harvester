@@ -58,7 +58,8 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.documents = list(
-            document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"])
+            document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"], {"days": 1},
+                               state=TestDocument.States.DELETED)
         )
         TestDocument.objects.all().update(finished_at=self.current_time, pending_at=None)
         self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")

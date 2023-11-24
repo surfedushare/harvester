@@ -138,8 +138,8 @@ class FileDocument(HarvestDocument):
                 return False
         return False
 
-    def clean(self):
-        super().clean()
+    def clean(self, set_metadata=True):
+        super().clean(set_metadata=set_metadata)
         url = self.properties.get("url", None)
         if url and not url.startswith("http"):
             self.is_not_found = True

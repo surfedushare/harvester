@@ -152,8 +152,8 @@ class ProductDocument(HarvestDocument):
             data = self.transform_search_data(data)
         return data
 
-    def clean(self) -> None:
-        super().clean()
+    def set_metadata(self, current_time=None, new=False) -> None:
+        super().set_metadata(current_time=current_time, new=new)
         language = self.metadata.get("language", None)
         if language is None:
             source_language = self.properties.get("language", None)
