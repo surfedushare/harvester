@@ -78,7 +78,7 @@ class TestInitialHarvestSource(TestCase):
             self.assertTrue(doc.pipeline["tika"]["success"])
             self.assertEqual(list(doc.derivatives.keys()), ["tika"])
             self.assertEqual(doc.derivatives["tika"], {
-                "texts": [f"Tika content for http://localhost:8888/file/{ix}"]
+                "texts": [f"Tika content for http://testserver/file/{ix}"]
             })
         # Assert Set state
         set_instance = Set.objects.get(id=self.set.id)

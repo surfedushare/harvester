@@ -15,7 +15,7 @@ class EntityMockAPIView(APIView):
 
     permission_classes = (AllowAny,)
 
-    def get(self, request, entity):
+    def get(self, request, entity, since):
         # Generate the basic seeds
         size = int(request.GET.get("size", 20))
         sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
@@ -52,7 +52,7 @@ class EntityMockIdListAPIView(APIView):
 
     permission_classes = (AllowAny,)
 
-    def get(self, request, entity):
+    def get(self, request, entity, since):
         size = int(request.GET.get("size", 20))
         sequence_properties = ENTITY_SEQUENCE_PROPERTIES.get(entity, None)
         seeds = list(seed_generator(entity, size, sequence_properties))

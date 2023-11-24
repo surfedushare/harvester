@@ -25,7 +25,6 @@ class TestSimpleHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         for resource in MockHarvestResource.objects.all():
             self.assertTrue(resource.success)
             self.assertEqual(resource.request["args"], ["simple", "1970-01-01T00:00:00Z"])
-            self.assertEqual(resource.since, make_aware(datetime(year=1970, month=1, day=1)))
 
 
 UPDATE_PARAMETERS = {
@@ -48,7 +47,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "set": "surf:testing",
                 "external_id": 0,
                 "srn": "surf:testing:0",
-                "url": "http://localhost:8888/file/0",
+                "url": "http://testserver/file/0",
                 "title": "title for 0",
                 "access_rights": "OpenAccess",
                 "copyright": None,
@@ -71,7 +70,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "set": "surf:testing",
                 "external_id": 1,
                 "srn": "surf:testing:1",
-                "url": "http://localhost:8888/file/1",
+                "url": "http://testserver/file/1",
                 "title": "title for 1 before update",  # this is the important part that will change during the update
                 "access_rights": "OpenAccess",
                 "copyright": None,
@@ -95,7 +94,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "set": "surf:testing",
                 "external_id": 2,
                 "srn": "surf:testing:2",
-                "url": "http://localhost:8888/file/2",
+                "url": "http://testserver/file/2",
                 "title": "title for 2",
                 "access_rights": "OpenAccess",
                 "copyright": None,

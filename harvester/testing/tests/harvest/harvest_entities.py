@@ -11,7 +11,7 @@ from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.utils.factories import create_datatype_models
 from testing.utils.generators import seed_generator
 from testing.models import (Dataset, DatasetVersion, HarvestState, Set, TestDocument, MockHarvestResource,
-                            MockDetailResource)
+                            MockIdsResource, MockDetailResource)
 
 
 class HarvestEntitiesTestCase(TestCase):
@@ -24,12 +24,9 @@ class HarvestEntitiesTestCase(TestCase):
         super().setUp()
         self.simple_entity = HarvestEntity.objects.get(source__module="simple")
         self.merge_entity = HarvestEntity.objects.get(source__module="merge")
-        MockHarvestResource.objects.create(
-            uri="localhost:8888/mocks/entity/simple_set",
-            since=now(),
-            set_specification="simple_set"
-        )
-        MockDetailResource.objects.create(uri="localhost:8888/mocks/entity/merge_set/0")
+        MockHarvestResource.objects.create(uri="/mocks/entity/simple/1970-01-01T00:00:00Z")
+        MockIdsResource.objects.create(uri="/mocks/entity/merge/1970-01-01T00:00:00Z/ids")
+        MockDetailResource.objects.create(uri="/mocks/entity/merge/0")
 
     def assert_harvest_state(self, harvest_state):
         self.assertEqual(harvest_state.dataset.id, self.dataset.id)
@@ -195,7 +192,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             self.assert_dataset_version(dataset_version, historic_sets=2)
         # Assert resources
         self.assertEqual(
-            MockHarvestResource.objects.all().count(), 0,
+            MockIdsResource.objects.all().count(), 0,
             "Expected resources for 'merge' entity to get deleted because of delete_policy=no"
         )
         self.assertEqual(

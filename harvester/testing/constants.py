@@ -13,18 +13,17 @@ SEED_DEFAULTS = {
 ENTITY_SEQUENCE_PROPERTIES = {
     "simple": {
         "external_id": "{ix}",  # will be cast to an int
-        "url": "http://localhost:8888/file/{ix}",
+        "url": "http://testserver/file/{ix}",
         "title": "title for {ix}"
     },
     "nested": {
         "external_id": "{ix}",  # will be cast to an int
-        "url": "http://localhost:8888/file/{ix}",
+        "url": "http://testserver/file/{ix}",
         "title": "title for {ix}"
     },
     "merge": {
-        "state": "deleted",  # to create pre-existing documents for delete_policy=no sources
         "external_id": "{ix}",  # will be cast to an int
-        "url": "http://localhost:8888/file/{ix}",
+        "url": "http://testserver/file/{ix}",
         "title": "title for {ix}"
     }
 }

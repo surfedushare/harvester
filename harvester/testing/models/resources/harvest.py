@@ -1,13 +1,14 @@
+from urllib.parse import urlparse, parse_qs
+
 from urlobject import URLObject
 
-from datagrowth.resources import HttpResource
+from datagrowth.resources import HttpResource, TestClientResource
 from core.models.resources.harvest import HarvestHttpResource
 
 
-class MockHarvestResource(HarvestHttpResource):
-    is_extracted = None  # legacy field which will disappear so we exclude it here
+class MockHarvestResource(TestClientResource):
 
-    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}/"
+    test_view_name = "testing:entities"
 
     PARAMETERS = {
         "size": 20,
@@ -15,21 +16,23 @@ class MockHarvestResource(HarvestHttpResource):
     }
 
     def next_parameters(self):
-        if not self.success or self.request["args"][0] == "merge":
-            return {}
         content_type, data = self.content
-        next_link = data.get("next", None)
-        if not next_link:
+        if not data or not (next_url := data.get("next")):
             return {}
-        next_url = URLObject(next_link)
+        next_link = urlparse(next_url)
+        params = parse_qs(next_link.query)
         return {
-            "page": next_url.query_dict["page"]
+            "page": params["page"]
         }
 
 
-class MockDetailResource(HttpResource):
+class MockIdsResource(TestClientResource):
+    test_view_name = "testing:entity-ids"
 
-    URI_TEMPLATE = "http://localhost:8888/mocks/entity/{}/{}/"
+
+class MockDetailResource(TestClientResource):
+
+    test_view_name = "testing:entity-details"
 
     PARAMETERS = {
         "size": 20,
