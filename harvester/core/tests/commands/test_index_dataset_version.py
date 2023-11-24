@@ -248,7 +248,7 @@ class TestIndexDatasetVersionWithHistory(OpenSearchClientTestCase):
             self.assertEqual(version, "002")
         self.assertEqual(DatasetVersion.objects.filter(is_current=True).count(), 1)
         dataset_version = DatasetVersion.objects.filter(is_current=True).last()
-        self.assertEqual(dataset_version.id, 3)
+        self.assertNotEqual(dataset_version.id, old_version.id)
         # Index the previous version and check we only get the modified documents
         get_search_client.reset_mock()
         streaming_bulk.reset_mock()
@@ -280,7 +280,7 @@ class TestIndexDatasetVersionWithHistory(OpenSearchClientTestCase):
             )
         self.assertEqual(DatasetVersion.objects.filter(is_current=True).count(), 1)
         dataset_version = DatasetVersion.objects.filter(is_current=True).last()
-        self.assertEqual(dataset_version.id, 1)
+        self.assertEqual(dataset_version.id, old_version.id)
 
     @patch("core.models.search.index.get_opensearch_client", return_value=search_client)
     @patch("core.models.search.index.streaming_bulk")
