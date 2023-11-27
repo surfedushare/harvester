@@ -45,8 +45,8 @@ def run(ctx, test_file=None, warnings=False, fast=False, parallel=False, search_
             ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag}", echo=True, pty=True)
         else:
             # Running all tests in parallel except for search, because manipulating indices is not atomic
-            ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag} -n auto", echo=True, pty=True)
-            ctx.run(f"pytest {warnings_flag} -m search", echo=True, pty=True)
+            ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag} -n auto --create-db", echo=True, pty=True)
+            ctx.run(f"pytest {warnings_flag} -m search --reuse-db", echo=True, pty=True)
 
 
 test_collection = Collection("test", run)
