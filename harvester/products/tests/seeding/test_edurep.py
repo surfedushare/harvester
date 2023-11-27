@@ -28,7 +28,7 @@ class TestEdurepProductSeeding(TestCase):
                 self.assertIsNotNone(file_.identity)
                 self.assertTrue(file_.properties)
                 print(file_.state)
-                if file_.state == ProductDocument.States.ACTIVE:
+                if file_.state == ProductDocument.States.ACTIVE or file_.state == ProductDocument.States.INACTIVE:
                     self.assertTrue(file_.pending_at)
                     self.assertIsNone(file_.finished_at)
                 else:
