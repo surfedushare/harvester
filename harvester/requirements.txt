@@ -17,7 +17,7 @@ django-log-formatter-json==0.2.0
 ujson==3.2.0  # implicit dependency of django-log-formatter-json
 
 # Harvester Celery
-celery==5.3.4
+celery==5.3.6
 celery[redis]
 redis==4.6.0
 flower==1.2.0
