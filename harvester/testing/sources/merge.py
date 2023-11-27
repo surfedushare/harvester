@@ -14,7 +14,7 @@ SEEDING_PHASES = [
         "strategy": "initial",
         "batch_size": 5,
         "retrieve_data": {
-            "resource": "testing.MockHarvestResource",
+            "resource": "testing.MockIdsResource",
             "method": "get",
             "args": ["merge"],
             "kwargs": {},

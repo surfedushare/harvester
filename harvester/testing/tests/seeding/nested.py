@@ -1,7 +1,4 @@
 from unittest.mock import patch
-from datetime import datetime
-
-from django.utils.timezone import make_aware
 
 from core.processors import HttpSeedingProcessor
 from testing.tests.seeding.base import HttpSeedingProcessorTestCase
@@ -33,7 +30,6 @@ class TestNestedHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         for resource in MockHarvestResource.objects.all():
             self.assertTrue(resource.success)
             self.assertEqual(resource.request["args"], ["nested", "1970-01-01T00:00:00Z"])
-            self.assertEqual(resource.since, make_aware(datetime(year=1970, month=1, day=1)))
 
 
 NESTED_DELETE_PARAMETERS = {
@@ -58,7 +54,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 1,
                 "srn": "surf:testing:1",
                 "parent_id": "surf:testing:2",
-                "url": "http://localhost:8888/file/1",
+                "url": "http://testserver/file/1",
                 "title": "title for 1 before update",  # this is the important part that will change during the update
                 "access_rights": "OpenAccess",
                 "copyright": None,
@@ -83,7 +79,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 2,
                 "srn": "surf:testing:2",
                 "parent_id": "surf:testing:2",
-                "url": "http://localhost:8888/file/2",
+                "url": "http://testserver/file/2",
                 "title": "title for 2",
                 "access_rights": "OpenAccess",
                 "copyright": None,
@@ -103,7 +99,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                 "external_id": 3,
                 "srn": "surf:testing:3",
                 "parent_id": "surf:testing:4",
-                "url": "http://localhost:8888/file/3",
+                "url": "http://testserver/file/3",
                 "title": "title for 3",
                 "access_rights": "OpenAccess",
                 "copyright": None,

@@ -58,4 +58,4 @@ jobs:
         invoke container.prepare-builds
     - name: Run tests
       run:
-        invoke test.run
+        invoke test.run --parallel

@@ -1,13 +1,10 @@
-from datetime import datetime
 from unittest.mock import patch
-
-from django.utils.timezone import make_aware
 
 from core.processors import HttpSeedingProcessor
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.tests.seeding.base import HttpSeedingProcessorTestCase
 from testing.utils.generators import document_generator
-from testing.models import TestDocument, MockHarvestResource, MockDetailResource
+from testing.models import TestDocument, MockIdsResource, MockDetailResource
 from testing.sources.merge import SEEDING_PHASES
 
 
@@ -24,13 +21,12 @@ class TestMergeHttpSeedingProcessor(HttpSeedingProcessorTestCase):
 
         # Assert list resource
         self.assertEqual(
-            MockHarvestResource.objects.all().count(), 1,
+            MockIdsResource.objects.all().count(), 1,
             "Expected one requests to list mock data endpoints"
         )
-        list_resource = MockHarvestResource.objects.first()
+        list_resource = MockIdsResource.objects.first()
         self.assertTrue(list_resource.success)
         self.assertEqual(list_resource.request["args"], ["merge", "1970-01-01T00:00:00Z"])
-        self.assertEqual(list_resource.since, make_aware(datetime(year=1970, month=1, day=1)))
         # Assert detail resources
         self.assertEqual(
             MockDetailResource.objects.all().count(), 20,
@@ -58,18 +54,19 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.documents = list(
-            document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"])
+            document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"], {"days": 1},
+                               state=TestDocument.States.DELETED)
         )
         TestDocument.objects.all().update(finished_at=self.current_time, pending_at=None)
         self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")
         self.updated_document.properties["title"] = "title for 1 before update"
         self.updated_document.save()
         self.unchanged_document = TestDocument.objects.get(properties__srn="surf:testing:2")
-        self.unchanged_document.metadata["hash"] = "3ab3f0fdaa5625237031f72277dd43723b0b774d"
+        self.unchanged_document.metadata["hash"] = "68ec32dbc79b1a5fc40caaec4134b4ba8b12bd8f"
         self.unchanged_document.pipeline["tika"] = {"success": True}
         self.unchanged_document.save()
 
-    @patch.object(MockHarvestResource, "PARAMETERS", UPDATE_PARAMETERS)
+    @patch.object(MockIdsResource, "PARAMETERS", UPDATE_PARAMETERS)
     def test_seeding(self):
         processor = HttpSeedingProcessor(self.set, {
             "phases": SEEDING_PHASES
@@ -110,7 +107,8 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
 
         # Assert unchanged document
         unchanged_document = TestDocument.objects.get(identity="surf:testing:2")
-        self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"])
+        self.assertEqual(unchanged_document.metadata["created_at"], unchanged_document.metadata["modified_at"],
+                         "Unexpected update for unchanged document, is the hash set in the setUp method still correct?")
         self.assertIsNone(unchanged_document.metadata["deleted_at"])
         self.assertEqual(unchanged_document.properties["title"], "title for 2", "Expected the title to remain as-is")
         self.assertIsNone(

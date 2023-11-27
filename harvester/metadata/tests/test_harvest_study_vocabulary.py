@@ -1,12 +1,30 @@
 from unittest.mock import patch
-from django.test import TestCase
+
+from django.test import TestCase, tag
 from django.core.management import call_command
+
+from datagrowth.configuration import register_defaults
 from metadata.models import MetadataValue
 
 
+@tag("slow")
 class TestHarvestStudyVocabulary(TestCase):
 
     fixtures = ["initial-study-vocabulary-resources"]
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
+
+    @classmethod
+    def tearDownClass(cls):
+        register_defaults("global", {
+            "cache_only": False
+        })
+        super().tearDownClass()
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
     def test_no_duplicates(self, fake_deepl):

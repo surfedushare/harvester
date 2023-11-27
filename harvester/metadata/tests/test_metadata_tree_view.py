@@ -1,10 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 
 from django.contrib.auth.models import User
 
 from metadata.models import MetadataField, MetadataValue
 
 
+@tag("slow")
 class TestMetadataTreeView(TestCase):
 
     fixtures = ["test-metadata-edusources"]
