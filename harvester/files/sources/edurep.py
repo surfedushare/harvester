@@ -5,7 +5,6 @@ from collections import namedtuple
 
 
 from sources.utils.edurep import EdurepExtractor
-from sources.utils.base import parse_url
 from files.models import Set, FileDocument
 
 
@@ -92,7 +91,7 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_hash(cls, soup, info: FileInfo) -> str | None:
-        url = parse_url(info.url.text.strip())
+        url = EdurepExtractor.parse_url(info.url.text.strip())
         if not url:
             return
         return sha1(url.encode("utf-8")).hexdigest()
@@ -103,7 +102,7 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_url(cls, soup, info: FileInfo) -> str | None:
-        return parse_url(info.url.text.strip())
+        return EdurepExtractor.parse_url(info.url.text.strip())
 
     @classmethod
     def get_mime_type(cls, soup, info: FileInfo) -> str | None:

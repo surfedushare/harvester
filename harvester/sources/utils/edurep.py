@@ -7,8 +7,10 @@ from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
 from harvester import settings
 from django.utils.text import slugify
 
+from sources.utils.base import BaseExtractor
 
-class EdurepExtractor(object):
+
+class EdurepExtractor(BaseExtractor):
 
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
                               re.IGNORECASE)
