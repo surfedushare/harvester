@@ -8,7 +8,6 @@ from harvester import settings
 from django.utils.text import slugify
 
 
-
 class EdurepExtractor(object):
 
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
