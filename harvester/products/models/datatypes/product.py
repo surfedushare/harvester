@@ -61,7 +61,8 @@ class ProductDocument(HarvestDocument):
         ]
         files_by_identity = {
             file_document.identity: file_document.to_data()
-            for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False)
+            for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False,
+                                                             dataset_version__is_current=True)
         }
         # Get the first file and merge its info into the product
         # If the product sets a technical_type we ignore the file technical_type
