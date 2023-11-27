@@ -7,7 +7,6 @@ from dateutil.parser import parse as date_parser
 from django.utils.text import slugify
 
 from core.constants import HIGHER_EDUCATION_LEVELS
-from sources.utils.sharekit import webhook_data_transformer
 
 logger = logging.getLogger("harvester")
 
@@ -360,6 +359,3 @@ SEEDING_PHASES = [
         }
     }
 ]
-
-
-WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer
