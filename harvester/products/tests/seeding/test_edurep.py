@@ -27,8 +27,11 @@ class TestEdurepProductSeeding(TestCase):
                 self.assertIsInstance(file_, ProductDocument)
                 self.assertIsNotNone(file_.identity)
                 self.assertTrue(file_.properties)
-                self.assertTrue(file_.pending_at)
-        self.assertEqual(self.set.documents.count(), 13)
+                if file_.state == "active" or file_.state == "inactive":
+                    self.assertTrue(file_.pending_at)
+                else:
+                    self.assertFalse(file_.pending_at)
+        self.assertEqual(self.set.documents.count(), 12)
 
     def test_delta_seeding(self):
         self.skipTest("to be tested")
