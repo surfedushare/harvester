@@ -1,23 +1,11 @@
-import logging
-import re
 from datetime import datetime
 
 from dateutil.parser import parse as date_parser
 
 from sources.utils.edurep import EdurepExtractor
 
-logger = logging.getLogger("harvester")
-
-
-LOWEST_EDUCATIONAL_LEVEL = 2  # HBO
-
 
 class EdurepDataExtraction(object):
-
-    youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
-    cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
-                              re.IGNORECASE)
-    cc_code_regex = re.compile(r"^cc([ \-][a-z]{2})+$", re.IGNORECASE)
 
     #############################
     # OAI-PMH
