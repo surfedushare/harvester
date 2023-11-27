@@ -96,7 +96,6 @@ class EdurepDataExtraction(object):
             files.append(file.text.strip())
         return files
 
-
     @classmethod
     def get_title(cls, soup, el):
         node = el.find('czp:title')
@@ -247,7 +246,6 @@ class EdurepDataExtraction(object):
         return date_parser(
             provider_datetime,
             default=datetime(year=1970, month=1, day=1)).strftime("%Y-%m-%d")
-
 
     @classmethod
     def get_publisher_year(cls, soup, el):

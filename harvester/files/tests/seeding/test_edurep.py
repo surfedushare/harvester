@@ -55,12 +55,14 @@ class TestEdurepFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["external_id"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
 
     def test_get_mime_type(self):
-        self.assertEqual(self.seeds[0]["mime_type"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        self.assertEqual(self.seeds[0]["mime_type"],
+                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
         self.assertEqual(self.seeds[1]["mime_type"], "text/xxx")
         self.assertEqual(self.seeds[2]["mime_type"], "application/x-zip-compressed")
 
     def test_get_url(self):
-        self.assertEqual(self.seeds[0]["url"], "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7")
+        self.assertEqual(self.seeds[0]["url"],
+                         "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7")
         self.assertEqual(self.seeds[1]["url"], "https://www.youtube.com/watch?v=Zl59P5ZNX3M")
 
     def test_get_copyright(self):
@@ -69,8 +71,10 @@ class TestEdurepFileExtraction(TestCase):
         self.assertEqual(self.seeds[2]["copyright"], "cc-by-sa-40")
 
     def test_get_product_id(self):
-        self.assertEqual(self.seeds[0]["product_id"], "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751")
-        self.assertEqual(self.seeds[5]["product_id"], "surfsharekit:oai:surfsharekit.nl:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b")
+        self.assertEqual(self.seeds[0]["product_id"],
+                         "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751")
+        self.assertEqual(self.seeds[5]["product_id"],
+                         "surfsharekit:oai:surfsharekit.nl:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b")
 
     def test_get_access_rights(self):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess")

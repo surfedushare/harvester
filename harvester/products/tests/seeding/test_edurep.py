@@ -56,8 +56,6 @@ class TestEdurepProductExtraction(TestCase):
         for batch in processor("edurep", "2020-02-10T13:08:39Z"):
             cls.seeds += [doc.properties for doc in batch]
 
-
-
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[3]['authors'], [
@@ -83,7 +81,6 @@ class TestEdurepProductExtraction(TestCase):
             'AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein'
         )
         self.assertEqual(seeds[5]['organizations']['root']['name'], 'SURFnet')
-
 
     def test_study_vocabulary(self):
         seeds = self.seeds
