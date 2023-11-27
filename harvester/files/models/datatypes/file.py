@@ -164,8 +164,8 @@ class FileDocument(HarvestDocument):
         }
         if "tika" in self.derivatives:
             data["text"] = self.derivatives["tika"]["texts"][0]  # TODO: allow all Tika output
-        if "extruct" in self.derivatives:
-            data["video"] = self.derivatives["extruct"]
+        if "youtube_api" in self.derivatives:
+            data["video"] = self.derivatives["youtube_api"]
         if "pdf_preview" in self.derivatives:
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:
