@@ -2,7 +2,8 @@ from typing import Iterator
 from hashlib import sha1
 from collections import namedtuple
 
-from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
+from sources.utils.base import parse_url
+from sources.utils.sharekit import extract_channel, extract_state, webhook_data_transformer
 from files.models import Set, FileDocument
 
 

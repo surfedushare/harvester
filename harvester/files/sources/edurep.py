@@ -5,7 +5,7 @@ from collections import namedtuple
 
 
 from sources.utils.edurep import EdurepExtractor
-from sources.utils.sharekit import parse_url
+from sources.utils.base import parse_url
 from files.models import Set, FileDocument
 
 

@@ -12,14 +12,6 @@ def extract_channel(response_data: dict) -> str | None:
     return f"sharekit:{channel}"
 
 
-def parse_url(url: str) -> str | None:
-    if not url:
-        return
-    url = url.strip()
-    url = url.replace(" ", "+")
-    return url
-
-
 def extract_state(node: dict) -> str:
     attributes = node.get("attributes", {})
     default_state = "active"
