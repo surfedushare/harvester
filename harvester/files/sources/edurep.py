@@ -131,13 +131,7 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_provider(cls, soup, info: FileInfo) -> dict | None:
-        provider_name = EdurepExtractor.get_provider_name(info.product, info.product.find('identifier').text.strip())
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": None,
-            "name": provider_name
-        }
+        return EdurepExtractor.get_provider(info.product)
 
 
 OBJECTIVE = {

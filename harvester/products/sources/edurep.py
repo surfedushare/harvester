@@ -2,11 +2,9 @@ import logging
 import re
 from datetime import datetime
 
-from vobject.base import ParseError, readOne
 from dateutil.parser import parse as date_parser
-from django.utils.text import slugify
 
-from core.constants import HIGHER_EDUCATION_LEVELS
+from sources.utils.edurep import EdurepExtractor
 
 logger = logging.getLogger("harvester")
 
@@ -26,33 +24,6 @@ class EdurepDataExtraction(object):
     #############################
 
     @classmethod
-    def parse_copyright_description(cls, description):
-        if description is None:
-            return
-        url_match = cls.cc_url_regex.match(description)
-        if url_match is None:
-            code_match = cls.cc_code_regex.match(description)
-            return slugify(description.lower()) if code_match else None
-        license = url_match.group("license").lower()
-        if license == "mark":
-            license = "pdm"
-        elif license == "zero":
-            license = "cc0"
-        else:
-            license = "cc-" + license
-        return slugify(f"{license}-{url_match.group('version')}")
-
-    @classmethod
-    def parse_vcard_element(cls, el, record):
-        card = "\n".join(field.strip() for field in el.text.strip().split("\n"))
-        try:
-            return readOne(card)
-        except ParseError:
-            external_id = cls.get_oaipmh_external_id(None, record)
-            logger.warning(f"Can't parse vCard for material with id: {external_id}")
-            return
-
-    @classmethod
     def get_oaipmh_records(cls, soup):
         return soup.find_all('record')
 
@@ -62,11 +33,7 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_oaipmh_record_state(cls, soup, el):
-        lowest_educational_level = cls.get_lowest_educational_level(soup, el)
-        if lowest_educational_level < LOWEST_EDUCATIONAL_LEVEL:
-            return "inactive"
-        header = el.find('header')
-        return header.get("status", "active")
+        return EdurepExtractor.get_oaipmh_record_state(el)
 
     @classmethod
     def get_set(cls, soup, el):
@@ -75,18 +42,6 @@ class EdurepDataExtraction(object):
     #############################
     # GENERIC
     #############################
-
-    @staticmethod
-    def find_all_classification_blocks(element, classification_type, output_type):
-        assert output_type in ["czp:entry", "czp:id"]
-        entries = element.find_all(string=classification_type)
-        blocks = []
-        for entry in entries:
-            classification_element = entry.find_parent('czp:classification')
-            if not classification_element:
-                continue
-            blocks += classification_element.find_all(output_type)
-        return blocks
 
     @classmethod
     def get_files(cls, soup, el):
@@ -136,13 +91,7 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_copyright(cls, soup, el):
-        node = el.find('czp:copyrightandotherrestrictions')
-        if node is None:
-            return "yes"
-        copyright = node.find('czp:value').find('czp:langstring').text.strip()
-        if copyright == "yes":
-            copyright = cls.parse_copyright_description(cls.get_copyright_description(soup, el))
-        return copyright or "yes"
+        return EdurepExtractor.get_copyright(el)
 
     @classmethod
     def get_aggregation_level(cls, soup, el):
@@ -162,8 +111,9 @@ class EdurepDataExtraction(object):
         nodes = contribution.find_all('czp:vcard')
 
         authors = []
+        external_id = cls.get_oaipmh_external_id(soup, el)
         for node in nodes:
-            author = cls.parse_vcard_element(node, el)
+            author = EdurepExtractor.parse_vcard_element(node, external_id)
             if hasattr(author, "fn"):
                 authors.append({
                     "name": author.fn.value.strip(),
@@ -177,16 +127,7 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_provider(cls, soup, el):
-        provider_name = None
-        publishers = cls.get_publishers(soup, el)
-        if len(publishers):
-            provider_name = publishers[0]
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": None,
-            "name": provider_name
-        }
+        return EdurepExtractor.get_provider(el)
 
     @classmethod
     def get_organizations(cls, soup, el):
@@ -206,19 +147,8 @@ class EdurepDataExtraction(object):
 
     @classmethod
     def get_publishers(cls, soup, el):
-        publishers = []
-        publisher_element = el.find(string='publisher')
-        if not publisher_element:
-            return publishers
-        contribution_element = publisher_element.find_parent('czp:contribute')
-        if not contribution_element:
-            return publishers
-        nodes = contribution_element.find_all('czp:vcard')
-        for node in nodes:
-            publisher = cls.parse_vcard_element(node, el)
-            if hasattr(publisher, "fn"):
-                publishers.append(publisher.fn.value)
-        return publishers
+        external_id = cls.get_oaipmh_external_id(soup, el)
+        return EdurepExtractor.get_publishers(el, external_id)
 
     @staticmethod
     def find_role_datetime(role):
@@ -255,62 +185,23 @@ class EdurepDataExtraction(object):
         return datetime.year
 
     @classmethod
-    def get_lom_educational_levels(cls, soup, el):
-        educational = el.find('czp:educational')
-        if not educational:
-            return []
-        contexts = educational.find_all('czp:context')
-        if not contexts:
-            return []
-        educational_levels = [
-            edu.find('czp:value').find('czp:langstring').text.strip()
-            for edu in contexts
-        ]
-        return list(set(educational_levels))
-
-    @classmethod
     def get_educational_levels(cls, soup, el):
-        blocks = cls.find_all_classification_blocks(el, "educational level", "czp:entry")
+        blocks = EdurepExtractor.find_all_classification_blocks(el, "educational level", "czp:entry")
         return list(set([block.find('czp:langstring').text.strip() for block in blocks]))
 
     @classmethod
-    def get_lowest_educational_level(cls, soup, el):
-        educational_levels = cls.get_educational_levels(soup, el)
-        current_numeric_level = 3 if len(educational_levels) else -1
-        for education_level in educational_levels:
-            for higher_education_level, numeric_level in HIGHER_EDUCATION_LEVELS.items():
-                if not education_level.startswith(higher_education_level):
-                    continue
-                # One of the records education levels matches a higher education level.
-                # We re-assign current level and stop processing this education level,
-                # as it shouldn't match multiple higher education levels
-                current_numeric_level = min(current_numeric_level, numeric_level)
-                break
-            else:
-                # No higher education level found inside current education level.
-                # Dealing with an "other" means a lower education level than we're interested in.
-                # So this record has the lowest possible level. We're done processing this seed.
-                current_numeric_level = 0
-                break
-        return current_numeric_level
-
-    @classmethod
     def get_studies(cls, soup, el):
-        blocks = cls.find_all_classification_blocks(el, "discipline", "czp:id")
+        blocks = EdurepExtractor.find_all_classification_blocks(el, "discipline", "czp:id")
         return list(set([block.text.strip() for block in blocks]))
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
-        blocks = cls.find_all_classification_blocks(el, "idea", "czp:id")
+        blocks = EdurepExtractor.find_all_classification_blocks(el, "idea", "czp:id")
         return list(set([block.text.strip() for block in blocks]))
 
     @classmethod
     def get_copyright_description(cls, soup, el):
-        node = el.find('czp:rights')
-        if not node:
-            return
-        description = node.find('czp:description')
-        return description.find('czp:langstring').text.strip() if description else None
+        return EdurepExtractor.get_copyright_description(el)
 
 
 OBJECTIVE = {

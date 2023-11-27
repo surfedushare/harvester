@@ -143,3 +143,13 @@ class EdurepExtractor(object):
         if len(publishers):
             provider_name = publishers[0]
         return provider_name
+
+    @classmethod
+    def get_provider(cls, product) -> dict | None:
+        provider_name = EdurepExtractor.get_provider_name(product, product.find('identifier').text.strip())
+        return {
+            "ror": None,
+            "external_id": None,
+            "slug": None,
+            "name": provider_name
+        }
