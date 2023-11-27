@@ -1,4 +1,7 @@
 import re
+import logging
+
+from vobject.base import ParseError, readOne
 
 from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
 from harvester import settings
@@ -12,6 +15,7 @@ class EdurepExtractor(object):
                               re.IGNORECASE)
     cc_code_regex = re.compile(r"^cc([ \-][a-z]{2})+$", re.IGNORECASE)
 
+    logger = logging.getLogger("harvester")
 
     @classmethod
     def find_all_classification_blocks(cls, element, classification_type, output_type):
@@ -107,3 +111,36 @@ class EdurepExtractor(object):
             return
         description = node.find('czp:description')
         return description.find('czp:langstring').text.strip() if description else None
+
+    @classmethod
+    def parse_vcard_element(cls, record, external_id):
+        card = "\n".join(field.strip() for field in record.text.strip().split("\n"))
+        try:
+            return readOne(card)
+        except ParseError:
+            cls.logger.warning(f"Can't parse vCard for material with id: {external_id}")
+            return
+
+    @classmethod
+    def get_publishers(cls, product, external_id):
+        publishers = []
+        publisher_element = product.find(string='publisher')
+        if not publisher_element:
+            return publishers
+        contribution_element = publisher_element.find_parent('czp:contribute')
+        if not contribution_element:
+            return publishers
+        nodes = contribution_element.find_all('czp:vcard')
+        for node in nodes:
+            publisher = cls.parse_vcard_element(node, external_id)
+            if hasattr(publisher, "fn"):
+                publishers.append(publisher.fn.value)
+        return publishers
+
+    @classmethod
+    def get_provider_name(cls, product, external_id):
+        provider_name = None
+        publishers = cls.get_publishers(product, external_id)
+        if len(publishers):
+            provider_name = publishers[0]
+        return provider_name
