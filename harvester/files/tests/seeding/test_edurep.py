@@ -27,7 +27,12 @@ class TestEdurepFileSeeding(TestCase):
                 self.assertIsInstance(file_, FileDocument)
                 self.assertIsNotNone(file_.identity)
                 self.assertTrue(file_.properties)
-                self.assertTrue(file_.pending_at)
+                if file_.state == FileDocument.States.ACTIVE:
+                    self.assertTrue(file_.pending_at)
+                    self.assertIsNone(file_.finished_at)
+                else:
+                    self.assertIsNone(file_.pending_at)
+                    self.assertIsNotNone(file_.finished_at)
         self.assertEqual(self.set.documents.count(), 12)
 
 

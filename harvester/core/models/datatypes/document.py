@@ -106,11 +106,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             self.metadata["created_at"] = current_time
         # Update metadata about deletion
         self.state = self.properties.get("state", None)
-        if self.state == self.States.DELETED and (not self.metadata.get("deleted_at", None) or new):
+        if self.state != self.States.ACTIVE and (not self.metadata.get("deleted_at", None) or new):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
-        elif self.state != self.States.DELETED:
+        elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
