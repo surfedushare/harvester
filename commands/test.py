@@ -7,15 +7,17 @@ from invoke import Collection
     "warnings": "Whether to print warnings in the test report",
     "fast": "Whether to exclude tests marked as slow",
     "parallel": "Whether to run the tests in parallel on multiple cpus",
-    "search_tests": "Only run the tests tagged with search"
+    "search_tests": "Only run the tests tagged with search",
+    "fail_fast": "Fails at first failing test when enabled",
 })
-def run(ctx, test_file=None, warnings=False, fast=False, parallel=False, search_tests=False):
+def run(ctx, test_file=None, warnings=False, fast=False, parallel=False, search_tests=False, fail_fast=False):
     """
     Runs the tests for the harvester
     """
     # Specify some flags we'll be passing on to pytest based on command line arguments
     test_file = test_file if test_file else ""
     warnings_flag = "--disable-warnings" if not warnings else ""
+    fail_fast_flag = "" if not fail_fast else "-x"
 
     # Assert that inputs make sense
     assert not test_file or not parallel, "You shouldn't run tests from a single file in parallel"
@@ -42,11 +44,14 @@ def run(ctx, test_file=None, warnings=False, fast=False, parallel=False, search_
     # Run pytest command
     with ctx.cd("harvester"):
         if not parallel:
-            ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag}", echo=True, pty=True)
+            ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag} {fail_fast_flag}", echo=True, pty=True)
         else:
             # Running all tests in parallel except for search, because manipulating indices is not atomic
-            ctx.run(f"pytest {test_file} {warnings_flag} {marks_flag} -n auto --create-db", echo=True, pty=True)
-            ctx.run(f"pytest {warnings_flag} -m search --reuse-db", echo=True, pty=True)
+            ctx.run(
+                f"pytest {test_file} {warnings_flag} {marks_flag} {fail_fast_flag} -n auto --create-db",
+                echo=True, pty=True
+            )
+            ctx.run(f"pytest {warnings_flag} {fail_fast_flag} -m search --reuse-db", echo=True, pty=True)
 
 
 test_collection = Collection("test", run)
