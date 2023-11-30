@@ -42,7 +42,7 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | Datase
     set_current_pipeline = dataset_version.pipeline.get("set_current_dataset_version", None)
     if set_current_pipeline is not None:
         if not set_current_pipeline.get("success", False):
-            dataset_version.invalidate_task("set_current_dataset_version")
+            dataset_version.invalidate_task("set_current_dataset_version", commit=True)
 
 
 @app.task(name="set_current_dataset_version", base=DatabaseConnectionResetTask)
