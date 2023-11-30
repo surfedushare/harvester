@@ -98,7 +98,7 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_set(cls, soup, info: FileInfo) -> str | None:
-        return info.product.find('setSpec').text.strip()
+        return f"edurep:{info.product.find('setSpec').text.strip()}"
 
     @classmethod
     def get_url(cls, soup, info: FileInfo) -> str | None:

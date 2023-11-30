@@ -62,6 +62,15 @@ class TestEdurepProductExtraction(TestCase):
         for batch in processor("edurep", "2020-02-10T13:08:39Z"):
             cls.seeds += [doc.properties for doc in batch]
 
+    def test_get_external_id(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["external_id"],
+                         "surfsharekit:oai:surfsharekit.nl:3d2940a0-9573-412e-8fa2-067c55e2a72f")
+
+    def test_get_set(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["set"], "edurep:surfsharekit")
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[3]['authors'], [
