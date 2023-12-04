@@ -5,7 +5,7 @@ from django.utils.timezone import make_aware
 
 from harvester.utils.extraction import get_harvest_seeds
 from core.constants import Repositories
-from sources.factories.edurep.extraction import EdurepJsonSearchResourceFactory, SET_SPECIFICATION
+from sources.factories.edurep_json.extraction import EdurepJsonSearchResourceFactory, SET_SPECIFICATION
 
 
 class TestGetHarvestSeedsEdurep(TestCase):

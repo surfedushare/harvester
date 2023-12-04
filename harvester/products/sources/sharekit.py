@@ -2,18 +2,18 @@ from datetime import datetime
 from dateutil.parser import parse as date_parser
 from itertools import chain
 
-from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
+from sources.utils.sharekit import SharekitExtractor
 
 
 class SharekitMetadataExtraction(object):
 
     @classmethod
     def get_record_state(cls, node):
-        return extract_state(node)
+        return SharekitExtractor.extract_state(node)
 
     @classmethod
     def get_channel(cls, data):
-        return extract_channel(data)
+        return SharekitExtractor.extract_channel(data)
 
     #############################
     # GENERIC
@@ -24,8 +24,8 @@ class SharekitMetadataExtraction(object):
         files = node["attributes"].get("files", []) or []
         links = node["attributes"].get("links", []) or []
         urls = []
-        urls += [parse_url(file_["url"]) for file_ in files if file_.get("url", None)]
-        urls += [parse_url(link["url"]) for link in links if link.get("url", None)]
+        urls += [SharekitExtractor.parse_url(file_["url"]) for file_ in files if file_.get("url", None)]
+        urls += [SharekitExtractor.parse_url(link["url"]) for link in links if link.get("url", None)]
         return urls
 
     @classmethod
@@ -227,4 +227,4 @@ SEEDING_PHASES = [
 ]
 
 
-WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer
+WEBHOOK_DATA_TRANSFORMER = SharekitExtractor.webhook_data_transformer

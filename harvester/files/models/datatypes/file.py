@@ -1,6 +1,7 @@
 import re
 from urllib.parse import urlparse
 from mimetypes import guess_type
+from copy import deepcopy
 
 from django.db import models
 from django.conf import settings
@@ -152,9 +153,8 @@ class FileDocument(HarvestDocument):
         if not mime_type and url:
             mime_type, encoding = guess_type(url)
         self.mime_type = mime_type
-        if self.mime_type:
-            self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
-            self.properties["type"] = self.type
+        self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
+        self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
 
     def to_data(self, merge_derivatives: bool = True) -> dict:
@@ -164,8 +164,10 @@ class FileDocument(HarvestDocument):
         }
         if "tika" in self.derivatives:
             data["text"] = self.derivatives["tika"]["texts"][0]  # TODO: allow all Tika output
-        if "extruct" in self.derivatives:
-            data["video"] = self.derivatives["extruct"]
+        if "youtube_api" in self.derivatives:
+            youtube_data = deepcopy(self.derivatives["youtube_api"])
+            data["previews"] = youtube_data.pop("previews", None)
+            data["video"] = youtube_data
         if "pdf_preview" in self.derivatives:
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:

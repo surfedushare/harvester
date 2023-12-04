@@ -2,7 +2,7 @@ from typing import Iterator
 from hashlib import sha1
 from collections import namedtuple
 
-from sources.utils.sharekit import extract_channel, parse_url, extract_state, webhook_data_transformer
+from sources.utils.sharekit import SharekitExtractor
 from files.models import Set, FileDocument
 
 
@@ -20,7 +20,7 @@ def get_file_info(sharekit_products_data: dict) -> Iterator[FileInfo]:
     :param sharekit_products_data: a parsed Sharekit publication API response
     :return: yields FileInfo tuples
     """
-    channel = extract_channel(sharekit_products_data)
+    channel = SharekitExtractor.extract_channel(sharekit_products_data)
     for product in sharekit_products_data["data"]:
         product_attributes = product["attributes"]
         product_files = product_attributes.get("files", []) or []
@@ -48,13 +48,13 @@ class SharekitFileExtraction(object):
     def get_state(cls, info: FileInfo) -> str:
         if not info.file:
             return FileDocument.States.DELETED
-        return extract_state(info.product)
+        return SharekitExtractor.extract_state(info.product)
 
     @classmethod
     def get_url(cls, info: FileInfo) -> str | None:
         if not info.file:
             return
-        return parse_url(info.file["url"])
+        return SharekitExtractor.parse_url(info.file["url"])
 
     @classmethod
     def get_hash(cls, info: FileInfo) -> str | None:
@@ -153,4 +153,4 @@ SEEDING_PHASES = [
 ]
 
 
-WEBHOOK_DATA_TRANSFORMER = webhook_data_transformer
+WEBHOOK_DATA_TRANSFORMER = SharekitExtractor.webhook_data_transformer
