@@ -5,7 +5,7 @@ from dateutil.parser import parse as date_parser
 from sources.utils.edurep import EdurepExtractor
 
 
-class EdurepDataExtraction(object):
+class EdurepProductExtraction(object):
 
     #############################
     # OAI-PMH
@@ -194,32 +194,32 @@ class EdurepDataExtraction(object):
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": EdurepDataExtraction.get_oaipmh_records,
-    "state": EdurepDataExtraction.get_oaipmh_record_state,
-    "external_id": EdurepDataExtraction.get_oaipmh_external_id,
-    "set": EdurepDataExtraction.get_set,
+    "@": EdurepProductExtraction.get_oaipmh_records,
+    "state": EdurepProductExtraction.get_oaipmh_record_state,
+    "external_id": EdurepProductExtraction.get_oaipmh_external_id,
+    "set": EdurepProductExtraction.get_set,
     # Generic metadata
-    "files": EdurepDataExtraction.get_files,
-    "title": EdurepDataExtraction.get_title,
-    "language": EdurepDataExtraction.get_language,
-    "keywords": EdurepDataExtraction.get_keywords,
-    "description": EdurepDataExtraction.get_description,
-    "copyright": EdurepDataExtraction.get_copyright,
-    "copyright_description": EdurepDataExtraction.get_copyright_description,
-    "authors": EdurepDataExtraction.get_authors,
-    "provider": EdurepDataExtraction.get_provider,
-    "organizations": EdurepDataExtraction.get_organizations,
-    "publishers": EdurepDataExtraction.get_publishers,
-    "publisher_date": EdurepDataExtraction.get_publisher_date,
-    "publisher_year": EdurepDataExtraction.get_publisher_year,
+    "files": EdurepProductExtraction.get_files,
+    "title": EdurepProductExtraction.get_title,
+    "language": EdurepProductExtraction.get_language,
+    "keywords": EdurepProductExtraction.get_keywords,
+    "description": EdurepProductExtraction.get_description,
+    "copyright": EdurepProductExtraction.get_copyright,
+    "copyright_description": EdurepProductExtraction.get_copyright_description,
+    "authors": EdurepProductExtraction.get_authors,
+    "provider": EdurepProductExtraction.get_provider,
+    "organizations": EdurepProductExtraction.get_organizations,
+    "publishers": EdurepProductExtraction.get_publishers,
+    "publisher_date": EdurepProductExtraction.get_publisher_date,
+    "publisher_year": EdurepProductExtraction.get_publisher_year,
     # Learning material metadata
-    "learning_material.aggregation_level": EdurepDataExtraction.get_aggregation_level,
-    "learning_material.material_types": EdurepDataExtraction.get_material_types,
-    "learning_material.lom_educational_levels": EdurepDataExtraction.get_educational_levels,
-    "learning_material.studies": EdurepDataExtraction.get_studies,
-    "learning_material.study_vocabulary": EdurepDataExtraction.get_study_vocabulary,
-    "learning_material.disciplines": EdurepDataExtraction.get_studies,
-    "learning_material.consortium": EdurepDataExtraction.get_consortium,
+    "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
+    "learning_material.material_types": EdurepProductExtraction.get_material_types,
+    "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
+    "learning_material.studies": EdurepProductExtraction.get_studies,
+    "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
+    "learning_material.disciplines": EdurepProductExtraction.get_studies,
+    "learning_material.consortium": EdurepProductExtraction.get_consortium,
 }
 
 SEEDING_PHASES = [
