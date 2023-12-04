@@ -28,7 +28,7 @@ def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
     if isinstance(args[0], model):
         if len(args) == 1 and not as_list:
             return args[0] if args[0].pending_at else None
-        return [instance for instance in args if instance.is_pending]
+        return [instance for instance in args if instance.pending_at]
     # When getting ids we load them from the database
     if len(args) == 1 and not as_list:
         return model.objects.filter(id=args[0], pending_at__isnull=False).first()

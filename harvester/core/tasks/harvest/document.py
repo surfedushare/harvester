@@ -1,3 +1,4 @@
+from django.utils.timezone import now
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -30,3 +31,23 @@ def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocumen
             callback=recursive_callback_signature,
             asynchronous=asynchronous
         )
+
+
+@app.task(name="cancel_document_tasks", base=DatabaseConnectionResetTask)
+def cancel_document_tasks(app_label: str, documents: list[int | HarvestDocument]) -> None:
+    if not len(documents):
+        return
+    models = load_harvest_models(app_label)
+    documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
+    if not documents:
+        return
+    documents = documents if isinstance(documents, list) else [documents]
+    stopped = []
+    for document in documents:
+        for task in document.get_pending_tasks():
+            document.pipeline[task] = {"success": False, "canceled": True}
+        document.pending_at = None
+        document.finished_at = now()
+        stopped.append(document)
+
+    models["Document"].objects.bulk_update(stopped, ["pending_at", "finished_at", "pipeline"])
