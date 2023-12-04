@@ -55,7 +55,7 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_mime_type(cls, soup, info: FileInfo) -> str | None:
-        if info.mime_type.text is "":
+        if info.mime_type.text == "":
             return
         return info.mime_type.text.strip()
 
