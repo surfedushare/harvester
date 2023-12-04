@@ -118,6 +118,7 @@ class TestSyncMetadata(TestCase):
         for value in MetadataValue.objects.filter(value__in=["edusources", "document"]):
             value.delete()
         frequencies = copy(self.test_frequencies)
+        frequencies.pop("technical_type")
         frequencies["harvest_source"] = {
             "edusources": 3
         }
