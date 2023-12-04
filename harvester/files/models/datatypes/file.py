@@ -153,9 +153,8 @@ class FileDocument(HarvestDocument):
         if not mime_type and url:
             mime_type, encoding = guess_type(url)
         self.mime_type = mime_type
-        if self.mime_type:
-            self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
-            self.properties["type"] = self.type
+        self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
+        self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
 
     def to_data(self, merge_derivatives: bool = True) -> dict:

@@ -65,7 +65,7 @@ class TestEdurepFileExtraction(TestCase):
     def test_get_mime_type(self):
         self.assertEqual(self.seeds[0]["mime_type"],
                          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-        self.assertEqual(self.seeds[1]["mime_type"], "text/xxx")
+        self.assertEqual(self.seeds[1]["mime_type"], None)
         self.assertEqual(self.seeds[2]["mime_type"], "application/x-zip-compressed")
 
     def test_get_url(self):
