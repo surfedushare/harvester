@@ -84,8 +84,14 @@ class TestEdurepFileExtraction(TestCase):
         self.assertEqual(self.seeds[6]["is_link"], True)
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], {'external_id': None, 'name': None, 'ror': None, 'slug': None})
-        self.assertEqual(self.seeds[1]["provider"], {'external_id': None, 'name': None, 'ror': None, 'slug': None})
+        self.assertEqual(
+            self.seeds[0]["provider"],
+            {'external_id': None, 'name': None, 'ror': None, 'slug': None},
+            "file should be DELETED and give no external_id")
+        self.assertEqual(
+            self.seeds[1]["provider"],
+            {'external_id': None, 'name': None, 'ror': None, 'slug': None},
+            "file should be INACTIVE and give no external_id")
         self.assertEqual(self.seeds[2]["provider"], {'external_id': None,
                                                      'name': 'AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein',
                                                      'ror': None,
