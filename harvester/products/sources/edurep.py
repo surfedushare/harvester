@@ -71,7 +71,7 @@ class EdurepProductExtraction(object):
     def get_material_types(cls, soup, el):
         material_types = el.find_all('czp:learningresourcetype')
         if not material_types:
-            return []
+            return ["unknown"]
         return [
             material_type.find('czp:value').find('czp:langstring').text.strip()
             for material_type in material_types
