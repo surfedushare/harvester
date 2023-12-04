@@ -174,8 +174,7 @@ class EdurepProductExtraction(object):
 
     @classmethod
     def get_educational_levels(cls, soup, el):
-        blocks = EdurepExtractor.find_all_classification_blocks(el, "educational level", "czp:entry")
-        return list(set([block.find('czp:langstring').text.strip() for block in blocks]))
+        return EdurepExtractor.get_educational_levels(el)
 
     @classmethod
     def get_studies(cls, soup, el):

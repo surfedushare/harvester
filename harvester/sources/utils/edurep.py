@@ -31,12 +31,19 @@ class EdurepExtractor(BaseExtractor):
         return blocks
 
     @classmethod
+    def get_educational_levels(cls, product):
+        blocks = EdurepExtractor.find_all_classification_blocks(product, "educational level", "czp:entry")
+        levels = list(set([block.find('czp:langstring').text.strip() for block in blocks]))
+        if product.find('setSpec').text.strip() == "l4l" and len(levels) == 0:
+            levels.append("WO")
+        return levels
+
+    @classmethod
     def _get_educational_level_state(cls, product):
         """
         Returns the desired state of the record based on (non NL-LOM) educational levels
         """
-        blocks = cls.find_all_classification_blocks(product, "educational level", "czp:entry")
-        educational_levels = list(set([block.find('czp:langstring').text.strip() for block in blocks]))
+        educational_levels = cls.get_educational_levels(product)
         if not len(educational_levels):
             return "inactive"
         has_higher_level = False
