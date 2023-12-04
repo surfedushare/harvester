@@ -48,6 +48,9 @@ class TestEdurepFileExtraction(TestCase):
         for batch in self.processor("edurep", "1970-01-01T00:00:00Z"):
             self.seeds += [doc.properties for doc in batch]
 
+    def test_get_set(self):
+        self.assertEqual(self.seeds[0]["set"], "edurep:surfsharekit")
+
     def test_get_hash(self):
         self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
 

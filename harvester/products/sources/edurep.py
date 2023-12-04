@@ -25,7 +25,7 @@ class EdurepProductExtraction(object):
 
     @classmethod
     def get_set(cls, soup, el):
-        return el.find('setSpec').text.strip()
+        return f"edurep:{el.find('setSpec').text.strip()}"
 
     #############################
     # GENERIC
