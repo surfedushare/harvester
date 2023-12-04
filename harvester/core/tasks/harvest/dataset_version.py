@@ -16,20 +16,25 @@ from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_ha
     retry_kwargs={"max_retries": 5, "countdown": 5 * 60}
 )
 def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | DatasetVersion, asynchronous: bool = True,
-                                   recursion_depth: int = 0) -> None:
+                                   recursion_depth: int = 0, previous_tasks: list[str] = None) -> None:
     if recursion_depth >= 10:
         raise RecursionError("Maximum harvest_dataset_version recursion reached")
+    previous_tasks = previous_tasks or []
+    # Load DatasetVersion and check its state
     models = load_harvest_models(app_label)
     dataset_version = load_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
     if dataset_version is None:  # parallel tasks may already picked-up this dispatch
         return
+
+    # Dispatch pending tasks
     pending = validate_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
-    if len(pending):
+    if len(pending) and pending != previous_tasks:  # we're not repeating the same tasks indefinitely
         recursive_callback_signature = dispatch_dataset_version_tasks.si(
             app_label,
             dataset_version.id,
             asynchronous=asynchronous,
-            recursion_depth=recursion_depth+1
+            recursion_depth=recursion_depth+1,
+            previous_tasks=pending
         )
         dispatch_harvest_object_tasks(
             app_label,
@@ -37,12 +42,6 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | Datase
             callback=recursive_callback_signature,
             asynchronous=asynchronous
         )
-    # We unset any set_current_dataset_version tasks if they have failed
-    # as we want to keep trying until all sets have completed
-    set_current_pipeline = dataset_version.pipeline.get("set_current_dataset_version", None)
-    if set_current_pipeline is not None:
-        if not set_current_pipeline.get("success", False):
-            dataset_version.invalidate_task("set_current_dataset_version", commit=True)
 
 
 @app.task(name="set_current_dataset_version", base=DatabaseConnectionResetTask)
@@ -63,8 +62,8 @@ def set_current_dataset_version(app_label: str, dataset_version_ids: list[int]) 
         should_set_current = not has_unfinished_sets and not has_pending_sets
         if should_set_current:
             dataset_version.set_current()
-        dataset_version.pipeline["set_current_dataset_version"] = {"success": should_set_current}
-        dataset_version.save()
+            dataset_version.pipeline["set_current_dataset_version"] = {"success": True}
+            dataset_version.save()
 
 
 @app.task(name="create_opensearch_index", base=DatabaseConnectionResetTask)
