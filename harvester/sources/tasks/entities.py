@@ -53,7 +53,8 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
         new_version = dataset.versions.create()
         dataset_versions.append(new_version.natural_key)
         for state in states:
-            if reset or not current_version or state.should_purge():
+            if reset or not current_version or state.should_purge() or not \
+                    current_version.sets.filter(name=state.set_name).exists():
                 state.clear_resources()
                 state.reset(new_version)
             else:

@@ -3,7 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
-from core.tasks import dispatch_document_tasks
+from core.tasks import dispatch_document_tasks, cancel_document_tasks
 from files.tests.factories import create_file_document_set
 from files.models import FileDocument
 
@@ -52,7 +52,7 @@ class TestHarvestObjectFileDocument(TestCase):
         self.assertEqual(pending_tasks_2, [], "Expected no tasks to execute when analysis is disallowed")
 
 
-class TestSimpleDispatchDocumentTasks(TestCase):
+class TestSimpleDocumentTasks(TestCase):
 
     dataset_version = None
     set = None
@@ -112,3 +112,16 @@ class TestSimpleDispatchDocumentTasks(TestCase):
 
     def test_dispatch_document_tasks_no_documents(self):
         dispatch_document_tasks("files", [], asynchronous=False)
+
+    def test_cancel_document_tasks(self):
+        cancel_document_tasks("files", self.documents)
+        for doc in FileDocument.objects.all():
+            self.assertNotEqual(doc.pipeline, {}, "Expected cancel_document_tasks to write to pipeline")
+            for task, result in doc.pipeline.items():
+                self.assertEqual(result, {"success": False, "canceled": True})
+
+    def test_cancel_document_tasks_no_documents(self):
+        cancel_document_tasks("files", [])
+        self.assertGreater(FileDocument.objects.all().count(), 0)
+        for doc in FileDocument.objects.all():
+            self.assertEqual(doc.pipeline, {}, "Expected cancel_document_tasks to do nothing without input documents")

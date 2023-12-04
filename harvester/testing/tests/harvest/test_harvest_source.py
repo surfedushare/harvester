@@ -152,7 +152,8 @@ class TestDeltaHarvestSource(TestCase):
             name="merge:merge_set",
             pending_at=None,  # HarvestSet does not become pending until all data from source has been pulled
             identifier="srn",
-            dataset_version=self.dataset_version
+            dataset_version=self.dataset_version,
+            finished_at=self.current_time
         )
         for historic_set in self.historic_sets:
             self.dataset_version.historic_sets.add(historic_set)
@@ -181,8 +182,8 @@ class TestDeltaHarvestSource(TestCase):
         self.assertIsNotNone(dataset_version.finished_at)
         self.assertEqual(dataset_version.sets.all().count(), 2, "Expected a 'simple' and 'merge' set")
         self.assertEqual(
-            dataset_version.sets.filter(finished_at__isnull=True).count(), 1,
-            "Expected either the new 'simple' or now 'merge' Set to be unfinished"
+            dataset_version.sets.filter(finished_at__isnull=True).count(), 0,
+            "Expected all Sets to be finished at end of the test"
         )
 
     def test_delta(self):
@@ -291,6 +292,8 @@ class TestDeltaHarvestSource(TestCase):
             entity=harvest_entity,
             set_specification="merge_set"
         )
+        self.simple_set.finished_at = self.current_time
+        self.simple_set.save()
         # Call the harvest_source task with patched HttpSeedingProcessor output
         seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
         seeding_patch_value = document_generator("merge", 44, 10, self.merge_set, self.sequence_properties)

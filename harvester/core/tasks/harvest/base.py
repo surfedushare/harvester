@@ -12,6 +12,14 @@ class PendingHarvestObjects(Exception):
     pass
 
 
+class PendingHarvestDocuments(PendingHarvestObjects):
+    pass
+
+
+class PendingHarvestSets(PendingHarvestObjects):
+    pass
+
+
 def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
                                    as_list: bool = False) -> list[HarvestObject] | HarvestObject:
     if not args:
@@ -20,7 +28,7 @@ def load_pending_harvest_instances(*args, model: Type[HarvestObject] = None,
     if isinstance(args[0], model):
         if len(args) == 1 and not as_list:
             return args[0] if args[0].pending_at else None
-        return [instance for instance in args if instance.is_pending]
+        return [instance for instance in args if instance.pending_at]
     # When getting ids we load them from the database
     if len(args) == 1 and not as_list:
         return model.objects.filter(id=args[0], pending_at__isnull=False).first()
@@ -37,9 +45,9 @@ def validate_pending_harvest_instances(instances: list[HarvestObject] | HarvestO
     for instance in instances:
         # We skip any containers that have pending content
         if hasattr(instance, "documents") and instance.documents.filter(pending_at__isnull=False).exists():
-            raise PendingHarvestObjects()
+            raise PendingHarvestDocuments()
         elif hasattr(instance, "collections") and instance.collections.filter(pending_at__isnull=False).exists():
-            raise PendingHarvestObjects()
+            raise PendingHarvestSets()
         # Then we check if the instance is done or is pending
         elif not instance.get_pending_tasks():
             finished.append(instance)

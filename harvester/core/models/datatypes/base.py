@@ -50,7 +50,7 @@ class HarvestObjectMixin(models.Model):
                     property_dependencies[dependency].append(task_name)
         return property_dependencies
 
-    def invalidate_task(self, task_name: str, current_time: datetime = None) -> None:
+    def invalidate_task(self, task_name: str, current_time: datetime = None, commit: bool = False) -> None:
         is_invalidated = False
         if task_name in self.pipeline:
             is_invalidated = True
@@ -61,6 +61,8 @@ class HarvestObjectMixin(models.Model):
         if is_invalidated:
             self.pending_at = current_time or now()
             self.finished_at = None
+        if commit:
+            self.save()
 
     def finish_processing(self, current_time: datetime = None, commit: bool = True):
         self.pending_at = None
