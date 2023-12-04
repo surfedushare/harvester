@@ -125,7 +125,9 @@ class HarvestLogger(object):
             "repository": repository,
             "total": document_counts["total"],
             "deleted": document_counts["deleted_count"],
-            "inactive": document_counts["inactive_count"]
+            "inactive": {
+                "total": document_counts["inactive_count"]
+            }
         })
         results.info(f"{collection.name} ({repository}) => {document_counts['total']}", extra=extra)
 
@@ -146,7 +148,9 @@ class HarvestLogger(object):
             "repository": None,
             "total": document_counts["total"],
             "deleted": document_counts["deleted_count"],
-            "inactive": document_counts["inactive_count"]
+            "inactive": {
+                "total": document_counts["inactive_count"]
+            }
         })
         results.info(f"{dataset_version} => {document_counts['total']}", extra=extra)
 
