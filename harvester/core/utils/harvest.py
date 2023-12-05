@@ -1,16 +1,14 @@
-import logging
-
 from django.db.models import Count
 from django.db.transaction import atomic
 
+from core.logging import HarvestLogger
 from core.models import Harvest, Batch, ProcessResult
-
-
-logger = logging.getLogger("harvester")
 
 
 @atomic()
 def prepare_harvest(dataset, reset=False):
+
+    logger = HarvestLogger(None, "prepare_harvest", {})
 
     excluded_specs = []
     for harvest in Harvest.objects.filter(dataset=dataset).select_for_update():
