@@ -5,11 +5,12 @@ from collections import defaultdict
 from django.contrib.auth.models import User
 
 from core.models import DatasetVersion, MatomoVisitsResource, Query, QueryRanking, Document
+from search.clients import get_search_client
 
 
-def _create_or_increase_query_ranking(dataset_version, query_string, url_object, user):
+def _create_or_increase_query_ranking(search_client, dataset_version, query_string, url_object, user):
     _, external_id = os.path.split(url_object.path.strip("/"))
-    external_id.replace("edurep_delen", "WikiwijsMaken")
+    external_id = search_client.clean_external_id(external_id)
     document = Document.objects.filter(dataset_version=dataset_version, reference=external_id).last()
     if not document:
         return external_id
@@ -31,6 +32,7 @@ def create_or_update_download_query_rankings():
         "Goal.Download": True
     }
     superuser = User.objects.get(username="supersurf")
+    search_client = get_search_client()
     not_found = defaultdict(int)
     visit_lengths = defaultdict(int)
     visitor_id_counts = defaultdict(int)
@@ -58,7 +60,8 @@ def create_or_update_download_query_rankings():
                 current_result = action["url"]
                 continue
             elif is_result and action.get("eventAction", None) == "Download":  # record a hit
-                missing = _create_or_increase_query_ranking(latest_dataset_version, current_query, url, superuser)
+                missing = _create_or_increase_query_ranking(search_client, latest_dataset_version, current_query, url,
+                                                            superuser)
                 if missing:
                     not_found[missing] += 1
                 current_result = None
