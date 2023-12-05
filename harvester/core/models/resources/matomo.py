@@ -48,7 +48,8 @@ class MatomoVisitsResource(HttpResource):
         "format": "JSON",
         "period": "range",
         "filter_offset": "0",
-        "idSite": "64"
+        "idSite": "64",
+        "filter_limit": "100",
     }
     DEFAULT_START_DATE = "2022-09-01"
 
@@ -67,7 +68,7 @@ class MatomoVisitsResource(HttpResource):
         params = parse_qs(url.query)
         offset = int(params["filter_offset"][0])
         return {
-            "filter_offset": offset + 1
+            "filter_offset": offset + int(self.PARAMETERS["filter_limit"])
         }
 
     def _create_request(self, method, *args, **kwargs):
