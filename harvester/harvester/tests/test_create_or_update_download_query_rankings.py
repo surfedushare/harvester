@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from harvester.utils.matomo import create_or_update_download_query_rankings
 from core.tests.factories import create_dataset_version, DatasetFactory, DocumentFactory
 from core.tests.factories.matomo import MatomoVisitsResourceFactory
-from core.models import Query, QueryRanking
+from core.models import Query, QueryRanking, DatasetVersion
 
 
 class TestCreateOrUpdateDownloadQueryRankings(TestCase):
@@ -16,18 +16,14 @@ class TestCreateOrUpdateDownloadQueryRankings(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         dataset = DatasetFactory.create()
-        cls.dataset_version = create_dataset_version(
-            dataset=dataset,
-            version="0.0.1",
-            created_at=now(),
-            include_current=True
-        )
-        DocumentFactory.create(dataset_version=cls.dataset_version,
-                               reference="edurep_delen:d622776b-84be-45ee-bb0a-ae2c3e56bf59", language="nl")
-        DocumentFactory.create(dataset_version=cls.dataset_version,
-                               reference="edurep_delen:a213da49-0658-4448-b418-4598311a1205", language="en")
-        DocumentFactory.create(dataset_version=cls.dataset_version,
-                               reference="edurep_delen:fa88b25c-a00c-4afe-b198-3b33e9cc109a", language="nl")
+        create_dataset_version(dataset=dataset, version="0.0.1", created_at=now(), include_current=True)
+        dataset_version = DatasetVersion.objects.get_current_version()
+        DocumentFactory.create(dataset_version=dataset_version,
+                               reference="WikiwijsDelen:urn:uuid:d622776b-84be-45ee-bb0a-ae2c3e56bf59", language="nl")
+        DocumentFactory.create(dataset_version=dataset_version,
+                               reference="WikiwijsDelen:urn:uuid:a213da49-0658-4448-b418-4598311a1205", language="en")
+        DocumentFactory.create(dataset_version=dataset_version,
+                               reference="WikiwijsDelen:urn:uuid:fa88b25c-a00c-4afe-b198-3b33e9cc109a", language="nl")
         MatomoVisitsResourceFactory.create(is_initial=True)
         User.objects.create(username="supersurf")
 
@@ -40,5 +36,5 @@ class TestCreateOrUpdateDownloadQueryRankings(TestCase):
         query_ranking = QueryRanking.objects.last()
         self.assertEqual(query_ranking.query_id, query.id)
         self.assertEqual(query_ranking.ranking, {
-            "edusources-nl:edurep_delen:d622776b-84be-45ee-bb0a-ae2c3e56bf59": 1
+            "edusources-nl:WikiwijsDelen:urn:uuid:d622776b-84be-45ee-bb0a-ae2c3e56bf59": 1
         })
