@@ -1,11 +1,7 @@
-import logging
-
 from django.core.management.base import BaseCommand
 
+from core.logging import HarvestLogger
 from harvester.tasks import harvest
-
-
-logger = logging.getLogger("harvester")
 
 
 class Command(BaseCommand):
@@ -25,5 +21,8 @@ class Command(BaseCommand):
         reset = options["reset"]
         no_promote = options["no_promote"]
         report_dataset_version = options["report_dataset_version"]
+
+        logger = HarvestLogger(None, "run_legacy_harvester", {})
+
         logger.info(f"Calling harvest outside of schedule; reset={reset}")
         harvest(reset=reset, no_promote=no_promote, report_dataset_version=report_dataset_version)

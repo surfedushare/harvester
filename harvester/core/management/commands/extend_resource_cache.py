@@ -1,10 +1,7 @@
-import logging
-
 from django.apps import apps
 from django.core.management.base import BaseCommand
 
-
-logger = logging.getLogger("harvester")
+from core.logging import HarvestLogger
 
 
 class Command(BaseCommand):
@@ -20,6 +17,9 @@ class Command(BaseCommand):
     ]
 
     def handle(self, **options):
+
+        logger = HarvestLogger(None, "extend_resource_cache", {})
+
         for resource_model in self.resources:
             logger.info(f"Extending cache for: {resource_model}")
             model = apps.get_model(resource_model)
