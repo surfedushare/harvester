@@ -31,7 +31,8 @@ class MatomoVisitsResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        return f"webstats.surf.nl/?date={self.since:%Y-%m-%dT%H:%M:%SZ}%2C2023-12-12&filter_limit=100&filter_offset=0&" \
+        return f"webstats.surf.nl/?date={self.since:%Y-%m-%dT%H:%M:%SZ}%2C2023-12-12&" \
+               f"filter_limit=100&filter_offset=0&" \
                f"format=JSON&idSite=63&method=Live.getLastVisitsDetails&module=API&period=range"
 
     @factory.lazy_attribute
