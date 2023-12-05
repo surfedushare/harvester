@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils.timezone import now
 from django.contrib.auth.models import User
 
-from harvester.utils.matomo import create_or_update_download_query_rankings
+from core.analysis.matomo import create_or_update_download_query_rankings
 from core.tests.factories import create_dataset_version, DatasetFactory, DocumentFactory
 from core.tests.factories.matomo import MatomoVisitsResourceFactory
 from core.models import Query, QueryRanking, DatasetVersion
