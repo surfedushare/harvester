@@ -4,6 +4,7 @@ from collections import defaultdict
 from itertools import groupby
 from functools import reduce
 from datetime import datetime
+from copy import deepcopy
 
 from django.conf import settings
 from django.db import models
@@ -27,6 +28,18 @@ class HarvestDataset(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_harvested = models.BooleanField(default=False)
     indexing = models.CharField(max_length=50, choices=IndexingOptions.choices, default=IndexingOptions.NO)
+
+    @staticmethod
+    def copy_dataset_version(dataset_version):
+        collections = list(dataset_version.sets.all())
+        dataset_version = deepcopy(dataset_version)
+        dataset_version.pk = None
+        dataset_version.id = None
+        dataset_version.clean()
+        dataset_version.save()
+        for collection in collections:
+            dataset_version.copy_collection(collection)
+        return dataset_version
 
     def __str__(self) -> str:
         return "{} (id={})".format(self.name, self.id)
@@ -91,9 +104,6 @@ class HarvestDatasetVersionManager(models.Manager):
 
 def default_dataset_version_tasks():
     return {
-        # TODO: allow set_current_dataset_version task as a dependency,
-        #  currently dispatch_dataset_version_tasks fiddles with the pipeline property to prevent infinite recursion.
-        #  So the pipeline property can't be read to determine if set_current_dataset_version is ready as a dependency.
         "set_current_dataset_version": {
             "depends_on": [],
             "checks": [],
@@ -156,6 +166,19 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         type(self).objects.all().update(is_index_promoted=False)
         self.is_index_promoted = True
         self.save()
+
+    def copy_collection(self, collection):
+        Document = collection.get_document_model()
+        source_id = collection.id
+        collection = deepcopy(collection)
+        collection.pk = None
+        collection.id = None
+        collection.dataset_version = self
+        collection.clean()
+        collection.save()
+        for _ in collection.add_batches(Document.objects.filter(collection_id=source_id).iterator()):
+            pass
+        return collection
 
     class Meta:
         abstract = True

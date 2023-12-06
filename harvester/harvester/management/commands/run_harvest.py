@@ -4,6 +4,7 @@ from django.apps import apps
 from django.core.management.base import BaseCommand
 
 from core.logging import HarvestLogger
+from core.models.resources.utils import extend_resource_cache
 from sources.tasks import harvest_entities
 from search.loading import dataset_versions_are_ready
 from search.tasks import index_dataset_versions
@@ -50,6 +51,11 @@ class Command(BaseCommand):
             f"Running harvest command; "
             f"reset={reset}, report={report_dataset_version}, async={asynchronous}"
         )
+
+        if reset:
+            for label, resource in extend_resource_cache():
+                logger.info(f"Extended cache for: {label}.{resource.get_name()}")
+            logger.info("Done extending resource cache")
 
         dataset_versions = harvest_entities(reset=reset, asynchronous=asynchronous)
         ready = not asynchronous

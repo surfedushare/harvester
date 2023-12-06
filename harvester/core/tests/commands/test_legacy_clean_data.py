@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.core.management import call_command
 from django.utils.timezone import make_aware
 
-from core.models import Document, HttpTikaResource, DatasetVersion, Collection, Dataset, ElasticIndex, Extension
+from core.models import Document, HttpTikaResource, DatasetVersion, Collection, Dataset, ElasticIndex
 from core.tests.mocks import get_search_client_mock
 from core.tests.factories import DatasetFactory, create_dataset_version
 
@@ -37,13 +37,6 @@ class TestCleanData(TestCase):
                 created_time,
                 include_current=False
             )
-        self.new_extension = Extension.objects.create(id="new", is_addition=True, properties={})
-        self.old_extension = Extension.objects.create(
-            id="old",
-            is_addition=True,
-            properties={},
-            deleted_at=make_aware(datetime(year=1970, month=1, day=1))
-        )
 
     @patch("core.models.search.index.get_opensearch_client", return_value=search_client)
     def test_clean_data(self, get_search_client):
@@ -66,8 +59,6 @@ class TestCleanData(TestCase):
         self.assertEqual(get_search_client.call_count, 80, "Not sure why there are two calls per removed ElasticIndex")
         self.assertEqual(self.search_client.indices.exists.call_count, 40)
         self.assertEqual(self.search_client.indices.delete.call_count, 40)
-        self.assertEqual(Extension.objects.all().count(), 1)
-        self.assertEqual(Extension.objects.all().last().id, "new")
 
     def test_clean_data_duplicated_resources(self):
         # We'll add old Resources to new Documents and make sure these resources do not get deleted

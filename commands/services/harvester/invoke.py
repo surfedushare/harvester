@@ -146,19 +146,6 @@ def harvest(ctx, mode, reset=False, legacy=True, asynchronous=True, no_promote=F
     run_harvester_task(ctx, mode, command)
 
 
-@task(help={
-    "mode": "Mode you want to generate previews for: localhost, development, acceptance or production. "
-            "Must match APPLICATION_MODE",
-    "dataset": "Name of the dataset (a Greek letter) that you want to generate previews for"
-})
-def generate_previews(ctx, mode, dataset):
-    """
-    Starts a task on AWS container cluster or localhost that will generate previews.
-    """
-    command = ["python", "manage.py", "generate_previews", f"--dataset={dataset}"]
-    run_harvester_task(ctx, mode, command)
-
-
 @task(name="sync_preview_media", help={
     "source": "The source you want to sync preview media from"
 })
@@ -193,19 +180,6 @@ def clean_data(ctx, mode):
     Starts a clean up tasks on the AWS container cluster or localhost
     """
     command = ["python", "manage.py", "clean_data"]
-
-    run_harvester_task(ctx, mode, command)
-
-
-@task(help={
-    "mode": "Mode you want to extend resource cache for: localhost, development, acceptance or production. "
-            "Must match APPLICATION_MODE"
-})
-def extend_resource_cache(ctx, mode):
-    """
-    Extends the purge_at time for Resources on the AWS container cluster or localhost
-    """
-    command = ["python", "manage.py", "extend_resource_cache"]
 
     run_harvester_task(ctx, mode, command)
 
