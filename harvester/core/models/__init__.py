@@ -12,6 +12,6 @@ from .legacy.extension import Extension
 from .legacy.harvest import Harvest, HarvestSource
 # End legacy models
 
-from .search import ElasticIndex, ElasticIndexSerializer, Query
+from .search import ElasticIndex, ElasticIndexSerializer, Query, QueryRanking
 
 from .choices import EducationalLevels
