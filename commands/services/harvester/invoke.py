@@ -146,19 +146,6 @@ def harvest(ctx, mode, reset=False, legacy=True, asynchronous=True, no_promote=F
     run_harvester_task(ctx, mode, command)
 
 
-@task(help={
-    "mode": "Mode you want to generate previews for: localhost, development, acceptance or production. "
-            "Must match APPLICATION_MODE",
-    "dataset": "Name of the dataset (a Greek letter) that you want to generate previews for"
-})
-def generate_previews(ctx, mode, dataset):
-    """
-    Starts a task on AWS container cluster or localhost that will generate previews.
-    """
-    command = ["python", "manage.py", "generate_previews", f"--dataset={dataset}"]
-    run_harvester_task(ctx, mode, command)
-
-
 @task(name="sync_preview_media", help={
     "source": "The source you want to sync preview media from"
 })
