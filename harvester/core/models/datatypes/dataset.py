@@ -104,9 +104,6 @@ class HarvestDatasetVersionManager(models.Manager):
 
 def default_dataset_version_tasks():
     return {
-        # TODO: allow set_current_dataset_version task as a dependency,
-        #  currently dispatch_dataset_version_tasks fiddles with the pipeline property to prevent infinite recursion.
-        #  So the pipeline property can't be read to determine if set_current_dataset_version is ready as a dependency.
         "set_current_dataset_version": {
             "depends_on": [],
             "checks": [],
