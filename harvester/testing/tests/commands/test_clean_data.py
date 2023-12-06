@@ -116,8 +116,6 @@ class TestCleanData(TestCase):
         old_tika_ids = []
         new_tika_ids = []
         for old_doc, new_doc in zip(oldest_version.documents.all(), newest_version.documents.all()):
-            import json; print(json.dumps(old_doc.pipeline, indent=4))
-            import json; print(json.dumps(new_doc.pipeline, indent=4))
             old_tika_ids.append(old_doc.pipeline["tika"]["id"])
             new_tika_ids.append(new_doc.pipeline["tika"]["id"])
             new_doc.properties = old_doc.properties
