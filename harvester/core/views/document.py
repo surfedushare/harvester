@@ -33,7 +33,7 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
         if not dataset_version:
             raise NoCurrentDatasetVersionException()
         if self.exclude_deletes:
-            queryset = dataset_version.documents.exclude(state=HarvestDocument.States.DELETED)
+            queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
             queryset = dataset_version.documents.all()
         return queryset
