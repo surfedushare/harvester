@@ -38,13 +38,7 @@ def create_or_update_download_query_rankings():
     visitor_id_counts = defaultdict(int)
     for visit in MatomoVisitsResource.objects.iterate_visits(filter_custom_events=download_event_filter, min_actions=3):
         visitor_id_counts[visit["visitorId"]] += 1
-    visitor_id_blacklist = {
-        visitor_id for visitor_id, count in visitor_id_counts.items()
-        if count >= 25  # very frequent visitors are suspicious and discarded
-    }
     for visit in MatomoVisitsResource.objects.iterate_visits(filter_custom_events=download_event_filter, min_actions=3):
-        if visit["visitorId"] in visitor_id_blacklist:
-            continue
         current_query = None
         current_result = None
         visit_lengths[len(visit["actionDetails"])] += 1
