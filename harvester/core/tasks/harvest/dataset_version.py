@@ -28,13 +28,14 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int | Datase
 
     # Dispatch pending tasks
     pending = validate_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
-    if len(pending) and pending != previous_tasks:  # we're not repeating the same tasks indefinitely
+    pending_tasks = [task for instance in pending for task in instance.get_pending_tasks()]
+    if len(pending) and pending_tasks != previous_tasks:  # we're not repeating the same tasks indefinitely
         recursive_callback_signature = dispatch_dataset_version_tasks.si(
             app_label,
             dataset_version.id,
             asynchronous=asynchronous,
             recursion_depth=recursion_depth+1,
-            previous_tasks=pending
+            previous_tasks=pending_tasks
         )
         dispatch_harvest_object_tasks(
             app_label,
