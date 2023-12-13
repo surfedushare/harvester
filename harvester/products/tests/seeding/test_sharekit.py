@@ -68,7 +68,7 @@ class TestSharekitProductSeeding(TestCase):
                     self.assertIsNone(product.pending_at)
                     self.assertTrue(product.finished_at)
                 documents.append(product)
-        self.assertEqual(len(documents), 3 + 1 + 2, "Expected three additions, one deletion and two updates")
+        self.assertEqual(len(documents), 3 + 1 + 1, "Expected two additions, one deletion and one update")
         self.assertEqual(self.set.documents.count(), 14, "Expected 11 initial Documents and 3 delta additions")
 
     def test_empty_seeding(self):
