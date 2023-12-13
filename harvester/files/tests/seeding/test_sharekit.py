@@ -45,7 +45,6 @@ class TestSharekitFileSeeding(TestCase):
         SharekitMetadataHarvestFactory.create(is_initial=False, number=0)
         # Set some expectations
         become_processing_product_ids = {
-            "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",  # Changed study_vocabulary by the delta
             # Documents added by the delta
             "3e45b9e3-ba76-4200-a927-2902177f1f6c",
             "4842596f-fe60-40ef-8c06-4d3d6e296ba4",
@@ -67,7 +66,7 @@ class TestSharekitFileSeeding(TestCase):
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
-        self.assertEqual(len(documents), 3 + 5 + 1, "Expected three additions, five deletions and one update")
+        self.assertEqual(len(documents), 3 + 3 + 0, "Expected three additions, three deletions and no (file) updates")
         self.assertEqual(
             self.set.documents.count(), 5 + 11,
             "Expected 5 files to get added and 11 links"

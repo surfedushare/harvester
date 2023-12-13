@@ -163,7 +163,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     def to_search(self) -> list[dict]:
         # Decide whether to delete or not from the index
-        if self.state != "active":
+        if self.state != self.States.ACTIVE:
             yield {
                 "_id": self.properties["srn"],
                 "_op_type": "delete"

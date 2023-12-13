@@ -33,13 +33,52 @@ class TestEdurepProductSeeding(TestCase):
                 else:
                     self.assertIsNone(product.pending_at)
                     self.assertIsNotNone(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 12)
+        self.assertEqual(self.set.documents.count(), 13)
 
     def test_delta_seeding(self):
-        self.skipTest("to be tested")
+        # Load the initial data, set all tasks as completed and create delta Resource
+        initial_documents = []
+        for batch in self.processor("edurep", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.finish_processing()
+                initial_documents.append(doc)
+        EdurepOAIPMHFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Changed study_vocabulary by the delta
+            "edurep:surfsharekit:surfsharekit:oai:surfsharekit.nl:b5473dd1-8aa4-455f-b359-9af8081ce697",
+            # Documents added by the delta
+            "edurep:surfsharekit:surfsharekit:oai:surfsharekit.nl:3e45b9e3-ba76-4200-a927-2902177f1f6c",
+            "edurep:surfsharekit:surfsharekit:oai:surfsharekit.nl:4842596f-fe60-40ef-8c06-4d3d6e296ba4",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+                documents.append(product)
+        self.assertEqual(len(documents), 2 + 2 + 2, "Expected two additions, two deletions and two updates")
+        self.assertEqual(
+            self.set.documents.count(), 13 + 2 + 1,
+            "Expected 13 initial Documents, 2 delta additions and one delete that didn't exist before"
+        )
 
     def test_empty_seeding(self):
-        self.skipTest("to be tested")
+        EdurepOAIPMHFactory.create(is_initial=False, number=0, is_empty=True)  # delta without results
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
 
 
 class TestEdurepProductExtraction(TestCase):
@@ -55,6 +94,9 @@ class TestEdurepProductExtraction(TestCase):
         processor = HttpSeedingProcessor(cls.set, {
             "phases": SEEDING_PHASES
         })
+        # Gathering the seeds of both initial and delta responses
+        # Notice that duplicate data from responses will be filtered out as delta ignores duplicate data
+        # Order of data should be preserved, but beware that this isn't set into stone
         cls.seeds = []
         for batch in processor("edurep", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
@@ -80,12 +122,12 @@ class TestEdurepProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[3]['publishers'], ['AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein'])
         self.assertEqual(seeds[5]['publishers'], ['SURFnet'])
-        self.assertEqual(seeds[21]['publishers'], ['Erasmus Medisch Centrum'])
+        self.assertEqual(seeds[18]['publishers'], ['Erasmus Medisch Centrum'])
 
     def test_consortium(self):
         seeds = self.seeds
         self.assertEqual(seeds[3]['learning_material']['consortium'], None)
-        self.assertEqual(seeds[21]['learning_material']['consortium'], 'HBO Verpleegkunde')
+        self.assertEqual(seeds[18]['learning_material']['consortium'], 'HBO Verpleegkunde')
 
     def test_organizations(self):
         seeds = self.seeds
@@ -152,49 +194,49 @@ class TestEdurepProductExtraction(TestCase):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["title"], "Deleted item should be None")
         self.assertEqual(seeds[5]["title"], "01. How can we summarize 13.8 billion years in one brief course?")
-        self.assertEqual(seeds[20]["title"], "Nutr103x 7 3 4 Negative effects of heating")
+        self.assertEqual(seeds[17]["title"], "Nutr103x 7 3 4 Negative effects of heating")
 
     def test_get_description(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["description"], "Deleted item should be None")
         self.assertEqual(seeds[5]["description"], "Video about the question: how can we summarize 13.8")
-        self.assertEqual(seeds[20]["description"], "Video about the negative effects of heating")
+        self.assertEqual(seeds[17]["description"], "Video about the negative effects of heating")
 
     def test_get_copyright(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["copyright"], 'yes', "Deleted item should be yes")
         self.assertEqual(seeds[5]["copyright"], "cc-by-40")
-        self.assertEqual(seeds[21]["copyright"], "cc-by-nc-nd-40")
+        self.assertEqual(seeds[18]["copyright"], "cc-by-nc-nd-40")
 
     def test_get_copyright_description(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["copyright_description"], "Deleted item should be None")
         self.assertEqual(seeds[5]["copyright_description"], 'https://creativecommons.org/licenses/by/4.0/')
-        self.assertEqual(seeds[21]["copyright_description"], 'https://creativecommons.org/licenses/by-nc-nd/4.0/')
+        self.assertEqual(seeds[18]["copyright_description"], 'https://creativecommons.org/licenses/by-nc-nd/4.0/')
 
     def test_get_language(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["language"], "Deleted item should be None")
         self.assertEqual(seeds[5]["language"], "en")
-        self.assertEqual(seeds[21]["language"], "nl")
+        self.assertEqual(seeds[18]["language"], "nl")
 
     def test_get_publishers(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publishers"], [], "Deleted item should have empty list")
         self.assertEqual(seeds[5]["publishers"], ['SURFnet'])
-        self.assertEqual(seeds[20]["publishers"], [])
+        self.assertEqual(seeds[17]["publishers"], [])
 
     def test_get_keywords(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
         self.assertEqual(seeds[5]["keywords"], ['Video', 'mooc', 'Big history'])
-        self.assertEqual(seeds[20]["keywords"], ['Video', 'MOOC', 'Nutrition', 'Health', 'Food safety'])
+        self.assertEqual(seeds[17]["keywords"], ['Video', 'MOOC', 'Nutrition', 'Health', 'Food safety'])
 
     def test_get_aggregation_level(self):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["learning_material"]["aggregation_level"], "Deleted item should have empty list")
         self.assertEqual(seeds[5]["learning_material"]["aggregation_level"], '2')
-        self.assertIsNone(seeds[20]["learning_material"]["aggregation_level"], "when no level is found should be None")
+        self.assertIsNone(seeds[17]["learning_material"]["aggregation_level"], "when no level is found should be None")
 
     def test_get_disciplines(self):
         seeds = self.seeds

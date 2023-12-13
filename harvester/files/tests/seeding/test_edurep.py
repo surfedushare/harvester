@@ -33,7 +33,76 @@ class TestEdurepFileSeeding(TestCase):
                 else:
                     self.assertIsNone(file_.pending_at)
                     self.assertIsNotNone(file_.finished_at)
-        self.assertEqual(self.set.documents.count(), 12)
+        self.assertEqual(self.set.documents.count(), 13)
+
+    def test_delta_seeding(self):
+        # Load the initial data, set all tasks as completed and create delta Resource
+        initial_documents = []
+        for batch in self.processor("edurep", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.finish_processing()
+                initial_documents.append(doc)
+        EdurepOAIPMHFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Changed study_vocabulary by the delta
+            "surfsharekit:oai:surfsharekit.nl:b5473dd1-8aa4-455f-b359-9af8081ce697",
+            # Documents added by the delta
+            "surfsharekit:oai:surfsharekit.nl:3e45b9e3-ba76-4200-a927-2902177f1f6c",
+            "surfsharekit:oai:surfsharekit.nl:4842596f-fe60-40ef-8c06-4d3d6e296ba4",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertIsInstance(batch, list)
+            for file_ in batch:
+                self.assertIsInstance(file_, FileDocument)
+                self.assertIsNotNone(file_.identity)
+                self.assertTrue(file_.properties)
+                if file_.properties["product_id"] in become_processing_ids:
+                    self.assertTrue(file_.pending_at)
+                    self.assertIsNone(file_.finished_at)
+                else:
+                    self.assertIsNone(file_.pending_at)
+                    self.assertTrue(file_.finished_at)
+                documents.append(file_)
+        self.assertEqual(len(documents), 2 + 1 + 0, "Expected two additions, one deletion and no (file) updates")
+        self.assertEqual(
+            self.set.documents.count(), 13 + 2,
+            "Expected 13 initial Documents and 2 delta additions"
+        )
+
+    def test_empty_seeding(self):
+        EdurepOAIPMHFactory.create(is_initial=False, number=0, is_empty=True)  # delta without results
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
+
+    def test_deletes_seeding(self):
+        EdurepOAIPMHFactory.create(is_initial=False, number=0, is_deletes=True)
+        # Here we expect to harvest nothing, because deletes without existing documents in the Set lead will be ignored.
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
+        # Now we'll create a pre-existing Document with the active state.
+        # Based on the product_id (which is the only identifier that is known for deleted files),
+        # we expect this Document to be deleted.
+        seed = {
+            "state": "active",
+            "set": "edurep",
+            "external_id": "aaa",
+            "parent_id": "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
+        }
+        document = FileDocument.build(seed, self.set)
+        document.save()
+        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+            self.assertEqual(len(batch), 1)
+            doc = batch[0]
+            self.assertEqual(doc.properties["state"], FileDocument.States.DELETED)
+            self.assertLess(doc.metadata["created_at"], doc.metadata["deleted_at"])
+        self.assertEqual(self.set.documents.count(), 1)
 
 
 class TestEdurepFileExtraction(TestCase):
