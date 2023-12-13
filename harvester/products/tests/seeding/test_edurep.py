@@ -94,6 +94,9 @@ class TestEdurepProductExtraction(TestCase):
         processor = HttpSeedingProcessor(cls.set, {
             "phases": SEEDING_PHASES
         })
+        # Gathering the seeds of both initial and delta responses
+        # Notice that duplicate data from responses will be filtered out as delta ignores duplicate data
+        # Order of data should be preserved, but beware that this isn't set into stone
         cls.seeds = []
         for batch in processor("edurep", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
