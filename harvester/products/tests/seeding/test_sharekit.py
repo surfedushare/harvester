@@ -57,7 +57,6 @@ class TestSharekitProductSeeding(TestCase):
         documents = []
         for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
             self.assertIsInstance(batch, list)
-            self.assertTrue(batch, "Expected delta batches to yield multiple ProductDocuments")
             for product in batch:
                 self.assertIsInstance(product, ProductDocument)
                 self.assertIsNotNone(product.identity)

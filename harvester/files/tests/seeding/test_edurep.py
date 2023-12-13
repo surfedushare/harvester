@@ -33,7 +33,7 @@ class TestEdurepFileSeeding(TestCase):
                 else:
                     self.assertIsNone(file_.pending_at)
                     self.assertIsNotNone(file_.finished_at)
-        self.assertEqual(self.set.documents.count(), 12)
+        self.assertEqual(self.set.documents.count(), 13)
 
 
 class TestEdurepFileExtraction(TestCase):
