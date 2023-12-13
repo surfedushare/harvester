@@ -39,7 +39,10 @@ class TestEdurepProductSeeding(TestCase):
         self.skipTest("to be tested")
 
     def test_empty_seeding(self):
-        self.skipTest("to be tested")
+        EdurepOAIPMHFactory.create(is_initial=False, number=0, is_empty=True)  # delta without results
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
+            self.assertEqual(batch, [])
+        self.assertEqual(self.set.documents.count(), 0)
 
 
 class TestEdurepProductExtraction(TestCase):

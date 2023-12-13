@@ -17,6 +17,8 @@ class EdurepOAIPMHFactory(factory.django.DjangoModelFactory):
 
     class Params:
         is_initial = True
+        is_empty = False
+        is_deletes = False
         number = 0
         resumption = None
 
@@ -51,8 +53,19 @@ class EdurepOAIPMHFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial" if self.is_initial else "delta"
-        response_file = f"fixture.edurep.{response_type}.{self.number}.xml"
+        if self.is_empty:
+            response_sequence = self.number
+            response_type = "empty"
+        elif self.is_deletes:
+            response_sequence = self.number
+            response_type = "deletes"
+        elif self.is_initial:
+            response_sequence = self.number
+            response_type = "initial"
+        else:
+            response_sequence = 0
+            response_type = "delta"
+        response_file = f"fixture.edurep.{response_type}.{response_sequence}.xml"
         response_file_path = os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures", response_file)
         with open(response_file_path, "r") as response:
             return response.read()
