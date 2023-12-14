@@ -154,11 +154,6 @@ class AnatomyToolFileExtraction(object):
         }
 
     @classmethod
-    def get_studies(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> list[str]:
-        blocks = cls.find_all_classification_blocks(file_info.product, "discipline", "id")
-        return list(set([block.text.strip() for block in blocks]))
-
-    @classmethod
     def get_access_rights(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> None | str:
         files = cls.get_files(soup, file_info)
         if not len(files):
@@ -187,7 +182,6 @@ OBJECTIVE = {
     "copyright": AnatomyToolFileExtraction.get_copyright,
     "access_rights": AnatomyToolFileExtraction.get_access_rights,
     "provider": AnatomyToolFileExtraction.get_provider,
-    "studies": AnatomyToolFileExtraction.get_studies,
     "product_id": AnatomyToolFileExtraction.get_product_id,
 }
 
