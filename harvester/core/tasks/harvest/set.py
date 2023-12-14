@@ -26,7 +26,7 @@ def dispatch_set_task_retry(task, exc, task_id, args, kwargs, einfo):
         if harvest_set is None:
             logger.warning("Couldn't load pending Set during on_retry of dispatch_set_tasks")
             return
-        pending_document_count = harvest_set.documents.filter(pending_at__isnull=False)
+        pending_document_count = harvest_set.documents.filter(pending_at__isnull=False).count()
         logger.info(f"Cancelling document tasks for {pending_document_count} documents")
         for batch in ibatch(harvest_set.documents.filter(pending_at__isnull=False).iterator(), batch_size=100):
             cancel_document_tasks(app_label, batch)
