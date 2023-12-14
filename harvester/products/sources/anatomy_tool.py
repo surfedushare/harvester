@@ -195,6 +195,24 @@ class AnatomyToolExtraction(object):
     def get_learning_material_disciplines(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> list[str]:
         return ["gezondheid"]
 
+    @staticmethod
+    def find_all_classification_blocks(element: bs4.element.Tag, classification_type: str, output_type: str) \
+            -> list[bs4.element.Tag]:
+        assert output_type in ["entry", "id"]
+        entries = element.find_all(string=classification_type)
+        blocks = []
+        for entry in entries:
+            classification_element = entry.find_parent('classification')
+            if not classification_element:
+                continue
+            blocks += classification_element.find_all(output_type)
+        return blocks
+
+    @classmethod
+    def get_studies(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> list[str]:
+        blocks = cls.find_all_classification_blocks(el, "discipline", "id")
+        return list(set([block.text.strip() for block in blocks]))
+
 
 OBJECTIVE = {
     "@": AnatomyToolExtraction.get_oaipmh_records,
@@ -214,12 +232,12 @@ OBJECTIVE = {
     "publisher_date": AnatomyToolExtraction.get_publisher_date,
     "publisher_year": AnatomyToolExtraction.get_publisher_year,
     "copyright_description": AnatomyToolExtraction.get_copyright_description,
-    "doi": lambda soup, el: None,
     # Learning material metadata
     "learning_material.aggregation_level": AnatomyToolExtraction.get_aggregation_level,
     "learning_material.lom_educational_levels": AnatomyToolExtraction.get_lom_educational_levels,
     "learning_material.disciplines": AnatomyToolExtraction.get_learning_material_disciplines,
     "learning_material.consortium": AnatomyToolExtraction.get_consortium,
+    "learning_material.studies": AnatomyToolExtraction.get_studies,
 }
 
 SEEDING_PHASES = [
