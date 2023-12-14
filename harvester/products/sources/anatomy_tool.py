@@ -199,7 +199,7 @@ class AnatomyToolExtraction(object):
 OBJECTIVE = {
     "@": AnatomyToolExtraction.get_oaipmh_records,
     "external_id": AnatomyToolExtraction.get_oaipmh_external_id,
-    "set": lambda soup, el: f"anatomy_tool:{AnatomyToolExtraction.get_oaipmh_external_id(soup, el)}",
+    "set": lambda soup, el: "anatomy_tool:anatomy_tool",
     "state": AnatomyToolExtraction.get_oaipmh_record_state,
     "files": AnatomyToolExtraction.get_files,
     "title": AnatomyToolExtraction.get_title,

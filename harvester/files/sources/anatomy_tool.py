@@ -60,7 +60,7 @@ class AnatomyToolFileExtraction(object):
 
     @classmethod
     def get_set(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
-        return f"anatomy_tool:{file_info.product.find('identifier').text.strip()}"
+        return f"anatomy_tool:anatomy_tool"
 
     #############################
     # GENERIC
