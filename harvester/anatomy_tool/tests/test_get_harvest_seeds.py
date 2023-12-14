@@ -6,12 +6,12 @@ from harvester.utils.extraction import get_harvest_seeds
 from core.constants import Repositories
 from core.tests.base import SeedExtractionTestCase
 from anatomy_tool.tests.factories import AnatomyToolOAIPMHFactory
-from anatomy_tool.extraction import ANATOMY_TOOL_EXTRACTION_OBJECTIVE, AnatomyToolExtraction
+from anatomy_tool.extraction import OBJECTIVE, AnatomyToolExtraction
 
 
 class TestGetHarvestSeedsAnatomyTool(SeedExtractionTestCase):
 
-    OBJECTIVE = ANATOMY_TOOL_EXTRACTION_OBJECTIVE
+    OBJECTIVE = OBJECTIVE
 
     @classmethod
     def setUpClass(cls):

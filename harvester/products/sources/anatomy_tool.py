@@ -196,7 +196,7 @@ class AnatomyToolExtraction(object):
         return ["gezondheid"]
 
 
-ANATOMY_TOOL_EXTRACTION_OBJECTIVE = {
+OBJECTIVE = {
     "@": AnatomyToolExtraction.get_oaipmh_records,
     "external_id": AnatomyToolExtraction.get_oaipmh_external_id,
     "set": lambda soup, el: f"anatomy_tool:{AnatomyToolExtraction.get_oaipmh_external_id(soup, el)}",
@@ -234,7 +234,7 @@ SEEDING_PHASES = [
             "kwargs": {},
         },
         "contribute_data": {
-            "objective": ANATOMY_TOOL_EXTRACTION_OBJECTIVE,
+            "objective": OBJECTIVE,
         }
     }
 ]

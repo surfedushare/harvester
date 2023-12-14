@@ -175,7 +175,7 @@ class AnatomyToolFileExtraction(object):
         return description.find('string').text.strip() if description else None
 
 
-ANATOMY_TOOL_EXTRACTION_OBJECTIVE = {
+OBJECTIVE = {
     "@": get_file_infos,
     "external_id": AnatomyToolFileExtraction.get_oaipmh_external_id,
     "set": AnatomyToolFileExtraction.get_set,
@@ -204,7 +204,7 @@ SEEDING_PHASES = [
             "kwargs": {},
         },
         "contribute_data": {
-            "objective": ANATOMY_TOOL_EXTRACTION_OBJECTIVE
+            "objective": OBJECTIVE
         }
     }
 ]

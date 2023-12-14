@@ -301,7 +301,7 @@ class AnatomyToolExtraction(object):
         return ["gezondheid"]
 
 
-ANATOMY_TOOL_EXTRACTION_OBJECTIVE = {
+OBJECTIVE = {
     "url": AnatomyToolExtraction.get_url,
     "files": AnatomyToolExtraction.get_files,
     "title": AnatomyToolExtraction.get_title,
