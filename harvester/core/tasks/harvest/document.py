@@ -21,7 +21,7 @@ def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocumen
     if len(pending):
         recursive_callback_signature = dispatch_document_tasks.si(
             app_label,
-            [doc.id for doc in documents],
+            [doc.id for doc in pending],
             asynchronous=asynchronous,
             recursion_depth=recursion_depth+1
         )
