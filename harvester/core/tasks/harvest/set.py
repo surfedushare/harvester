@@ -101,7 +101,9 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Set = models["Set"]
     for harvest_set in Set.objects.filter(id__in=set_ids).select_for_update():
-        # Historic data needs to be larger than 50 documents
+        # The check_set_integrity call may replace new data with historic data when validation fails
+        is_replaced = False
+        # Historic data needs to be larger than 50 documents before we consider replacement
         historic_set = harvest_set.dataset_version.historic_sets.filter(name=harvest_set.name).last()
         if historic_set is not None and historic_set.documents.count() >= 50:
             historic_count = historic_set.documents.filter(metadata__deleted_at=None).count()
@@ -110,10 +112,12 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
             # If historic data is 5% larger than new data the data is considered invalid
             # We'll use the historic data instead of the new data
             if current_count == 0 or (count_diff > 0 and count_diff / current_count >= 0.05):
+                is_replaced = True
                 harvest_set.documents.all().delete()
                 harvest_set.copy_documents(historic_set)
         # For all sets we mark this task as completed to continue the harvesting process
         harvest_set.pipeline["check_set_integrity"] = {
-            "success": True
+            "success": True,
+            "is_replaced": is_replaced
         }
         harvest_set.save()
