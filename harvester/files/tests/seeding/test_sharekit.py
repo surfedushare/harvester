@@ -133,7 +133,10 @@ class TestSharekitFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
 
     def test_get_external_id(self):
-        self.assertEqual(self.seeds[0]["external_id"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
+        self.assertEqual(
+            self.seeds[0]["external_id"],
+            "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de"
+        )
 
     def test_get_mime_type(self):
         self.assertEqual(

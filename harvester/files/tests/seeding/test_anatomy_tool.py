@@ -75,7 +75,9 @@ class TestAnatomyToolFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["hash"], "cfc82b306cd64856d627b19350623c7c4752b5df")
 
     def test_get_external_id(self):
-        self.assertEqual(self.seeds[0]["external_id"], "oai:anatomytool.org:56055")
+        self.assertEqual(
+            self.seeds[0]["external_id"], "oai:anatomytool.org:56055:cfc82b306cd64856d627b19350623c7c4752b5df"
+        )
 
     def test_get_mime_type(self):
         self.assertEqual(

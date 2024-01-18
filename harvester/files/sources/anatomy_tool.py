@@ -15,7 +15,7 @@ def get_file_infos(anatomy_tool_soup: bs4.BeautifulSoup) -> Iterator[FileInfo]:
     for product in anatomy_tool_soup.find_all('record'):
         mime_types = product.find_all('format')
         urls = product.find_all('location')
-        if not urls:
+        if not urls:  # anything without a URL will get deleted
             continue
         for mime_type, url in zip(mime_types, urls):
             yield FileInfo(product, mime_type, url)
@@ -54,11 +54,6 @@ class AnatomyToolFileExtraction(object):
         return slugify(f"{license}-{url_match.group('version')}")
 
     @classmethod
-    def get_oaipmh_external_id(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
-        el = file_info.product
-        return el.find('identifier').text.strip()
-
-    @classmethod
     def get_set(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
         return "anatomy_tool:anatomy_tool"
 
@@ -80,40 +75,22 @@ class AnatomyToolFileExtraction(object):
         return blocks
 
     @classmethod
-    def get_files(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> list[dict[str, str]]:
-        el = file_info.product
-        mime_types = el.find_all('format')
-        urls = el.find_all('location')
-        default_copyright = cls.get_copyright(soup, file_info)
-        return [
-            {
-                "mime_type": mime_type,
-                "url": url,
-                "hash": sha1(url.encode("utf-8")).hexdigest(),
-                "title": title,
-                "copyright": default_copyright,
-                "access_rights": "OpenAccess" if default_copyright != "yes" else "RestrictedAccess"
-            }
-            for mime_type, url, title in zip(
-                [mime_node.text.strip() for mime_node in mime_types],
-                [url_node.text.strip() for url_node in urls],
-                [f"URL {ix+1}" for ix, mime_node in enumerate(mime_types)],
-            )
-        ]
-
-    @classmethod
     def get_url(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
         return file_info.url.text.strip().replace(" ", "+")
 
     @classmethod
-    def get_hash(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str | None:
-        if not file_info.url:
-            return
+    def get_hash(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
         return sha1(file_info.url.encode("utf-8")).hexdigest()
 
     @classmethod
     def get_product_id(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
         return file_info.product.find('identifier').text.strip()
+
+    @classmethod
+    def get_external_id(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
+        file_hash = cls.get_hash(soup, file_info)
+        product_id = cls.get_product_id(soup, file_info)
+        return f"{product_id}:{file_hash}"
 
     @classmethod
     def get_title(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str | None:
@@ -155,10 +132,8 @@ class AnatomyToolFileExtraction(object):
 
     @classmethod
     def get_access_rights(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> None | str:
-        files = cls.get_files(soup, file_info)
-        if not len(files):
-            return
-        return files[0]["access_rights"]
+        default_copyright = cls.get_copyright(soup, file_info)
+        return "OpenAccess" if default_copyright != "yes" else "RestrictedAccess"
 
     @classmethod
     def get_copyright_description(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> None | str:
@@ -172,7 +147,7 @@ class AnatomyToolFileExtraction(object):
 
 OBJECTIVE = {
     "@": get_file_infos,
-    "external_id": AnatomyToolFileExtraction.get_oaipmh_external_id,
+    "external_id": AnatomyToolFileExtraction.get_external_id,
     "set": AnatomyToolFileExtraction.get_set,
     "url": AnatomyToolFileExtraction.get_url,
     "hash": AnatomyToolFileExtraction.get_hash,

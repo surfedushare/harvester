@@ -68,7 +68,7 @@ class TestEdurepFileSeeding(TestCase):
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
-        self.assertEqual(len(documents), 2 + 1 + 0, "Expected two additions, one deletion and no (file) updates")
+        self.assertEqual(len(documents), 2 + 1 + 1, "Expected two additions, one deletion and one update")
         self.assertEqual(
             self.set.documents.count(), 13 + 2,
             "Expected 13 initial Documents and 2 delta additions"
@@ -90,19 +90,21 @@ class TestEdurepFileSeeding(TestCase):
         # Based on the product_id (which is the only identifier that is known for deleted files),
         # we expect this Document to be deleted.
         seed = {
-            "state": "active",
+            "state": FileDocument.States.ACTIVE,
             "set": "edurep",
             "external_id": "aaa",
-            "parent_id": "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
+            "product_id": "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
         }
         document = FileDocument.build(seed, self.set)
         document.save()
-        for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
+        for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
             self.assertEqual(len(batch), 1)
             doc = batch[0]
             self.assertEqual(doc.properties["state"], FileDocument.States.DELETED)
             self.assertLess(doc.metadata["created_at"], doc.metadata["deleted_at"])
         self.assertEqual(self.set.documents.count(), 1)
+        document = self.set.documents.first()
+        self.assertEqual(document.properties["state"], FileDocument.States.DELETED)
 
 
 class TestEdurepFileExtraction(TestCase):
@@ -129,7 +131,11 @@ class TestEdurepFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
 
     def test_get_external_id(self):
-        self.assertEqual(self.seeds[0]["external_id"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
+        self.assertEqual(
+            self.seeds[0]["external_id"],
+            "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:"
+            "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de"
+        )
 
     def test_get_mime_type(self):
         self.assertEqual(self.seeds[0]["mime_type"],

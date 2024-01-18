@@ -64,6 +64,13 @@ class SharekitFileExtraction(object):
         return sha1(url.encode("utf-8")).hexdigest()
 
     @classmethod
+    def get_external_id(cls, info: FileInfo) -> str | None:
+        file_hash = cls.get_hash(info)
+        if not file_hash:
+            return
+        return f"{info.product['id']}:{file_hash}"
+
+    @classmethod
     def get_mime_type(cls, info: FileInfo) -> str | None:
         if not info.file:
             return
@@ -111,7 +118,7 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": get_file_info,
     "state": SharekitFileExtraction.get_state,
-    "external_id": SharekitFileExtraction.get_hash,
+    "external_id": SharekitFileExtraction.get_external_id,
     "set": lambda info: info.channel,
     # Generic metadata
     "url": SharekitFileExtraction.get_url,
