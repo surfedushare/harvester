@@ -5,7 +5,7 @@ from itertools import chain
 from sources.utils.sharekit import SharekitExtractor
 
 
-class SharekitMetadataExtraction(object):
+class SharekitMetadataExtraction:
 
     @classmethod
     def get_record_state(cls, node):
