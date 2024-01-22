@@ -18,7 +18,7 @@ def get_file_infos(edurep_soup) -> FileInfo:
         mime_types = product.find_all('czp:format')
         urls = product.find_all('czp:location')
         if not urls:
-            continue
+            yield FileInfo(product, None, None)
         for mime_type, url in zip(mime_types, urls):
             yield FileInfo(product, mime_type, url)
 
@@ -35,15 +35,23 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
 class EdurepFileExtraction(object):
 
     @classmethod
-    def get_state(cls, soup, info: FileInfo) -> str | None:
+    def get_state(cls, soup, info: FileInfo) -> str:
         return EdurepExtractor.get_oaipmh_record_state(info.product)
 
     @classmethod
     def get_hash(cls, soup, info: FileInfo) -> str | None:
-        url = EdurepExtractor.parse_url(info.url.text.strip())
-        if not url:
+        if not info.url:
             return
+        url = EdurepExtractor.parse_url(info.url.text.strip())
         return sha1(url.encode("utf-8")).hexdigest()
+
+    @classmethod
+    def get_external_id(cls, soup, info: FileInfo) -> str | None:
+        file_hash = cls.get_hash(soup, info)
+        if not file_hash:
+            return
+        parent_id = cls.get_product_id(soup, info)
+        return f"{parent_id}:{file_hash}"
 
     @classmethod
     def get_set(cls, soup, info: FileInfo) -> str | None:
@@ -51,11 +59,13 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_url(cls, soup, info: FileInfo) -> str | None:
+        if not info.url:
+            return
         return EdurepExtractor.parse_url(info.url.text.strip())
 
     @classmethod
     def get_mime_type(cls, soup, info: FileInfo) -> str | None:
-        if info.mime_type.text == "":
+        if not info.mime_type or info.mime_type.text == "":
             return
         return info.mime_type.text.strip()
 
@@ -77,6 +87,8 @@ class EdurepFileExtraction(object):
 
     @classmethod
     def get_is_link(cls, soup, info: FileInfo) -> bool | None:
+        if not info.mime_type:
+            return
         return info.mime_type.text.strip() == "text/html"
 
     @classmethod
@@ -88,7 +100,7 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": get_file_infos,
     "state": EdurepFileExtraction.get_state,
-    "external_id": EdurepFileExtraction.get_hash,
+    "external_id": EdurepFileExtraction.get_external_id,
     "set": EdurepFileExtraction.get_set,
     # Generic metadata
     "url": EdurepFileExtraction.get_url,

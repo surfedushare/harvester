@@ -7,7 +7,7 @@ from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
 
 from core.models import HarvestHttpResource
-from anatomy_tool.extraction import AnatomyToolExtraction, ANATOMY_TOOL_EXTRACTION_OBJECTIVE
+from anatomy_tool.extraction import AnatomyToolExtraction, OBJECTIVE
 
 
 logger = logging.getLogger("harvester")
@@ -27,7 +27,7 @@ class AnatomyToolOAIPMHManager(models.Manager):
             "external_id": AnatomyToolExtraction.get_oaipmh_external_id,
             "state": AnatomyToolExtraction.get_oaipmh_record_state
         }
-        oaipmh_objective.update(ANATOMY_TOOL_EXTRACTION_OBJECTIVE)
+        oaipmh_objective.update(OBJECTIVE)
         extract_config = create_config("extract_processor", {
             "objective": oaipmh_objective
         })

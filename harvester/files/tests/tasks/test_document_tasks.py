@@ -43,7 +43,7 @@ class TestHarvestObjectFileDocument(TestCase):
         self.youtube.save()
         # Assert that tasks depending on Tika have become pending
         pending_tasks_1 = self.document_1.get_pending_tasks()
-        self.assertEqual(pending_tasks_1, ["tika", "tika_xml"])
+        self.assertEqual(pending_tasks_1, ["tika"])
         youtube_tasks = self.youtube.get_pending_tasks()
         self.assertEqual(youtube_tasks, [])
 

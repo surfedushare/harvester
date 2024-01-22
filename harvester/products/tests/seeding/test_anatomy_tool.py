@@ -1,42 +1,79 @@
-from datetime import datetime
+from datagrowth.configuration import register_defaults
+from django.test import TestCase
 
-from django.utils.timezone import make_aware
-
-from harvester.utils.extraction import get_harvest_seeds
-from core.constants import Repositories
+from core.processors import HttpSeedingProcessor
 from core.tests.base import SeedExtractionTestCase
-from anatomy_tool.tests.factories import AnatomyToolOAIPMHFactory
-from anatomy_tool.extraction import OBJECTIVE, AnatomyToolExtraction
+from products.models import Set, ProductDocument
+from products.sources.anatomy_tool import AnatomyToolExtraction, SEEDING_PHASES
+from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
 
 
-class TestGetHarvestSeedsAnatomyTool(SeedExtractionTestCase):
-
-    OBJECTIVE = OBJECTIVE
+class TestAnatomyToolProductSeeding(TestCase):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
         AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
-        cls.begin_of_time = make_aware(datetime(year=1970, month=1, day=1))
-        cls.set_spec = "anatomy_tool"
-        cls.seeds = get_harvest_seeds(Repositories.ANATOMY_TOOL, cls.set_spec, cls.begin_of_time)
 
-    def test_get_complete_set(self):
-        seeds = self.seeds
-        self.assertEqual(len(seeds), 10)
-        self.check_seed_integrity(seeds, include_deleted=False)
+    @classmethod
+    def tearDownClass(cls):
+        register_defaults("global", {
+            "cache_only": False
+        })
+        super().tearDownClass()
 
-    def test_get_complete_set_without_deletes(self):
-        seeds = get_harvest_seeds(Repositories.ANATOMY_TOOL, self.set_spec, self.begin_of_time,
-                                  include_deleted=False)
-        self.assertEqual(len(seeds), 10)
-        self.check_seed_integrity(seeds, include_deleted=False)
+    def setUp(self) -> None:
+        super().setUp()
+        self.set = Set.objects.create(identifier="srn")
+        self.processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
 
-    def test_from_youtube_property(self):
-        seeds = self.seeds
-        self.assertEqual(len(seeds), 10)
-        youtube_seeds = [seed for seed in seeds if seed['from_youtube']]
-        self.assertEqual(len(youtube_seeds), 0)
+    def test_initial_seeding(self):
+        for batch in self.processor("anatomy_tool", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 10)
+
+
+class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
+
+    set = None
+    seeds = []
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
+        AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
+        cls.set = Set.objects.create(identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": SEEDING_PHASES
+        })
+        cls.seeds = []
+        for batch in processor("anatomy_tool", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+
+    @classmethod
+    def tearDownClass(cls):
+        register_defaults("global", {
+            "cache_only": False
+        })
+        super().tearDownClass()
 
     def test_authors_property(self):
         seeds = self.seeds
@@ -45,37 +82,14 @@ class TestGetHarvestSeedsAnatomyTool(SeedExtractionTestCase):
             {'name': 'Prof. X. Test', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None}
         ])
 
-    def test_analysis_allowed_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['analysis_allowed'], True, "Expected standard material to allow analysis")
-        self.assertEqual(seeds[6]['analysis_allowed'], False, "Expected restricted material to disallow analysis")
-
     def test_lom_educational_level(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["lom_educational_levels"], ["HBO", "WO"])
+        self.assertEqual(seeds[0]["learning_material"]["lom_educational_levels"], ["HBO", "WO"])
 
     def test_get_files(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [
-            {
-                "mime_type": "image/png",
-                "url": "https://anatomytool.org/node/56055",
-                "hash": "2d49dee36ce2965cd9e03d91dbd4f9ac54de770a",
-                "title": "URL 1",
-                "copyright": "cc-by-nc-sa-40",
-                "access_rights": "OpenAccess"
-            }
-        ])
-        self.assertEqual(seeds[6]["files"], [
-            {
-                "mime_type": "image/jpeg",
-                "url": "https://anatomytool.org/node/56176",
-                "hash": "62c2493141fd745099b4b5a4d875c67d2103a964",
-                "title": "URL 1",
-                "copyright": "yes",
-                "access_rights": "RestrictedAccess"
-            }
-        ])
+        self.assertEqual(seeds[0]["files"], ["https://anatomytool.org/node/56055"])
+        self.assertEqual(seeds[6]["files"], ["https://anatomytool.org/node/56176"])
 
     def test_parse_copyright_description(self):
         descriptions = {
@@ -104,10 +118,6 @@ class TestGetHarvestSeedsAnatomyTool(SeedExtractionTestCase):
         self.assertEqual(len(seeds), 10, "Expected get_harvest_seeds to filter differently based on copyright")
         self.assertEqual(seeds[0]["copyright"], "cc-by-nc-sa-40")
         self.assertEqual(seeds[6]["copyright"], "yes")
-
-    def test_get_technical_type(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["technical_type"], "image")
 
     def test_get_keywords(self):
         seeds = self.seeds

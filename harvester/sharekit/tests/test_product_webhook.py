@@ -52,14 +52,14 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
             {
                 "state": "active",
                 "set": "sharekit:edusources",
-                "external_id": "8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:8b714937aab9bda1005d8aa76c607e629b25d89e",
                 "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
                 "product_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
             },
             {
                 "state": "active",
                 "set": "sharekit:edusources",
-                "external_id": "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
                 "url": "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7",
                 "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
             },

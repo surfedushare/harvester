@@ -41,7 +41,10 @@ class Document(DocumentBase):
 
     def update(self, data, commit=True):
         if "language" in self.properties:
-            data.pop("language", None)
+            if isinstance(data, dict):
+                data.pop("language", None)
+            else:
+                data.properties.pop("language", None)
         super().update(data, commit=commit)
 
     def get_language(self):

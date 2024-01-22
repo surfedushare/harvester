@@ -27,11 +27,13 @@ def default_document_tasks():
             "checks": ["is_analysis_possible"],
             "resources": ["files.HttpTikaResource"]
         },
-        "tika_xml": {
-            "depends_on": ["check_url"],
-            "checks": ["is_analysis_possible"],
-            "resources": ["files.HttpTikaResource"]
-        },
+        # TODO: experimental Tika use may replace normal use,
+        #  but due to JSON size restrictions we can't use them simultaneously
+        # "tika_xml": {
+        #     "depends_on": ["check_url"],
+        #     "checks": ["is_analysis_possible"],
+        #     "resources": ["files.HttpTikaResource"]
+        # },
         "pdf_preview": {
             "depends_on": ["check_url"],
             "checks": ["is_analysis_possible", "is_pdf"],
