@@ -48,7 +48,7 @@ class HvaPureResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial"
+        response_type = "initial" if self.is_initial else "delta"
         response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",

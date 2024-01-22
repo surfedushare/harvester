@@ -1,10 +1,90 @@
 from django.test import TestCase, override_settings
+from django.utils.timezone import now
 
 from datagrowth.configuration import register_defaults
 from core.processors import HttpSeedingProcessor
-from products.models import Set
+from products.models import Set, ProductDocument
 from products.sources.hva import SEEDING_PHASES
+from sources.models import HvaPureResource
 from sources.factories.hva.extraction import HvaPureResourceFactory
+
+
+@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
+class TestHvaProductSeeding(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        HvaPureResourceFactory.create_common_responses()
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.set = Set.objects.create(name="hva", identifier="srn")
+        self.processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+
+    def test_initial_seeding(self):
+        for batch in self.processor("hva", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                self.assertTrue(product.pending_at)
+        self.assertEqual(self.set.documents.count(), 20)
+
+    def test_delta_seeding(self):
+        # Load the initial data, set all tasks as completed and mark everything as deleted (delete_policy=no)
+        current_time = now()
+        initial_documents = []
+        for batch in self.processor("hva", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.properties["state"] = ProductDocument.States.DELETED
+                doc.clean()
+                doc.finish_processing(current_time=current_time)
+                initial_documents.append(doc)
+        # HvA doesn't really have delta's, so we delete initial resources and create a new "delta" resource.
+        HvaPureResource.objects.all().delete()
+        HvaPureResourceFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Documents added by the delta
+            "hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("hva", "2020-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+                documents.append(product)
+        self.assertEqual(len(documents), 10, "Expected test to work with single page for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 20 + 1,
+            "Expected 20 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 documented added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 10,
+            "Expected 10 deleted Documents, because second page didn't come in through the delta"
+        )
+        self.assertEqual(
+            self.set.documents.filter(properties__title="Best practices schuldhulpverlening Amsterdam").count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")

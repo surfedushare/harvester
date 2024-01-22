@@ -1,5 +1,6 @@
-class BaseExtractor(object):
+class BaseExtractor:
 
+    @staticmethod
     def parse_url(url: str) -> str | None:
         if not url:
             return

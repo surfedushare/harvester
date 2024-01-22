@@ -9,8 +9,7 @@ from files.sources.sharekit import SEEDING_PHASES
 class TestSharekitFileSeeding(TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         SharekitMetadataHarvestFactory.create_common_sharekit_responses()
 
     def setUp(self) -> None:
