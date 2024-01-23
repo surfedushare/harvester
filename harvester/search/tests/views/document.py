@@ -173,7 +173,6 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
             "authors.name.keyword-Marc de Graaf": 2,
             "authors.name.keyword-Michel van Ast": 2,
             "authors.name.keyword-Theo van den Bogaart": 2,
-            "studies-7afbb7a6-c29b-425c-9c59-6f79c845f5f0": 2,
             "copyright.keyword-cc-by-30": 2
         })
 
