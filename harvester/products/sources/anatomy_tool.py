@@ -103,13 +103,6 @@ class AnatomyToolExtraction(object):
         return cls.parse_copyright_description(cls.get_copyright_description(soup, el)) or "yes"
 
     @classmethod
-    def get_aggregation_level(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> None | str:
-        node = el.find('aggregationlevel', None)
-        if node is None:
-            return None
-        return node.find('value').text.strip() if node else None
-
-    @classmethod
     def get_authors(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> list[dict[str, None | str]]:
         lifecycle = el.find('lifecycle')
         if not lifecycle:
@@ -233,7 +226,7 @@ OBJECTIVE = {
     "publisher_year": AnatomyToolExtraction.get_publisher_year,
     "copyright_description": AnatomyToolExtraction.get_copyright_description,
     # Learning material metadata
-    "learning_material.aggregation_level": AnatomyToolExtraction.get_aggregation_level,
+    "learning_material.aggregation_level": lambda soup, el: "1",
     "learning_material.lom_educational_levels": AnatomyToolExtraction.get_lom_educational_levels,
     "learning_material.disciplines": AnatomyToolExtraction.get_learning_material_disciplines,
     "learning_material.consortium": AnatomyToolExtraction.get_consortium,
