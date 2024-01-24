@@ -183,8 +183,11 @@ class EdurepProductExtraction(object):
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
-        blocks = EdurepExtractor.find_all_classification_blocks(el, "idea", "czp:id")
-        return list(set([block.text.strip() for block in blocks]))
+        studies = cls.get_studies(soup, el)
+        return [
+            f"http://purl.edustandaard.nl/concept/{study}"
+            for study in studies
+        ]
 
     @classmethod
     def get_copyright_description(cls, soup, el):
