@@ -5,6 +5,8 @@ from hashlib import sha1
 
 from django.conf import settings
 
+from sources.utils.base import BaseExtractor
+
 
 @dataclass(frozen=True, slots=True)
 class ElectronicVersionInfo:
@@ -36,7 +38,7 @@ def get_electronic_version_info(pure_data: dict) -> Iterator[ElectronicVersionIn
             )
 
 
-class HvaMetadataExtraction:
+class HvaMetadataExtraction(BaseExtractor):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
 
@@ -59,7 +61,8 @@ class HvaMetadataExtraction:
 
     @classmethod
     def get_url(cls, info: ElectronicVersionInfo) -> str:
-        return cls._parse_file_url(info.data["url"])  # TODO: inherit and override?
+        normalized_url = cls.parse_url(info.data["url"])
+        return cls._parse_file_url(normalized_url)
 
     @classmethod
     def get_hash(cls, info: ElectronicVersionInfo) -> str:

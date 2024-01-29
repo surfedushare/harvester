@@ -2,8 +2,10 @@ from hashlib import sha1
 
 from django.conf import settings
 
+from sources.utils.base import BaseExtractor
 
-class HvaMetadataExtraction:
+
+class HvaMetadataExtraction(BaseExtractor):
 
     #############################
     # GENERIC
@@ -26,7 +28,8 @@ class HvaMetadataExtraction:
         files = []
         for electronic_version in electronic_versions:
             if "file" in electronic_version:
-                url = HvaMetadataExtraction._parse_file_url(electronic_version["file"]["url"])
+                normalized_url = cls.parse_url(electronic_version["file"]["url"])
+                url = HvaMetadataExtraction._parse_file_url(normalized_url)
             elif "link" in electronic_version:
                 url = electronic_version["link"]
             else:
