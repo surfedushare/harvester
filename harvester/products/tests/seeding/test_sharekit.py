@@ -84,8 +84,7 @@ class TestSharekitProductExtraction(TestCase):
     seeds = []
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         SharekitMetadataHarvestFactory.create_common_sharekit_responses()
         cls.set = Set.objects.create(name="edusources", identifier="srn")
         processor = HttpSeedingProcessor(cls.set, {

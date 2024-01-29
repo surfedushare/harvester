@@ -33,7 +33,7 @@ class HvaPureResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def uri(self):
         offset = self.number * 10
-        return f"{ENDPOINT}?offset={offset}&size=10"
+        return f"{ENDPOINT}?offset={offset}&size=10" if offset else ENDPOINT
 
     @factory.lazy_attribute
     def request(self):
@@ -48,7 +48,7 @@ class HvaPureResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial"
+        response_type = "initial" if self.is_initial else "delta"
         response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",
