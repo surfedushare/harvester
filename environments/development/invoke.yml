@@ -25,8 +25,8 @@ harvester:
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
   webhook_allowed_ips:
     sharekit:
-      - "20.56.15.206"  # production
-      - "20.56.8.62"  # acceptance
+      - "145.101.123.227"  # production
+      - "145.101.123.196"  # acceptance
       - "145.90.232.169"    # one EduVPN IP not the range!
     publinova:
       - "83.96.213.17"  # production
