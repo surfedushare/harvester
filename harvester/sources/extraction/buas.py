@@ -41,7 +41,7 @@ class BuasMetadataExtraction(ExtractProcessor):
             access_rights = "RestrictedAccess"
         return {
             "title": file_name,
-            "url": url.replace("\u2060", "") if url else None,
+            "url": url,
             "mime_type": mime_type,
             "hash": sha1(url.encode("utf-8")).hexdigest(),
             "copyright": None,
