@@ -51,7 +51,7 @@ class TestHvaProductSeeding(TestCase):
         # Set some expectations
         become_processing_ids = {
             # Documents added by the delta
-            "hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a",
+            "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a",
         }
         # Load the delta data and see if updates have taken place
         documents = []
