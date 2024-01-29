@@ -75,11 +75,12 @@ class TestHvaProductSeeding(TestCase):
         )
         self.assertEqual(
             self.set.documents.filter(pending_at__isnull=False).count(), 1,
-            "Expected 1 documented added by delta to become pending"
+            "Expected 1 document added by delta to become pending"
         )
         self.assertEqual(
             self.set.documents.filter(metadata__deleted_at=None).count(), 10,
-            "Expected 10 deleted Documents, because second page didn't come in through the delta"
+            "Expected 10 Documents to have no deleted_at date and 10 with deleted_at, "
+            "because second page didn't come in through the delta"
         )
         self.assertEqual(
             self.set.documents.filter(properties__title="Best practices schuldhulpverlening Amsterdam").count(), 1,

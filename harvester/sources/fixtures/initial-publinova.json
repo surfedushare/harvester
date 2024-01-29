@@ -34,5 +34,52 @@
             "days": 30
         }
     }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 2,
+    "fields": {
+        "name": "Hogeschool van Amsterdam",
+        "module": "hva",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 3,
+    "fields": {
+        "source": 2,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hva"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 4,
+    "fields": {
+        "source": 2,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hva"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
 }
 ]
