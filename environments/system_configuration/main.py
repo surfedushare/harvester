@@ -168,23 +168,25 @@ def create_configuration(mode=None, context="container"):
     return config
 
 
-def create_configuration_and_session():
+def create_configuration_and_session(mode=None, context=None):
     """
     Creates an environment holding all the configuration for current mode and creates an AWS session.
     The used profile for AWS session is either default or the configured profile_name for the environment
 
-    :param config_class: Set to invoke.config.Config if you want to use Fabric
-    :param service: The name of the service to get the environment for
+    :param mode: the mode you want a configuration for
+    :param context: the context you want a configuration for (host or container)
     :return: environment, session
     """
+    mode = mode or MODE
+    context = context or CONTEXT
 
     # Now we use the customize invoke load as described above
-    environment = create_configuration(MODE, context=CONTEXT)
+    environment = create_configuration(mode, context=context)
     # Creating a AWS session based on configuration and context
-    session = boto3.Session() if CONTEXT != "host" else boto3.Session(profile_name=environment.aws.profile_name)
+    session = boto3.Session() if context != "host" else boto3.Session(profile_name=environment.aws.profile_name)
 
     # Load secrets (we resolve secrets during runtime so that AWS can manage them)
-    if environment.aws.load_secrets and CONTEXT != "unprivileged":
+    if environment.aws.load_secrets and context != "unprivileged":
         secrets_manager = session.client('secretsmanager')
         # This skips over any non-AWS secrets
         secrets = environment.secrets or {}
