@@ -41,7 +41,7 @@ def default_document_tasks():
         },
         "video_preview": {  # Other than Youtube like Vimeo
             "depends_on": ["check_url"],
-            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
+            "checks": ["is_analysis_possible", "is_video"],
             "resources": ["files.YoutubeThumbnailResource"]
         },
         "youtube_api": {
@@ -168,7 +168,6 @@ class FileDocument(HarvestDocument):
             data["text"] = self.derivatives["tika"]["texts"][0]  # TODO: allow all Tika output
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
-            data["previews"] = youtube_data.pop("previews", None)
             data["video"] = youtube_data
         if "pdf_preview" in self.derivatives:
             data["previews"] = self.derivatives["pdf_preview"]
