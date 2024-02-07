@@ -6,8 +6,10 @@ from dateutil.parser import parse as date_parser
 
 from django.utils.text import slugify
 
+from sources.utils.base import BaseExtractor
 
-class AnatomyToolExtraction(object):
+
+class AnatomyToolExtraction(BaseExtractor):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
@@ -64,7 +66,7 @@ class AnatomyToolExtraction(object):
 
     @classmethod
     def get_files(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> list[str]:
-        return [url.text.strip() for url in el.find_all('location')]
+        return [cls.parse_url(url.text) for url in el.find_all('location')]
 
     @classmethod
     def get_title(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> None | str:

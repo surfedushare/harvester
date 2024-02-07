@@ -7,6 +7,8 @@ from typing import Iterator
 import bs4
 from django.utils.text import slugify
 
+from sources.utils.base import BaseExtractor
+
 
 FileInfo = namedtuple("FileInfo", ["product", "mime_type", "url"])
 
@@ -21,7 +23,7 @@ def get_file_infos(anatomy_tool_soup: bs4.BeautifulSoup) -> Iterator[FileInfo]:
             yield FileInfo(product, mime_type, url)
 
 
-class AnatomyToolFileExtraction(object):
+class AnatomyToolFileExtraction(BaseExtractor):
 
     youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
     cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
@@ -76,11 +78,12 @@ class AnatomyToolFileExtraction(object):
 
     @classmethod
     def get_url(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
-        return file_info.url.text.strip().replace(" ", "+")
+        return cls.parse_url(file_info.url.text)
 
     @classmethod
     def get_hash(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
-        return sha1(file_info.url.encode("utf-8")).hexdigest()
+        url = cls.get_url(soup, file_info)
+        return sha1(url.encode("utf-8")).hexdigest()
 
     @classmethod
     def get_product_id(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str:
