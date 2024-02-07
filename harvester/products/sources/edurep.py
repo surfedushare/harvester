@@ -35,7 +35,7 @@ class EdurepProductExtraction(object):
     def get_files(cls, soup, el):
         files = []
         for file in el.find_all('czp:location'):
-            files.append(file.text.strip())
+            files.append(EdurepExtractor.parse_url(file.text))
         return files
 
     @classmethod

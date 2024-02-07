@@ -72,11 +72,11 @@ class TestAnatomyToolFileExtraction(TestCase):
                          "https://anatomytool.org/node/56096", "Expected to get the url of a website")
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "cfc82b306cd64856d627b19350623c7c4752b5df")
+        self.assertEqual(self.seeds[0]["hash"], "2d49dee36ce2965cd9e03d91dbd4f9ac54de770a")
 
     def test_get_external_id(self):
         self.assertEqual(
-            self.seeds[0]["external_id"], "oai:anatomytool.org:56055:cfc82b306cd64856d627b19350623c7c4752b5df"
+            self.seeds[0]["external_id"], "oai:anatomytool.org:56055:2d49dee36ce2965cd9e03d91dbd4f9ac54de770a"
         )
 
     def test_get_mime_type(self):
