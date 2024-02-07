@@ -56,7 +56,7 @@ class ProductDocument(HarvestDocument):
     def update_files_data(data: dict) -> dict:
         # Prepare lookups
         file_identities = [
-            f"{data['set']}:{sha1(url.encode('utf-8')).hexdigest()}"
+            f"{data['set']}:{data['external_id']}:{sha1(url.encode('utf-8')).hexdigest()}"
             for url in data["files"]
         ]
         files_by_identity = {
@@ -148,6 +148,7 @@ class ProductDocument(HarvestDocument):
             data.update(learning_material)
         research_product = data.pop("research_product", None)
         if research_product:
+            research_product.pop("parties", None)  # parties equals publishers for now and we ignore parties
             data.update(research_product)
         if for_search:
             data = self.transform_search_data(data)

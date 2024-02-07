@@ -390,7 +390,7 @@
             "modified_at": "2023-11-15T09:28:06.002Z",
             "properties": {
                 "set": "sharekit:edusources",
-                "srn": "sharekit:edusources:8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "srn": "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:8b714937aab9bda1005d8aa76c607e629b25d89e",
                 "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
                 "hash": "8b714937aab9bda1005d8aa76c607e629b25d89e",
                 "type": "website",
@@ -401,11 +401,11 @@
                 "copyright": "cc-by-40",
                 "mime_type": "text/html",
                 "product_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
-                "external_id": "8b714937aab9bda1005d8aa76c607e629b25d89e",
+                "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:8b714937aab9bda1005d8aa76c607e629b25d89e",
                 "access_rights": "OpenAccess",
                 "harvest_source": "sharekit"
             },
-            "identity": "sharekit:edusources:8b714937aab9bda1005d8aa76c607e629b25d89e",
+            "identity": "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:8b714937aab9bda1005d8aa76c607e629b25d89e",
             "reference": null,
             "pipeline": {
                 "tika": {
@@ -444,7 +444,7 @@
             "state": "active",
             "metadata": {
                 "srn": null,
-                "hash": "f6944aa58e50f9ca0730eefc95e04ed2787aa370",
+                "hash": "1f4e55a571c66e4885e6fe50c432445f5f901992",
                 "provider": {
                     "ror": null,
                     "name": null,
