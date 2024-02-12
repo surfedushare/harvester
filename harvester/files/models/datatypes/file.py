@@ -39,9 +39,12 @@ def default_document_tasks():
             "checks": ["is_analysis_possible", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
-        "video_preview": {  # Other than Youtube like Vimeo
-            "depends_on": ["check_url"],
-            "checks": ["is_analysis_possible", "is_video"],
+        "video_preview": {
+            # While thumbnails from Youtube API get ignored we need this task to be lenient.
+            # It would be better to perform a check_url and use is_analysis_possible before executing,
+            # but that fails for Youtube so that's not a possibility at the moment.
+            "depends_on": [],
+            "checks": ["is_video"],
             "resources": ["files.YoutubeThumbnailResource"]
         },
         "youtube_api": {

@@ -32,7 +32,7 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["check_url"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ['youtube_api'])
+        self.assertEqual(youtube_tasks, ['video_preview', 'youtube_api'])
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed
@@ -40,6 +40,7 @@ class TestHarvestObjectFileDocument(TestCase):
         self.document_1.derivatives["check_url"] = {"status": 200}
         self.document_1.save()
         self.youtube.pipeline["youtube_api"] = {"success": True}
+        self.youtube.pipeline["video_preview"] = {"success": True}
         self.youtube.save()
         # Assert that tasks depending on Tika have become pending
         pending_tasks_1 = self.document_1.get_pending_tasks()
