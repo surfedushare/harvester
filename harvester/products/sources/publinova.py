@@ -1,12 +1,11 @@
 from datetime import datetime
-from hashlib import sha1
 from dateutil.parser import parse as date_parser
 from sentry_sdk import capture_message
 
-from sources.utils.base import BaseExtractor
+from sources.utils.publinova import PublinovaExtractor
 
 
-class PublinovaMetadataExtraction(BaseExtractor):
+class PublinovaProductExtraction(PublinovaExtractor):
 
     @classmethod
     def get_record_state(cls, node):
@@ -15,14 +14,6 @@ class PublinovaMetadataExtraction(BaseExtractor):
     #############################
     # GENERIC
     #############################
-
-    @staticmethod
-    def _parse_file(file_object):
-        url = file_object["url"]
-        file_object["hash"] = sha1(url.encode("utf-8")).hexdigest()
-        file_object["copyright"] = None
-        file_object["access_rights"] = "OpenAccess"
-        return file_object
 
     @classmethod
     def get_files(cls, node):
@@ -115,32 +106,32 @@ class PublinovaMetadataExtraction(BaseExtractor):
 OBJECTIVE = {
     # Essential keys for functioning of the system
     "@": "$.data",
-    "state": PublinovaMetadataExtraction.get_record_state,
+    "state": PublinovaProductExtraction.get_record_state,
     "set": lambda node: "publinova:publinova",
     "external_id": "$.id",
     # Generic metadata
-    "files": PublinovaMetadataExtraction.get_files,
+    "files": PublinovaProductExtraction.get_files,
     "title": "$.title",
-    "language": PublinovaMetadataExtraction.get_language,
-    "keywords": PublinovaMetadataExtraction.get_keywords,
+    "language": PublinovaProductExtraction.get_language,
+    "keywords": PublinovaProductExtraction.get_keywords,
     "description": "$.description",
-    "copyright": PublinovaMetadataExtraction.get_copyright,
-    "authors": PublinovaMetadataExtraction.get_authors,
-    "provider": PublinovaMetadataExtraction.get_provider,
-    "organizations": PublinovaMetadataExtraction.get_organizations,
-    "publishers": PublinovaMetadataExtraction.get_publishers,
-    "publisher_date": PublinovaMetadataExtraction.get_publisher_date,
-    "publisher_year": PublinovaMetadataExtraction.get_publisher_year,
-    "doi": PublinovaMetadataExtraction.get_doi,
+    "copyright": PublinovaProductExtraction.get_copyright,
+    "authors": PublinovaProductExtraction.get_authors,
+    "provider": PublinovaProductExtraction.get_provider,
+    "organizations": PublinovaProductExtraction.get_organizations,
+    "publishers": PublinovaProductExtraction.get_publishers,
+    "publisher_date": PublinovaProductExtraction.get_publisher_date,
+    "publisher_year": PublinovaProductExtraction.get_publisher_year,
+    "doi": PublinovaProductExtraction.get_doi,
     # Research product metadata
     "research_product.research_object_type": "$.research_object_type",
-    "research_product.research_themes": PublinovaMetadataExtraction.get_research_themes,
+    "research_product.research_themes": PublinovaProductExtraction.get_research_themes,
 }
 
 
 SEEDING_PHASES = [
     {
-        "phase": "publications",
+        "phase": "products",
         "strategy": "initial",
         "batch_size": 25,
         "retrieve_data": {
