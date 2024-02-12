@@ -32,6 +32,11 @@ class PublinovaMetadataResourceFactory(factory.django.DjangoModelFactory):
     }
 
     @factory.lazy_attribute
+    def uri(self):
+        page_param = f"?page={self.number}" if self.number else ""
+        return f"{ENDPOINT}{page_param}"
+
+    @factory.lazy_attribute
     def request(self):
         return {
             "args": [f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
