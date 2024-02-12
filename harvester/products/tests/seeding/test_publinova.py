@@ -1,9 +1,107 @@
 from django.test import TestCase
+from django.utils.timezone import now
+
+from datagrowth.configuration import register_defaults
 
 from core.processors import HttpSeedingProcessor
+from sources.models import PublinovaMetadataResource
 from sources.factories.publinova.extraction import PublinovaMetadataResourceFactory
-from products.models import Set
+from products.models import Set, ProductDocument
 from products.sources.publinova import SEEDING_PHASES
+
+
+class TestAnatomyToolProductSeeding(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
+        PublinovaMetadataResourceFactory.create_common_responses()
+
+    @classmethod
+    def tearDownClass(cls):
+        register_defaults("global", {
+            "cache_only": False
+        })
+        super().tearDownClass()
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.set = Set.objects.create(identifier="srn")
+        self.processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+
+    def test_initial_seeding(self):
+        for batch in self.processor("publinova", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 11, "Expected 10 products and 1 product on the second page")
+
+    def test_delta_seeding(self):
+        # Load the initial data, set all tasks as completed and mark everything as deleted (delete_policy=no)
+        current_time = now()
+        initial_documents = []
+        for batch in self.processor("publinova", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.properties["state"] = ProductDocument.States.DELETED
+                doc.clean()
+                doc.finish_processing(current_time=current_time)
+                initial_documents.append(doc)
+        # HvA doesn't really have delta's, so we delete initial resources and create a new "delta" resource.
+        PublinovaMetadataResource.objects.all().delete()
+        PublinovaMetadataResourceFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Documents added by the delta
+            "publinova:publinova:18569e78-424c-42cd-bca8-ef36acc2ab30",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("publinova", "2020-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+                documents.append(product)
+        self.assertEqual(len(documents), 11, "Expected test to work with single page of 11 products for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 11 + 1,
+            "Expected 11 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 11,
+            "Expected 10 Documents to have no deleted_at date and 1 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
+        update_title = "Using a Vortex (responsibly ... really, really) | Wageningen UR"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=update_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 class TestPublinovaProductExtraction(TestCase):
