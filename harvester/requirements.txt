@@ -44,7 +44,7 @@ pandas==1.5.3
 beautifulsoup4==4.12.2
 
 # AWS
-awscli==1.32.19
+awscli==1.32.39
 boto3==1.34.19
 requests-aws4auth==1.2.3
 django-storages==1.14.2
