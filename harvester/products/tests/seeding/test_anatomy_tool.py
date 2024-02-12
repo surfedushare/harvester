@@ -11,8 +11,7 @@ from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
 class TestAnatomyToolProductSeeding(TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         register_defaults("global", {
             "cache_only": True
         })
@@ -54,8 +53,7 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
     seeds = []
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         register_defaults("global", {
             "cache_only": True
         })
