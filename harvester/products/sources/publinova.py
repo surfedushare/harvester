@@ -1,4 +1,3 @@
-import re
 from datetime import datetime
 from hashlib import sha1
 from dateutil.parser import parse as date_parser
