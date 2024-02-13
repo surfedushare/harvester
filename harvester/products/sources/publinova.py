@@ -145,3 +145,6 @@ SEEDING_PHASES = [
         }
     }
 ]
+
+
+WEBHOOK_DATA_TRANSFORMER = PublinovaExtractor.webhook_data_transformer
