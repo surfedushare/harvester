@@ -1,80 +1,68 @@
-from datetime import datetime
-
 from django.test import TestCase
-from django.utils.timezone import make_aware
 
-from harvester.utils.extraction import get_harvest_seeds
-from core.constants import Repositories
-from sources.factories.greeni.extraction import GreeniOAIPMHResourceFactory, SET_SPECIFICATION
+from datagrowth.configuration import register_defaults
+from core.processors import HttpSeedingProcessor
+from sources.factories.greeni.extraction import GreeniOAIPMHResourceFactory
+from products.models import Set
+from products.sources.greeni import SEEDING_PHASES
 
 
-class TestGetHarvestSeedsGreeni(TestCase):
+class TestGreeniProductExtraction(TestCase):
+
+    set = None
+    seeds = []
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.begin_of_time = make_aware(datetime(year=1970, month=1, day=1))
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
         GreeniOAIPMHResourceFactory.create_common_responses()
-        cls.seeds = get_harvest_seeds(Repositories.GREENI, SET_SPECIFICATION, cls.begin_of_time)
+        cls.set = Set.objects.create(name="greeni:PUBVHL", identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": SEEDING_PHASES
+        })
+        cls.seeds = []
+        for batch in processor("PUBVHL", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+        register_defaults("global", {
+            "cache_only": False
+        })
 
     def test_get_id(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["external_id"], "oai:www.greeni.nl:VBS:2:121587")
+        self.assertEqual(self.seeds[0]["external_id"], "oai:www.greeni.nl:VBS:2:121587")
+
+    def test_get_set(self):
+        self.assertEqual(self.seeds[0]["set"], "greeni:PUBVHL")
+
+    def test_get_provider(self):
+        provider = {
+            "ror": None,
+            "external_id": None,
+            "slug": "PUBVHL",
+            "name": "Hogeschool Van Hall Larenstein"
+        }
+        self.assertEqual(self.seeds[0]["provider"], provider)
 
     def test_get_files(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [
-            {
-                "mime_type": "application/pdf",
-                "url": "https://www.greeni.nl/iguana/CMS.MetaDataEditDownload.cls?file=2:121587:1",
-                "hash": "c75306b29041ba822c5310eb19d8582a9b07a585",
-                "title": "Attachment 1",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            },
-            {
-                "mime_type": "text/html",
-                "url": "https://www.greeni.nl/iguana/www.main.cls?surl=greenisearch#RecordId=2.121587",
-                "hash": "78570277381005bbbe9fff97c58bb4272aa18609",
-                "title": "URL 1",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            }
+        self.assertEqual(self.seeds[0]["files"], [
+            "https://www.greeni.nl/iguana/CMS.MetaDataEditDownload.cls?file=2:121587:1",
+            "https://www.greeni.nl/iguana/www.main.cls?surl=greenisearch#RecordId=2.121587",
         ])
-
-    def test_get_url(self):
-        seeds = self.seeds
-        self.assertEqual(
-            seeds[0]["url"],
-            "https://www.greeni.nl/iguana/CMS.MetaDataEditDownload.cls?file=2:121587:1"
-        )
-
-    def test_get_mime_type(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["mime_type"], "application/pdf")
-        self.assertIsNone(seeds[1]["mime_type"])
 
     def test_get_language(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["language"], {"metadata": "nl"})
-        self.assertEqual(seeds[30]["language"], {"metadata": "en"})
-
-    def test_get_analysis_allowed(self):
-        seeds = self.seeds
-        self.assertTrue(seeds[0]["analysis_allowed"], "OpenAccess document should allow analysis")
-        self.assertFalse(seeds[1]["analysis_allowed"], "ClosedAccess document shouldn't allow analysis")
+        self.assertEqual(seeds[0]["language"], "nl")
+        self.assertEqual(seeds[30]["language"], "en")
 
     def test_get_title(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["title"], "Out of the box...!")
+        self.assertEqual(self.seeds[0]["title"], "Out of the box...!")
 
     def test_get_description(self):
-        seeds = self.seeds
-        self.assertTrue(seeds[0]["description"].startswith("Hoe kunnen de krachten gebundeld worden"))
+        self.assertTrue(self.seeds[0]["description"].startswith("Hoe kunnen de krachten gebundeld worden"))
 
     def test_authors_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['authors'], [
+        self.assertEqual(self.seeds[0]['authors'], [
             {'name': 'F. Timmermans',
              'email': None,
              'external_id': "PUBVHL:person:a47515e171fc035e986276e6877a2094aed68632",
@@ -89,37 +77,27 @@ class TestGetHarvestSeedsGreeni(TestCase):
              'isni': None},
         ])
 
-    def test_get_provider(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["provider"]["slug"], "PUBVHL")
-
     def test_get_organizations(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["organizations"]["root"]["name"], "VHL")
-        self.assertEqual(seeds[9]["organizations"]["root"]["name"], "Agrimedia")
+        self.assertEqual(self.seeds[0]["organizations"]["root"]["name"], "Hogeschool Van Hall Larenstein")
+        self.assertEqual(self.seeds[9]["organizations"]["root"]["name"], "Hogeschool Van Hall Larenstein")
 
     def test_get_publishers(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["publishers"], ["VHL"])
-        self.assertEqual(seeds[9]["publishers"], ["Agrimedia"])
+        self.assertEqual(self.seeds[0]["publishers"], ["VHL"])
+        self.assertEqual(self.seeds[9]["publishers"], ["Agrimedia"])
 
     def test_publisher_year(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_year"], 2010)
-        self.assertEqual(seeds[1]["publisher_year"], 2012)
-        self.assertIsNone(seeds[2]["publisher_year"], "Expected parse errors to be ignored")
+        self.assertEqual(self.seeds[0]["publisher_year"], 2010)
+        self.assertEqual(self.seeds[1]["publisher_year"], 2012)
+        self.assertIsNone(self.seeds[2]["publisher_year"], "Expected parse errors to be ignored")
 
     def test_publisher_date(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_date"], "2010-01-01")
-        self.assertEqual(seeds[1]["publisher_date"], "2012-11-02")
+        self.assertEqual(self.seeds[0]["publisher_date"], "2010-01-01")
+        self.assertEqual(self.seeds[1]["publisher_date"], "2012-11-02")
 
     def test_research_object_type(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["research_object_type"], "info:eu-repo/semantics/book")
-        self.assertIsNone(seeds[1]["research_object_type"])
+        self.assertEqual(self.seeds[0]["research_product"]["research_object_type"], "info:eu-repo/semantics/book")
+        self.assertIsNone(self.seeds[1]["research_product"]["research_object_type"])
 
     def test_get_doi(self):
-        seeds = self.seeds
-        self.assertIsNone(seeds[0]["doi"], "DOI might not be specified")
-        self.assertEqual(seeds[3]["doi"], "10.31715/2+018.6")
+        self.assertIsNone(self.seeds[0]["doi"], "DOI might not be specified")
+        self.assertEqual(self.seeds[3]["doi"], "10.31715/2+018.6")
