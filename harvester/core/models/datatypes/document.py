@@ -175,8 +175,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         yield search_data
 
     def __eq__(self, other):
-        if not isinstance(other, HarvestDocument):
-            return NotImplemented()
+        # We won't try equality with anything but a HarvestDocument of the same class
+        if not isinstance(other, type(self)):
+            return NotImplemented
+        # Harvester determines equality based on hash of data from sources inside properties field,
+        # as well as whether that data should be considered deleted or not.
         content_hash = self.metadata.get("hash", None)
         deleted_at = self.metadata.get("deleted_at", None)
         return content_hash and content_hash == other.metadata.get("hash", None) and \

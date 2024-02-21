@@ -22,6 +22,7 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
     product_seeds = None
     file_seeds = None
     product_documents = []
+    support_study_vocabulary = True
 
     @classmethod
     def load_product_test_data(cls):
@@ -94,8 +95,7 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
         }
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.load_product_test_data()
         cls.test_start_time = now()
         cls.webhook_url = reverse("product-webhook", args=("sharekit", "edusources", cls.webhook_secret,))

@@ -32,6 +32,11 @@ class PublinovaMetadataResourceFactory(factory.django.DjangoModelFactory):
     }
 
     @factory.lazy_attribute
+    def uri(self):
+        page_param = f"?page={self.number+1}" if self.number else ""
+        return f"{ENDPOINT}{page_param}"
+
+    @factory.lazy_attribute
     def request(self):
         return {
             "args": [f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
@@ -44,7 +49,7 @@ class PublinovaMetadataResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial"
+        response_type = "initial" if self.is_initial else "delta"
         response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",

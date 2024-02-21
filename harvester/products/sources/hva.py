@@ -133,7 +133,7 @@ OBJECTIVE = {
     "@": "$.items",
     "external_id": "$.uuid",
     "state": lambda node: "active",
-    "#set": lambda node: "hva",
+    "set": lambda node: "hva:hva",
     # Generic metadata
     "doi": HvaMetadataExtraction.get_doi,
     "files": HvaMetadataExtraction.get_files,

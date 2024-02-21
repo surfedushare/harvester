@@ -31,6 +31,7 @@ class TestProductWebhookTestCase(TestCase):
     test_product_ids = {}
     entity_type = None
     set_names = None
+    support_study_vocabulary = False
 
     update_document = None
 
@@ -81,6 +82,24 @@ class TestProductWebhookTestCase(TestCase):
         self.assertGreater(create_file.modified_at, self.test_start_time)
         return create_product, create_file
 
+    def assert_study_vocabulary_tasks(self, product, expected_vocabulary=None, expect_task_update=True):
+        self.assertEqual(
+            product.properties["learning_material"]["study_vocabulary"],
+            expected_vocabulary,
+            f"Expected study_vocabulary {'not ' if not expect_task_update else ''}to update"
+        )
+        if expect_task_update:
+            self.assertIsNotNone(product.pending_at)
+            self.assertIsNone(product.finished_at)
+            self.assertEqual(
+                product.pipeline, {},
+                "Expected tasks to get reset because of new study_vocabulary term"
+            )
+        else:
+            self.assertIsNone(product.pending_at)
+            self.assertIsNotNone(product.finished_at)
+            self.assertTrue(product.pipeline, "Expected tasks to remain valid")
+
     def assert_update_models(self):
         update_product, update_file = self.reload_document_models("update")
         # Product asserts
@@ -89,18 +108,12 @@ class TestProductWebhookTestCase(TestCase):
         self.assertLess(update_product.created_at, self.test_start_time)
         self.assertGreater(update_product.modified_at, self.test_start_time)
         self.assertEqual(update_product.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
-        # Check that applied-science gets replaced and will re-trigger task
-        self.assertEqual(
-            update_product.properties["learning_material"]["study_vocabulary"],
-            ["http://purl.edustandaard.nl/concept/7aae4604-bdf4-40ab-81e9-673c697595f9"],
-            "Expected applied-science term to be replaced with id for 'DNA Sequencing'"
-        )
-        self.assertIsNotNone(update_product.pending_at)
-        self.assertIsNone(update_product.finished_at)
-        self.assertEqual(
-            update_product.pipeline, {},
-            "Expected tasks to get reset because of new study_vocabulary term"
-        )
+        # Check that applied-science gets replaced and will re-trigger task if applicable
+        if self.support_study_vocabulary:
+            self.assert_study_vocabulary_tasks(
+                update_product,
+                ["http://purl.edustandaard.nl/concept/7aae4604-bdf4-40ab-81e9-673c697595f9"]
+            )
         # File asserts
         self.assertIsNotNone(update_file)
         self.assertEqual(update_file.state, "active")
@@ -118,8 +131,8 @@ class TestProductWebhookTestCase(TestCase):
         self.assertEqual(delete_product.properties["state"], "deleted")
         self.assertEqual(delete_product.properties["title"], "To be deleted",
                          "Expected properties of deleted products to remain intact")
-        self.assertEqual(delete_product.pipeline, {"lookup_study_vocabulary_parents": {"success": True}},
-                         "Expected tasks to remain valid after deletion")
+        if self.support_study_vocabulary:
+            self.assert_study_vocabulary_tasks(delete_product, ["applied-science"], expect_task_update=False)
         # File asserts
         self.assertIsNotNone(delete_file)
         self.assertEqual(delete_product.state, "deleted")
