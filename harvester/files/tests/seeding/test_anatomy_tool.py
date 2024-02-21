@@ -15,7 +15,6 @@ class TestAnatomyToolFileSeeding(TestCase):
         register_defaults("global", {
             "cache_only": True
         })
-        AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
 
     @classmethod
     def tearDownClass(cls):
@@ -24,15 +23,19 @@ class TestAnatomyToolFileSeeding(TestCase):
         })
         super().tearDownClass()
 
+    @classmethod
+    def setUpTestData(cls):
+        AnatomyToolOAIPMHFactory.create_common_responses()
+
     def setUp(self) -> None:
         super().setUp()
-        self.set = FileSet.objects.create(name="edusources", identifier="srn")
+        self.set = FileSet.objects.create(name="anatomy_tool", identifier="srn")
         self.processor = HttpSeedingProcessor(self.set, {
             "phases": SEEDING_PHASES
         })
 
     def test_initial_seeding(self):
-        for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
+        for batch in self.processor("anatomy_tool", "1970-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
             for file_ in batch:
                 self.assertIsInstance(file_, FileDocument)
@@ -47,20 +50,25 @@ class TestAnatomyToolFileSeeding(TestCase):
 
 class TestAnatomyToolFileExtraction(TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
+    set = None
+    seeds = []
 
-    def setUp(self) -> None:
-        super().setUp()
-        self.set = FileSet.objects.create(name="edusources", identifier="srn")
-        self.processor = HttpSeedingProcessor(self.set, {
+    @classmethod
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
+        AnatomyToolOAIPMHFactory.create_common_responses()
+        cls.set = FileSet.objects.create(name="anatomy_tool", identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
             "phases": SEEDING_PHASES
         })
-        self.seeds = []
-        for batch in self.processor("edusources", "1970-01-01T00:00:00Z"):
-            self.seeds += [doc.properties for doc in batch]
+        cls.seeds = []
+        for batch in processor("anatomy_tool", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+        register_defaults("global", {
+            "cache_only": False
+        })
 
     def test_get_state(self):
         self.assertEqual(self.seeds[0]["state"], FileDocument.States.ACTIVE)

@@ -58,5 +58,5 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
             return response.read()
 
     @classmethod
-    def create_common_anatomy_tool_responses(cls, include_delta=False):
+    def create_common_responses(cls, include_delta=False):
         cls.create(is_initial=True, number=0)

@@ -11,11 +11,11 @@ from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
 class TestAnatomyToolProductSeeding(TestCase):
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpClass(cls):
+        super().setUpClass()
         register_defaults("global", {
             "cache_only": True
         })
-        AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
 
     @classmethod
     def tearDownClass(cls):
@@ -23,6 +23,10 @@ class TestAnatomyToolProductSeeding(TestCase):
             "cache_only": False
         })
         super().tearDownClass()
+
+    @classmethod
+    def setUpTestData(cls):
+        AnatomyToolOAIPMHFactory.create_common_responses()
 
     def setUp(self) -> None:
         super().setUp()
@@ -57,7 +61,7 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
         register_defaults("global", {
             "cache_only": True
         })
-        AnatomyToolOAIPMHFactory.create_common_anatomy_tool_responses()
+        AnatomyToolOAIPMHFactory.create_common_responses()
         cls.set = Set.objects.create(identifier="srn")
         processor = HttpSeedingProcessor(cls.set, {
             "phases": SEEDING_PHASES
@@ -65,13 +69,9 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
         cls.seeds = []
         for batch in processor("anatomy_tool", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
-
-    @classmethod
-    def tearDownClass(cls):
         register_defaults("global", {
             "cache_only": False
         })
-        super().tearDownClass()
 
     def test_authors_property(self):
         seeds = self.seeds
