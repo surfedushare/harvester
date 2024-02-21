@@ -31,7 +31,7 @@ pdf2image==1.17.0
 Unidecode==1.3.7
 extruct==0.16.0
 django-versatileimagefield==3.0
-django-mptt==0.15.0
+django-mptt==0.16.0
 
 # Datagrowth & dependencies
 datagrowth==0.19.6
