@@ -4,6 +4,7 @@ from celery import current_app as app
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
 from metadata.models import MetadataValue
+from metadata.utils.operations import normalize_field_values
 
 
 @app.task(name="lookup_study_vocabulary_parents", base=DatabaseConnectionResetTask)
@@ -38,20 +39,12 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Document = models["Document"]
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
-        metadata_values = MetadataValue.objects.filter(
-            value__in=document.properties["learning_material"]["disciplines"],
-            field__name="learning_material_disciplines"
+        disciplines_normalized = normalize_field_values(
+            "learning_material_disciplines",
+            *document.properties["learning_material"]["disciplines"]
         )
-        disciplines = set()
-        for metadata_value in metadata_values:
-            try:
-                root = metadata_value.get_root()
-            except MetadataValue.DoesNotExist:
-                disciplines.add(metadata_value.value)
-                continue
-            disciplines.add(root.value if root is not None else metadata_value.value)
         document.derivatives["normalize_disciplines"] = {
-            "learning_material_disciplines_normalized": list(disciplines)
+            "learning_material_disciplines_normalized": disciplines_normalized
         }
         # For all documents we mark this task as completed to continue the harvesting process
         document.pipeline["normalize_disciplines"] = {
