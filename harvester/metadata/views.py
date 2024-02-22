@@ -70,4 +70,12 @@ class MetadataFieldValuesView(generics.ListAPIView):
         startswith = self.kwargs.get("startswith", None)
         if startswith:
             queryset = queryset.filter(value__istartswith=startswith)
+        field = MetadataField.objects.get(name=self.kwargs["field"])
+        match field.value_output_order:
+            case field.ValueOutputOrders.FREQUENCY:
+                queryset = queryset.order_by("-frequency", "value")
+            case field.ValueOutputOrders.ALPHABETICAL:
+                queryset = queryset.order_by("value")
+            case _:
+                pass
         return queryset

@@ -34,6 +34,11 @@ class MetadataFieldManager(models.Manager):
 
 class MetadataField(models.Model):
 
+    class ValueOutputOrders(models.TextChoices):
+        FREQUENCY = "frequency"
+        ALPHABETICAL = "alphabetical"
+        MANUAL = "manual"
+
     objects = MetadataFieldManager()
 
     name = models.CharField(max_length=255, null=False, blank=False)
@@ -44,6 +49,8 @@ class MetadataField(models.Model):
     is_hidden = models.BooleanField(default=False)
     is_manual = models.BooleanField(default=False)
     english_as_dutch = models.BooleanField(default=False)
+    value_output_order = models.CharField(max_length=50, choices=ValueOutputOrders.choices,
+                                          default=ValueOutputOrders.FREQUENCY)
 
     def __str__(self):
         return self.name
@@ -72,7 +79,13 @@ class MetadataFieldSerializer(serializers.ModelSerializer):
         children = obj.metadatavalue_set.filter(deleted_at__isnull=True) \
             .select_related("translation") \
             .get_cached_trees()
-        children.sort(key=lambda child: child.frequency, reverse=True)
+        match obj.value_output_order:
+            case obj.ValueOutputOrders.FREQUENCY:
+                children.sort(key=lambda child: child.frequency, reverse=True)
+            case obj.ValueOutputOrders.ALPHABETICAL:
+                children.sort(key=lambda child: child.value)
+            case _:
+                pass
         max_children = self.context["request"].GET.get("max_children", "")
         max_children = int(max_children) if max_children else None
         return MetadataValueSerializer(children, many=True, context=self.context).data[:max_children]

@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from copy import copy
 
-from django.test import TestCase, tag
+from django.test import TestCase
 from django.utils.timezone import now
 
 from metadata.models import MetadataTranslation, MetadataValue
@@ -12,7 +12,6 @@ def _translate_metadata_value_mock(field, value):
     return MetadataTranslation(nl=value, en=value, is_fuzzy=False)
 
 
-@tag("slow")
 @patch("metadata.tasks._translate_metadata_value", new=_translate_metadata_value_mock)
 class TestSyncMetadata(TestCase):
 
