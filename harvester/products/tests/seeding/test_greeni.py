@@ -3,8 +3,87 @@ from django.test import TestCase
 from datagrowth.configuration import register_defaults
 from core.processors import HttpSeedingProcessor
 from sources.factories.greeni.extraction import GreeniOAIPMHResourceFactory
-from products.models import Set
+from products.models import Set, ProductDocument
 from products.sources.greeni import SEEDING_PHASES
+
+
+class TestGreeniProductSeeding(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        register_defaults("global", {
+            "cache_only": False
+        })
+
+    @classmethod
+    def setUpTestData(cls):
+        GreeniOAIPMHResourceFactory.create_common_responses()
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.set = Set.objects.create(name="greeni:PUBVHL", identifier="srn")
+        self.processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+
+    def test_initial_seeding(self):
+        for batch in self.processor("PUBVHL", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 100)
+
+    def test_delta_seeding(self):
+        # Load the initial data, set all tasks as completed and create delta Resource
+        initial_documents = []
+        for batch in self.processor("PUBVHL", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.finish_processing()
+                initial_documents.append(doc)
+        GreeniOAIPMHResourceFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Documents added by the delta
+            "greeni:PUBVHL:oai:www.greeni.nl:VBS:2:123456",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("PUBVHL", "2020-02-10T13:08:39Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+                documents.append(product)
+        self.assertEqual(len(documents), 1 + 1 + 1, "Expected 1 addition, 1 update and 1 deletes")
+        self.assertEqual(
+            self.set.documents.count(), 100 + 1,
+            "Expected 100 initial Documents and one additional Document"
+        )
 
 
 class TestGreeniProductExtraction(TestCase):

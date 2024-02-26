@@ -3,8 +3,90 @@ from django.test import TestCase
 from datagrowth.configuration import register_defaults
 from core.processors import HttpSeedingProcessor
 from sources.factories.saxion.extraction import SaxionOAIPMHResourceFactory
-from products.models import Set
+from sources.models import SaxionOAIPMHResource
+from products.models import Set, ProductDocument
 from products.sources.saxion import SEEDING_PHASES
+
+
+class TestSaxionProductSeeding(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        register_defaults("global", {
+            "cache_only": True
+        })
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        register_defaults("global", {
+            "cache_only": False
+        })
+
+    @classmethod
+    def setUpTestData(cls):
+        SaxionOAIPMHResourceFactory.create_common_responses()
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.set = Set.objects.create(name="saxion:kenniscentra", identifier="srn")
+        self.processor = HttpSeedingProcessor(self.set, {
+            "phases": SEEDING_PHASES
+        })
+
+    def test_initial_seeding(self):
+        for batch in self.processor("kenniscentra", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 200)
+
+    def test_delta_seeding(self):
+        # Load the initial data, set all tasks as completed and create delta Resource
+        initial_documents = []
+        for batch in self.processor("kenniscentra", "1970-01-01T00:00:00Z"):
+            for doc in batch:
+                for task in doc.tasks.keys():
+                    doc.pipeline[task] = {"success": True}
+                doc.finish_processing()
+                initial_documents.append(doc)
+        # Saxion doesn't really have delta's, so we delete initial resources and create a new "delta" resource.
+        SaxionOAIPMHResource.objects.all().delete()
+        SaxionOAIPMHResourceFactory.create(is_initial=False, number=0)
+        # Set some expectations
+        become_processing_ids = {
+            # Documents added by the delta
+            "saxion:kenniscentra:1FC6BD0B-CE70-4D4D-83AF26E4AA012345",
+        }
+        # Load the delta data and see if updates have taken place
+        documents = []
+        for batch in self.processor("kenniscentra", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.identity in become_processing_ids:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertTrue(product.finished_at)
+                documents.append(product)
+        self.assertEqual(len(documents), 1 + 1, "Expected 1 addition, 1 update")
+        self.assertEqual(
+            self.set.documents.count(), 200 + 1,
+            "Expected 200 initial Documents and one additional Document"
+        )
 
 
 class TestSaxionProductExtraction(TestCase):

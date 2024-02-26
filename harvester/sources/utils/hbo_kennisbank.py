@@ -76,7 +76,7 @@ class HBOKennisbankExtractor(BaseExtractor):
     @classmethod
     def get_oaipmh_set(cls, soup):
         request = soup.find("request")
-        set_specification = request.get("set").strip()
+        set_specification = request.get("set", "").strip()
         if not set_specification:
             return
         return f"{cls.source_slug}:{set_specification}"
