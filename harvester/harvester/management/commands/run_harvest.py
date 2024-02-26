@@ -36,7 +36,7 @@ class Command(BaseCommand):
                             help="Ignores all previous harvests and reloads all data from sources")
         parser.add_argument('-a', '--asynchronous', action="store_true")
         parser.add_argument('-rd', '--report-dataset-version', action="store_true")
-        parser.add_argument('-t', '--timeout', type=int, default=60*60*4)
+        parser.add_argument('-t', '--timeout', type=int, default=60*60*8)
         parser.add_argument('-w', '--wait-interval', type=int, default=10)
 
     def handle(self, **options):
