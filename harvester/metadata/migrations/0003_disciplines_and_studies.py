@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.operations.RunPython(
-            copy_to_disciplines_and_studies,
-            undo_copy_to_disciplines_and_studies
+            migrations.operations.RunPython.noop,
+            migrations.operations.RunPython.noop,
         )
     ]

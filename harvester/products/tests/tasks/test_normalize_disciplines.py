@@ -1,4 +1,4 @@
-from django.test import TestCase, tag
+from django.test import TestCase
 
 from testing.utils.factories import create_datatype_models
 from products.tasks import normalize_disciplines
@@ -47,7 +47,6 @@ class TestNormalizeDisciplines(TestCase):
             self.seeds, 3
         )
 
-    @tag("slow")
     def test_normalize_disciplines(self):
         normalize_disciplines("products", [doc.id for doc in self.documents])
         earth_and_environment = ProductDocument.objects.get(identity="surf:testing:1")

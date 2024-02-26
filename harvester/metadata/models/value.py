@@ -62,9 +62,6 @@ class MetadataValue(MPTTModel):
     def get_name(cls):
         return cls._meta.model_name
 
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
     class Meta:
         unique_together = ("field", "value", "site",)
 
@@ -80,7 +77,14 @@ class MetadataValueSerializer(serializers.ModelSerializer):
     def get_children(self, obj):
         if obj.is_leaf_node():
             return []
-        children = sorted(obj.get_children(), key=lambda child: child.frequency, reverse=True)
+        children = list(obj.get_children())
+        match obj.field.value_output_order:
+            case obj.field.ValueOutputOrders.FREQUENCY:
+                children.sort(key=lambda child: child.frequency, reverse=True)
+            case obj.field.ValueOutputOrders.ALPHABETICAL:
+                children.sort(key=lambda child: child.value)
+            case _:
+                pass
         max_children = self.context["request"].GET.get("max_children", "")
         max_children = int(max_children) if max_children else None
         return MetadataValueSerializer(children, many=True, context=self.context).data[:max_children]

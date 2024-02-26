@@ -36,7 +36,7 @@ class TestHarvestStudyVocabulary(TestCase):
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
     def test_same_number_applied_science(self, fake_deepl):
-        with self.assertNumQueries(1026):
+        with self.assertNumQueries(879):
             call_command("harvest_study_vocabulary", "--vocabulary=applied-science")
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
@@ -47,10 +47,13 @@ class TestHarvestStudyVocabulary(TestCase):
         self.assertEqual(value.name, "Python")
         self.assertEqual(value.parent.value,
                          "http://purl.edustandaard.nl/concept/982e3b48-90b9-4fbd-9365-04289afe6929")
-        self.assertEqual([descendant.name for descendant in value.get_descendants()],
-                         ["Biopython", "Data Cleaning with Python", "Data Visualisation with Python",
-                          "Machine Learning  with Python", "NumPy", "Pandas", "Python Basics",
-                          "SciPy", "Statistics with Python"])
+        self.assertEqual(
+            [descendant.name for descendant in value.get_descendants()],
+            [
+                "NumPy", "Biopython", "Pandas", "Statistics with Python", "Python Basics",
+                "Data Visualisation with Python", "Data Cleaning with Python", "Machine Learning  with Python", "SciPy"
+            ]
+        )
         self.assertTrue(value.is_manual, "Expected values to be manual to prevent automatic deletion")
         self.assertEqual(
             value.field.name, "study_vocabulary",
