@@ -13,7 +13,7 @@ SLUG = "greeni"
 ENDPOINT = GreeniOAIPMHResource.URI_TEMPLATE.replace("https://", "")
 SET_SPECIFICATION = "PUBVHL"
 METADATA_PREFIX = "didl"
-RESUMPTION_TOKEN = "MToxMDB8Mjp8Mzp8NDp8NTpubF9kaWRs"
+RESUMPTION_TOKEN = "PUBVHL|didl|1840-12-31|9999-12-31|^2^139717|66191,57659"
 
 
 class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
@@ -40,9 +40,9 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        from_param = f"from={self.since:%Y-%m-%d}"
-        identity = quote(f"{from_param}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}", safe="=&") \
-            if not self.resumption else f"resumptionToken={quote(self.resumption)}"
+        identity = f"from={self.since:%Y-%m-%d}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}"
+        if self.resumption:
+            identity = f"resumptionToken={quote(self.resumption)}"
         return f"{ENDPOINT}?{identity}&verb=ListRecords"
 
     @factory.lazy_attribute
