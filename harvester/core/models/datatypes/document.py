@@ -3,6 +3,7 @@ from copy import copy, deepcopy
 import json
 from hashlib import sha1
 from sentry_sdk import capture_message
+from operator import xor
 
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
@@ -183,7 +184,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         content_hash = self.metadata.get("hash", None)
         deleted_at = self.metadata.get("deleted_at", None)
         return content_hash and content_hash == other.metadata.get("hash", None) and \
-            deleted_at == other.metadata.get("deleted_at", None)
+            not xor(bool(deleted_at), bool(other.metadata.get("deleted_at", None)))
 
     def __hash__(self):
         content_hash = self.metadata.get("hash", None)
