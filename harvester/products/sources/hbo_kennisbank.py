@@ -1,17 +1,13 @@
 from typing import Type
-import bs4
 import vobject
 from hashlib import sha1
 from datetime import datetime
 from dateutil.parser import ParserError, parse as date_parser
 
-from sources.utils.base import BaseExtractor
-from sources.utils.hbo_kennisbank import HBO_KENNISBANK_SET_TO_PROVIDER
+from sources.utils.hbo_kennisbank import HBOKennisbankExtractor
 
 
-class HBOKennisbankProductExtractor(BaseExtractor):
-
-    source_slug = None
+class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
 
     language_mapping = {
         "nl": "nl",
@@ -29,55 +25,9 @@ class HBOKennisbankProductExtractor(BaseExtractor):
         card = "\n".join(field.strip() for field in el.text.strip().split("\n"))
         return vobject.readOne(card)
 
-    @classmethod
-    def get_oaipmh_records(cls, soup):
-        return soup.find_all('record')
-
-    @classmethod
-    def get_oaipmh_set(cls, soup):
-        request = soup.find("request")
-        set_specification = request.get("set", "").strip()
-        if not set_specification:
-            return
-        return f"{cls.source_slug}:{set_specification}"
-
-    @classmethod
-    def get_oaipmh_external_id(cls, soup, el):
-        return el.find('identifier').text.strip()
-
-    @classmethod
-    def get_oaipmh_record_state(cls, soup, el):
-        header = el.find('header')
-        return header.get("status", "active")
-
     #############################
     # HELPERS
     #############################
-
-    @classmethod
-    def find_resources(cls, xml, resource_type) -> list[bs4.Tag]:
-        resource_code = None
-        if resource_type == "file":
-            resource_code = "objectFile"
-        elif resource_type == "link":
-            resource_code = "humanStartPage"
-        elif resource_type == "meta":
-            resource_code = "descriptiveMetadata"
-        resource_identifier = f"info:eu-repo/semantics/{resource_code}"
-        return xml.find_all("rdf:type", attrs={"rdf:resource": resource_identifier})
-
-    @classmethod
-    def find_metadata(cls, xml) -> bs4.Tag | None:
-        resources = cls.find_resources(xml, "meta")
-        if not resources:
-            return
-        elif len(resources) > 1:
-            raise AssertionError(f"Unexpected length for metadata resource: {len(resources)}")
-        metadata = resources[0]
-        item = next((parent for parent in metadata.parents if parent.name == "Item"), None)
-        if not item:
-            raise AssertionError("Metadata descriptor did not have an item as parent")
-        return item.find("Resource")
 
     @classmethod
     def _extract_url(cls, resource):
@@ -92,11 +42,6 @@ class HBOKennisbankProductExtractor(BaseExtractor):
     #############################
     # EXTRACTION
     #############################
-
-    @classmethod
-    def get_provider(cls, soup, el):
-        set_specification = cls.get_oaipmh_set(soup)
-        return HBO_KENNISBANK_SET_TO_PROVIDER[set_specification]
 
     @classmethod
     def get_files(cls, soup, el):
@@ -126,18 +71,6 @@ class HBOKennisbankProductExtractor(BaseExtractor):
     def get_description(cls, soup, el):
         node = el.find('abstract')
         return node.text if node else None
-
-    @classmethod
-    def get_copyright(cls, soup, el):
-        copyright_description = cls.get_copyright_description(soup, el)
-        return cls.parse_copyright_description(copyright_description)
-
-    @classmethod
-    def get_copyright_description(cls, soup, el):
-        copyright_desciption = el.find("rights")
-        if not copyright_desciption:
-            return
-        return copyright_desciption.text.strip()
 
     @classmethod
     def get_authors(cls, soup, el):
