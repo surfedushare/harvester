@@ -180,15 +180,20 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         if not isinstance(other, type(self)):
             return NotImplemented
         # Harvester determines equality based on hash of data from sources inside properties field,
-        # as well as whether that data should be considered deleted or not.
+        # as well as whether that data should be considered deleted or not and
+        # which dataset version the documents belong to.
         content_hash = self.metadata.get("hash", None)
         deleted_at = self.metadata.get("deleted_at", None)
         return content_hash and content_hash == other.metadata.get("hash", None) and \
-            not xor(bool(deleted_at), bool(other.metadata.get("deleted_at", None)))
+            not xor(bool(deleted_at), bool(other.metadata.get("deleted_at", None))) and \
+            self.dataset_version_id == other.dataset_version_id
 
     def __hash__(self):
         content_hash = self.metadata.get("hash", None)
-        return int(content_hash, 16) if content_hash else super().__hash__()
+        hash_number = int(content_hash, 16)
+        if self.dataset_version_id:
+            hash_number += self.dataset_version_id
+        return hash_number if content_hash else super().__hash__()
 
     class Meta:
         abstract = True
