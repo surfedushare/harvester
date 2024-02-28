@@ -127,6 +127,16 @@ class HvaMetadataExtraction(BaseExtractor):
         day = publication_date.get("day", 1)
         return f"{year}-{month:02}-{day:02}"
 
+    @classmethod
+    def get_publisher_year(cls, node):
+        current_publication = next(
+            (publication for publication in node["publicationStatuses"] if publication["current"]),
+            None
+        )
+        if not current_publication:
+            return
+        return current_publication["publicationDate"]["year"]
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -146,7 +156,7 @@ OBJECTIVE = {
     "organizations": HvaMetadataExtraction.get_organizations,
     "publishers": HvaMetadataExtraction.get_publishers,
     "publisher_date": HvaMetadataExtraction.get_publisher_date,
-    "publisher_year": "$.publicationStatuses.0.publicationDate.year",
+    "publisher_year": HvaMetadataExtraction.get_publisher_year,
     # Research product metadata
     "research_product.research_object_type": "$.type.term.en_GB",
     "research_product.research_themes": lambda node: [],
