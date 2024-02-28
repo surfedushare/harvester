@@ -4,7 +4,7 @@ from django.test import TestCase
 from core.processors import HttpSeedingProcessor
 from core.tests.base import SeedExtractionTestCase
 from products.models import Set, ProductDocument
-from products.sources.anatomy_tool import AnatomyToolExtraction, SEEDING_PHASES
+from products.sources.anatomy_tool import SEEDING_PHASES
 from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
 
 
@@ -88,28 +88,6 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], ["https://anatomytool.org/node/56055"])
         self.assertEqual(seeds[6]["files"], ["https://anatomytool.org/node/56176"])
-
-    def test_parse_copyright_description(self):
-        descriptions = {
-            "http://creativecommons.org/licenses/by-nc-sa/3.0/nl/": "cc-by-nc-sa-30",
-            "http://creativecommons.org/licenses/by-nc-sa/4.0/": "cc-by-nc-sa-40",
-            "http://creativecommons.org/licenses/by-nc/4.0/": "cc-by-nc-40",
-            "http://creativecommons.org/licenses/by-sa/3.0/nl/": "cc-by-sa-30",
-            "http://creativecommons.org/licenses/by-sa/4.0/": "cc-by-sa-40",
-            "http://creativecommons.org/licenses/by/3.0/nl/": "cc-by-30",
-            "http://creativecommons.org/licenses/by/4.0/": "cc-by-40",
-            "http://creativecommons.org/publicdomain/mark/1.0/": "pdm-10",
-            "Public Domain": "pdm-10",
-            "http://creativecommons.org/publicdomain/zero/1.0/": "cc0-10",
-            "CC BY NC SA": "cc-by-nc-sa",
-            "CC BY-NC-SA": "cc-by-nc-sa",
-            "cc by": "cc-by",
-            "Copyrighted": "yes",
-            "invalid": None,
-            None: None
-        }
-        for description, license in descriptions.items():
-            self.assertEqual(AnatomyToolExtraction.parse_copyright_description(description), license)
 
     def test_get_copyright(self):
         seeds = self.seeds

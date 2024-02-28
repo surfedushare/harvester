@@ -1,19 +1,12 @@
-import re
 import logging
 
 from vobject.base import ParseError, readOne
 
 from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
-from django.utils.text import slugify
-
 from sources.utils.base import BaseExtractor
 
 
 class EdurepExtractor(BaseExtractor):
-
-    cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
-                              re.IGNORECASE)
-    cc_code_regex = re.compile(r"^cc([ \-][a-z]{2})+$", re.IGNORECASE)
 
     logger = logging.getLogger("harvester")
 
@@ -90,23 +83,6 @@ class EdurepExtractor(BaseExtractor):
         if copyright == "yes":
             copyright = cls.parse_copyright_description(cls.get_copyright_description(product))
         return copyright or "yes"
-
-    @classmethod
-    def parse_copyright_description(cls, description):
-        if description is None:
-            return
-        url_match = cls.cc_url_regex.match(description)
-        if url_match is None:
-            code_match = cls.cc_code_regex.match(description)
-            return slugify(description.lower()) if code_match else None
-        license = url_match.group("license").lower()
-        if license == "mark":
-            license = "pdm"
-        elif license == "zero":
-            license = "cc0"
-        else:
-            license = "cc-" + license
-        return slugify(f"{license}-{url_match.group('version')}")
 
     @classmethod
     def get_copyright_description(cls, product):

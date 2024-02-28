@@ -1,12 +1,9 @@
 from typing import Type
-import re
 import bs4
 import vobject
 from hashlib import sha1
 from datetime import datetime
 from dateutil.parser import ParserError, parse as date_parser
-
-from django.utils.text import slugify
 
 from datagrowth.resources import HttpResource
 from sources.utils.base import BaseExtractor
@@ -32,10 +29,6 @@ class HBOKennisbankExtractor(BaseExtractor):
 
     source_slug = None
 
-    cc_url_regex = re.compile(r"^https?://creativecommons\.org/(?P<type>\w+)/(?P<license>[a-z\-]+)/(?P<version>\d\.\d)",
-                              re.IGNORECASE)
-    cc_code_regex = re.compile(r"^cc([ \-][a-z]{2})+$", re.IGNORECASE)
-
     language_mapping = {
         "nl": "nl",
         "en": "en",
@@ -46,23 +39,6 @@ class HBOKennisbankExtractor(BaseExtractor):
     #############################
     # OAI-PMH
     #############################
-
-    @classmethod
-    def parse_copyright_description(cls, description):
-        if description is None:
-            return
-        url_match = cls.cc_url_regex.match(description)
-        if url_match is None:
-            code_match = cls.cc_code_regex.match(description)
-            return slugify(description.lower()) if code_match else None
-        license = url_match.group("license").lower()
-        if license == "mark":
-            license = "pdm"
-        elif license == "zero":
-            license = "cc0"
-        else:
-            license = "cc-" + license
-        return slugify(f"{license}-{url_match.group('version')}")
 
     @staticmethod
     def parse_vcard_element(el):
