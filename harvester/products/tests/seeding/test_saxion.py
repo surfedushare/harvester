@@ -156,6 +156,14 @@ class TestSaxionProductExtraction(TestCase):
         self.assertTrue(self.seeds[0]["description"].startswith("Duchenne muscular Dystrophy (DMD)"))
         self.assertIsNone(self.deleted["description"])
 
+    def test_copyright(self):
+        self.assertEqual(self.seeds[0]["copyright"], "cc-by-nc-nd-40")
+        self.assertIsNone(self.deleted["copyright"])
+
+    def test_copyright_description(self):
+        self.assertEqual(self.seeds[0]["copyright_description"], "https://creativecommons.org/licenses/by-nc-nd/4.0")
+        self.assertIsNone(self.deleted["copyright_description"])
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [

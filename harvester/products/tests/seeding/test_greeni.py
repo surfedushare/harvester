@@ -140,6 +140,12 @@ class TestGreeniProductExtraction(TestCase):
     def test_get_description(self):
         self.assertTrue(self.seeds[0]["description"].startswith("Hoe kunnen de krachten gebundeld worden"))
 
+    def test_copyright(self):
+        self.assertIsNone(self.seeds[0]["copyright"])
+
+    def test_copyright_description(self):
+        self.assertIsNone(self.seeds[0]["copyright_description"])
+
     def test_authors_property(self):
         self.assertEqual(self.seeds[0]['authors'], [
             {'name': 'F. Timmermans',

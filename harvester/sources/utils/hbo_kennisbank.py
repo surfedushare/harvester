@@ -123,11 +123,9 @@ class HBOKennisbankExtractor(BaseExtractor):
     def _extract_url(cls, resource):
         item = next((parent for parent in resource.parents if parent.name == "Item"), None)
         if not item:
-            print("not item")
             return
         element = item.find("Resource")
         if not element:
-            print("not element")
             return
         return cls.parse_url(element["ref"])
 
@@ -168,6 +166,18 @@ class HBOKennisbankExtractor(BaseExtractor):
     def get_description(cls, soup, el):
         node = el.find('abstract')
         return node.text if node else None
+
+    @classmethod
+    def get_copyright(cls, soup, el):
+        copyright_description = cls.get_copyright_description(soup, el)
+        return cls.parse_copyright_description(copyright_description)
+
+    @classmethod
+    def get_copyright_description(cls, soup, el):
+        copyright_desciption = el.find("rights")
+        if not copyright_desciption:
+            return
+        return copyright_desciption.text.strip()
 
     @classmethod
     def get_authors(cls, soup, el):
@@ -268,6 +278,8 @@ def build_objective(extract_processor: Type[HBOKennisbankExtractor]) -> dict:
         "language": extract_processor.get_language,
         "title": extract_processor.get_title,
         "description": extract_processor.get_description,
+        "copyright": extract_processor.get_copyright,
+        "copyright_description": extract_processor.get_copyright_description,
         "authors": extract_processor.get_authors,
         "publishers": extract_processor.get_publishers,
         "publisher_date": extract_processor.get_publisher_date,
