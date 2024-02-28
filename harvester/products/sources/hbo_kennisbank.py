@@ -5,27 +5,11 @@ from hashlib import sha1
 from datetime import datetime
 from dateutil.parser import ParserError, parse as date_parser
 
-from datagrowth.resources import HttpResource
 from sources.utils.base import BaseExtractor
+from sources.utils.hbo_kennisbank import HBO_KENNISBANK_SET_TO_PROVIDER
 
 
-HBO_KENNISBANK_SET_TO_PROVIDER = {
-    "greeni:PUBVHL": {
-        "ror": None,
-        "external_id": None,
-        "slug": "PUBVHL",
-        "name": "Hogeschool Van Hall Larenstein"
-    },
-    "saxion:kenniscentra": {
-        "ror": None,
-        "external_id": None,
-        "slug": "saxion",
-        "name": "Saxion"
-    }
-}
-
-
-class HBOKennisbankExtractor(BaseExtractor):
+class HBOKennisbankProductExtractor(BaseExtractor):
 
     source_slug = None
 
@@ -240,7 +224,7 @@ class HBOKennisbankExtractor(BaseExtractor):
             return None
 
 
-def build_objective(extract_processor: Type[HBOKennisbankExtractor]) -> dict:
+def build_objective(extract_processor: Type[HBOKennisbankProductExtractor]) -> dict:
     return {
         # Essential objective keys for system functioning
         "@": extract_processor.get_oaipmh_records,
@@ -263,23 +247,3 @@ def build_objective(extract_processor: Type[HBOKennisbankExtractor]) -> dict:
         "organizations": extract_processor.get_organizations,
         "research_product.research_object_type": extract_processor.get_research_object_type,
     }
-
-
-def build_seeding_phases(resource: Type[HttpResource], objective: dict) -> list[dict]:
-    resource_label = f"{resource._meta.app_label}.{resource._meta.model_name}"
-    return [
-        {
-            "phase": "records",
-            "strategy": "initial",
-            "batch_size": 25,
-            "retrieve_data": {
-                "resource": resource_label,
-                "method": "get",
-                "args": [],
-                "kwargs": {},
-            },
-            "contribute_data": {
-                "objective": objective
-            }
-        }
-    ]

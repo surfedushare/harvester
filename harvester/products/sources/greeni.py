@@ -1,8 +1,9 @@
-from sources.utils.hbo_kennisbank import HBOKennisbankExtractor, build_objective, build_seeding_phases
+from sources.utils.hbo_kennisbank import build_seeding_phases
 from sources.models import GreeniOAIPMHResource
+from products.sources.hbo_kennisbank import HBOKennisbankProductExtractor, build_objective
 
 
-class GreeniExtractor(HBOKennisbankExtractor):
+class GreeniProductExtractor(HBOKennisbankProductExtractor):
     source_slug = "greeni"
 
     @classmethod
@@ -18,7 +19,7 @@ class GreeniExtractor(HBOKennisbankExtractor):
         return f"{cls.source_slug}:{set_specification}"
 
 
-OBJECTIVE = build_objective(GreeniExtractor)
+OBJECTIVE = build_objective(GreeniProductExtractor)
 
 
 SEEDING_PHASES = build_seeding_phases(GreeniOAIPMHResource, OBJECTIVE)
