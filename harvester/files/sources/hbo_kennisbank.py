@@ -5,6 +5,7 @@ from hashlib import sha1
 from collections import namedtuple
 
 from sources.utils.hbo_kennisbank import HBOKennisbankExtractor
+from files.models import Set, FileDocument
 
 
 FileInfo = namedtuple("FileInfo", ["product", "file", "item", "is_link"])
@@ -95,6 +96,15 @@ def get_file_infos(hbo_kennisbank_soup: bs4.BeautifulSoup) -> Iterator[FileInfo]
                 yield FileInfo(product, None, None, True)
             link_element = link_item.find("Resource")
             yield FileInfo(product, link_element, link_item, True)
+
+
+def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
+    if not seed["state"] == FileDocument.States.DELETED:
+        yield seed
+        return
+    for doc in harvest_set.documents.filter(properties__product_id=seed["product_id"]):
+        doc.properties["state"] = FileDocument.States.DELETED
+        yield doc.properties
 
 
 def build_objective(extract_processor: Type[HBOKennisbankFileExtractor]) -> dict:

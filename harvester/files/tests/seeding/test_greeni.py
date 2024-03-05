@@ -80,7 +80,7 @@ class TestGreeniFileSeeding(TestCase):
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
-        self.assertEqual(len(documents), 2, "Expected 2 additions")
+        self.assertEqual(len(documents), 2 + 2, "Expected 2 additions and 2 deletes")
         self.assertEqual(
             self.set.documents.count(), 198 + 2,
             "Expected 198 initial Documents and 2 additional Documents"

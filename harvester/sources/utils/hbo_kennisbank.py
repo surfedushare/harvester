@@ -1,4 +1,4 @@
-from typing import Type
+from typing import Type, Callable, Optional
 import bs4
 
 from datagrowth.resources import HttpResource
@@ -88,9 +88,10 @@ class HBOKennisbankExtractor(BaseExtractor):
         return copyright_desciption.text.strip()
 
 
-def build_seeding_phases(resource: Type[HttpResource], objective: dict) -> list[dict]:
+def build_seeding_phases(resource: Type[HttpResource], objective: dict,
+                         back_fill_deletes: Optional[Callable] = None) -> list[dict]:
     resource_label = f"{resource._meta.app_label}.{resource._meta.model_name}"
-    return [
+    phases = [
         {
             "phase": "records",
             "strategy": "initial",
@@ -106,3 +107,14 @@ def build_seeding_phases(resource: Type[HttpResource], objective: dict) -> list[
             }
         }
     ]
+    if back_fill_deletes:
+        phases.append({
+            "phase": "deletes",
+            "strategy": "back_fill",
+            "batch_size": 25,
+            "contribute_data": {
+                "callback": back_fill_deletes
+            },
+            "is_post_initialization": True
+        })
+    return phases

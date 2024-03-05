@@ -1,6 +1,6 @@
 from sources.utils.hbo_kennisbank import build_seeding_phases
 from sources.models import GreeniOAIPMHResource
-from files.sources.hbo_kennisbank import HBOKennisbankFileExtractor, build_objective
+from files.sources.hbo_kennisbank import HBOKennisbankFileExtractor, build_objective, back_fill_deletes
 
 
 class GreeniFileExtractor(HBOKennisbankFileExtractor):
@@ -23,4 +23,4 @@ class GreeniFileExtractor(HBOKennisbankFileExtractor):
 OBJECTIVE = build_objective(GreeniFileExtractor)
 
 
-SEEDING_PHASES = build_seeding_phases(GreeniOAIPMHResource, OBJECTIVE)
+SEEDING_PHASES = build_seeding_phases(GreeniOAIPMHResource, OBJECTIVE, back_fill_deletes=back_fill_deletes)
