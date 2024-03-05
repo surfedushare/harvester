@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django.test import override_settings
 from django.utils.timezone import make_aware
 
 from harvester.utils.extraction import get_harvest_seeds

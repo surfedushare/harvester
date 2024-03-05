@@ -4,7 +4,6 @@ import logging
 from vobject.base import ParseError, readOne
 
 from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
-from harvester import settings
 from django.utils.text import slugify
 
 from sources.utils.base import BaseExtractor
