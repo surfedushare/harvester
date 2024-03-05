@@ -39,13 +39,8 @@ class TestGetHarvestSeedsEdurep(SeedExtractionTestCase):
     def test_get_complete_set_without_deletes(self):
         # Harvest with MBO levels if the learning material has at least one HBO or WO level as well.
         # This is expected to become the new default.
-        with override_settings(EDUREP_MBO_EDUCATIONAL_LEVEL=True):
-            seeds = get_harvest_seeds(Repositories.EDUREP, self.set_spec, self.begin_of_time, include_deleted=False)
-        self.assertEqual(len(seeds), 7)
-        self.check_seed_integrity(seeds, include_deleted=False)
-        # Deprecated: harvest without MBO at all
         seeds = get_harvest_seeds(Repositories.EDUREP, self.set_spec, self.begin_of_time, include_deleted=False)
-        self.assertEqual(len(seeds), 6)
+        self.assertEqual(len(seeds), 7)
         self.check_seed_integrity(seeds, include_deleted=False)
 
     def test_get_partial_set_without_deletes(self):
@@ -203,14 +198,10 @@ class TestGetHarvestSeedsEdurep(SeedExtractionTestCase):
     def test_get_oaipmh_record_state(self):
         # Harvest with MBO levels if the learning material has at least one HBO or WO level as well.
         # This is expected to become the new default.
-        with override_settings(EDUREP_MBO_EDUCATIONAL_LEVEL=True):
-            seeds = get_harvest_seeds(Repositories.EDUREP, self.set_spec, self.begin_of_time)
+        seeds = get_harvest_seeds(Repositories.EDUREP, self.set_spec, self.begin_of_time)
         self.assertEqual(seeds[0]["state"], "deleted", "Expected deleted material to have state deleted")
         self.assertEqual(seeds[1]["state"], "active", "Expected MBO level with HBO level to be active")
         self.assertEqual(seeds[2]["state"], "inactive", "Expected Groep 3 level to always be inactive")
         self.assertEqual(seeds[3]["state"], "inactive", "Expected MBO level to be inactive without any higher levels")
         self.assertEqual(seeds[9]["state"], "active", "Expected HBO level to be active")
         self.assertEqual(seeds[13]["state"], "active", "Expected WO level to be active")
-        # Deprecated: harvest without MBO at all
-        seeds = self.seeds
-        self.assertEqual(seeds[1]["state"], "inactive", "Expected MBO level to always be inactive")
