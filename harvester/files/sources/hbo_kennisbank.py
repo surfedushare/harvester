@@ -78,14 +78,18 @@ class HBOKennisbankFileExtractor(HBOKennisbankExtractor):
 def get_file_infos(hbo_kennisbank_soup: bs4.BeautifulSoup) -> Iterator[FileInfo]:
     for product in HBOKennisbankExtractor.get_oaipmh_records(hbo_kennisbank_soup):
         # Handle files
-        for file_resource in HBOKennisbankExtractor.find_resources(product, "file"):
+        file_resources = HBOKennisbankExtractor.find_resources(product, "file")
+        link_resources = HBOKennisbankExtractor.find_resources(product, "link")
+        if not file_resources and not link_resources:
+            yield FileInfo(product, None, None, False)
+        for file_resource in file_resources:
             file_item = next((parent for parent in file_resource.parents if parent.name == "Item"), None)
             if not file_item:
                 yield FileInfo(product, None, None, False)
             file_element = file_item.find("Resource")
             yield FileInfo(product, file_element, file_item, False)
         # Handle links
-        for link_resource in HBOKennisbankExtractor.find_resources(product, "link"):
+        for link_resource in link_resources:
             link_item = next((parent for parent in link_resource.parents if parent.name == "Item"), None)
             if not link_item:
                 yield FileInfo(product, None, None, True)
