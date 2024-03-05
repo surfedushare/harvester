@@ -114,7 +114,7 @@ class TestDocumentView(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         if self.format == "raw":
-            data.pop("properties")  # these are expected to change often and shouldn"t fail the tests
+            data.pop("properties")  # these are expected to change often and shouldn't fail the tests
         self.assertEqual(data, self.expected_document_output)
 
     def test_detail_not_found(self):
