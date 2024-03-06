@@ -190,10 +190,12 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     def __hash__(self):
         content_hash = self.metadata.get("hash", None)
+        if not content_hash:
+            return super().__hash__()
         hash_number = int(content_hash, 16)
         if self.dataset_version_id:
             hash_number += self.dataset_version_id
-        return hash_number if content_hash else super().__hash__()
+        return hash_number
 
     class Meta:
         abstract = True
