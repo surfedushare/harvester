@@ -60,7 +60,7 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
         language_term = el.find("languageTerm")
         if not language_term:
             return "unk"
-        return cls.language_mapping[language_term.text.strip()]
+        return cls.language_mapping.get(language_term.text.strip(), "unk")
 
     @classmethod
     def get_title(cls, soup, el):
