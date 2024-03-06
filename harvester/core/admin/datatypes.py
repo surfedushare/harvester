@@ -48,7 +48,7 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
     readonly_fields = ("is_current", "is_index_promoted",)
 
     def harvest_count(self, obj):
-        return obj.documents.filter(properties__state="active", dataset_version=obj).count()
+        return obj.documents.filter(state="active").count()
 
     def index_count(self, obj):
         if not obj.index:
