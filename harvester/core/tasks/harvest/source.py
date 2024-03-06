@@ -51,6 +51,7 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
     })
     harvest_from = f"{harvest_state.harvested_at:%Y-%m-%dT%H:%M:%SZ}"
     for documents in seeding_processor(harvest_state.set_specification, harvest_from):
+        documents = [doc for doc in documents if doc.pending_at]
         if not len(documents):
             continue
         if asynchronous:
