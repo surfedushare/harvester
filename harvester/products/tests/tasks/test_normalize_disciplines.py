@@ -44,7 +44,7 @@ class TestNormalizeDisciplines(TestCase):
         ]
         self.dataset, self.dataset_version, self.sets, self.documents = create_datatype_models(
             "products", self.set_names,
-            self.seeds, 3
+            self.seeds, len(self.seeds)
         )
 
     def test_normalize_disciplines(self):

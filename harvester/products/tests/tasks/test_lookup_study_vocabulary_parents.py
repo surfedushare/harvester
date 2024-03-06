@@ -5,7 +5,7 @@ from products.tasks import lookup_study_vocabulary_parents
 from products.models import ProductDocument
 
 
-class TestNormalizeDisciplines(TestCase):
+class TestLookupStudyVocabularyParents(TestCase):
 
     fixtures = ["test-study-vocabulary"]
 

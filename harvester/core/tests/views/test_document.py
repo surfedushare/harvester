@@ -182,7 +182,6 @@ class TestResearchProductDocumentView(TestDocumentView):
         "provider": "SURFnet",
         "type": "website",
         "research_object_type": None,
-        "extension": None,
         "parties": [
             "SURFnet"
         ],

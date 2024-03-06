@@ -12,7 +12,13 @@ from files.models import FileDocument
 
 
 def default_document_tasks():
-    tasks = {}
+    tasks = {
+        "normalize_publisher_year": {
+            "depends_on": ["$.publisher_year"],
+            "checks": ["has_publisher_year"],
+            "resources": []
+        }
+    }
     if settings.PROJECT == "edusources":
         tasks["lookup_study_vocabulary_parents"] = {
             "depends_on": ["$.learning_material.study_vocabulary"],
@@ -48,6 +54,13 @@ class ProductDocument(HarvestDocument):
         return MetadataValue.objects \
             .filter(field__name="learning_material_disciplines_normalized", value__in=discipline_ids) \
             .exists()
+
+    @property
+    def has_publisher_year(self) -> bool:
+        publisher_year = self.properties.get("publisher_year")
+        if not publisher_year:
+            return False
+        return MetadataValue.objects.filter(field__name="publisher_year", value=publisher_year).exists()
 
     def get_language(self) -> str:
         return self.metadata["language"]
