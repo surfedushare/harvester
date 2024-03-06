@@ -10,7 +10,9 @@ from sources.models import SaxionOAIPMHResource
 
 
 SLUG = "saxion"
-ENDPOINT = SaxionOAIPMHResource.URI_TEMPLATE.replace("https://", "")
+uri = SaxionOAIPMHResource.URI_TEMPLATE.replace("https://", "")
+start_params = uri.find("?")
+ENDPOINT = uri[:start_params]
 SET_SPECIFICATION = "kenniscentra"
 METADATA_PREFIX = "oai_mods"
 RESUMPTION_TOKEN = "5608392947620842476"
@@ -40,10 +42,10 @@ class SaxionOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        from_param = f"from={self.since:%Y-%m-%dT%H:%M:%SZ}"
-        identity = quote(f"{from_param}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}", safe="=&")
+        identity = f"metadataPrefix={METADATA_PREFIX}"
         if self.resumption:
             identity += f"&resumptionToken={quote(self.resumption)}"
+        identity += f"&set={self.set_specification}"
         return f"{ENDPOINT}?{identity}&verb=ListRecords"
 
     @factory.lazy_attribute

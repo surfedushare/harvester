@@ -24,11 +24,11 @@ def get_file_infos(edurep_soup) -> FileInfo:
 
 
 def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
-    if not seed["state"] == FileDocument.States.DELETED.value:
+    if not seed["state"] == FileDocument.States.DELETED:
         yield seed
         return
     for doc in harvest_set.documents.filter(properties__product_id=seed["product_id"]):
-        doc.properties["state"] = FileDocument.States.DELETED.value
+        doc.properties["state"] = FileDocument.States.DELETED
         yield doc.properties
 
 

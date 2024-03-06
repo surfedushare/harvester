@@ -10,7 +10,9 @@ from sources.models import GreeniOAIPMHResource
 
 
 SLUG = "greeni"
-ENDPOINT = GreeniOAIPMHResource.URI_TEMPLATE.replace("https://", "")
+uri = GreeniOAIPMHResource.URI_TEMPLATE.replace("https://", "")
+start_params = uri.find("?")
+ENDPOINT = uri[:start_params]
 SET_SPECIFICATION = "PUBVHL"
 METADATA_PREFIX = "didl"
 RESUMPTION_TOKEN = "PUBVHL|didl|1840-12-31|9999-12-31|^2^139717|66191,57659"
@@ -48,7 +50,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def request(self):
         return {
-            "args": [self.set_specification, f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
+            "args": [self.set_specification, f"{self.since:%Y-%m-%d}"],
             "kwargs": {},
             "method": "get",
             "url": "https://" + self.uri,
