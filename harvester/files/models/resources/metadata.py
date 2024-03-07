@@ -1,5 +1,6 @@
 import logging
 import json
+from requests.exceptions import InvalidURL
 
 from django.conf import settings
 from django.db import models
@@ -116,6 +117,12 @@ class CheckURLResource(URLResource):
             "content_type": self.head.get("content-type", "unknown/unknown").split(';')[0]
         }
         self.body = json.dumps(response_info)
+
+    def _send(self):
+        try:
+            super()._send()
+        except InvalidURL:
+            self.set_error(400, connection_error=True)
 
     @property
     def success(self):
