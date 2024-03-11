@@ -179,6 +179,7 @@ OBJECTIVE = {
     "external_id": "$.id",
     "#set": SharekitMetadataExtraction.get_channel,
     # Generic metadata
+    "modified_at": "$.attributes.modifiedAt",
     "doi": "$.attributes.doi",
     "files": SharekitMetadataExtraction.get_files,
     "technical_type": "$.attributes.technicalFormat",

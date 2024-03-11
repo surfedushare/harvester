@@ -43,6 +43,11 @@ class HBOKennisbankExtractor(BaseExtractor):
         return el.find('identifier').text.strip()
 
     @classmethod
+    def get_oaipmh_modified_at(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> str:
+        header = el.find("header")
+        return header.find("datestamp").text.strip()
+
+    @classmethod
     def get_oaipmh_set(cls, soup):
         request = soup.find("request")
         set_specification = request.get("set", "").strip()

@@ -4,6 +4,7 @@ SEED_DEFAULTS = {
     "set": None,
     "external_id": None,
     # Generic metadata
+    "modified_at": None,
     "files": [],
     "technical_type": None,
     "title": None,
