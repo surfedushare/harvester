@@ -165,6 +165,7 @@ def build_objective(extract_processor: Type[HBOKennisbankProductExtractor]) -> d
         "external_id": extract_processor.get_oaipmh_external_id,
         "#set": extract_processor.get_oaipmh_set,
         # Generic metadata
+        "modified_at": extract_processor.get_oaipmh_modified_at,
         "provider": extract_processor.get_provider,
         "doi": extract_processor.get_doi,
         "files": extract_processor.get_files,

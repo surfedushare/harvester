@@ -114,6 +114,9 @@ class TestGreeniProductExtraction(TestCase):
     def test_get_set(self):
         self.assertEqual(self.seeds[0]["set"], "greeni:PUBVHL")
 
+    def test_get_modified_at(self):
+        self.assertEqual(self.seeds[0]["modified_at"], "2022-03-16")
+
     def test_get_provider(self):
         provider = {
             "ror": None,

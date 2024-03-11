@@ -30,6 +30,11 @@ class AnatomyToolExtraction(BaseExtractor):
         header = el.find('header')
         return header.get("status", "active")
 
+    @classmethod
+    def get_oaipmh_modified_at(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> str:
+        header = el.find("header")
+        return header.find("datestamp").text.strip()
+
     #############################
     # GENERIC
     #############################
@@ -184,6 +189,7 @@ OBJECTIVE = {
     "external_id": AnatomyToolExtraction.get_oaipmh_external_id,
     "set": lambda soup, el: "anatomy_tool:anatomy_tool",
     "state": AnatomyToolExtraction.get_oaipmh_record_state,
+    "modified_at": AnatomyToolExtraction.get_oaipmh_modified_at,
     "files": AnatomyToolExtraction.get_files,
     "title": AnatomyToolExtraction.get_title,
     "language": AnatomyToolExtraction.get_language,

@@ -110,6 +110,7 @@ OBJECTIVE = {
     "set": lambda node: "publinova:publinova",
     "external_id": "$.id",
     # Generic metadata
+    "modified_at": "$.modified_at",
     "files": PublinovaProductExtraction.get_files,
     "title": "$.title",
     "language": PublinovaProductExtraction.get_language,
