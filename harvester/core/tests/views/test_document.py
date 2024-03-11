@@ -18,6 +18,7 @@ class TestDocumentView(TestCase):
     detail_view_name = "v1:core:document-detail"
     expected_document_output = {
         "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
+        "modified_at": None,
         "published_at": "2016-09-02",
         "doi": None,
         "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
@@ -150,6 +151,7 @@ class TestResearchProductDocumentView(TestDocumentView):
     expected_document_output = {
         "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
         "published_at": "2016-09-02",
+        "modified_at": None,
         "doi": None,
         "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
         "title": "Using a Vortex | Wageningen UR",
