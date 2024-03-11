@@ -58,7 +58,7 @@ class DatasetDocumentsView(generics.ListAPIView):
         except Http404:
             if kwargs["pk"] is not None:
                 raise Http404("Not found")
-            dataset = Dataset.objects.filter(is_latest=True).last()
+            dataset = Dataset.objects.all().last()
         if dataset is None:
             raise Http404("No content found")
 
