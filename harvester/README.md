@@ -137,14 +137,16 @@ APPLICATION_MODE=<environment> fab -H <bastion-host-domain> db.setup
 To load the latest production data into the database and push that data to Open Search on an AWS environment run:
 
 ```bash
-APPLICATION_MODE=<environment> invoke hrv.load-data <environment> -s production -d <dataset-name>
+APPLICATION_MODE=<environment> invoke hrv.load-data <environment> -s production -a products
+APPLICATION_MODE=<environment> invoke hrv.load-data <environment> -s production -a files
 ```
 
 To load data for localhost you have to use a slightly different command,
 because your profile will need access to the source.
 
 ```bash
-AWS_PROFILE=pol-prod invoke hrv.load-data localhost -s production -d <dataset-name>
+AWS_PROFILE=pol-prod invoke hrv.load-data localhost -s production -a products
+AWS_PROFILE=pol-prod invoke hrv.load-data localhost -s production -a files
 ```
 
 The harvester keeps its harvest results in the database. It may be required to clean these results to start fresh.
