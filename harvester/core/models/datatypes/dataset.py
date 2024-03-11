@@ -144,7 +144,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
 
     @property
-    def natural_key(self) -> tuple[str, int]:
+    def model_key(self) -> tuple[str, int]:
         return f"{self._meta.app_label}.{self._meta.model_name}", self.id,
 
     def get_search_documents_by_language(self, **filters) -> dict[str, list]:
