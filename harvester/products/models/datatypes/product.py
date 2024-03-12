@@ -81,20 +81,19 @@ class ProductDocument(HarvestDocument):
         # If the product sets a technical_type we ignore the file technical_type
         first_file_document = next(
             (files_by_identity[identity] for identity in file_identities if identity in files_by_identity),
-            None
+            {}
         )
-        if first_file_document:
-            main_file_info = {
-                "url": first_file_document["url"],
-                "mime_type": first_file_document["mime_type"],
-                "technical_type": first_file_document["type"],
-                "text": first_file_document.get("text", None),
-                "previews": first_file_document.get("previews", None),
-                "video": first_file_document.get("video", None),
-            }
-            if data.get("technical_type", None):
-                main_file_info.pop("technical_type")
-            data.update(main_file_info)
+        main_file_info = {
+            "url": first_file_document.get("url"),
+            "mime_type": first_file_document.get("mime_type"),
+            "technical_type": first_file_document.get("type"),
+            "text": first_file_document.get("text"),
+            "previews": first_file_document.get("previews"),
+            "video": first_file_document.get("video"),
+        }
+        if data.get("technical_type", None):
+            main_file_info.pop("technical_type")
+        data.update(main_file_info)
         # Clean the file data a bit and set titles for links
         links_in_order = [
             file_identity for file_identity in file_identities
