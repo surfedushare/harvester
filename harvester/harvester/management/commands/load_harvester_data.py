@@ -56,7 +56,7 @@ class Command(base.LabelCommand):
             task_resources = load_task_resources(app_label)[app_label]
             resources = list(task_resources.keys()) if task_resources else []
 
-        delete_models = resources + self.metadata_models
+        delete_models = resources + self.metadata_models if app_label in ["core", "products"] else resources
         for resource_model in delete_models:
             print(f"Deleting resource {resource_model}")
             model = apps.get_model(resource_model)
