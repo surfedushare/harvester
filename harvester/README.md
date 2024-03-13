@@ -20,8 +20,8 @@ or diagnose problems with Docker.
 You can start/stop supporting services like Postgres, Redis and Open Search with the following:
 
 ```bash
-docker-compose -f docker-compose.yml up
-docker-compose -f docker-compose.yml down
+docker compose -f docker-compose.yml up
+docker compose -f docker-compose.yml down
 ```
 
 When these supporting services run you can run the processes described below one-by-one outside of containers.
