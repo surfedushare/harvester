@@ -10,7 +10,7 @@ class TestProductDocumentCompatability(TestCase):
     backward_compatible_fields = [
         "doi", "state", "title", "authors", "keywords", "provider", "copyright", "has_parts", "is_part_of",
         "publishers", "description", "external_id", "organizations", "publisher_date", "publisher_year",
-        "copyright_description", "harvest_source", "url", "mime_type", "technical_type", "ideas", "consortium",
+        "copyright_description", "harvest_source", "url", "mime_type", "technical_type", "consortium",
         "material_types", "aggregation_level", "lom_educational_levels", "learning_material_disciplines",
         "research_themes", "research_object_type", "text", "suggest_phrase", "suggest_completion", "language", "video",
         "previews", "studies",
