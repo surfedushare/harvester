@@ -139,18 +139,6 @@ class SharekitMetadataExtraction:
         ]))
 
     @classmethod
-    def get_ideas(cls, node):
-        vocabularies = node["attributes"].get("vocabularies", {})
-        terms = chain(*vocabularies.values())
-        compound_ideas = [term["value"] for term in terms]
-        if not compound_ideas:
-            return []
-        ideas = []
-        for compound_idea in compound_ideas:
-            ideas += compound_idea.split(" - ")
-        return list(set(ideas))
-
-    @classmethod
     def get_study_vocabulary(cls, node):
         vocabularies = node["attributes"].get("vocabularies", {})
         terms = chain(*vocabularies.values())
@@ -200,7 +188,6 @@ OBJECTIVE = {
     "learning_material.aggregation_level": "$.attributes.aggregationlevel",
     "learning_material.material_types": SharekitMetadataExtraction.get_material_types,
     "learning_material.lom_educational_levels": SharekitMetadataExtraction.get_lom_educational_levels,
-    "learning_material.ideas": SharekitMetadataExtraction.get_ideas,
     "learning_material.study_vocabulary": SharekitMetadataExtraction.get_study_vocabulary,
     "learning_material.disciplines": SharekitMetadataExtraction.get_learning_material_disciplines,
     "learning_material.consortium": SharekitMetadataExtraction.get_consortium,

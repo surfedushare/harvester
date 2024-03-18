@@ -173,21 +173,6 @@ class TestSharekitProductExtraction(TestCase):
         )
         self.assertEqual(seeds[5]['has_parts'], [], "Expected child material to have no children")
 
-    def test_ideas_property(self):
-        seeds = self.seeds
-        possible_ideas = [
-            "Informatievaardigheid vocabulaire 2020",
-            "Publiceren en communiceren",
-            "Publiceren (van eindproduct)"
-        ]
-        self.assertTrue(seeds[0]['learning_material']["ideas"])
-        for idea in seeds[0]['learning_material']["ideas"]:
-            self.assertIn(idea, possible_ideas, "Expected material with idea elements to return the spliced strings")
-        self.assertEqual(
-            seeds[2]['learning_material']["ideas"], [],
-            "Expected material without ideas to return empty list"
-        )
-
     def test_study_vocabulary_property(self):
         seeds = self.seeds
         self.assertEqual(
@@ -196,7 +181,7 @@ class TestSharekitProductExtraction(TestCase):
         )
         self.assertEqual(
             seeds[2]['learning_material']["study_vocabulary"], [],
-            "Expected material without ideas to return empty list"
+            "Expected material without vocabulary terms to return empty list"
         )
 
     def test_lom_educational_level(self):

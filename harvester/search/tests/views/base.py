@@ -98,7 +98,6 @@ class DocumentAPITestCase(TestCase):
             "has_parts",
             "is_part_of",
             "study_vocabulary",
-            "ideas",
             "doi",
             "technical_type",
             "disciplines",

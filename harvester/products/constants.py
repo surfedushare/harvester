@@ -29,7 +29,6 @@ SEED_DEFAULTS = {
         "aggregation_level": None,
         "lom_educational_levels": [],
         "studies": [],
-        "ideas": [],
         "study_vocabulary": [],
         "disciplines": [],
         "consortium": None
