@@ -57,30 +57,25 @@ def harvester_migrate(ctx, mode):
     "mode": "Mode you want to load data for: localhost, development, acceptance or production. "
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
-    "dataset": "The name of the greek letter that represents the dataset you want to import",
+    "app_label": "The Django app you want to dump data for",
     "download_edurep": "If edurep should be downloaded, defaults to False",
-    "wipe_data": "Whether old data should be deleted before load, defaults to True"
 })
-def load_data(ctx, mode, source, dataset, download_edurep=False, wipe_data=True):
+def load_data(ctx, mode, source, app_label, download_edurep=False):
     """
     Loads the production database and sets up Open Search data on localhost or an AWS cluster
     """
     if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
 
-    command = ["python", "manage.py", "load_harvester_data", dataset, f"--harvest-source={source}", "--index"]
+    command = ["python", "manage.py", "load_harvester_data", app_label, f"--harvest-source={source}", "--index"]
 
     if download_edurep:
         print("Will download edurep data, this can take a while...")
         command += ["--download-edurep"]
 
     if source == "localhost":
-        print(f"Will try to import {dataset} using pre-downloaded files")
+        print(f"Will try to import app '{app_label}' using pre-downloaded files")
         command += ["--skip-download"]
-
-    if wipe_data:
-        print("Will wipe data before loading")
-        command += ["--wipe-data"]
 
     run_harvester_task(ctx, mode, command)
 
@@ -231,13 +226,13 @@ def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=No
 @task(help={
     "mode": "Mode you want to dump data for: localhost, development, acceptance or production. "
             "Must match APPLICATION_MODE",
-    "dataset": "Name of the dataset (a Greek letter) that you want to dump"
+    "app_label": "Name of the app_label that you want to dump data for."
 })
-def dump_data(ctx, mode, dataset):
+def dump_data(ctx, mode, app_label):
     """
     Starts a task on the AWS container cluster to dump a specific Dataset and its related models
     """
-    command = ["python", "manage.py", "dump_harvester_data", dataset]
+    command = ["python", "manage.py", "dump_harvester_data", app_label]
 
     run_harvester_task(ctx, mode, command)
 

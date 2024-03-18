@@ -117,6 +117,10 @@ class TestHvaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["external_id"], "7288bd68-d62b-4db0-8cea-5f189e209254")
 
+    def test_get_modified_at(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["modified_at"], "2018-05-01T08:21:40.498+02:00")
+
     def test_get_files(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [])

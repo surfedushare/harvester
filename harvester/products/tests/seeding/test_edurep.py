@@ -112,6 +112,10 @@ class TestEdurepProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["set"], "edurep:surfsharekit")
 
+    def test_get_modified_at(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["modified_at"], "2019-11-05T00:06:37Z")
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[3]['authors'], [

@@ -122,6 +122,9 @@ class TestSaxionProductExtraction(TestCase):
         self.assertEqual(self.seeds[0]["set"], "saxion:kenniscentra")
         self.assertEqual(self.deleted["set"], "saxion:kenniscentra")
 
+    def test_get_modified_at(self):
+        self.assertEqual(self.seeds[0]["modified_at"], "2021-01-26")
+
     def test_get_provider(self):
         provider = {
             "ror": None,

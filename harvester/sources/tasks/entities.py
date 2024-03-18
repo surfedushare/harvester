@@ -51,7 +51,7 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
         # After that we harvest_source to start fetching metadata.
         current_version = dataset.versions.get_current_version()
         new_version = dataset.versions.create()
-        dataset_versions.append(new_version.natural_key)
+        dataset_versions.append(new_version.model_key)
         for state in states:
             if reset or not current_version or state.should_purge() or not \
                     current_version.sets.filter(name=state.set_name).exists():

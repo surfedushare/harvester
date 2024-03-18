@@ -1,3 +1,4 @@
+import bs4
 from datetime import datetime
 
 from dateutil.parser import parse as date_parser
@@ -22,6 +23,11 @@ class EdurepProductExtraction(object):
     @classmethod
     def get_oaipmh_record_state(cls, soup, el):
         return EdurepExtractor.get_oaipmh_record_state(el)
+
+    @classmethod
+    def get_oaipmh_modified_at(cls, soup: bs4.BeautifulSoup, el: bs4.element.Tag) -> str:
+        header = el.find("header")
+        return header.find("datestamp").text.strip()
 
     @classmethod
     def get_set(cls, soup, el):
@@ -201,6 +207,7 @@ OBJECTIVE = {
     "external_id": EdurepProductExtraction.get_oaipmh_external_id,
     "set": EdurepProductExtraction.get_set,
     # Generic metadata
+    "modified_at": EdurepProductExtraction.get_oaipmh_modified_at,
     "files": EdurepProductExtraction.get_files,
     "title": EdurepProductExtraction.get_title,
     "language": EdurepProductExtraction.get_language,

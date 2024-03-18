@@ -145,6 +145,7 @@ OBJECTIVE = {
     "state": lambda node: "active",
     "set": lambda node: "hva:hva",
     # Generic metadata
+    "modified_at": "$.modifiedDate",
     "doi": HvaMetadataExtraction.get_doi,
     "files": HvaMetadataExtraction.get_files,
     "title": "$.title.value",

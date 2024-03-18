@@ -68,6 +68,8 @@ class HBOKennisbankFileExtractor(HBOKennisbankExtractor):
         if not info.file:
             return "ClosedAccess"
         access_rights_node = info.item.find("accessRights")
+        if not access_rights_node:
+            return "ClosedAccess"
         _, access_rights = os.path.split(access_rights_node.text.strip())
         return access_rights
 

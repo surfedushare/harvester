@@ -94,6 +94,10 @@ class TestSharekitProductExtraction(TestCase):
         for batch in processor("edusources", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
 
+    def test_modified_at(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["modified_at"], "2017-12-11T12:52:09Z")
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[2]['authors'], [

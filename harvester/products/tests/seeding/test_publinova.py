@@ -132,6 +132,10 @@ class TestPublinovaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["external_id"], "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257")
 
+    def test_get_modified_at(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["modified_at"], "2023-03-28T10:17:20.000000Z")
+
     def test_get_files(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [

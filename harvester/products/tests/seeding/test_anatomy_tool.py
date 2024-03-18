@@ -73,6 +73,10 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
             "cache_only": False
         })
 
+    def test_get_modified_at(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["modified_at"], "2020-10-28T02:39:34Z")
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [

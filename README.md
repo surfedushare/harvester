@@ -10,7 +10,7 @@ or locally stored data.
 
 ## Prerequisites
 
-This project uses `Python 3.10`, `npm`, `Docker`, `docker-compose` and `psql`.
+This project uses `Python 3.10`, `npm`, `Docker`, `Docker Compose V2` and `psql`.
 Make sure they are installed on your system before installing the project.
 
 ## Installation
@@ -68,14 +68,15 @@ To finish the container setup you can run these commands to build all containers
 ```bash
 invoke aws.sync-repository-state
 invoke container.prepare-builds
-docker-compose up --build
+docker compose up --build
 ```
 
 After that you can seed the database with data:
 
 ```bash
 invoke db.setup
-invoke hrv.load-data localhost -d <latest-dataset> -s production
+invoke hrv.load-data localhost -a products -s production
+invoke hrv.load-data localhost -a files -s production
 ```
 
 The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
@@ -113,8 +114,8 @@ source activate.sh
 After you've loaded your environment you can run all components of the project in containers with:
 
 ```bash
-docker-compose up
-docker-compose down
+docker compose up
+docker compose down
 ```
 
 Alternatively you can run [processes outside of containers](harvester/README.md#running-outside-of-containers).
