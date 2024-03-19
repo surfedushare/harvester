@@ -62,10 +62,20 @@ class HarvesterSchema(AutoSchema):
             if "similarity" in path:
                 operation["parameters"] += [
                     {
+                        "name": "srn",
+                        "in": "query",
+                        "required": False,
+                        "description": "The SRN of the document you want similar documents for.",
+                        'schema': {
+                            'type': 'string',
+                        }
+                    },
+                    {
                         "name": "external_id",
                         "in": "query",
-                        "required": True,
-                        "description": "The external_id of the document you want similar documents for.",
+                        "required": False,
+                        "description": "The external_id of the document you want similar documents for "
+                                       "(using SRN instead of external_id is recommended).",
                         'schema': {
                             'type': 'string',
                         }

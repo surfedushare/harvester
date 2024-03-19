@@ -1,8 +1,11 @@
+from operator import xor
+
 from django.conf import settings
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 
 from search_client import DocumentTypes
 from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
@@ -11,8 +14,16 @@ from harvester.schema import HarvesterSchema
 
 
 class SimilaritySerializer(serializers.Serializer):
-    external_id = serializers.CharField(write_only=True, required=True)
+    external_id = serializers.CharField(write_only=True, required=False)
+    srn = serializers.CharField(write_only=True, required=False)
     language = serializers.CharField(write_only=True, required=True)
+
+    def validate(self, attrs):
+        srn = attrs.get("srn")
+        external_id = attrs.get("external_id")
+        if not xor(bool(srn), bool(external_id)):
+            raise ValidationError("Either a SRN or an external_id should be provided.")
+        return attrs
 
 
 class LearningMaterialSimilaritySerializer(SimilaritySerializer):
@@ -58,10 +69,14 @@ class SimilarityAPIView(GenericAPIView):
     def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
-        external_id = serializer.validated_data["external_id"]
+        external_id = serializer.validated_data.get("external_id", None)
+        identifier = serializer.validated_data.get("srn", external_id)
         language = serializer.validated_data["language"]
         client = get_search_client()
-        results = client.more_like_this(external_id, language, transform_results=True)
+        results = client.more_like_this(
+            identifier, language,
+            transform_results=True, is_external_identifier=bool(external_id)
+        )
         return Response(results)
 
 
