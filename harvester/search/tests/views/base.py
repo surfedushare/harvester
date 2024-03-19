@@ -29,12 +29,12 @@ class OpenSearchTestCaseMixin(object):
                 generate_document = generate_nl_product
             case _:
                 raise ValueError(f"Invalid document type to index_document: {document_type}")
+        body = generate_document(**kwargs)
         index_kwargs = {
+            "id": body["srn"],
             "index": cls.get_alias("nl"),
-            "body": generate_document(**kwargs)
+            "body": body
         }
-        if "external_id" in kwargs:
-            index_kwargs["id"] = kwargs["external_id"]
         if is_last_document:
             index_kwargs["refresh"] = True
         cls.search.index(**index_kwargs)
@@ -60,7 +60,7 @@ class OpenSearchTestCaseMixin(object):
         cls.index_document(cls.document_type)
         cls.index_document(
             cls.document_type, is_last_document=True,
-            external_id="abc", title=f"Nog een {cls.document_type}", publisher_date="2020-03-18"
+            source="surfsharekit", external_id="abc", title=f"Nog een {cls.document_type}", publisher_date="2020-03-18"
         )
         # Create a SURF SearchClient
         cls.instance = SearchClient(settings.OPENSEARCH_HOST, cls.document_type, cls.alias_prefix)

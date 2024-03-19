@@ -33,15 +33,9 @@ class TestLearningMaterialSimilarityView(OpenSearchTestCaseMixin, TestSimilarity
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.index_document(
-            cls.document_type, external_id="def",
-        )
-        cls.index_document(
-            cls.document_type, external_id="123",
-        )
-        cls.index_document(
-            cls.document_type, is_last_document=True, external_id="456",
-        )
+        cls.index_document(cls.document_type, external_id="def", source="surfsharekit")
+        cls.index_document(cls.document_type, external_id="123", source="surfsharekit")
+        cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
 
 
 @override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
@@ -51,15 +45,9 @@ class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityV
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.index_document(
-            cls.document_type, external_id="def",
-        )
-        cls.index_document(
-            cls.document_type, external_id="123",
-        )
-        cls.index_document(
-            cls.document_type, is_last_document=True, external_id="456",
-        )
+        cls.index_document(cls.document_type, external_id="def", source="surfsharekit")
+        cls.index_document(cls.document_type, external_id="123", source="surfsharekit")
+        cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
 
 
 @override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
