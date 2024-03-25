@@ -199,21 +199,37 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_ALLOW_ALL_ORIGINS = True
+staticfiles_storage = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 if environment.aws.is_aws:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    file_storage = 'storages.backends.s3boto3.S3Boto3Storage'
+    file_storage_options = {
+        "bucket_name": environment.aws.harvest_content_bucket,
+        "region_name": "eu-central-1"
+    }
     MEDIA_ROOT = ''
     MEDIA_URL = f'https://{environment.aws.harvest_content_bucket}.s3.eu-central-1.amazonaws.com/'
     AWS_STORAGE_BUCKET_NAME = environment.aws.harvest_content_bucket
-    AWS_S3_REGION_NAME = 'eu-central-1'
-    AWS_DEFAULT_ACL = None
 else:
-    DEFAULT_FILE_STORAGE = 'core.files.storage.OverwriteStorage'
+    file_storage = 'core.files.storage.OverwriteStorage'
+    file_storage_options = {}
     MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media', 'harvester')
     MEDIA_URL = '/media/harvester/'
     AWS_STORAGE_BUCKET_NAME = None
+
+
+# Storages
+# https://docs.djangoproject.com/en/4.2/ref/settings/#storages
+
+STORAGES = {
+    "default": {
+        "BACKEND": file_storage,
+        "OPTIONS": file_storage_options
+    },
+    "staticfiles": {
+        "BACKEND": staticfiles_storage
+    }
+}
 
 
 # Rest framework
