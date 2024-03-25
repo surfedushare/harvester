@@ -627,6 +627,5 @@ WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
 WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
-# Thumbnails
-
-THUMBNAIL_FORCE_PNG_EXTENSION = False
+# Harvester tasks
+CHECK_URL_AUTO_SUCCEED_SETS = []
