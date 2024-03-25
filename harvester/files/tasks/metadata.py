@@ -16,7 +16,7 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
     check_document_ids = []
     for doc in Document.objects.filter(id__in=document_ids):
         if doc.properties.get("set") not in settings.CHECK_URL_AUTO_SUCCEED_SETS:
-            check_document_ids.append(doc)
+            check_document_ids.append(doc.id)
             continue
         # Some sources don't support the check_url logic and to be backward compatible we fake it for some Sets.
         # The fake results allow Tika and other tasks to function normally without a truly successful check_url.
@@ -58,7 +58,7 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
             "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"],
         }
     })
-    check_url_processor(Document.objects.filter(id__in=document_ids))
+    check_url_processor(Document.objects.filter(id__in=check_document_ids))
 
 
 def tika_content_extraction(results):
