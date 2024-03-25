@@ -56,7 +56,7 @@ class TestCleanData(TestCase):
         self.assertEqual(Document.objects.count(), 35, "Expected five documents per collection")
         self.assertEqual(HttpTikaResource.objects.count(), 35, "Expected one HttpTikaResource per Document")
         # Check if indices were removed properly as well
-        self.assertEqual(get_search_client.call_count, 80, "Not sure why there are two calls per removed ElasticIndex")
+        self.assertEqual(get_search_client.call_count, 40, "Expected a get_search_client call per removed ElasticIndex")
         self.assertEqual(self.search_client.indices.exists.call_count, 40)
         self.assertEqual(self.search_client.indices.delete.call_count, 40)
 
@@ -96,6 +96,6 @@ class TestCleanData(TestCase):
         self.assertEqual(Document.objects.count(), 35, "Expected five documents per collection")
         self.assertEqual(HttpTikaResource.objects.count(), 0)
         # Check if indices were removed properly as well
-        self.assertEqual(get_search_client.call_count, 80, "Not sure why there are two calls per removed ElasticIndex")
+        self.assertEqual(get_search_client.call_count, 40, "Expected a get_search_client call per removed ElasticIndex")
         self.assertEqual(self.search_client.indices.exists.call_count, 40)
         self.assertEqual(self.search_client.indices.delete.call_count, 40)
