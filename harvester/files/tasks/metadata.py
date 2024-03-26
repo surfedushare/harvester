@@ -23,14 +23,14 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
         url = doc.properties.get("url")
         doc.status_code = 203 if url else 404  # 203 means non-authoritative information
         doc.is_not_found = doc.status_code == 404
-        doc.pipeline["check_url"] = {
-            "success": bool(url),
+        doc.pipeline["check_url"] = {"success": bool(url), "is_auto_succeed": True}
+        doc.derivatives["check_url"] = {
+            "url": url,
             "status": doc.status_code,
             "content_type": doc.properties.get("mime_type", "unknown/unknown"),
             "has_redirect": False,
             "has_temporary_redirect": False
         }
-        doc.derivatives["check_url"] = {"url": url}
         doc.save()
 
     if not check_document_ids:  # all Documents auto succeeded
