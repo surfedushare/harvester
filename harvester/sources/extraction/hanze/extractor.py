@@ -24,7 +24,7 @@ class HanzeResourceObjectExtraction(ExtractProcessor):
 
     @staticmethod
     def _parse_file_url(url):
-        file_path_segment = "/nppo/research-outputs/"
+        file_path_segment = "/nppo/"
         if file_path_segment not in url:
             return url  # not dealing with a url we recognize as a file url
         start = url.index(file_path_segment)
