@@ -52,7 +52,7 @@ class HvaMetadataExtraction(BaseExtractor):
 
     @staticmethod
     def _parse_file_url(url):
-        file_path_segment = "/ws/api/research-outputs/"
+        file_path_segment = "/ws/api/"
         if file_path_segment not in url:
             return url  # not dealing with a url we recognize as a file url
         start = url.index(file_path_segment)
