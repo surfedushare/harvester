@@ -125,7 +125,7 @@ class TestHvaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [])
         self.assertEqual(seeds[3]["files"], [
-            "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
+            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
             "MDIyMzRi/636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
         ])
 

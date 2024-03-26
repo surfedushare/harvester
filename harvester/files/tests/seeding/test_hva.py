@@ -50,7 +50,7 @@ class TestHvAFileSeeding(TestCase):
         # Set some expectations
         become_processing_ids = {
             # Files added by the delta
-            "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a:83180627ed1b06b2e265b0976e8934dc381c7166",
+            "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a:484cf5228fad26faec3c382b410c228a8bdfe5e1",
         }
         # Load the delta data and see if updates have taken place
         documents = []
@@ -64,7 +64,10 @@ class TestHvAFileSeeding(TestCase):
                     self.assertTrue(file_.pending_at)
                     self.assertIsNone(file_.finished_at)
                 else:
-                    self.assertIsNone(file_.pending_at)
+                    self.assertIsNone(
+                        file_.pending_at,
+                        f"Did not expect document with identity '{file_.identity}' to be pending"
+                    )
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
         self.assertEqual(len(documents), 6, "Expected test to work with single page for the delta")
@@ -121,7 +124,7 @@ class TestHvaFileExtraction(TestCase):
     def test_get_external_id(self):
         self.assertEqual(
             self.seeds[0]["external_id"],
-            "d7126f6d-c412-43c8-ad2a-6acb7613917d:29b015fbc72ff79b6167d87ade7086878eede928"
+            "d7126f6d-c412-43c8-ad2a-6acb7613917d:f5052b0d0d801fcd313c4395f963ab332ab3a521"
         )
         self.assertEqual(
             self.seeds[3]["external_id"],
@@ -132,7 +135,7 @@ class TestHvaFileExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(
             seeds[0]["url"],
-            "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
+            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
             "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf"
         )
         self.assertEqual(
@@ -141,7 +144,7 @@ class TestHvaFileExtraction(TestCase):
         )
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "29b015fbc72ff79b6167d87ade7086878eede928")
+        self.assertEqual(self.seeds[0]["hash"], "f5052b0d0d801fcd313c4395f963ab332ab3a521")
         self.assertEqual(self.seeds[3]["hash"], "54a95ef8691a8b3ac88759451ac61feeedaa14cf")
 
     def test_get_mime_type(self):

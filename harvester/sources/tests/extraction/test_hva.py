@@ -31,9 +31,9 @@ class TestGetHarvestSeedsHva(TestCase):
         self.assertEqual(seeds[3]["files"], [
             {
                 "mime_type": "application/pdf",
-                "url": "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
+                "url": "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
                        "MDIyMzRi/636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
-                "hash": "29b015fbc72ff79b6167d87ade7086878eede928",
+                "hash": "f5052b0d0d801fcd313c4395f963ab332ab3a521",
                 "title": "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
                 "copyright": None,
                 "access_rights": "OpenAccess"
@@ -48,7 +48,7 @@ class TestGetHarvestSeedsHva(TestCase):
         )
         self.assertEqual(
             seeds[3]["url"],
-            "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
+            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
             "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf"
         )
 
