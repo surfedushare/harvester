@@ -110,6 +110,14 @@ class HanzeResourceObjectExtraction(ExtractProcessor):
         return settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(mime_type, "unknown")
 
     @classmethod
+    def get_title(cls, node):
+        title = node["title"]["value"]
+        if "subTitle" in node:
+            subtitle = node["subTitle"]["value"]
+            title = f"{title}: {subtitle}"
+        return title
+
+    @classmethod
     def get_description(cls, node):
         if "abstract" not in node:
             return
@@ -284,7 +292,7 @@ HanzeResourceObjectExtraction.OBJECTIVE = {
     "url": HanzeResourceObjectExtraction.get_url,
     "files": HanzeResourceObjectExtraction.get_files,
     "copyright": lambda node: None,
-    "title": "$.title.value",
+    "title": HanzeResourceObjectExtraction.get_title,
     "language": HanzeResourceObjectExtraction.get_language,
     "keywords": HanzeResourceObjectExtraction.get_keywords,
     "description": HanzeResourceObjectExtraction.get_description,

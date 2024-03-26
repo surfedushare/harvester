@@ -82,7 +82,16 @@ class TestGetHarvestSeedsHanze(TestCase):
 
     def test_get_title(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["title"], "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen")
+        self.assertEqual(
+            seeds[0]["title"],
+            "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen: "
+            "een overzicht van 20 jaar monitoring in Nederland en een aanzet tot richtlijnen",
+            "Expected subtitle to be concatenated with title"
+        )
+        self.assertEqual(
+            seeds[2]["title"], "'Vrije plekken' en cultureel erfgoed van krimpdorpen",
+            "Only expected title if subtitle is not available"
+        )
 
     def test_get_description(self):
         seeds = self.seeds
