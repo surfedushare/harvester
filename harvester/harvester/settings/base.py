@@ -199,7 +199,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
-staticfiles_storage = 'whitenoise.storage.CompressedStaticFilesStorage'
+staticfiles_storage = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 if environment.aws.is_aws:
     file_storage = 'storages.backends.s3boto3.S3Boto3Storage'
