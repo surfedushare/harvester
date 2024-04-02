@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 SHELL ["/bin/bash", "-c"]
 ARG UID=1000
 ARG GID=1000
