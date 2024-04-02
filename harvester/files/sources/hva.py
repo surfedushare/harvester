@@ -111,7 +111,7 @@ OBJECTIVE = {
 
 SEEDING_PHASES = [
     {
-        "phase": "publications",
+        "phase": "research_outputs",
         "strategy": "initial",
         "batch_size": 100,
         "retrieve_data": {
