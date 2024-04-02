@@ -25,11 +25,14 @@ class HkuMetadataResourceFactory(factory.django.DjangoModelFactory):
 
     since = make_aware(datetime(year=1970, month=1, day=1))
     set_specification = SET_SPECIFICATION
-    uri = ENDPOINT
     status = 200
     head = {
         "content-type": "application/json"
     }
+
+    @factory.lazy_attribute
+    def uri(self):
+        return f"{ENDPOINT}?format=json&project=pubplatv4"
 
     @factory.lazy_attribute
     def request(self):
