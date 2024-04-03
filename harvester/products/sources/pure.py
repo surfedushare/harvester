@@ -1,25 +1,10 @@
 from typing import Type
 from hashlib import sha1
 
-from django.conf import settings
-
-from sources.utils.base import BaseExtractor
+from sources.utils.pure import PureExtractor
 
 
-class PureProductExtraction(BaseExtractor):
-
-    #############################
-    # GENERIC
-    #############################
-
-    @staticmethod
-    def _parse_file_url(url):
-        file_path_segment = "/ws/api/"
-        if file_path_segment not in url:
-            return url  # not dealing with a url we recognize as a file url
-        start = url.index(file_path_segment)
-        file_path = url[start + len(file_path_segment):]
-        return f"{settings.SOURCES_MIDDLEWARE_API}files/hva/{file_path}"
+class PureProductExtraction(PureExtractor):
 
     @classmethod
     def get_files(cls, node):

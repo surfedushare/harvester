@@ -1,14 +1,14 @@
 from sources.utils.pure import build_seeding_phases
 from sources.models import HanzeResearchObjectResource
-from products.sources.pure import PureProductExtraction, build_objective
+from files.sources.pure import PureFileExtraction, build_objective
 
 
-class HanzeProductExtractor(PureProductExtraction):
+class HanzeFileExtractor(PureFileExtraction):
     pure_api_prefix = "/nppo/"
     source_slug = "hanze"
 
 
-OBJECTIVE = build_objective(HanzeProductExtractor, "hanze:hanze")
+OBJECTIVE = build_objective(HanzeFileExtractor, "hanze:hanze")
 
 
 SEEDING_PHASES = build_seeding_phases(HanzeResearchObjectResource, OBJECTIVE)

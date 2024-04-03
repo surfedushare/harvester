@@ -4,7 +4,8 @@ from products.sources.pure import PureProductExtraction, build_objective
 
 
 class HvAProductExtractor(PureProductExtraction):
-    pass
+    pure_api_prefix = "/ws/api/"
+    source_slug = "hva"
 
 
 OBJECTIVE = build_objective(HvAProductExtractor, "hva:hva")

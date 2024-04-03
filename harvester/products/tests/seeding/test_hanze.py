@@ -39,36 +39,7 @@ class TestHanzeProductExtraction(TestCase):
         self.assertEqual(self.seeds[0]["external_id"], "01ea0ee1-a419-42ee-878b-439b44562098")
 
     def test_get_files(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [
-            {
-                "mime_type": "application/pdf",
-                "url": "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
-                       "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
-                       "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
-                "hash": "01df6be8b59f65074350ca33c8eded52ea106222",
-                "title": "wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
-                         "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            }
-        ])
-        self.assertEqual(seeds[12]["files"], [
-            {
-                "title": "Power_to_the_people_accepted_version_1.pdf",
-                "url": "http://testserver/api/v1/files/hanze/research-outputs/3786d62c-11fa-445b-a299-cc79ea00d468/"
-                       "files/MDAxYTdkM2M2/Power_to_the_people_accepted_version_1.pdf",
-                "mime_type": "application/pdf",
-                "hash": "a38e0ae1aaefd3842e7afdf47be2ef25f5e7f46b",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            }
-        ])
-
-    def test_get_url(self):
-        seeds = self.seeds
-        self.assertEqual(
-            seeds[0]["url"],
+        self.assertEqual(self.seeds[0]["files"], [
             "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
             "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
             "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf"

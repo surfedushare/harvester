@@ -2,9 +2,7 @@ from typing import Iterator, Type
 from dataclasses import dataclass
 from hashlib import sha1
 
-from django.conf import settings
-
-from sources.utils.base import BaseExtractor
+from sources.utils.pure import PureExtractor
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,16 +35,7 @@ def get_electronic_version_info(pure_data: dict) -> Iterator[ElectronicVersionIn
             )
 
 
-class PureFileExtraction(BaseExtractor):
-
-    @staticmethod
-    def _parse_file_url(url):
-        file_path_segment = "/ws/api/"
-        if file_path_segment not in url:
-            return url  # not dealing with a url we recognize as a file url
-        start = url.index(file_path_segment)
-        file_path = url[start + len(file_path_segment):]
-        return f"{settings.SOURCES_MIDDLEWARE_API}files/hva/{file_path}"
+class PureFileExtraction(PureExtractor):
 
     @classmethod
     def get_url(cls, info: ElectronicVersionInfo) -> str:

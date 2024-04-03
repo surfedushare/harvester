@@ -1,6 +1,25 @@
 from typing import Type
 
+from django.conf import settings
+
 from datagrowth.resources import HttpResource
+
+from sources.utils.base import BaseExtractor
+
+
+class PureExtractor(BaseExtractor):
+
+    pure_api_prefix = None
+    source_slug = None
+
+    @classmethod
+    def _parse_file_url(cls, url):
+        file_path_segment = cls.pure_api_prefix
+        if file_path_segment not in url:
+            return url  # not dealing with a url we recognize as a file url
+        start = url.index(file_path_segment)
+        file_path = url[start + len(file_path_segment):]
+        return f"{settings.SOURCES_MIDDLEWARE_API}files/{cls.source_slug}/{file_path}"
 
 
 def build_seeding_phases(resource: Type[HttpResource], objective: dict) -> list[dict]:
