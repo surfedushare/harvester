@@ -1,3 +1,4 @@
+from typing import Type
 from hashlib import sha1
 
 from django.conf import settings
@@ -5,7 +6,7 @@ from django.conf import settings
 from sources.utils.base import BaseExtractor
 
 
-class HvaMetadataExtraction(BaseExtractor):
+class PureProductExtraction(BaseExtractor):
 
     #############################
     # GENERIC
@@ -29,7 +30,7 @@ class HvaMetadataExtraction(BaseExtractor):
         for electronic_version in electronic_versions:
             if "file" in electronic_version:
                 normalized_url = cls.parse_url(electronic_version["file"]["url"])
-                url = HvaMetadataExtraction._parse_file_url(normalized_url)
+                url = cls._parse_file_url(normalized_url)
             elif "link" in electronic_version:
                 url = electronic_version["link"]
             else:
@@ -66,7 +67,7 @@ class HvaMetadataExtraction(BaseExtractor):
                 "name": full_name,
                 "email": None,
                 "external_id": person_data.get("uuid",
-                                               f"{HvaMetadataExtraction.get_provider(node)['slug']}:person:"
+                                               f"{cls.get_provider(node)['slug']}:person:"
                                                f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
                 "dai": None,
                 "orcid": None,
@@ -138,45 +139,28 @@ class HvaMetadataExtraction(BaseExtractor):
         return current_publication["publicationDate"]["year"]
 
 
-OBJECTIVE = {
-    # Essential objective keys for system functioning
-    "@": "$.items",
-    "external_id": "$.uuid",
-    "state": lambda node: "active",
-    "set": lambda node: "hva:hva",
-    # Generic metadata
-    "modified_at": "$.modifiedDate",
-    "doi": HvaMetadataExtraction.get_doi,
-    "files": HvaMetadataExtraction.get_files,
-    "title": "$.title.value",
-    "language": HvaMetadataExtraction.get_language,
-    "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
-    "description": "$.abstract.en_GB",
-    "authors": HvaMetadataExtraction.get_authors,
-    "provider": HvaMetadataExtraction.get_provider,
-    "organizations": HvaMetadataExtraction.get_organizations,
-    "publishers": HvaMetadataExtraction.get_publishers,
-    "publisher_date": HvaMetadataExtraction.get_publisher_date,
-    "publisher_year": HvaMetadataExtraction.get_publisher_year,
-    # Research product metadata
-    "research_product.research_object_type": "$.type.term.en_GB",
-    "research_product.research_themes": lambda node: [],
-}
-
-
-SEEDING_PHASES = [
-    {
-        "phase": "research_outputs",
-        "strategy": "initial",
-        "batch_size": 100,
-        "retrieve_data": {
-            "resource": "sources.hvapureresource",
-            "method": "get",
-            "args": [],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "objective": OBJECTIVE
-        }
+def build_objective(extract_processor: Type[PureProductExtraction], source_set: str) -> dict:
+    return {
+        # Essential objective keys for system functioning
+        "@": "$.items",
+        "external_id": "$.uuid",
+        "state": lambda node: "active",
+        "set": lambda node: source_set,
+        # Generic metadata
+        "modified_at": "$.modifiedDate",
+        "doi": extract_processor.get_doi,
+        "files": extract_processor.get_files,
+        "title": "$.title.value",
+        "language": extract_processor.get_language,
+        "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
+        "description": "$.abstract.en_GB",
+        "authors": extract_processor.get_authors,
+        "provider": extract_processor.get_provider,
+        "organizations": extract_processor.get_organizations,
+        "publishers": extract_processor.get_publishers,
+        "publisher_date": extract_processor.get_publisher_date,
+        "publisher_year": extract_processor.get_publisher_year,
+        # Research product metadata
+        "research_product.research_object_type": "$.type.term.en_GB",
+        "research_product.research_themes": lambda node: [],
     }
-]
