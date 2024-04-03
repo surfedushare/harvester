@@ -1,30 +1,42 @@
-from datetime import datetime
-
 from django.test import TestCase, override_settings
-from django.utils.timezone import make_aware
 
-from harvester.utils.extraction import get_harvest_seeds
-from core.constants import Repositories
-from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactory, SET_SPECIFICATION
+from datagrowth.configuration import register_defaults
+from core.processors import HttpSeedingProcessor
+from products.models import Set
+from products.sources.hanze import SEEDING_PHASES
+from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactory
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
-class TestGetHarvestSeedsHanze(TestCase):
+class TestHanzeProductExtraction(TestCase):
+
+    set = None
+    seeds = []
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.begin_of_time = make_aware(datetime(year=1970, month=1, day=1))
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
+
         HanzeResearchObjectResourceFactory.create_common_responses()
-        cls.seeds = get_harvest_seeds(Repositories.HANZE, SET_SPECIFICATION, cls.begin_of_time, include_no_url=True)
+        cls.set = Set.objects.create(name="hanze", identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": SEEDING_PHASES
+        })
+        cls.seeds = []
+        for batch in processor("hanze", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+
+        register_defaults("global", {
+            "cache_only": False
+        })
 
     def test_get_record_state(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["state"], "active")
+        self.assertEqual(self.seeds[0]["state"], "active")
 
     def test_get_id(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["external_id"], "01ea0ee1-a419-42ee-878b-439b44562098")
+        self.assertEqual(self.seeds[0]["external_id"], "01ea0ee1-a419-42ee-878b-439b44562098")
 
     def test_get_files(self):
         seeds = self.seeds
