@@ -89,8 +89,7 @@ class TestHanzeProductExtraction(TestCase):
         ])
 
     def test_authors_property(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]['authors'], [
+        self.assertEqual(self.seeds[0]['authors'], [
             {
                 'name': 'Woogie Boogie',
                 'email': None,

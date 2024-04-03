@@ -91,6 +91,15 @@ class PureProductExtraction(PureExtractor):
                 "orcid": None,
                 "isni": None
             })
+        # We'll put the first organization author as first author in the list
+        # Within Publinova this person will become the owner and contact person
+        first_organization_author_index = next(
+            (ix for ix, person in enumerate(node["contributors"]) if "externalPerson" not in person),
+            None
+        )
+        if first_organization_author_index is not None:
+            first_hanze_author = authors.pop(first_organization_author_index)
+            authors = [first_hanze_author] + authors
         return authors
 
     @classmethod
