@@ -56,6 +56,16 @@ class PureProductExtraction(PureExtractor):
         return node["abstract"].get(locale, fallback_description)
 
     @classmethod
+    def get_keywords(cls, node):
+        results = []
+        for keywords in node.get("keywordGroups", []):
+            match keywords["logicalName"]:
+                case "keywordContainers":
+                    for free_keywords in keywords["keywords"]:
+                        results += free_keywords["freeKeywords"]
+        return list(set(results))
+
+    @classmethod
     def get_authors(cls, node):
         authors = []
         for person in node["contributors"]:
@@ -160,7 +170,7 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "files": extract_processor.get_files,
         "title": extract_processor.get_title,
         "language": extract_processor.get_language,
-        "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
+        "keywords": extract_processor.get_keywords,
         "description": extract_processor.get_description,
         "authors": extract_processor.get_authors,
         "provider": extract_processor.get_provider,

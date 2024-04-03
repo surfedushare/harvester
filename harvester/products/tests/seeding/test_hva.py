@@ -144,7 +144,10 @@ class TestHvaProductExtraction(TestCase):
 
     def test_keywords(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["keywords"], ['onderzoek', 'leerlingen', 'Amsterdam', 'schoolloopbanen', 'jongeren'])
+        self.assertEqual(
+            sorted(seeds[0]["keywords"]),
+            ['Amsterdam', 'jongeren', 'leerlingen', 'onderzoek', 'schoolloopbanen']
+        )
 
     def test_authors_property(self):
         seeds = self.seeds
