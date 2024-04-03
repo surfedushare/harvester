@@ -1,6 +1,5 @@
-from typing import Iterator
+from typing import Iterator, Type
 from dataclasses import dataclass
-import re
 from hashlib import sha1
 
 from django.conf import settings
@@ -38,17 +37,7 @@ def get_electronic_version_info(pure_data: dict) -> Iterator[ElectronicVersionIn
             )
 
 
-class HvaMetadataExtraction(BaseExtractor):
-
-    youtube_regex = re.compile(r".*(youtube\.com|youtu\.be).*", re.IGNORECASE)
-
-    @classmethod
-    def get_record_state(cls, node):
-        return "active"
-
-    #############################
-    # GENERIC
-    #############################
+class PureFileExtraction(BaseExtractor):
 
     @staticmethod
     def _parse_file_url(url):
@@ -92,36 +81,21 @@ class HvaMetadataExtraction(BaseExtractor):
         return access_rights
 
 
-OBJECTIVE = {
-    # Essential keys for functioning of the system
-    "@": get_electronic_version_info,
-    "set": lambda info: "hva:hva",
-    "external_id": HvaMetadataExtraction.get_external_id,
-    # Generic metadata
-    "url": HvaMetadataExtraction.get_url,
-    "hash": HvaMetadataExtraction.get_hash,
-    "mime_type": HvaMetadataExtraction.get_mime_type,
-    "title": HvaMetadataExtraction.get_title,
-    "access_rights": HvaMetadataExtraction.get_access_rights,
-    "product_id": lambda info: info.product["uuid"],
-    "is_link": lambda info: info.is_link,
-    "provider": lambda info: "hva",
-}
-
-
-SEEDING_PHASES = [
-    {
-        "phase": "research_outputs",
-        "strategy": "initial",
-        "batch_size": 100,
-        "retrieve_data": {
-            "resource": "sources.hvapureresource",
-            "method": "get",
-            "args": [],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "objective": OBJECTIVE
-        }
+def build_objective(extract_processor: Type[PureFileExtraction], source_set: str) -> dict:
+    provider, set_name = source_set.split(":")
+    return {
+        # Essential keys for functioning of the system
+        "@": get_electronic_version_info,
+        "state": lambda node: "active",
+        "set": lambda info: source_set,
+        "external_id": extract_processor.get_external_id,
+        # Generic metadata
+        "url": extract_processor.get_url,
+        "hash": extract_processor.get_hash,
+        "mime_type": extract_processor.get_mime_type,
+        "title": extract_processor.get_title,
+        "access_rights": extract_processor.get_access_rights,
+        "product_id": lambda info: info.product["uuid"],
+        "is_link": lambda info: info.is_link,
+        "provider": lambda info: provider,
     }
-]
