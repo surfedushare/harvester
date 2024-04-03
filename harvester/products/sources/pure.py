@@ -7,6 +7,8 @@ from sources.utils.pure import PureExtractor
 
 class PureProductExtraction(PureExtractor):
 
+    support_subtitle = False
+
     @classmethod
     def get_files(cls, node):
         electronic_versions = node.get("electronicVersions", []) + node.get("additionalFiles", [])
@@ -36,6 +38,14 @@ class PureProductExtraction(PureExtractor):
         if locale in ["en_GB", "nl_NL"]:
             return locale[:2]
         return "unk"
+
+    @classmethod
+    def get_title(cls, node):
+        title = node["title"]["value"]
+        if "subTitle" in node and cls.support_subtitle:
+            subtitle = node["subTitle"]["value"]
+            title = f"{title}: {subtitle}"
+        return title
 
     @classmethod
     def get_authors(cls, node):
@@ -140,7 +150,7 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "modified_at": "$.modifiedDate",
         "doi": extract_processor.get_doi,
         "files": extract_processor.get_files,
-        "title": "$.title.value",
+        "title": extract_processor.get_title,
         "language": extract_processor.get_language,
         "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
         "description": "$.abstract.en_GB",
