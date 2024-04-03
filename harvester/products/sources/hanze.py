@@ -1,5 +1,6 @@
 from sources.utils.pure import build_seeding_phases
 from sources.models import HanzeResearchObjectResource
+from sources.extraction.hanze.research_themes import ASJC_TO_RESEARCH_THEME
 from products.sources.pure import PureProductExtraction, build_objective
 
 
@@ -28,6 +29,18 @@ class HanzeProductExtractor(PureProductExtraction):
                             continue
                         results.append(classification["term"]["en_GB"])
         return list(set(results))
+
+    @classmethod
+    def get_research_themes(cls, node):
+        research_themes = []
+        for keywords in node.get("keywordGroups", []):
+            if keywords["logicalName"] == "ASJCSubjectAreas":
+                asjc_identifiers = [
+                    classification["uri"].replace("/dk/atira/pure/subjectarea/asjc/", "")
+                    for classification in keywords["classifications"]
+                ]
+                research_themes += [ASJC_TO_RESEARCH_THEME[identifier] for identifier in asjc_identifiers]
+        return research_themes
 
 
 OBJECTIVE = build_objective(HanzeProductExtractor, "hanze:hanze")

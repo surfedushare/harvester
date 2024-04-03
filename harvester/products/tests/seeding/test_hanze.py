@@ -109,25 +109,23 @@ class TestHanzeProductExtraction(TestCase):
         ])
 
     def test_publisher_date(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_date"], "2011-11-01")
-        self.assertEqual(seeds[9]["publisher_date"], "2021-02-01")
+        self.assertEqual(self.seeds[0]["publisher_date"], "2011-11-01")
+        self.assertEqual(self.seeds[9]["publisher_date"], "2021-02-01")
 
     def test_publisher_year(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_year"], 2011)
-        self.assertEqual(seeds[9]["publisher_year"], 2021)
+        self.assertEqual(self.seeds[0]["publisher_year"], 2011)
+        self.assertEqual(self.seeds[9]["publisher_year"], 2021)
 
     def test_research_object_type(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["research_object_type"], "Article")
+        self.assertEqual(self.seeds[0]["research_product"]["research_object_type"], "Article")
 
     def test_doi(self):
-        seeds = self.seeds
-        self.assertIsNone(seeds[0]["doi"])
-        self.assertEqual(seeds[12]["doi"], "10.1016/+j+.rser.2014.10.089")
+        self.assertIsNone(self.seeds[0]["doi"])
+        self.assertEqual(self.seeds[12]["doi"], "10.1016/+j+.rser.2014.10.089")
 
     def test_research_theme(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["research_themes"], ["techniek"])
-        self.assertEqual(seeds[14]["research_themes"], ["economie_management", "ruimtelijkeordening_planning"])
+        self.assertEqual(self.seeds[0]["research_product"]["research_themes"], ["techniek"])
+        self.assertEqual(
+            self.seeds[14]["research_product"]["research_themes"],
+            ["economie_management", "ruimtelijkeordening_planning"]
+        )

@@ -165,6 +165,10 @@ class PureProductExtraction(PureExtractor):
             return
         return current_publication["publicationDate"]["year"]
 
+    @classmethod
+    def get_research_themes(cls, node):
+        return []
+
 
 def build_objective(extract_processor: Type[PureProductExtraction], source_set: str) -> dict:
     return {
@@ -189,5 +193,5 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "publisher_year": extract_processor.get_publisher_year,
         # Research product metadata
         "research_product.research_object_type": "$.type.term.en_GB",
-        "research_product.research_themes": lambda node: [],
+        "research_product.research_themes": extract_processor.get_research_themes,
     }
