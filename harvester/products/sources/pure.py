@@ -1,3 +1,4 @@
+import os
 from typing import Type
 from hashlib import sha1
 
@@ -24,12 +25,16 @@ class PureProductExtraction(PureExtractor):
         return files
 
     @classmethod
+    def get_locale(cls, node):
+        locale_uri = node["language"]["uri"]
+        _, locale = os.path.split(locale_uri)
+        return locale
+
+    @classmethod
     def get_language(cls, node):
-        language = node["language"]["term"]["en_GB"]
-        if language == "Dutch":
-            return "nl"
-        elif language == "English":
-            return "en"
+        locale = cls.get_locale(node)
+        if locale in ["en_GB", "nl_NL"]:
+            return locale[:2]
         return "unk"
 
     @classmethod

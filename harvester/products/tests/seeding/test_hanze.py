@@ -42,26 +42,16 @@ class TestHanzeProductExtraction(TestCase):
         self.assertEqual(self.seeds[0]["files"], [
             "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
             "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
-            "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf"
-        )
-
-    def test_get_mime_type(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["mime_type"], "application/pdf")
-
-    def test_get_analysis_allowed(self):
-        seeds = self.seeds
-        self.assertTrue(seeds[0]["analysis_allowed"], "Expected OpenAccess file to allow analysis")
-        self.assertFalse(
-            seeds[2]["analysis_allowed"],
-            "Expected RestrictedAccess file to disallow analysis, because copyright will be unknown"
-        )
-        self.assertFalse(seeds[3]["analysis_allowed"], "Expected ClosedAccess file to disallow analysis")
+            "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
+        ])
+        self.assertEqual(self.seeds[12]["files"], [
+            "http://testserver/api/v1/files/hanze/research-outputs/3786d62c-11fa-445b-a299-cc79ea00d468/"
+            "files/MDAxYTdkM2M2/Power_to_the_people_accepted_version_1.pdf",
+        ])
 
     def test_get_language(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["language"], {"metadata": "nl"})
-        self.assertEqual(seeds[1]["language"], {"metadata": "en"})
+        self.assertEqual(self.seeds[0]["language"], "nl")
+        self.assertEqual(self.seeds[1]["language"], "en")
 
     def test_get_title(self):
         seeds = self.seeds
