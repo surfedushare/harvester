@@ -62,7 +62,7 @@ class PureProductExtraction(PureExtractor):
             match keywords["logicalName"]:
                 case "keywordContainers":
                     for free_keywords in keywords["keywords"]:
-                        results += free_keywords["freeKeywords"]
+                        results += free_keywords.get("freeKeywords", [])
         return list(set(results))
 
     @classmethod
