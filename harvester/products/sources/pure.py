@@ -48,6 +48,14 @@ class PureProductExtraction(PureExtractor):
         return title
 
     @classmethod
+    def get_description(cls, node):
+        if "abstract" not in node:
+            return
+        locale = cls.get_locale(node)
+        fallback_description = next(iter(node["abstract"].values()), None)
+        return node["abstract"].get(locale, fallback_description)
+
+    @classmethod
     def get_authors(cls, node):
         authors = []
         for person in node["contributors"]:
@@ -153,7 +161,7 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "title": extract_processor.get_title,
         "language": extract_processor.get_language,
         "keywords": "$.keywordGroups.0.keywords.0.freeKeywords",
-        "description": "$.abstract.en_GB",
+        "description": extract_processor.get_description,
         "authors": extract_processor.get_authors,
         "provider": extract_processor.get_provider,
         "organizations": extract_processor.get_organizations,
