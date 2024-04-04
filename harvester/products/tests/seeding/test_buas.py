@@ -1,23 +1,33 @@
-from datetime import datetime
-
 from django.test import TestCase
-from django.utils.timezone import make_aware
 
-from harvester.utils.extraction import get_harvest_seeds
-from core.constants import Repositories
-from sources.factories.buas.extraction import BuasPureResourceFactory, SET_SPECIFICATION
+from datagrowth.configuration import register_defaults
+from core.processors import HttpSeedingProcessor
+from products.models import Set
+from products.sources.buas import SEEDING_PHASES
+from sources.factories.buas.extraction import BuasPureResourceFactory
 
 
-class TestGetHarvestSeedsBuas(TestCase):
+class TestBuasProductExtraction(TestCase):
 
-    begin_of_time = None
+    set = None
+    seeds = []
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.begin_of_time = make_aware(datetime(year=1970, month=1, day=1))
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
         BuasPureResourceFactory.create_common_responses()
-        cls.seeds = get_harvest_seeds(Repositories.BUAS, SET_SPECIFICATION, cls.begin_of_time)
+        cls.set = Set.objects.create(name="buas:buas", identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": SEEDING_PHASES
+        })
+        cls.seeds = []
+        for batch in processor("buas", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+        register_defaults("global", {
+            "cache_only": False
+        })
 
     def test_get_id(self):
         seeds = self.seeds
