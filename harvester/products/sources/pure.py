@@ -8,6 +8,8 @@ from sources.utils.pure import PureExtractor
 class PureProductExtraction(PureExtractor):
 
     support_subtitle = False
+    authors_property = "contributors"
+    file_url_property = "url"
 
     @classmethod
     def get_files(cls, node):
@@ -17,7 +19,7 @@ class PureProductExtraction(PureExtractor):
         files = []
         for electronic_version in electronic_versions:
             if "file" in electronic_version:
-                normalized_url = cls.parse_url(electronic_version["file"]["url"])
+                normalized_url = cls.parse_url(electronic_version["file"][cls.file_url_property])
                 url = cls._parse_file_url(normalized_url)
             elif "link" in electronic_version:
                 url = electronic_version["link"]
@@ -68,7 +70,7 @@ class PureProductExtraction(PureExtractor):
     @classmethod
     def get_authors(cls, node):
         authors = []
-        for person in node["contributors"]:
+        for person in node[cls.authors_property]:
             name = person.get('name', {})
             match name:
                 case {"firstName": first_name}:
@@ -94,12 +96,12 @@ class PureProductExtraction(PureExtractor):
         # We'll put the first organization author as first author in the list
         # Within Publinova this person will become the owner and contact person
         first_organization_author_index = next(
-            (ix for ix, person in enumerate(node["contributors"]) if "externalPerson" not in person),
+            (ix for ix, person in enumerate(node[cls.authors_property]) if "externalPerson" not in person),
             None
         )
         if first_organization_author_index is not None:
-            first_hanze_author = authors.pop(first_organization_author_index)
-            authors = [first_hanze_author] + authors
+            first_organization_author = authors.pop(first_organization_author_index)
+            authors = [first_organization_author] + authors
         return authors
 
     @classmethod
