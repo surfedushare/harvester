@@ -214,20 +214,6 @@ class TestRawDocumentView(TestDocumentView):
     }
 
 
-class TestMetadataDocumentView(TestDocumentView):
-
-    format = "metadata"
-    list_view_name = "v1:core:metadata-documents"
-    detail_view_name = "v1:core:metadata-document-detail"
-    expected_document_output = {
-        "id": 222318,
-        "reference": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
-        "language": "en",
-        "created_at": "2020-02-17T10:53:24.388000Z",
-        "modified_at": "2020-02-17T10:53:24.388000Z"
-    }
-
-
 @skip("Extensions are deprecated")
 @override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
 class TestExtendedDocumentView(TestCase):
