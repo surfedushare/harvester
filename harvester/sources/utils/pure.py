@@ -16,7 +16,7 @@ class PureExtractor(BaseExtractor):
     @classmethod
     def _parse_file_url(cls, url):
         file_path_segment = cls.pure_api_prefix
-        if file_path_segment not in url:
+        if file_path_segment is None or file_path_segment not in url:
             return url  # not dealing with a url we recognize as a file url
         start = url.index(file_path_segment)
         file_path = url[start + len(file_path_segment):]

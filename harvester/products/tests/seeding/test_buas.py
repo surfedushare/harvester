@@ -30,32 +30,15 @@ class TestBuasProductExtraction(TestCase):
         })
 
     def test_get_id(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["external_id"], "b7b17301-7123-4113-aa8a-8391aa9d7e01")
+        self.assertEqual(self.seeds[0]["external_id"], "b7b17301-7123-4113-aa8a-8391aa9d7e01")
 
     def test_get_files(self):
-        seeds = self.seeds
-        self.assertEqual(seeds[0]["files"], [])
-        self.assertEqual(seeds[1]["files"], [
-            {
-                "title": None,
-                "url": "http://www.control-online.nl/gamesindustrie/2010/04/26/nieuw-column-op-maandag/",
-                "mime_type": "text/html",
-                "hash": "d42e0d5475f052d4fa0ef5216fd7dcbfc3a4374d",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            }
+        self.assertEqual(self.seeds[0]["files"], [])
+        self.assertEqual(self.seeds[1]["files"], [
+            "http://www.control-online.nl/gamesindustrie/2010/04/26/nieuw-column-op-maandag/",
         ])
-        self.assertEqual(seeds[3]["files"], [
-            {
-                "title": "Peeters_tourismandclimatemitigation_peetersp_ed_nhtv2007.pdf",
-                "url": "https://pure.buas.nl/ws/files/15672869/"
-                       "Peeters_tourismandclimatemitigation_peetersp_ed_nhtv2007.pdf",
-                "mime_type": "application/pdf",
-                "hash": "f8839eeea39968549dafe4075232074a15adcb63",
-                "copyright": None,
-                "access_rights": "OpenAccess"
-            }
+        self.assertEqual(self.seeds[3]["files"], [
+            "https://pure.buas.nl/ws/files/15672869/Peeters_tourismandclimatemitigation_peetersp_ed_nhtv2007.pdf"
         ])
 
     def test_get_url(self):

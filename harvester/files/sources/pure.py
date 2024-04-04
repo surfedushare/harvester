@@ -37,9 +37,12 @@ def get_electronic_version_info(pure_data: dict) -> Iterator[ElectronicVersionIn
 
 class PureFileExtraction(PureExtractor):
 
+    file_url_property = "url"
+
     @classmethod
     def get_url(cls, info: ElectronicVersionInfo) -> str:
-        normalized_url = cls.parse_url(info.data["url"])
+        url_property = "url" if info.is_link else cls.file_url_property
+        normalized_url = cls.parse_url(info.data[url_property])
         return cls._parse_file_url(normalized_url)
 
     @classmethod
