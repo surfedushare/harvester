@@ -6,8 +6,8 @@ from products.sources.pure import PureProductExtraction, build_objective
 class BuasProductExtractor(PureProductExtraction):
     source_slug = "buas"
     source_name = "Breda University of Applied Sciences"
-    authors_property = "personAssociations"
-    file_url_property = "fileURL"
+    authors_property = "personAssociations"  # Pure API v1 naming convention
+    file_url_property = "fileURL"  # Pure API v1 naming convention
 
     @classmethod
     def get_keywords(cls, node):
@@ -21,7 +21,7 @@ class BuasProductExtractor(PureProductExtraction):
         return results
 
 
-OBJECTIVE = build_objective(BuasProductExtractor, "buas:buas")
+OBJECTIVE = build_objective(BuasProductExtractor, "buas:buas", "v1")
 
 
 SEEDING_PHASES = build_seeding_phases(BuasPureResource, OBJECTIVE)

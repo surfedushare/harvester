@@ -149,7 +149,15 @@ class PureProductExtraction(PureExtractor):
         return []
 
 
-def build_objective(extract_processor: Type[PureProductExtraction], source_set: str) -> dict:
+def build_objective(extract_processor: Type[PureProductExtraction], source_set: str, api_version: str = "v2") -> dict:
+    if api_version == "v2":
+        description_extractor = extract_processor.get_description
+        object_type_extractor = "$.type.term.en_GB"
+    elif api_version == "v1":
+        description_extractor = "$.abstract.text.0.value"
+        object_type_extractor = "$.type.term.text.0.value"
+    else:
+        raise ValueError(f"Unexpected Pure API version: {api_version}")
     return {
         # Essential objective keys for system functioning
         "@": "$.items",
@@ -163,7 +171,7 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "title": extract_processor.get_title,
         "language": extract_processor.get_language,
         "keywords": extract_processor.get_keywords,
-        "description": extract_processor.get_description,
+        "description": description_extractor,
         "authors": extract_processor.get_authors,
         "provider": extract_processor.get_provider,
         "organizations": extract_processor.get_organizations,
@@ -171,6 +179,6 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "publisher_date": extract_processor.get_publisher_date,
         "publisher_year": extract_processor.get_publisher_year,
         # Research product metadata
-        "research_product.research_object_type": "$.type.term.en_GB",
+        "research_product.research_object_type": object_type_extractor,
         "research_product.research_themes": extract_processor.get_research_themes,
     }
