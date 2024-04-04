@@ -103,29 +103,6 @@ class PureProductExtraction(PureExtractor):
         return authors
 
     @classmethod
-    def get_provider(cls, node):
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": "hva",
-            "name": "Hogeschool van Amsterdam"
-        }
-
-    @classmethod
-    def get_organizations(cls, node):
-        root = cls.get_provider(node)
-        root["type"] = "institute"
-        return {
-            "root": root,
-            "departments": [],
-            "associates": []
-        }
-
-    @classmethod
-    def get_publishers(cls, node):
-        return ["Hogeschool van Amsterdam"]
-
-    @classmethod
     def get_doi(cls, node):
         if "electronicVersions" not in node:
             return None

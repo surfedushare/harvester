@@ -8,6 +8,7 @@ class HanzeProductExtractor(PureProductExtraction):
 
     pure_api_prefix = "/nppo/"
     source_slug = "hanze"
+    source_name = "Hanze"
     support_subtitle = True
 
     @classmethod

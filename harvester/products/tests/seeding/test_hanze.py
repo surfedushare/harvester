@@ -108,6 +108,17 @@ class TestHanzeProductExtraction(TestCase):
             }
         ])
 
+    def test_get_provider(self):
+        self.assertEqual(self.seeds[0]["provider"], {
+            "ror": None,
+            "external_id": None,
+            "slug": "hanze",
+            "name": "Hanze"
+        })
+
+    def test_get_publishers(self):
+        self.assertEqual(self.seeds[0]["publishers"], ["Hanze"])
+
     def test_publisher_date(self):
         self.assertEqual(self.seeds[0]["publisher_date"], "2011-11-01")
         self.assertEqual(self.seeds[9]["publisher_date"], "2021-02-01")

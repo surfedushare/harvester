@@ -179,6 +179,17 @@ class TestHvaProductExtraction(TestCase):
             }
         ])
 
+    def test_get_provider(self):
+        self.assertEqual(self.seeds[0]["provider"], {
+            "ror": None,
+            "external_id": None,
+            "slug": "hva",
+            "name": "Hogeschool van Amsterdam"
+        })
+
+    def test_get_publishers(self):
+        self.assertEqual(self.seeds[0]["publishers"], ["Hogeschool van Amsterdam"])
+
     def test_publisher_year(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["publisher_year"], 2016)
