@@ -69,7 +69,7 @@ class Command(PipelineCommand):
             errors = index.push(lang_doc_dict[lang], recreate=True)
             self.logger.open_search_errors(errors)
             if should_promote:
-                self.logger.info(f"Promoting index { index.remote_name } to latest")
+                self.logger.info(f"Promoting index {index.remote_name} to latest")
                 index.promote_to_latest()
             self.logger.end(f"index.{lang}", fail=index.error_count)
 

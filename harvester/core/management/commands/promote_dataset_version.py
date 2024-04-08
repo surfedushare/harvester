@@ -43,12 +43,12 @@ class Command(BaseCommand):
 
         if getattr(dataset_version, "indices", None):
             for index in dataset_version.indices.all():
-                logger.info(f"Promoting index { index.remote_name } to latest")
+                logger.info(f"Promoting index {index.remote_name} to latest")
                 index.promote_to_latest()
             dataset_version.set_current()
         elif getattr(dataset_version, "index", None):
             index = dataset_version.index
-            logger.info(f"Promoting index { index.name } to latest")
+            logger.info(f"Promoting index {index.name} to latest")
             dataset_version.index.promote_all_to_latest()  # when merging languages into one index we can remove "all"
             dataset_version.set_index_promoted()
             dataset_version.set_current()
