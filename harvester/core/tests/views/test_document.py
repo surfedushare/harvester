@@ -123,7 +123,7 @@ class TestDocumentView(TestCase):
         response = self.client.get(detail_url)
         self.assertEqual(response.status_code, 404)
         data = response.json()
-        self.assertEqual(data["detail"], "Not found.")
+        self.assertEqual(data["detail"], "No Document matches the given query.")
 
     def test_detail_quoted_id(self):
         """
