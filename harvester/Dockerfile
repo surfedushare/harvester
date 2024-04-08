@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 SHELL ["/bin/bash", "-c"]
 ARG UID=1000
 ARG GID=1000
@@ -39,7 +39,7 @@ USER app:app
 COPY harvester/requirements.txt /usr/src/app/
 RUN pip install -U --no-cache-dir --user pip
 RUN pip install wheel
-RUN pip install --no-cache-dir --user uwsgi==2.0.21
+RUN pip install --no-cache-dir --user uwsgi==2.0.24
 RUN pip install --no-cache-dir --user -r requirements.txt
 RUN pip install --no-cache-dir --user git+https://github.com/surfedushare/search-client.git@v0.5.2
 
