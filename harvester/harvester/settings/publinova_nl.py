@@ -8,3 +8,5 @@ SHAREKIT_TEST_ORGANIZATION = "Publinova test"
 SHAREKIT_TEST_ORGANIZATIONS = ["Publinova test", "ArtEZ University of the Arts"]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
+
+CHECK_URL_AUTO_SUCCEED_SETS = ["saxion:kenniscentra"]

@@ -128,5 +128,99 @@
             "days": 30
         }
     }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 4,
+    "fields": {
+        "name": "Greeni",
+        "module": "greeni",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 7,
+    "fields": {
+        "source": 4,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "PUBVHL"
+        ],
+        "delete_policy": "transient",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 8,
+    "fields": {
+        "source": 4,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "PUBVHL"
+        ],
+        "delete_policy": "transient",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 5,
+    "fields": {
+        "name": "Saxion",
+        "module": "saxion",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 9,
+    "fields": {
+        "source": 5,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "kenniscentra"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 10,
+    "fields": {
+        "source": 5,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "kenniscentra"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
 }
 ]

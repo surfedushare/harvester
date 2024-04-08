@@ -33,7 +33,7 @@ class HanzeResearchObjectResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def uri(self):
         offset = self.number * 10
-        return f"{ENDPOINT}?offset={offset}&size=10"
+        return f"{ENDPOINT}?offset={offset}&size=10" if offset else ENDPOINT
 
     @factory.lazy_attribute
     def request(self):

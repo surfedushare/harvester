@@ -18,11 +18,11 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://staging.edurep.kennisnet.nl"
-    sharekit: "https://api.acc.surfsharekit.nl"
+    sharekit: "https://api.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
-    publinova: "https://api.publinova.acc.surf.zooma.cloud"
+    publinova: "https://api.publinova.nl"
   webhook_allowed_ips:
     sharekit:
       - "145.101.123.227"  # production

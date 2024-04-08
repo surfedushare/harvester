@@ -31,10 +31,10 @@ class TestGetHarvestSeedsHanze(TestCase):
         self.assertEqual(seeds[0]["files"], [
             {
                 "mime_type": "application/pdf",
-                "url": "http://testserver/api/v1/files/hanze/01ea0ee1-a419-42ee-878b-439b44562098/"
+                "url": "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
                        "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
                        "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
-                "hash": "d47389e09bad8edaa58c9f10f089b98f38aa2544",
+                "hash": "01df6be8b59f65074350ca33c8eded52ea106222",
                 "title": "wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
                          "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
                 "copyright": None,
@@ -44,10 +44,10 @@ class TestGetHarvestSeedsHanze(TestCase):
         self.assertEqual(seeds[12]["files"], [
             {
                 "title": "Power_to_the_people_accepted_version_1.pdf",
-                "url": "http://testserver/api/v1/files/hanze/3786d62c-11fa-445b-a299-cc79ea00d468/"
+                "url": "http://testserver/api/v1/files/hanze/research-outputs/3786d62c-11fa-445b-a299-cc79ea00d468/"
                        "files/MDAxYTdkM2M2/Power_to_the_people_accepted_version_1.pdf",
                 "mime_type": "application/pdf",
-                "hash": "fbe8676a434726e5e16f78929494cc2fc9a14a2b",
+                "hash": "a38e0ae1aaefd3842e7afdf47be2ef25f5e7f46b",
                 "copyright": None,
                 "access_rights": "OpenAccess"
             }
@@ -57,7 +57,7 @@ class TestGetHarvestSeedsHanze(TestCase):
         seeds = self.seeds
         self.assertEqual(
             seeds[0]["url"],
-            "http://testserver/api/v1/files/hanze/01ea0ee1-a419-42ee-878b-439b44562098/"
+            "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
             "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
             "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf"
         )
@@ -82,7 +82,16 @@ class TestGetHarvestSeedsHanze(TestCase):
 
     def test_get_title(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["title"], "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen")
+        self.assertEqual(
+            seeds[0]["title"],
+            "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen: "
+            "een overzicht van 20 jaar monitoring in Nederland en een aanzet tot richtlijnen",
+            "Expected subtitle to be concatenated with title"
+        )
+        self.assertEqual(
+            seeds[2]["title"], "'Vrije plekken' en cultureel erfgoed van krimpdorpen",
+            "Only expected title if subtitle is not available"
+        )
 
     def test_get_description(self):
         seeds = self.seeds

@@ -125,7 +125,7 @@ class TestHvaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [])
         self.assertEqual(seeds[3]["files"], [
-            "http://testserver/api/v1/files/hva/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
+            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
             "MDIyMzRi/636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
         ])
 
@@ -144,7 +144,10 @@ class TestHvaProductExtraction(TestCase):
 
     def test_keywords(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["keywords"], ['onderzoek', 'leerlingen', 'Amsterdam', 'schoolloopbanen', 'jongeren'])
+        self.assertEqual(
+            sorted(seeds[0]["keywords"]),
+            ['Amsterdam', 'jongeren', 'leerlingen', 'onderzoek', 'schoolloopbanen']
+        )
 
     def test_authors_property(self):
         seeds = self.seeds
@@ -175,6 +178,17 @@ class TestHvaProductExtraction(TestCase):
                 'dai': None, 'orcid': None, 'isni': None
             }
         ])
+
+    def test_get_provider(self):
+        self.assertEqual(self.seeds[0]["provider"], {
+            "ror": None,
+            "external_id": None,
+            "slug": "hva",
+            "name": "Hogeschool van Amsterdam"
+        })
+
+    def test_get_publishers(self):
+        self.assertEqual(self.seeds[0]["publishers"], ["Hogeschool van Amsterdam"])
 
     def test_publisher_year(self):
         seeds = self.seeds

@@ -24,7 +24,7 @@ class HanzeResourceObjectExtraction(ExtractProcessor):
 
     @staticmethod
     def _parse_file_url(url):
-        file_path_segment = "/nppo/research-outputs/"
+        file_path_segment = "/nppo/"
         if file_path_segment not in url:
             return url  # not dealing with a url we recognize as a file url
         start = url.index(file_path_segment)
@@ -108,6 +108,14 @@ class HanzeResourceObjectExtraction(ExtractProcessor):
             return
         mime_type, encoding = guess_type(file_url)
         return settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(mime_type, "unknown")
+
+    @classmethod
+    def get_title(cls, node):
+        title = node["title"]["value"]
+        if "subTitle" in node:
+            subtitle = node["subTitle"]["value"]
+            title = f"{title}: {subtitle}"
+        return title
 
     @classmethod
     def get_description(cls, node):
@@ -284,7 +292,7 @@ HanzeResourceObjectExtraction.OBJECTIVE = {
     "url": HanzeResourceObjectExtraction.get_url,
     "files": HanzeResourceObjectExtraction.get_files,
     "copyright": lambda node: None,
-    "title": "$.title.value",
+    "title": HanzeResourceObjectExtraction.get_title,
     "language": HanzeResourceObjectExtraction.get_language,
     "keywords": HanzeResourceObjectExtraction.get_keywords,
     "description": HanzeResourceObjectExtraction.get_description,
