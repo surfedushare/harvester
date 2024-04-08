@@ -10,7 +10,7 @@ or locally stored data.
 
 ## Prerequisites
 
-This project uses `Python 3.10`, `npm`, `Docker`, `Docker Compose V2` and `psql`.
+This project uses `Python 3.12`, `npm`, `Docker`, `Docker Compose V2` and `psql`.
 Make sure they are installed on your system before installing the project.
 
 ## Installation
@@ -27,7 +27,7 @@ We recommend installing Python through pyenv:
 
 ```
 brew update && brew upgrade pyenv
-pyenv install 3.10.4
+pyenv install 3.12.0
 ```
 
 When using macOS make sure you have `libmagic` installed. It can be installed using `brew install libmagic`.
