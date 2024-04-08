@@ -150,8 +150,11 @@ class FileDocument(HarvestDocument):
         if url and not url.startswith("http"):
             self.is_not_found = True
         elif url:
-            url_info = urlparse(url)
-            self.domain = url_info.hostname
+            try:
+                url_info = urlparse(url)
+                self.domain = url_info.hostname
+            except ValueError:
+                self.is_not_found = True
         else:
             self.is_not_found = True
         mime_type = self.properties.get("mime_type")
