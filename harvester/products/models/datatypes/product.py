@@ -101,7 +101,7 @@ class ProductDocument(HarvestDocument):
         ]
         files = []
         for file_identity in file_identities:
-            file_info = files_by_identity.get(file_identity, None)
+            file_info = files_by_identity.get(file_identity, {})
             if not file_info:
                 continue
             if "text" in file_info:
@@ -128,7 +128,7 @@ class ProductDocument(HarvestDocument):
         ]
 
     def transform_search_data(self, data: dict) -> dict:
-        text = data.pop("text", None)
+        text = data.pop("text", "")
         if text and len(text) >= 1000000:
             text = " ".join(text.split(" ")[:10000])
         data["text"] = text
@@ -153,12 +153,12 @@ class ProductDocument(HarvestDocument):
                 "url": None, "mime_type": None, "text": None, "previews": None, "video": None,
                 "technical_type": data.get("technical_type"),
             })
-        learning_material = data.pop("learning_material", None)
+        learning_material = data.pop("learning_material", {})
         if learning_material:
             learning_material["learning_material_disciplines"] = learning_material["disciplines"]
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
             data.update(learning_material)
-        research_product = data.pop("research_product", None)
+        research_product = data.pop("research_product", {})
         if research_product:
             research_product.pop("parties", None)  # parties equals publishers for now and we ignore parties
             data.update(research_product)
