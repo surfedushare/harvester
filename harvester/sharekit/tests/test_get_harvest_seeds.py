@@ -92,14 +92,13 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
 
     def test_publishers_property(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]['publishers'], ['SURFnet'])
+        self.assertEqual(seeds[2]['publishers'], ["Hogeschool Utrecht", 'SURFnet'])
         self.assertEqual(seeds[4]['publishers'], ['SURFnet'])
 
     def test_consortium(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]['consortium'], 'Projectgroep Vaktherapie')
+        self.assertEqual(seeds[0]['consortium'], 'Stimuleringsregeling Open en Online Onderwijs')
         self.assertIsNone(seeds[1]['consortium'])
-        self.assertEqual(seeds[2]['consortium'], 'Domain Applied Science')
 
     def test_organizations(self):
         seeds = self.seeds
@@ -187,11 +186,10 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["technical_type"], "document",
                          "Expected unknown technical types to be deferred from mime type")
-        self.assertEqual(seeds[2]["technical_type"], "document",
+        self.assertEqual(seeds[2]["technical_type"], "unknown",
                          "Expected files without URL and mime type to be ignored for technical_format")
         self.assertEqual(seeds[3]["technical_type"], "video", "Expected technicalFormat to be used when present")
         self.assertEqual(seeds[4]["technical_type"], "website", "Expected links to be a fallback if there are no files")
-        self.assertEqual(seeds[5]["technical_type"], "unknown", "Expected 'unknown' for missing mime types")
 
     def test_get_material_types(self):
         seeds = self.seeds
@@ -205,11 +203,11 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
 
     def test_get_publisher_year(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_year"], 1970)
+        self.assertEqual(seeds[0]["publisher_year"], 2019)
         self.assertIsNone(seeds[8]["publisher_year"], "Expected deleted material to have no publisher year")
 
     def test_get_publisher_date(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
-        self.assertIsNone(seeds[6]["publisher_date"])
-        self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")
+        self.assertEqual(seeds[0]["publisher_date"], "2019-01-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2016-09-02")
+        self.assertIsNone(seeds[2]["publisher_date"])

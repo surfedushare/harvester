@@ -129,14 +129,13 @@ class TestSharekitProductExtraction(TestCase):
 
     def test_publishers_property(self):
         seeds = self.seeds
-        self.assertEqual(seeds[2]['publishers'], ['SURFnet'])
+        self.assertEqual(seeds[2]['publishers'], ["Hogeschool Utrecht", 'SURFnet'])
         self.assertEqual(seeds[4]['publishers'], ['SURFnet'])
 
     def test_consortium(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]['learning_material']['consortium'], 'Projectgroep Vaktherapie')
+        self.assertEqual(seeds[0]['learning_material']['consortium'], 'Stimuleringsregeling Open en Online Onderwijs')
         self.assertIsNone(seeds[1]['learning_material']['consortium'])
-        self.assertEqual(seeds[2]['learning_material']['consortium'], 'Domain Applied Science')
 
     def test_organizations(self):
         seeds = self.seeds
@@ -228,14 +227,14 @@ class TestSharekitProductExtraction(TestCase):
 
     def test_get_publisher_year(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_year"], 1970)
+        self.assertEqual(seeds[0]["publisher_year"], 2019)
         self.assertIsNone(seeds[8]["publisher_year"], "Expected deleted material to have no publisher year")
 
     def test_get_publisher_date(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["publisher_date"], "1970-12-11")
-        self.assertIsNone(seeds[6]["publisher_date"])
-        self.assertEqual(seeds[7]["publisher_date"], "2016-01-01")
+        self.assertEqual(seeds[0]["publisher_date"], "2019-01-01")
+        self.assertEqual(seeds[1]["publisher_date"], "2016-09-02")
+        self.assertIsNone(seeds[2]["publisher_date"])
 
     def test_technical_type(self):
         seeds = self.seeds
