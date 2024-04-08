@@ -7,8 +7,8 @@ from django.utils.timezone import make_aware
 from django.core.exceptions import ValidationError
 
 from datagrowth.exceptions import DGHttpError50X, DGHttpError40X
-from edurep.models import EdurepOAIPMH
-from edurep.tests.factories import EdurepOAIPMHFactory
+from sources.models import EdurepOAIPMH
+from sources.factories.edurep.extraction import EdurepOAIPMHFactory
 
 
 class TestEdurepOAIPMH(TestCase):
@@ -17,8 +17,8 @@ class TestEdurepOAIPMH(TestCase):
     def setUp(cls):
         cls.instance = EdurepOAIPMH()
 
-    @patch("edurep.models.EdurepOAIPMH.handle_errors")
-    @patch("edurep.models.EdurepOAIPMH._send")
+    @patch("sources.models.EdurepOAIPMH.handle_errors")
+    @patch("sources.models.EdurepOAIPMH._send")
     def test_get_since_time(self, send_mock, handle_errors_mock):
         self.instance.get("surfsharekit", "2021-01-01T01:00:00Z")
         self.assertEqual(send_mock.call_count, 1)
@@ -29,8 +29,8 @@ class TestEdurepOAIPMH(TestCase):
         self.assertEqual(self.instance.since, make_aware(datetime(year=2021, month=1, day=1, hour=1)))
         self.assertEqual(self.instance.set_specification, "surfsharekit")
 
-    @patch("edurep.models.EdurepOAIPMH.handle_errors")
-    @patch("edurep.models.EdurepOAIPMH._send")
+    @patch("sources.models.EdurepOAIPMH.handle_errors")
+    @patch("sources.models.EdurepOAIPMH._send")
     def test_get_since_date(self, send_mock, handle_errors_mock):
         self.instance.get("surfsharekit", "2021-01-01")
         self.assertEqual(send_mock.call_count, 1)
