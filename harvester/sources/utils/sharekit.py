@@ -22,8 +22,8 @@ class SharekitExtractor(BaseExtractor):
         default_state = "active"
         if attributes:
             provider_name = attributes.get("owner", {}).get("name", None)
-            if provider_name and provider_name in settings.SHAREKIT_TEST_ORGANIZATION and \
-                    settings.ENVIRONMENT in ["production"]:
+            if provider_name and provider_name in settings.SHAREKIT_TEST_ORGANIZATIONS and \
+                    settings.ENVIRONMENT == "production":
                 default_state = "skipped"
         return node.get("meta", {}).get("status", default_state)
 
