@@ -129,12 +129,26 @@ class TestSharekitFileExtraction(TestCase):
                          "https://www.youtube.com/watch?v=Zl59P5ZNX3M")
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
+        self.assertEqual(
+            self.seeds[0]["hash"],
+            "5e4efaa669b40b9f4b75ba32fa9c3ca0-15",
+            "Expected files with an eTag to use it as hash"
+        )
+        self.assertEqual(
+            self.seeds[1]["hash"],
+            "8b714937aab9bda1005d8aa76c607e629b25d89e",
+            "Expected links to never use an eTag as hash, since it is not provided"
+        )
+        self.assertEqual(
+            self.seeds[2]["hash"],
+            "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+            "Expected files without an eTag to fall back to a URL based hash"
+        )
 
     def test_get_external_id(self):
         self.assertEqual(
             self.seeds[0]["external_id"],
-            "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de"
+            "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
         )
 
     def test_get_mime_type(self):
