@@ -94,6 +94,14 @@ class TestSharekitProductExtraction(TestCase):
         for batch in processor("edusources", "1970-01-01T00:00:00Z"):
             cls.seeds += [doc.properties for doc in batch]
 
+    def test_provider(self):
+        self.assertEqual(self.seeds[0]["provider"], {
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+            "slug": None,
+            "name": "Stimuleringsregeling Open en Online Onderwijs"
+        })
+
     def test_modified_at(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["modified_at"], "2017-12-11T12:52:09Z")
@@ -139,7 +147,7 @@ class TestSharekitProductExtraction(TestCase):
 
     def test_organizations(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["organizations"]["root"]["name"], "SURFnet")
+        self.assertEqual(seeds[0]["organizations"]["root"]["name"], "Stimuleringsregeling Open en Online Onderwijs")
 
     def test_is_part_of_property(self):
         seeds = self.seeds
