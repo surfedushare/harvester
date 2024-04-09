@@ -48,12 +48,13 @@ class TestSharekitFileSeeding(TestCase):
             "3e45b9e3-ba76-4200-a927-2902177f1f6c",
             "4842596f-fe60-40ef-8c06-4d3d6e296ba4",
             "f4e867ba-0bd0-489a-824a-752038dfee63",
+            # Documents that get an update
+            "63903863-6c93-4bda-b850-277f3c9ec00e"
         }
         # Load the delta data and see if updates have taken place
         documents = []
         for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
             self.assertIsInstance(batch, list)
-            # import json; print(json.dumps([doc.properties for doc in batch], indent=4))
             for file_ in batch:
                 self.assertIsInstance(file_, FileDocument)
                 self.assertIsNotNone(file_.identity)
@@ -64,6 +65,11 @@ class TestSharekitFileSeeding(TestCase):
                 else:
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
+                if file_.properties["product_id"] == "63903863-6c93-4bda-b850-277f3c9ec00e":
+                    self.assertEqual(
+                        file_.get_pending_tasks(), ["check_url"],
+                        "Expected a hash change to re-trigger related tasks"
+                    )
                 documents.append(file_)
         self.assertEqual(len(documents), 3 + 1 + 1, "Expected three additions, one deletion and one update")
         self.assertEqual(
