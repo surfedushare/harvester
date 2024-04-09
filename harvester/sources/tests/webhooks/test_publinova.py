@@ -20,6 +20,10 @@ class TestPublinovaDocumentWebhook(webhook_test_base.TestEditDocumentWebhook):
 
     fixtures = ["datasets-history"]
 
+    update_id = "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
+    delete_id = "63903863-6c93-4bda-b850-277f3c9ec00e"
+    expected_language_code = "en"
+
     @classmethod
     def load_publinova_test_data(cls):
         delta_response = PublinovaMetadataResourceFactory.create(is_initial=True, number=0)

@@ -32,20 +32,20 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
                 "state": "active",
                 "set": "sharekit:edusources",
                 "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
-                "title": "Should become 'Using a Vortex (responsibly) | Wageningen UR'",
+                "title": "To be deleted",
                 "language": "en",
                 "learning_material": {
-                    "study_vocabulary": ["applied-science"]  # gets replaced
+                    "study_vocabulary": ["applied-science"]  # remains intact
                 }
             },
             {
                 "state": "active",
                 "set": "sharekit:edusources",
                 "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
-                "title": "To be deleted",
+                "title": "Should become 'Pim-pam-pet denken bij scheikunde'",
                 "language": "nl",
                 "learning_material": {
-                    "study_vocabulary": ["applied-science"]  # remains intact
+                    "study_vocabulary": ["applied-science"]  # gets replaced
                 }
             }
         ]
@@ -60,8 +60,22 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
             {
                 "state": "active",
                 "set": "sharekit:edusources",
-                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
-                "url": "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+            },
+            {
+                "state": "active",
+                "set": "sharekit:edusources",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a",
+                "url": "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
+                "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+            },
+            {
+                "state": "active",
+                "set": "sharekit:edusources",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
                 "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
             },
         ]
@@ -69,12 +83,12 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
             create_datatype_models("products", cls.set_names, cls.product_seeds, 2)
         )
         cls.files_dataset, cls.files_dataset_version, cls.files_sets, cls.files_documents = (
-            create_datatype_models("files", cls.set_names, cls.file_seeds, 2)
+            create_datatype_models("files", cls.set_names, cls.file_seeds, 4)
         )
-        cls.update_document = cls.product_documents[0]
+        cls.update_document = cls.product_documents[1]
         cls.update_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
         cls.update_document.save()
-        delete_document = cls.product_documents[1]
+        delete_document = cls.product_documents[0]
         delete_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
         delete_document.save()
 
@@ -86,8 +100,8 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
         delta_records = delta["data"]
         cls.test_data = {
             "create": delta_records[2],
-            "update": delta_records[0],
-            "delete": delta_records[1]
+            "update": delta_records[1],
+            "delete": delta_records[0]
         }
         cls.test_product_ids = {
             test_type: product_data["id"]

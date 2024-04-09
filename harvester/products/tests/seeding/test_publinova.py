@@ -10,7 +10,7 @@ from products.models import Set, ProductDocument
 from products.sources.publinova import SEEDING_PHASES
 
 
-class TestAnatomyToolProductSeeding(TestCase):
+class TestPublinovaProductSeeding(TestCase):
 
     @classmethod
     def setUpTestData(cls):

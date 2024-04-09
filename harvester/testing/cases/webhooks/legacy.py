@@ -28,6 +28,10 @@ class TestEditDocumentWebhook(TestCase):
     data_key = None
     test_data = None
 
+    update_id = "63903863-6c93-4bda-b850-277f3c9ec00e"
+    delete_id = "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257"
+    expected_language_code = "nl"
+
     def call_webhook(self, url, ip=None, verb="create", overrides=None):
         data = deepcopy(self.test_data[verb])
         if isinstance(overrides, dict):
@@ -83,16 +87,16 @@ class TestEditDocumentWebhook(TestCase):
     def test_update(self):
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
-        update_document = Document.objects.filter(reference="5be6dfeb-b9ad-41a8-b4f5-94b9438e4257").last()
+        update_document = Document.objects.filter(reference=self.update_id).last()
         self.assertIsNotNone(update_document)
         self.assertLess(update_document.created_at, self.test_start_time)
         self.assertGreater(update_document.modified_at, self.test_start_time)
-        self.assertEqual(update_document.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
+        self.assertEqual(update_document.properties["title"], "Pim-pam-pet denken bij scheikunde")
 
     def test_delete(self):
         delete_response = self.call_webhook(self.webhook_url, verb="delete")
         self.assertEqual(delete_response.status_code, 200)
-        delete_document = Document.objects.filter(reference="63903863-6c93-4bda-b850-277f3c9ec00e").last()
+        delete_document = Document.objects.filter(reference=self.delete_id).last()
         self.assertIsNotNone(delete_document)
         self.assertLess(delete_document.created_at, self.test_start_time)
         self.assertGreater(delete_document.modified_at, self.test_start_time)
@@ -114,9 +118,9 @@ class TestEditDocumentWebhook(TestCase):
     def test_update_no_language(self):
         update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
         self.assertEqual(update_response.status_code, 200)
-        update_document = Document.objects.filter(reference="5be6dfeb-b9ad-41a8-b4f5-94b9438e4257").last()
+        update_document = Document.objects.filter(reference=self.update_id).last()
         self.assertIsNotNone(update_document)
         self.assertLess(update_document.created_at, self.test_start_time)
         self.assertGreater(update_document.modified_at, self.test_start_time)
-        self.assertEqual(update_document.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
-        self.assertEqual(update_document.properties["language"], {"metadata": "en"})
+        self.assertEqual(update_document.properties["title"], "Pim-pam-pet denken bij scheikunde")
+        self.assertEqual(update_document.properties["language"], {"metadata": self.expected_language_code})

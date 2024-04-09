@@ -26,8 +26,8 @@ class TestSharekitDocumentWebhook(webhook_test_base.TestEditDocumentWebhook):
         delta_records = delta["data"]
         return {
             "create": delta_records[2],
-            "update": delta_records[0],
-            "delete": delta_records[1]
+            "update": delta_records[1],
+            "delete": delta_records[0]
         }
 
     @classmethod

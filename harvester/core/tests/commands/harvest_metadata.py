@@ -241,9 +241,11 @@ class TestMetadataHarvestWithHistory(TestCase):
         command = self.get_command_instance()
         # Checking the state before the test
         document_count = collection.document_set.count()
-        vortex_queryset = collection.documents.filter(properties__title="Using a Vortex | Wageningen UR")
-        self.assertEqual(vortex_queryset.count(), 1,
-                         "Expected the start state to contain 'Using a Vortex'")
+        didactiek_queryset = collection.documents.filter(
+            properties__title="Didactiek van macro-meso-micro denken bij scheikunde"
+        )
+        self.assertEqual(didactiek_queryset.count(), 1,
+                         "Expected the start state to contain 'Didactiek van macro-meso-micro denken bij scheikunde'")
         for doc in collection.documents.all():
             self.assertEqual(doc.created_at, doc.modified_at, f"Document is unexpectedly updated: {doc.id}")
         # Perform the test
@@ -257,16 +259,16 @@ class TestMetadataHarvestWithHistory(TestCase):
         # Checking the state after the test
         self.assertEqual(collection.document_set.count(), document_count+3)
         # Check video documents content updates
-        vortex_updateset = collection.documents.filter(properties__title="Using a Vortex (responsibly) | Wageningen UR")
-        self.assertEqual(vortex_updateset.count(), 1)
-        self.assertEqual(vortex_queryset.count(), 0)
+        didaktiek_updateset = collection.documents.filter(properties__title="Pim-pam-pet denken bij scheikunde")
+        self.assertEqual(didaktiek_updateset.count(), 1)
+        self.assertEqual(didactiek_queryset.count(), 0)
         # Check regular document content updates
         handson_insertset = collection.documents.filter(
             properties__title="Hands-off exercise based on WEKA - Tuning and Testing"
         )
         self.assertEqual(handson_insertset.count(), 1)
         processed_ids = set()
-        for update in vortex_updateset:
+        for update in didaktiek_updateset:
             self.assertNotEqual(update.created_at, update.modified_at,
                                 f"Document is unexpectedly not updated: {update.id}")
             self.assertEqual(update.reference, update.properties["external_id"])

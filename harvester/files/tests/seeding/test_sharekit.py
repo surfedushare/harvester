@@ -65,7 +65,7 @@ class TestSharekitFileSeeding(TestCase):
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
-        self.assertEqual(len(documents), 3 + 3 + 0, "Expected three additions, three deletions and no (file) updates")
+        self.assertEqual(len(documents), 3 + 1 + 1, "Expected three additions, one deletion and one update")
         self.assertEqual(
             self.set.documents.count(), 5 + 11,
             "Expected 5 files to get added and 11 links"

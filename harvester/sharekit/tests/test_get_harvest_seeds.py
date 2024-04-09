@@ -59,7 +59,7 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
         seeds = self.seeds
         self.assertEqual(len(seeds), 16)
         youtube_seeds = [seed for seed in seeds if seed['from_youtube']]
-        self.assertEqual(len(youtube_seeds), 9)
+        self.assertEqual(len(youtube_seeds), 8)
 
     def test_authors_property(self):
         seeds = self.seeds
@@ -107,7 +107,7 @@ class TestGetHarvestSeedsSharekit(SeedExtractionTestCase):
     def test_analysis_allowed_property(self):
         seeds = self.seeds
         self.assertTrue(seeds[0]['analysis_allowed'], "Expected standard material to allow analysis")
-        self.assertFalse(seeds[12]['analysis_allowed'], "Expected deleted document to disallow analysis")
+        self.assertFalse(seeds[11]['analysis_allowed'], "Expected deleted document to disallow analysis")
         self.assertTrue(seeds[13]['analysis_allowed'], "Expected open document with yes copyright to allow analysis")
 
     def test_is_part_of_property(self):

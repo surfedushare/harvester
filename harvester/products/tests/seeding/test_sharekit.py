@@ -47,7 +47,7 @@ class TestSharekitProductSeeding(TestCase):
         SharekitMetadataHarvestFactory.create(is_initial=False, number=0)
         # Set some expectations
         become_processing_ids = {
-            "sharekit:edusources:5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",  # Changed study_vocabulary by the delta
+            "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",  # Changed study_vocabulary by the delta
             # Documents added by the delta
             "sharekit:edusources:3e45b9e3-ba76-4200-a927-2902177f1f6c",
             "sharekit:edusources:4842596f-fe60-40ef-8c06-4d3d6e296ba4",

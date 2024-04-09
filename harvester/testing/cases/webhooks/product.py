@@ -62,10 +62,13 @@ class TestProductWebhookTestCase(TestCase):
             f"ProductDocument with external_id {create_id} should not exist before the test"
         )
 
-    def reload_document_models(self, test_type):
+    def reload_document_models(self, test_type, many=False):
         product_id = self.test_product_ids[test_type]
         product_document = ProductDocument.objects.filter(properties__external_id=product_id).last()
-        file_document = FileDocument.objects.filter(properties__product_id=product_id).last()
+        if many:
+            file_document = list(FileDocument.objects.filter(properties__product_id=product_id))
+        else:
+            file_document = FileDocument.objects.filter(properties__product_id=product_id).last()
         return product_document, file_document
 
     def assert_create_models(self):
@@ -101,13 +104,13 @@ class TestProductWebhookTestCase(TestCase):
             self.assertTrue(product.pipeline, "Expected tasks to remain valid")
 
     def assert_update_models(self):
-        update_product, update_file = self.reload_document_models("update")
+        update_product, update_files = self.reload_document_models("update", many=True)
         # Product asserts
         self.assertIsNotNone(update_product)
         self.assertEqual(update_product.state, "active")
         self.assertLess(update_product.created_at, self.test_start_time)
         self.assertGreater(update_product.modified_at, self.test_start_time)
-        self.assertEqual(update_product.properties["title"], "Using a Vortex (responsibly) | Wageningen UR")
+        self.assertEqual(update_product.properties["title"], "Pim-pam-pet denken bij scheikunde")
         # Check that applied-science gets replaced and will re-trigger task if applicable
         if self.support_study_vocabulary:
             self.assert_study_vocabulary_tasks(
@@ -115,11 +118,12 @@ class TestProductWebhookTestCase(TestCase):
                 ["http://purl.edustandaard.nl/concept/7aae4604-bdf4-40ab-81e9-673c697595f9"]
             )
         # File asserts
+        update_file = update_files[0]
         self.assertIsNotNone(update_file)
         self.assertEqual(update_file.state, "active")
         self.assertLess(update_file.created_at, self.test_start_time)
         self.assertGreater(update_file.modified_at, self.test_start_time)
-        return update_product, update_file
+        return update_product, update_files
 
     def assert_delete_models(self):
         delete_product, delete_file = self.reload_document_models("delete")
@@ -183,11 +187,11 @@ class TestProductWebhookTestCase(TestCase):
     def test_update(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
-        update_product, update_file = self.assert_update_models()
+        update_product, update_files = self.assert_update_models()
         # Dispatch asserts
         dispatch_mock.assert_has_calls([
             call("products", [update_product.id]),
-            call("files", [update_file.id])
+            call("files", [update_file.id for update_file in update_files])
         ])
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
@@ -217,11 +221,11 @@ class TestProductWebhookTestCase(TestCase):
     def test_update_no_language(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
         self.assertEqual(update_response.status_code, 200)
-        update_product, update_file = self.assert_update_models()
+        update_product, update_files = self.assert_update_models()
         # Dispatch asserts
         dispatch_mock.assert_has_calls([
             call("products", [update_product.id]),
-            call("files", [update_file.id])
+            call("files", [update_file.id for update_file in update_files])
         ])
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
@@ -233,9 +237,9 @@ class TestProductWebhookTestCase(TestCase):
         # Execute the webhook
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
-        update_product, update_file = self.assert_update_models()
+        update_product, update_files = self.assert_update_models()
         # Dispatch asserts
         dispatch_mock.assert_has_calls([
             call("products", [update_product.id]),
-            call("files", [update_file.id])
+            call("files", [update_file.id for update_file in update_files])
         ])
