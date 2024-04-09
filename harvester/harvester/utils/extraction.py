@@ -12,9 +12,11 @@ def prepare_seed(seed):
     seed["language"] = {"metadata": language} if language else None
     if seed["state"] == "deleted":
         return
-    if seed["publishers"] and seed["publishers"] in settings.SHAREKIT_TEST_ORGANIZATIONS and \
-            settings.ENVIRONMENT == "production":
-        seed["state"] = "skipped"
+    if seed["publishers"] and settings.ENVIRONMENT == "production":
+        for test_organization in settings.SHAREKIT_TEST_ORGANIZATIONS:
+            if test_organization in seed["publishers"]:
+                seed["state"] = "skipped"
+                break
 
 
 def get_harvest_seeds(repository, set_specification, latest_update, include_deleted=True, include_no_url=False):
