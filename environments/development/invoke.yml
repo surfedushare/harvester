@@ -2,7 +2,7 @@
 # It uses AWS Secret Manager to lookup any secrets at application bootstrap
 
 django:
-  debug: true
+  debug: false
   protocol: "https"
   logging:
     level: "DEBUG"
