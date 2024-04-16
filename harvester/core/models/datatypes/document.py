@@ -95,7 +95,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             update_value = reach(dependency_key, content)
             if current_value != update_value:
                 for task in task_names:
-                    self.invalidate_task(task, current_time=current_time)
+                    self.invalidate_task(task, current_time=current_time, commit=commit)
         # Update as normal, but parse special keys
         data = self.parse_seed_data(data)
         super().update(data, commit=commit)
