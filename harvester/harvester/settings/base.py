@@ -645,4 +645,6 @@ WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
 # Harvester tasks
+
 CHECK_URL_AUTO_SUCCEED_SETS = []
+SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False

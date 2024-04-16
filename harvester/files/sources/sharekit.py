@@ -100,7 +100,7 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_copyright(cls, info: FileInfo) -> str | None:
-        return info.product["attributes"].get("termsOfUse")
+        return info.file.get("usageRight")
 
     @classmethod
     def get_access_rights(cls, info: FileInfo) -> str | None:

@@ -90,9 +90,12 @@ class ProductDocument(HarvestDocument):
             "text": first_file_document.get("text"),
             "previews": first_file_document.get("previews"),
             "video": first_file_document.get("video"),
+            "copyright": first_file_document.get("copyright") or "yes"
         }
-        if data.get("technical_type", None):
+        if data.get("technical_type"):
             main_file_info.pop("technical_type")
+        if data.get("copyright") or not settings.SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT:
+            main_file_info.pop("copyright")
         data.update(main_file_info)
         # Clean the file data a bit and set titles for links
         links_in_order = [
