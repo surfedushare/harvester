@@ -102,7 +102,7 @@
                         "url": "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
                         "hash": "8b714937aab9bda1005d8aa76c607e629b25d89e",
                         "title": "URL 1",
-                        "copyright": "cc-by-40",
+                        "copyright": "cc-by-nd-40",
                         "access_rights": "OpenAccess"
                     }
                 ],
@@ -398,7 +398,7 @@
                 "title": null,
                 "is_link": true,
                 "provider": "sharekit",
-                "copyright": "cc-by-40",
+                "copyright": "cc-by-nd-40",
                 "mime_type": "text/html",
                 "product_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257",
                 "external_id": "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:8b714937aab9bda1005d8aa76c607e629b25d89e",
