@@ -624,10 +624,6 @@ WEBHOOKS = {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
-    "sharekit:edusourcesprivate": {
-        "secret": environment.secrets.harvester.sharekit_webhook_secret,
-        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
-    },
     "sharekit:nppo": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
@@ -637,9 +633,11 @@ WEBHOOKS = {
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
+# Acceptance webhook definitions
+WEBHOOKS["edusources_acc"] = WEBHOOKS["sharekit:edusources"]
+WEBHOOKS["nppo_acc"] = WEBHOOKS["sharekit:nppo"]
 # Legacy webhook set definitions for backward compatability
 WEBHOOKS["edusources"] = WEBHOOKS["sharekit:edusources"]
-WEBHOOKS["edusourcesprivate"] = WEBHOOKS["sharekit:edusourcesprivate"]
 WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
 WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
