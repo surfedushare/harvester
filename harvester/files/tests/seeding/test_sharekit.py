@@ -172,9 +172,10 @@ class TestSharekitFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["copyright"], "cc-by-nc-40",
                          "Expected file to take copyright from product")
         self.assertEqual(self.seeds[1]["copyright"], "cc-by-40",
-                         "Expected link to take access_rights from product")
+                         "Expected link to take copyright from product")
         self.assertEqual(self.seeds[2]["copyright"], "cc-by-sa-40",
                          "Expected restricted access to propagate copyright as normal")
+        self.assertIsNone(self.seeds[3]["copyright"], "Expected file without specified copyright to be None")
 
     def test_get_access_rights(self):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess",
