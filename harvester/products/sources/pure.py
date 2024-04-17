@@ -78,7 +78,7 @@ class PureProductExtraction(PureExtractor):
                 case {"lastName": last_name}:
                     full_name = last_name
                 case _:
-                    # Contributors with the type: ExternalContributorAssociation
+                    # Contributors with the type: ExternalContributorAssociation sometimes
                     # do not yield any name or other identity information.
                     # We skip the (useless) data silently
                     continue
@@ -99,7 +99,7 @@ class PureProductExtraction(PureExtractor):
             (ix for ix, person in enumerate(node[cls.authors_property]) if "externalPerson" not in person),
             None
         )
-        if first_organization_author_index is not None:
+        if authors and first_organization_author_index is not None:
             first_organization_author = authors.pop(first_organization_author_index)
             authors = [first_organization_author] + authors
         return authors

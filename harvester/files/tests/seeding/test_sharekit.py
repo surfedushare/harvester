@@ -48,12 +48,13 @@ class TestSharekitFileSeeding(TestCase):
             "3e45b9e3-ba76-4200-a927-2902177f1f6c",
             "4842596f-fe60-40ef-8c06-4d3d6e296ba4",
             "f4e867ba-0bd0-489a-824a-752038dfee63",
+            # Documents that get an update
+            "63903863-6c93-4bda-b850-277f3c9ec00e"
         }
         # Load the delta data and see if updates have taken place
         documents = []
         for batch in self.processor("edusources", "2020-02-10T13:08:39Z"):
             self.assertIsInstance(batch, list)
-            # import json; print(json.dumps([doc.properties for doc in batch], indent=4))
             for file_ in batch:
                 self.assertIsInstance(file_, FileDocument)
                 self.assertIsNotNone(file_.identity)
@@ -64,6 +65,11 @@ class TestSharekitFileSeeding(TestCase):
                 else:
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
+                if file_.properties["product_id"] == "63903863-6c93-4bda-b850-277f3c9ec00e":
+                    self.assertEqual(
+                        file_.get_pending_tasks(), ["check_url"],
+                        "Expected a hash change to re-trigger related tasks"
+                    )
                 documents.append(file_)
         self.assertEqual(len(documents), 3 + 1 + 1, "Expected three additions, one deletion and one update")
         self.assertEqual(
@@ -129,12 +135,26 @@ class TestSharekitFileExtraction(TestCase):
                          "https://www.youtube.com/watch?v=Zl59P5ZNX3M")
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "0ed38cdc914e5e8a6aa1248438a1e2032a14b0de")
+        self.assertEqual(
+            self.seeds[0]["hash"],
+            "5e4efaa669b40b9f4b75ba32fa9c3ca0-15",
+            "Expected files with an eTag to use it as hash"
+        )
+        self.assertEqual(
+            self.seeds[1]["hash"],
+            "8b714937aab9bda1005d8aa76c607e629b25d89e",
+            "Expected links to never use an eTag as hash, since it is not provided"
+        )
+        self.assertEqual(
+            self.seeds[2]["hash"],
+            "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+            "Expected files without an eTag to fall back to a URL based hash"
+        )
 
     def test_get_external_id(self):
         self.assertEqual(
             self.seeds[0]["external_id"],
-            "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de"
+            "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
         )
 
     def test_get_mime_type(self):
@@ -152,9 +172,10 @@ class TestSharekitFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["copyright"], "cc-by-nc-40",
                          "Expected file to take copyright from product")
         self.assertEqual(self.seeds[1]["copyright"], "cc-by-40",
-                         "Expected link to take access_rights from product")
+                         "Expected link to take copyright from product")
         self.assertEqual(self.seeds[2]["copyright"], "cc-by-sa-40",
                          "Expected restricted access to propagate copyright as normal")
+        self.assertIsNone(self.seeds[3]["copyright"], "Expected file without specified copyright to be None")
 
     def test_get_access_rights(self):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess",

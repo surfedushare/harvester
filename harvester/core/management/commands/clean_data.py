@@ -36,6 +36,8 @@ class Command(BaseCommand):
                 for stale_dataset_version in stale_dataset_versions:
                     if app_label != "core" and stale_dataset_version.index:
                         stale_dataset_version.index.delete()
+                    models["ProcessResult"].objects.filter(document__dataset_version=stale_dataset_version) \
+                        ._raw_delete("default")
                     models["Document"].objects.filter(dataset_version=stale_dataset_version)._raw_delete("default")
                     stale_dataset_version.delete()
             # Now go over all resources and delete old ones without matching documents

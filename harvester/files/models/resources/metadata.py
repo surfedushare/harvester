@@ -1,5 +1,6 @@
 import logging
 import json
+from urllib3.exceptions import LocationParseError
 from requests.exceptions import InvalidURL
 
 from django.conf import settings
@@ -121,7 +122,7 @@ class CheckURLResource(URLResource):
     def _send(self):
         try:
             super()._send()
-        except InvalidURL:
+        except (InvalidURL, LocationParseError):
             self.set_error(400, connection_error=True)
 
     @property

@@ -58,17 +58,27 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_hash(cls, info: FileInfo) -> str | None:
-        url = cls.get_url(info)
-        if not url:
+        if not info.file:
             return
-        return sha1(url.encode("utf-8")).hexdigest()
+        etag = info.file.get("eTag")
+        if not etag or not etag.startswith("\"") or not etag.endswith("\""):
+            etag = None
+        if etag:
+            file_hash = etag.strip("\"")
+        else:
+            url = cls.get_url(info)
+            file_hash = sha1(url.encode("utf-8")).hexdigest() if url else None
+        return file_hash
 
     @classmethod
     def get_external_id(cls, info: FileInfo) -> str | None:
-        file_hash = cls.get_hash(info)
-        if not file_hash:
+        if not info.file:
             return
-        return f"{info.product['id']}:{file_hash}"
+        url = cls.get_url(info)
+        if not url:
+            return
+        url_hash = sha1(url.encode("utf-8")).hexdigest()
+        return f"{info.product['id']}:{url_hash}"
 
     @classmethod
     def get_mime_type(cls, info: FileInfo) -> str | None:
@@ -90,7 +100,9 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_copyright(cls, info: FileInfo) -> str | None:
-        return info.product["attributes"].get("termsOfUse")
+        if info.is_link or not info.file:
+            return info.product["attributes"].get("termsOfUse")
+        return info.file.get("usageRight")
 
     @classmethod
     def get_access_rights(cls, info: FileInfo) -> str | None:

@@ -2,7 +2,7 @@
 # It uses AWS Secret Manager to lookup any secrets at application bootstrap
 
 django:
-  debug: true
+  debug: false
   protocol: "https"
   logging:
     level: "DEBUG"
@@ -18,7 +18,7 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://staging.edurep.kennisnet.nl"
-    sharekit: "https://api.surfsharekit.nl"
+    sharekit: "https://api.acc.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"

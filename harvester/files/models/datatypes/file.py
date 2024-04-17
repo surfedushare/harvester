@@ -18,24 +18,24 @@ from files.models.resources.metadata import CheckURLResource
 def default_document_tasks():
     return {
         "check_url": {
-            "depends_on": ["$.url"],
+            "depends_on": ["$.hash"],
             "checks": ["!is_not_found", "is_analysis_allowed", "!is_youtube_video"],
             "resources": ["files.CheckURLResource"]
         },
         "tika": {
-            "depends_on": ["check_url"],
+            "depends_on": ["$.hash", "check_url"],
             "checks": ["is_analysis_possible"],
             "resources": ["files.HttpTikaResource"]
         },
         # TODO: experimental Tika use may replace normal use,
         #  but due to JSON size restrictions we can't use them simultaneously
         # "tika_xml": {
-        #     "depends_on": ["check_url"],
+        #     "depends_on": ["$.hash", "check_url"],
         #     "checks": ["is_analysis_possible"],
         #     "resources": ["files.HttpTikaResource"]
         # },
         "pdf_preview": {
-            "depends_on": ["check_url"],
+            "depends_on": ["$.hash", "check_url"],
             "checks": ["is_analysis_possible", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
@@ -48,7 +48,7 @@ def default_document_tasks():
             "resources": ["files.YoutubeThumbnailResource"]
         },
         "youtube_api": {
-            "depends_on": ["$.url"],
+            "depends_on": ["$.hash"],
             "checks": ["is_youtube_video"],
             "resources": ["files.YoutubeAPIResource"]
         }
@@ -150,8 +150,11 @@ class FileDocument(HarvestDocument):
         if url and not url.startswith("http"):
             self.is_not_found = True
         elif url:
-            url_info = urlparse(url)
-            self.domain = url_info.hostname
+            try:
+                url_info = urlparse(url)
+                self.domain = url_info.hostname
+            except ValueError:
+                self.is_not_found = True
         else:
             self.is_not_found = True
         mime_type = self.properties.get("mime_type")

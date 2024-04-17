@@ -66,22 +66,21 @@ class SharekitMetadataExtraction:
 
     @classmethod
     def get_provider(cls, node):
-        provider_name = None
-        publishers = cls.get_publishers(node)
-        if isinstance(publishers, str):
-            provider_name = publishers
-        if len(publishers):
-            provider_name = publishers[0]
+        if not node["attributes"]:
+            return
+        owner = node["attributes"]["owner"]
         return {
             "ror": None,
-            "external_id": None,
+            "external_id": owner["id"],
             "slug": None,
-            "name": provider_name
+            "name": owner["name"]
         }
 
     @classmethod
     def get_organizations(cls, node):
         root = cls.get_provider(node)
+        if not root:
+            return
         root["type"] = "unknown"
         return {
             "root": root,
