@@ -125,6 +125,15 @@ class SharekitFileExtraction(object):
             publishers = [publishers]
         return publishers[0] if len(publishers) else "sharekit"
 
+    @classmethod
+    def get_priority(cls, info: FileInfo) -> int:
+        if not info.file:
+            return 0
+        important_value = info.file.get("important", "0")
+        if important_value is None or not important_value.isnumeric():
+            return 0
+        return int(important_value)
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -142,6 +151,7 @@ OBJECTIVE = {
     "product_id": lambda info: info.product["id"],
     "is_link": lambda info: info.is_link,
     "provider": SharekitFileExtraction.get_provider,
+    "priority": SharekitFileExtraction.get_priority,
 }
 
 

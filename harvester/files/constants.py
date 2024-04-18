@@ -13,4 +13,5 @@ SEED_DEFAULTS = {
     "product_id": None,
     "is_link": False,
     "provider": None,
+    "priority": 0,
 }

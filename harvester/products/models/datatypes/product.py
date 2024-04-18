@@ -77,10 +77,15 @@ class ProductDocument(HarvestDocument):
             for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False,
                                                              dataset_version__is_current=True)
         }
+        prioritized_file_identities = sorted(
+            file_identities,
+            key=lambda file_identity: files_by_identity.get(file_identity, {}).get("priority", 0),
+            reverse=True
+        )
         # Get the first file and merge its info into the product
         # If the product sets a technical_type we ignore the file technical_type
         first_file_document = next(
-            (files_by_identity[identity] for identity in file_identities if identity in files_by_identity),
+            (files_by_identity[identity] for identity in prioritized_file_identities if identity in files_by_identity),
             {}
         )
         main_file_info = {
@@ -99,11 +104,11 @@ class ProductDocument(HarvestDocument):
         data.update(main_file_info)
         # Clean the file data a bit and set titles for links
         links_in_order = [
-            file_identity for file_identity in file_identities
+            file_identity for file_identity in prioritized_file_identities
             if file_identity in files_by_identity and files_by_identity[file_identity]["is_link"]
         ]
         files = []
-        for file_identity in file_identities:
+        for file_identity in prioritized_file_identities:
             file_info = files_by_identity.get(file_identity, {})
             if not file_info:
                 continue

@@ -65,7 +65,7 @@ TECHNICAL_TYPE_CHOICES = sorted([
 
 
 WHITELISTED_OUTPUT_FIELDS = {
-    "srn", "url", "hash", "state", "title", "type", "is_link", "copyright", "mime_type", "access_rights"
+    "srn", "url", "hash", "state", "title", "type", "is_link", "copyright", "mime_type", "access_rights", "priority"
 }
 
 

@@ -1,0 +1,678 @@
+[
+    {
+        "model": "products.dataset",
+        "pk": 1,
+        "fields": {
+            "name": "test",
+            "is_harvested": true,
+            "indexing": "yes"
+        }
+    },
+    {
+        "model": "products.datasetversion",
+        "pk": 1,
+        "fields": {
+            "pipeline": {},
+            "derivatives": {},
+            "pending_at": "2023-10-17T14:18:46.870Z",
+            "finished_at": null,
+            "dataset": 1,
+            "index": null,
+            "is_current": true,
+            "is_index_promoted": false,
+            "created_at": "2023-10-17T14:18:46.870Z",
+            "version": "1.39.25",
+            "tasks": {
+                "create_opensearch_index": {
+                    "checks": [],
+                    "resources": [],
+                    "depends_on": []
+                },
+                "set_current_dataset_version": {
+                    "checks": [],
+                    "resources": [],
+                    "depends_on": []
+                }
+            },
+            "historic_sets": []
+        }
+    },
+    {
+        "model": "products.productdocument",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-04-18T01:01:46.829Z",
+            "modified_at": "2024-04-18T01:01:46.829Z",
+            "properties": {
+                "doi": null,
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+                "files": [
+                    "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                    "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
+                    "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729"
+                ],
+                "state": "active",
+                "title": "Didactiek van macro-meso-micro denken bij scheikunde",
+                "authors": [
+                    {
+                        "dai": null,
+                        "isni": null,
+                        "name": "Ruud Kok",
+                        "email": null,
+                        "orcid": null,
+                        "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                    },
+                    {
+                        "dai": null,
+                        "isni": null,
+                        "name": "Astrid Bulte",
+                        "email": null,
+                        "orcid": null,
+                        "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+                    },
+                    {
+                        "dai": null,
+                        "isni": null,
+                        "name": "Hans Poorthuis",
+                        "email": null,
+                        "orcid": null,
+                        "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+                    }
+                ],
+                "keywords": [
+                    "correspondentie",
+                    "Didactiek",
+                    "eigenschappen",
+                    "macro",
+                    "macro-meso-micro",
+                    "meso",
+                    "micro",
+                    "scheikunde",
+                    "structuur"
+                ],
+                "language": "nl",
+                "provider": {
+                    "ror": null,
+                    "name": "Stimuleringsregeling Open en Online Onderwijs",
+                    "slug": null,
+                    "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
+                },
+                "copyright": "cc-by-sa-40",
+                "has_parts": [],
+                "is_part_of": [],
+                "publishers": [
+                    "Hogeschool Utrecht",
+                    "SURFnet"
+                ],
+                "description": "Geen samenvatting",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+                "modified_at": "2021-04-15T14:29:05Z",
+                "organizations": {
+                    "root": {
+                        "ror": null,
+                        "name": "Stimuleringsregeling Open en Online Onderwijs",
+                        "slug": null,
+                        "type": "unknown",
+                        "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
+                    },
+                    "associates": [],
+                    "departments": []
+                },
+                "publisher_date": "2017-09-27",
+                "publisher_year": 2017,
+                "technical_type": null,
+                "research_product": {
+                    "parties": [],
+                    "research_themes": [],
+                    "research_object_type": null
+                },
+                "learning_material": {
+                    "ideas": [],
+                    "studies": [],
+                    "consortium": "Stimuleringsregeling Open en Online Onderwijs",
+                    "disciplines": [
+                        "exact_informatica"
+                    ],
+                    "material_types": [
+                        "unknown"
+                    ],
+                    "study_vocabulary": [],
+                    "aggregation_level": "4",
+                    "lom_educational_levels": [
+                        "HBO"
+                    ]
+                },
+                "copyright_description": null
+            },
+            "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+            "reference": null,
+            "pipeline": {
+                "normalize_disciplines": {
+                    "success": true
+                },
+                "normalize_publisher_year": {
+                    "success": true
+                }
+            },
+            "derivatives": {
+                "normalize_disciplines": {
+                    "learning_material_disciplines_normalized": [
+                        "exact_informatica"
+                    ]
+                },
+                "normalize_publisher_year": {
+                    "publisher_year_normalized": "older-than"
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2024-04-17T14:19:38.635Z",
+            "dataset_version": 1,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
+                "language": "nl",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2024-04-17T14:19:12.720Z",
+                "deleted_at": null,
+                "modified_at": "2024-04-17T14:19:12.720Z"
+            },
+            "tasks": {
+                "normalize_disciplines": {
+                    "checks": [
+                        "has_disciplines"
+                    ],
+                    "resources": [],
+                    "depends_on": [
+                        "$.learning_material.disciplines"
+                    ]
+                },
+                "normalize_publisher_year": {
+                    "checks": [
+                        "has_publisher_year"
+                    ],
+                    "resources": [],
+                    "depends_on": [
+                        "$.publisher_year"
+                    ]
+                },
+                "lookup_study_vocabulary_parents": {
+                    "checks": [
+                        "has_study_vocabulary"
+                    ],
+                    "resources": [],
+                    "depends_on": [
+                        "$.learning_material.study_vocabulary"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "model": "files.dataset",
+        "pk": 1,
+        "fields": {
+            "name": "test",
+            "is_harvested": true,
+            "indexing": "no"
+        }
+    },
+    {
+        "model": "files.datasetversion",
+        "pk": 1,
+        "fields": {
+            "pipeline": {},
+            "derivatives": {},
+            "pending_at": "2023-10-17T14:18:46.870Z",
+            "finished_at": null,
+            "dataset": 1,
+            "index": null,
+            "is_current": true,
+            "is_index_promoted": false,
+            "created_at": "2023-10-17T14:18:46.870Z",
+            "version": "1.39.25",
+            "tasks": {
+                "create_opensearch_index": {
+                    "checks": [],
+                    "resources": [],
+                    "depends_on": []
+                },
+                "set_current_dataset_version": {
+                    "checks": [],
+                    "resources": [],
+                    "depends_on": []
+                }
+            },
+            "historic_sets": []
+        }
+    },
+    {
+        "model": "files.filedocument",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-04-18T01:05:08.212Z",
+            "modified_at": "2024-04-18T01:05:08.212Z",
+            "properties": {
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                "hash": "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "type": "document",
+                "state": "active",
+                "title": "IMSCP_94812.zip",
+                "is_link": false,
+                "provider": "Hogeschool Utrecht",
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/x-zip",
+                "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "access_rights": "OpenAccess",
+                "priority": 0
+            },
+            "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+            "reference": null,
+            "pipeline": {
+                "tika": {
+                    "id": 2944,
+                    "success": true,
+                    "resource": "files.httptikaresource"
+                },
+                "check_url": {
+                    "id": 3088,
+                    "success": true,
+                    "resource": "files.checkurlresource"
+                }
+            },
+            "derivatives": {
+                "tika": {
+                    "texts": ["Fake Tika text 1"]
+                },
+                "check_url": {
+                    "url": "https://api.surfsharekit.nl/api/v1/files/repoItemFiles/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "has_redirect": true,
+                    "has_temporary_redirect": true
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2024-04-17T14:19:48.689Z",
+            "dataset_version": 1,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "c646744cd910142b234b69fdf51df6d6c74858d7",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2024-04-17T14:19:15.512Z",
+                "deleted_at": null,
+                "modified_at": "2024-04-17T14:19:15.512Z"
+            },
+            "tasks": {
+                "tika": {
+                    "checks": [
+                        "is_analysis_possible"
+                    ],
+                    "resources": [
+                        "files.HttpTikaResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "check_url": {
+                    "checks": [
+                        "!is_not_found",
+                        "is_analysis_allowed",
+                        "!is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.CheckURLResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "pdf_preview": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_pdf"
+                    ],
+                    "resources": [
+                        "files.PdfThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "youtube_api": {
+                    "checks": [
+                        "is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeAPIResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "video_preview": {
+                    "checks": [
+                        "is_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeThumbnailResource"
+                    ],
+                    "depends_on": []
+                }
+            },
+            "status_code": 200,
+            "redirects": "temporary",
+            "domain": "surfsharekit.nl",
+            "mime_type": "application/x-zip",
+            "type": "document",
+            "is_not_found": false,
+            "is_analysis_allowed": true
+        }
+    },
+    {
+        "model": "files.filedocument",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-04-18T01:05:11.360Z",
+            "modified_at": "2024-04-18T01:05:11.360Z",
+            "properties": {
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
+                "hash": "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "type": "website",
+                "state": "active",
+                "title": null,
+                "is_link": true,
+                "provider": "Hogeschool Utrecht",
+                "copyright": "cc-by-sa-40",
+                "mime_type": "text/html",
+                "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "access_rights": "OpenAccess",
+                "priority": 0
+            },
+            "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+            "reference": null,
+            "pipeline": {
+                "tika": {
+                    "id": 2738,
+                    "success": true,
+                    "resource": "files.httptikaresource"
+                },
+                "check_url": {
+                    "id": 3091,
+                    "success": true,
+                    "resource": "files.checkurlresource"
+                }
+            },
+            "derivatives": {
+                "tika": {
+                    "texts": ["Fake Tika text 2"]
+                },
+                "check_url": {
+                    "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "has_redirect": false,
+                    "has_temporary_redirect": false
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2024-04-17T14:19:48.689Z",
+            "dataset_version": 1,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "c27b242e0d8534362844c8b27d0b6c80c65bb40b",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2024-04-17T14:19:15.512Z",
+                "deleted_at": null,
+                "modified_at": "2024-04-17T14:19:15.512Z"
+            },
+            "tasks": {
+                "tika": {
+                    "checks": [
+                        "is_analysis_possible"
+                    ],
+                    "resources": [
+                        "files.HttpTikaResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "check_url": {
+                    "checks": [
+                        "!is_not_found",
+                        "is_analysis_allowed",
+                        "!is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.CheckURLResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "pdf_preview": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_pdf"
+                    ],
+                    "resources": [
+                        "files.PdfThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "youtube_api": {
+                    "checks": [
+                        "is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeAPIResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "video_preview": {
+                    "checks": [
+                        "is_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeThumbnailResource"
+                    ],
+                    "depends_on": []
+                }
+            },
+            "status_code": 200,
+            "redirects": "no",
+            "domain": "maken.wikiwijs.nl",
+            "mime_type": "text/html",
+            "type": "website",
+            "is_not_found": false,
+            "is_analysis_allowed": true
+        }
+    },
+    {
+        "model": "files.filedocument",
+        "pk": 5145293,
+        "fields": {
+            "created_at": "2024-04-18T01:05:11.360Z",
+            "modified_at": "2024-04-18T01:05:11.360Z",
+            "properties": {
+                "set": "sharekit:edusources",
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a",
+                "url": "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
+                "hash": "339df213a16895868ba4bfc635b7d3348348e33a",
+                "type": "document",
+                "state": "active",
+                "title": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
+                "is_link": false,
+                "provider": "Hogeschool Utrecht",
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/pdf",
+                "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+                "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a",
+                "access_rights": "OpenAccess",
+                "priority": 0
+            },
+            "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a",
+            "reference": null,
+            "pipeline": {
+                "tika": {
+                    "id": 2737,
+                    "success": true,
+                    "resource": "files.httptikaresource"
+                },
+                "check_url": {
+                    "id": 3090,
+                    "success": true,
+                    "resource": "files.checkurlresource"
+                },
+                "pdf_preview": {
+                    "id": 455,
+                    "success": true,
+                    "resource": "files.pdfthumbnailresource"
+                }
+            },
+            "derivatives": {
+                "tika": {
+                    "texts": ["Fake Tika text 3"]
+                },
+                "check_url": {
+                    "url": "https://api.surfsharekit.nl/api/v1/files/repoItemFiles/9f71f782-09de-48b1-a10f-15d882471df7",
+                    "status": 200,
+                    "content_type": "text/html",
+                    "has_redirect": true,
+                    "has_temporary_redirect": true
+                },
+                "pdf_preview": {
+                    "preview": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7-thumbnail-400x300.png",
+                    "full_size": "https://surfpol-harvester-content-prod.s3.amazonaws.com/files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7.png",
+                    "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7-thumbnail-200x150.png"
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2024-04-17T14:19:49.407Z",
+            "dataset_version": 1,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "srn": null,
+                "hash": "4b204811753695b3af14ceb2ebf119b2d57fd2ba",
+                "provider": {
+                    "ror": null,
+                    "name": null,
+                    "slug": null,
+                    "external_id": null
+                },
+                "created_at": "2024-04-17T14:19:15.512Z",
+                "deleted_at": null,
+                "modified_at": "2024-04-17T14:19:15.512Z"
+            },
+            "tasks": {
+                "tika": {
+                    "checks": [
+                        "is_analysis_possible"
+                    ],
+                    "resources": [
+                        "files.HttpTikaResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "check_url": {
+                    "checks": [
+                        "!is_not_found",
+                        "is_analysis_allowed",
+                        "!is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.CheckURLResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "pdf_preview": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_pdf"
+                    ],
+                    "resources": [
+                        "files.PdfThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "youtube_api": {
+                    "checks": [
+                        "is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeAPIResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "video_preview": {
+                    "checks": [
+                        "is_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeThumbnailResource"
+                    ],
+                    "depends_on": []
+                }
+            },
+            "status_code": 200,
+            "redirects": "temporary",
+            "domain": "surfsharekit.nl",
+            "mime_type": "application/pdf",
+            "type": "document",
+            "is_not_found": false,
+            "is_analysis_allowed": true
+        }
+    }
+]
