@@ -5,9 +5,9 @@ from django.test import TestCase
 from files.models import FileDocument
 
 
-class DocumentTestCase(TestCase):
+class FileDocumentTestCase(TestCase):
 
-    fixtures = ["test-document.json"]
+    fixtures = ["test-file-document.json"]
 
     def test_get_pending_tasks_hash_update(self):
         # Check that file from fixture is not processing
