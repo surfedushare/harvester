@@ -63,12 +63,12 @@
             "reference": null,
             "pipeline": {
                 "tika": {
-                    "id": 11205,
+                    "id": 1,
                     "success": true,
                     "resource": "files.httptikaresource"
                 },
                 "check_url": {
-                    "id": 11911,
+                    "id": 1,
                     "success": true,
                     "resource": "files.checkurlresource"
                 }
@@ -173,6 +173,222 @@
             "type": "document",
             "is_not_found": false,
             "is_analysis_allowed": true
+        }
+    },
+    {
+        "model": "files.checkurlresource",
+        "pk": 1,
+        "fields": {
+            "uri": "surfsharekit.nl/objectstore/dc11453f-df4a-4a32-a927-a61512d4cd26",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-04-15T13:30:16.662Z",
+            "modified_at": "2024-04-17T14:02:46.258Z",
+            "purge_at": "2024-05-17T14:01:56.895Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://surfsharekit.nl/objectstore/dc11453f-df4a-4a32-a927-a61512d4cd26",
+                "args": [
+                    "https://surfsharekit.nl/objectstore/dc11453f-df4a-4a32-a927-a61512d4cd26"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "head",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.31.0",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 15 Apr 2024 13:30:16 GMT",
+                "etag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+                "vary": "X-Forwarded-Protocol",
+                "server": "Apache",
+                "connection": "Keep-Alive",
+                "keep-alive": "timeout=5, max=100",
+                "content-type": "text/html; charset=utf-8",
+                "cache-control": "no-cache, must-revalidate",
+                "referrer-policy": "strict-origin-when-cross-origin",
+                "x-frame-options": "deny",
+                "x-xss-protection": "1; mode=block",
+                "permissions-policy": "fullscreen=(self), sync-xhr=(self), geolocation=(), midi=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()",
+                "x-content-type-options": "nosniff",
+                "strict-transport-security": "max-age=31536000; includeSubDomains"
+            },
+            "body": "{\"has_redirect\": true, \"has_temporary_redirect\": true, \"url\": \"https://api.surfsharekit.nl/api/v1/files/repoItemFiles/dc11453f-df4a-4a32-a927-a61512d4cd26\", \"status\": 200, \"content_type\": \"text/html\"}"
+        }
+    },
+    {
+        "model": "files.httptikaresource",
+        "pk": 1,
+        "fields": {
+            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fanatomytool.org%2Fnode%2F57056&fetcherName=http",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-02-19T15:47:30.919Z",
+            "modified_at": "2024-04-17T14:03:13.584Z",
+            "purge_at": "2024-05-17T14:01:57.853Z",
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "http://localhost:9998/rmeta/text?fetcherName=http&fetchKey=https%3A%2F%2Fanatomytool.org%2Fnode%2F57056",
+                "args": [
+                    "https://anatomytool.org/node/57056"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "put",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.6); python-requests/2.31.0",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 19 Feb 2024 15:47:30 GMT",
+                "vary": "Accept-Encoding",
+                "server": "Jetty(9.4.49.v20220914)",
+                "content-type": "application/json",
+                "content-encoding": "gzip",
+                "transfer-encoding": "chunked"
+            },
+            "body": "{\"http-connection:target-ip-address\":\"46.17.6.158\",\"http-header:status-code\":\"200\",\"X-TIKA:Parsed-By-Full-Set\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"X-TIKA:content_handler\":\"ToTextContentHandler\",\"resourceName\":\"apache-tika-4472183543111308227.tmp\",\"http-connection:num-redirects\":\"0\",\"http-connection:target-url\":\"https://anatomytool.org/node/57056\",\"viewport\":\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\",\"X-TIKA:Parsed-By\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"dc:title\":\"gonad mouse embryo | AnatomyTOOL\",\"Content-Encoding\":\"UTF-8\",\"Content-Type-Hint\":\"text/html; charset=utf-8\",\"X-TIKA:parse_time_millis\":\"4\",\"X-TIKA:embedded_depth\":\"0\",\"X-TIKA:content\":\"Fake Tika resource content\", \"Content-Length\":\"0\",\"http-header:content-type\":\"text/html; charset=utf-8\",\"Content-Language\":\"en\",\"Content-Type\":\"text/html; charset=UTF-8\",\"Generator\":\"Drupal 7 (http://drupal.org)\"}",
+            "retainer_type": null
+        }
+    },
+    {
+        "model": "files.httptikaresource",
+        "pk": 1,
+        "fields": {
+            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2Fdc11453f-df4a-4a32-a927-a61512d4cd26&fetcherName=http",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-04-15T13:30:17.157Z",
+            "modified_at": "2024-04-17T14:03:23.372Z",
+            "purge_at": "2024-05-17T14:01:57.853Z",
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "http://localhost:9998/rmeta/text?fetcherName=http&fetchKey=https%3A%2F%2Fsurfsharekit.nl%2Fobjectstore%2Fdc11453f-df4a-4a32-a927-a61512d4cd26",
+                "args": [
+                    "https://surfsharekit.nl/objectstore/dc11453f-df4a-4a32-a927-a61512d4cd26"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "put",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.31.0",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 15 Apr 2024 13:30:17 GMT",
+                "vary": "Accept-Encoding",
+                "server": "Jetty(9.4.49.v20220914)",
+                "content-type": "application/json",
+                "content-encoding": "gzip",
+                "transfer-encoding": "chunked"
+            },
+            "body": "[{\"cp:revision\":\"1\",\"extended-properties:AppVersion\":\"16.0000\",\"http-connection:target-ip-address\":\"145.100.60.210\",\"meta:paragraph-count\":\"4\",\"meta:word-count\":\"327\",\"X-TIKA:Parsed-By-Full-Set\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.microsoft.ooxml.OOXMLParser\",\"org.apache.tika.parser.image.ImageParser\"],\"X-TIKA:content_handler\":\"ToTextContentHandler\",\"dc:creator\":\"Goumans, B.H.G.M. (Bianca)\",\"extended-properties:Company\":\"\",\"dcterms:created\":\"2024-04-15T09:13:00Z\",\"meta:line-count\":\"14\",\"dcterms:modified\":\"2024-04-15T09:44:00Z\",\"http-connection:target-url\":\"https://proxy.swift.surfsara.nl/live/objectstore/b5ce5c4c-288d-4f7a-9dea-a80f686ceb66/Docentenhandleiding.docx?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8ea577ad65394dfeb2d62886e3056a36%2F20240415%2FNL%2Fs3%2Faws4_request&X-Amz-Date=20240415T133016Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=a22e2d8fd2da316755bb87847b92bfd4866cc7dea9ffef857af58580b8d6e3ca\",\"meta:character-count\":\"1799\",\"meta:character-count-with-spaces\":\"2122\",\"Content-Length\":\"0\",\"http-header:content-type\":\"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\"Content-Type\":\"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\"http-header:status-code\":\"200\",\"extended-properties:Application\":\"Microsoft Office Word\",\"meta:last-author\":\"Goumans, B.H.G.M. (Bianca)\",\"xmpTPg:NPages\":\"1\",\"resourceName\":\"/live/objectstore/b5ce5c4c-288d-4f7a-9dea-a80f686ceb66/Docentenhandleiding.docx?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8ea577ad65394dfeb2d62886e3056a36%2F20240415%2FNL%2Fs3%2Faws4_request&X-Amz-Date=20240415T133016Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=a22e2d8fd2da316755bb87847b92bfd4866cc7dea9ffef857af58580b8d6e3ca\",\"http-connection:num-redirects\":\"2\",\"extended-properties:Template\":\"Normal\",\"X-TIKA:Parsed-By\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.microsoft.ooxml.OOXMLParser\"],\"extended-properties:DocSecurityString\":\"None\",\"X-TIKA:parse_time_millis\":\"19\",\"X-TIKA:embedded_depth\":\"0\",\"X-TIKA:content\":\"Fake Tika resource content\", \"meta:page-count\":\"1\",\"dc:publisher\":\"\"},{\"Transparency Alpha\":\"nonpremultipled\",\"tiff:ImageLength\":\"49\",\"Compression CompressionTypeName\":\"deflate\",\"Data BitsPerSample\":\"8 8 8 8\",\"Data PlanarConfiguration\":\"PixelInterleaved\",\"Dimension VerticalPixelSize\":\"0.16934802\",\"IHDR\":\"width=138, height=49, bitDepth=8, colorType=RGBAlpha, compressionMethod=deflate, filterMethod=adaptive, interlaceMethod=none\",\"embeddedRelationshipId\":\"rId4\",\"Chroma ColorSpaceType\":\"RGB\",\"tiff:BitsPerSample\":\"8 8 8 8\",\"Content-Type\":\"image/png\",\"height\":\"49\",\"gAMA\":\"45455\",\"pHYs\":\"pixelsPerUnitXAxis=5905, pixelsPerUnitYAxis=5905, unitSpecifier=meter\",\"Chroma Gamma\":\"0.45455\",\"Dimension PixelAspectRatio\":\"1.0\",\"resourceName\":\"image1.png\",\"sRGB\":\"Perceptual\",\"Compression NumProgressiveScans\":\"1\",\"X-TIKA:Parsed-By\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.image.ImageParser\"],\"Dimension HorizontalPixelSize\":\"0.16934802\",\"Chroma BlackIsZero\":\"true\",\"Compression Lossless\":\"true\",\"X-TIKA:embedded_depth\":\"1\",\"width\":\"138\",\"X-TIKA:parse_time_millis\":\"2\",\"Dimension ImageOrientation\":\"Normal\",\"X-TIKA:embedded_resource_path\":\"/image1.png\",\"tiff:ImageWidth\":\"138\",\"Chroma NumChannels\":\"4\",\"Data SampleFormat\":\"UnsignedIntegral\"}]",
+            "retainer_type": null
+        }
+    },
+    {
+        "model": "files.checkurlresource",
+        "pk": 2,
+        "fields": {
+            "uri": "surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-02-19T14:58:31.623Z",
+            "modified_at": "2024-04-17T14:19:22.409Z",
+            "purge_at": "2024-05-17T14:01:56.895Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                "args": [
+                    "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "head",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.6); python-requests/2.31.0",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 19 Feb 2024 14:58:31 GMT",
+                "etag": "\"d41d8cd98f00b204e9800998ecf8427e\"",
+                "vary": "X-Forwarded-Protocol",
+                "server": "Apache",
+                "connection": "Keep-Alive",
+                "keep-alive": "timeout=5, max=100",
+                "content-type": "text/html; charset=utf-8",
+                "cache-control": "no-cache, must-revalidate",
+                "referrer-policy": "strict-origin-when-cross-origin",
+                "x-frame-options": "deny",
+                "x-xss-protection": "1; mode=block",
+                "permissions-policy": "fullscreen=(self), sync-xhr=(self), geolocation=(), midi=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()",
+                "x-content-type-options": "nosniff",
+                "strict-transport-security": "max-age=31536000; includeSubDomains"
+            },
+            "body": "{\"has_redirect\": true, \"has_temporary_redirect\": true, \" url\": \"https://api.surfsharekit.nl/api/v1/files/repoItemFiles/88c687c8-fbc4-4d69-a27d-45d9f30d642b\", \"status\": 200, \"content_type\": \"text/html\"}"
+        }
+    },
+    {
+        "model": "files.httptikaresource",
+        "pk": 2,
+        "fields": {
+            "uri": "localhost:9998/rmeta/text?fetchKey=https%3A%2F%2Fanatomytool.org%2Fnode%2F57056&fetcherName=http",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-02-19T15:47:30.919Z",
+            "modified_at": "2024-04-17T14:03:13.584Z",
+            "purge_at": "2024-05-17T14:01:57.853Z",
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "http://localhost:9998/rmeta/text?fetcherName=http&fetchKey=https%3A%2F%2Fanatomytool.org%2Fnode%2F57056",
+                "args": [
+                    "https://anatomytool.org/node/57056"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "put",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.6); python-requests/2.31.0",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 19 Feb 2024 15:47:30 GMT",
+                "vary": "Accept-Encoding",
+                "server": "Jetty(9.4.49.v20220914)",
+                "content-type": "application/json",
+                "content-encoding": "gzip",
+                "transfer-encoding": "chunked"
+            },
+            "body": "{\"http-connection:target-ip-address\":\"46.17.6.158\",\"http-header:status-code\":\"200\",\"X-TIKA:Parsed-By-Full-Set\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"X-TIKA:content_handler\":\"ToTextContentHandler\",\"resourceName\":\"apache-tika-4472183543111308227.tmp\",\"http-connection:num-redirects\":\"0\",\"http-connection:target-url\":\"https://anatomytool.org/node/57056\",\"viewport\":\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\",\"X-TIKA:Parsed-By\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"dc:title\":\"gonad mouse embryo | AnatomyTOOL\",\"Content-Encoding\":\"UTF-8\",\"Content-Type-Hint\":\"text/html; charset=utf-8\",\"X-TIKA:parse_time_millis\":\"4\",\"X-TIKA:embedded_depth\":\"0\",\"X-TIKA:content\":\"Fake Tika resource content\", \"Content-Length\":\"0\",\"http-header:content-type\":\"text/html; charset=utf-8\",\"Content-Language\":\"en\",\"Content-Type\":\"text/html; charset=UTF-8\",\"Generator\":\"Drupal 7 (http://drupal.org)\"}",
+            "retainer_type": null
         }
     }
 ]

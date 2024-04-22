@@ -293,7 +293,9 @@
             },
             "derivatives": {
                 "tika": {
-                    "texts": ["Fake Tika text 1"]
+                    "texts": [
+                        "Fake Tika text 1"
+                    ]
                 },
                 "check_url": {
                     "url": "https://api.surfsharekit.nl/api/v1/files/repoItemFiles/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
@@ -430,7 +432,9 @@
             },
             "derivatives": {
                 "tika": {
-                    "texts": ["Fake Tika text 2"]
+                    "texts": [
+                        "Fake Tika text 2"
+                    ]
                 },
                 "check_url": {
                     "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
@@ -572,7 +576,9 @@
             },
             "derivatives": {
                 "tika": {
-                    "texts": ["Fake Tika text 3"]
+                    "texts": [
+                        "Fake Tika text 3"
+                    ]
                 },
                 "check_url": {
                     "url": "https://api.surfsharekit.nl/api/v1/files/repoItemFiles/9f71f782-09de-48b1-a10f-15d882471df7",
