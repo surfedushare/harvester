@@ -642,7 +642,8 @@ WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
 WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
-# Harvester tasks
+# Harvester tasks and logic
 
 CHECK_URL_AUTO_SUCCEED_SETS = []
 SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False
+DEFAULT_FILE_TITLES_TEMPLATE = None

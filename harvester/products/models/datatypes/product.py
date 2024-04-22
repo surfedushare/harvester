@@ -102,11 +102,16 @@ class ProductDocument(HarvestDocument):
         if data.get("copyright") or not settings.SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT:
             main_file_info.pop("copyright")
         data.update(main_file_info)
-        # Clean the file data a bit and set titles for links
-        links_in_order = [
-            file_identity for file_identity in prioritized_file_identities
-            if file_identity in files_by_identity and files_by_identity[file_identity]["is_link"]
-        ]
+        # Clean the file data a bit and set titles
+        files_in_order = []
+        links_in_order = []
+        for file_identity in prioritized_file_identities:
+            if file_identity not in files_by_identity:
+                continue
+            if files_by_identity[file_identity]["is_link"]:
+                links_in_order.append(file_identity)
+            else:
+                files_in_order.append(file_identity)
         files = []
         for file_identity in prioritized_file_identities:
             file_info = files_by_identity.get(file_identity, {})
@@ -117,6 +122,9 @@ class ProductDocument(HarvestDocument):
             if file_info["is_link"] and not file_info["title"]:
                 links_index = links_in_order.index(file_identity)
                 file_info["title"] = f"URL {links_index+1}"
+            elif not file_info["is_link"] and not file_info["title"] and settings.DEFAULT_FILE_TITLES_TEMPLATE:
+                files_index = files_in_order.index(file_identity)
+                file_info["title"] = settings.DEFAULT_FILE_TITLES_TEMPLATE.format(ix=files_index+1)
             files.append(file_info)
         # Return the product with updated files data
         data["files"] = files
