@@ -222,5 +222,146 @@
             "days": 30
         }
     }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 6,
+    "fields": {
+        "name": "Hanze",
+        "module": "hanze",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 11,
+    "fields": {
+        "source": 6,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hanze"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 12,
+    "fields": {
+        "source": 6,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hanze"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 7,
+    "fields": {
+        "name": "Breda University of Applied Sciences",
+        "module": "buas",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 13,
+    "fields": {
+        "source": 7,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "buas"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 14,
+    "fields": {
+        "source": 7,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "buas"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestsource",
+    "pk": 8,
+    "fields": {
+        "name": "Hogeschool voor de Kunsten Utrecht",
+        "module": "hku",
+        "is_repository": false,
+        "created_at": "2023-09-20T09:03:50.613Z",
+        "modified_at": "2023-09-20T09:03:50.613Z"
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 15,
+    "fields": {
+        "source": 8,
+        "type": "products",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hku"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
+    "pk": 16,
+    "fields": {
+        "source": 8,
+        "type": "files",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "hku"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
 }
 ]
