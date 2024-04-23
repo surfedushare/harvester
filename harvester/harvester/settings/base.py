@@ -634,8 +634,8 @@ WEBHOOKS = {
     }
 }
 # Acceptance webhook definitions
-WEBHOOKS["edusources_acc"] = WEBHOOKS["sharekit:edusources"]
-WEBHOOKS["nppo_acc"] = WEBHOOKS["sharekit:nppo"]
+WEBHOOKS["sharekit:edusources_acc"] = WEBHOOKS["sharekit:edusources"]
+WEBHOOKS["sharekit:nppo_acc"] = WEBHOOKS["sharekit:nppo"]
 # Legacy webhook set definitions for backward compatability
 WEBHOOKS["edusources"] = WEBHOOKS["sharekit:edusources"]
 WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
