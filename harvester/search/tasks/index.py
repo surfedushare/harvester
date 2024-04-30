@@ -14,7 +14,7 @@ from search.models import OpenSearchIndex
 
 
 def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
-                                   logger: HarvestLogger) -> OpenSearchIndex | None:
+                                   logger: HarvestLogger, recreate: bool = False) -> OpenSearchIndex | None:
     try:
         with atomic():
             index = OpenSearchIndex.objects.select_for_update(nowait=True).get(id=dataset_version.index.id)
@@ -23,7 +23,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
             search_documents = dataset_version.get_search_documents_by_language(**filters)
             if not search_documents:
                 return
-            errors = index.push(search_documents, recreate=False)
+            errors = index.push(search_documents, recreate=recreate)
             logger.open_search_errors(errors)
             index.pushed_at = current_time
             index.save()
@@ -62,7 +62,7 @@ def sync_opensearch_indices(app_label: str) -> None:
 
 
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
-def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
+def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False) -> None:
     for dataset_version_model, dataset_version_id in dataset_versions:
         # Load the dataset version
         Dataset, DatasetVersion, dataset_version = load_data_models(dataset_version_model, dataset_version_id)
@@ -81,8 +81,8 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]]) -> None:
             warn_delete_does_not_exist=False
         )
         # Acquire lock and push recently modified documents to the index
-        index = _push_dataset_version_to_index(dataset_version, logger)
         logger.info(f"Pushing index for: {app_label}")
+        index = _push_dataset_version_to_index(dataset_version, logger, recreate=recreate_indices)
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             for language in settings.OPENSEARCH_LANGUAGE_CODES:
