@@ -125,9 +125,12 @@ class Command(base.LabelCommand):
             harvester_data_bucket = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester"
             download_edurep = options["download_edurep"]
             if download_edurep:
-                ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}")
+                ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}", echo=True)
             else:
-                ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR} --exclude *edurepoaipmh*")
+                ctx.run(
+                    f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR} --exclude *edurepoaipmh*",
+                    echo=True
+                )
         logger.info(f"Importing data for: {app_label}")
         for entry in os.scandir(get_dumps_path(models["Dataset"])):
             if entry.is_file():

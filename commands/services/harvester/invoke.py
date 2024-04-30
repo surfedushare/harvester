@@ -62,7 +62,7 @@ def harvester_migrate(ctx, mode):
 })
 def load_data(ctx, mode, source, app_label, download_edurep=False):
     """
-    Loads the production database and sets up Open Search data on localhost or an AWS cluster
+    Loads a remote database and sets up Open Search data on localhost or an AWS cluster
     """
     if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
@@ -230,7 +230,7 @@ def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=No
 })
 def dump_data(ctx, mode, app_label):
     """
-    Starts a task on the AWS container cluster to dump a specific Dataset and its related models
+    Starts a task on the AWS container cluster to dump a specific Django app and its models
     """
     command = ["python", "manage.py", "dump_harvester_data", app_label]
 
