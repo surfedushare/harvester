@@ -100,9 +100,9 @@ class SharekitFileExtraction(object):
 
     @classmethod
     def get_copyright(cls, info: FileInfo) -> str | None:
-        if info.is_link or not info.file:
+        if not info.file:
             return info.product["attributes"].get("termsOfUse")
-        return info.file.get("usageRight")
+        return info.file.get("usageRight") or info.product["attributes"].get("termsOfUse")
 
     @classmethod
     def get_access_rights(cls, info: FileInfo) -> str | None:
