@@ -8,6 +8,7 @@ SEED_DEFAULTS = {
     "files": [],
     "technical_type": None,
     "title": None,
+    "subtitle": None,
     "language": None,
     "keywords": [],
     "description": None,
