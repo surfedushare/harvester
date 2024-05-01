@@ -44,18 +44,19 @@ class TestPromoteDatasetVersion(TestCase):
     @patch("core.models.search.index.get_opensearch_client", return_value=search_client)
     def test_promote_dataset(self, get_search_client):
         get_search_client.reset_mock()
-        call_command("promote_dataset_version", "--dataset=test")
+        call_command("promote_dataset_version", "--dataset=test", "--app-label=core")
         self.assert_index_promoted()
 
         get_search_client.reset_mock()
-        call_command("promote_dataset_version", "--dataset=test", "--harvester-version=0.0.1")
+        call_command("promote_dataset_version", "--dataset=test", "--harvester-version=0.0.1",
+                     "--app-label=core")
         self.assert_index_promoted()
         self.assert_is_current(True)
 
     @patch("core.models.search.index.get_opensearch_client", return_value=search_client)
     def test_promote_dataset_version(self, get_search_client):
         get_search_client.reset_mock()
-        call_command("promote_dataset_version", "--dataset-version=1")
+        call_command("promote_dataset_version", "--dataset-version=1", "--app-label=core")
         self.assert_index_promoted()
         self.assert_is_current(True)
 
@@ -66,7 +67,8 @@ class TestPromoteDatasetVersion(TestCase):
         except CommandError:
             pass
         try:
-            call_command("promote_dataset_version", "--dataset=test", "--harvester-version=0.0.2")
+            call_command("promote_dataset_version", "--dataset=test", "--harvester-version=0.0.2",
+                         "--app-label=core")
             self.fail("Expected promote_dataset_version to fail with invalid harvester version specified")
         except CommandError:
             pass

@@ -156,4 +156,4 @@ class Command(base.LabelCommand):
                 latest_dataset_version.index.pushed_at = None  # forces a new push for this environment
                 latest_dataset_version.index.configuration = {}  # forces recreation of configuration for environment
                 latest_dataset_version.index.save()
-                index_dataset_versions([latest_dataset_version.model_key])
+                index_dataset_versions([latest_dataset_version.model_key], recreate_indices=True)

@@ -14,7 +14,7 @@ class Command(BaseCommand):
         parser.add_argument('-d', '--dataset', type=str, default="")
         parser.add_argument('-hv', '--harvester-version', type=str, default=settings.VERSION)
         parser.add_argument('-i', '--dataset-version-id', type=int, default=0)
-        parser.add_argument('-a', '--app-label', type=str, default="core")
+        parser.add_argument('-a', '--app-label', type=str, default="products")
 
     def handle(self, *args, **options):
 
