@@ -22,7 +22,7 @@ harvester:
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
-    publinova: "https://api.publinova.nl"
+    publinova: "https://api.publinova.acc.surf.zooma.cloud"
   webhook_allowed_ips:
     sharekit:
       - "145.101.123.227"  # production
