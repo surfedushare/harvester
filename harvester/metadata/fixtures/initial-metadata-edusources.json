@@ -23,6 +23,17 @@
 },
 {
     "model": "metadata.metadatatranslation",
+    "pk": 10,
+    "fields": {
+        "created_at": "2022-01-12T12:14:02.898Z",
+        "updated_at": "2022-01-12T12:14:02.898Z",
+        "nl": "Publicatiejaar",
+        "en": "Publication year",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
     "pk": 30,
     "fields": {
         "created_at": "2022-01-12T12:14:03.013Z",
@@ -174,6 +185,19 @@
         "created_at": "2022-10-05T13:10:52.788Z",
         "updated_at": "2022-10-05T13:10:52.788Z",
         "translation": 9,
+        "is_hidden": true,
+        "is_manual": false,
+        "english_as_dutch": false
+    }
+},
+{
+    "model": "metadata.metadatafield",
+    "pk": 19,
+    "fields": {
+        "name": "publisher_year_normalized",
+        "created_at": "2022-10-05T13:10:52.788Z",
+        "updated_at": "2022-10-05T13:10:52.788Z",
+        "translation": 10,
         "is_hidden": false,
         "is_manual": false,
         "english_as_dutch": false
