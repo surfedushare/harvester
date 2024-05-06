@@ -39,6 +39,11 @@ def default_document_tasks():
             "checks": ["is_analysis_possible", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
+        "image_preview": {
+            "depends_on": ["$.hash", "check_url"],
+            "checks": ["is_analysis_possible", "is_image"],
+            "resources": ["files.ImageThumbnailResource"]
+        },
         "video_preview": {
             # While thumbnails from Youtube API get ignored we need this task to be lenient.
             # It would be better to perform a check_url and use is_analysis_possible before executing,
@@ -129,6 +134,13 @@ class FileDocument(HarvestDocument):
         return self.mime_type in ["application/pdf", "application/x-pdf"]
 
     @property
+    def is_image(self):
+        if self.type != "image":
+            return False
+        content_type = self.derivatives.get("check_url", {}).get("content_type")
+        return bool(content_type and content_type != "text/html")
+
+    @property
     def is_analysis_possible(self):
         check_url = self.derivatives.get("check_url", {})
         status = check_url.get("status")
@@ -179,6 +191,8 @@ class FileDocument(HarvestDocument):
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:
             data["previews"] = self.derivatives["video_preview"]
+        elif "image_preview" in self.derivatives:
+            data["previews"] = self.derivatives["image_preview"]
         return data
 
 
