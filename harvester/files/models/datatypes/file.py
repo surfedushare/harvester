@@ -6,6 +6,8 @@ from copy import deepcopy
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 from datagrowth.resources.base import Resource
 
@@ -61,6 +63,7 @@ def default_document_tasks():
 
 
 youtube_domain_regex = re.compile(r".*(youtube\.com|youtu\.be)", re.IGNORECASE)
+url_validator = URLValidator()
 
 
 TECHNICAL_TYPE_CHOICES = sorted([
@@ -159,15 +162,11 @@ class FileDocument(HarvestDocument):
     def clean(self, set_metadata=True):
         super().clean(set_metadata=set_metadata)
         url = self.properties.get("url", None)
-        if url and not url.startswith("http"):
-            self.is_not_found = True
-        elif url:
-            try:
-                url_info = urlparse(url)
-                self.domain = url_info.hostname
-            except ValueError:
-                self.is_not_found = True
-        else:
+        try:
+            url_validator(url)
+            url_info = urlparse(url)
+            self.domain = url_info.hostname
+        except ValidationError:
             self.is_not_found = True
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
