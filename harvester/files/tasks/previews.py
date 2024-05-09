@@ -69,7 +69,7 @@ def pdf_preview(app_label: str, document_ids: list[int]):
     pdf_processor(FileDocument.objects.filter(id__in=document_ids))
 
 
-@app.task(name="pdf_preview", base=DatabaseConnectionResetTask)
+@app.task(name="image_preview", base=DatabaseConnectionResetTask)
 def image_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
