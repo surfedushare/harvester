@@ -134,38 +134,6 @@ def tika_xml_task(app_label: str, document_ids: list[int]) -> None:
     tika_xml_processor(Document.objects.filter(id__in=document_ids))
 
 
-@app.task(name="extruct", base=DatabaseConnectionResetTask)
-def extruct_task(app_label, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
-    extruct_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
-            "document": "FileDocument",
-            "process_result": "ProcessResult",
-            "batch": "Batch"
-        },
-        "pipeline_phase": "extruct",
-        "batch_size": len(document_ids),
-        "asynchronous": False,
-        "retrieve_data": {
-            "resource": "files.extructresource",
-            "method": "get",
-            "args": ["$.url"],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "to_property": "derivatives/extruct",
-            "objective": {
-                "@": "$.microdata",
-                "duration": "$.properties.duration",
-                "embed_url": "$.properties.embedUrl"
-            }
-        }
-    })
-    extruct_processor(FileDocument.objects.filter(id__in=document_ids))
-
-
 def get_embed_url(node):
     html = node["player"]["embedHtml"]
     url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"

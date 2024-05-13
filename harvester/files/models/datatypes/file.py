@@ -6,6 +6,8 @@ from copy import deepcopy
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 from datagrowth.resources.base import Resource
 
@@ -39,6 +41,11 @@ def default_document_tasks():
             "checks": ["is_analysis_possible", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
+        "image_preview": {
+            "depends_on": ["$.hash", "check_url"],
+            "checks": ["is_analysis_possible", "is_image"],
+            "resources": ["files.ImageThumbnailResource"]
+        },
         "video_preview": {
             # While thumbnails from Youtube API get ignored we need this task to be lenient.
             # It would be better to perform a check_url and use is_analysis_possible before executing,
@@ -56,6 +63,7 @@ def default_document_tasks():
 
 
 youtube_domain_regex = re.compile(r".*(youtube\.com|youtu\.be)", re.IGNORECASE)
+url_validator = URLValidator()
 
 
 TECHNICAL_TYPE_CHOICES = sorted([
@@ -129,6 +137,13 @@ class FileDocument(HarvestDocument):
         return self.mime_type in ["application/pdf", "application/x-pdf"]
 
     @property
+    def is_image(self):
+        if self.type != "image":
+            return False
+        content_type = self.derivatives.get("check_url", {}).get("content_type")
+        return bool(content_type and content_type != "text/html")
+
+    @property
     def is_analysis_possible(self):
         check_url = self.derivatives.get("check_url", {})
         status = check_url.get("status")
@@ -147,15 +162,11 @@ class FileDocument(HarvestDocument):
     def clean(self, set_metadata=True):
         super().clean(set_metadata=set_metadata)
         url = self.properties.get("url", None)
-        if url and not url.startswith("http"):
-            self.is_not_found = True
-        elif url:
-            try:
-                url_info = urlparse(url)
-                self.domain = url_info.hostname
-            except ValueError:
-                self.is_not_found = True
-        else:
+        try:
+            url_validator(url)
+            url_info = urlparse(url)
+            self.domain = url_info.hostname
+        except ValidationError:
             self.is_not_found = True
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
@@ -179,6 +190,8 @@ class FileDocument(HarvestDocument):
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:
             data["previews"] = self.derivatives["video_preview"]
+        elif "image_preview" in self.derivatives:
+            data["previews"] = self.derivatives["image_preview"]
         return data
 
 

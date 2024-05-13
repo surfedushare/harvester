@@ -67,3 +67,36 @@ def pdf_preview(app_label: str, document_ids: list[int]):
         }
     })
     pdf_processor(FileDocument.objects.filter(id__in=document_ids))
+
+
+@app.task(name="pdf_preview", base=DatabaseConnectionResetTask)
+def image_preview(app_label: str, document_ids: list[int]):
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
+    image_processor = HttpPipelineProcessor({
+        "pipeline_app_label": "files",
+        "pipeline_models": {
+            "document": "FileDocument",
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "pipeline_phase": "image_preview",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.imagethumbnailresource",
+            "method": "get",
+            "args": ["$.url"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "to_property": "derivatives/image_preview",
+            "objective": {
+                "@": "$",
+                "full_size": "$.full_size",
+                "preview": "$.preview",
+                "preview_small": "$.preview_small",
+            }
+        }
+    })
+    image_processor(FileDocument.objects.filter(id__in=document_ids))
