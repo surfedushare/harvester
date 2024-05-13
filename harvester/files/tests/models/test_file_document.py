@@ -1,8 +1,9 @@
+import json
 from copy import deepcopy
 
 from django.test import TestCase
 
-from files.models import FileDocument, CheckURLResource, HttpTikaResource
+from files.models import Set, FileDocument, CheckURLResource, HttpTikaResource
 
 
 class FileDocumentTestCase(TestCase):
@@ -40,3 +41,23 @@ class FileDocumentTestCase(TestCase):
         self.assertIsNone(file_document.finished_at)
         self.assertEqual(CheckURLResource.objects.count(), 1, "Expected check_url resource from pipeline to be deleted")
         self.assertEqual(HttpTikaResource.objects.count(), 2, "Expected tika resources to be unaffected")
+
+    def test_clean_url(self):
+        valid_url = "https://www.example.com"
+        collection = Set()
+        doc = FileDocument.build({"url": valid_url, "external_id": "abc123", "set": "test"}, collection=collection)
+        doc.clean()
+        self.assertFalse(doc.is_not_found, "Expected valid URL to be marked as 'found' by default")
+        invalid_urls = urls = [
+            "htp://example.com",  # Incorrect scheme
+            "http:///example.com",  # Missing host
+            "://example.com",  # Missing scheme
+            "www.example.com",  # Missing scheme and leading slashes
+            "http://Handreiking+voor+professionals+in+de+geboorte-+en+jeugdgezondheidszorg",
+            json.dumps("https://data\u2060-scope.com").strip('"'),  # Pure leaks word-joiner chars into URL's
+            None
+        ]
+        for invalid_url in invalid_urls:
+            doc = FileDocument.build({"url": invalid_url, "external_id": "abc123", "set": "test"}, collection=collection)
+            doc.clean()
+            self.assertTrue(doc.is_not_found, f"Expected invalid URL to be marked as 'not found': {invalid_url}")
