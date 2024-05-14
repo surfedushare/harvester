@@ -1,4 +1,3 @@
-import json
 from copy import deepcopy
 
 from django.test import TestCase
@@ -54,7 +53,7 @@ class FileDocumentTestCase(TestCase):
             "://example.com",  # Missing scheme
             "www.example.com",  # Missing scheme and leading slashes
             "http://Handreiking+voor+professionals+in+de+geboorte-+en+jeugdgezondheidszorg",
-            json.dumps("https://data\u2060-scope.com").strip('"'),  # Pure leaks word-joiner chars into URL's
+            "https://www⁠.bd⁠.nl⁠/dongen⁠/hoe-de-bus-verdween-uit-jorwerd-openbaar-vervoerarmoede~a9818109⁠/",
             None
         ]
         for invalid_url in invalid_urls:

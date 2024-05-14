@@ -1,5 +1,6 @@
 import re
-from urllib.parse import urlparse
+from urllib3.util import parse_url
+from urllib3.exceptions import LocationParseError
 from mimetypes import guess_type
 from copy import deepcopy
 
@@ -164,9 +165,9 @@ class FileDocument(HarvestDocument):
         url = self.properties.get("url", None)
         try:
             url_validator(url)
-            url_info = urlparse(url)
-            self.domain = url_info.hostname
-        except ValidationError:
+            scheme, auth, host, port, path, query, fragment = parse_url(url)
+            self.domain = host
+        except (ValidationError, LocationParseError):
             self.is_not_found = True
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
