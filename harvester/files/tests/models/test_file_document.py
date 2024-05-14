@@ -48,7 +48,7 @@ class FileDocumentTestCase(TestCase):
         doc = FileDocument.build({"url": valid_url, "external_id": "abc123", "set": "test"}, collection=collection)
         doc.clean()
         self.assertFalse(doc.is_not_found, "Expected valid URL to be marked as 'found' by default")
-        invalid_urls = urls = [
+        invalid_urls = [
             "htp://example.com",  # Incorrect scheme
             "http:///example.com",  # Missing host
             "://example.com",  # Missing scheme
@@ -58,6 +58,9 @@ class FileDocumentTestCase(TestCase):
             None
         ]
         for invalid_url in invalid_urls:
-            doc = FileDocument.build({"url": invalid_url, "external_id": "abc123", "set": "test"}, collection=collection)
+            doc = FileDocument.build(
+                {"url": invalid_url, "external_id": "abc123", "set": "test"},
+                collection=collection
+            )
             doc.clean()
             self.assertTrue(doc.is_not_found, f"Expected invalid URL to be marked as 'not found': {invalid_url}")
