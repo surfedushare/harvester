@@ -1,75 +1,32 @@
 from django.test import TestCase, override_settings
-from django.utils.timezone import now
 
 from datagrowth.configuration import register_defaults
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from sources.models import HvaPureResource
 from sources.factories.hva.extraction import HvaPureResourceFactory
 from files.models import Set, FileDocument
 from files.sources.hva import SEEDING_PHASES
+from testing.cases import seeding
 
 
-class TestHvAFileSeeding(TestCase):
+class TestHvAFileSeeding(seeding.SourceSeedingTestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        HvaPureResourceFactory.create_common_responses()
-
-    def setUp(self) -> None:
-        super().setUp()
-        self.set = Set.objects.create(name="hva", identifier="srn")
-        self.processor = HttpSeedingProcessor(self.set, {
-            "phases": SEEDING_PHASES
-        })
+    entity = "files"
+    source = "hva"
+    resource = HvaPureResource
+    resource_factory = HvaPureResourceFactory
+    delete_policy = DeletePolicies.NO
 
     def test_initial_seeding(self):
-        for batch in self.processor("hva", "1970-01-01T00:00:00Z"):
-            self.assertIsInstance(batch, list)
-            for file_ in batch:
-                self.assertIsInstance(file_, FileDocument)
-                self.assertIsNotNone(file_.identity)
-                self.assertTrue(file_.properties)
-                self.assertTrue(file_.pending_at)
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 11)
         self.assertEqual(self.set.documents.count(), 11)
 
-    def test_delta_seeding(self):
-        # Load the initial data, set all tasks as completed and mark everything as deleted (delete_policy=no)
-        current_time = now()
-        initial_documents = []
-        for batch in self.processor("hva", "1970-01-01T00:00:00Z"):
-            for doc in batch:
-                for task in doc.tasks.keys():
-                    doc.pipeline[task] = {"success": True}
-                doc.properties["state"] = FileDocument.States.DELETED
-                doc.clean()
-                doc.finish_processing(current_time=current_time)
-                initial_documents.append(doc)
-        # HvA doesn't really have delta's, so we delete initial resources and create a new "delta" resource.
-        HvaPureResource.objects.all().delete()
-        HvaPureResourceFactory.create(is_initial=False, number=0)
-        # Set some expectations
-        become_processing_ids = {
-            # Files added by the delta
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
             "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a:484cf5228fad26faec3c382b410c228a8bdfe5e1",
-        }
-        # Load the delta data and see if updates have taken place
-        documents = []
-        for batch in self.processor("hva", "2020-01-01T00:00:00Z"):
-            self.assertIsInstance(batch, list)
-            for file_ in batch:
-                self.assertIsInstance(file_, FileDocument)
-                self.assertIsNotNone(file_.identity)
-                self.assertTrue(file_.properties)
-                if file_.identity in become_processing_ids:
-                    self.assertTrue(file_.pending_at)
-                    self.assertIsNone(file_.finished_at)
-                else:
-                    self.assertIsNone(
-                        file_.pending_at,
-                        f"Did not expect document with identity '{file_.identity}' to be pending"
-                    )
-                    self.assertTrue(file_.finished_at)
-                documents.append(file_)
+        ])
         self.assertEqual(len(documents), 6, "Expected test to work with single page for the delta")
         self.assertEqual(
             self.set.documents.all().count(), 11 + 1,
