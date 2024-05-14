@@ -3,54 +3,11 @@ import logging
 from django.db import models
 from urlobject import URLObject
 
-from datagrowth.configuration import create_config
-from datagrowth.processors import ExtractProcessor
-
-from anatomy_tool.extraction import AnatomyToolExtraction, OBJECTIVE
-
 
 logger = logging.getLogger("harvester")
 
 
-class AnatomyToolOAIPMHManager(models.Manager):
-
-    def extract_seeds(self, latest_update):
-        queryset = self.get_queryset().filter(
-            since__date__gte=latest_update.date(),
-            status=200,
-            is_extracted=False
-        )
-
-        oaipmh_objective = {
-            "@": AnatomyToolExtraction.get_oaipmh_records,
-            "external_id": AnatomyToolExtraction.get_oaipmh_external_id,
-            "state": AnatomyToolExtraction.get_oaipmh_record_state
-        }
-        oaipmh_objective.update(OBJECTIVE)
-        extract_config = create_config("extract_processor", {
-            "objective": oaipmh_objective
-        })
-        prc = ExtractProcessor(config=extract_config)
-
-        results = []
-        for harvest in queryset:
-            seed_resource = {
-                "resource": f"{harvest._meta.app_label}.{harvest._meta.model_name}",
-                "id": harvest.id,
-                "success": True
-            }
-            try:
-                for seed in prc.extract_from_resource(harvest):
-                    seed["seed_resource"] = seed_resource
-                    results.append(seed)
-            except ValueError as exc:
-                logger.warning("Invalid XML:", exc, harvest.uri)
-        return results
-
-
 class AnatomyToolOAIPMH(object):
-
-    objects = AnatomyToolOAIPMHManager()
 
     set_specification = models.CharField(max_length=255, blank=True, null=False, default="anatomy_tool")
     use_multiple_sets = False
