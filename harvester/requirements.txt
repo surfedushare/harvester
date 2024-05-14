@@ -1,5 +1,5 @@
 # Harvester web
-django==4.2.11
+django==4.2.13
 djangorestframework==3.15.1
 django-cors-headers==3.14.0
 whitenoise==6.6.0
