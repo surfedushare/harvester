@@ -76,6 +76,7 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
     list_per_page = 10
     list_filter = ('dataset_version__is_current', 'collection__name', 'state',)
     readonly_fields = ("created_at", "modified_at",)
+    actions = ["reset_document_tasks"]
 
     def changelist_view(self, request, extra_context=None):
         # Filter on current dataset version if no filter is being used
@@ -85,6 +86,9 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
             request.GET = parameters
             request.META['QUERY_STRING'] = request.GET.urlencode()
         return super().changelist_view(request, extra_context=extra_context)
+
+    def reset_document_tasks(self, request, queryset):
+        queryset.update(pipeline={}, derivatives={}, pending_at=None, finished_at=None)
 
 
 class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
