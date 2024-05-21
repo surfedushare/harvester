@@ -24,8 +24,6 @@ from core import views as core_views
 from metadata.urls import public_api_patterns as metadata_public
 from search.urls import public_api_patterns as search_public
 from products.urls import public_api_patterns as products_public, webhook_urlpatterns as products_webhooks
-from sharekit import views as sharekit_views
-from sources import views as sources_views
 
 
 api_description = """
@@ -59,14 +57,6 @@ urlpatterns = [
     path('', include('testing.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include((api_urlpatterns, "v1",))),
-    path(
-        'sharekit/edit-document/<str:channel>/<uuid:secret>/', sharekit_views.legacy_edit_document_webhook,
-        name="sharekit-document-webhook"
-    ),
-    path(
-        'publinova/edit-document/<str:channel>/<uuid:secret>/', sources_views.legacy_publinova_document_webhook,
-        name="publinova-document-webhook"
-    ),
     *products_webhooks,
     path('', core_views.health_check, name="health-check")
 ]

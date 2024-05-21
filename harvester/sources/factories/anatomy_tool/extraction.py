@@ -23,7 +23,7 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
     since = factory.Maybe(
         "is_initial",
         make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
+        make_aware(datetime(year=2020, month=1, day=1))
     )
     set_specification = "anatomy_tool"
     status = 200
@@ -60,3 +60,8 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
     @classmethod
     def create_common_responses(cls, include_delta=False):
         cls.create(is_initial=True, number=0)
+        cls.create(is_initial=True, number=1, resumption="6dc475814880745c5c55bba3fb288c35")
+
+    @classmethod
+    def create_delta_responses(cls):
+        cls.create(is_initial=False, number=0)

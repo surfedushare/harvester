@@ -61,3 +61,7 @@ class HvaPureResourceFactory(factory.django.DjangoModelFactory):
     def create_common_responses(cls):
         cls.create(number=0)
         cls.create(number=1)
+
+    @classmethod
+    def create_delta_responses(cls):
+        cls.create(number=0, is_initial=False)

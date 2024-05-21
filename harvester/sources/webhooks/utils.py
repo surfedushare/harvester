@@ -6,22 +6,10 @@ from django.shortcuts import HttpResponse
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
-from harvester.utils.extraction import prepare_seed
 from core.logging import HarvestLogger
 from core.loading import load_harvest_models
 from core.models.datatypes import HarvestSet, HarvestDocument
 from core.processors.seed.resource import HttpSeedingProcessor
-
-
-def get_legacy_seed_operation(seed, collection):
-    document_exists = collection.document_set.filter(reference=seed["external_id"]).exists()
-    if seed["state"] == "deleted" and document_exists:
-        return "delete"
-    elif seed["state"] == "deleted":
-        return "ignore"
-    elif document_exists:
-        return "update"
-    return "create"
 
 
 def validate_webhook_data(request, set_name, secret_key):
@@ -68,28 +56,6 @@ def get_webhook_destination(set_name, app_label="core"):
         return None, None
     set_instance = dataset_version.sets.filter(name=set_name).last()
     return dataset_version, set_instance
-
-
-def extract_legacy_webhook_seed(extractor, objective, collection, data):
-    """
-    Extracts the relevant data from the raw data
-
-    :param extractor: ExtractProcessor to use
-    :param objective: mapping to extract relevant data
-    :param collection: Collection that might already contain incoming data
-    :param data: the raw data to extract from
-    :return: data to be stored into the system (known as a "seed")
-    """
-    extract_config = create_config("extract_processor", {
-        "objective": objective
-    })
-    prc = extractor(config=extract_config)
-    seed = next(prc.extract("application/json", data))
-    operation = get_legacy_seed_operation(seed, collection)
-    if operation == "create" and seed["language"] is None:
-        seed["language"] = "unk"
-    prepare_seed(seed)
-    return seed, operation
 
 
 def commit_webhook_seeds(objective: dict, webhook_data: dict, set_instance: HarvestSet,

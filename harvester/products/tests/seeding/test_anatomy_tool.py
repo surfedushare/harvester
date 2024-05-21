@@ -1,54 +1,50 @@
 from datagrowth.configuration import register_defaults
-from django.test import TestCase
 
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from core.tests.base import SeedExtractionTestCase
-from products.models import Set, ProductDocument
+from products.models import Set
 from products.sources.anatomy_tool import SEEDING_PHASES
+from sources.models import AnatomyToolOAIPMH
 from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
+from testing.cases import seeding
 
 
-class TestAnatomyToolProductSeeding(TestCase):
+class TestAnatomyToolProductSeeding(seeding.SourceSeedingTestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        register_defaults("global", {
-            "cache_only": True
-        })
-
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
-
-    @classmethod
-    def setUpTestData(cls):
-        AnatomyToolOAIPMHFactory.create_common_responses()
-
-    def setUp(self) -> None:
-        super().setUp()
-        self.set = Set.objects.create(identifier="srn")
-        self.processor = HttpSeedingProcessor(self.set, {
-            "phases": SEEDING_PHASES
-        })
+    entity = "products"
+    source = "anatomy_tool"
+    resource = AnatomyToolOAIPMH
+    resource_factory = AnatomyToolOAIPMHFactory
+    delete_policy = DeletePolicies.NO
 
     def test_initial_seeding(self):
-        for batch in self.processor("anatomy_tool", "1970-01-01T00:00:00Z"):
-            self.assertIsInstance(batch, list)
-            for product in batch:
-                self.assertIsInstance(product, ProductDocument)
-                self.assertIsNotNone(product.identity)
-                self.assertTrue(product.properties)
-                if product.state == ProductDocument.States.ACTIVE:
-                    self.assertTrue(product.pending_at)
-                    self.assertIsNone(product.finished_at)
-                else:
-                    self.assertIsNone(product.pending_at)
-                    self.assertIsNotNone(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 10)
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 20)
+        self.assertEqual(self.set.documents.count(), 20)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "anatomy_tool:anatomy_tool:oai:anatomytool.org:62564"
+        ])
+        self.assertEqual(len(documents), 10, "Expected delta to work with a single page")
+        self.assertEqual(
+            self.set.documents.all().count(), 20 + 1,
+            "Expected 20 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 10,
+            "Expected 6 Documents to have no deleted_at date and 10 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
+        self.assertEqual(
+            self.set.documents.filter(properties__title="Macroscopy tutorial duodenum").count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
@@ -95,7 +91,6 @@ class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
 
     def test_get_copyright(self):
         seeds = self.seeds
-        self.assertEqual(len(seeds), 10, "Expected get_harvest_seeds to filter differently based on copyright")
         self.assertEqual(seeds[0]["copyright"], "cc-by-nc-sa-40")
         self.assertEqual(seeds[6]["copyright"], "yes")
 

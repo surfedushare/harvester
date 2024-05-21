@@ -6,7 +6,6 @@ from urlobject import URLObject
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
 
-from core.models import HarvestHttpResource
 from anatomy_tool.extraction import AnatomyToolExtraction, OBJECTIVE
 
 
@@ -49,7 +48,7 @@ class AnatomyToolOAIPMHManager(models.Manager):
         return results
 
 
-class AnatomyToolOAIPMH(HarvestHttpResource):
+class AnatomyToolOAIPMH(object):
 
     objects = AnatomyToolOAIPMHManager()
 
