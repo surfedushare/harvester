@@ -7,6 +7,6 @@ fabric==3.2.2
 factory-boy==3.3.0
 flake8==7.0.0
 pytest-django==4.8.0
-pytest-xdist==3.5.0
+pytest-xdist==3.6.1
 
 -r harvester/requirements.txt
