@@ -48,16 +48,7 @@ class HarvestEntitiesTestCase(TestCase):
         self.assertEqual(dataset_version.sets.count(), 2)
         self.assertEqual(dataset_version.historic_sets.count(), historic_sets)
 
-
-class TestInitialHarvestEntities(HarvestEntitiesTestCase):
-
-    def setUp(self):
-        super().setUp()
-        self.dataset = Dataset.objects.create(name="test", is_harvested=True)
-
-    @patch("sources.tasks.entities.harvest_source")
-    def test_harvest_entities(self, harvest_source_mock):
-        dataset_versions = harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+    def assert_harvest_entities(self, dataset_versions, harvest_source_mock):
         self.assertIsInstance(dataset_versions, list)
         self.assertEqual(len(dataset_versions), 1)
         self.assertEqual(
@@ -79,6 +70,18 @@ class TestInitialHarvestEntities(HarvestEntitiesTestCase):
         )
         for harvest_state in HarvestState.objects.all():
             self.assert_harvest_state(harvest_state)
+
+
+class TestInitialHarvestEntities(HarvestEntitiesTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.dataset = Dataset.objects.create(name="test", is_harvested=True)
+
+    @patch("sources.tasks.entities.harvest_source")
+    def test_harvest_entities(self, harvest_source_mock):
+        dataset_versions = harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
+        self.assert_harvest_entities(dataset_versions, harvest_source_mock)
         # Assert Set
         self.assertEqual(
             Set.objects.all().count(), 2,
@@ -127,19 +130,32 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             self.seeds, 5
         )
         self.merge_document = next((doc for doc in self.documents if doc.collection.name == "merge:merge_set"))
-        self.failed_document = self.documents[0]
+        self.invalid_document = self.documents[0]
+        self.invalid_document.pipeline = {
+            "check_url": {"success": False},
+        }
+        self.invalid_document.derivatives = {
+            "check_url": {"status": 504}
+        }
+        self.invalid_document.save()
+        self.failed_document = self.documents[1]
         self.failed_document.pipeline = {
+            "check_url": {"success": True},
             "tika": {"success": False}
         }
         self.failed_document.derivatives = {
+            "check_url": {"status": 200},
             "tika": {"texts": []}
         }
         self.failed_document.save()
-        for doc in self.documents[1:]:
+        self.unprocessed_document = self.documents[2]
+        for doc in self.documents[3:]:
             doc.pipeline = {
+                "check_url": {"success": True},
                 "tika": {"success": True}
             }
             doc.derivatives = {
+                "check_url": {"status": 200},
                 "tika": {"texts": ["text from Tika"]}
             }
             doc.save()
@@ -147,27 +163,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
     @patch("sources.tasks.entities.harvest_source")
     def test_harvest_entities(self, harvest_source_mock):
         dataset_versions = harvest_entities(HarvestEntity.EntityType.TEST, asynchronous=False)
-        self.assertIsInstance(dataset_versions, list)
-        self.assertEqual(len(dataset_versions), 1)
-        self.assertEqual(
-            dataset_versions[0][0], "testing.datasetversion",
-            "Expected app_label and model_name as part of output about dataset versions"
-        )
-        self.assertGreater(
-            dataset_versions[0][1], 0,
-            "Expected an id integer as part of output about dataset versions"
-        )
-        # Assert call to harvest_source
-        self.assertEqual(harvest_source_mock.call_count, 2)
-        harvest_source_mock.assert_any_call("testing", "simple", "simple_set", asynchronous=False)
-        harvest_source_mock.assert_any_call("testing", "merge", "merge_set", asynchronous=False)
-        # Assert HarvestState
-        self.assertEqual(
-            HarvestState.objects.all().count(), 2,
-            "Expected two harvest_state instances based on two sources in the fixtures"
-        )
-        for harvest_state in HarvestState.objects.all():
-            self.assert_harvest_state(harvest_state)
+        self.assert_harvest_entities(dataset_versions, harvest_source_mock)
         # Assert Set
         self.assertEqual(
             Set.objects.all().count(), 4,
@@ -201,20 +197,53 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         # Assert documents
         self.assertEqual(TestDocument.objects.all().count(), 20)
+        invalid_document = TestDocument.objects \
+            .exclude(dataset_version=self.dataset_version) \
+            .filter(identity=self.invalid_document.identity) \
+            .last()
+        self.assertEqual(
+            invalid_document.pipeline, {"check_url": {"success": False}},
+            "Expected check_url to propagate between harvests"
+        )
+        self.assertEqual(
+            invalid_document.derivatives, {"check_url": {"status": 504}},
+            "Expected derivatives to get reset"
+        )
+        self.assertTrue(invalid_document.properties, "Expected properties to remain intact")
+        self.assertIsNone(invalid_document.pending_at, "Expected invalid document to remain finished")
         failed_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.failed_document.identity) \
             .last()
-        self.assertEqual(failed_document.pipeline, {}, "Expected pipeline to get reset")
-        self.assertEqual(failed_document.derivatives, {}, "Expected derivatives to get reset")
+        self.assertEqual(failed_document.pipeline, {"check_url": {"success": True}}, "Expected pipeline to get reset")
+        self.assertEqual(
+            failed_document.derivatives, {"check_url": {"status": 200}},
+            "Expected derivatives to get reset"
+        )
         self.assertTrue(failed_document.properties, "Expected properties to remain intact")
         self.assertIsInstance(failed_document.pending_at, datetime, "Expected failed document to become pending")
+
+        unprocessed_document = TestDocument.objects \
+            .exclude(dataset_version=self.dataset_version) \
+            .filter(identity=self.unprocessed_document.identity) \
+            .last()
+        self.assertEqual(unprocessed_document.pipeline, {}, "Expected pipeline to remain as is")
+        self.assertEqual(unprocessed_document.derivatives, {}, "Expected derivatives to remain as is")
+        self.assertTrue(unprocessed_document.properties, "Expected properties to remain intact")
+        self.assertIsInstance(
+            unprocessed_document.pending_at, datetime,
+            "Expected previously unprocessed document to become pending"
+        )
+        error_identities = [
+            self.invalid_document.identity, self.failed_document.identity, self.unprocessed_document.identity
+        ]
         success_document = TestDocument.objects \
-            .exclude(dataset_version=self.dataset_version, identity=self.failed_document.identity) \
+            .exclude(dataset_version=self.dataset_version, identity__in=error_identities) \
             .first()
         self.assertEqual(
             success_document.pipeline,
             {
+                "check_url": {"success": True},
                 "tika": {"success": True}
             },
             "Expected pipeline to remain intact"
@@ -222,6 +251,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.assertEqual(
             success_document.derivatives,
             {
+                "check_url": {"status": 200},
                 "tika": {"texts": ["text from Tika"]}
             },
             "Expected derivatives to remain intact"
