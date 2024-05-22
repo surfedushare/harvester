@@ -84,7 +84,6 @@ class Command(PipelineCommand):
             updates = []
             inserts = []
             for seed in seeds:
-                self.logger.report_material(seed["external_id"], title=seed["title"], url=seed["url"])
                 document = Document.objects.build_from_seed(
                     seed,
                     collection=collection,
@@ -111,11 +110,6 @@ class Command(PipelineCommand):
         document_delete_total = 0
         for seeds_batch in self.batchify("update.delete.batch", deletion_seeds, len(deletion_seeds)):
             seeds = list(seeds_batch)
-            for seed in seeds:
-                self.logger.report_material(
-                    seed["external_id"],
-                    state=seed["state"]
-                )
             ids = [seed["external_id"] for seed in seeds]
             delete_total, delete_details = collection.documents.filter(reference__in=ids).delete()
             document_delete_total += delete_total

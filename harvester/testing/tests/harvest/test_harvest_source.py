@@ -11,6 +11,7 @@ from datagrowth.configuration import register_defaults
 from core.tasks.harvest.source import harvest_source
 from sources.models.harvest import HarvestEntity
 from files.tests.factories.tika import HttpTikaResourceFactory
+from files.tests.factories.check_url import CheckURLResourceFactory
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.utils.generators import seed_generator, document_generator
 from testing.utils.factories import create_datatype_models
@@ -59,6 +60,7 @@ class TestInitialHarvestSource(TestCase):
         self.sequence_properties = copy(ENTITY_SEQUENCE_PROPERTIES["simple"])
         for seed in seed_generator("simple", 20, self.sequence_properties):
             HttpTikaResourceFactory.create(url=seed["url"])
+            CheckURLResourceFactory.create(url=seed["url"])
 
     def test_initial(self):
         seeding_patch_target = "core.tasks.harvest.source.HttpSeedingProcessor.__call__"
@@ -74,11 +76,19 @@ class TestInitialHarvestSource(TestCase):
             "Expected no pending documents"
         )
         for ix, doc in enumerate(self.set.documents.all().order_by("created_at")):
-            self.assertEqual(list(doc.pipeline.keys()), ["tika"])
+            self.assertEqual(list(doc.pipeline.keys()), ["tika", "check_url"])
             self.assertTrue(doc.pipeline["tika"]["success"])
-            self.assertEqual(list(doc.derivatives.keys()), ["tika"])
+            self.assertTrue(doc.pipeline["check_url"]["success"])
+            self.assertEqual(list(doc.derivatives.keys()), ["tika", "check_url"])
             self.assertEqual(doc.derivatives["tika"], {
                 "texts": [f"Tika content for http://testserver/file/{ix}"]
+            })
+            self.assertEqual(doc.derivatives["check_url"], {
+                "url": f"http://testserver/file/{ix}",
+                "status": 200,
+                "content_type": "text/html",
+                "has_redirect": False,
+                "has_temporary_redirect": False
             })
         # Assert Set state
         set_instance = Set.objects.get(id=self.set.id)
@@ -161,6 +171,7 @@ class TestDeltaHarvestSource(TestCase):
                 self.simple_set.copy_documents(historic_set)
         for seed in seed_generator("simple", 100, self.sequence_properties):
             HttpTikaResourceFactory.create(url=seed["url"])
+            CheckURLResourceFactory.create(url=seed["url"])
 
     def assert_harvest_state(self, harvest_state_id, should_update_harvested_at=True, document_count=0,
                              pending_document_count=0):

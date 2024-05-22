@@ -36,7 +36,7 @@ def dispatch_set_task_retry(task, exc, task_id, args, kwargs, einfo):
     name="dispatch_set_tasks",
     base=DatabaseConnectionResetTask,
     autoretry_for=(PendingHarvestObjects,),
-    retry_kwargs={"max_retries": 5, "countdown": 15 * 60},
+    retry_kwargs={"max_retries": 24, "countdown": 5 * 60},
     on_retry=dispatch_set_task_retry
 )
 def dispatch_set_tasks(app_label: str, harvest_set: int | HarvestSet, asynchronous: bool = True,

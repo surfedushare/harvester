@@ -32,7 +32,7 @@ class TestDocumentModel(TestCase):
     def test_get_property_dependencies(self):
         property_dependencies = self.document.get_property_dependencies()
         self.assertEqual(property_dependencies, {
-            "$.url": ["tika"]
+            "$.url": ["check_url"]
         })
 
     def test_invalidate_task(self):
@@ -75,16 +75,16 @@ class TestDocumentModel(TestCase):
 
     def test_update_url(self):
         # Setup the document to reflect that pipeline tasks have run
-        self.document.pipeline["tika"] = {"success": True}
-        self.document.derivatives["tika"] = {"texts": ["I will disappear"]}
+        self.document.pipeline["check_url"] = {"success": True}
+        self.document.derivatives["check_url"] = {"status": 200}
         self.document.pending_at = None
         self.document.finished_at = now()
         self.document.save()
         # Update the document
         self.document.update({"url": None})
         # Assert the document
-        self.assertNotIn("tika", self.document.pipeline)
-        self.assertNotIn("tika", self.document.derivatives)
+        self.assertNotIn("check_url", self.document.pipeline)
+        self.assertNotIn("check_url", self.document.derivatives)
         self.assertIsNotNone(self.document.pending_at, "Expected Document to become pending after updating URL")
         self.assertIsNone(self.document.finished_at, "Expected Document to not be finished after updating URL")
 

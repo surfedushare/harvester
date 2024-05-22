@@ -6,7 +6,6 @@ from django.shortcuts import HttpResponse
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
-from core.logging import HarvestLogger
 from core.loading import load_harvest_models
 from core.models.datatypes import HarvestSet, HarvestDocument
 from core.processors.seed.resource import HttpSeedingProcessor
@@ -89,22 +88,3 @@ def commit_webhook_seeds(objective: dict, webhook_data: dict, set_instance: Harv
         for doc in batch:
             documents.append(doc)
     return documents
-
-
-def commit_webhook_seed(dataset_version, collection, seed):
-    """
-    Commits data to the relevant collection and logs the update to the HarvestLogger.
-
-    :param dataset_version: the dataset_version to commit to
-    :param collection: the collection to commit to
-    :param seed: the data to commit
-    :return: None
-    """
-    collection.update([seed], "external_id")
-    logger = HarvestLogger(dataset_version.dataset.name, "edit_document_webhook", {})
-    logger.report_material(
-        seed["external_id"],
-        state=seed["state"],
-        title=seed["title"],
-        url=seed["url"]
-    )
