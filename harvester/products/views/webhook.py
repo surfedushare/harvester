@@ -32,8 +32,9 @@ def product_webhook(request: HttpRequest, source: str, set_specification: str, s
             [doc.id for doc in documents if doc.state != HarvestDocument.States.DELETED]
         )
         for document in documents:
-            logger.report_material(
+            logger.report_document(
                 document.identity,
+                entity_type,
                 state=document.state,
                 title=document.properties.get("title", None)
             )

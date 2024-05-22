@@ -3,6 +3,7 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
+from core.logging import HarvestLogger
 from core.models.datatypes import HarvestDocument
 from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_harvest_object_tasks,
                                      validate_pending_harvest_instances)
@@ -51,3 +52,11 @@ def cancel_document_tasks(app_label: str, documents: list[int | HarvestDocument]
         stopped.append(document)
 
     models["Document"].objects.bulk_update(stopped, ["pending_at", "finished_at", "pipeline"])
+
+    if stopped:
+        dataset_version = stopped[0].dataset_version
+        collection = stopped[0].collection
+        dataset = dataset_version.dataset.name if dataset_version else None
+        source = collection.name if collection else None
+        logger = HarvestLogger(dataset, "cancel_document_tasks", {}, is_legacy_logger=False)
+        logger.report_cancelled_documents(app_label, source, len(stopped))
