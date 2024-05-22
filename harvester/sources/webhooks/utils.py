@@ -6,7 +6,6 @@ from django.shortcuts import HttpResponse
 
 from datagrowth.configuration import create_config
 from datagrowth.processors import ExtractProcessor
-from core.logging import HarvestLogger
 from core.loading import load_harvest_models
 from core.models.datatypes import HarvestSet, HarvestDocument
 from core.processors.seed.resource import HttpSeedingProcessor
