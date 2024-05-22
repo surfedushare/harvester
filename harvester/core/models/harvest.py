@@ -72,7 +72,7 @@ class HarvestState(models.Model):
                     if not result.get("success", False) and task != "check_url":
                         document.invalidate_task(task, current_time=current_time)
                 # Check if any open tasks are left and start processing if that is the case
-                if document.get_pending_tasks():
+                if document.state == document.States.ACTIVE and document.get_pending_tasks():
                     document.pending_at = current_time
                     document.finished_at = None
                 # Copy the instance in the database

@@ -149,7 +149,10 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         }
         self.failed_document.save()
         self.unprocessed_document = self.documents[2]
-        for doc in self.documents[3:]:
+        self.inactive_document = self.documents[3]
+        self.inactive_document.state = TestDocument.States.INACTIVE
+        self.inactive_document.save()
+        for doc in self.documents[4:]:
             doc.pipeline = {
                 "check_url": {"success": True},
                 "tika": {"success": True}
@@ -196,6 +199,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             "Expected resources for 'merge' entity to get deleted because of delete_policy=no"
         )
         # Assert documents
+        # Invalid document
         self.assertEqual(TestDocument.objects.all().count(), 20)
         invalid_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version) \
@@ -211,6 +215,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         self.assertTrue(invalid_document.properties, "Expected properties to remain intact")
         self.assertIsNone(invalid_document.pending_at, "Expected invalid document to remain finished")
+        # Failed document
         failed_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.failed_document.identity) \
@@ -222,7 +227,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         self.assertTrue(failed_document.properties, "Expected properties to remain intact")
         self.assertIsInstance(failed_document.pending_at, datetime, "Expected failed document to become pending")
-
+        # Unprocessed document
         unprocessed_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.unprocessed_document.identity) \
@@ -234,8 +239,19 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             unprocessed_document.pending_at, datetime,
             "Expected previously unprocessed document to become pending"
         )
+        # Inactive document
+        inactive_document = TestDocument.objects \
+            .exclude(dataset_version=self.dataset_version) \
+            .filter(identity=self.inactive_document.identity) \
+            .last()
+        self.assertEqual(inactive_document.pipeline, {}, "Expected pipeline to remain as is")
+        self.assertEqual(inactive_document.derivatives, {}, "Expected derivatives to remain as is")
+        self.assertTrue(inactive_document.properties, "Expected properties to remain intact")
+        self.assertIsNone(inactive_document.pending_at, "Expected inactive document to remain unprocessed")
+        # Success documents
         error_identities = [
-            self.invalid_document.identity, self.failed_document.identity, self.unprocessed_document.identity
+            self.invalid_document.identity, self.failed_document.identity, self.unprocessed_document.identity,
+            self.inactive_document.identity
         ]
         success_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version, identity__in=error_identities) \
@@ -258,6 +274,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         self.assertTrue(success_document.properties, "Expected properties to remain intact")
         self.assertIsNone(success_document.pending_at, "Expected document not to become pending automatically")
+        # Merge document
         merge_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.merge_document.identity) \
