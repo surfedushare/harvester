@@ -88,6 +88,10 @@ class HttpTikaResource(HttpTikaResourceBase):
         params["fetchKey"] = fetch_key
         return params
 
+    def _create_url(self, *args):
+        url = super()._create_url(*args)
+        return url.replace("+", "%2520")  # all links are expected to be normalized to + through BaseExtractor.parse_url
+
     class Meta:
         app_label = "files"
 
