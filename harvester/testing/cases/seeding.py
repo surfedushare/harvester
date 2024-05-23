@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.test import TestCase
 from django.utils.timezone import now
 
@@ -18,6 +21,7 @@ class SourceSeedingTestCase(TestCase):
     resource: Resource = None
     resource_factory: ResourceFactoryProtocol = None
     delete_policy: DeletePolicies = None
+    has_pagination: bool = True
 
     models: dict = None
     configuration: dict = None
@@ -51,6 +55,15 @@ class SourceSeedingTestCase(TestCase):
             "phases": self.configuration["seeding_phases"]
         })
 
+    def check_response_fixtures(self, response_type: str) -> None:
+        response_format = self.resource_factory.head["content-type"].split("/")[1]
+        page_count = 1 if response_type == "delta" or not self.has_pagination else 2
+        for page_number in range(0, page_count):
+            response_file = f"fixture.{self.source}.{response_type}.{page_number}.{response_format}"
+            response_file_path = os.path.join(settings.BASE_DIR, "sources", "factories", "fixtures", response_file)
+            if not os.path.exists(response_file_path):
+                raise AssertionError(f"Expected fixture {response_file_path} to run {self.__class__.__name__}")
+
     def setup_initial_documents(self) -> list[HarvestDocument]:
         # Load the initial data, set all tasks as completed and mark everything as deleted (delete_policy=no)
         current_time = now()
@@ -71,8 +84,7 @@ class SourceSeedingTestCase(TestCase):
         self.resource_factory.create_delta_responses()
 
     def test_initial_seeding(self) -> list[HarvestDocument]:
-        # Creating Resource test data
-        self.resource_factory.create_common_responses()
+        self.check_response_fixtures("initial")
         # Perform tests
         documents = []
         for batch in self.processor(self.source, "1970-01-01T00:00:00Z"):
@@ -86,6 +98,7 @@ class SourceSeedingTestCase(TestCase):
         return documents
 
     def test_delta_seeding(self, become_processing_ids) -> list[HarvestDocument]:
+        self.check_response_fixtures("delta")
         # Creating the test data
         self.setup_initial_documents()
         self.setup_delta_resources()
