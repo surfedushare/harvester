@@ -93,7 +93,12 @@ class SourceSeedingTestCase(TestCase):
                 self.assertIsInstance(doc, self.models["Document"])
                 self.assertIsNotNone(doc.identity)
                 self.assertTrue(doc.properties)
-                self.assertTrue(doc.pending_at)
+                if doc.state == doc.States.ACTIVE:
+                    self.assertTrue(doc.pending_at)
+                    self.assertIsNone(doc.finished_at)
+                else:
+                    self.assertIsNone(doc.pending_at)
+                    self.assertTrue(doc.finished_at)
                 documents.append(doc)
         return documents
 
