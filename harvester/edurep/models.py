@@ -1,2 +1,0 @@
-class EdurepOAIPMH(object):
-    pass
