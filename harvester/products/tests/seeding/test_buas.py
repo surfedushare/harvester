@@ -1,10 +1,50 @@
 from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from products.models import Set
 from products.sources.buas import SEEDING_PHASES
+from sources.models import BuasPureResource
 from sources.factories.buas.extraction import BuasPureResourceFactory
+from testing.cases import seeding
+
+
+class TestBuasProductSeeding(seeding.SourceSeedingTestCase):
+
+    entity = "products"
+    source = "buas"
+    resource = BuasPureResource
+    resource_factory = BuasPureResourceFactory
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 20)
+        self.assertEqual(self.set.documents.count(), 20)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "buas:buas:ffffffff-efb7-44f1-82c6-e9b7f1351b96",
+        ])
+        self.assertEqual(len(documents), 10, "Expected test to work with single page for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 20 + 1,
+            "Expected 20 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 10,
+            "Expected 10 Documents to have no deleted_at date and 11 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
+        self.assertEqual(
+            self.set.documents.filter(properties__title="Notes from the greener ground").count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 class TestBuasProductExtraction(TestCase):
