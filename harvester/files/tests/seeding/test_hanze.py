@@ -2,7 +2,6 @@ from django.test import TestCase, override_settings
 
 from datagrowth.configuration import register_defaults
 from core.constants import DeletePolicies
-from core.models.datatypes import HarvestDocument
 from core.processors import HttpSeedingProcessor
 from files.models import Set
 from files.sources.hanze import SEEDING_PHASES
