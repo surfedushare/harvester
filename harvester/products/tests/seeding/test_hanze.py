@@ -1,10 +1,53 @@
 from django.test import TestCase, override_settings
 
 from datagrowth.configuration import register_defaults
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from products.models import Set
 from products.sources.hanze import SEEDING_PHASES
+from sources.models import HanzeResearchObjectResource
 from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactory
+from testing.cases import seeding
+
+
+@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
+class TestHanzeProductSeeding(seeding.SourceSeedingTestCase):
+
+    entity = "products"
+    source = "hanze"
+    resource = HanzeResearchObjectResource
+    resource_factory = HanzeResearchObjectResourceFactory
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 20)
+        self.assertEqual(self.set.documents.count(), 20)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "hanze:hanze:ffffffff-3115-41bb-9d73-2a193da652ea",
+        ])
+        self.assertEqual(len(documents), 10, "Expected test to work with single page for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 20 + 1,
+            "Expected 20 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 10,
+            "Expected 10 Documents to have no deleted_at date and 10 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
+        updated_title = "Nationale ervaringen met ondergrondse infiltratievoorzieningen: " \
+                        "een overzicht van 20 jaar monitoring in Nederland en een aanzet tot richtlijnen"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=updated_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
