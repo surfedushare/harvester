@@ -1,6 +1,7 @@
 from opensearchpy import NotFoundError
 
 from django.contrib import admin, messages
+from django import forms
 from django.utils.html import format_html
 from django.urls import reverse
 
@@ -9,6 +10,7 @@ from admin_confirm.admin import confirm_action
 from datagrowth.admin import DataStorageAdmin, DocumentAdmin as DatagrowthDocumentAdmin
 
 from search.clients import get_opensearch_client
+from core.admin.widgets import PrettyJSONWidget
 from core.tasks.commands import promote_dataset_version
 
 
@@ -71,12 +73,26 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
                                "Please refresh the page in a couple of minutes to see the results.")
 
 
+class DocumentAdminForm(forms.ModelForm):
+    class Meta:
+        model = None  # set dynamically
+        fields = "__all__"
+        widgets = {
+            "metadata": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "properties": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "tasks": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "pipeline": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "derivatives": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+        }
+
+
 class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
     list_display = ('identity', 'state', 'pipeline_info', 'modified_at', "finished_at",)
     list_per_page = 10
     list_filter = ('dataset_version__is_current', 'collection__name', 'state',)
     readonly_fields = ("created_at", "modified_at",)
     actions = ["reset_document_tasks"]
+    form = DocumentAdminForm
 
     def changelist_view(self, request, extra_context=None):
         # Filter on current dataset version if no filter is being used
@@ -86,6 +102,11 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
             request.GET = parameters
             request.META['QUERY_STRING'] = request.GET.urlencode()
         return super().changelist_view(request, extra_context=extra_context)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.Meta.model = self.model
+        return form
 
     def reset_document_tasks(self, request, queryset):
         queryset.update(pipeline={}, derivatives={}, pending_at=None, finished_at=None)
