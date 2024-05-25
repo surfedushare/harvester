@@ -40,6 +40,17 @@ class DatasetAdmin(DataStorageAdmin):
     list_display = ('__str__', 'is_harvested', 'indexing',)
 
 
+class DataStorageAdminForm(forms.ModelForm):
+    class Meta:
+        model = None  # set dynamically
+        fields = "__all__"
+        widgets = {
+            "tasks": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "pipeline": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "derivatives": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+        }
+
+
 class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.ModelAdmin):
 
     list_display = ('__str__', "pipeline_info", "created_at", "finished_at", 'is_current', "is_index_promoted",
@@ -47,6 +58,12 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
     list_per_page = 10
     actions = ["promote_dataset_version_index"]
     readonly_fields = ("is_current", "is_index_promoted",)
+    form = DataStorageAdminForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.Meta.model = self.model
+        return form
 
     def harvest_count(self, obj):
         return obj.documents.filter(state="active").count()
@@ -120,6 +137,7 @@ class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
     list_filter = ('dataset_version__is_current',)
     ordering = ('-created_at',)
     list_per_page = 10
+    form = DataStorageAdminForm
 
     def changelist_view(self, request, extra_context=None):
         # Filter on current dataset version if no filter is being used
@@ -129,6 +147,11 @@ class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
             request.GET = parameters
             request.META['QUERY_STRING'] = request.GET.urlencode()
         return super().changelist_view(request, extra_context=extra_context)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.Meta.model = self.model
+        return form
 
     def active_document_count(self, obj):
         return obj.documents.filter(properties__state="active").count()
