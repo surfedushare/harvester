@@ -30,6 +30,7 @@ harvester:
     publinova:
       - "83.96.213.17"  # production
       - "83.96.203.224"  # acceptance
+  manual_documents: true
 
 postgres:
   host: "surfpol-edushare.cikhmbah79es.eu-central-1.rds.amazonaws.com"
