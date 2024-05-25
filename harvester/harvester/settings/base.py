@@ -439,6 +439,10 @@ MIME_TYPE_TO_TECHNICAL_TYPE = {
     'application/vnd.google-earth.kmz': 'app',
     'application/x-java': 'app',
 }
+MIME_TYPE_CHOICES = [
+    (mime_type, mime_type)
+    for mime_type in sorted(MIME_TYPE_TO_TECHNICAL_TYPE.keys())
+]
 
 COPYRIGHT_VALUES = [
     "cc-by-40",
@@ -647,3 +651,4 @@ WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 CHECK_URL_AUTO_SUCCEED_SETS = []
 SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False
 DEFAULT_FILE_TITLES_TEMPLATE = None
+ALLOW_MANUAL_DOCUMENTS = environment.harvester.manual_documents
