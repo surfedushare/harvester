@@ -483,10 +483,6 @@ CELERY_BEAT_SCHEDULE = {
             minute=0
         ),
     },
-    'sync_indices': {
-        'task': 'sync_indices',
-        'schedule': 30,
-    },
     'sync_metadata': {
         'task': 'sync_metadata',
         'schedule': crontab(minute=30)
