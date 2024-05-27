@@ -54,7 +54,7 @@ django-storages==1.14.3
 # Tools
 watchdog==2.3.1
 ipython==8.24.0
-tqdm==4.66.2
+tqdm==4.66.4
 invoke==2.2.0
 ipdb==0.13.13
 sentry-sdk==1.45.0
