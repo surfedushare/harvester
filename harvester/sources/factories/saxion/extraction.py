@@ -32,7 +32,7 @@ class SaxionOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     since = factory.Maybe(
         "is_initial",
         make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
+        make_aware(datetime(year=2020, month=1, day=1))
     )
     set_specification = SET_SPECIFICATION
     status = 200
@@ -42,7 +42,8 @@ class SaxionOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        identity = f"metadataPrefix={METADATA_PREFIX}"
+        from_param = quote(f"{self.since:%Y-%m-%dT%H:%M:%SZ}")
+        identity = f"from={from_param}&metadataPrefix={METADATA_PREFIX}"
         if self.resumption:
             identity += f"&resumptionToken={quote(self.resumption)}"
         identity += f"&set={self.set_specification}"

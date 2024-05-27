@@ -69,7 +69,7 @@ class TestSaxionProductSeeding(TestCase):
         }
         # Load the delta data and see if updates have taken place
         documents = []
-        for batch in self.processor("kenniscentra", "1970-01-01T00:00:00Z"):
+        for batch in self.processor("kenniscentra", "2020-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
             for product in batch:
                 self.assertIsInstance(product, ProductDocument)
