@@ -89,8 +89,11 @@ class HttpTikaResource(HttpTikaResourceBase):
         return params
 
     def _create_url(self, *args):
+        # All input links are expected to be normalized to + through BaseExtractor.parse_url.
+        # Here we double encode the + to %20 and Tika will decode twice which means we end up with %20 inside Tika.
+        # Having spaces or + inside Tika server will lead to illegal character exceptions.
         url = super()._create_url(*args)
-        return url.replace("+", "%2520")  # all links are expected to be normalized to + through BaseExtractor.parse_url
+        return url.replace("+", "%252520")
 
     class Meta:
         app_label = "files"
