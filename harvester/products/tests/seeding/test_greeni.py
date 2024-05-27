@@ -79,10 +79,10 @@ class TestGreeniProductSeeding(TestCase):
                     self.assertIsNone(product.pending_at)
                     self.assertTrue(product.finished_at)
                 documents.append(product)
-        self.assertEqual(len(documents), 1 + 1 + 1, "Expected 1 addition, 1 update and 1 deletes")
+        self.assertEqual(len(documents), 1 + 1 + 1 + 1, "Expected 1 addition, 1 inactive, 1 update and 1 deletes")
         self.assertEqual(
-            self.set.documents.count(), 100 + 1,
-            "Expected 100 initial Documents and one additional Document"
+            self.set.documents.count(), 100 + 1 + 1,
+            "Expected 100 initial Documents and one additional and one inactive Document"
         )
 
 
