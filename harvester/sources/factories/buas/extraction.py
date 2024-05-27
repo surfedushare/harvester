@@ -48,7 +48,7 @@ class BuasPureResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial"
+        response_type = "initial" if self.is_initial else "delta"
         response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",
@@ -61,3 +61,7 @@ class BuasPureResourceFactory(factory.django.DjangoModelFactory):
     def create_common_responses(cls):
         cls.create(number=0)
         cls.create(number=1)
+
+    @classmethod
+    def create_delta_responses(cls):
+        cls.create(number=0, is_initial=False)

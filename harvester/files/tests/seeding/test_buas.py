@@ -1,10 +1,46 @@
 from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from files.models import Set
 from files.sources.buas import SEEDING_PHASES
+from sources.models import BuasPureResource
 from sources.factories.buas.extraction import BuasPureResourceFactory
+from testing.cases import seeding
+
+
+class TestBuasFileSeeding(seeding.SourceSeedingTestCase):
+
+    entity = "files"
+    source = "buas"
+    resource = BuasPureResource
+    resource_factory = BuasPureResourceFactory
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 7)
+        self.assertEqual(self.set.documents.count(), 7)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "buas:buas:ffffffff-efb7-44f1-82c6-e9b7f1351b96:4ecfd46543d312248397be957aacd93c3981bd7c",
+        ])
+        self.assertEqual(len(documents), 5, "Expected test to work with single page for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 7 + 1,
+            "Expected 7 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 5,
+            "Expected 5 Documents to have no deleted_at date and 4 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
 
 
 class TestBuasFileExtraction(TestCase):

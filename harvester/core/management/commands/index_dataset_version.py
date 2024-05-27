@@ -1,9 +1,7 @@
-from django.urls import reverse
 from django.contrib.sites.models import Site
 
 from core.models import Dataset, ElasticIndex, EducationalLevels
 from core.management.base import PipelineCommand
-from core.utils.notifications import send_admin_notification
 from core.constants import SITE_SHORTHAND_BY_DOMAIN
 
 
@@ -34,10 +32,6 @@ class Command(PipelineCommand):
         collection_errors = dataset.evaluate_dataset_version(dataset_version) if not skip_evaluation else []
 
         for collection in collection_errors:
-            send_admin_notification(
-                f"The {collection.name} collection dropped by more than 5%. Falling back to previous version.",
-                reverse("admin:core_collection_changelist")
-            )
             dataset_version.document_set.filter(collection__name=collection.name).update(dataset_version=None)
             dataset_version.copy_collection(collection)
 

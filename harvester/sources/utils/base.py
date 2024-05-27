@@ -15,6 +15,7 @@ class BaseExtractor:
             return
         url = url.strip()
         url = url.replace(" ", "+")
+        url = url.replace("%20", "+")
         return url
 
     @classmethod

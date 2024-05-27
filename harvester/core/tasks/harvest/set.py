@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 
 from django.db.transaction import atomic
@@ -7,6 +6,7 @@ from celery import current_app as app
 from datagrowth.utils import ibatch
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
+from core.logging import HarvestLogger
 from core.models.datatypes import HarvestSet
 from core.tasks.harvest.base import (load_pending_harvest_instances, dispatch_harvest_object_tasks,
                                      validate_pending_harvest_instances, PendingHarvestObjects)
@@ -14,22 +14,23 @@ from core.tasks.harvest.dataset_version import dispatch_dataset_version_tasks
 from core.tasks.harvest.document import cancel_document_tasks
 
 
-logger = logging.getLogger("harvester")
-
-
 def dispatch_set_task_retry(task, exc, task_id, args, kwargs, einfo):
-    if task.request.retries == task.max_retries:
-        app_label = args[0]
-        harvest_set_id = args[1]
-        models = load_harvest_models(app_label)
-        harvest_set = load_pending_harvest_instances(harvest_set_id, model=models["Set"])
-        if harvest_set is None:
-            logger.warning("Couldn't load pending Set during on_retry of dispatch_set_tasks")
-            return
-        pending_document_count = harvest_set.documents.filter(pending_at__isnull=False).count()
-        logger.info(f"Cancelling document tasks for {pending_document_count} documents")
-        for batch in ibatch(harvest_set.documents.filter(pending_at__isnull=False).iterator(), batch_size=100):
-            cancel_document_tasks(app_label, batch)
+    if task.request.retries != task.max_retries:
+        return
+
+    app_label = args[0]
+    harvest_set_id = args[1]
+    models = load_harvest_models(app_label)
+    logger = HarvestLogger(app_label, "dispatch_set_task_retry", {}, is_legacy_logger=False)
+    harvest_set = load_pending_harvest_instances(harvest_set_id, model=models["Set"])
+    if harvest_set is None:
+        logger.warning("Couldn't load pending Set during on_retry of dispatch_set_tasks")
+        return
+
+    pending_document_count = harvest_set.documents.filter(pending_at__isnull=False).count()
+    logger.report_cancelled_documents(app_label, harvest_set.name, pending_document_count)
+    for batch in ibatch(harvest_set.documents.filter(pending_at__isnull=False).iterator(), batch_size=100):
+        cancel_document_tasks(app_label, batch)
 
 
 @app.task(

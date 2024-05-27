@@ -85,7 +85,10 @@ class HttpTikaResource(HttpTikaResourceBase):
 
     def parameters(self, fetch_key, **kwargs):
         params = super().parameters(**kwargs)
-        params["fetchKey"] = fetch_key
+        # All input links are expected to be normalized to + through BaseExtractor.parse_url.
+        # Here we double encode the + to %20 and Tika will decode twice which means we end up with %20 inside Tika.
+        # Having spaces or + inside Tika server will lead to illegal character exceptions.
+        params["fetchKey"] = fetch_key.replace("+", "%252520")
         return params
 
     class Meta:

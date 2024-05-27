@@ -2,6 +2,7 @@ from typing import Any, Iterator, List, Dict, Union
 from copy import deepcopy
 from collections import OrderedDict
 from requests import Session
+from json.decoder import JSONDecodeError
 
 from datagrowth.datatypes import CollectionBase
 from datagrowth.configuration import create_config, ConfigurationType
@@ -152,7 +153,7 @@ class ResourceSeedingProcessor(Processor):
                         self.contents[phase_index] = self.build_seed_iterator(phase, *args, **kwargs)
                     try:
                         self.buffer = next(self.contents[phase_index])
-                    except StopIteration:
+                    except (StopIteration, JSONDecodeError):
                         # The contents iterator is exhausted.
                         # We'll flush the currently empty buffer
                         self.flush_buffer(phase, force=True)

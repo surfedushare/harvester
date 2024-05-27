@@ -44,6 +44,13 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
             dispatch_document_tasks.delay(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
         else:
             dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
+        for doc in documents:
+            logger.report_document(
+                doc.identity,
+                app_label,
+                state=doc.state,
+                title=doc.properties.get("title", None)
+            )
 
     # Process new seeds to documents
     seeding_processor = HttpSeedingProcessor(harvest_set, {
@@ -58,6 +65,13 @@ def harvest_source(app_label: str, source: str, set_specification: str, asynchro
             dispatch_document_tasks.delay(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
         else:
             dispatch_document_tasks(app_label, [doc.id for doc in documents], asynchronous=asynchronous)
+        for doc in documents:
+            logger.report_document(
+                doc.identity,
+                app_label,
+                state=doc.state,
+                title=doc.properties.get("title", None)
+            )
     else:
         logger.info(f"Finished seeding for: {app_label}, {harvest_set.name}")
         logger.report_collection(harvest_set, app_label)

@@ -238,8 +238,6 @@ Here is an overview of commands that are regularly used during a release and the
 
 - [Database migration](#Migrate)
 - [Harvesting](harvester/README.md#Harvesting on AWS)
-- Index recreation. See: `invoke -h hrv.index-dataset-version`
-  (this doesn't collect documents from sources like harvesting, but does recreate indices for a Dataset)
 - [Terraform](https://www.terraform.io/intro)
 
 #### Rollback

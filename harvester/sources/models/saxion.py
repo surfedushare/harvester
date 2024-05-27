@@ -51,8 +51,8 @@ class SaxionOAIPMHResource(HarvestHttpResource):
 
     objects = SaxionOAIPMHResourceManager()
 
-    URI_TEMPLATE = settings.SOURCES["saxion"]["endpoint"] + "/harvester?set={}" \
-        if settings.SOURCES["saxion"]["endpoint"] else "/harvester?set={}"
+    URI_TEMPLATE = settings.SOURCES["saxion"]["endpoint"] + "/harvester?set={}&from={}" \
+        if settings.SOURCES["saxion"]["endpoint"] else "/harvester?set={}&from={}"
     PARAMETERS = {
         "verb": "ListRecords",
         "metadataPrefix": "oai_mods"

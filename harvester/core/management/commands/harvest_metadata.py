@@ -171,4 +171,3 @@ class Command(PipelineCommand):
 
             self.handle_upsert_seeds(collection, upserts)
             self.handle_deletion_seeds(collection, deletes)
-            self.logger.report_collection(collection, repository)

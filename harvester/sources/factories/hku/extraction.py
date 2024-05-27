@@ -22,6 +22,7 @@ class HkuMetadataResourceFactory(factory.django.DjangoModelFactory):
     class Params:
         is_initial = True
         number = 0
+        is_empty = False
 
     since = make_aware(datetime(year=1970, month=1, day=1))
     set_specification = SET_SPECIFICATION
@@ -47,7 +48,9 @@ class HkuMetadataResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def body(self):
-        response_type = "initial"
+        if self.is_empty:
+            return ""
+        response_type = "initial" if self.is_initial else "delta"
         response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",
@@ -59,3 +62,7 @@ class HkuMetadataResourceFactory(factory.django.DjangoModelFactory):
     @classmethod
     def create_common_responses(cls):
         cls.create(number=0)
+
+    @classmethod
+    def create_delta_responses(cls):
+        cls.create(number=0, is_initial=False)

@@ -80,7 +80,7 @@ class HarvestState(models.Model):
                 document.id = None
                 document.collection = self.harvest_set
                 document.dataset_version = dataset_version
-                if self.entity.delete_policy == DeletePolicies.NO:
+                if self.entity.delete_policy == DeletePolicies.NO and not self.entity.is_manual:
                     document.properties["state"] = document.States.DELETED
                 document.clean()
                 documents.append(document)

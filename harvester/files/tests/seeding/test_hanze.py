@@ -1,10 +1,53 @@
 from django.test import TestCase, override_settings
 
 from datagrowth.configuration import register_defaults
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
 from files.models import Set
 from files.sources.hanze import SEEDING_PHASES
+from sources.models import HanzeResearchObjectResource
 from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactory
+from testing.cases import seeding
+
+
+@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
+class TestHanzeFileSeeding(seeding.SourceSeedingTestCase):
+
+    entity = "files"
+    source = "hanze"
+    resource = HanzeResearchObjectResource
+    resource_factory = HanzeResearchObjectResourceFactory
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 14)
+        self.assertEqual(self.set.documents.count(), 14)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "hanze:hanze:ffffffff-3115-41bb-9d73-2a193da652ea:34c9d2735ae055acb66f3cd85c996a84efd12842",
+        ])
+        self.assertEqual(len(documents), 8, "Expected test to work with single page for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 14 + 1,
+            "Expected 14 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 8,
+            "Expected 8 Documents to have no deleted_at date and 7 with deleted_at, "
+            "because second page didn't come in through the delta"
+        )
+        updated_title = "wtnr2_verh1_p99_113_HR_v2_Nationale_ervaringen_met_" \
+                        "ondergrondse_infiltratievoorzieningen_20_jaar.pdf"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=updated_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")

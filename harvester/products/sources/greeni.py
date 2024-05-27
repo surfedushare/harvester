@@ -7,6 +7,14 @@ class GreeniProductExtractor(HBOKennisbankProductExtractor):
     source_slug = "greeni"
 
     @classmethod
+    def get_oaipmh_record_state(cls, soup, el):
+        state = super().get_oaipmh_record_state(soup, el)
+        metadata = el.find("metadata")
+        if metadata and metadata.string and not metadata.string.strip():  # detects an empty (non-self-closing) element
+            state = "inactive"
+        return state
+
+    @classmethod
     def get_oaipmh_set(cls, soup):
         oaipmh_set = super().get_oaipmh_set(soup)
         if oaipmh_set:
