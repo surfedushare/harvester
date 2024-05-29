@@ -37,8 +37,9 @@ class TestFile(ManualDocument):
             self.properties["hash"] = sha1(self.url.encode("utf-8")).hexdigest()
         if not self.properties.get("mime_type"):
             self.properties["mime_type"] = self.mime_type
-        if not self.properties.get("external_id") and self.properties.get("product_id") and self.properties.get("hash"):
-            external_id = f"{self.properties.get("product_id")}:{self.properties.get("hash")}"
+        if not self.properties.get("external_id") and self.product.properties.get("external_id") and \
+                self.properties.get("hash"):
+            external_id = f"{self.product.properties.get("external_id")}:{self.properties.get("hash")}"
             self.properties["external_id"] = external_id
 
 

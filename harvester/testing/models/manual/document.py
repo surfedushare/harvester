@@ -44,6 +44,9 @@ class ManualDocument(models.Model):
         if not self.properties.get("title"):
             self.properties["title"] = self.title
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         abstract = True
 
