@@ -4,6 +4,7 @@ import json
 from hashlib import sha1
 from sentry_sdk import capture_message
 from operator import xor
+from datetime import datetime
 
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
@@ -11,6 +12,7 @@ from django.utils.timezone import now
 
 from datagrowth.utils import reach
 from datagrowth.datatypes import DocumentBase
+from datagrowth.resources.base import Resource
 from core.models.datatypes.base import HarvestObjectMixin
 from core.utils.decoders import HarvesterJSONDecoder
 
@@ -137,8 +139,18 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         if set_metadata:
             self.set_metadata()
 
-    def apply_resource(self, resource):
+    def apply_resource(self, resource: Resource) -> None:
         pass
+
+    def prepare_task_processing(self, current_time: datetime) -> None:
+        # Check if previous runs have any errors and invalidate tasks where errors have occurred
+        for task, result in list(self.pipeline.items()):
+            if not result.get("success", False) and task != "check_url":
+                self.invalidate_task(task, current_time=current_time)
+        # Check if any open tasks are left and start processing if that is the case
+        if self.state == self.States.ACTIVE and self.get_pending_tasks():
+            self.pending_at = current_time
+            self.finished_at = None
 
     def get_derivatives_data(self) -> dict:
         data = {}

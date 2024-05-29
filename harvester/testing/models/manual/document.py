@@ -69,10 +69,10 @@ def dispatch_manual_document(document: ManualDocument, asynchronous: bool = True
     seeding_config = create_config("seeding_processor", {
         "phases": source_configuration["seeding_phases"]
     })
-    models = load_harvest_models(entity_type)
-    dataset_version = models["DatasetVersion"].objects.get_current_version()
+    harvest_models = load_harvest_models(entity_type)
+    dataset_version = harvest_models["DatasetVersion"].objects.get_current_version()
     set_name = f"{source_module}:{document.set_specification}"
-    set_instance = models["Set"].objects.get(dataset_version=dataset_version, name=set_name)
+    set_instance = harvest_models["Set"].objects.get(dataset_version=dataset_version, name=set_name)
 
     # Store seeds as documents and dispatch tasks
     current_time = now()
@@ -80,14 +80,7 @@ def dispatch_manual_document(document: ManualDocument, asynchronous: bool = True
     documents = []
     for batch in seeder():
         for document in batch:
-            # Check if previous runs have any errors and invalidate tasks where errors have occurred
-            for task, result in list(document.pipeline.items()):
-                if not result.get("success", False) and task != "check_url":
-                    document.invalidate_task(task, current_time=current_time)
-            # Check if any open tasks are left and start processing if that is the case
-            if document.state == document.States.ACTIVE and document.get_pending_tasks():
-                document.pending_at = current_time
-                document.finished_at = None
+            document.prepare_task_processing(current_time=current_time)
             document.save()
             documents.append(document)
             logger.report_document(

@@ -67,14 +67,7 @@ class HarvestState(models.Model):
         for batch in ibatch(harvest_set.documents.all(), batch_size=100):
             documents = []
             for document in batch:
-                # Check if previous runs have any errors and invalidate tasks where errors have occurred
-                for task, result in list(document.pipeline.items()):
-                    if not result.get("success", False) and task != "check_url":
-                        document.invalidate_task(task, current_time=current_time)
-                # Check if any open tasks are left and start processing if that is the case
-                if document.state == document.States.ACTIVE and document.get_pending_tasks():
-                    document.pending_at = current_time
-                    document.finished_at = None
+                document.prepare_task_processing(current_time=current_time)
                 # Copy the instance in the database
                 document.pk = None
                 document.id = None
