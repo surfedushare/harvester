@@ -28,6 +28,8 @@ class TestProduct(ManualDocument):
 
     def clean(self):
         super().clean()
+        if not self.properties.get("external_id") and self.id:
+            self.properties["external_id"] = f"harvester:{self.entity.type}:{self.id}"
         if self.modified_at:
             self.properties["modified_at"] = self.modified_at.isoformat()
 

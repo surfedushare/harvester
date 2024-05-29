@@ -37,8 +37,6 @@ class ManualDocument(models.Model):
                 "slug": self.entity.source.module,
                 "name": self.entity.source.name
             }
-        if not self.properties.get("external_id") and self.id:
-            self.properties["external_id"] = f"harvester:{self.entity.type}:{self.id}"
         if not self.properties.get("set"):
             self.properties["set"] = f"{self.entity.source.module}:{self.set_specification}"
         if not self.properties.get("title"):

@@ -27,13 +27,17 @@ class TestFile(ManualDocument):
 
     def clean(self):
         super().clean()
+        if self.product:
+            product_id = f"{self.product.properties.get("set")}:{self.product.properties.get("external_id")}"
+            self.properties["product_id"] = product_id
         if not self.properties.get("url") or not self.properties.get("hash"):
             self.properties["url"] = self.url
             self.properties["hash"] = sha1(self.url.encode("utf-8")).hexdigest()
         if not self.properties.get("mime_type"):
             self.properties["mime_type"] = self.mime_type
-        if self.product:
-            self.properties["product_id"] = self.product.properties.get("srn")
+        if not self.properties.get("external_id") and self.properties.get("product_id") and self.properties.get("hash"):
+            external_id = f"{self.properties.get("product_id")}:{self.properties.get("hash")}"
+            self.properties["external_id"] = external_id
 
 
 @receiver(models.signals.post_save, sender=TestFile)
