@@ -95,9 +95,7 @@ INSTALLED_APPS = [
     'files',
     'testing',
 
-    'edurep',
-    'sharekit',
-    'anatomy_tool',
+    'sharekit',  # legacy, should be migrated to sources
 ]
 
 MIDDLEWARE = [
