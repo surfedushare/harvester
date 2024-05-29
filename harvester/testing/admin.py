@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib import admin
+from django.contrib import admin, messages
 from django import forms
 from django.urls import reverse
 from django.utils.html import format_html
@@ -19,8 +19,9 @@ class ManualDocumentAdminForm(forms.ModelForm):
 
 
 class ManualDocumentAdmin(admin.ModelAdmin):
-    list_display = ["title", "document_link", "created_at", "modified_at"]
+    list_display = ["title", "entity", "document_link", "created_at", "modified_at"]
     form = ManualDocumentAdminForm
+    actions = ["dispatch_background_tasks_for_documents"]
 
     def document_link(self, obj):
         object_id = obj.properties.get("external_id", None)
@@ -41,6 +42,23 @@ class ManualDocumentAdmin(admin.ModelAdmin):
             return self.readonly_fields
         else:  # When obj is None, we are adding a new object
             return self.readonly_fields + ('properties',)
+
+    def dispatch_background_tasks_for_documents(self, request, queryset):
+        errors = []
+        dispatched = []
+        for doc in queryset.all():
+            if not doc.properties.get("external_id") or not doc.entity.is_manual:
+                errors.append(doc)
+                continue
+            doc.clean()
+            doc.save()
+            dispatched.append(doc)
+        if len(errors):
+            warning = f"{len(errors)} errors occurred while dispatching documents, " \
+                      f"are entities set to manual and external_ids filled in correctly?"
+            messages.warning(request, warning)
+        else:
+            messages.info(request, f"Dispatched {len(dispatched)} documents for background processing")
 
 
 if settings.ALLOW_MANUAL_DOCUMENTS:
