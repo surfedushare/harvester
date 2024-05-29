@@ -28,6 +28,7 @@ harvester:
       - "145.101.123.227"
     publinova:
       - "83.96.213.17"
+  manual_documents: false
 
 postgres:
   host: "surfpol-edushare.cef190hciiol.eu-central-1.rds.amazonaws.com"

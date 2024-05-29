@@ -36,6 +36,7 @@ harvester:
       - "83.96.213.17"  # production
       - "83.96.203.224"  # acceptance
       - "127.0.0.1"
+  manual_documents: true
 
 postgres:
   host: "postgres"

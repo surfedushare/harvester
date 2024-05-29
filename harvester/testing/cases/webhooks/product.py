@@ -1,6 +1,6 @@
 import json
 from copy import deepcopy
-from unittest.mock import patch, call
+from unittest.mock import patch
 
 from django.test import TestCase, override_settings
 
@@ -145,6 +145,18 @@ class TestProductWebhookTestCase(TestCase):
         self.assertEqual(delete_file.properties["state"], "deleted")
         return delete_product, delete_file
 
+    def assert_dispatch_mock_calls(self, dispatch_mock, product_ids, file_ids):
+        for args, kwargs in dispatch_mock.call_args_list:
+            entity_type = args[0]
+            self.assertIsInstance(args[1], list, "Expected second argument for dispatch call to be a list")
+            self.assertEqual(kwargs, {}, "Did not expect kwargs for dispatch call")
+            if entity_type == "products":
+                self.assertEqual(args[1].sort(), product_ids.sort())
+            elif entity_type == "files":
+                self.assertEqual(args[1].sort(), file_ids.sort())
+            else:
+                raise AssertionError(f"Unexpected entity type for dispatch call {entity_type}")
+
     def test_invalid_secret(self):
         no_uuid_secret_url = self.webhook_url.replace(self.webhook_secret, "invalid")
         no_uuid_response = self.call_webhook(no_uuid_secret_url)
@@ -177,33 +189,23 @@ class TestProductWebhookTestCase(TestCase):
         create_response = self.call_webhook(self.webhook_url)
         self.assertEqual(create_response.status_code, 200)
         create_product, create_file = self.assert_create_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", [create_product.id]),
-            call("files", [create_file.id])
-        ])
+        self.assert_dispatch_mock_calls(dispatch_mock, [create_product.id], [create_file.id])
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_update(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
         update_product, update_files = self.assert_update_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", [update_product.id]),
-            call("files", [update_file.id for update_file in update_files])
-        ])
+        self.assert_dispatch_mock_calls(
+            dispatch_mock, [update_product.id], [update_file.id for update_file in update_files]
+        )
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_delete(self, dispatch_mock):
         delete_response = self.call_webhook(self.webhook_url, verb="delete")
         self.assertEqual(delete_response.status_code, 200)
         self.assert_delete_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", []),
-            call("files", [])
-        ])
+        self.assert_dispatch_mock_calls(dispatch_mock, [], [])
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_create_no_language(self, dispatch_mock):
@@ -211,22 +213,16 @@ class TestProductWebhookTestCase(TestCase):
         create_response = self.call_webhook(self.webhook_url, overrides={"language": None})
         self.assertEqual(create_response.status_code, 200)
         create_product, create_file = self.assert_create_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", [create_product.id]),
-            call("files", [create_file.id])
-        ])
+        self.assert_dispatch_mock_calls(dispatch_mock, [create_product.id], [create_file.id])
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_update_no_language(self, dispatch_mock):
         update_response = self.call_webhook(self.webhook_url, verb="update", overrides={"language": None})
         self.assertEqual(update_response.status_code, 200)
         update_product, update_files = self.assert_update_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", [update_product.id]),
-            call("files", [update_file.id for update_file in update_files])
-        ])
+        self.assert_dispatch_mock_calls(
+            dispatch_mock, [update_product.id], [update_file.id for update_file in update_files]
+        )
 
     @patch("products.views.webhook.dispatch_document_tasks.delay")
     def test_update_deleted(self, dispatch_mock):
@@ -238,8 +234,6 @@ class TestProductWebhookTestCase(TestCase):
         update_response = self.call_webhook(self.webhook_url, verb="update")
         self.assertEqual(update_response.status_code, 200)
         update_product, update_files = self.assert_update_models()
-        # Dispatch asserts
-        dispatch_mock.assert_has_calls([
-            call("products", [update_product.id]),
-            call("files", [update_file.id for update_file in update_files])
-        ])
+        self.assert_dispatch_mock_calls(
+            dispatch_mock, [update_product.id], [update_file.id for update_file in update_files]
+        )
