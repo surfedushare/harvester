@@ -24,6 +24,8 @@ def product_properties_default():
 
 class TestProduct(ManualDocument):
 
+    entity_type = "products"
+
     properties = models.JSONField(default=product_properties_default)
 
     def clean(self):

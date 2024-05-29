@@ -20,6 +20,8 @@ def file_properties_default():
 
 class TestFile(ManualDocument):
 
+    entity_type = "files"
+
     url = models.URLField()
     mime_type = models.CharField(choices=settings.MIME_TYPE_CHOICES, default="unknown")
     product = models.ForeignKey(TestProduct, on_delete=models.SET_NULL, null=True, blank=True)

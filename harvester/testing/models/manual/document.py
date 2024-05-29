@@ -13,6 +13,8 @@ from sources.models import HarvestEntity
 
 class ManualDocument(models.Model):
 
+    entity_type = None
+
     # Essential fields to be able to insert the manual document into the harvester using dispatch_manual_document
     set_specification = models.CharField(max_length=256)
     entity = models.ForeignKey(HarvestEntity, on_delete=models.CASCADE)

@@ -6,6 +6,7 @@ from django.utils.html import format_html
 
 from core.loading import load_harvest_models
 from core.admin.widgets import PrettyJSONWidget
+from sources.models import HarvestEntity
 from testing.models import TestProduct, TestFile
 
 
@@ -42,6 +43,11 @@ class ManualDocumentAdmin(admin.ModelAdmin):
             return self.readonly_fields
         else:  # When obj is None, we are adding a new object
             return self.readonly_fields + ('properties',)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "entity":
+            kwargs["queryset"] = HarvestEntity.objects.filter(type=self.model.entity_type)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def dispatch_background_tasks_for_documents(self, request, queryset):
         errors = []
