@@ -150,7 +150,7 @@ class TestEdurepProductExtraction(TestCase):
         )
         self.assertEqual(
             seeds[0]['learning_material']["study_vocabulary"], [],
-            "Expected material without ideas to return empty list"
+            "Expected material without vocabulary terms to return empty list"
         )
 
     def test_lom_educational_level(self):
