@@ -1,8 +1,9 @@
+from django.test import TestCase
+
 from datagrowth.configuration import register_defaults
 
 from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
-from core.tests.base import SeedExtractionTestCase
 from products.models import Set
 from products.sources.anatomy_tool import SEEDING_PHASES
 from sources.models import AnatomyToolOAIPMH
@@ -47,7 +48,7 @@ class TestAnatomyToolProductSeeding(seeding.SourceSeedingTestCase):
         )
 
 
-class TestAnatomyToolProductExtraction(SeedExtractionTestCase):
+class TestAnatomyToolProductExtraction(TestCase):
 
     set = None
     seeds = []

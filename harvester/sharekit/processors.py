@@ -1,1 +1,0 @@
-from sharekit.extraction import SharekitMetadataExtraction

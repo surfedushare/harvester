@@ -13,18 +13,23 @@ def lookup_study_vocabulary_parents(app_label: str, document_ids: list[int]) -> 
     models = load_harvest_models(app_label)
     Document = models["Document"]
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
-        metadata_values = MetadataValue.objects.filter(
+        metadata_values = MetadataValue.objects.select_related("translation").filter(
             value__in=document.properties["learning_material"]["study_vocabulary"],
             field__name="study_vocabulary"
         )
+        study_vocabulary_ids = set()
         study_vocabulary_terms = set()
         for metadata_value in metadata_values:
             for ancestor in metadata_value.get_ancestors(include_self=True):
-                study_vocabulary_terms.add(ancestor.value)
+                study_vocabulary_ids.add(ancestor.value)
+                study_vocabulary_terms.add(ancestor.translation.nl)
+        study_vocabulary_ids = list(study_vocabulary_ids)
+        study_vocabulary_ids.sort()
         study_vocabulary_terms = list(study_vocabulary_terms)
         study_vocabulary_terms.sort()
         document.derivatives["lookup_study_vocabulary_parents"] = {
-            "study_vocabulary": study_vocabulary_terms
+            "study_vocabulary": study_vocabulary_ids,
+            "study_vocabulary_terms": study_vocabulary_terms
         }
         # For all documents we mark this task as completed to continue the harvesting process
         document.pipeline["lookup_study_vocabulary_parents"] = {
@@ -44,7 +49,8 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
             *document.properties["learning_material"]["disciplines"]
         )
         document.derivatives["normalize_disciplines"] = {
-            "learning_material_disciplines_normalized": disciplines_normalized
+            "learning_material_disciplines_normalized": disciplines_normalized,
+            "disciplines_normalized": disciplines_normalized
         }
         # For all documents we mark this task as completed to continue the harvesting process
         document.pipeline["normalize_disciplines"] = {
