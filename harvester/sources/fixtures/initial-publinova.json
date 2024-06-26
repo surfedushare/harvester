@@ -199,7 +199,7 @@
         "set_specifications": [
             "kenniscentra"
         ],
-        "delete_policy": "no",
+        "delete_policy": "transient",
         "purge_interval": {
             "days": 30
         }
@@ -217,7 +217,7 @@
         "set_specifications": [
             "kenniscentra"
         ],
-        "delete_policy": "no",
+        "delete_policy": "transient",
         "purge_interval": {
             "days": 30
         }
