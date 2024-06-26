@@ -156,6 +156,8 @@ class ProductDocument(HarvestDocument):
         data = super().get_derivatives_data()
         if "learning_material_disciplines_normalized" not in data:
             data["learning_material_disciplines_normalized"] = []
+        if "disciplines_normalized" not in data:
+            data["disciplines_normalized"] = []
         return data
 
     def to_data(self, merge_derivatives: bool = True, for_search: bool = True) -> dict:

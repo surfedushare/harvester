@@ -49,7 +49,8 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
             *document.properties["learning_material"]["disciplines"]
         )
         document.derivatives["normalize_disciplines"] = {
-            "learning_material_disciplines_normalized": disciplines_normalized
+            "learning_material_disciplines_normalized": disciplines_normalized,
+            "disciplines_normalized": disciplines_normalized
         }
         # For all documents we mark this task as completed to continue the harvesting process
         document.pipeline["normalize_disciplines"] = {
