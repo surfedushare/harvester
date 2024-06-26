@@ -24,7 +24,7 @@ redis==4.6.0
 flower==2.0.1
 
 # Harvester search
-opensearch-py==2.5.0
+opensearch-py==2.6.0
 
 # Harvester other
 vobject==0.9.7
