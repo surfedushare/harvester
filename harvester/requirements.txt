@@ -36,7 +36,7 @@ django-mptt==0.16.0
 
 # Datagrowth & dependencies
 datagrowth==0.19.8
-requests==2.32.2
+requests==2.32.3
 urllib3==1.26.19
 jsonschema==3.2.0
 pytz==2021.3
