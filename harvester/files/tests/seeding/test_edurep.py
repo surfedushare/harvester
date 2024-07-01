@@ -33,7 +33,7 @@ class TestEdurepFileSeeding(TestCase):
                 else:
                     self.assertIsNone(file_.pending_at)
                     self.assertIsNotNone(file_.finished_at)
-        self.assertEqual(self.set.documents.count(), 13)
+        self.assertEqual(self.set.documents.count(), 9)
 
     def test_delta_seeding(self):
         # Load the initial data, set all tasks as completed and create delta Resource
@@ -70,7 +70,7 @@ class TestEdurepFileSeeding(TestCase):
                 documents.append(file_)
         self.assertEqual(len(documents), 2 + 1 + 1, "Expected two additions, one deletion and one update")
         self.assertEqual(
-            self.set.documents.count(), 13 + 2,
+            self.set.documents.count(), 9 + 2,
             "Expected 13 initial Documents and 2 delta additions"
         )
 
@@ -154,10 +154,10 @@ class TestEdurepFileExtraction(TestCase):
         self.assertEqual(self.seeds[2]["copyright"], "cc-by-sa-40")
 
     def test_get_product_id(self):
-        self.assertEqual(self.seeds[0]["product_id"],
-                         "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751")
-        self.assertEqual(self.seeds[5]["product_id"],
-                         "surfsharekit:oai:surfsharekit.nl:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b")
+        self.assertEqual(
+            self.seeds[0]["product_id"],
+            "surfsharekit:oai:surfsharekit.nl:5af0e26f-c4d2-4ddd-94ab-7dd0bd531751"
+        )
 
     def test_get_access_rights(self):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess")

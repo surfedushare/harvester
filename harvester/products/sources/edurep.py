@@ -6,7 +6,7 @@ from dateutil.parser import parse as date_parser
 from sources.utils.edurep import EdurepExtractor
 
 
-class EdurepProductExtraction(object):
+class EdurepProductExtraction:
 
     #############################
     # OAI-PMH
@@ -71,7 +71,7 @@ class EdurepProductExtraction(object):
         if node is None:
             return
         translation = node.find('czp:langstring')
-        return translation.text if translation else None
+        return translation.text.strip() if translation else None
 
     @classmethod
     def get_material_types(cls, soup, el):
