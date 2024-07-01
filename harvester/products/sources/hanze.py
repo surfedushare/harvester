@@ -1,3 +1,5 @@
+from sentry_sdk import capture_message
+
 from sources.utils.pure import build_seeding_phases
 from sources.models import HanzeResearchObjectResource
 from sources.extraction.hanze.research_themes import ASJC_TO_RESEARCH_THEME
@@ -40,7 +42,13 @@ class HanzeProductExtractor(PureProductExtraction):
                     classification["uri"].replace("/dk/atira/pure/subjectarea/asjc/", "")
                     for classification in keywords["classifications"]
                 ]
-                research_themes += [ASJC_TO_RESEARCH_THEME[identifier] for identifier in asjc_identifiers]
+                for identifier in asjc_identifiers:
+                    if identifier not in ASJC_TO_RESEARCH_THEME:
+                        # There's a mismatch between expected ASJC values and given values.
+                        # We're reporting this to Sentry for now, but it needs to be handled by SURF backoffice somehow.
+                        capture_message(f"Found unknown Hanze ASJC subject area: {identifier}", level="warning")
+                        continue
+                    research_themes.append(ASJC_TO_RESEARCH_THEME[identifier])
         return research_themes
 
 
