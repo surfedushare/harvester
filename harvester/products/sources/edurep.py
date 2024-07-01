@@ -13,10 +13,6 @@ class EdurepProductExtraction:
     #############################
 
     @classmethod
-    def get_oaipmh_records(cls, soup):
-        return soup.find_all('record')
-
-    @classmethod
     def get_oaipmh_external_id(cls, soup, el):
         return el.find('identifier').text.strip()
 
@@ -202,7 +198,7 @@ class EdurepProductExtraction:
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": EdurepProductExtraction.get_oaipmh_records,
+    "@": EdurepExtractor.iterate_valid_products,
     "state": EdurepProductExtraction.get_oaipmh_record_state,
     "external_id": EdurepProductExtraction.get_oaipmh_external_id,
     "set": EdurepProductExtraction.get_set,

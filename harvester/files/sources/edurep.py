@@ -14,7 +14,7 @@ FileInfo = namedtuple("FileInfo", ["product", "mime_type", "url"])
 
 
 def get_file_infos(edurep_soup) -> FileInfo:
-    for product in edurep_soup.find_all('record'):
+    for product in EdurepExtractor.iterate_valid_products(edurep_soup):
         mime_types = product.find_all('czp:format')
         urls = product.find_all('czp:location')
         if not urls:

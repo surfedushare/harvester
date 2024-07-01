@@ -1,5 +1,6 @@
 import logging
 
+import bs4
 from vobject.base import ParseError, readOne
 
 from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
@@ -9,6 +10,10 @@ from sources.utils.base import BaseExtractor
 class EdurepExtractor(BaseExtractor):
 
     logger = logging.getLogger("harvester")
+
+    #############################
+    # HELPERS
+    #############################
 
     @classmethod
     def find_all_classification_blocks(cls, element, classification_type, output_type):
@@ -21,6 +26,15 @@ class EdurepExtractor(BaseExtractor):
                 continue
             blocks += classification_element.find_all(output_type)
         return blocks
+
+    @classmethod
+    def get_oaipmh_record_state(cls, product):
+        """
+        Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
+        """
+        educational_level_state = cls._get_educational_level_state(product)
+        header = product.find('header')
+        return header.get("status", educational_level_state)
 
     @classmethod
     def get_educational_levels(cls, product):
@@ -66,13 +80,17 @@ class EdurepExtractor(BaseExtractor):
         return "active" if has_higher_level and not has_lower_level else "inactive"
 
     @classmethod
-    def get_oaipmh_record_state(cls, product):
-        """
-        Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
-        """
-        educational_level_state = cls._get_educational_level_state(product)
-        header = product.find('header')
-        return header.get("status", educational_level_state)
+    def iterate_valid_products(cls, soup: bs4.BeautifulSoup):
+        for product in soup.find_all("record"):
+            product_state = cls.get_oaipmh_record_state(product)
+            educational_level_state = cls._get_educational_level_state(product)
+            if educational_level_state == "inactive" and product_state != "deleted":
+                continue
+            yield product
+
+    #############################
+    # GENERIC TRANSFORMATIONS
+    #############################
 
     @classmethod
     def get_copyright(cls, product):
