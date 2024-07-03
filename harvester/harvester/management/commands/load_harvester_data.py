@@ -88,7 +88,7 @@ class Command(base.LabelCommand):
             if harvest_source else environment
 
         # Delete old datasets
-        print("Deleting old data")
+        print(f"Deleting old data: {app_label}")
         models["Document"].objects.all().delete()
         models["Dataset"].objects.all().delete()
         models["DatasetVersion"].objects.all().delete()
@@ -101,6 +101,7 @@ class Command(base.LabelCommand):
             ctx = Context(environment)
             harvester_data_bucket = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester"
             ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}", echo=True)
+
         logger.info(f"Importing data for: {app_label}")
         for entry in os.scandir(get_dumps_path(models["Dataset"])):
             if entry.is_file():
@@ -108,7 +109,7 @@ class Command(base.LabelCommand):
                     for objects in objects_from_disk(dump_file):
                         self.bulk_create_objects(objects)
         # Load resources
-        self.load_data(app_label, app_label == "products")
+        self.load_data(app_label, load_metadata=app_label == "products")
         self.reset_postgres_sequences(app_label)
 
         # Index data
