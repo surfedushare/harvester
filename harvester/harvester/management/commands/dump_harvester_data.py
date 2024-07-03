@@ -16,15 +16,6 @@ logger = logging.getLogger("harvester")
 
 class Command(base.LabelCommand):
 
-    resources = [
-        "core.HttpTikaResource",
-        "core.ExtructResource",
-        "core.YoutubeThumbnailResource",
-        "core.PdfThumbnailResource",
-        "sharekit.SharekitMetadataHarvest",
-        "edurep.EdurepOAIPMH"
-    ]
-
     metadata = [
         "metadata.MetadataField",
         "metadata.MetadataTranslation",
@@ -32,10 +23,7 @@ class Command(base.LabelCommand):
     ]
 
     def dump_resources(self, app_label):
-        if app_label == "core":
-            resources = self.resources
-        else:
-            resources = load_task_resources(app_label)[app_label]
+        resources = load_task_resources(app_label)[app_label]
         paths = []
         for resource_model in resources:
             clazz = apps.get_model(resource_model)
@@ -85,7 +73,7 @@ class Command(base.LabelCommand):
             dataset_files.append(dataset_file)
 
         resource_files = self.dump_resources(app_label)
-        metadata_files = self.dump_metadata() if app_label in ["core", "products"] else []
+        metadata_files = self.dump_metadata() if app_label in ["products"] else []
 
         # Sync files with AWS
         if environment.service.env != "localhost":

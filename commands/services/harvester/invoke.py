@@ -58,9 +58,8 @@ def harvester_migrate(ctx, mode):
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
     "app_label": "The Django app you want to dump data for",
-    "download_edurep": "If edurep should be downloaded, defaults to False",
 })
-def load_data(ctx, mode, source, app_label, download_edurep=False):
+def load_data(ctx, mode, source, app_label):
     """
     Loads a remote database and sets up Open Search data on localhost or an AWS cluster
     """
@@ -68,10 +67,6 @@ def load_data(ctx, mode, source, app_label, download_edurep=False):
         raise Exit("Cowardly refusing to use production as a destination environment")
 
     command = ["python", "manage.py", "load_harvester_data", app_label, f"--harvest-source={source}", "--index"]
-
-    if download_edurep:
-        print("Will download edurep data, this can take a while...")
-        command += ["--download-edurep"]
 
     if source == "localhost":
         print(f"Will try to import app '{app_label}' using pre-downloaded files")
