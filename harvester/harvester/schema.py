@@ -3,7 +3,7 @@ from rest_framework.schemas.openapi import AutoSchema
 
 class HarvesterSchema(AutoSchema):
 
-    def _get_operation_id(self, path, method):
+    def get_operation_id(self, path, method):
         operation_id = path.replace("/", "-").strip("-")
         return f"{method.lower()}-{operation_id}"
 
