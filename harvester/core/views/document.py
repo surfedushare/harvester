@@ -71,7 +71,14 @@ class DatasetVersionDocumentDetailView(RetrieveModelMixin, DatasetVersionDocumen
             )
 
 
-class SearchDocumentListViewMixin(object):
+class SearchDocumentListViewMixin:
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        modified_since_filter = self.request.query_params.get("modified_since")
+        if modified_since_filter:
+            queryset = queryset.filter(metadata__modified_at__gte=modified_since_filter)
+        return queryset
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
