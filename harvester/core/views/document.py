@@ -36,6 +36,7 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
             queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
             queryset = dataset_version.documents.all()
+        queryset = queryset.order_by("-id")
         return queryset
 
 
