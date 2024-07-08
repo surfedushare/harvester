@@ -77,7 +77,7 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
     exclude_deletes = True
 
 
-class SearchProductGenericViewMixin(object):
+class SearchProductGenericViewMixin:
 
     def get_serializer_class(self):
         if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:

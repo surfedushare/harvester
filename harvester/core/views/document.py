@@ -79,7 +79,7 @@ class SearchDocumentListViewMixin(object):
         return super().get_serializer(*args, **kwargs)
 
 
-class SearchDocumentRetrieveViewMixin(object):
+class SearchDocumentRetrieveViewMixin:
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
