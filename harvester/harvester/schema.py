@@ -20,7 +20,7 @@ class HarvesterSchema(AutoSchema):
     def get_operation(self, path, method):
         operation = super().get_operation(path, method)
         if path.startswith("/product"):
-            operation["tags"] = [f"Download products"]
+            operation["tags"] = ["Download products"]
             for parameter in operation["parameters"]:
                 if parameter["name"] == "page":
                     parameter["schema"]["default"] = 1
