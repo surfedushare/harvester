@@ -6,7 +6,7 @@ from urllib.parse import quote
 from django.conf import settings
 from django.utils.timezone import make_aware
 
-from sharekit.models import SharekitMetadataHarvest
+from sources.models.sharekit import SharekitMetadataHarvest
 
 
 class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):

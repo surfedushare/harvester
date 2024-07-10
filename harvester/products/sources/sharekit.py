@@ -203,7 +203,7 @@ SEEDING_PHASES = [
         "strategy": "initial",
         "batch_size": 25,
         "retrieve_data": {
-            "resource": "sharekit.sharekitmetadataharvest",
+            "resource": "sources.sharekitmetadataharvest",
             "method": "get",
             "args": [],
             "kwargs": {},
