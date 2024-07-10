@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from core.processors import HttpSeedingProcessor
-from sharekit.tests.factories import SharekitMetadataHarvestFactory
+from sources.factories.sharekit.extraction import SharekitMetadataHarvestFactory
 from files.models import Set as FileSet, FileDocument
 from files.sources.sharekit import SEEDING_PHASES
 

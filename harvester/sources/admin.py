@@ -7,7 +7,7 @@ from django.urls import reverse
 from datagrowth.admin import HttpResourceAdmin
 from core.loading import load_harvest_models
 from sources.models import (HvaPureResource, HkuMetadataResource, GreeniOAIPMHResource, BuasPureResource,
-                            HanzeResearchObjectResource, PublinovaMetadataResource, EdurepJsonSearchResource,
+                            HanzeResearchObjectResource, PublinovaMetadataResource, SharekitMetadataHarvest,
                             SaxionOAIPMHResource, AnatomyToolOAIPMH, EdurepOAIPMH)
 from sources.models.harvest import HarvestSource, HarvestEntity
 
@@ -62,7 +62,7 @@ admin.site.register(GreeniOAIPMHResource, HttpResourceAdmin)
 admin.site.register(BuasPureResource, HttpResourceAdmin)
 admin.site.register(HanzeResearchObjectResource, HttpResourceAdmin)
 admin.site.register(PublinovaMetadataResource, HttpResourceAdmin)
-admin.site.register(EdurepJsonSearchResource, HttpResourceAdmin)
+admin.site.register(SharekitMetadataHarvest, HttpResourceAdmin)
 admin.site.register(SaxionOAIPMHResource, HttpResourceAdmin)
 admin.site.register(EdurepOAIPMH, HttpResourceAdmin)
 admin.site.register(AnatomyToolOAIPMH, HttpResourceAdmin)
