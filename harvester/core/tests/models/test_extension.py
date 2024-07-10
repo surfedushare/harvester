@@ -3,8 +3,6 @@ from unittest import skip
 
 from django.test import TestCase
 
-from core.models import Extension
-
 
 @skip("Extensions are deprecated")
 class TestExtension(TestCase):

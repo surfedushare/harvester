@@ -4,11 +4,12 @@ from collections import defaultdict
 
 from django.contrib.auth.models import User
 
-from core.models import DatasetVersion, MatomoVisitsResource, Query, QueryRanking, Document
+from core.models import MatomoVisitsResource, Query, QueryRanking
 from search.clients import get_search_client
 
 
 def _create_or_increase_query_ranking(search_client, dataset_version, query_string, url_object, user):
+    from core.models import Document
     _, external_id = os.path.split(url_object.path.strip("/"))
     external_id = search_client.clean_external_id(external_id)
     document = Document.objects.filter(dataset_version=dataset_version, reference=external_id).last()
@@ -27,6 +28,7 @@ def _create_or_increase_query_ranking(search_client, dataset_version, query_stri
 
 
 def create_or_update_download_query_rankings():
+    from core.models import DatasetVersion
     latest_dataset_version = DatasetVersion.objects.get_current_version()
     download_event_filter = {
         "Goal.Download": True
