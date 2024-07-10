@@ -2,7 +2,7 @@ import json
 
 from django.test import TestCase
 
-from core.models import HttpTikaResource
+from files.models import HttpTikaResource
 
 
 class TestTikaResource(TestCase):

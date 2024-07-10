@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
-from core.models import Document, Extension
+# from core.models import Document, Extension
 
 
 @skip("Extensions are deprecated")
