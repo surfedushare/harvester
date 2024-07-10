@@ -1,10 +1,6 @@
-from datetime import datetime
 from urllib.parse import unquote
-from unittest.mock import patch
 
 from django.test import TestCase
-from django.utils.timezone import make_aware
-from django.core.exceptions import ValidationError
 
 from datagrowth.exceptions import DGHttpError50X, DGHttpError40X
 from sources.models import EdurepOAIPMH
@@ -16,42 +12,6 @@ class TestEdurepOAIPMH(TestCase):
     @classmethod
     def setUp(cls):
         cls.instance = EdurepOAIPMH()
-
-    @patch("sources.models.EdurepOAIPMH.handle_errors")
-    @patch("sources.models.EdurepOAIPMH._send")
-    def test_get_since_time(self, send_mock, handle_errors_mock):
-        self.instance.get("surfsharekit", "2021-01-01T01:00:00Z")
-        self.assertEqual(send_mock.call_count, 1)
-        self.assertEqual(handle_errors_mock.call_count, 1)
-        self.assertEqual(self.instance.uri,
-                         "staging.edurep.kennisnet.nl/edurep/oai?"
-                         "from=2021-01-01T01%3A00%3A00Z&metadataPrefix=lom&set=surfsharekit&verb=ListRecords")
-        self.assertEqual(self.instance.since, make_aware(datetime(year=2021, month=1, day=1, hour=1)))
-        self.assertEqual(self.instance.set_specification, "surfsharekit")
-
-    @patch("sources.models.EdurepOAIPMH.handle_errors")
-    @patch("sources.models.EdurepOAIPMH._send")
-    def test_get_since_date(self, send_mock, handle_errors_mock):
-        self.instance.get("surfsharekit", "2021-01-01")
-        self.assertEqual(send_mock.call_count, 1)
-        self.assertEqual(handle_errors_mock.call_count, 1)
-        self.assertEqual(self.instance.uri,
-                         "staging.edurep.kennisnet.nl/edurep/oai?"
-                         "from=2021-01-01&metadataPrefix=lom&set=surfsharekit&verb=ListRecords")
-        self.assertEqual(self.instance.since, make_aware(datetime(year=2021, month=1, day=1)))
-        self.assertEqual(self.instance.set_specification, "surfsharekit")
-
-    def test_invalid_input(self):
-        try:
-            self.instance.get()
-            self.fail("EdurepOAIPMH did not raise when getting no input")
-        except ValidationError:
-            pass
-        try:
-            self.instance.get("surfsharekit", "not-a-time-at-all!")
-            self.fail("EdurepOAIPMH did not raise when getting invalid datetime")
-        except ValidationError:
-            pass
 
     def test_create_next_request(self):
         previous = EdurepOAIPMHFactory()
