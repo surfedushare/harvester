@@ -9,6 +9,14 @@ from django.utils.timezone import make_aware
 from sources.models import AnatomyToolOAIPMH
 
 
+def since(is_initial) -> str:
+    if is_initial:
+        date = make_aware(datetime(year=1970, month=1, day=1))
+    else:
+        date = make_aware(datetime(year=2020, month=1, day=1))
+    return f"{date:%Y-%m-%dT%H:%M:%SZ}"
+
+
 class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
 
     class Meta:
@@ -20,12 +28,6 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
         number = 0
         resumption = None
 
-    since = factory.Maybe(
-        "is_initial",
-        make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=1, day=1))
-    )
-    set_specification = "anatomy_tool"
     status = 200
     head = {
         "content-type": "text/xml"
@@ -33,7 +35,7 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self) -> str:
-        from_param = f"from={self.since:%Y-%m-%dT%H:%M:%SZ}"
+        from_param = f"from={since(self.is_initial)}"
         identity = quote(f"{from_param}&metadataPrefix=nl_lom", safe="=&") \
             if not self.resumption else f"resumptionToken={quote(self.resumption)}"
         return f"anatomytool.org/oai-pmh?{identity}&verb=ListRecords"
@@ -41,7 +43,7 @@ class AnatomyToolOAIPMHFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def request(self) -> dict[str, None | str | list[str] | dict[str, str]]:
         return {
-            "args": [self.set_specification, f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
+            "args": ["anatomy_tool", since(self.is_initial)],
             "kwargs": {},
             "method": "get",
             "url": "https://" + self.uri,

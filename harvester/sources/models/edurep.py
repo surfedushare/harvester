@@ -3,13 +3,13 @@ from urlobject import URLObject
 
 from django.conf import settings
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class EdurepOAIPMH(HarvestHttpResource):
+class EdurepOAIPMH(HttpResource):
 
     URI_TEMPLATE = settings.EDUREP_BASE_URL + "/edurep/oai?set={}&from={}"
     PARAMETERS = {

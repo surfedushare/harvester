@@ -1,4 +1,3 @@
-from .resources.harvest import HarvestHttpResource
 from .resources.matomo import MatomoVisitsResource
 
 # Start legacy models
