@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import YoutubeThumbnailResource
+from files.models import YoutubeThumbnailResource
 
 
 class TestYoutubeThumbnailResource(TestCase):

@@ -3,7 +3,10 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import django.contrib.postgres.fields.jsonb
-import core.models.legacy.harvest
+
+
+def thirty_days_default():
+    return {"days": 30}
 
 
 class Migration(migrations.Migration):
@@ -64,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='harvestsource',
             name='purge_interval',
-            field=django.contrib.postgres.fields.jsonb.JSONField(default=core.models.legacy.harvest.thirty_days_default),
+            field=django.contrib.postgres.fields.jsonb.JSONField(default=thirty_days_default),
         ),
         migrations.CreateModel(
             name='DatasetVersion',
