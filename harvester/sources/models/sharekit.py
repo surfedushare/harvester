@@ -2,10 +2,10 @@ from urlobject import URLObject
 
 from django.conf import settings
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
-class SharekitMetadataHarvest(HarvestHttpResource):
+class SharekitMetadataHarvest(HttpResource):
 
     URI_TEMPLATE = settings.SHAREKIT_BASE_URL + "/api/jsonapi/channel/v1/{}/repoItems?filter[modified][GE]={}"
     PARAMETERS = {

@@ -1,19 +1,13 @@
 import logging
-
-from django.contrib.contenttypes.fields import ContentType
-from django.db import models
 from urlobject import URLObject
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class AnatomyToolOAIPMH(HarvestHttpResource):
-
-    set_specification = models.CharField(max_length=255, blank=True, null=False, default="anatomy_tool")
-    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
+class AnatomyToolOAIPMH(HttpResource):
 
     URI_TEMPLATE = "https://anatomytool.org/oai-pmh?from={}"
     PARAMETERS = {

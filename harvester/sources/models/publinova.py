@@ -2,18 +2,14 @@ import logging
 from urlobject import URLObject
 
 from django.conf import settings
-from django.db import models
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class PublinovaMetadataResource(HarvestHttpResource):
-
-    set_specification = models.CharField(max_length=255, blank=True, null=False, default="publinova")
-    use_multiple_sets = False
+class PublinovaMetadataResource(HttpResource):
 
     URI_TEMPLATE = settings.SOURCES["publinova"]["endpoint"] + "/sources/products" \
         if settings.SOURCES["publinova"]["endpoint"] else "/sources/products"

@@ -9,13 +9,18 @@ from django.utils.timezone import make_aware
 from sources.models import GreeniOAIPMHResource
 
 
-SLUG = "greeni"
 uri = GreeniOAIPMHResource.URI_TEMPLATE.replace("https://", "")
 start_params = uri.find("?")
 ENDPOINT = uri[:start_params]
-SET_SPECIFICATION = "PUBVHL"
-METADATA_PREFIX = "didl"
 RESUMPTION_TOKEN = "PUBVHL|didl|1840-12-31|9999-12-31|^2^139717|66191,57659"
+
+
+def since(is_initial) -> str:
+    if is_initial:
+        date = make_aware(datetime(year=1970, month=1, day=1))
+    else:
+        date = make_aware(datetime(year=2020, month=2, day=10))
+    return f"{date:%Y-%m-%d}"
 
 
 class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
@@ -29,12 +34,6 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
         number = 0
         resumption = None
 
-    since = factory.Maybe(
-        "is_initial",
-        make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10))
-    )
-    set_specification = SET_SPECIFICATION
     status = 200
     head = {
         "content-type": "text/xml"
@@ -42,7 +41,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        identity = f"from={self.since:%Y-%m-%d}&metadataPrefix={METADATA_PREFIX}&set={self.set_specification}"
+        identity = f"from={since(self.is_initial)}&metadataPrefix=didl&set=PUBVHL"
         if self.resumption:
             identity = f"resumptionToken={quote(self.resumption)}"
         return f"{ENDPOINT}?{identity}&verb=ListRecords"
@@ -50,7 +49,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def request(self):
         return {
-            "args": [self.set_specification, f"{self.since:%Y-%m-%d}"],
+            "args": ["PUBVHL", since(self.is_initial)],
             "kwargs": {},
             "method": "get",
             "url": "https://" + self.uri,
@@ -61,7 +60,7 @@ class GreeniOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def body(self):
         response_type = "initial" if self.is_initial else "delta"
-        response_file = f"fixture.{SLUG}.{response_type}.{self.number}.xml"
+        response_file = f"fixture.greeni.{response_type}.{self.number}.xml"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",
             response_file
