@@ -5,7 +5,6 @@ from datetime import datetime
 
 from django.dispatch import receiver
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
 
 import pdf2image
 from pdf2image.exceptions import PDFPageCountError
@@ -15,7 +14,9 @@ from versatileimagefield.utils import build_versatileimagefield_url_set
 from datagrowth.resources import HttpFileResource
 
 
-class BasePdfThumbnailResource(HttpFileResource):
+class PdfThumbnailResource(HttpFileResource):
+
+    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "pdf"), null=True, blank=True)
 
     def _update_from_results(self, response):
         # Save the metadata
@@ -55,18 +56,6 @@ class BasePdfThumbnailResource(HttpFileResource):
                 for image_key, url in signed_urls.items()
             }
         return None, None
-
-    class Meta:
-        abstract = True
-
-
-class PdfThumbnailResource(BasePdfThumbnailResource):
-
-    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "pdf"), null=True, blank=True)
-    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
-
-    class Meta:
-        app_label = "files"
 
 
 @receiver(models.signals.post_delete, sender=PdfThumbnailResource)
