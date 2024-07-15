@@ -216,3 +216,11 @@ SEEDING_PHASES = [
 
 
 WEBHOOK_DATA_TRANSFORMER = SharekitExtractor.webhook_data_transformer
+
+
+SEQUENCE_PROPERTIES = {  # with tests these properties are used to generate mock data
+    "external_id": "{ix}",
+    "set": "sharekit:test",
+    "title": "Title {ix}",
+    "language": "{ix}",
+}
