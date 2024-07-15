@@ -23,6 +23,9 @@ class Command(BaseCommand):
         harvester_version = options["harvester_version"]
         app_label = options["app_label"]
 
+        if app_label == "core":
+            raise CommandError("No longer possible to promote a legacy dataset version from the core app")
+
         models = load_harvest_models(app_label)
         Dataset = models["Dataset"]
         DatasetVersion = models["DatasetVersion"]
@@ -41,18 +44,10 @@ class Command(BaseCommand):
 
         logger.info(f"Promoting: {dataset_version.dataset.name}, {dataset_version.version} (id={dataset_version.id})")
 
-        if getattr(dataset_version, "indices", None):
-            for index in dataset_version.indices.all():
-                logger.info(f"Promoting index {index.remote_name} to latest")
-                index.promote_to_latest()
-            dataset_version.set_current()
-        elif getattr(dataset_version, "index", None):
-            index = dataset_version.index
-            logger.info(f"Promoting index {index.name} to latest")
-            dataset_version.index.promote_all_to_latest()  # when merging languages into one index we can remove "all"
-            dataset_version.set_index_promoted()
-            dataset_version.set_current()
-        else:
-            raise CommandError("Unexpected DatasetVersion interface: neither indices nor index is available")
+        index = dataset_version.index
+        logger.info(f"Promoting index {index.name} to latest")
+        dataset_version.index.promote_all_to_latest()  # when merging languages into one index we can remove "all"
+        dataset_version.set_index_promoted()
+        dataset_version.set_current()
 
         logger.info("Finished promoting")
