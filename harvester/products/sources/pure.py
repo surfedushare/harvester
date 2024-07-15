@@ -153,9 +153,11 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
     if api_version == "v2":
         description_extractor = extract_processor.get_description
         object_type_extractor = "$.type.term.en_GB"
+        modified_at_extractor = "$.modifiedDate"
     elif api_version == "v1":
         description_extractor = "$.abstract.text.0.value"
         object_type_extractor = "$.type.term.text.0.value"
+        modified_at_extractor = "$.info.modifiedDate"
     else:
         raise ValueError(f"Unexpected Pure API version: {api_version}")
     return {
@@ -165,7 +167,7 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "state": lambda node: "active",
         "set": lambda node: source_set,
         # Generic metadata
-        "modified_at": "$.modifiedDate",
+        "modified_at": modified_at_extractor,
         "doi": extract_processor.get_doi,
         "files": extract_processor.get_files,
         "title": extract_processor.get_title,
