@@ -49,3 +49,60 @@ class FileDocumentTestCase(TestCase):
         with override_settings(DEFAULT_FILE_TITLES_TEMPLATE="Attachment {ix}"):
             product_data = product.to_data()
             self.assertEqual(product_data["files"][0]["title"], "Attachment 1")
+
+    @override_settings(SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT=False)
+    def test_to_search_no_files(self):
+        FileDocument.objects.all().delete()
+        product = ProductDocument.objects.get(id=1)
+        product_search = product.to_data(for_search=True)
+        self.assertIsNone(product_search["url"])
+        self.assertIsNone(product_search["mime_type"])
+        self.assertIsNone(product_search["technical_type"])
+        self.assertIsNone(product_search["text"])
+        self.assertIsNone(product_search["previews"])
+        self.assertEqual(product_search["files"], [])
+
+    def test_technical_type_overrides(self):
+        """
+        Technical type is file dependant, but we make sure that it gets inherited from ProductDocument if required
+        """
+        # Test ProductDocument override
+        product = ProductDocument.objects.get(id=1)
+        product.properties["technical_type"] = "video"
+        product_search = product.to_data(for_search=True)
+        self.assertEqual(product_search["technical_type"], "video",
+                         "If set on ProductDocument the technical_type should override the FileDocument.type")
+        # Test override if there are no files at all
+        FileDocument.objects.all().delete()
+        product.properties["technical_type"] = None
+        product_search = product.to_data(for_search=True)
+        self.assertIsNone(product_search["technical_type"],
+                          "Expected technical_type to be None if there are no files and ProductDocument doesn't set it")
+        product.properties["technical_type"] = "website"
+        product_search = product.to_data(for_search=True)
+        self.assertEqual(product_search["technical_type"], "website",
+                         "Expected ProductDocument to dictate technical_type without any files present")
+
+    def test_copyright_overrides(self):
+        """
+        Copyright is file dependant, when this is enabled in settings and product doesn't provide a value.
+        """
+        # Remove the product copyright and see if file copyright emerges.
+        product = ProductDocument.objects.get(id=1)
+        product.properties["copyright"] = None
+        product_search = product.to_data(for_search=True)
+        self.assertEqual(product_search["copyright"], "cc-by-sa-40")
+        # Test no product copyright and this feature disabled (tests use Edusources settings where this is enabled)
+        with override_settings(SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT=False):
+            product_search = product.to_data(for_search=True)
+            self.assertIsNone(product_search["copyright"], "cc-by-nd-40")
+        # Now we remove the value from FileDocument to see if the "yes" default shows up.
+        file_document = FileDocument.objects.get(id=1)
+        file_document.properties["copyright"] = None
+        file_document.save()
+        product_search = product.to_data(for_search=True)
+        self.assertEqual(product_search["copyright"], "yes")
+        # And finally we remove all files from product. It again should show the "yes" default.
+        FileDocument.objects.all().delete()
+        product_search = product.to_data(for_search=True)
+        self.assertEqual(product_search["copyright"], "yes")
