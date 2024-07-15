@@ -42,14 +42,14 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def head(self):
-        return json.dumps({
+        return {
             "date": "Fri, 11 Aug 2023 01:27:22 GMT",
             "vary": "Accept-Encoding",
             "server": "Jetty(9.4.49.v20220914)",
             "content-type": "application/json",
             "content-encoding": "gzip",
             "transfer-encoding": "chunked"
-        })
+        }
 
     @factory.lazy_attribute
     def body(self):
