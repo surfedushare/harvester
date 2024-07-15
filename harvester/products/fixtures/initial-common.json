@@ -5,7 +5,7 @@
     "fields": {
         "name": "epsilon",
         "is_harvested": true,
-        "indexing": "index_only"
+        "indexing": "index_and_promote"
     }
 }
 ]
