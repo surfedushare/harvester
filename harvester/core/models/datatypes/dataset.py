@@ -155,6 +155,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
             if language not in settings.OPENSEARCH_ANALYSERS:
                 language = "unk"
             by_language[language] += list(document.to_search())
+            by_language["all"] += list(document.to_search())
         return by_language
 
     def set_current(self) -> None:

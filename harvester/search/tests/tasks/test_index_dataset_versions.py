@@ -45,17 +45,22 @@ class TestIndexDatasetVersions(TestCase):
         self.search_client.indices.delete.reset_mock()
 
     def assert_document_stream(self, streaming_bulk_mock):
-        self.assertEqual(streaming_bulk_mock.call_count, 3, "Expected a separate call for nl, en and unk")
+        self.assertEqual(streaming_bulk_mock.call_count, 4, "Expected a separate call for nl, en, unk and all")
         for args, kwargs in streaming_bulk_mock.call_args_list:
             client, docs = args
             alias, dataset_info = kwargs["index"].split("--")
-            dataset, version, language = dataset_info.split("-")
-            if language == "nl":
+            # Check language based call when appropriate and strip the language postfix
+            if dataset_info.endswith("nl"):
                 self.assertEqual(len(docs), 3)
-            elif language == "en":
+                dataset_info = dataset_info[:-3]
+            elif dataset_info.endswith("en"):
                 self.assertEqual(len(docs), 4)
-            elif language == "unk":
+                dataset_info = dataset_info[:-3]
+            elif dataset_info.endswith("unk"):
                 self.assertEqual(len(docs), 3)
+                dataset_info = dataset_info[:-4]
+            # Non-language asserts from here
+            dataset, version = dataset_info.split("-")
             self.assertEqual(dataset, "test")
             self.assertEqual(version, "003", "Only expected one dataset version to get indexed")
 
