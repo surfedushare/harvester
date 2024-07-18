@@ -44,27 +44,33 @@ class OpenSearchIndex(models.Model):
         for language in settings.OPENSEARCH_LANGUAGE_CODES:
             if type(self).objects.filter(name=self.name).count() <= 1 and self.check_remote_exists(language):
                 self.client.indices.delete(index=self.get_remote_name(language))
+        if self.check_remote_exists():
+            self.client.indices.delete(index=self.get_remote_name())
         super().delete(using=using, keep_parents=keep_parents)
 
-    def get_remote_name(self, language: str) -> str:
+    def get_remote_name(self, language: str = None) -> str:
         if not self.id:
             raise ValueError("Can't get the remote name for an unsaved object")
-        name = f"{self.name}-{language}"
+        name = self.name
+        if language and language != "all":
+            name += f"-{language}"
         return name.replace(".", "")
 
     def get_remote_names(self) -> list[str]:
-        return [
+        names = [
             self.get_remote_name(language)
             for language in settings.OPENSEARCH_LANGUAGE_CODES
         ]
+        names.append(self.get_remote_name())
+        return names
 
-    def check_remote_exists(self, language: str) -> bool:
+    def check_remote_exists(self, language: str = None) -> bool:
         if not self.id:
             raise ValueError("Can't check for existence with an unsaved object")
         remote_name = self.get_remote_name(language)
         return self.client.indices.exists(remote_name)
 
-    def push(self, search_documents: dict[str, dict], recreate=True, request_timeout=300) -> list[str]:
+    def push(self, search_documents: dict[str, list[dict]], recreate=True, request_timeout=300) -> list[str]:
         if not self.id:
             raise ValueError("Can't push index with unsaved object")
 
@@ -133,6 +139,7 @@ class OpenSearchIndex(models.Model):
                 language: self.get_index_config(language)
                 for language in settings.OPENSEARCH_LANGUAGE_CODES
             }
+            self.configuration["all"] = self.get_index_config()
 
     def __str__(self) -> str:
         return self.name
@@ -142,7 +149,7 @@ class OpenSearchIndex(models.Model):
         verbose_name_plural = "OpenSearch indices"
 
     @staticmethod
-    def get_index_config(language: str) -> dict:
+    def get_index_config(language: str = None) -> dict:
         """
         Returns the elasticsearch index configuration.
         Configures the analysers based on the language passed in.
@@ -150,6 +157,12 @@ class OpenSearchIndex(models.Model):
         decompound_word_list = None
         if settings.OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS:
             decompound_word_list = settings.OPENSEARCH_DECOMPOUND_WORD_LISTS.dutch
+        if language is None:
+            return create_open_search_index_configuration(
+                "unk",
+                settings.DOCUMENT_TYPE,
+                decompound_word_list=decompound_word_list
+            )
         return create_open_search_index_configuration(
             language,
             settings.DOCUMENT_TYPE,
