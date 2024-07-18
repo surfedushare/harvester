@@ -78,14 +78,16 @@ class TestIndexDatasetVersions(TestCase):
                 index=f"*-*-*-{platform}-{language}",
                 name=f"{platform}-{language}"
             )
+            self.search_client.indices.delete_alias.assert_any_call(
+                index=f"{platform}-{entity}--*-*",
+                name=f"{platform}-{entity}"
+            )
 
     def assert_alias_creation(self, platform: str, entity: str, languages: list[str]):
         for language in languages:
-            # [call(index='edusources-testing--test-003-en', name='edusources-testing-en'),
-            # call(index='edusources-testing--test-003-en', name='edusources-en'),
             self.search_client.indices.put_alias.assert_any_call(
-                index=f"{platform}-{entity}--test-003-{language}",
-                name=f"{platform}-{entity}-{language}"
+                index=f"{platform}-{entity}--test-003",
+                name=f"{platform}-{entity}"
             )
             self.search_client.indices.put_alias.assert_any_call(
                 index=f"{platform}-{entity}--test-003-{language}",
