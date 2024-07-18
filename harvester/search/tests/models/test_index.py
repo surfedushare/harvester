@@ -19,6 +19,7 @@ class TestOpenSearchIndexModel(TestCase):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")
         self.assertIsNone(instance.id)
         self.assertEqual(instance.name, "edusources-testing--test-0.0.1")
+        self.assertEqual(instance.entity, "testing")
         self.assertEqual(set(instance.configuration.keys()), {"nl", "en", "unk"})
 
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
