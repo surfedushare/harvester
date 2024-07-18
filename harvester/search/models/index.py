@@ -105,9 +105,10 @@ class OpenSearchIndex(models.Model):
 
     def promote_all_to_latest(self) -> None:
         for language in settings.OPENSEARCH_LANGUAGE_CODES:
-            self.promote_to_latest(language)
+            self.promote_language_index_to_latest(language)
+        self.promote_to_latest()
 
-    def promote_to_latest(self, language: str) -> None:
+    def promote_language_index_to_latest(self, language: str) -> None:
         alias_prefix, dataset_info = self.name.split("--")
         alias = f"{alias_prefix}-{language}"
         legacy_alias = f"{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
@@ -117,17 +118,32 @@ class OpenSearchIndex(models.Model):
         index_pattern = f"{alias_prefix}--*-*-{language}"
         legacy_pattern = f"*-*-*-{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
         try:
-            self.client.indices.delete_alias(index=index_pattern, name=alias)
+            # NB: this is still being used at the time of writing.
+            # The plan is to move away from language based aliases soon and then this becomes obsolete.
             self.client.indices.delete_alias(index=index_pattern, name=legacy_alias)
         except NotFoundError:
             pass
         if self.check_remote_exists(language):
-            self.client.indices.put_alias(index=self.get_remote_name(language), name=alias)
             self.client.indices.put_alias(index=self.get_remote_name(language), name=legacy_alias)
             try:
+                # This deletes new-style aliases that have a language postfix pointing to a language-style index pattern
+                # These aliases were never used. We migrated towards having new-style aliases without language postfix.
+                # We still delete them here to make sure the residues disappear.
+                self.client.indices.delete_alias(index=index_pattern, name=alias)
+                # This deletes legacy-style aliases pointing to legacy indices that should no longer exist.
                 self.client.indices.delete_alias(index=legacy_pattern, name=legacy_alias)
             except NotFoundError:
                 pass
+
+    def promote_to_latest(self) -> None:
+        alias, dataset_info = self.name.split("--")
+        index_pattern = f"{alias}--*-*"
+        try:
+            self.client.indices.delete_alias(index=index_pattern, name=alias)
+        except NotFoundError:
+            pass
+        if self.check_remote_exists():
+            self.client.indices.put_alias(index=self.get_remote_name(), name=alias)
 
     def clean(self) -> None:
         if not self.configuration:

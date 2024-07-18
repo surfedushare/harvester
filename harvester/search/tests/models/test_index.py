@@ -32,7 +32,7 @@ class TestOpenSearchIndexModel(TestCase):
                 index=f"edusources-testing--test-001-{language}"
             )
         self.search_client.indices.delete.assert_any_call(
-            index=f"edusources-testing--test-001"
+            index="edusources-testing--test-001"
         )
 
     def test_get_remote_names(self):

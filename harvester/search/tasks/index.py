@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
