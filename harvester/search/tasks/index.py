@@ -85,7 +85,6 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         index = _push_dataset_version_to_index(dataset_version, logger, recreate=recreate_indices)
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
-            for language in settings.OPENSEARCH_LANGUAGE_CODES:
-                logger.info(f"Promoting to latest: {app_label}, {language}")
-                index.promote_to_latest(language)
+            logger.info(f"Promoting to latest: {app_label}")
+            index.promote_all_to_latest()
             dataset_version.set_index_promoted()
