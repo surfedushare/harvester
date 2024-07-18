@@ -106,8 +106,8 @@ class TestCleanData(TestCase):
         self.assertEqual(HttpTikaResource.objects.count(), 40, "Expected one HttpTikaResource per Document")
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
-        self.assertEqual(self.search_client.indices.exists.call_count, 42)
-        self.assertEqual(self.search_client.indices.delete.call_count, 42)
+        self.assertEqual(self.search_client.indices.exists.call_count, 56)
+        self.assertEqual(self.search_client.indices.delete.call_count, 56)
 
     def test_clean_data_duplicated_resources(self):
         # We'll add old Resources to new Documents and make sure these resources do not get deleted
@@ -146,5 +146,5 @@ class TestCleanData(TestCase):
         self.assertEqual(HttpTikaResource.objects.count(), 0)
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
-        self.assertEqual(self.search_client.indices.exists.call_count, 42)
-        self.assertEqual(self.search_client.indices.delete.call_count, 42)
+        self.assertEqual(self.search_client.indices.exists.call_count, 56)
+        self.assertEqual(self.search_client.indices.delete.call_count, 56)
