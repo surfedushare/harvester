@@ -15,6 +15,7 @@ from search.clients import get_opensearch_client
 class OpenSearchIndex(models.Model):
 
     name = models.CharField(max_length=255)
+    entity = models.CharField(max_length=50, default="products")
     configuration = models.JSONField(blank=True)
     error_count = models.IntegerField(default=0)
 
@@ -25,6 +26,7 @@ class OpenSearchIndex(models.Model):
     @classmethod
     def build(cls, app_label: str, dataset: str, version: str) -> OpenSearchIndex:
         index = cls(
+            entity=app_label,
             name=f"{settings.OPENSEARCH_ALIAS_PREFIX}-{app_label}--{dataset}-{version}"
         )
         index.clean()
