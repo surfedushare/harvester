@@ -69,7 +69,7 @@ class OpenSearchIndex(models.Model):
             self.error_count = 0
         self.clean()
 
-        for language, search_documents in search_documents.items():
+        for language, documents in search_documents.items():
             # Some preparation based on remote state as well as arguments
             remote_name = self.get_remote_name(language)
             remote_exists = self.check_remote_exists(language)
@@ -78,13 +78,13 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration[language])
             if recreate:
-                search_documents = [
-                    search_document for search_document in search_documents
+                documents = [
+                    search_document for search_document in documents
                     if search_document.get("_op_type", None) != "delete"
                 ]
 
             # Actual push of docs to ES
-            for is_ok, result in streaming_bulk(self.client, search_documents, index=remote_name,
+            for is_ok, result in streaming_bulk(self.client, documents, index=remote_name,
                                                 chunk_size=100, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
