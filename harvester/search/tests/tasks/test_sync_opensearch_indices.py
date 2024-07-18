@@ -1,6 +1,5 @@
 from unittest.mock import patch
 from datetime import timedelta
-from time import sleep
 
 from django.test import TestCase
 from django.utils.timezone import now
@@ -21,10 +20,10 @@ class TestSyncOpenSearchIndices(TestCase):
     start_time = None
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.start_time = now()
-        sleep(1)  # create a little bit of a delta to ensure documents aren't excluded because of time restrictions
+    def setUpTestData(cls):
+        # Set start time, but create a little bit of a delta to ensure documents aren't excluded,
+        # because of time restrictions
+        cls.start_time = now() - timedelta(seconds=1)
         # The inactive data shouldn't be indexed, because the Dataset indicates no indexing is required
         inactive_dataset, inactive_dataset_version, inactive_sets, inactive_documents = create_datatype_models(
             "testing", ["simple_set"],
