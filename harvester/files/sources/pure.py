@@ -1,3 +1,4 @@
+import os
 from typing import Iterator, Type
 from dataclasses import dataclass
 from hashlib import sha1
@@ -56,6 +57,14 @@ class PureFileExtraction(PureExtractor):
         return f"{info.product['uuid']}:{file_hash}"
 
     @classmethod
+    def get_language(cls, info: ElectronicVersionInfo):
+        locale_uri = info.product["language"]["uri"]
+        _, locale = os.path.split(locale_uri)
+        if locale in ["en_GB", "nl_NL"]:
+            return locale[:2]
+        return
+
+    @classmethod
     def get_mime_type(cls, info: ElectronicVersionInfo) -> str:
         return info.data["mimeType"] if not info.is_link else "text/html"
 
@@ -81,6 +90,7 @@ def build_objective(extract_processor: Type[PureFileExtraction], source_set: str
         "state": lambda node: "active",
         "set": lambda info: source_set,
         "external_id": extract_processor.get_external_id,
+        "language": extract_processor.get_language,
         # Generic metadata
         "url": extract_processor.get_url,
         "hash": extract_processor.get_hash,

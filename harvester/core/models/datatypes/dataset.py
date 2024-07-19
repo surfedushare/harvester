@@ -151,9 +151,7 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         by_language = defaultdict(list)
         documents = self.documents.filter(**filters)
         for document in documents:
-            language = document.get_language()
-            if language not in settings.OPENSEARCH_ANALYSERS:
-                language = "unk"
+            language = document.get_analyzer_language()
             by_language[language] += list(document.to_search())
             by_language["all"] += list(document.to_search())
         return by_language

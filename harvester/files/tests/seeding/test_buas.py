@@ -79,6 +79,9 @@ class TestBuasFileExtraction(TestCase):
             "28aca36e-17b8-48eb-a4a3-70610dbf73f6:d42e0d5475f052d4fa0ef5216fd7dcbfc3a4374d"
         )
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "nl")
+
     def test_get_url(self):
         self.assertEqual(
             self.seeds[0]["url"],

@@ -72,6 +72,10 @@ class TestAnatomyToolFileExtraction(TestCase):
     def test_get_state(self):
         self.assertEqual(self.seeds[0]["state"], FileDocument.States.ACTIVE)
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "x-none")
+        self.assertEqual(self.seeds[1]["language"], "en")
+
     def test_get_url(self):
         self.assertEqual(self.seeds[0]["url"],
                          "https://anatomytool.org/node/56055", "Expected to get the url of an image")

@@ -29,7 +29,7 @@ class HkuProductExtraction(HkuExtractor):
             return "nl"
         elif language == "Engels":
             return "en"
-        return "unk"
+        return
 
     @classmethod
     def get_copyright(cls, node):

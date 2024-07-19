@@ -4,6 +4,7 @@ from django.utils.timezone import now
 from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
+from core.utils.analyzers import get_analyzer_language
 from files.models.resources.metadata import CheckURLResource
 from files.models.datatypes.file import Redirects
 from testing.constants import SEED_DEFAULTS
@@ -40,8 +41,8 @@ class TestDocument(HarvestDocument):
                 self.pending_at = None
                 self.finished_at = now()
 
-    def get_language(self):
-        return self.properties.get("language", None)
+    def get_analyzer_language(self):
+        return get_analyzer_language(self.properties.get("language", None))
 
 
 class Overwrite(HarvestOverwrite):

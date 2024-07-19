@@ -157,6 +157,10 @@ class TestSharekitFileExtraction(TestCase):
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
         )
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "en")
+        self.assertEqual(self.seeds[2]["language"], "nl")
+
     def test_get_mime_type(self):
         self.assertEqual(
             self.seeds[0]["mime_type"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

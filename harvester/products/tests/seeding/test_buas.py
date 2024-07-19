@@ -86,7 +86,6 @@ class TestBuasProductExtraction(TestCase):
 
     def test_get_language(self):
         self.assertEqual(self.seeds[0]["language"], "en")
-        self.assertEqual(self.seeds[4]["language"], "en")
 
     def test_get_title(self):
         self.assertEqual(

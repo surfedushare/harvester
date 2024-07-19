@@ -88,6 +88,11 @@ class TestHvaFileExtraction(TestCase):
             "341fa580-d385-4484-9566-e94c99643e7e:54a95ef8691a8b3ac88759451ac61feeedaa14cf"
         )
 
+    def test_get_language(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["language"], "nl")
+        self.assertEqual(seeds[4]["language"], "en")
+
     def test_get_url(self):
         seeds = self.seeds
         self.assertEqual(
