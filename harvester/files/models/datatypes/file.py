@@ -7,6 +7,7 @@ from copy import deepcopy
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
+from django.utils.html import strip_tags
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
@@ -30,13 +31,6 @@ def default_document_tasks():
             "checks": ["is_analysis_possible"],
             "resources": ["files.HttpTikaResource"]
         },
-        # TODO: experimental Tika use may replace normal use,
-        #  but due to JSON size restrictions we can't use them simultaneously
-        # "tika_xml": {
-        #     "depends_on": ["$.hash", "check_url"],
-        #     "checks": ["is_analysis_possible"],
-        #     "resources": ["files.HttpTikaResource"]
-        # },
         "pdf_preview": {
             "depends_on": ["$.hash", "check_url"],
             "checks": ["is_analysis_possible", "is_pdf"],
@@ -183,7 +177,7 @@ class FileDocument(HarvestDocument):
             for key, value in super().to_data(merge_derivatives=False).items() if key in WHITELISTED_OUTPUT_FIELDS
         }
         if "tika" in self.derivatives:
-            data["text"] = self.derivatives["tika"]["texts"][0]  # TODO: allow all Tika output
+            data["text"] = strip_tags(self.derivatives["tika"]["texts"][0])
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
             data["video"] = youtube_data
