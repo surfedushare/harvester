@@ -43,6 +43,10 @@ class HBOKennisbankFileExtractor(HBOKennisbankExtractor):
         return super().get_oaipmh_external_id(soup, info.product)
 
     @classmethod
+    def get_language(cls, soup, info: FileInfo):
+        return super().get_product_language(soup, info.product)
+
+    @classmethod
     def get_external_id(cls, soup, info: FileInfo):
         file_hash = cls.get_hash(soup, info)
         if not file_hash:
@@ -115,6 +119,7 @@ def build_objective(extract_processor: Type[HBOKennisbankFileExtractor]) -> dict
         "@": get_file_infos,
         "state": extract_processor.get_oaipmh_record_state,
         "external_id": extract_processor.get_external_id,
+        "language": extract_processor.get_language,
         "#set": extract_processor.get_oaipmh_set,
         # Generic metadata
         "url": extract_processor.get_url,

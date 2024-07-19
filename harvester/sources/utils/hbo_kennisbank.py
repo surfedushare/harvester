@@ -25,6 +25,13 @@ class HBOKennisbankExtractor(BaseExtractor):
 
     source_slug = None
 
+    language_mapping = {
+        "nl": "nl",
+        "en": "en",
+        "dut": "nl",
+        "eng": "en"
+    }
+
     #############################
     # OAI-PMH
     #############################
@@ -74,6 +81,13 @@ class HBOKennisbankExtractor(BaseExtractor):
     #############################
     # Extraction
     #############################
+
+    @classmethod
+    def get_product_language(cls, soup, record):
+        language_term = record.find("languageTerm")
+        if not language_term:
+            return
+        return cls.language_mapping.get(language_term.text.strip())
 
     @classmethod
     def get_provider(cls, soup, el):

@@ -124,6 +124,10 @@ class TestGreeniFileExtraction(TestCase):
     def test_get_set(self):
         self.assertEqual(self.seeds[0]["set"], "greeni:PUBVHL")
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "nl")
+        self.assertEqual(self.seeds[60]["language"], "en")
+
     def test_get_url(self):
         self.assertEqual(
             self.seeds[0]["url"],

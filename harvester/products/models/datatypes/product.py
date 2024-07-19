@@ -6,6 +6,7 @@ from django.db import models
 from django.conf import settings
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
+from core.utils.analyzers import get_analyzer_language
 from metadata.models import MetadataValue
 from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
@@ -62,7 +63,7 @@ class ProductDocument(HarvestDocument):
             return False
         return MetadataValue.objects.filter(field__name="publisher_year", value=publisher_year).exists()
 
-    def get_language(self) -> str:
+    def get_analyzer_language(self) -> str:
         return self.metadata["language"]
 
     @staticmethod
@@ -189,8 +190,7 @@ class ProductDocument(HarvestDocument):
         language = self.metadata.get("language", None)
         if language is None:
             source_language = self.properties.get("language", None)
-            language_codes = settings.OPENSEARCH_LANGUAGE_CODES
-            self.metadata["language"] = source_language if source_language in language_codes else "unk"
+            self.metadata["language"] = get_analyzer_language(source_language)
 
 
 class Overwrite(HarvestOverwrite):

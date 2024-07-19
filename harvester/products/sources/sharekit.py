@@ -29,13 +29,6 @@ class SharekitMetadataExtraction:
         return urls
 
     @classmethod
-    def get_language(cls, node):
-        language = node["attributes"].get("language")
-        if not language:
-            return "unk"
-        return language
-
-    @classmethod
     def get_material_types(cls, node):
         material_types = node["attributes"].get("typesLearningMaterial", [])
         if not material_types:
@@ -172,7 +165,7 @@ OBJECTIVE = {
     "technical_type": "$.attributes.technicalFormat",
     "title": "$.attributes.title",
     "subtitle": "$.attributes.subtitle",
-    "language": SharekitMetadataExtraction.get_language,
+    "language": "$.attributes.language",
     "keywords": "$.attributes.keywords",
     "description": "$.attributes.abstract",
     "copyright": SharekitMetadataExtraction.get_copyright,

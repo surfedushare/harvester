@@ -42,13 +42,17 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
         yield doc.properties
 
 
-class SharekitFileExtraction(object):
+class SharekitFileExtraction:
 
     @classmethod
     def get_state(cls, info: FileInfo) -> str:
         if not info.file:
             return FileDocument.States.DELETED
         return SharekitExtractor.extract_state(info.product)
+
+    @classmethod
+    def get_language(cls, info: FileInfo):
+        return info.product["attributes"].get("language")
 
     @classmethod
     def get_url(cls, info: FileInfo) -> str | None:
@@ -141,6 +145,7 @@ OBJECTIVE = {
     "state": SharekitFileExtraction.get_state,
     "external_id": SharekitFileExtraction.get_external_id,
     "set": lambda info: info.channel,
+    "language": SharekitFileExtraction.get_language,
     # Generic metadata
     "url": SharekitFileExtraction.get_url,
     "hash": SharekitFileExtraction.get_hash,

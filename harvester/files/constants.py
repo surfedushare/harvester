@@ -3,6 +3,7 @@ SEED_DEFAULTS = {
     "state": "active",
     "set": None,
     "external_id": None,
+    "language": None,
     # Generic metadata
     "url": None,
     "hash": None,

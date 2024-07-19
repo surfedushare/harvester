@@ -92,6 +92,10 @@ class TestHkuFileExtraction(TestCase):
     def test_get_hash(self):
         self.assertEqual(self.seeds[0]["hash"], "3bb6b2c5cb318b7daa677e51095084c45209ae2f")
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "en")
+        self.assertEqual(self.seeds[4]["language"], "nl")
+
     def test_get_mime_type(self):
         self.assertEqual(self.seeds[0]["mime_type"], "application/pdf")
 

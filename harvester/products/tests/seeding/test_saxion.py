@@ -145,7 +145,7 @@ class TestSaxionProductExtraction(TestCase):
     def test_get_language(self):
         self.assertEqual(self.seeds[0]["language"], "en")
         self.assertEqual(self.seeds[1]["language"], "nl")
-        self.assertEqual(self.deleted["language"], "unk")
+        self.assertIsNone(self.deleted["language"])
 
     def test_get_title(self):
         self.assertEqual(

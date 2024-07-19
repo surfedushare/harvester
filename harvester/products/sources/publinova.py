@@ -26,9 +26,9 @@ class PublinovaProductExtraction(PublinovaExtractor):
     def get_language(cls, node):
         language = node.get("language", None)
         if not language:
-            return "unk"
+            return
         capture_message(f"Received a language from Publinova: {language}", level="warning")
-        return "unk"
+        return language
 
     @classmethod
     def get_copyright(cls, node):
