@@ -137,7 +137,9 @@
                     "material_types": [
                         "unknown"
                     ],
-                    "study_vocabulary": [],
+                    "study_vocabulary": [
+                        "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d"
+                    ],
                     "aggregation_level": "4",
                     "lom_educational_levels": [
                         "HBO"
@@ -153,16 +155,34 @@
                 },
                 "normalize_publisher_year": {
                     "success": true
+                },
+                "lookup_study_vocabulary_parents": {
+                    "success": true
                 }
             },
             "derivatives": {
                 "normalize_disciplines": {
                     "learning_material_disciplines_normalized": [
                         "exact_informatica"
+                    ],
+                    "disciplines_normalized": [
+                        "exact_informatica"
                     ]
                 },
                 "normalize_publisher_year": {
                     "publisher_year_normalized": "older-than"
+                },
+                "lookup_study_vocabulary_parents": {
+                    "study_vocabulary": [
+                        "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+                        "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+                        "applied-science"
+                    ],
+                    "study_vocabulary_terms": [
+                        "Python",
+                        "Applied Science",
+                        "Applied Science"
+                    ]
                 }
             },
             "pending_at": null,
