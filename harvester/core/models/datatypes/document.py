@@ -164,7 +164,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 data[key] = value
         return data
 
-    def to_data(self, merge_derivatives: bool = True) -> dict:
+    def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
         data = deepcopy(self.properties)
         if self.overwrite:
             data["overwrite"] = self.overwrite.id
@@ -175,7 +175,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             data.update(self.get_derivatives_data())
         return data
 
-    def to_search(self) -> list[dict]:
+    def to_search(self, use_multilingual_fields: bool = False) -> list[dict]:
         # Decide whether to delete or not from the index
         if self.state != self.States.ACTIVE:
             yield {
@@ -184,7 +184,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             }
             return
         # Get the basic document information including from document overwrites
-        search_data = self.to_data()
+        search_data = self.to_data(use_multilingual_fields=use_multilingual_fields)
         search_data["_id"] = self.properties["srn"]
         yield search_data
 
