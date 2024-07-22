@@ -56,27 +56,37 @@ class TestLookupStudyVocabularyParents(TestCase):
         doc_1 = ProductDocument.objects.get(identity="surf:testing:1")
         self.assertEqual(doc_1.derivatives, {
             "lookup_study_vocabulary_parents": {
-                "study_vocabulary": [
-                    # name=Oriënteren en specificeren
-                    "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001",
-                    # name=Samenwerken (in teams)
-                    "http://purl.edustandaard.nl/concept/5273fae8-2571-43a0-9942-93aaea79053c",
-                    # name=Oriënteren op informatielandschap
-                    "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa",
-                    # name=Waarde van informatie/data
-                    "http://purl.edustandaard.nl/concept/c2d0aee0-19be-47f0-85b0-90ac17cd22c5",
-                    # name=Organiseren en verwerken
-                    "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8",
-                    "informatievaardigheid"
-                ],
-                "study_vocabulary_terms": [
-                    "Organiseren en verwerken",
-                    "Ori\u00ebnteren en specificeren",
-                    "Ori\u00ebnteren op informatielandschap",
-                    "Samenwerken (in teams)",
-                    "Waarde van informatie/data",
-                    "informatievaardigheid"
-                ]
+                "study_vocabulary": {
+                    "keyword": [
+                        # name=Oriënteren en specificeren
+                        "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001",
+                        # name=Samenwerken (in teams)
+                        "http://purl.edustandaard.nl/concept/5273fae8-2571-43a0-9942-93aaea79053c",
+                        # name=Oriënteren op informatielandschap
+                        "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa",
+                        # name=Waarde van informatie/data
+                        "http://purl.edustandaard.nl/concept/c2d0aee0-19be-47f0-85b0-90ac17cd22c5",
+                        # name=Organiseren en verwerken
+                        "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8",
+                        "informatievaardigheid"
+                    ],
+                    "nl": [
+                        "Organiseren en verwerken",
+                        "Ori\u00ebnteren en specificeren",
+                        "Ori\u00ebnteren op informatielandschap",
+                        "Samenwerken (in teams)",
+                        "Waarde van informatie/data",
+                        "informatievaardigheid"
+                    ],
+                    "en": [
+                        "Collaboration (in teams)",
+                        "Organizing and processing",
+                        "Orienting and specifying",
+                        "Orienting to information landscape",
+                        "Value of information/data",
+                        "information literacy"
+                    ],
+                }
             }
         }, "Expected all parents of all study vocabulary terms to get added without duplications")
         self.assertEqual(doc_1.pipeline, {
@@ -85,15 +95,21 @@ class TestLookupStudyVocabularyParents(TestCase):
         doc_2 = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(doc_2.derivatives, {
             "lookup_study_vocabulary_parents": {
-                "study_vocabulary": [
-                    # name=Kritisch beoordelen
-                    "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877",
-                    "informatievaardigheid"
-                ],
-                "study_vocabulary_terms": [
-                    "Kritisch beoordelen",
-                    "informatievaardigheid"
-                ]
+                "study_vocabulary": {
+                    "keyword": [
+                        # name=Kritisch beoordelen
+                        "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877",
+                        "informatievaardigheid"
+                    ],
+                    "nl": [
+                        "Kritisch beoordelen",
+                        "informatievaardigheid"
+                    ],
+                    "en": [
+                        "Critically evaluate",
+                        "information literacy"
+                    ]
+                }
             }
         }, "Expected parent of study vocabulary term to get added")
         self.assertEqual(doc_2.pipeline, {
@@ -102,8 +118,11 @@ class TestLookupStudyVocabularyParents(TestCase):
         doc_3 = ProductDocument.objects.get(identity="surf:testing:3")
         self.assertEqual(doc_3.derivatives, {
             "lookup_study_vocabulary_parents": {
-                "study_vocabulary": [],
-                "study_vocabulary_terms": []
+                "study_vocabulary": {
+                    "keyword": [],
+                    "nl": [],
+                    "en": []
+                }
             }
         }, "Expected empty list when no study vocabulary terms were specified")
         self.assertEqual(doc_3.pipeline, {
