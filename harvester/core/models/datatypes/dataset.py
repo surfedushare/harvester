@@ -152,8 +152,8 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         documents = self.documents.filter(**filters)
         for document in documents:
             language = document.get_analyzer_language()
-            by_language[language] += list(document.to_search())
-            by_language["all"] += list(document.to_search())
+            by_language[language] += list(document.to_search(use_multilingual_fields=False))
+            by_language["all"] += list(document.to_search(use_multilingual_fields=False))
         return by_language
 
     def set_current(self) -> None:

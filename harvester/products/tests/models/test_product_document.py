@@ -128,3 +128,118 @@ class FileDocumentTestCase(TestCase):
             "Applied Science"
         ])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+
+    @staticmethod
+    def build_multilingual_derivatives():
+        return {
+            "normalize_disciplines": {
+                "disciplines_normalized": {
+                    "keyword": ["exact_informatica"],
+                    "en": ["Exact sciences and Informatics"],
+                    "nl": ["Exact en Informatica"]
+                }
+            },
+            "normalize_publisher_year": {
+                "publisher_year_normalized": "older-than"
+            },
+            "lookup_study_vocabulary_parents": {
+                "study_vocabulary": {
+                    "keyword": [
+                        "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+                        "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+                        "applied-science"
+                    ],
+                    "en": [
+                        "Python",
+                        "Applied Science",
+                        "Applied Science"
+                    ],
+                    "nl": [
+                        "Python",
+                        "Applied Science",
+                        "Applied Science"
+                    ]
+                }
+            },
+            "lookup_consortium_translations": {
+                "consortium": {
+                    "keyword": "Stimuleringsregeling Open en Online Onderwijs",
+                    "en": "Stimuleringsregeling Open en Online Onderwijs",
+                    "nl": "Stimuleringsregeling Open en Online Onderwijs"
+                }
+            }
+        }
+
+    def test_multilingual_indices_to_data_multilingual_derivatives(self):
+        product = ProductDocument.objects.get(id=1)
+        product.derivatives = self.build_multilingual_derivatives()
+        data = product.to_data(for_search=False)
+        self.assertEqual(data["learning_material_disciplines_normalized"], [
+            "exact_informatica"
+        ])
+        self.assertEqual(data["disciplines_normalized"], [
+            "exact_informatica"
+        ])
+        self.assertEqual(data["publisher_year_normalized"], "older-than")
+        self.assertEqual(data["study_vocabulary"], [
+            "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+            "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+            "applied-science"
+        ])
+        self.assertEqual(data["study_vocabulary_terms"], [
+            "Python",
+            "Applied Science",
+            "Applied Science"
+        ])
+        self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+
+    def test_multilingual_indices_to_data_without_derivatives(self):
+        product = ProductDocument.objects.get(id=1)
+        product.derivatives = {}
+        data = product.to_data(for_search=False)
+        self.assertEqual(data["learning_material_disciplines_normalized"], [])
+        self.assertEqual(data["disciplines_normalized"], [])
+        self.assertIsNone(data["publisher_year_normalized"])
+        self.assertEqual(data["study_vocabulary"], [])
+        self.assertEqual(data["study_vocabulary_terms"], [])
+        self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+
+    def test_multilingual_fields_to_data(self):
+        product = ProductDocument.objects.get(id=1)
+        product.derivatives = self.build_multilingual_derivatives()
+        data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["disciplines_normalized"], {
+            "keyword": ["exact_informatica"],
+            "en": ["Exact sciences and Informatics"],
+            "nl": ["Exact en Informatica"]
+        })
+        self.assertEqual(data["study_vocabulary"], {
+            "keyword": [
+                "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+                "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+                "applied-science"
+            ],
+            "en": [
+                "Python",
+                "Applied Science",
+                "Applied Science"
+            ],
+            "nl": [
+                "Python",
+                "Applied Science",
+                "Applied Science"
+            ]
+        })
+        self.assertEqual(data["consortium"], {
+            "keyword": "Stimuleringsregeling Open en Online Onderwijs",
+            "en": "Stimuleringsregeling Open en Online Onderwijs",
+            "nl": "Stimuleringsregeling Open en Online Onderwijs",
+        })
+
+    def test_multilingual_fields_to_data_without_derivatives(self):
+        product = ProductDocument.objects.get(id=1)
+        product.derivatives = {}
+        data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["disciplines_normalized"], {})
+        self.assertEqual(data["study_vocabulary"], {})
+        self.assertEqual(data["consortium"], {})
