@@ -14,7 +14,7 @@ class RawProductDocumentSerializer(DocumentBaseSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = DocumentBaseSerializer.default_fields + ("metadata",)
+        fields = DocumentBaseSerializer.default_fields + ("metadata", "derivatives")
 
 
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
