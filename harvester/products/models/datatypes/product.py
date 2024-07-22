@@ -216,7 +216,7 @@ class ProductDocument(HarvestDocument):
         # Platform specific transforms
         learning_material = data.pop("learning_material", {})
         if learning_material:
-            learning_material["learning_material_disciplines"] = learning_material["disciplines"]  # TODO: remove this compatibility
+            learning_material["learning_material_disciplines"] = learning_material["disciplines"]
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
             if ("consortium" in data and data["consortium"]) or use_multilingual_fields:
                 learning_material.pop("consortium", None)  # prevents overwriting derivatives data
