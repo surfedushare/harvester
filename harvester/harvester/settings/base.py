@@ -532,7 +532,6 @@ DATA_RETENTION_KEEP_VERSIONS = environment.harvester.data_retention.keep_version
 
 SHAREKIT_API_KEY = getattr(environment.secrets.sharekit, environment.project.name)
 SHAREKIT_BASE_URL = environment.harvester.repositories.sharekit
-SHAREKIT_TEST_ORGANIZATION = None  # set by project specific settings, legacy harvester
 SHAREKIT_TEST_ORGANIZATIONS = []  # set by project specific settings
 
 
