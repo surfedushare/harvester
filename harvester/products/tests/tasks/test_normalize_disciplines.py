@@ -52,8 +52,11 @@ class TestNormalizeDisciplines(TestCase):
         earth_and_environment = ProductDocument.objects.get(identity="surf:testing:1")
         self.assertEqual(earth_and_environment.derivatives, {
             "normalize_disciplines": {
-                "learning_material_disciplines_normalized": ["aarde_milieu"],
-                "disciplines_normalized": ["aarde_milieu"]
+                "disciplines_normalized": {
+                    "keyword": ["aarde_milieu"],
+                    "en": ["Earth and environment"],
+                    "nl": ["Aarde en Milieu"],
+                }
             }
         })
         self.assertEqual(earth_and_environment.pipeline, {
@@ -62,8 +65,11 @@ class TestNormalizeDisciplines(TestCase):
         economy_and_business = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(economy_and_business.derivatives, {
             "normalize_disciplines": {
-                "learning_material_disciplines_normalized": ["economie_bedrijf"],
-                "disciplines_normalized": ["economie_bedrijf"]
+                "disciplines_normalized": {
+                    "keyword": ["economie_bedrijf"],
+                    "en": ["Economics and Organization"],
+                    "nl": ["Economie en Bedrijf"],
+                }
             }
         })
         self.assertEqual(economy_and_business.pipeline, {
@@ -72,8 +78,11 @@ class TestNormalizeDisciplines(TestCase):
         undefined = ProductDocument.objects.get(identity="surf:testing:3")
         self.assertEqual(undefined.derivatives, {
             "normalize_disciplines": {
-                "learning_material_disciplines_normalized": [],
-                "disciplines_normalized": []
+                "disciplines_normalized": {
+                    "keyword": [],
+                    "en": [],
+                    "nl": [],
+                }
             }
         })
         self.assertEqual(undefined.pipeline, {

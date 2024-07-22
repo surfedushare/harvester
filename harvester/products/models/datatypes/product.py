@@ -31,6 +31,11 @@ def default_document_tasks():
             "checks": ["has_disciplines"],
             "resources": []
         }
+        tasks["lookup_consortium_translations"] = {
+            "depends_on": ["$.learning_material.consortium"],
+            "checks": ["has_consortium"],
+            "resources": []
+        }
     return tasks
 
 
@@ -54,6 +59,15 @@ class ProductDocument(HarvestDocument):
             return False
         return MetadataValue.objects \
             .filter(field__name="learning_material_disciplines_normalized", value__in=discipline_ids) \
+            .exists()
+
+    @property
+    def has_consortium(self) -> bool:
+        consortium = self.properties.get("learning_material", {}).get("consortium")
+        if not consortium:
+            return False
+        return MetadataValue.objects \
+            .filter(field__name="learning_material_disciplines_normalized", value=consortium) \
             .exists()
 
     @property
