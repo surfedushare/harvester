@@ -106,3 +106,25 @@ class FileDocumentTestCase(TestCase):
         FileDocument.objects.all().delete()
         product_search = product.to_data(for_search=True)
         self.assertEqual(product_search["copyright"], "yes")
+
+    def test_multilingual_indices_to_data(self):
+        product = ProductDocument.objects.get(id=1)
+        data = product.to_data(for_search=False)
+        self.assertEqual(data["learning_material_disciplines_normalized"], [
+            "exact_informatica"
+        ])
+        self.assertEqual(data["disciplines_normalized"], [
+            "exact_informatica"
+        ])
+        self.assertEqual(data["publisher_year_normalized"], "older-than")
+        self.assertEqual(data["study_vocabulary"], [
+            "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+            "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+            "applied-science"
+        ])
+        self.assertEqual(data["study_vocabulary_terms"], [
+            "Python",
+            "Applied Science",
+            "Applied Science"
+        ])
+        self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
