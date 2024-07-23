@@ -36,6 +36,7 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
             queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
             queryset = dataset_version.documents.all()
+        queryset = queryset.order_by("-id")
         return queryset
 
 
@@ -70,7 +71,14 @@ class DatasetVersionDocumentDetailView(RetrieveModelMixin, DatasetVersionDocumen
             )
 
 
-class SearchDocumentListViewMixin(object):
+class SearchDocumentListViewMixin:
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        modified_since_filter = self.request.query_params.get("modified_since")
+        if modified_since_filter:
+            queryset = queryset.filter(metadata__modified_at__gte=modified_since_filter)
+        return queryset
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
@@ -79,7 +87,7 @@ class SearchDocumentListViewMixin(object):
         return super().get_serializer(*args, **kwargs)
 
 
-class SearchDocumentRetrieveViewMixin(object):
+class SearchDocumentRetrieveViewMixin:
 
     def get_serializer(self, *args, **kwargs):
         if len(args):

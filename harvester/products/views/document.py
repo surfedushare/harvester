@@ -30,6 +30,7 @@ class ProductDocumentSerializer(DocumentBaseSerializer):
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
 
     srn = serializers.CharField(source="identity")
+    title = serializers.CharField(source="properties.title")
     language = serializers.CharField(source="properties.language")
     created_at = serializers.DateTimeField(source="metadata.created_at")
     modified_at = serializers.DateTimeField(source="metadata.modified_at")
@@ -37,7 +38,7 @@ class MetadataProductDocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = ("id", "srn", "reference", "language", "created_at", "modified_at")
+        fields = ("id", "srn", "title", "reference", "language", "created_at", "modified_at")
 
 
 class RawProductListView(DatasetVersionDocumentListView):
@@ -76,7 +77,7 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
     exclude_deletes = True
 
 
-class SearchProductGenericViewMixin(object):
+class SearchProductGenericViewMixin:
 
     def get_serializer_class(self):
         if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:

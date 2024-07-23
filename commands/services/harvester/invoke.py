@@ -58,26 +58,25 @@ def harvester_migrate(ctx, mode):
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
     "app_label": "The Django app you want to dump data for",
-    "download_edurep": "If edurep should be downloaded, defaults to False",
 })
-def load_data(ctx, mode, source, app_label, download_edurep=False):
+def load_data(ctx, mode, source, app_label=None):
     """
     Loads a remote database and sets up Open Search data on localhost or an AWS cluster
     """
     if ctx.config.service.env == "production":
         raise Exit("Cowardly refusing to use production as a destination environment")
 
-    command = ["python", "manage.py", "load_harvester_data", app_label, f"--harvest-source={source}", "--index"]
+    if not app_label:
+        app_labels = ["files", "products"]
+    else:
+        app_labels = [app_label]
 
-    if download_edurep:
-        print("Will download edurep data, this can take a while...")
-        command += ["--download-edurep"]
-
-    if source == "localhost":
-        print(f"Will try to import app '{app_label}' using pre-downloaded files")
-        command += ["--skip-download"]
-
-    run_harvester_task(ctx, mode, command)
+    for label in app_labels:
+        command = ["python", "manage.py", "load_harvester_data", label, f"--harvest-source={source}"]
+        if source == "localhost":
+            print(f"Will try to import app '{app_label}' using pre-downloaded files")
+            command += ["--skip-download"]
+        run_harvester_task(ctx, mode, command)
 
 
 @task(help={
@@ -228,13 +227,18 @@ def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=No
             "Must match APPLICATION_MODE",
     "app_label": "Name of the app_label that you want to dump data for."
 })
-def dump_data(ctx, mode, app_label):
+def dump_data(ctx, mode, app_label=None):
     """
     Starts a task on the AWS container cluster to dump a specific Django app and its models
     """
-    command = ["python", "manage.py", "dump_harvester_data", app_label]
+    if not app_label:
+        app_labels = ["files", "products"]
+    else:
+        app_labels = [app_label]
 
-    run_harvester_task(ctx, mode, command)
+    for label in app_labels:
+        command = ["python", "manage.py", "dump_harvester_data", label]
+        run_harvester_task(ctx, mode, command)
 
 
 @task()

@@ -51,21 +51,30 @@ class TestNormalizeDisciplines(TestCase):
         normalize_disciplines("products", [doc.id for doc in self.documents])
         earth_and_environment = ProductDocument.objects.get(identity="surf:testing:1")
         self.assertEqual(earth_and_environment.derivatives, {
-            "normalize_disciplines": {"learning_material_disciplines_normalized": ["aarde_milieu"]}
+            "normalize_disciplines": {
+                "learning_material_disciplines_normalized": ["aarde_milieu"],
+                "disciplines_normalized": ["aarde_milieu"]
+            }
         })
         self.assertEqual(earth_and_environment.pipeline, {
             "normalize_disciplines": {"success": True}
         })
         economy_and_business = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(economy_and_business.derivatives, {
-            "normalize_disciplines": {"learning_material_disciplines_normalized": ["economie_bedrijf"]}
+            "normalize_disciplines": {
+                "learning_material_disciplines_normalized": ["economie_bedrijf"],
+                "disciplines_normalized": ["economie_bedrijf"]
+            }
         })
         self.assertEqual(economy_and_business.pipeline, {
             "normalize_disciplines": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:3")
         self.assertEqual(undefined.derivatives, {
-            "normalize_disciplines": {"learning_material_disciplines_normalized": []}
+            "normalize_disciplines": {
+                "learning_material_disciplines_normalized": [],
+                "disciplines_normalized": []
+            }
         })
         self.assertEqual(undefined.pipeline, {
             "normalize_disciplines": {"success": True}

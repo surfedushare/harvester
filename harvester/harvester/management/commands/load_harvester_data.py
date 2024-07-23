@@ -12,7 +12,6 @@ from datagrowth.utils import get_dumps_path, objects_from_disk
 from system_configuration.main import create_configuration
 from harvester.settings import environment
 from core.loading import load_harvest_models, load_task_resources
-from core.models import HarvestSource, Harvest, ElasticIndex
 from search.models import OpenSearchIndex
 from search.tasks import index_dataset_versions
 
@@ -25,13 +24,6 @@ class Command(base.LabelCommand):
     A command to load data from S3 bucket
     """
 
-    resources = [
-        "core.HttpTikaResource",
-        "core.ExtructResource",
-        "core.YoutubeThumbnailResource",
-        "core.PdfThumbnailResource",
-        "sharekit.SharekitMetadataHarvest",
-    ]
     metadata_models = [
         "metadata.MetadataField",
         "metadata.MetadataValue",
@@ -40,23 +32,16 @@ class Command(base.LabelCommand):
 
     def add_arguments(self, parser):
         super().add_arguments(parser)
-
         parser.add_argument('-de', '--download-edurep', action="store_true")
         parser.add_argument('-s', '--skip-download', action="store_true")
         parser.add_argument('-hs', '--harvest-source', type=str)
-        parser.add_argument('-i', '--index', action="store_true", default=True)
 
-    def load_data(self, app_label, download_edurep):
-        if download_edurep:
-            self.resources.append("edurep.EdurepOAIPMH")
+    def load_data(self, app_label, load_metadata=False):
 
-        if app_label == "core":
-            resources = self.resources
-        else:
-            task_resources = load_task_resources(app_label)[app_label]
-            resources = list(task_resources.keys()) if task_resources else []
+        task_resources = load_task_resources(app_label)[app_label]
+        resources = list(task_resources.keys()) if task_resources else []
 
-        delete_models = resources + self.metadata_models if app_label in ["core", "products"] else resources
+        delete_models = resources + self.metadata_models if load_metadata else resources
         for resource_model in delete_models:
             print(f"Deleting resource {resource_model}")
             model = apps.get_model(resource_model)
@@ -66,7 +51,7 @@ class Command(base.LabelCommand):
             print(f"Loading resource {resource_model}")
             call_command("load_resource", resource_model)
 
-        if app_label in ["core", "products"]:
+        if load_metadata:
             metadata_models = [  # for loading we need MetadataTranslations before MetadataField and MetadataValue
                 self.metadata_models[2],
                 *self.metadata_models[:2]
@@ -77,14 +62,13 @@ class Command(base.LabelCommand):
                 load_file = os.path.join(get_dumps_path(clazz), f"{clazz.get_name()}.dump.json")
                 call_command("loaddata", load_file)
 
-    def reset_postgres_sequences(self):
-        app_labels = set([resource.split(".")[0] for resource in self.resources])
-        for app_label in app_labels:
-            out = StringIO()
-            call_command("sqlsequencereset", app_label, "--no-color", stdout=out)
-            with connection.cursor() as cursor:
-                sql = out.getvalue()
-                cursor.execute(sql)
+    @staticmethod
+    def reset_postgres_sequences(app_label):
+        out = StringIO()
+        call_command("sqlsequencereset", app_label, "--no-color", stdout=out)
+        with connection.cursor() as cursor:
+            sql = out.getvalue()
+            cursor.execute(sql)
 
     def bulk_create_objects(self, objects):
         obj = objects[0]
@@ -97,8 +81,6 @@ class Command(base.LabelCommand):
 
         skip_download = options["skip_download"]
         harvest_source = options.get("harvest_source", None)
-        should_index = options.get("index")
-        download_edurep = options["download_edurep"]
 
         assert harvest_source or environment.service.env != "localhost", \
             "Expected a harvest source argument for a localhost environment"
@@ -106,16 +88,11 @@ class Command(base.LabelCommand):
             if harvest_source else environment
 
         # Delete old datasets
-        print("Deleting old data")
+        print(f"Deleting old data: {app_label}")
         models["Document"].objects.all().delete()
         models["Dataset"].objects.all().delete()
         models["DatasetVersion"].objects.all().delete()
-        if app_label == "core":
-            print("Deleting old models for core")
-            ElasticIndex.objects.all().delete()
-            HarvestSource.objects.all().delete()
-            Harvest.objects.all().delete()
-        elif app_label == "products":
+        if app_label == "products":
             print("Deleting old indices for products")
             OpenSearchIndex.objects.all().delete()
 
@@ -123,14 +100,8 @@ class Command(base.LabelCommand):
             logger.info(f"Downloading dump files for: {app_label}")
             ctx = Context(environment)
             harvester_data_bucket = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester"
-            download_edurep = options["download_edurep"]
-            if download_edurep:
-                ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}", echo=True)
-            else:
-                ctx.run(
-                    f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR} --exclude *edurepoaipmh*",
-                    echo=True
-                )
+            ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}", echo=True)
+
         logger.info(f"Importing data for: {app_label}")
         for entry in os.scandir(get_dumps_path(models["Dataset"])):
             if entry.is_file():
@@ -138,22 +109,13 @@ class Command(base.LabelCommand):
                     for objects in objects_from_disk(dump_file):
                         self.bulk_create_objects(objects)
         # Load resources
-        self.load_data(app_label, download_edurep)
-        self.reset_postgres_sequences()
+        self.load_data(app_label, load_metadata=app_label == "products")
+        self.reset_postgres_sequences(app_label)
 
         # Index data
-        if should_index and app_label == "core":
-            latest_dataset_version = models["DatasetVersion"].objects.get_current_version()
-            if latest_dataset_version:
-                call_command(
-                    "index_dataset_version",
-                    dataset=latest_dataset_version.dataset.name,
-                    harvester_version=latest_dataset_version.version
-                )
-        elif should_index:
-            latest_dataset_version = models["DatasetVersion"].objects.get_current_version()
-            if latest_dataset_version and latest_dataset_version.index:
-                latest_dataset_version.index.pushed_at = None  # forces a new push for this environment
-                latest_dataset_version.index.configuration = {}  # forces recreation of configuration for environment
-                latest_dataset_version.index.save()
-                index_dataset_versions([latest_dataset_version.model_key], recreate_indices=True)
+        latest_dataset_version = models["DatasetVersion"].objects.get_current_version()
+        if latest_dataset_version and latest_dataset_version.index:
+            latest_dataset_version.index.pushed_at = None  # forces a new push for this environment
+            latest_dataset_version.index.configuration = {}  # forces recreation of configuration for environment
+            latest_dataset_version.index.save()
+            index_dataset_versions([latest_dataset_version.model_key], recreate_indices=True)

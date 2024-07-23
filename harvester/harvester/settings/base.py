@@ -95,9 +95,7 @@ INSTALLED_APPS = [
     'files',
     'testing',
 
-    'edurep',
-    'sharekit',
-    'anatomy_tool',
+    'sharekit',  # legacy, should be migrated to sources
 ]
 
 MIDDLEWARE = [
@@ -513,6 +511,7 @@ if DEBUG:
     INTERNAL_HOSTS = [
         '127.0.0.1:8888',
         'localhost:8888',
+        'localhost:8889',
     ]
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: request.get_host() in INTERNAL_HOSTS

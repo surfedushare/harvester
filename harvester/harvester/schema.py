@@ -3,7 +3,7 @@ from rest_framework.schemas.openapi import AutoSchema
 
 class HarvesterSchema(AutoSchema):
 
-    def _get_operation_id(self, path, method):
+    def get_operation_id(self, path, method):
         operation_id = path.replace("/", "-").strip("-")
         return f"{method.lower()}-{operation_id}"
 
@@ -19,14 +19,26 @@ class HarvesterSchema(AutoSchema):
 
     def get_operation(self, path, method):
         operation = super().get_operation(path, method)
-        if path.startswith("/product") or path.startswith("/document"):
-            entity = "products" if path.startswith("/product") else "documents"
-            operation["tags"] = [f"Download {entity}"]
+        if path.startswith("/product"):
+            operation["tags"] = ["Download products"]
             for parameter in operation["parameters"]:
                 if parameter["name"] == "page":
                     parameter["schema"]["default"] = 1
                 if parameter["name"] == "page_size":
                     parameter["schema"]["default"] = 10
+            if not path.endswith("/{srn}/"):
+                operation["parameters"] += [
+                    {
+                        "name": "modified_since",
+                        "in": "query",
+                        "required": False,
+                        "description": "Specify from which point in time onward "
+                                       "you want to get changes to the product entities.",
+                        'schema': {
+                            'type': 'datetime',
+                        }
+                    }
+                ]
         elif path.startswith("/extension"):
             operation["tags"] = ["Extending data"]
         elif path.startswith("/search") or path.startswith("/find"):

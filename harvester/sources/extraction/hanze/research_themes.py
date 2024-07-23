@@ -92,6 +92,7 @@ ASJC_TO_RESEARCH_THEME = {
     "1700/1711": "ict_media",
     "1700/1712": "ict_media",
     "1800": "techniek",
+    "1800/1800": "techniek",
     "1800/1801": "techniek",
     "1800/1802": "techniek",
     "1800/1803": "techniek",

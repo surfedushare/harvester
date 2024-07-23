@@ -6,15 +6,11 @@ from dateutil.parser import parse as date_parser
 from sources.utils.edurep import EdurepExtractor
 
 
-class EdurepProductExtraction(object):
+class EdurepProductExtraction:
 
     #############################
     # OAI-PMH
     #############################
-
-    @classmethod
-    def get_oaipmh_records(cls, soup):
-        return soup.find_all('record')
 
     @classmethod
     def get_oaipmh_external_id(cls, soup, el):
@@ -71,7 +67,7 @@ class EdurepProductExtraction(object):
         if node is None:
             return
         translation = node.find('czp:langstring')
-        return translation.text if translation else None
+        return translation.text.strip() if translation else None
 
     @classmethod
     def get_material_types(cls, soup, el):
@@ -202,7 +198,7 @@ class EdurepProductExtraction(object):
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": EdurepProductExtraction.get_oaipmh_records,
+    "@": EdurepExtractor.iterate_valid_products,
     "state": EdurepProductExtraction.get_oaipmh_record_state,
     "external_id": EdurepProductExtraction.get_oaipmh_external_id,
     "set": EdurepProductExtraction.get_set,

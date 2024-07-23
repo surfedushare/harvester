@@ -52,7 +52,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
     state = models.CharField(max_length=50, choices=States.choices, default=States.ACTIVE, db_index=True)
     metadata = models.JSONField(
         default=document_metadata_default, blank=True,
-        encoder=DjangoJSONEncoder, decoder=HarvesterJSONDecoder
+        encoder=DjangoJSONEncoder, decoder=HarvesterJSONDecoder, db_index=True
     )
 
     property_defaults = {}
