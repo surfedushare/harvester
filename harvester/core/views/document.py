@@ -36,6 +36,9 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
             queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
             queryset = dataset_version.documents.all()
+        modified_since_filter = self.request.query_params.get("modified_since")
+        if modified_since_filter:
+            queryset = queryset.filter(metadata__modified_at__gte=modified_since_filter)
         queryset = queryset.order_by("-id")
         return queryset
 

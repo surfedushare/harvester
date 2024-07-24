@@ -195,6 +195,19 @@ class TestDocumentView(TestCase):
         data = response.json()
         self.assertEqual(data["detail"], "Missing a current dataset version to list data")
 
+    def test_list_modified_since(self):
+        for product in ProductDocument.objects.all()[:3]:
+            product.metadata["modified_at"] = "2024-05-01T00:00:00Z"
+            product.save()
+        list_url = reverse(self.list_view_name)
+        response = self.client.get(list_url + "?page=1&page_size=10&modified_since=2024-05-01T00:00:00Z")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIsNone(data["previous"])
+        self.assertIsNone(data["next"])
+        self.assertEqual(len(data["results"]), 3)
+        self.assertEqual(data["count"], 3)
+
     def test_detail(self):
         detail_url = reverse(self.detail_view_name, args=("sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",))
         response = self.client.get(detail_url)
