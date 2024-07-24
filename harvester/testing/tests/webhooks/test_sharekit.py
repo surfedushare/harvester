@@ -2,7 +2,7 @@ from django.test import override_settings
 from django.urls import reverse
 from django.utils.timezone import now
 
-from sharekit.tests.factories import SharekitMetadataHarvestFactory
+from sources.factories.sharekit.extraction import SharekitMetadataHarvestFactory
 from testing.cases.webhooks import product as product_test_case
 from testing.utils.factories import create_datatype_models
 

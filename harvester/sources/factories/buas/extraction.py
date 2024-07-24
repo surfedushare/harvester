@@ -8,9 +8,7 @@ from django.utils.timezone import make_aware
 from sources.models import BuasPureResource
 
 
-SLUG = "buas"
 ENDPOINT = BuasPureResource.URI_TEMPLATE.replace("https://", "")
-SET_SPECIFICATION = "buas"
 
 
 class BuasPureResourceFactory(factory.django.DjangoModelFactory):
@@ -23,8 +21,6 @@ class BuasPureResourceFactory(factory.django.DjangoModelFactory):
         is_initial = True
         number = 0
 
-    since = make_aware(datetime(year=1970, month=1, day=1))
-    set_specification = SET_SPECIFICATION
     status = 200
     head = {
         "content-type": "application/json"
@@ -38,7 +34,7 @@ class BuasPureResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def request(self):
         return {
-            "args": [f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
+            "args": [f"{make_aware(datetime(year=1970, month=1, day=1)):%Y-%m-%dT%H:%M:%SZ}"],
             "kwargs": {},
             "method": "get",
             "url": "https://" + self.uri,
@@ -49,7 +45,7 @@ class BuasPureResourceFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def body(self):
         response_type = "initial" if self.is_initial else "delta"
-        response_file = f"fixture.{SLUG}.{response_type}.{self.number}.json"
+        response_file = f"fixture.buas.{response_type}.{self.number}.json"
         response_file_path = os.path.join(
             settings.BASE_DIR, "sources", "factories", "fixtures",
             response_file

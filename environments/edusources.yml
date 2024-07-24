@@ -12,7 +12,6 @@ opensearch:
 django:
   domain: "harvester.{environment_code}.surfedushare.nl"
   fixtures:
-    - "core/fixtures/initial-edusources.json"
     - "metadata/fixtures/initial-metadata-edusources.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-edusources.json"

@@ -6,7 +6,15 @@ from urllib.parse import quote
 from django.conf import settings
 from django.utils.timezone import make_aware
 
-from sharekit.models import SharekitMetadataHarvest
+from sources.models.sharekit import SharekitMetadataHarvest
+
+
+def since(is_initial) -> str:
+    if is_initial:
+        date = make_aware(datetime(year=1970, month=1, day=1))
+    else:
+        date = make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
+    return f"{date:%Y-%m-%dT%H:%M:%SZ}"
 
 
 class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
@@ -22,12 +30,6 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
         is_deletes = False
         number = 0
 
-    since = factory.Maybe(
-        "is_initial",
-        make_aware(datetime(year=1970, month=1, day=1)),
-        make_aware(datetime(year=2020, month=2, day=10, hour=13, minute=8, second=39, microsecond=315000))
-    )
-    set_specification = "edusources"
     status = 200
     head = {
         "content-type": "application/json"
@@ -35,8 +37,8 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def uri(self):
-        base = f"api.acc.surfsharekit.nl/api/jsonapi/channel/v1/{self.set_specification}/repoItems?"
-        modified_parameter = quote(f"filter[modified][GE]={self.since:%Y-%m-%dT%H:%M:%SZ}", safe="=")
+        base = "api.acc.surfsharekit.nl/api/jsonapi/channel/v1/edusources/repoItems?"
+        modified_parameter = quote(f"filter[modified][GE]={since(self.is_initial)}", safe="=")
         page_size_parameter = quote("page[size]=25", safe="=")
         page_number_parameter = quote(f"page[number]={self.number+1}", safe="=")
         if self.number > 0:
@@ -48,7 +50,7 @@ class SharekitMetadataHarvestFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def request(self):
         return {
-            "args": [self.set_specification, f"{self.since:%Y-%m-%dT%H:%M:%SZ}"],
+            "args": ["edusources", since(self.is_initial)],
             "kwargs": {},
             "method": "get",
             "url": "https://" + self.uri,

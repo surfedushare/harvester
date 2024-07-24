@@ -1,18 +1,14 @@
 import logging
 
 from django.conf import settings
-from django.db import models
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class HvaPureResource(HarvestHttpResource):
-
-    set_specification = models.CharField(max_length=255, blank=True, null=False, default="hva")
-    use_multiple_sets = False
+class HvaPureResource(HttpResource):
 
     URI_TEMPLATE = settings.SOURCES["hva"]["endpoint"] + "/ws/api/research-outputs" \
         if settings.SOURCES["hva"]["endpoint"] else "/ws/api/research-outputs"

@@ -12,7 +12,6 @@ opensearch:
 django:
   domain: "harvester.{environment_code}.publinova.nl"
   fixtures:
-    - "core/fixtures/initial-publinova.json"
     - "metadata/fixtures/initial-metadata-publinova.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-publinova.json"

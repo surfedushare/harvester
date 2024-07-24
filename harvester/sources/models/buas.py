@@ -1,18 +1,14 @@
 import logging
 
 from django.conf import settings
-from django.db import models
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class BuasPureResource(HarvestHttpResource):
-
-    set_specification = models.CharField(max_length=255, blank=True, null=False, default="buas")
-    use_multiple_sets = False
+class BuasPureResource(HttpResource):
 
     URI_TEMPLATE = settings.SOURCES["buas"]["endpoint"] + "/ws/api/524/research-outputs" \
         if settings.SOURCES["buas"]["endpoint"] else "/ws/api/524/research-outputs"

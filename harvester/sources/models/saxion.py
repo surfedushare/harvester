@@ -2,13 +2,13 @@ import logging
 
 from django.conf import settings
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
 logger = logging.getLogger("harvester")
 
 
-class SaxionOAIPMHResource(HarvestHttpResource):
+class SaxionOAIPMHResource(HttpResource):
 
     URI_TEMPLATE = settings.SOURCES["saxion"]["endpoint"] + "/harvester?set={}&from={}" \
         if settings.SOURCES["saxion"]["endpoint"] else "/harvester?set={}&from={}"

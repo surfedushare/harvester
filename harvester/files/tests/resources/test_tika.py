@@ -1,8 +1,9 @@
 import json
+from unittest.mock import patch
 
 from django.test import TestCase
 
-from core.models import HttpTikaResource
+from files.models import HttpTikaResource
 
 
 class TestTikaResource(TestCase):
@@ -111,3 +112,29 @@ class TestTikaResource(TestCase):
             status=200, head={"content-type": expected_content_type}, body=json.dumps(expected_data))
         resource.handle_errors()
         self.assertEqual(resource.status, 1)
+
+    @patch("files.models.resources.metadata.HttpTikaResource._send")
+    def test_tika_return_type_configurations(self, send_mock):
+        url = "https://example.com/test.pdf"
+        plain_resource = HttpTikaResource(config={"tika_return_type": "text"}).put(url)
+        self.assertTrue(plain_resource.uri.startswith("tika:9998/rmeta/text"))
+        self.assertTrue(plain_resource.request["url"].startswith("http://tika:9998/rmeta/text"))
+        xml_resource = HttpTikaResource(config={"tika_return_type": "xml"}).put(url)
+        self.assertTrue(xml_resource.uri.startswith("tika:9998/rmeta/xml"))
+        self.assertTrue(xml_resource.request["url"].startswith("http://tika:9998/rmeta/xml"))
+
+    @patch("files.models.resources.metadata.HttpTikaResource._send")
+    def test_spaces_encoding(self, send_mock):
+        url = "https://example.com/test+spaces+encoding.pdf"
+        rsc = HttpTikaResource(config={"tika_return_type": "text"}).put(url)
+        self.assertTrue(send_mock.called)
+        self.assertEqual(
+            rsc.uri,
+            "tika:9998/rmeta/text?fetchKey="
+            "https%3A%2F%2Fexample.com%2Ftest%25252520spaces%25252520encoding.pdf&fetcherName=http"
+        )
+        self.assertEqual(
+            rsc.request["url"],
+            "http://tika:9998/rmeta/text?fetcherName=http&fetchKey="
+            "https%3A%2F%2Fexample.com%2Ftest%25252520spaces%25252520encoding.pdf"
+        )

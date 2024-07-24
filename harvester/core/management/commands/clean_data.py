@@ -7,7 +7,6 @@ from django.utils.timezone import make_aware
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
-from core.models import ElasticIndex
 from core.loading import load_harvest_models, load_task_resources
 
 
@@ -16,18 +15,9 @@ class Command(BaseCommand):
     A convenience command to delete any data that is considered stale
     """
 
-    LEGACY_RESOURCES = {
-        "core": {
-            "core.HttpTikaResource": ["tika"],
-            "core.ExtructResource": ["extruct"],
-            "core.YoutubeThumbnailResource": ["youtube_preview"],
-            "core.PdfThumbnailResource": ["pdf_preview"],
-        }
-    }
-
     def handle(self, **options):
         purge_time = make_aware(datetime.now()) - timedelta(**settings.DATA_RETENTION_PURGE_AFTER)
-        task_resources = load_task_resources(extra_resources=self.LEGACY_RESOURCES)
+        task_resources = load_task_resources()
         for app_label, resources in task_resources.items():
             models = load_harvest_models(app_label)
             # Delete DatasetVersions that are not in use and overdue
@@ -54,6 +44,3 @@ class Command(BaseCommand):
                     filters = reduce(lambda x, y: x | y, document_phase_filters)
                     if not models["Document"].objects.filter(filters).exists():
                         resource.delete()
-        # Finally delete all ElasticIndex without a DatasetVersion (this clears remote indices as well)
-        for index in ElasticIndex.objects.filter(dataset_version__isnull=True):
-            index.delete()

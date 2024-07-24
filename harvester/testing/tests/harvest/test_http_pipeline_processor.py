@@ -1,11 +1,14 @@
-import logging
 from unittest.mock import MagicMock, patch
 
-from celery.canvas import Signature
-from core.models import Batch, Collection, ProcessResult
-from core.processors import HttpPipelineProcessor
-from core.tests.factories import DocumentFactory
 from django.test import TestCase
+from celery.canvas import Signature
+
+from core.processors import HttpPipelineProcessor
+from files.models import Batch, ProcessResult, HttpTikaResource
+from files.sources.sharekit import SEQUENCE_PROPERTIES
+from files.tests.factories.tika import HttpTikaResourceFactory
+from testing.utils.factories import create_datatype_models
+from testing.utils.generators import seed_generator
 
 
 chord_mock_result = MagicMock()
@@ -13,39 +16,43 @@ chord_mock_result = MagicMock()
 
 class TestHttpPipelineProcessor(TestCase):
 
-    fixtures = ["datasets-history", "resources-basic-initial", "resources-basic-delta"]
-
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        logging.disable(logging.WARNING)
+    def setUpTestData(cls):
+        file_seeds = list(seed_generator("sharekit", 10, app_label="files", sequence_properties=SEQUENCE_PROPERTIES))
+        active_dataset, active_dataset_version, active_sets, active_documents = create_datatype_models(
+            "files", ["test"], file_seeds[0:5], 5
+        )
+        cls.set = active_sets[0]
+        for ix, seed in enumerate(file_seeds[1:]):
+            # This loop never sees the first seed and creates an error Tika instance for the second seed.
+            if not ix:
+                status = 500
+            else:
+                status = 200
+            HttpTikaResourceFactory.create(url=seed["url"], status=status)
 
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        logging.disable(logging.NOTSET)
-
-    def setUp(self):
-        super().setUp()
-        self.collection = Collection.objects.get(id=171)
-        self.ignored_document = DocumentFactory.create(collection=self.collection, url=None)
-
-    @patch("core.models.resources.basic.HttpTikaResource._send")
+    @patch("files.models.resources.metadata.HttpTikaResource._send")
     def test_synchronous_tika_pipeline(self, send_mock):
-        resource = "core.httptikaresource"
+        resource = "files.httptikaresource"
         processor = HttpPipelineProcessor({
-            "pipeline_app_label": "core",
+            "pipeline_app_label": "files",
+            "pipeline_models": {
+                "document": "FileDocument",
+                "process_result": "ProcessResult",
+                "batch": "Batch"
+            },
             "pipeline_phase": "tika",
-            "pipeline_depends_on": "metadata",
-            "batch_size": 5,
+            "batch_size": 2,
             "asynchronous": False,
             "retrieve_data": {
+                "tika_return_type": "text",
                 "resource": resource,
                 "method": "put",
                 "args": ["$.url"],
                 "kwargs": {},
             },
             "contribute_data": {
+                "to_property": "derivatives/tika",
                 "objective": {
                     "@": "$.0",
                     "text": "$.X-TIKA:content"
@@ -53,31 +60,25 @@ class TestHttpPipelineProcessor(TestCase):
             }
         })
 
-        processor(self.collection.documents.exclude(properties__url=None))
+        processor(self.set.documents.all())
         self.assertEqual(
             Batch.objects.count(), 3,
             "Expected batches to remain after use, because deleting in async environment leads to race conditions"
         )
         self.assertEqual(ProcessResult.objects.count(), 0, "Expected ProcessResults to get deleted after use")
-        self.assertEqual(self.collection.documents.count(), 13)
-        for document in self.collection.documents.all():
-            if "metadata" not in document.pipeline:
-                self.assertEqual(document.id, self.ignored_document.id,
-                                 "Expected documents without complete metadata phase to get ignored")
-                continue
-            if document.properties["url"] is None:
-                continue
+        self.assertEqual(self.set.documents.count(), 5)
+        for document in self.set.documents.all():
             self.assertIn("tika", document.pipeline)
             tika_pipeline = document.pipeline["tika"]
-            self.assertEqual(tika_pipeline["resource"], "core.httptikaresource")
+            self.assertEqual(tika_pipeline["resource"], "files.httptikaresource")
             self.assertIsInstance(tika_pipeline["id"], int)
             self.assertIsInstance(tika_pipeline["success"], bool)
-            if tika_pipeline["success"]:
+            tika_resource = HttpTikaResource.objects.get(id=tika_pipeline["id"])
+            if tika_resource.status == 200:  # Incomplete testing Tika responses are 204
                 self.assertIsInstance(
-                    document.properties["text"], str,
+                    document.derivatives["tika"]["text"], str,
                     "Expected text to be extracted from Tika responses if they succeed"
                 )
-
         self.assertEqual(send_mock.call_count, 2, "Expected one erroneous resource to retry and one new resource")
 
     @patch("core.processors.pipeline.base.chord", return_value=chord_mock_result)
@@ -86,14 +87,19 @@ class TestHttpPipelineProcessor(TestCase):
         This test only asserts if Celery is used as expected.
         See synchronous test for actual result testing.
         """
-        resource = "core.httptikaresource"
+        resource = "files.httptikaresource"
         processor = HttpPipelineProcessor({
-            "pipeline_app_label": "core",
+            "pipeline_app_label": "files",
             "pipeline_phase": "tika",
-            "pipeline_depends_on": "metadata",
-            "batch_size": 5,
+            "pipeline_models": {
+                "document": "FileDocument",
+                "process_result": "ProcessResult",
+                "batch": "Batch"
+            },
+            "batch_size": 2,
             "asynchronous": True,
             "retrieve_data": {
+                "tika_return_type": "text",
                 "resource": resource,
                 "method": "put",
                 "args": ["$.url"],
@@ -106,7 +112,7 @@ class TestHttpPipelineProcessor(TestCase):
                 }
             }
         })
-        task = processor(self.collection.documents)
+        task = processor(self.set.documents.all())
         task.get()
         self.assertEqual(chord_mock.call_count, 1)
         chord_call = chord_mock.call_args_list[0]
