@@ -9,3 +9,4 @@ from .publinova import PublinovaMetadataResource
 from .saxion import SaxionOAIPMHResource
 from .harvest import HarvestSource, HarvestEntity
 from .sharekit import SharekitMetadataHarvest
+from .pmhify import PmhifyOAIPMHResource
