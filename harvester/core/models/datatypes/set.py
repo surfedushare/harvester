@@ -34,7 +34,7 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
         related_name="sets"
     )
 
-    name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     delete_policy = models.CharField(max_length=50, choices=DELETE_POLICY_CHOICES, null=True, blank=True)
     tasks = models.JSONField(default=default_set_tasks, blank=True)
     pending_at = models.DateTimeField(null=True, blank=True)  # sets are not pending until all source data is fetched
