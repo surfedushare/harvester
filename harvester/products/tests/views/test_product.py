@@ -1,0 +1,431 @@
+from django.test import TestCase, override_settings
+from django.urls import reverse
+from django.contrib.auth.models import User
+
+from search_client import DocumentTypes
+from products.models import DatasetVersion, ProductDocument
+
+
+class TestDocumentView(TestCase):
+
+    fixtures = ["test-product-document"]
+    maxDiff = None
+
+    format = None
+    list_view_name = "v1:products:list-products"
+    detail_view_name = "v1:products:product-detail"
+    expected_document_output = {
+        "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "set": "sharekit:edusources",
+        "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+        "published_at": "2017-09-27",
+        "modified_at": "2021-04-15",
+        "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+        "title": "Didactiek van macro-meso-micro denken bij scheikunde",
+        "description": "Geen samenvatting",
+        "language": "nl",
+        "copyright": "cc-by-sa-40",
+        "video": None,
+        "harvest_source": "edusources",
+        "previews": None,
+        "files": [
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                "hash": "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "type": "document",
+                "state": "active",
+                "title": "IMSCP_94812.zip",
+                "is_link": False,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/x-zip",
+                "access_rights": "OpenAccess"
+            },
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "339df213a16895868ba4bfc635b7d3348348e33a",
+                "url": "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
+                "hash": "339df213a16895868ba4bfc635b7d3348348e33a",
+                "type": "document",
+                "state": "active",
+                "title": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
+                "is_link": False,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/pdf",
+                "access_rights": "OpenAccess",
+                "previews": {
+                    "preview": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/previews/"
+                               "pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7-thumbnail-400x300.png",
+                    "full_size": "https://surfpol-harvester-content-prod.s3.amazonaws.com/files/previews/"
+                                 "pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7.png",
+                    "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/"
+                                     "files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
+                                     "-thumbnail-200x150.png"
+                }
+            },
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
+                "hash": "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "type": "website",
+                "state": "active",
+                "title": "URL 1",
+                "is_link": True,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "text/html",
+                "access_rights": "OpenAccess"
+            }
+        ],
+        "authors": [
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Ruud Kok",
+                "email": None,
+                "orcid": None,
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+            },
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Astrid Bulte",
+                "email": None,
+                "orcid": None,
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+            },
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Hans Poorthuis",
+                "email": None,
+                "orcid": None,
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+            }
+        ],
+        "has_parts": [],
+        "is_part_of": [],
+        "keywords": [
+            "correspondentie",
+            "Didactiek",
+            "eigenschappen",
+            "macro",
+            "macro-meso-micro",
+            "meso",
+            "micro",
+            "scheikunde",
+            "structuur"
+        ],
+        "score": 1.0,
+        "provider": {
+            "ror": None,
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
+        },
+        "doi": None,
+        "lom_educational_levels": [
+            "HBO"
+        ],
+        "studies": [],
+        "disciplines": [
+            "exact_informatica"
+        ],
+        "ideas": [],
+        "study_vocabulary": [],
+        "technical_type": "document",
+        "publishers": [
+            "Hogeschool Utrecht",
+            "SURFnet"
+        ],
+        "consortium": "Stimuleringsregeling Open en Online Onderwijs",
+        "subtitle": None
+    }
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(username="supersurf")
+        # We duplicate the ProductDocument data a bunch to create larger responses
+        product = ProductDocument.objects.first()
+        for ix in range(0, 10):
+            product.id = None
+            product.pk = None
+            product.identity += f"-{ix}"
+            product.save()
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(self.user)
+
+    def test_list(self):
+        list_url = reverse(self.list_view_name)
+        response = self.client.get(list_url + "?page=1&page_size=10")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        if not self.format:
+            self.assertEqual(data["next"], "http://testserver/api/v1/product/?page=2&page_size=10")
+        else:
+            self.assertEqual(data["next"], f"http://testserver/api/v1/product/{self.format}/?page=2&page_size=10")
+        self.assertIsNone(data["previous"])
+        self.assertEqual(len(data["results"]), 10)
+        self.assertEqual(data["count"], 11)
+
+    def test_list_second_page(self):
+        list_url = reverse(self.list_view_name)
+        response = self.client.get(list_url + "?page=2&page_size=10")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        if not self.format:
+            self.assertEqual(data["previous"], "http://testserver/api/v1/product/?page_size=10")
+        else:
+            self.assertEqual(data["previous"], f"http://testserver/api/v1/product/{self.format}/?page_size=10")
+        self.assertIsNone(data["next"])
+        self.assertEqual(len(data["results"]), 1)
+        self.assertEqual(data["count"], 11)
+
+    def test_list_no_dataset_version(self):
+        DatasetVersion.objects.all().update(is_current=False)
+        list_url = reverse(self.list_view_name)
+        response = self.client.get(list_url + "?page=1&page_size=10")
+        self.assertEqual(response.status_code, 417)
+        data = response.json()
+        self.assertEqual(data["detail"], "Missing a current dataset version to list data")
+
+    def test_detail(self):
+        detail_url = reverse(self.detail_view_name, args=("sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",))
+        response = self.client.get(detail_url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        if self.format == "raw":
+            data.pop("properties")  # these are expected to change often and shouldn't fail the tests
+        self.assertEqual(data, self.expected_document_output)
+
+    def test_detail_not_found(self):
+        detail_url = reverse(self.detail_view_name, args=("does-not-exist",))
+        response = self.client.get(detail_url)
+        self.assertEqual(response.status_code, 404)
+        data = response.json()
+        self.assertEqual(data["detail"], "No ProductDocument matches the given query.")
+
+    def test_detail_quoted_id(self):
+        """
+        This test checks whether Documents can be referenced with "/" or other URL characters in their reference.
+        When making detail requests for such Documents the client should URL encode the "external_id"
+        """
+        document = ProductDocument.objects.get(identity="sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e")
+        document.identity += "/1"
+        document.save()
+        detail_url = reverse(
+            self.detail_view_name,
+            args=("sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e%2F1",)
+        )
+        response = self.client.get(detail_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_detail_no_dataset_version(self):
+        DatasetVersion.objects.all().update(is_current=False)
+        detail_url = reverse(self.detail_view_name, args=("sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",))
+        response = self.client.get(detail_url)
+        self.assertEqual(response.status_code, 417)
+        data = response.json()
+        self.assertEqual(data["detail"], "Missing a current dataset version to retrieve data")
+
+
+@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
+class TestResearchProductDocumentView(TestDocumentView):
+    expected_document_output = {
+        "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "set": "sharekit:edusources",
+        "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+        "published_at": "2017-09-27",
+        "modified_at": "2021-04-15",
+        "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+        "title": "Didactiek van macro-meso-micro denken bij scheikunde",
+        "description": "Geen samenvatting",
+        "language": "nl",
+        "copyright": "cc-by-sa-40",
+        "video": None,
+        "harvest_source": "edusources",
+        "previews": None,
+        "files": [
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
+                "hash": "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                "type": "document",
+                "state": "active",
+                "title": "IMSCP_94812.zip",
+                "is_link": False,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/x-zip",
+                "access_rights": "OpenAccess"
+            },
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "339df213a16895868ba4bfc635b7d3348348e33a",
+                "url": "https://surfsharekit.nl/objectstore/9f71f782-09de-48b1-a10f-15d882471df7",
+                "hash": "339df213a16895868ba4bfc635b7d3348348e33a",
+                "type": "document",
+                "state": "active",
+                "title": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
+                "is_link": False,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "application/pdf",
+                "access_rights": "OpenAccess",
+                "previews": {
+                    "preview": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/previews/pdf/"
+                               "20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7-thumbnail-400x300.png",
+                    "full_size": "https://surfpol-harvester-content-prod.s3.amazonaws.com/files/previews/pdf/"
+                                 "20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7.png",
+                    "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/"
+                                     "previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
+                                     "-thumbnail-200x150.png"
+                }
+            },
+            {
+                "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                       "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "url": "https://maken.wikiwijs.nl/94812/Macro_meso_micro#!page-2935729",
+                "hash": "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                "type": "website",
+                "state": "active",
+                "title": "URL 1",
+                "is_link": True,
+                "priority": 0,
+                "copyright": "cc-by-sa-40",
+                "mime_type": "text/html",
+                "access_rights": "OpenAccess"
+            }
+        ],
+        "authors": [
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Ruud Kok",
+                "email": None,
+                "orcid": None,
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+            },
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Astrid Bulte",
+                "email": None,
+                "orcid": None,
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+            },
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Hans Poorthuis",
+                "email": None,
+                "orcid": None,
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+            }
+        ],
+        "has_parts": [],
+        "is_part_of": [],
+        "keywords": [
+            "correspondentie",
+            "Didactiek",
+            "eigenschappen",
+            "macro",
+            "macro-meso-micro",
+            "meso",
+            "micro",
+            "scheikunde",
+            "structuur"
+        ],
+        "provider": "Stimuleringsregeling Open en Online Onderwijs",
+        "doi": None,
+        "type": "document",
+        "research_object_type": None,
+        "parties": [
+            "Hogeschool Utrecht",
+            "SURFnet"
+        ],
+        "research_themes": [],
+        "projects": [],
+        "owners": [
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Ruud Kok",
+                "email": None,
+                "orcid": None,
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+            }
+        ],
+        "contacts": [
+            {
+                "dai": None,
+                "isni": None,
+                "name": "Ruud Kok",
+                "email": None,
+                "orcid": None,
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+            }
+        ],
+        "subtitle": None
+    }
+
+
+class TestRawDocumentView(TestDocumentView):
+
+    format = "raw"
+    list_view_name = "v1:products:raw-products"
+    detail_view_name = "v1:products:raw-product-detail"
+    expected_document_output = {
+        "id": 1,
+        "created_at": "2024-04-18T01:01:46.829000Z",
+        "modified_at": "2024-04-18T01:01:46.829000Z",
+        "reference": None,
+        "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "metadata": {
+            "srn": None,
+            "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
+            "language": "nl",
+            "provider": {
+                "ror": None,
+                "name": None,
+                "slug": None,
+                "external_id": None
+            },
+            "created_at": "2024-04-17T14:19:12.720000Z",
+            "deleted_at": None,
+            "modified_at": "2024-04-17T14:19:12.720000Z"
+        },
+        "derivatives": {
+            "normalize_disciplines": {
+                "learning_material_disciplines_normalized": [
+                    "exact_informatica"
+                ]
+            },
+            "normalize_publisher_year": {
+                "publisher_year_normalized": "older-than"
+            }
+        }
+    }
+
+
+class TestMetadataDocumentView(TestDocumentView):
+
+    format = "metadata"
+    list_view_name = "v1:products:metadata-products"
+    detail_view_name = "v1:products:metadata-product-detail"
+    expected_document_output = {
+        "id": 1,
+        "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "title": "Didactiek van macro-meso-micro denken bij scheikunde",
+        "reference": "63903863-6c93-4bda-b850-277f3c9ec00e",
+        "language": "nl",
+        "created_at": "2024-04-17T14:19:12.720000Z",
+        "modified_at": "2024-04-17T14:19:12.720000Z"
+    }
