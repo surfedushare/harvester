@@ -72,6 +72,9 @@ class TestBuasProductExtraction(TestCase):
     def test_get_id(self):
         self.assertEqual(self.seeds[0]["external_id"], "b7b17301-7123-4113-aa8a-8391aa9d7e01")
 
+    def test_modified_at(self):
+        self.assertEqual(self.seeds[0]["modified_at"], "2018-10-17T08:06:43.022+0000")
+
     def test_get_files(self):
         self.assertEqual(self.seeds[0]["files"], [])
         self.assertEqual(self.seeds[1]["files"], [

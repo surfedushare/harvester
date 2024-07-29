@@ -81,6 +81,9 @@ class TestHanzeProductExtraction(TestCase):
     def test_get_id(self):
         self.assertEqual(self.seeds[0]["external_id"], "01ea0ee1-a419-42ee-878b-439b44562098")
 
+    def test_modified_at(self):
+        self.assertIsNone(self.seeds[0]["modified_at"])
+
     def test_get_files(self):
         self.assertEqual(self.seeds[0]["files"], [
             "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
