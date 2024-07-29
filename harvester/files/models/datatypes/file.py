@@ -89,12 +89,12 @@ class FileDocument(HarvestDocument):
     tasks = models.JSONField(default=default_document_tasks, blank=True)
 
     status_code = models.SmallIntegerField(default=-1)
-    redirects = models.CharField(max_length=50, choices=Redirects.choices, default=Redirects.NO)
+    redirects = models.CharField(max_length=50, choices=Redirects.choices, default=Redirects.NO, db_index=True)
     domain = models.CharField(max_length=256, null=True, blank=True)
-    mime_type = models.CharField(max_length=256, null=True, blank=True)
-    type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown")
-    is_not_found = models.BooleanField(default=False)
-    is_analysis_allowed = models.BooleanField(null=True, blank=True)
+    mime_type = models.CharField(max_length=256, null=True, blank=True, db_index=True)
+    type = models.CharField(max_length=50, choices=TECHNICAL_TYPE_CHOICES, default="unknown", db_index=True)
+    is_not_found = models.BooleanField(default=False, db_index=True)
+    is_analysis_allowed = models.BooleanField(null=True, blank=True, db_index=True)
 
     property_defaults = SEED_DEFAULTS
 

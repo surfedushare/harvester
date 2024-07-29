@@ -26,6 +26,8 @@ services:
 
   opensearch:
     image: opensearchproject/opensearch:1.2.0
+    environment:
+      - cluster.routing.allocation.disk.threshold_enabled=false
     volumes:
       - opensearch-data:/usr/share/opensearch/data
       - ./opensearch/config/opensearch.yml:/usr/share/opensearch/config/opensearch.yml

@@ -10,21 +10,11 @@ from core.views.document import (DatasetVersionDocumentListView, DatasetVersionD
 from products.models import ProductDocument
 
 
-class ProductDocumentSerializer(DocumentBaseSerializer):
-
-    harvest_source = serializers.CharField(source="properties.set")
-    feed = serializers.CharField(source="properties.set")
-    properties = serializers.SerializerMethodField()
-
-    def get_properties(self, document):
-        properties = document.properties
-        properties["owners"] = [next(iter(properties["authors"]), None)]
-        properties["contacts"] = [next(iter(properties["authors"]), None)]
-        return properties
+class RawProductDocumentSerializer(DocumentBaseSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = DocumentBaseSerializer.default_fields + ("harvest_source", "feed",)
+        fields = DocumentBaseSerializer.default_fields + ("metadata", "derivatives")
 
 
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
@@ -47,7 +37,7 @@ class RawProductListView(DatasetVersionDocumentListView):
     The dataformat is an internal dataformat which is not guaranteed to remain constant over time.
     This endpoint is mostly meant for debugging purposes.
     """
-    serializer_class = ProductDocumentSerializer
+    serializer_class = RawProductDocumentSerializer
 
 
 class MetadataProductListView(DatasetVersionDocumentListView):
@@ -65,7 +55,7 @@ class RawProductDetailView(DatasetVersionDocumentDetailView):
     The dataformat is an internal dataformat which is not guaranteed to remain constant over time.
     This endpoint is mostly meant for debugging purposes.
     """
-    serializer_class = ProductDocumentSerializer
+    serializer_class = RawProductDocumentSerializer
 
 
 class MetadataProductDetailView(DatasetVersionDocumentDetailView):

@@ -5,11 +5,11 @@ from django.test import TestCase
 from django.core.management import call_command
 from django.utils.timezone import make_aware
 
-from core.tests.mocks import get_search_client_mock
 from search.models import OpenSearchIndex
 from files.models import FileDocument, HttpTikaResource, DatasetVersion, Set, Dataset
 from files.sources.sharekit import SEQUENCE_PROPERTIES
 from files.tests.factories.tika import HttpTikaResourceFactory
+from testing.utils.mocks import get_search_client_mock
 from testing.utils.factories import create_datatype_models
 from testing.utils.generators import seed_generator
 
@@ -105,7 +105,7 @@ class TestCleanData(TestCase):
         self.assertEqual(FileDocument.objects.count(), 40, "Expected five documents per collection")
         self.assertEqual(HttpTikaResource.objects.count(), 40, "Expected one HttpTikaResource per Document")
         # Check if indices were removed properly as well
-        self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed ElasticIndex")
+        self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
         self.assertEqual(self.search_client.indices.exists.call_count, 42)
         self.assertEqual(self.search_client.indices.delete.call_count, 42)
 

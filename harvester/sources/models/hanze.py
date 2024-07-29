@@ -1,13 +1,9 @@
 from django.conf import settings
-from django.db import models
 
-from core.models import HarvestHttpResource
+from datagrowth.resources import HttpResource
 
 
-class HanzeResearchObjectResource(HarvestHttpResource):
-
-    set_specification = models.CharField(max_length=255, blank=True, null=False, default="hanze")
-    use_multiple_sets = False
+class HanzeResearchObjectResource(HttpResource):
 
     URI_TEMPLATE = settings.SOURCES["hanze"]["endpoint"] + "/nppo/research-outputs" \
         if settings.SOURCES["hanze"]["endpoint"] else "/nppo/research-outputs"

@@ -4,22 +4,36 @@ from urllib3.exceptions import LocationParseError
 from requests.exceptions import InvalidURL
 
 from django.conf import settings
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
 
 from datagrowth.resources import HttpResource, URLResource
-import extruct
 
 
 logger = logging.getLogger("harvester")
 
 
-class HttpTikaResourceBase(HttpResource):
+class HttpTikaResource(HttpResource):
 
-    URI_TEMPLATE = settings.TIKA_HOST + "/rmeta/text?fetchKey={}"
+    @property
+    def URI_TEMPLATE(self):
+        return f"{settings.TIKA_HOST}/rmeta/{self.config.tika_return_type}"
+
     PARAMETERS = {
         "fetcherName": "http"
     }
+
+    def variables(self, *args):
+        return {
+            "url": [],
+            "fetch_key": args[0]
+        }
+
+    def parameters(self, fetch_key, **kwargs):
+        params = super().parameters(**kwargs)
+        # All input links are expected to be normalized to + through BaseExtractor.parse_url.
+        # Here we double encode the + to %20 and Tika will decode twice which means we end up with %20 inside Tika.
+        # Having spaces or + inside Tika server will lead to illegal character exceptions.
+        params["fetchKey"] = fetch_key.replace("+", "%252520")
+        return params
 
     def handle_errors(self):
         super().handle_errors()
@@ -39,68 +53,6 @@ class HttpTikaResourceBase(HttpResource):
             self.status = 204
         elif not has_content and has_exception:
             self.status = 1
-
-    class Meta:
-        abstract = True
-
-
-class ExtructResourceBase(URLResource):
-
-    @property
-    def success(self):
-        success = super().success
-        content_type, data = self.content
-        return success and bool(data)
-
-    @property
-    def content(self):
-        if super().success:
-            content_type = self.head.get("content-type", "unknown/unknown").split(';')[0]
-            if content_type != "text/html":
-                return None, None
-            try:
-                result = extruct.extract(self.body)
-                return "application/json", result
-            except json.JSONDecodeError:
-                pass
-        return None, None
-
-    class Meta:
-        abstract = True
-
-
-class HttpTikaResource(HttpTikaResourceBase):
-
-    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
-
-    @property
-    def URI_TEMPLATE(self):
-        return f"{settings.TIKA_HOST}/rmeta/{self.config.tika_return_type}"
-
-    def variables(self, *args):
-        return {
-            "url": [],
-            "fetch_key": args[0]
-        }
-
-    def parameters(self, fetch_key, **kwargs):
-        params = super().parameters(**kwargs)
-        # All input links are expected to be normalized to + through BaseExtractor.parse_url.
-        # Here we double encode the + to %20 and Tika will decode twice which means we end up with %20 inside Tika.
-        # Having spaces or + inside Tika server will lead to illegal character exceptions.
-        params["fetchKey"] = fetch_key.replace("+", "%252520")
-        return params
-
-    class Meta:
-        app_label = "files"
-
-
-class ExtructResource(ExtructResourceBase):
-
-    retainer_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE, related_name="+")
-
-    class Meta:
-        app_label = "files"
 
 
 class CheckURLResource(URLResource):

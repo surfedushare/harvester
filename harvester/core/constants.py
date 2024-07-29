@@ -1,34 +1,3 @@
-class Repositories:
-    EDUREP_JSONSEARCH = "sources.EdurepJsonSearchResource"
-    EDUREP = "edurep.EdurepOAIPMH"
-    SHAREKIT = "sharekit.SharekitMetadataHarvest"
-    ANATOMY_TOOL = "anatomy_tool.AnatomyToolOAIPMH"
-    HANZE = "sources.HanzeResearchObjectResource"
-    HAN = "sources.HanOAIPMHResource"
-    HVA = "sources.HvaPureResource"
-    HKU = "sources.HkuMetadataResource"
-    GREENI = "sources.GreeniOAIPMHResource"
-    BUAS = "sources.BuasPureResource"
-    PUBLINOVA = "sources.PublinovaMetadataResource"
-    SAXION = "sources.SaxionOAIPMHResource"
-
-
-def get_repository_id(repository_resource):
-    repository_id = next(
-        (choice[1] for choice in REPOSITORY_CHOICES if choice[0] == repository_resource),
-        None
-    )
-    if repository_id is None:
-        return
-    return repository_id.lower()
-
-
-REPOSITORY_CHOICES = [
-    (value, attr.lower().capitalize())
-    for attr, value in sorted(Repositories.__dict__.items()) if not attr.startswith("_")
-]
-
-
 class DeletePolicies:
     """
     Details: http://www.openarchives.org/OAI/openarchivesprotocol.html#DeletedRecords
@@ -44,19 +13,6 @@ DELETE_POLICY_CHOICES = [
 ]
 
 
-class HarvestStages:
-    NEW = "New"
-    BASIC = "Basic"
-    VIDEO = "Video"
-    PREVIEW = "Preview"
-    COMPLETE = "Complete"
-
-
-HARVEST_STAGE_CHOICES = [
-    (value, value) for attr, value in sorted(HarvestStages.__dict__.items()) if not attr.startswith("_")
-]
-
-
 HIGHER_EDUCATION_LEVELS = {
     "HBO": 2,
     "WO": 3,
@@ -68,6 +24,7 @@ MBO_EDUCATIONAL_LEVELS = {
     "Beroepsonderwijs en Volwasseneneducatie",
     "Volwasseneneducatie",
 }
+
 
 SITE_SHORTHAND_BY_DOMAIN = {
     "harvester.prod.surfedushare.nl": "edusources",

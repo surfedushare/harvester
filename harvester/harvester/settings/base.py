@@ -471,7 +471,7 @@ CELERY_BROKER_URL = f'redis://{environment.redis.host}/0'
 CELERY_RESULT_BACKEND = f'redis://{environment.redis.host}/0'
 CELERY_TASK_DEFAULT_QUEUE = environment.project.name
 CELERY_TASK_ROUTES = {
-    'sync_indices': {'queue': f'{environment.project.name}-indexing'}
+    'sync_product_indices': {'queue': f'{environment.project.name}-indexing'}
 }
 CELERY_BEAT_SCHEDULE = {
     'clean_data': {
