@@ -107,9 +107,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         # Update metadata about creation
         if new:
             self.metadata["created_at"] = current_time
+            self.metadata["modified_at"] = current_time
         # Update metadata about deletion
         self.state = self.properties.get("state", None)
-        if self.state != self.States.ACTIVE and (not self.metadata.get("deleted_at", None) or new):
+        if self.state != self.States.ACTIVE and not new:
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
