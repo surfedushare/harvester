@@ -81,6 +81,7 @@ class TestDocumentView(TestCase):
                 "access_rights": "OpenAccess"
             }
         ],
+        "aggregation_level": "4",
         "authors": [
             {
                 "dai": None,
@@ -131,6 +132,7 @@ class TestDocumentView(TestCase):
         "lom_educational_levels": [
             "HBO"
         ],
+        "material_types": ["unknown"],
         "studies": [],
         "disciplines": [
             "exact_informatica"
