@@ -19,7 +19,7 @@ class NoCurrentDatasetVersionException(Exception):
 class DatasetVersionDocumentBaseView(generics.GenericAPIView):
 
     schema = HarvesterSchema()
-    exclude_deletes = False
+    exclude_deletes_unless_modified_since_filter = False
 
     def get_queryset(self):
         if not self.request.resolver_match:
@@ -32,11 +32,11 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
         dataset_version = models["DatasetVersion"].objects.get_current_version()
         if not dataset_version:
             raise NoCurrentDatasetVersionException()
-        if self.exclude_deletes:
+        modified_since_filter = self.request.query_params.get("modified_since")
+        if self.exclude_deletes_unless_modified_since_filter and not modified_since_filter:
             queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
             queryset = dataset_version.documents.all()
-        modified_since_filter = self.request.query_params.get("modified_since")
         if modified_since_filter:
             queryset = queryset.filter(metadata__modified_at__gte=modified_since_filter)
         queryset = queryset.order_by("-id")
@@ -85,7 +85,7 @@ class SearchDocumentListViewMixin:
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
-            objects = [list(doc.to_search())[0] for doc in args[0]]
+            objects = [doc.to_data() for doc in args[0]]
             args = (objects, *args[1:])
         return super().get_serializer(*args, **kwargs)
 
@@ -94,6 +94,6 @@ class SearchDocumentRetrieveViewMixin:
 
     def get_serializer(self, *args, **kwargs):
         if len(args):
-            obj = list(args[0].to_search())[0]
+            obj = args[0].to_data()
             args = (obj, *args[1:])
         return super().get_serializer(*args, **kwargs)
