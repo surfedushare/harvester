@@ -8,7 +8,7 @@ from products.sources.pmhify import SEEDING_PHASES
 from sources.factories.pmhify.extraction import PmhifyOAIPMHResourceFactory
 
 
-class TestAnatomyToolProductExtraction(TestCase):
+class TestMediasiteProductExtraction(TestCase):
 
     set = None
     seeds = []
@@ -32,3 +32,29 @@ class TestAnatomyToolProductExtraction(TestCase):
 
     def test_srn(self):
         self.assertEqual(self.seeds[0]["srn"], "mediasite:mediasite:2-1:9dbff211eeb4416babb78fb0896f1a851d")
+
+
+class TestTilburgUniversityProductExtraction(TestCase):
+
+    set = None
+    seeds = []
+
+    @classmethod
+    def setUpTestData(cls):
+        register_defaults("global", {
+            "cache_only": True
+        })
+        PmhifyOAIPMHResourceFactory.create_common_responses()
+        cls.set = Set.objects.create(identifier="srn")
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": SEEDING_PHASES
+        })
+        cls.seeds = []
+        for batch in processor("tilburguniversity"):
+            cls.seeds += [doc.properties for doc in batch]
+        register_defaults("global", {
+            "cache_only": False
+        })
+
+    def test_srn(self):
+        self.skipTest("sets need to be reflected in responses")

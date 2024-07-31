@@ -49,3 +49,4 @@ class PmhifyOAIPMHResourceFactory(factory.django.DjangoModelFactory):
     @classmethod
     def create_common_responses(cls, include_delta=False):
         cls.create(is_initial=True, number=0, set="mediasite")
+        cls.create(is_initial=True, number=0, set="tilburguniversity")

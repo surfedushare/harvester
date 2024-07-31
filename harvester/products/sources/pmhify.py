@@ -96,7 +96,7 @@ class PmhifyExtraction(BaseExtractor):
         if not date:
             return
         datetime = date.find('dateTime')
-        if not datetime:
+        if not datetime or not datetime.text:
             return
         datetime = date_parser(datetime.text)
         return datetime.strftime("%Y-%m-%d")
@@ -116,6 +116,7 @@ OBJECTIVE = {
     "set": lambda soup, el: "mediasite:mediasite",
     "state": PmhifyExtraction.get_oaipmh_record_state,
     "modified_at": PmhifyExtraction.get_oaipmh_modified_at,
+    "language": PmhifyExtraction.get_language,
     "files": PmhifyExtraction.get_files,
     "title": PmhifyExtraction.get_title,
     "description": PmhifyExtraction.get_description,
