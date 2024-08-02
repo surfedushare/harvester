@@ -65,7 +65,9 @@ class PureProductExtraction(PureExtractor):
                 case "keywordContainers":
                     for free_keywords in keywords["keywords"]:
                         results += free_keywords.get("freeKeywords", [])
-        return list(set(results))
+        unique_results = list(set(results))
+        sorted(unique_results)
+        return unique_results
 
     @classmethod
     def get_authors(cls, node):
