@@ -15,7 +15,6 @@ def get_search_client(document_type=None, alias_prefix=None):
         settings.OPENSEARCH_HOST,
         document_type,
         alias_prefix if alias_prefix else settings.OPENSEARCH_ALIAS_PREFIX,
-        search_results_key="results",
         **kwargs
     )
 

@@ -190,7 +190,6 @@ class ProductDocument(HarvestDocument):
             disciplines = data["disciplines_normalized"].get("keyword", [])
             data["disciplines_normalized"] = disciplines
             data["learning_material_disciplines_normalized"] = disciplines
-            pass
         if isinstance(data["consortium"], dict):
             data["consortium"] = data["consortium"].get("nl")
         if isinstance(data["study_vocabulary"], dict):

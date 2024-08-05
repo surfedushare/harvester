@@ -39,7 +39,6 @@ class MetadataValueComparer:
             host,
             document_type,
             environment.opensearch.alias_prefix,
-            search_results_key="results",
             **kwargs
         )
 
