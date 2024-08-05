@@ -66,7 +66,7 @@ class PureProductExtraction(PureExtractor):
                     for free_keywords in keywords["keywords"]:
                         results += free_keywords.get("freeKeywords", [])
         unique_results = list(set(results))
-        sorted(unique_results)
+        unique_results.sort()
         return unique_results
 
     @classmethod

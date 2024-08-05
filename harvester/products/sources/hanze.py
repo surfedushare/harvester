@@ -32,7 +32,7 @@ class HanzeProductExtractor(PureProductExtraction):
                             continue
                         results.append(classification["term"]["en_GB"])
         unique_results = list(set(results))
-        sorted(unique_results)
+        unique_results.sort()
         return unique_results
 
     @classmethod
