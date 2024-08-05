@@ -164,7 +164,6 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         self.assertEqual(data["page_size"], 10)
         self.assertEqual(data["filter_counts"], {
             "publishers.keyword-Wikiwijs Maken": 2,
-            "learning_material_disciplines-exact_informatica": 2,
             "technical_type-document": 2,
             "learning_material_disciplines_normalized-exact_informatica": 2,
             "lom_educational_levels-HBO": 2,
@@ -174,7 +173,7 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
             "authors.name.keyword-Marc de Graaf": 2,
             "authors.name.keyword-Michel van Ast": 2,
             "authors.name.keyword-Theo van den Bogaart": 2,
-            "copyright.keyword-cc-by-30": 2
+            "copyright.keyword-cc-by-40": 2
         })
 
     def test_search_filter_does_not_exist(self):
