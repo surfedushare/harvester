@@ -8,9 +8,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 from search_client import DocumentTypes
-from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from search.clients import get_search_client
 from harvester.schema import HarvesterSchema
+from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
 
 class SimilaritySerializer(serializers.Serializer):

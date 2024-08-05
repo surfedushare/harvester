@@ -3,11 +3,11 @@ from rest_framework import serializers
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
 
-from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from search_client.constants import DocumentTypes
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
                                  SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
 from products.models import ProductDocument
+from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
 
 class RawProductDocumentSerializer(DocumentBaseSerializer):

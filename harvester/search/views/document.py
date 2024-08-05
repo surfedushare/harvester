@@ -10,10 +10,10 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 from search_client import DocumentTypes
-from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField
 from search.clients import get_search_client
+from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
 
 class DocumentSearchFilterSerializer(serializers.Serializer):
