@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from rest_framework import serializers
 
@@ -7,7 +8,7 @@ from metadata.models import MetadataTranslation, MetadataTranslationSerializer, 
 
 class MetadataFieldManager(models.Manager):
 
-    def fetch_value_frequencies(self, alias_prefix="latest", **kwargs):
+    def fetch_value_frequencies(self, **kwargs):
         client = get_opensearch_client()
         aggregation_query = {
             field.name: {
@@ -18,7 +19,7 @@ class MetadataFieldManager(models.Manager):
             }
             for field in self.annotate(size=models.Count("metadatavalue")).filter(**kwargs).iterator()
         }
-        indices = [f"{alias_prefix}-{language}" for language in ["nl", "en", "unk"]]
+        indices = [f"{settings.PROJECT}-{language}" for language in ["nl", "en", "unk"]]
         response = client.search(
             index=indices,
             body={"aggs": aggregation_query}

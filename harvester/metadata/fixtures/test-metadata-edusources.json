@@ -15511,7 +15511,7 @@
     "model": "metadata.metadatafield",
     "pk": 17,
     "fields": {
-        "name": "learning_material_disciplines",
+        "name": "disciplines",
         "created_at": "2022-07-26T14:42:03.236Z",
         "updated_at": "2022-07-26T14:42:03.236Z",
         "translation": 2888,
