@@ -52,7 +52,7 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
     Document = models["Document"]
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         disciplines_normalized = normalize_field_values(
-            "learning_material_disciplines",
+            "disciplines",
             *document.properties["learning_material"]["disciplines"],
             as_models=True
         )
