@@ -56,7 +56,7 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
         fields += ["state", "pipeline", "derivatives", "pending_at", "finished_at", "metadata"]
         return fields
 
-    def copy_documents(self, source_set: HarvestSet):
+    def copy_documents(self, source_set: HarvestSet) -> None:
         Document = self.get_document_model()
         for batch in ibatch(Document.objects.filter(collection_id=source_set.id), batch_size=100):
             for doc in batch:
@@ -65,6 +65,24 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
                 doc.pk = None
                 doc.id = None
             Document.objects.bulk_create(batch)
+
+    def process_soft_deletes(self) -> None:
+        """
+        Any Documents with a metadata.deleted_at value, but a properties.state value of active is "soft deleted".
+        This happens for instance during preparation of a harvest when the source specifies "no delete policy".
+        Here we turn these soft deletes into hard deletes by updating properties, state and metadata.modified_at.
+        """
+        Document = self.get_document_model()
+        soft_deleted_documents = self.documents \
+            .exclude(metadata__deleted_at=None) \
+            .filter(properties__state=Document.States.ACTIVE)
+        for batch in ibatch(soft_deleted_documents, batch_size=100):
+            docs = []
+            for doc in batch:
+                doc.properties["state"] = Document.States.DELETED
+                doc.clean()
+                docs.append(doc)
+            Document.objects.bulk_update(docs, ["properties", "state", "metadata", "modified_at"])
 
     def __str__(self) -> str:
         return "{} (id={})".format(self.name, self.id)

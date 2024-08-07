@@ -74,8 +74,11 @@ class HarvestState(models.Model):
                 document.collection = self.harvest_set
                 document.dataset_version = dataset_version
                 if self.entity.delete_policy == DeletePolicies.NO and not self.entity.is_manual:
-                    document.properties["state"] = document.States.DELETED
-                document.clean()
+                    # Here we soft delete all Documents where delete_policy is "no".
+                    # This gets undone by any incoming document, which enables us to
+                    # look at deleted_at to detect deleted Documents during check_set_integrity task.
+                    document.metadata["deleted_at"] = current_time
+                document.clean(set_metadata=False)  # retains "metadata" from copy, but links new Set and DatasetVersion
                 documents.append(document)
             data_models["Document"].objects.bulk_create(documents)
         return self.harvest_set

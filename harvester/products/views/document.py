@@ -14,7 +14,7 @@ class RawProductDocumentSerializer(DocumentBaseSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = DocumentBaseSerializer.default_fields + ("metadata", "derivatives")
+        fields = DocumentBaseSerializer.default_fields + ("state", "metadata", "derivatives")
 
 
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class MetadataProductDocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductDocument
-        fields = ("id", "srn", "title", "reference", "language", "created_at", "modified_at")
+        fields = ("id", "state", "srn", "title", "reference", "language", "created_at", "modified_at")
 
 
 class RawProductListView(DatasetVersionDocumentListView):
@@ -46,7 +46,7 @@ class MetadataProductListView(DatasetVersionDocumentListView):
     This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProductDocumentSerializer
-    exclude_deletes = True
+    exclude_deletes_unless_modified_since_filter = True
 
 
 class RawProductDetailView(DatasetVersionDocumentDetailView):
@@ -64,7 +64,7 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
     but it only returns the metadata. This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProductDocumentSerializer
-    exclude_deletes = True
+    exclude_deletes_unless_modified_since_filter = True
 
 
 class SearchProductGenericViewMixin:
@@ -85,7 +85,7 @@ class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericVie
     This endpoint is useful for systems that want a local copy of all possible search results.
 
     Most properties for a ProductDocument are automatically documented through the interactive documentation.
-    However there are five special properties that we'll document here.
+    However there are a few special properties that we'll document here.
 
     **authors**: The list of authors for a ProductDocument.
     Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
@@ -104,7 +104,7 @@ class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericVie
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
-    exclude_deletes = True
+    exclude_deletes_unless_modified_since_filter = True
 
 
 class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGenericViewMixin,
@@ -115,7 +115,7 @@ class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGene
     This is useful if a system wants to update their copy of a product.
 
     Most properties for a ProductDocument are automatically documented through the interactive documentation.
-    However there are two special properties that we'll document here.
+    However there are a few special properties that we'll document here.
 
     **authors**: The list of authors for a ProductDocument.
     Authors are objects with the following properties: name, email, external_id, dai, orcid and isni.
@@ -134,4 +134,4 @@ class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGene
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
-    exclude_deletes = True
+    exclude_deletes_unless_modified_since_filter = True

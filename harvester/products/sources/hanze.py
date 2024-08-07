@@ -31,7 +31,9 @@ class HanzeProductExtractor(PureProductExtraction):
                         elif classification["uri"] == "research_focus_areas/02g_no_research_line_applicable":
                             continue
                         results.append(classification["term"]["en_GB"])
-        return list(set(results))
+        unique_results = list(set(results))
+        unique_results.sort()
+        return unique_results
 
     @classmethod
     def get_research_themes(cls, node):

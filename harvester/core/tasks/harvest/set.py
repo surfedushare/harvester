@@ -102,6 +102,8 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Set = models["Set"]
     for harvest_set in Set.objects.filter(id__in=set_ids).select_for_update():
+        # First we process soft deletes to become hard deletes
+        harvest_set.process_soft_deletes()
         # The check_set_integrity call may replace new data with historic data when validation fails
         is_replaced = False
         # Historic data needs to be larger than 50 documents before we consider replacement
