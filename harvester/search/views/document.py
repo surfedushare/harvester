@@ -151,7 +151,7 @@ class DocumentSearchAPIView(GenericAPIView):
             "did_you_mean": response["did_you_mean"],
             "page": data["page"],
             "page_size": data["page_size"],
-            "filter_counts": response["drilldowns"] if include_filter_counts else None
+            "filter_counts": response.get("aggregations", response["drilldowns"]) if include_filter_counts else None
         })
 
 

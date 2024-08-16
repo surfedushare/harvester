@@ -53,9 +53,9 @@ class MetadataValueComparer:
         fields = fields or [field["value"] for field in self.reference_tree]
 
         reference_results = self.reference_search.search("", drilldown_names=fields, filters=value_filters)
-        reference_counts = Counter(**reference_results["drilldowns"])
+        reference_counts = Counter(**reference_results.get("aggregations", reference_results["drilldowns"]))
         peer_results = self.peer_search.search("", drilldown_names=fields, filters=value_filters)
-        peer_counts = Counter(**peer_results["drilldowns"])
+        peer_counts = Counter(**peer_results.get("aggregations", peer_results["drilldowns"]))
 
         comparison_counts = copy(reference_counts)
         comparison_counts.subtract(peer_counts)
