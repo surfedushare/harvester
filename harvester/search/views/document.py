@@ -12,7 +12,6 @@ from rest_framework.exceptions import ValidationError
 from search_client.constants import Platforms, Entities
 
 from harvester.schema import HarvesterSchema
-from metadata.models import MetadataField
 from search.clients import get_search_client, prepare_results_for_response
 from search.views.base import load_results_serializers
 from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
@@ -38,7 +37,7 @@ class DocumentSearchSerializer(serializers.Serializer):
     def validate_filters(self, filters):
         if not filters:
             return filters
-        filter_fields = self.context.get("filter_fields", None)
+        filter_fields = self.context.get("filter_fields", set())
         for metadata_filter in filters:
             field_id = metadata_filter.get("external_id", None)
             if field_id not in filter_fields:
@@ -48,7 +47,7 @@ class DocumentSearchSerializer(serializers.Serializer):
     def validate_ordering(self, ordering):
         if not ordering:
             return
-        filter_fields = self.context.get("filter_fields", [])
+        filter_fields = self.context.get("filter_fields", set())
         ordering_field = ordering[1:] if ordering.startswith("-") else ordering
         if ordering_field not in filter_fields:
             raise ValidationError(detail=f"Invalid value for ordering: '{ordering}'")
@@ -129,7 +128,8 @@ class DocumentSearchAPIView(GenericAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["filter_fields"] = MetadataField.objects.all().values_list("name", flat=True)
+        client = get_search_client()
+        context["filter_fields"] = client.configuration.get_valid_filter_fields()
         return context
 
     def post(self, request, *args, **kwargs):
