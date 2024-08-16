@@ -1,15 +1,14 @@
 from django.conf import settings
 from django.test import TestCase, tag
-from opensearchpy import OpenSearch
 
-from search_client import SearchClient
+from search_client.opensearch import OpenSearchClientBuilder
 from search_client.constants import LANGUAGES, DocumentTypes
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search_client.factories import generate_nl_material, generate_nl_product
 
 
 @tag("search")
-class OpenSearchTestCaseMixin(object):
+class OpenSearchTestCaseMixin:
 
     search = None
     instance = None
@@ -41,15 +40,13 @@ class OpenSearchTestCaseMixin(object):
 
     @classmethod
     def get_alias(cls, language):
-        return f"{cls.alias_prefix}-{language}"
+        return f"{cls.alias_prefix}-{settings.PLATFORM.value}-{language}"
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         # Setup indices
-        cls.search = OpenSearch(
-            [settings.OPENSEARCH_HOST]
-        )
+        cls.search = OpenSearchClientBuilder.from_host(settings.OPENSEARCH_HOST).build()
         for language in LANGUAGES:
             cls.search.indices.create(
                 cls.get_alias(language),
@@ -60,10 +57,9 @@ class OpenSearchTestCaseMixin(object):
         cls.index_document(cls.document_type)
         cls.index_document(
             cls.document_type, is_last_document=True,
-            source="surfsharekit", external_id="abc", title=f"Nog een {cls.document_type}", publisher_date="2020-03-18"
+            source="surfsharekit", external_id="abc", title=f"Nog een {cls.document_type.value}",
+            publisher_date="2020-03-18"
         )
-        # Create a SURF SearchClient
-        cls.instance = SearchClient(settings.OPENSEARCH_HOST, cls.document_type, cls.alias_prefix)
 
     @classmethod
     def tearDownClass(cls):
@@ -72,7 +68,6 @@ class OpenSearchTestCaseMixin(object):
                 cls.get_alias(language)
             )
         cls.search.close()
-        cls.instance.client.close()
         super().tearDownClass()
 
 
@@ -93,7 +88,6 @@ class DocumentAPITestCase(TestCase):
             "keywords",
             "authors",
             "publishers",
-            "studies",
             "harvest_source",
             "has_parts",
             "is_part_of",

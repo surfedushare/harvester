@@ -9,10 +9,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from search_client import DocumentTypes
+from search_client.constants import Platforms, Entities
+
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField
-from search.clients import get_search_client
+from search.clients import get_search_client, prepare_results_for_response
+from search.views.base import load_results_serializers
 from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
 
@@ -118,12 +120,12 @@ class DocumentSearchAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return LearningMaterialSearchSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductSearchSerializer
         else:
-            raise AssertionError("DocumentSearchAPIView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("DocumentSearchAPIView expected application to use different PLATFORM")
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -135,21 +137,21 @@ class DocumentSearchAPIView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        include_filter_counts = request.GET.get("include_filter_counts", None)
-        if include_filter_counts == "1":
-            data["drilldown_names"] = serializer.context["filter_fields"].exclude(name="publisher_date")
+        include_filter_counts = request.GET.get("include_filter_counts", None) == "1"
         if not data["search_text"] and not data["ordering"]:
             data["ordering"] = "-publisher_date"
         # Execute search and return results
         client = get_search_client()
-        response = client.search(**data)
+        response = client.search(aggregate_filter_counts=include_filter_counts, **data)
+        result_serializer = load_results_serializers(request, single_serializer=True)
+        results = prepare_results_for_response(response["results"], result_serializer[Entities.PRODUCTS])
         return Response({
-            "results": response["results"],
+            "results": results,
             "results_total": response["results_total"],
             "did_you_mean": response["did_you_mean"],
             "page": data["page"],
             "page_size": data["page_size"],
-            "filter_counts": response["drilldowns"] if include_filter_counts == "1" else None
+            "filter_counts": response["drilldowns"] if include_filter_counts else None
         })
 
 
@@ -164,22 +166,22 @@ class DocumentSearchDetailAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return SimpleLearningMaterialResultSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductResultSerializer
         else:
-            raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("DocumentSearchDetailAPIView expected application to use different PLATFORM")
 
     def get_object(self):
         client = get_search_client()
         reference = unquote(self.kwargs["external_id"])
         response = client.get_documents_by_id([reference])
-        records = response.get("results", [])
-        if not records:
+        results = response.get("results", [])
+        if not results:
             raise Http404()
-        document = records[0]
-        return document
+        document = results[0]
+        return document.model_dump(mode="json")
 
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -221,12 +223,12 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
     max_page_size = 100
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return LearningMaterialDetailsSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductDetailsSerializer
         else:
-            raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("DocumentSearchDetailsAPIView expected application to use different PLATFORM")
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=self.request.data)
@@ -236,7 +238,8 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
             raise ValidationError(detail=f"Can't process more than {self.max_page_size} external ids at a time")
         client = get_search_client()
         response = client.get_documents_by_id(external_ids, page_size=self.max_page_size)
-        results = response.get("results", [])
+        result_serializer = load_results_serializers(request, single_serializer=True)
+        results = prepare_results_for_response(response.get("results", []), result_serializer[Entities.PRODUCTS])
         return Response({
             "results": results,
             "results_total": {
