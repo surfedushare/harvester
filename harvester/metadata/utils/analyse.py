@@ -5,7 +5,8 @@ from copy import copy
 
 from django.conf import settings
 
-from search_client import SearchClient
+from search_client.constants import Platforms
+from search_client.opensearch import SearchClient, OpenSearchClientBuilder
 from system_configuration.main import create_configuration_and_session
 
 
@@ -30,17 +31,12 @@ class MetadataValueComparer:
     @staticmethod
     def load_search_client(environment: Config) -> SearchClient:
         host = environment.opensearch.host
-        document_type = settings.DOCUMENT_TYPE
-        kwargs = {}
+        http_auth = None
         if "amazonaws.com" in host:
-            kwargs["basic_auth"] = ("supersurf", environment.secrets.opensearch.password,)
-            kwargs["verify_certs"] = environment.opensearch.verify_certs
-        return SearchClient(
-            host,
-            document_type,
-            environment.opensearch.alias_prefix,
-            **kwargs
-        )
+            http_auth = ("supersurf", environment.secrets.opensearch.password,)
+        opensearch_client = OpenSearchClientBuilder.from_host(host, http_auth).build()
+        platform = Platforms(settings.PROJECT)
+        return SearchClient(opensearch_client, platform)
 
     def __init__(self, reference_environment, peer_environment) -> None:
         self.reference_environment, session = create_configuration_and_session()

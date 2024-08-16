@@ -1,11 +1,16 @@
+from typing import Type
 from urllib.parse import unquote
 
+from django.conf import settings
+from pydantic import BaseModel
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_417_EXPECTATION_FAILED
 
+from search_client.constants import Platforms
+from search_client.serializers import LearningMaterial, ResearchProduct
 from harvester.schema import HarvesterSchema
 from harvester.pagination import HarvesterPageNumberPagination
 from core.loading import load_harvest_models
@@ -74,6 +79,15 @@ class DatasetVersionDocumentDetailView(RetrieveModelMixin, DatasetVersionDocumen
             )
 
 
+def load_pydantic_product_model() -> Type[BaseModel]:
+    if settings.PLATFORM is Platforms.EDUSOURCES:
+        return LearningMaterial
+    elif settings.PLATFORM is Platforms.PUBLINOVA:
+        return ResearchProduct
+    else:
+        raise AssertionError("SearchProductGenericViewMixin expected application to use different PLATFORM")
+
+
 class SearchDocumentListViewMixin:
 
     def get_queryset(self):
@@ -84,8 +98,12 @@ class SearchDocumentListViewMixin:
         return queryset
 
     def get_serializer(self, *args, **kwargs):
+        model = load_pydantic_product_model()
         if len(args):
-            objects = [doc.to_data() for doc in args[0]]
+            objects = [
+                model(**doc.to_data()).model_dump(mode="json")
+                for doc in args[0]
+            ]
             args = (objects, *args[1:])
         return super().get_serializer(*args, **kwargs)
 
@@ -93,7 +111,8 @@ class SearchDocumentListViewMixin:
 class SearchDocumentRetrieveViewMixin:
 
     def get_serializer(self, *args, **kwargs):
+        model = load_pydantic_product_model()
         if len(args):
-            obj = args[0].to_data()
+            obj = model(**args[0].to_data()).model_dump(mode="json")
             args = (obj, *args[1:])
         return super().get_serializer(*args, **kwargs)

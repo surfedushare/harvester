@@ -4,7 +4,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from search_client import DocumentTypes
+from search_client.constants import Platforms
 from products.models import DatasetVersion, ProductDocument
 
 
@@ -44,7 +44,9 @@ class TestDocumentView(TestCase):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/x-zip",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "previews": None,
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -67,7 +69,8 @@ class TestDocumentView(TestCase):
                     "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/"
                                      "files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
                                      "-thumbnail-200x150.png"
-                }
+                },
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -81,7 +84,9 @@ class TestDocumentView(TestCase):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "text/html",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "previews": None,
+                "video": None,
             }
         ],
         "aggregation_level": "4",
@@ -124,13 +129,8 @@ class TestDocumentView(TestCase):
             "scheikunde",
             "structuur"
         ],
-        "score": 1.0,
-        "provider": {
-            "ror": None,
-            "name": "Stimuleringsregeling Open en Online Onderwijs",
-            "slug": None,
-            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
-        },
+        "score": 0.0,
+        "provider": "Stimuleringsregeling Open en Online Onderwijs",
         "doi": None,
         "lom_educational_levels": [
             "HBO"
@@ -275,7 +275,7 @@ class TestDocumentView(TestCase):
         self.assertEqual(data["detail"], "Missing a current dataset version to retrieve data")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
+@override_settings(PLATFORM=Platforms.PUBLINOVA)
 class TestResearchProductDocumentView(TestDocumentView):
     expected_document_output = {
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
@@ -306,7 +306,9 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/x-zip",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "video": None,
+                "previews": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -329,7 +331,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                     "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/"
                                      "previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
                                      "-thumbnail-200x150.png"
-                }
+                },
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -343,7 +346,9 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "text/html",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "video": None,
+                "previews": None,
             }
         ],
         "authors": [

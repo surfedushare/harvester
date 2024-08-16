@@ -1,6 +1,6 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client import DocumentTypes
+from search_client.constants import DocumentTypes, Platforms
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -38,7 +38,7 @@ class TestLearningMaterialSimilarityView(OpenSearchTestCaseMixin, TestSimilarity
         cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityView):
     document_type = DocumentTypes.RESEARCH_PRODUCT
 
@@ -50,7 +50,7 @@ class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityV
         cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestAuthorSimilarityView(OpenSearchTestCaseMixin, DocumentAPITestCase):
 
     document_type = DocumentTypes.RESEARCH_PRODUCT

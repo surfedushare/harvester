@@ -3,7 +3,8 @@ from rest_framework import serializers
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
 
-from search_client.constants import DocumentTypes
+from search_client.constants import Platforms
+
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
                                  SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
 from products.models import ProductDocument
@@ -70,12 +71,12 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
 class SearchProductGenericViewMixin:
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return SimpleLearningMaterialResultSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductResultSerializer
         else:
-            raise AssertionError("DocumentListView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("SearchProductGenericViewMixin expected application to use different PLATFORM")
 
 
 class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericViewMixin, DatasetVersionDocumentListView):

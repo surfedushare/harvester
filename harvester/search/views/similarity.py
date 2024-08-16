@@ -7,8 +7,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from search_client import DocumentTypes
-from search.clients import get_search_client
+from search_client.constants import Entities, Platforms
+from search.clients import get_search_client, prepare_results_for_response
+from search.views.base import load_results_serializers
 from harvester.schema import HarvesterSchema
 from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
@@ -59,12 +60,12 @@ class SimilarityAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return LearningMaterialSimilaritySerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductSimilaritySerializer
         else:
-            raise AssertionError("SimilarityAPIView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("SimilarityAPIView expected application to use different PLATFORM")
 
     def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.GET)
@@ -73,11 +74,10 @@ class SimilarityAPIView(GenericAPIView):
         identifier = serializer.validated_data.get("srn", external_id)
         language = serializer.validated_data["language"]
         client = get_search_client()
-        results = client.more_like_this(
-            identifier, language,
-            transform_results=True, is_external_identifier=bool(external_id)
-        )
-        return Response(results)
+        response = client.more_like_this(identifier, language, is_external_identifier=bool(external_id))
+        result_serializer = load_results_serializers(request, single_serializer=True)
+        response["results"] = prepare_results_for_response(response["results"], result_serializer[Entities.PRODUCTS])
+        return Response(response)
 
 
 class AuthorSuggestionsAPIView(GenericAPIView):
@@ -90,17 +90,19 @@ class AuthorSuggestionsAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
+        if settings.PLATFORM is Platforms.EDUSOURCES:
             return LearningMaterialAuthorSuggestionSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
+        elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductAuthorSuggestionSerializer
         else:
-            raise AssertionError("AuthorSuggestionsAPIView expected application to use different DOCUMENT_TYPE")
+            raise AssertionError("AuthorSuggestionsAPIView expected application to use different PLATFORM")
 
     def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         author_name = serializer.validated_data["author_name"]
         client = get_search_client()
-        results = client.author_suggestions(author_name, transform_results=True)
-        return Response(results)
+        response = client.author_suggestions(author_name)
+        result_serializer = load_results_serializers(request, single_serializer=True)
+        response["results"] = prepare_results_for_response(response["results"], result_serializer[Entities.PRODUCTS])
+        return Response(response)

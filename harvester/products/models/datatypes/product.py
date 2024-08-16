@@ -94,7 +94,7 @@ class ProductDocument(HarvestDocument):
         }
         prioritized_file_identities = sorted(
             file_identities,
-            key=lambda file_identity: files_by_identity.get(file_identity, {}).get("priority", 0),
+            key=lambda file_id: files_by_identity.get(file_id, {}).get("priority", 0),
             reverse=True
         )
         # Get the first file and merge its info into the product
