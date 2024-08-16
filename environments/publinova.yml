@@ -6,9 +6,6 @@ postgres:
   user: "harvester_publinova"
   application_user: "harvester_publinova"
 
-opensearch:
-  alias_prefix: "publinova"
-
 django:
   domain: "harvester.{environment_code}.publinova.nl"
   fixtures:
