@@ -493,7 +493,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 # Debug Toolbar
 # https://django-debug-toolbar.readthedocs.io/en/latest/
 
-if DEBUG:
+if DEBUG and sys.argv[1:2] != ['test']:
     # Activation
     INSTALLED_APPS += [
         'debug_toolbar'
