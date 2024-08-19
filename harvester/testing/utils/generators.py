@@ -30,14 +30,17 @@ def seed_generator(source: str, size: int, sequence_properties=None, has_languag
 
 def document_generator(source: str, size: int, batch_size: int, set_instance: HarvestSet,
                        sequence_properties: dict = None, time_offset: dict = None, app_label: str = "testing",
-                       state: HarvestDocument.States = HarvestDocument.States.ACTIVE) -> Iterator[HarvestDocument]:
+                       soft_deletes: bool = False) -> Iterator[HarvestDocument]:
     models = load_harvest_models(app_label)
     Document = models["Document"]
     build_time = None if not time_offset else now() - timedelta(**time_offset)
     documents = [
         Document.build(seed, collection=set_instance, build_time=build_time)
-        for seed in seed_generator(source, size, sequence_properties, app_label=app_label, state=state)
+        for seed in seed_generator(source, size, sequence_properties, app_label=app_label)
     ]
+    if soft_deletes:
+        for document in documents:
+            document.metadata["deleted_at"] = build_time
     for batch in ibatch(documents, batch_size=batch_size):
         Document.objects.bulk_create(batch)
         yield batch

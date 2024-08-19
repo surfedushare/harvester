@@ -94,8 +94,6 @@ INSTALLED_APPS = [
     'products',
     'files',
     'testing',
-
-    'sharekit',  # legacy, should be migrated to sources
 ]
 
 MIDDLEWARE = [

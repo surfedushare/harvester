@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -18,6 +20,7 @@ class TestDocumentView(TestCase):
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "set": "sharekit:edusources",
         "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+        "state": "active",
         "published_at": "2017-09-27",
         "modified_at": "2021-04-15",
         "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
@@ -81,6 +84,7 @@ class TestDocumentView(TestCase):
                 "access_rights": "OpenAccess"
             }
         ],
+        "aggregation_level": "4",
         "authors": [
             {
                 "dai": None,
@@ -131,6 +135,7 @@ class TestDocumentView(TestCase):
         "lom_educational_levels": [
             "HBO"
         ],
+        "material_types": ["unknown"],
         "studies": [],
         "disciplines": [
             "exact_informatica"
@@ -145,16 +150,28 @@ class TestDocumentView(TestCase):
         "consortium": "Stimuleringsregeling Open en Online Onderwijs",
         "subtitle": None
     }
+    expected_product_count = 13  # 1 original, 15 copies and minus 3 deletes
 
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(username="supersurf")
+        create_time = datetime(year=2000, month=1, day=1)
+        delete_time = datetime(year=2024, month=1, day=1)
         # We duplicate the ProductDocument data a bunch to create larger responses
         product = ProductDocument.objects.first()
-        for ix in range(0, 10):
+        identity = product.identity
+        for ix in range(0, 15):
             product.id = None
             product.pk = None
-            product.identity += f"-{ix}"
+            product.identity = f"{identity}-{ix}"
+            if not ix % 5:
+                product.state = ProductDocument.States.DELETED
+                product.properties["state"] = ProductDocument.States.DELETED
+                product.set_metadata(current_time=delete_time)
+            else:
+                product.state = ProductDocument.States.ACTIVE
+                product.properties["state"] = ProductDocument.States.ACTIVE
+                product.set_metadata(current_time=create_time)
             product.save()
 
     def setUp(self):
@@ -172,7 +189,7 @@ class TestDocumentView(TestCase):
             self.assertEqual(data["next"], f"http://testserver/api/v1/product/{self.format}/?page=2&page_size=10")
         self.assertIsNone(data["previous"])
         self.assertEqual(len(data["results"]), 10)
-        self.assertEqual(data["count"], 11)
+        self.assertEqual(data["count"], self.expected_product_count)
 
     def test_list_second_page(self):
         list_url = reverse(self.list_view_name)
@@ -184,8 +201,8 @@ class TestDocumentView(TestCase):
         else:
             self.assertEqual(data["previous"], f"http://testserver/api/v1/product/{self.format}/?page_size=10")
         self.assertIsNone(data["next"])
-        self.assertEqual(len(data["results"]), 1)
-        self.assertEqual(data["count"], 11)
+        self.assertEqual(len(data["results"]), self.expected_product_count - 10)
+        self.assertEqual(data["count"], self.expected_product_count)
 
     def test_list_no_dataset_version(self):
         DatasetVersion.objects.all().update(is_current=False)
@@ -196,16 +213,20 @@ class TestDocumentView(TestCase):
         self.assertEqual(data["detail"], "Missing a current dataset version to list data")
 
     def test_list_modified_since(self):
-        for product in ProductDocument.objects.all()[:3]:
-            product.metadata["modified_at"] = "2024-05-01T00:00:00Z"
+        for product in ProductDocument.objects.all().order_by("id")[:3]:
+            product.metadata["modified_at"] = "2024-05-01T00:00:00"
             product.save()
         list_url = reverse(self.list_view_name)
-        response = self.client.get(list_url + "?page=1&page_size=10&modified_since=2024-05-01T00:00:00Z")
+        response = self.client.get(list_url + "?page=1&page_size=10&modified_since=2024-05-01T00:00:00")
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIsNone(data["previous"])
         self.assertIsNone(data["next"])
         self.assertEqual(len(data["results"]), 3)
+        self.assertEqual(
+            len([rsl for rsl in data["results"] if rsl["state"] == "deleted"]), 1,
+            "Expected modified_since parameter to expose deletes if they happened after the specified datetime"
+        )
         self.assertEqual(data["count"], 3)
 
     def test_detail(self):
@@ -253,6 +274,7 @@ class TestResearchProductDocumentView(TestDocumentView):
     expected_document_output = {
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "set": "sharekit:edusources",
+        "state": "active",
         "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
         "published_at": "2017-09-27",
         "modified_at": "2021-04-15",
@@ -401,6 +423,7 @@ class TestRawDocumentView(TestDocumentView):
         "modified_at": "2024-04-18T01:01:46.829000Z",
         "reference": None,
         "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "state": "active",
         "metadata": {
             "srn": None,
             "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
@@ -426,6 +449,7 @@ class TestRawDocumentView(TestDocumentView):
             }
         }
     }
+    expected_product_count = 16  # 1 original and 15 copies including all deletes
 
 
 class TestMetadataDocumentView(TestDocumentView):
@@ -436,6 +460,7 @@ class TestMetadataDocumentView(TestDocumentView):
     expected_document_output = {
         "id": 1,
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "state": "active",
         "title": "Didactiek van macro-meso-micro denken bij scheikunde",
         "reference": "63903863-6c93-4bda-b850-277f3c9ec00e",
         "language": "nl",

@@ -314,5 +314,4 @@ class TestDeltaHarvestSource(TestCase):
         seeding_processor_call.assert_called_with("merge_set", "1970-01-01T00:00:00Z")
         # Assert data
         # We expect to find the 50 old merge documents instead of 44 new merge documents
-        # There's only one expected Set, because
         self.assert_harvest_state(harvest_state.id, document_count=50)

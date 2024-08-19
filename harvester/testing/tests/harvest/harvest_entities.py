@@ -281,7 +281,15 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .last()
         self.assertIsNotNone(
             merge_document.metadata["deleted_at"],
-            "Expected document coming from delete_policy=no to always get deleted before harvesting starts"
+            "Expected document coming from delete_policy=no to always get 'soft' deleted before harvesting starts"
+        )
+        self.assertEqual(
+            merge_document.properties["state"], merge_document.States.ACTIVE,
+            "Expected document coming from delete_policy=no to always get 'soft' deleted without setting properties"
+        )
+        self.assertEqual(
+            merge_document.state, merge_document.States.ACTIVE,
+            "Expected document coming from delete_policy=no to always get 'soft' deleted without setting state"
         )
 
     @patch("sources.tasks.entities.harvest_source")
