@@ -1,6 +1,6 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client.constants import DocumentTypes, Platforms
+from search_client.constants import Platforms, Entities
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -138,7 +138,7 @@ class TestDocumentSearchView(DocumentAPITestCase):
 class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-edusources"]
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
     def test_search_including_filter_counts(self):
         search_url = reverse("v1:search:search-documents") + "?include_filter_counts=1"
@@ -201,7 +201,7 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
 class TestResearchProductSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-publinova"]
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
 
 class TestDocumentFindView(DocumentAPITestCase):
@@ -219,7 +219,7 @@ class TestDocumentFindView(DocumentAPITestCase):
         When making detail requests to find such Documents the client should URL encode the external_id.
         """
         self.index_document(
-            self.document_type, is_last_document=True,
+            Entities.PRODUCTS, is_last_entity_document=True,
             external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
         )
         search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",))
@@ -238,12 +238,12 @@ class TestDocumentFindView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
 @override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
 
 class TestDocumentsFindView(DocumentAPITestCase):
@@ -280,9 +280,9 @@ class TestDocumentsFindView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
 @override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA

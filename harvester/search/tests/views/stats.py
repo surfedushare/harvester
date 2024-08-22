@@ -1,6 +1,6 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client.constants import DocumentTypes, Platforms
+from search_client.constants import Platforms
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -16,9 +16,9 @@ class TestStatsView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialStatsView(OpenSearchTestCaseMixin, TestStatsView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
 @override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductStatsView(OpenSearchTestCaseMixin, TestStatsView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
