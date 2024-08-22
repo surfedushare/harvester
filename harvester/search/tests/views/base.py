@@ -4,7 +4,7 @@ from django.test import TestCase, tag
 from search_client.opensearch import OpenSearchClientBuilder
 from search_client.constants import LANGUAGES, DocumentTypes
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
-from search_client.factories import generate_nl_material, generate_nl_product
+from search_client.test.factories import generate_nl_material, generate_nl_product
 
 
 @tag("search")
