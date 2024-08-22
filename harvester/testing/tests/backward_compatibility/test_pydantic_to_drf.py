@@ -3,7 +3,7 @@ import json
 from django.test import TestCase
 from rest_framework.exceptions import ValidationError
 
-from search_client.factories.learning_material import generate_nl_material
+from search_client.test.factories import generate_nl_material
 from search_client.serializers.products import LearningMaterial, ResearchProduct
 
 from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer

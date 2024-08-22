@@ -5,7 +5,6 @@ from products.views.serializers.base import BaseSearchResultSerializer
 
 class SimpleLearningMaterialResultSerializer(BaseSearchResultSerializer):
 
-    score = serializers.FloatField(default=1.0)
     doi = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     lom_educational_levels = serializers.ListField(child=serializers.CharField())
     studies = serializers.ListField(child=serializers.CharField(), default=[])

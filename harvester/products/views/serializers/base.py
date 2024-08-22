@@ -7,6 +7,7 @@ class BaseSearchResultSerializer(serializers.Serializer):
     set = serializers.CharField(default=None)
     state = serializers.CharField(default="active")
     external_id = serializers.CharField()
+    score = serializers.FloatField(default=0.0)
     provider = serializers.CharField(default=None, allow_null=True)
     published_at = serializers.CharField(allow_null=True)
     modified_at = serializers.DateField(allow_null=True)
