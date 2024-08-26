@@ -32,14 +32,23 @@ def run_harvester_task(ctx, mode, command, environment=None):
 @task(
     name="migrate",
     help={
-        "mode": "Mode you want to migrate: development, acceptance or production. Must match APPLICATION_MODE"
+        "mode": "Mode you want to migrate: development, acceptance or production. Must match APPLICATION_MODE.",
+        "app_label": "The app label you want to migrate.",
+        "migration": "The migration number of the app label that you want to migrate to."
     }
 )
-def harvester_migrate(ctx, mode):
+def harvester_migrate(ctx, mode, app_label=None, migration=None):
     """
     Executes migration task on container cluster for development, acceptance or production environment on AWS
     """
+    if (app_label and not migration) or (not app_label and migration):
+        raise Exit(
+            "Specify both app_label and migration to run a specific migration or specify neither to run all migrations."
+        )
+
     command = ["python", "manage.py", "migrate"]
+    if migration:
+        command += [app_label, migration]
     environment = [
         {
             "name": "DET_POSTGRES_USER",
