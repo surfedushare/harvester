@@ -146,7 +146,7 @@ class ProductDocument(HarvestDocument):
     def transform_search_data(self, data: dict) -> dict:
         text = data.pop("text", "")
         if text and len(text) >= 1000000:
-            text = " ".join(text.split(" ")[:100000])
+            text = " ".join(text.split(" ")[:10000])
         data["text"] = text
         data["suggest_phrase"] = text
         data["suggest_completion"] = self.get_suggest_completion(data["title"], text)
