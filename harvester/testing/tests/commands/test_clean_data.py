@@ -154,7 +154,8 @@ class TestCleanData(TestCase):
         self.assertEqual(HttpTikaResource.objects.count(), 0)
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
-        self.assertEqual(self.search_client.indices.exists.call_count, 9,
+        self.assertEqual(
+            self.search_client.indices.exists.call_count, 9,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be checked for deletion when last DatasetVersions instance was cleaned"
         )
         self.assertEqual(
