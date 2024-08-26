@@ -44,7 +44,7 @@ class OpenSearchIndex(models.Model):
         for language in settings.OPENSEARCH_LANGUAGE_CODES:
             if type(self).objects.filter(name=self.name).count() <= 1 and self.check_remote_exists(language):
                 self.client.indices.delete(index=self.get_remote_name(language))
-        if self.check_remote_exists():
+        if type(self).objects.filter(name=self.name).count() <= 1 and self.check_remote_exists():
             self.client.indices.delete(index=self.get_remote_name())
         super().delete(using=using, keep_parents=keep_parents)
 
