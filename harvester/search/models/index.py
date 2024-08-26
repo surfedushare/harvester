@@ -35,8 +35,12 @@ class OpenSearchIndex(models.Model):
         self.client = get_opensearch_client()
 
     def delete(self, using=None, keep_parents=False):
+        """
+        Django's delete method. We override here to make sure that OpenSearch indices are also removed when necessary.
+        We only remove related indices if they exist and if this is the last model instance to reference the indices.
+        """
         for language in settings.OPENSEARCH_LANGUAGE_CODES:
-            if self.check_remote_exists(language):
+            if self.objects.filter(name=self.name).count() <= 1 and self.check_remote_exists(language):
                 self.client.indices.delete(index=self.get_remote_name(language))
         super().delete(using=using, keep_parents=keep_parents)
 
