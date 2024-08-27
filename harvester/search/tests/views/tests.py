@@ -5,3 +5,4 @@ from search.tests.views.autocomplete import TestLearningMaterialAutoCompleteView
 from search.tests.views.stats import TestLearningMaterialStatsView, TestResearchProductStatsView
 from search.tests.views.similarity import (TestLearningMaterialSimilarityView, TestResearchProductSimilarityView,
                                            TestAuthorSimilarityView)
+from search.tests.views.entities_parameter import TestEdusourcesProductSearchViews, TestPublinovaProductSearchViews

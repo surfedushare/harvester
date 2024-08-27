@@ -43,6 +43,19 @@ class HarvesterSchema(AutoSchema):
             operation["tags"] = ["Extending data"]
         elif path.startswith("/search") or path.startswith("/find"):
             operation["tags"] = ["Search"]
+            operation["parameters"] += [
+                {
+                    "name": "entities",
+                    "in": "query",
+                    "required": False,
+                    "description": "When set to a valid entity type and subtype like \"products:default\", "
+                                   "then it will use the search configuration available for those types to "
+                                   "perform the search operation.",
+                    'schema': {
+                        'type': 'string',
+                    }
+                }
+            ]
             if "search/documents" in path:
                 operation["parameters"] += [
                     {

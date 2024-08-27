@@ -5,14 +5,16 @@ from rest_framework.serializers import Serializer
 from pydantic import BaseModel
 from opensearchpy import OpenSearch
 
+from search_client.constants import Entities
 from search_client.opensearch import SearchClient, OpenSearchClientBuilder
 from search_client.opensearch.configuration import SearchConfiguration
 
 
-def prepare_results_for_response(models: list[BaseModel], serializer: Type[Serializer],
+def prepare_results_for_response(models: list[BaseModel], serializers: dict[Entities: Type[Serializer]],
                                  raise_exception: bool = True) -> list[dict]:
     results = []
     for model in models:
+        serializer = serializers[model.entity]
         result = serializer(data=model.model_dump(mode="json"))
         result.is_valid(raise_exception=raise_exception)
         results.append(result.data)

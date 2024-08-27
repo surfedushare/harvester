@@ -207,7 +207,10 @@ class TestResearchProductSearchView(OpenSearchTestCaseMixin, TestDocumentSearchV
 class TestDocumentFindView(DocumentAPITestCase):
 
     def test_find(self):
-        search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10",))
+        search_url = reverse(
+            "v1:search:find-document-detail",
+            args=("sharekit:edusources:3522b79c-928c-4249-a7f7-d2bcb3077f10",)
+        )
         response = self.client.get(search_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -220,9 +223,12 @@ class TestDocumentFindView(DocumentAPITestCase):
         """
         self.index_document(
             Entities.PRODUCTS, is_last_entity_document=True,
-            external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
+            source="sharekit:test", external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
         )
-        search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",))
+        search_url = reverse(
+            "v1:search:find-document-detail",
+            args=("sharekit:test:3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",)
+        )
         response = self.client.get(search_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -251,9 +257,9 @@ class TestDocumentsFindView(DocumentAPITestCase):
     def test_find(self):
         search_url = reverse("v1:search:find-document-details")
         post_data = {
-            "external_ids": [
-                "3522b79c-928c-4249-a7f7-d2bcb3077f10",
-                "abc",
+            "srns": [
+                "sharekit:edusources:3522b79c-928c-4249-a7f7-d2bcb3077f10",
+                "sharekit:test:abc",
                 "def"  # does not exist
             ]
         }
@@ -267,7 +273,7 @@ class TestDocumentsFindView(DocumentAPITestCase):
     def test_not_found(self):
         search_url = reverse("v1:search:find-document-details")
         post_data = {
-            "external_ids": [
+            "srns": [
                 "def"  # does not exist
             ]
         }

@@ -24,7 +24,7 @@ class OpenSearchTestCaseMixin(SearchClientIntegrationTestCaseMixin):
         cls.index_document(Entities.PRODUCTS)
         cls.index_document(
             Entities.PRODUCTS, is_last_entity_document=True,
-            source="surfsharekit", external_id="abc", title=f"Nog een {Entities.PRODUCTS.value}",
+            source="sharekit:test", external_id="abc", title=f"Nog een {Entities.PRODUCTS.value}",
             publisher_date="2020-03-18"
         )
 
