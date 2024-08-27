@@ -44,6 +44,8 @@ class DocumentSearchSerializer(serializers.Serializer):
     def validate_ordering(self, ordering):
         if not ordering:
             return
+        elif ordering == "string":  # This is the default used by the docs, which we ignore here for easy of use.
+            return
         filter_fields = self.context.get("filter_fields", set())
         ordering_field = ordering[1:] if ordering.startswith("-") else ordering
         if ordering_field not in filter_fields:
