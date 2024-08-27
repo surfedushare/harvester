@@ -4,11 +4,13 @@ from rest_framework.permissions import AllowAny
 
 from harvester.schema import HarvesterSchema
 from search.clients import get_search_client
+from search.views.base import validate_presets
 
 
 class StatsSerializer(serializers.Serializer):
 
     documents = serializers.IntegerField()
+    products = serializers.IntegerField(default=None, allow_null=True)
 
 
 class SearchStatsAPIView(generics.RetrieveAPIView):
@@ -20,7 +22,9 @@ class SearchStatsAPIView(generics.RetrieveAPIView):
 
     ## Response body
 
-    **documents**: The sum of documents present in Open Search
+    **documents**: The sum of all documents present in Open Search
+
+    **products**: The sum of all products present in Open Search
 
     """
     permission_classes = (AllowAny,)
@@ -28,7 +32,9 @@ class SearchStatsAPIView(generics.RetrieveAPIView):
     schema = HarvesterSchema()
 
     def get_object(self):
-        client = get_search_client()
-        return {
-            "documents": client.stats()
-        }
+        presets = validate_presets(self.request)
+        client = get_search_client(presets=presets)
+        stats = client.stats()
+        if isinstance(stats, int):
+            return {"documents": client.stats()}
+        return stats

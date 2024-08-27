@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from harvester.schema import HarvesterSchema
 from search.clients import get_search_client
+from search.views.base import validate_presets
 
 
 class AutocompleteRequestSerializer(serializers.Serializer):
@@ -26,6 +27,7 @@ class AutocompleteAPIView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        client = get_search_client()
+        presets = validate_presets(request)
+        client = get_search_client(presets=presets)
         response = client.autocomplete(**data)
         return Response(response)

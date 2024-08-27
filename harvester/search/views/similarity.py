@@ -7,9 +7,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from search_client.constants import Entities, Platforms
+from search_client.constants import Platforms
 from search.clients import get_search_client, prepare_results_for_response
-from search.views.base import load_results_serializers
+from search.views.base import validate_presets, load_results_serializers
 from harvester.schema import HarvesterSchema
 from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 
@@ -68,15 +68,16 @@ class SimilarityAPIView(GenericAPIView):
             raise AssertionError("SimilarityAPIView expected application to use different PLATFORM")
 
     def get(self, request, *args, **kwargs):
+        presets = validate_presets(self.request)
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         external_id = serializer.validated_data.get("external_id", None)
         identifier = serializer.validated_data.get("srn", external_id)
         language = serializer.validated_data["language"]
-        client = get_search_client()
+        client = get_search_client(presets=presets)
         response = client.more_like_this(identifier, language, is_external_identifier=bool(external_id))
-        result_serializer = load_results_serializers(request, single_serializer=True)
-        response["results"] = prepare_results_for_response(response["results"], result_serializer[Entities.PRODUCTS])
+        result_serializers = load_results_serializers(presets)
+        response["results"] = prepare_results_for_response(response["results"], result_serializers)
         return Response(response)
 
 
@@ -98,11 +99,12 @@ class AuthorSuggestionsAPIView(GenericAPIView):
             raise AssertionError("AuthorSuggestionsAPIView expected application to use different PLATFORM")
 
     def get(self, request, *args, **kwargs):
+        presets = validate_presets(self.request)
         serializer = self.get_serializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         author_name = serializer.validated_data["author_name"]
-        client = get_search_client()
+        client = get_search_client(presets=presets)
         response = client.author_suggestions(author_name)
-        result_serializer = load_results_serializers(request, single_serializer=True)
-        response["results"] = prepare_results_for_response(response["results"], result_serializer[Entities.PRODUCTS])
+        result_serializers = load_results_serializers(presets)
+        response["results"] = prepare_results_for_response(response["results"], result_serializers)
         return Response(response)
