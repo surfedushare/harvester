@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 class BaseSearchResultSerializer(serializers.Serializer):
 
+    entity = serializers.CharField()
     srn = serializers.CharField(default=None)
     set = serializers.CharField(default=None)
     state = serializers.CharField(default="active")
