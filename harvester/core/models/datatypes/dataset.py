@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections import defaultdict
 from itertools import groupby
 from functools import reduce
 from datetime import datetime
@@ -152,15 +151,6 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     @property
     def model_key(self) -> tuple[str, int]:
         return f"{self._meta.app_label}.{self._meta.model_name}", self.id,
-
-    def get_search_documents_by_language(self, **filters) -> dict[str, list]:
-        by_language = defaultdict(list)
-        documents = self.documents.filter(**filters)
-        for document in documents:
-            language = document.get_analyzer_language()
-            by_language[language] += list(document.to_search(use_multilingual_fields=False))
-            by_language["all"] += list(document.to_search(use_multilingual_fields=False))
-        return by_language
 
     def set_current(self) -> None:
         type(self).objects.all().update(is_current=False)
