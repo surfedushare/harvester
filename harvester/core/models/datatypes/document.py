@@ -175,18 +175,17 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             data.update(self.get_derivatives_data())
         return data
 
-    def to_search(self, use_multilingual_fields: bool = False) -> list[dict]:
+    def to_search(self, use_multilingual_fields: bool = False) -> dict:
         # Decide whether to delete or not from the index
         if self.state != self.States.ACTIVE:
-            yield {
+            return {
                 "_id": self.properties["srn"],
                 "_op_type": "delete"
             }
-            return
         # Get the basic document information including from document overwrites
         search_data = self.to_data(use_multilingual_fields=use_multilingual_fields)
         search_data["_id"] = self.properties["srn"]
-        yield search_data
+        return search_data
 
     def __eq__(self, other):
         # We won't try equality with anything but a HarvestDocument of the same class

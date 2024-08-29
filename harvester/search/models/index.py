@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from collections import defaultdict
 
 from django.conf import settings
 from django.db import models
@@ -49,8 +50,6 @@ class OpenSearchIndex(models.Model):
         super().delete(using=using, keep_parents=keep_parents)
 
     def get_remote_name(self, language: str = None) -> str:
-        if not self.id:
-            raise ValueError("Can't get the remote name for an unsaved object")
         name = self.name
         if language and language != "all":
             name += f"-{language}"
@@ -65,46 +64,48 @@ class OpenSearchIndex(models.Model):
         return names
 
     def check_remote_exists(self, language: str = None) -> bool:
-        if not self.id:
-            raise ValueError("Can't check for existence with an unsaved object")
         remote_name = self.get_remote_name(language)
         return self.client.indices.exists(remote_name)
 
-    def push(self, search_documents: dict[str, list[dict]], recreate=True, request_timeout=300) -> list[str]:
-        if not self.id:
-            raise ValueError("Can't push index with unsaved object")
-
-        current_time = make_aware(datetime.now())
-        errors = []
+    def prepare_push(self, recreate: bool = None) -> None:
+        # Set the state of this instance
         if recreate:
             self.configuration = {}
             self.error_count = 0
         self.clean()
-
-        for language, documents in search_documents.items():
-            # Some preparation based on remote state as well as arguments
-            remote_name = self.get_remote_name(language)
-            remote_exists = self.check_remote_exists(language)
+        self.save()
+        # Guarantee that the remotes exist.
+        for remote_name in self.get_remote_names():
+            # As long as we support indices per language we need to defer the language from remote name.
+            # This is expected to get deprecated soon.
+            language_postfix = remote_name.replace(
+                self.name.replace(".", ""), ""
+            )
+            language = language_postfix[1:] if language_postfix else "all"
+            # Actual checks and creation of remotes
+            remote_exists = self.client.indices.exists(remote_name)
             if remote_exists and recreate:
                 self.client.indices.delete(index=remote_name)
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration[language])
-            if recreate:
-                documents = [
-                    search_document for search_document in documents
-                    if search_document.get("_op_type", None) != "delete"
-                ]
 
-            # Actual push of docs to ES
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=300, is_done: bool = True) -> list[str]:
+        current_time = make_aware(datetime.now())
+        errors = []
+        search_documents_by_language = defaultdict(list)
+        for language, search_document in search_documents:
+            search_documents_by_language[language].append(search_document)
+        for language, documents in search_documents_by_language.items():
+            remote_name = self.get_remote_name(language)
             for is_ok, result in streaming_bulk(self.client, documents, index=remote_name,
                                                 chunk_size=100, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
                     self.error_count += 1
                     errors.append(result)
-
         self.pushed_at = current_time
-        self.save()
+        if is_done:
+            self.save()
         return errors
 
     def promote_all_to_latest(self) -> None:

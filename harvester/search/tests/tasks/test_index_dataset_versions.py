@@ -32,6 +32,9 @@ class TestIndexDatasetVersions(TestCase):
         cls.deleted_document = cls.documents[0]
         cls.deleted_document.state = cls.deleted_document.States.DELETED
         cls.deleted_document.save()
+        cls.old_document = cls.documents[1]
+        cls.old_document.metadata["modified_at"] = cls.start_time - timedelta(days=1)
+        cls.old_document.save()
 
     def setUp(self):
         super().setUp()
@@ -47,14 +50,15 @@ class TestIndexDatasetVersions(TestCase):
         self.search_client.indices.create.reset_mock()
         self.search_client.indices.delete.reset_mock()
 
-    def assert_document_stream(self, streaming_bulk_mock, exclude_deletes=False):
+    def assert_document_stream(self, streaming_bulk_mock, exclude_deletes=False, include_old_documents=False):
         self.assertEqual(streaming_bulk_mock.call_count, 4, "Expected a separate call for nl, en, unk and all")
         for args, kwargs in streaming_bulk_mock.call_args_list:
             client, docs = args
             alias, dataset_info = kwargs["index"].split("--")
             # Check language based call when appropriate and strip the language postfix
             if dataset_info.endswith("nl"):
-                self.assertEqual(len(docs), 3)
+                expected_count = 3 if include_old_documents else 2
+                self.assertEqual(len(docs), expected_count)
                 dataset_info = dataset_info[:-3]
             elif dataset_info.endswith("en"):
                 expected_count = 3 if exclude_deletes else 4
@@ -185,7 +189,7 @@ class TestIndexDatasetVersions(TestCase):
     def test_index_recreate(self, streaming_bulk_mock, get_search_client_mock):
         index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], recreate_indices=True)
         # Check if data was sent to search engine
-        self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True)
+        self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True, include_old_documents=True)
         # Check DatasetVersion and OpensearchIndex updates
         self.dataset_version.refresh_from_db()
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
@@ -197,3 +201,22 @@ class TestIndexDatasetVersions(TestCase):
         # Check index recreation
         self.assert_index_deletion("edusources", "testing", ["en", "nl", "unk"])
         self.assert_index_creation("edusources", "testing", ["en", "nl", "unk"])
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    @patch("search.models.index.streaming_bulk")
+    def test_index_since(self, streaming_bulk_mock, get_search_client_mock):
+        index_since = self.start_time - timedelta(days=2)
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], index_since=index_since)
+        # Check if data was sent to search engine
+        self.assert_document_stream(streaming_bulk_mock, include_old_documents=True)
+        # Check DatasetVersion and OpensearchIndex updates
+        self.dataset_version.refresh_from_db()
+        self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
+        self.dataset_version.index.refresh_from_db()
+        self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        # Check alias modifications
+        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        # Check indices are left alone
+        self.assertEqual(self.search_client.indices.delete.call_count, 0, "Expected index not to be recreated")
+        self.assertEqual(self.search_client.indices.create.call_count, 0, "Expected index not to be recreated")
