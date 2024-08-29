@@ -5,6 +5,7 @@ from itertools import groupby
 from functools import reduce
 from datetime import datetime
 from copy import deepcopy
+from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
@@ -142,6 +143,11 @@ class HarvestDatasetVersion(HarvestObjectMixin):
 
     def __str__(self) -> str:
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
+
+    def get_numeric_version(self) -> tuple[Decimal, int]:
+        major, minor, patch = self.version.split(".")
+        version = Decimal(f"{major}.{minor}")
+        return version, int(patch)
 
     @property
     def model_key(self) -> tuple[str, int]:

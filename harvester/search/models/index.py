@@ -55,12 +55,13 @@ class OpenSearchIndex(models.Model):
             name += f"-{language}"
         return name.replace(".", "")
 
-    def get_remote_names(self) -> list[str]:
+    def get_remote_names(self, include_multilingual_index=True) -> list[str]:
         names = [
             self.get_remote_name(language)
             for language in settings.OPENSEARCH_LANGUAGE_CODES
         ]
-        names.append(self.get_remote_name())
+        if include_multilingual_index:
+            names.append(self.get_remote_name())
         return names
 
     def check_remote_exists(self, language: str = None) -> bool:
