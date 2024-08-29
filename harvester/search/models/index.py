@@ -15,7 +15,7 @@ from search.clients import get_opensearch_client
 
 class OpenSearchIndex(models.Model):
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, db_index=True)
     entity = models.CharField(max_length=50, default="products")
     configuration = models.JSONField(blank=True)
     error_count = models.IntegerField(default=0)
