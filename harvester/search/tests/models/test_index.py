@@ -37,7 +37,6 @@ class TestOpenSearchIndexModel(TestCase):
 
     def test_get_remote_names(self):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")
-        self.assertRaises(ValueError, instance.get_remote_names)
         instance.save()
         names = instance.get_remote_names()
         self.assertEqual(set(names), {

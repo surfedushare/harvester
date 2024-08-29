@@ -29,6 +29,9 @@ class TestIndexDatasetVersions(TestCase):
             list(seed_generator("simple", 10, ENTITY_SEQUENCE_PROPERTIES["simple"], has_language=True)),
             10
         )
+        cls.deleted_document = cls.documents[0]
+        cls.deleted_document.state = cls.deleted_document.States.DELETED
+        cls.deleted_document.save()
 
     def setUp(self):
         super().setUp()
@@ -44,7 +47,7 @@ class TestIndexDatasetVersions(TestCase):
         self.search_client.indices.create.reset_mock()
         self.search_client.indices.delete.reset_mock()
 
-    def assert_document_stream(self, streaming_bulk_mock):
+    def assert_document_stream(self, streaming_bulk_mock, exclude_deletes=False):
         self.assertEqual(streaming_bulk_mock.call_count, 4, "Expected a separate call for nl, en, unk and all")
         for args, kwargs in streaming_bulk_mock.call_args_list:
             client, docs = args
@@ -54,7 +57,8 @@ class TestIndexDatasetVersions(TestCase):
                 self.assertEqual(len(docs), 3)
                 dataset_info = dataset_info[:-3]
             elif dataset_info.endswith("en"):
-                self.assertEqual(len(docs), 4)
+                expected_count = 3 if exclude_deletes else 4
+                self.assertEqual(len(docs), expected_count)
                 dataset_info = dataset_info[:-3]
             elif dataset_info.endswith("unk"):
                 self.assertEqual(len(docs), 3)
@@ -181,7 +185,7 @@ class TestIndexDatasetVersions(TestCase):
     def test_index_recreate(self, streaming_bulk_mock, get_search_client_mock):
         index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], recreate_indices=True)
         # Check if data was sent to search engine
-        self.assert_document_stream(streaming_bulk_mock)
+        self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True)
         # Check DatasetVersion and OpensearchIndex updates
         self.dataset_version.refresh_from_db()
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
