@@ -1,8 +1,12 @@
+from django.conf import settings
 from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.exceptions import ValidationError
 
+from search_client.opensearch.client import SearchClient
+from search_client.opensearch.configuration import is_valid_preset_search_configuration
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField, MetadataFieldSerializer, MetadataValue, MetadataValueSerializer
 
@@ -11,7 +15,7 @@ from metadata.models import MetadataField, MetadataFieldSerializer, MetadataValu
 class MetadataTreeView(generics.ListAPIView):
     """
     The metadata tree is used for filtering with the full text search endpoint.
-    This endpoint returns all available metadata values.
+    This endpoint returns all available metadata values for a given entity or all values for products.
 
     There are two types of nodes in the metadata tree.
     The root metadata nodes have a **field** value of null.
@@ -51,10 +55,27 @@ class MetadataTreeView(generics.ListAPIView):
     **frequency**: How many results match this node in the entire dataset.
 
     """
-    queryset = MetadataField.objects.filter(is_hidden=False).select_related("translation")
     serializer_class = MetadataFieldSerializer
     schema = HarvesterSchema()
     pagination_class = None
+
+    def get_entities(self) -> list[str]:
+        entity_input = self.request.GET.get("entity", SearchClient.preset_default)
+        try:
+            entity_validated_input = is_valid_preset_search_configuration(settings.PLATFORM, entity_input)
+        except ValueError:
+            raise ValidationError(f"Invalid entity for {settings.PLATFORM.value}: {entity_input}")
+        entities = [entity_validated_input]
+        if ":" in entity_input:
+            entity, subtype = entity_input.split(":")
+            entities.append(entity)
+        else:
+            entities.append(entity_input)
+        return entities
+
+    def get_queryset(self):
+        entities = self.get_entities()
+        return MetadataField.objects.filter(is_hidden=False).filter(entity__in=entities).select_related("translation")
 
 
 @method_decorator(gzip_page, name="dispatch")

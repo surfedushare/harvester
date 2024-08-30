@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from rest_framework import serializers
 
+from search_client.opensearch.configuration.presets import get_all_preset_keys
 from search.clients import get_opensearch_client
 from metadata.models import MetadataTranslation, MetadataTranslationSerializer, MetadataValueSerializer
 
@@ -33,6 +34,11 @@ class MetadataFieldManager(models.Manager):
         }
 
 
+ENTITY_CHOICES = [
+    (key, key,) for key in get_all_preset_keys()
+]
+
+
 class MetadataField(models.Model):
 
     class ValueOutputOrders(models.TextChoices):
@@ -43,6 +49,10 @@ class MetadataField(models.Model):
     objects = MetadataFieldManager()
 
     name = models.CharField(max_length=255, null=False, blank=False)
+    entity = models.CharField(
+        max_length=100, null=False, default="products", choices=ENTITY_CHOICES,
+        help_text="Indicates which entity and/or search configuration controls metadata for this field."
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
