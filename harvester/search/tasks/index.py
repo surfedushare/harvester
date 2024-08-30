@@ -33,7 +33,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
                 return
             # Preparation and batching of documents to push to relevant indices.
             index.prepare_push(recreate=recreate)
-            for batch in ibatch(documents, batch_size):
+            for batch in ibatch(documents.iterator(), batch_size):
                 search_document_batch = []
                 for document in batch:
                     language = document.get_analyzer_language()
