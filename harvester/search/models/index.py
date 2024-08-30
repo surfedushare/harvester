@@ -9,6 +9,7 @@ from django.utils.timezone import make_aware
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
 
+from search_client.opensearch.indices import build_products_index_configuration
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search.clients import get_opensearch_client
 
@@ -176,11 +177,7 @@ class OpenSearchIndex(models.Model):
         if settings.OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS:
             decompound_word_list = settings.OPENSEARCH_DECOMPOUND_WORD_LISTS.dutch
         if language is None:
-            return create_open_search_index_configuration(
-                "unk",
-                settings.DOCUMENT_TYPE,
-                decompound_word_list=decompound_word_list
-            )
+            return build_products_index_configuration(settings.DOCUMENT_TYPE, decompound_word_list)
         return create_open_search_index_configuration(
             language,
             settings.DOCUMENT_TYPE,
