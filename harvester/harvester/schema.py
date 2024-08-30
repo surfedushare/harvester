@@ -39,8 +39,6 @@ class HarvesterSchema(AutoSchema):
                         }
                     }
                 ]
-        elif path.startswith("/extension"):
-            operation["tags"] = ["Extending data"]
         elif path.startswith("/search") or path.startswith("/find"):
             operation["tags"] = ["Search"]
             operation["parameters"] += [
@@ -132,13 +130,26 @@ class HarvesterSchema(AutoSchema):
             if "tree" in path:
                 operation["parameters"] += [
                     {
+                        "name": "entity",
+                        "in": "query",
+                        "required": False,
+                        "description": "The response will only contain metadata fields who's values "
+                                       "stem from the given entity (leave empty for default product fields)",
+                        'schema': {
+                            'type': 'string',
+                        }
+                    },
+                ]
+                operation["parameters"] += [
+                    {
                         "name": "max_children",
                         "in": "query",
                         "required": False,
                         "description": "Limits the amount of children returned by this endpoint "
                                        "(mostly useful to speed up responses from the interactive documentation)",
                         'schema': {
-                            'type': 'string',
+                            'type': 'number',
+                            'default': 5
                         }
                     },
                 ]

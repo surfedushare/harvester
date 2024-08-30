@@ -26,7 +26,7 @@ class TestPydanticToDRFConversion(TestCase):
                 untyped_learning_material = json.loads(learning_material_json)
                 serializer = SimpleLearningMaterialResultSerializer(data=untyped_learning_material)
                 try:
-                    serializer.is_valid()
+                    serializer.is_valid(raise_exception=True)
                 except ValidationError as exc:
                     self.fail(
                         f"SimpleLearningMaterialResultSerializer raised validation error "
@@ -42,7 +42,7 @@ class TestPydanticToDRFConversion(TestCase):
                 untyped_research_product = json.loads(research_product_json)
                 serializer = ResearchProductResultSerializer(data=untyped_research_product)
                 try:
-                    serializer.is_valid()
+                    serializer.is_valid(raise_exception=True)
                 except ValidationError as exc:
                     self.fail(
                         f"ResearchProductResultSerializer raised validation error "
