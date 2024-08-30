@@ -7,6 +7,7 @@ from django.conf import settings
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from core.utils.analyzers import get_analyzer_language
+from core.utils.contents import ContentContainer, Content
 from metadata.models import MetadataValue
 from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
@@ -81,7 +82,7 @@ class ProductDocument(HarvestDocument):
         return self.metadata["language"]
 
     @staticmethod
-    def update_files_data(data: dict) -> dict:
+    def update_files_data(data: dict) -> tuple[dict, ContentContainer]:
         # Prepare lookups
         file_identities = [
             f"{data['set']}:{data['external_id']}:{sha1(url.encode('utf-8')).hexdigest()}"
@@ -107,7 +108,6 @@ class ProductDocument(HarvestDocument):
             "url": first_file_document.get("url"),
             "mime_type": first_file_document.get("mime_type"),
             "technical_type": first_file_document.get("type"),
-            "text": first_file_document.get("text"),
             "previews": first_file_document.get("previews"),
             "video": first_file_document.get("video"),
             "copyright": first_file_document.get("copyright") or "yes"
@@ -117,7 +117,7 @@ class ProductDocument(HarvestDocument):
         if data.get("copyright") or not settings.SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT:
             main_file_info.pop("copyright")
         data.update(main_file_info)
-        # Clean the file data a bit and set titles
+        # Clean the file data a bit and set titles for files
         files_in_order = []
         links_in_order = []
         for file_identity in prioritized_file_identities:
@@ -141,9 +141,31 @@ class ProductDocument(HarvestDocument):
                 files_index = files_in_order.index(file_identity)
                 file_info["title"] = settings.DEFAULT_FILE_TITLES_TEMPLATE.format(ix=files_index+1)
             files.append(file_info)
-        # Return the product with updated files data
         data["files"] = files
-        return data
+        # Add contents of files in order to a ContentContainer and create other in-order lists
+        content_container = ContentContainer()
+        licenses = []
+        technical_types = []
+        for file_identity in prioritized_file_identities:
+            file_data = files_by_identity.get(file_identity, {})
+            if not file_data:
+                continue
+            content = Content(
+                srn=data["srn"],
+                provider=data["provider"],
+                language=get_analyzer_language(data["language"], as_enum=True),
+                title=data["title"],
+                content=data.get("text")
+            )
+            content_container.append(content)
+            if license_ := file_data["copyright"]:
+                licenses.append(license_)
+            if technical_type := file_data["type"]:
+                technical_types.append(technical_type)
+        # Return the product with updated data from files
+        data["licenses"] = licenses
+        data["technical_types"] = technical_types
+        return data, content_container
 
     @staticmethod
     def get_suggest_completion(title: str, text: str) -> list[str]:
@@ -158,11 +180,8 @@ class ProductDocument(HarvestDocument):
             for word in suggest_completion
         ]
 
-    def transform_search_data(self, data: dict) -> dict:
-        text = data.pop("text", "")
-        if text and len(text) >= 1000000:
-            text = " ".join(text.split(" ")[:10000])
-        data["text"] = text
+    def transform_search_data(self, data: dict, content: ContentContainer) -> dict:
+        text = content.first("content")
         data["suggest_phrase"] = text
         data["suggest_completion"] = self.get_suggest_completion(data["title"], text)
         return data
@@ -180,8 +199,9 @@ class ProductDocument(HarvestDocument):
         return data
 
     @staticmethod
-    def transform_multilingual_fields(data: dict, use_multilingual_fields: bool) -> dict:
+    def transform_multilingual_fields(data: dict, content: ContentContainer, use_multilingual_fields: bool) -> dict:
         if use_multilingual_fields:
+            data["texts"] = content.to_data()
             return data
         # When not using multilingual fields we only transform if we receive a dict for certain fields.
         # The dict indicates that tasks have returned multilingual field data,
@@ -196,6 +216,7 @@ class ProductDocument(HarvestDocument):
             dutch_terms = data["study_vocabulary"].get("nl", [])
             data["study_vocabulary"] = data["study_vocabulary"].get("keyword", [])
             data["study_vocabulary_terms"] = dutch_terms
+        data["text"] = content.first("content")
         return data
 
     def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
@@ -204,12 +225,13 @@ class ProductDocument(HarvestDocument):
         data = super().to_data(merge_derivatives)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
-        # Transforms based on the main file
+        # Transforms based on the files as well as content preparation
         if len(data["files"]):
-            data = self.update_files_data(data)
+            data, content = self.update_files_data(data)
         else:
+            content = ContentContainer()
             data.update({
-                "url": None, "mime_type": None, "text": None, "previews": None, "video": None,
+                "url": None, "mime_type": None, "previews": None, "video": None,
                 "technical_type": data.get("technical_type"),
             })
         # Platform specific transforms
@@ -224,9 +246,9 @@ class ProductDocument(HarvestDocument):
             research_product.pop("parties", None)  # parties equals publishers for now and we ignore parties
             data.update(research_product)
         # Index related transforms
-        data = self.transform_multilingual_fields(data, use_multilingual_fields=use_multilingual_fields)
+        data = self.transform_multilingual_fields(data, content, use_multilingual_fields=use_multilingual_fields)
         if for_search:
-            data = self.transform_search_data(data)
+            data = self.transform_search_data(data, content)
         # Done
         return data
 
