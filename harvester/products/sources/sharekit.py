@@ -151,6 +151,27 @@ class SharekitMetadataExtraction:
             return []
         return discipline_value if isinstance(discipline_value, list) else [discipline_value]
 
+    @classmethod
+    def get_keywords(cls, node):
+        keywords = node["attributes"].get("keywords", [])
+        if not keywords:
+            return []
+        return keywords if isinstance(keywords, list) else [keywords]
+
+    @classmethod
+    def get_part_of(cls, node):
+        part_of = node["attributes"].get("partOf", [])
+        if not part_of:
+            return []
+        return part_of if isinstance(part_of, list) else [part_of]
+
+    @classmethod
+    def get_has_parts(cls, node):
+        has_parts = node["attributes"].get("hasParts", [])
+        if not has_parts:
+            return []
+        return has_parts if isinstance(has_parts, list) else [has_parts]
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -166,7 +187,7 @@ OBJECTIVE = {
     "title": "$.attributes.title",
     "subtitle": "$.attributes.subtitle",
     "language": "$.attributes.language",
-    "keywords": "$.attributes.keywords",
+    "keywords": SharekitMetadataExtraction.get_keywords,
     "description": "$.attributes.abstract",
     "copyright": SharekitMetadataExtraction.get_copyright,
     "authors": SharekitMetadataExtraction.get_authors,
@@ -175,8 +196,8 @@ OBJECTIVE = {
     "publishers": SharekitMetadataExtraction.get_publishers,
     "publisher_date": SharekitMetadataExtraction.get_publisher_date,
     "publisher_year": SharekitMetadataExtraction.get_publisher_year,
-    "is_part_of": "$.attributes.partOf",
-    "has_parts": "$.attributes.hasParts",
+    "is_part_of": SharekitMetadataExtraction.get_part_of,
+    "has_parts": SharekitMetadataExtraction.get_has_parts,
     # Learning material metadata
     "learning_material.aggregation_level": "$.attributes.aggregationlevel",
     "learning_material.material_types": SharekitMetadataExtraction.get_material_types,
