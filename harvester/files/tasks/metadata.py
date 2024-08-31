@@ -139,7 +139,10 @@ def get_embed_url(node):
     url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
     if not url_regex:
         return
-    return url_regex[0]
+    url = url_regex[0]
+    if not url.startswith("http"):
+        url = f"https://{url}"
+    return url
 
 
 def get_previews(node):
