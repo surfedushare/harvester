@@ -439,15 +439,9 @@ class TestRawDocumentView(TestDocumentView):
         "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "state": "active",
         "metadata": {
-            "srn": None,
             "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
             "language": "nl",
-            "provider": {
-                "ror": None,
-                "name": None,
-                "slug": None,
-                "external_id": None
-            },
+            "provider": "Stimuleringsregeling Open en Online Onderwijs",
             "created_at": "2024-04-17T14:19:12.720000Z",
             "deleted_at": None,
             "modified_at": "2024-04-17T14:19:12.720000Z"
