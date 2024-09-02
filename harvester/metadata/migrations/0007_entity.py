@@ -78,6 +78,14 @@ class Migration(migrations.Migration):
             name='entity',
             field=models.CharField(choices=[('products', 'products'), ('products:default', 'products:default'), ('products:multilingual-indices', 'products:multilingual-indices'), ('projects', 'projects'), ('projects:default', 'projects:default')], default='products', help_text='Indicates which entity and/or search configuration controls metadata for this field.', max_length=100),
         ),
+        migrations.AlterUniqueTogether(
+            name='metadatavalue',
+            unique_together={('field', 'value')},
+        ),
+        migrations.RemoveField(
+            model_name='metadatavalue',
+            name='site',
+        ),
         migrations.RunPython(
             migrate_metadata_field_to_entities,
             migrations.RunPython.noop
