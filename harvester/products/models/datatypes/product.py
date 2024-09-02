@@ -82,7 +82,7 @@ class ProductDocument(HarvestDocument):
         return self.metadata["language"]
 
     @staticmethod
-    def update_files_data(data: dict) -> tuple[dict, ContentContainer]:
+    def update_files_data(data: dict, content_container: ContentContainer) -> dict:
         # Prepare lookups
         file_identities = [
             f"{data['set']}:{data['external_id']}:{sha1(url.encode('utf-8')).hexdigest()}"
@@ -143,7 +143,6 @@ class ProductDocument(HarvestDocument):
             files.append(file_info)
         data["files"] = files
         # Add contents of files in order to a ContentContainer and create other in-order lists
-        content_container = ContentContainer()
         licenses = []
         technical_types = []
         for file_identity in prioritized_file_identities:
@@ -151,11 +150,11 @@ class ProductDocument(HarvestDocument):
             if not file_data:
                 continue
             content = Content(
-                srn=data["srn"],
-                provider=data["provider"],
-                language=get_analyzer_language(data["language"], as_enum=True),
-                title=data["title"],
-                content=data.get("text")
+                srn=file_data["srn"],
+                provider=file_data["provider"],
+                language=get_analyzer_language(file_data.get("language"), as_enum=True),
+                title=file_data["title"],
+                content=file_data.get("text")
             )
             content_container.append(content)
             if license_ := file_data["copyright"]:
@@ -165,7 +164,7 @@ class ProductDocument(HarvestDocument):
         # Return the product with updated data from files
         data["licenses"] = licenses
         data["technical_types"] = technical_types
-        return data, content_container
+        return data
 
     @staticmethod
     def get_suggest_completion(title: str, text: str) -> list[str]:
@@ -225,11 +224,20 @@ class ProductDocument(HarvestDocument):
         data = super().to_data(merge_derivatives)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
+        # Add content of the product to a ContentContainer
+        product_content = Content(
+            srn=data["srn"],
+            provider=data["provider"],
+            language=get_analyzer_language(data["language"], as_enum=True),
+            title=data["title"],
+            subtitle=data.get("subtitle"),
+            description=data["description"],
+        )
+        content_container = ContentContainer(contents=[product_content])
         # Transforms based on the files as well as content preparation
         if len(data["files"]):
-            data, content = self.update_files_data(data)
+            data = self.update_files_data(data, content_container)
         else:
-            content = ContentContainer()
             data.update({
                 "url": None, "mime_type": None, "previews": None, "video": None,
                 "technical_type": data.get("technical_type"),
@@ -246,9 +254,12 @@ class ProductDocument(HarvestDocument):
             research_product.pop("parties", None)  # parties equals publishers for now and we ignore parties
             data.update(research_product)
         # Index related transforms
-        data = self.transform_multilingual_fields(data, content, use_multilingual_fields=use_multilingual_fields)
+        data = self.transform_multilingual_fields(
+            data, content_container,
+            use_multilingual_fields=use_multilingual_fields
+        )
         if for_search:
-            data = self.transform_search_data(data, content)
+            data = self.transform_search_data(data, content_container)
         # Done
         return data
 
