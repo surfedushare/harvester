@@ -17,6 +17,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         super().add_arguments(parser)
         parser.add_argument('-dv', '--dataset-version-id', type=int)
+        parser.add_argument('-ei', '--exclude-inactive', action="store_true")
 
     def handle(self, *args, **options):
         dataset_version_id = options['dataset_version_id']
@@ -26,7 +27,11 @@ class Command(BaseCommand):
         serializer_class = products_app.result_serializer
         transformer_class = products_app.result_transformer
 
-        documents = dataset_version.documents.filter(state=ProductDocument.States.ACTIVE)
+        filters = {}
+        if options["exclude_inactive"]:
+            filters["state"] = ProductDocument.States.INACTIVE
+
+        documents = dataset_version.documents.filter(**filters)
         for document in tqdm(documents.iterator(), total=documents.count()):
             data = document.to_data()
             if not data:
