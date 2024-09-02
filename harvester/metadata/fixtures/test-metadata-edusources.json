@@ -5207,7 +5207,6 @@
     "pk": 1,
     "fields": {
         "name": "anatomy_tool",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.187Z",
         "updated_at": "2022-03-04T13:31:43.187Z",
         "deleted_at": null,
@@ -5229,7 +5228,6 @@
     "pk": 2,
     "fields": {
         "name": "edurep_delen",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.190Z",
         "updated_at": "2022-03-04T13:31:43.190Z",
         "deleted_at": null,
@@ -5251,7 +5249,6 @@
     "pk": 3,
     "fields": {
         "name": "l4l",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.192Z",
         "updated_at": "2022-03-04T13:31:43.192Z",
         "deleted_at": null,
@@ -5273,7 +5270,6 @@
     "pk": 4,
     "fields": {
         "name": "Sharekit",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.194Z",
         "updated_at": "2022-03-04T13:31:43.194Z",
         "deleted_at": null,
@@ -5295,7 +5291,6 @@
     "pk": 5,
     "fields": {
         "name": "edusources",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.196Z",
         "updated_at": "2022-03-04T13:31:43.196Z",
         "deleted_at": null,
@@ -5317,7 +5312,6 @@
     "pk": 6,
     "fields": {
         "name": "edusourcesprivate",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.197Z",
         "updated_at": "2022-03-04T13:31:43.197Z",
         "deleted_at": null,
@@ -5339,7 +5333,6 @@
     "pk": 7,
     "fields": {
         "name": "wikiwijsmaken",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.200Z",
         "updated_at": "2022-03-04T13:31:43.200Z",
         "deleted_at": null,
@@ -5361,7 +5354,6 @@
     "pk": 8,
     "fields": {
         "name": "2018",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.202Z",
         "updated_at": "2022-03-04T13:31:43.202Z",
         "deleted_at": null,
@@ -5383,7 +5375,6 @@
     "pk": 9,
     "fields": {
         "name": "2019",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.204Z",
         "updated_at": "2022-03-04T13:31:43.204Z",
         "deleted_at": null,
@@ -5405,7 +5396,6 @@
     "pk": 10,
     "fields": {
         "name": "2020",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.206Z",
         "updated_at": "2022-03-04T13:31:43.206Z",
         "deleted_at": null,
@@ -5427,7 +5417,6 @@
     "pk": 11,
     "fields": {
         "name": "2021",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.207Z",
         "updated_at": "2022-03-04T13:31:43.207Z",
         "deleted_at": null,
@@ -5449,7 +5438,6 @@
     "pk": 12,
     "fields": {
         "name": "2022",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.209Z",
         "updated_at": "2022-03-04T13:31:43.209Z",
         "deleted_at": null,
@@ -5471,7 +5459,6 @@
     "pk": 13,
     "fields": {
         "name": "Ouder dan",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.211Z",
         "updated_at": "2022-03-04T13:31:43.211Z",
         "deleted_at": null,
@@ -5493,7 +5480,6 @@
     "pk": 14,
     "fields": {
         "name": "2017",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.213Z",
         "updated_at": "2022-03-04T13:31:43.213Z",
         "deleted_at": null,
@@ -5515,7 +5501,6 @@
     "pk": 15,
     "fields": {
         "name": "1713",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.215Z",
         "updated_at": "2022-03-04T13:31:43.215Z",
         "deleted_at": null,
@@ -5537,7 +5522,6 @@
     "pk": 16,
     "fields": {
         "name": "1716",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.217Z",
         "updated_at": "2022-03-04T13:31:43.217Z",
         "deleted_at": null,
@@ -5559,7 +5543,6 @@
     "pk": 17,
     "fields": {
         "name": "1795",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.219Z",
         "updated_at": "2022-03-04T13:31:43.219Z",
         "deleted_at": null,
@@ -5581,7 +5564,6 @@
     "pk": 18,
     "fields": {
         "name": "1797",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.221Z",
         "updated_at": "2022-03-04T13:31:43.221Z",
         "deleted_at": null,
@@ -5603,7 +5585,6 @@
     "pk": 19,
     "fields": {
         "name": "1970",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.222Z",
         "updated_at": "2022-03-04T13:31:43.222Z",
         "deleted_at": null,
@@ -5625,7 +5606,6 @@
     "pk": 20,
     "fields": {
         "name": "2016",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.224Z",
         "updated_at": "2022-03-04T13:31:43.224Z",
         "deleted_at": null,
@@ -5647,7 +5627,6 @@
     "pk": 21,
     "fields": {
         "name": "2015",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.226Z",
         "updated_at": "2022-03-04T13:31:43.226Z",
         "deleted_at": null,
@@ -5669,7 +5648,6 @@
     "pk": 22,
     "fields": {
         "name": "2014",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.228Z",
         "updated_at": "2022-03-04T13:31:43.228Z",
         "deleted_at": null,
@@ -5691,7 +5669,6 @@
     "pk": 23,
     "fields": {
         "name": "2013",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.230Z",
         "updated_at": "2022-03-04T13:31:43.230Z",
         "deleted_at": null,
@@ -5713,7 +5690,6 @@
     "pk": 24,
     "fields": {
         "name": "2012",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.231Z",
         "updated_at": "2022-03-04T13:31:43.231Z",
         "deleted_at": null,
@@ -5735,7 +5711,6 @@
     "pk": 25,
     "fields": {
         "name": "2011",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.233Z",
         "updated_at": "2022-03-04T13:31:43.233Z",
         "deleted_at": null,
@@ -5757,7 +5732,6 @@
     "pk": 26,
     "fields": {
         "name": "2009",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.235Z",
         "updated_at": "2022-03-04T13:31:43.235Z",
         "deleted_at": null,
@@ -5779,7 +5753,6 @@
     "pk": 27,
     "fields": {
         "name": "2010",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.237Z",
         "updated_at": "2022-03-04T13:31:43.237Z",
         "deleted_at": null,
@@ -5801,7 +5774,6 @@
     "pk": 28,
     "fields": {
         "name": "Afbeelding",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.240Z",
         "updated_at": "2022-03-04T13:31:43.240Z",
         "deleted_at": null,
@@ -5823,7 +5795,6 @@
     "pk": 29,
     "fields": {
         "name": "App",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.242Z",
         "updated_at": "2022-03-04T13:31:43.242Z",
         "deleted_at": null,
@@ -5845,7 +5816,6 @@
     "pk": 30,
     "fields": {
         "name": "Audio",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.244Z",
         "updated_at": "2022-03-04T13:31:43.244Z",
         "deleted_at": null,
@@ -5867,7 +5837,6 @@
     "pk": 31,
     "fields": {
         "name": "Degrees video",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.246Z",
         "updated_at": "2022-03-04T13:31:43.246Z",
         "deleted_at": null,
@@ -5889,7 +5858,6 @@
     "pk": 32,
     "fields": {
         "name": "Document",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.247Z",
         "updated_at": "2022-03-04T13:31:43.247Z",
         "deleted_at": null,
@@ -5911,7 +5879,6 @@
     "pk": 33,
     "fields": {
         "name": "Openaccess textbook",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.249Z",
         "updated_at": "2022-03-04T13:31:43.249Z",
         "deleted_at": null,
@@ -5933,7 +5900,6 @@
     "pk": 34,
     "fields": {
         "name": "Presentatie",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.251Z",
         "updated_at": "2022-03-04T13:31:43.251Z",
         "deleted_at": null,
@@ -5955,7 +5921,6 @@
     "pk": 35,
     "fields": {
         "name": "Spreadsheet",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.253Z",
         "updated_at": "2022-03-04T13:31:43.253Z",
         "deleted_at": null,
@@ -5977,7 +5942,6 @@
     "pk": 36,
     "fields": {
         "name": "unknown",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.255Z",
         "updated_at": "2022-03-04T13:31:43.255Z",
         "deleted_at": null,
@@ -5999,7 +5963,6 @@
     "pk": 37,
     "fields": {
         "name": "Video",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.257Z",
         "updated_at": "2022-03-04T13:31:43.257Z",
         "deleted_at": null,
@@ -6021,7 +5984,6 @@
     "pk": 38,
     "fields": {
         "name": "Website",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.258Z",
         "updated_at": "2022-03-04T13:31:43.258Z",
         "deleted_at": null,
@@ -6043,7 +6005,6 @@
     "pk": 44,
     "fields": {
         "name": "document",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.271Z",
         "updated_at": "2022-03-04T13:31:43.271Z",
         "deleted_at": null,
@@ -6065,7 +6026,6 @@
     "pk": 45,
     "fields": {
         "name": "SURF",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.271Z",
         "updated_at": "2022-03-04T13:31:43.271Z",
         "deleted_at": null,
@@ -6087,7 +6047,6 @@
     "pk": 179,
     "fields": {
         "name": "HBO",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.526Z",
         "updated_at": "2022-03-04T13:31:43.526Z",
         "deleted_at": null,
@@ -6109,7 +6068,6 @@
     "pk": 180,
     "fields": {
         "name": "WO",
-        "site": 1,
         "created_at": "2022-03-04T13:31:43.528Z",
         "updated_at": "2022-03-04T13:31:43.528Z",
         "deleted_at": null,
@@ -6131,7 +6089,6 @@
     "pk": 2867,
     "fields": {
         "name": "aarde_milieu",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.237Z",
         "updated_at": "2022-07-26T14:42:03.237Z",
         "deleted_at": null,
@@ -6153,7 +6110,6 @@
     "pk": 2868,
     "fields": {
         "name": "Aardrijkskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.240Z",
         "updated_at": "2022-07-26T14:42:03.240Z",
         "deleted_at": null,
@@ -6175,7 +6131,6 @@
     "pk": 2869,
     "fields": {
         "name": "Aardwetenschappen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.241Z",
         "updated_at": "2022-07-26T14:42:03.242Z",
         "deleted_at": null,
@@ -6197,7 +6152,6 @@
     "pk": 2870,
     "fields": {
         "name": "Biologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.243Z",
         "updated_at": "2022-07-26T14:42:03.243Z",
         "deleted_at": null,
@@ -6219,7 +6173,6 @@
     "pk": 2871,
     "fields": {
         "name": "Milieuwetenschappen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.244Z",
         "updated_at": "2022-07-26T14:42:03.244Z",
         "deleted_at": null,
@@ -6241,7 +6194,6 @@
     "pk": 2872,
     "fields": {
         "name": "Voedsel, natuur en leefomgeving",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.246Z",
         "updated_at": "2022-07-26T14:42:03.246Z",
         "deleted_at": null,
@@ -6263,7 +6215,6 @@
     "pk": 2873,
     "fields": {
         "name": "economie_bedrijf",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.247Z",
         "updated_at": "2022-07-26T14:42:03.247Z",
         "deleted_at": null,
@@ -6285,7 +6236,6 @@
     "pk": 2874,
     "fields": {
         "name": "Bedrijfskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.250Z",
         "updated_at": "2022-07-26T14:42:03.250Z",
         "deleted_at": null,
@@ -6307,7 +6257,6 @@
     "pk": 2875,
     "fields": {
         "name": "economie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.251Z",
         "updated_at": "2022-07-26T14:42:03.251Z",
         "deleted_at": null,
@@ -6329,7 +6278,6 @@
     "pk": 2876,
     "fields": {
         "name": "Economie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.253Z",
         "updated_at": "2022-07-26T14:42:03.253Z",
         "deleted_at": null,
@@ -6351,7 +6299,6 @@
     "pk": 2877,
     "fields": {
         "name": "Landbouw",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.254Z",
         "updated_at": "2022-07-26T14:42:03.254Z",
         "deleted_at": null,
@@ -6373,7 +6320,6 @@
     "pk": 2878,
     "fields": {
         "name": "Organisatiekunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.256Z",
         "updated_at": "2022-07-26T14:42:03.256Z",
         "deleted_at": null,
@@ -6395,7 +6341,6 @@
     "pk": 2879,
     "fields": {
         "name": "Transport en logistiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.257Z",
         "updated_at": "2022-07-26T14:42:03.257Z",
         "deleted_at": null,
@@ -6417,7 +6362,6 @@
     "pk": 2880,
     "fields": {
         "name": "Vrijetijdsmanagement",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.259Z",
         "updated_at": "2022-07-26T14:42:03.259Z",
         "deleted_at": null,
@@ -6439,7 +6383,6 @@
     "pk": 2881,
     "fields": {
         "name": "exact_informatica",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.260Z",
         "updated_at": "2022-07-26T14:42:03.260Z",
         "deleted_at": null,
@@ -6461,7 +6404,6 @@
     "pk": 2882,
     "fields": {
         "name": "Astronomie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.263Z",
         "updated_at": "2022-07-26T14:42:03.263Z",
         "deleted_at": null,
@@ -6483,7 +6425,6 @@
     "pk": 2883,
     "fields": {
         "name": "Informatica",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.264Z",
         "updated_at": "2022-07-26T14:42:03.264Z",
         "deleted_at": null,
@@ -6505,7 +6446,6 @@
     "pk": 2884,
     "fields": {
         "name": "Natuurkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.265Z",
         "updated_at": "2022-07-26T14:42:03.265Z",
         "deleted_at": null,
@@ -6527,7 +6467,6 @@
     "pk": 2885,
     "fields": {
         "name": "Scheikunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.267Z",
         "updated_at": "2022-07-26T14:42:03.267Z",
         "deleted_at": null,
@@ -6549,7 +6488,6 @@
     "pk": 2886,
     "fields": {
         "name": "Wiskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.268Z",
         "updated_at": "2022-07-26T14:42:03.268Z",
         "deleted_at": null,
@@ -6571,7 +6509,6 @@
     "pk": 2887,
     "fields": {
         "name": "gedrag_maatschappij",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.270Z",
         "updated_at": "2022-07-26T14:42:03.270Z",
         "deleted_at": null,
@@ -6593,7 +6530,6 @@
     "pk": 2888,
     "fields": {
         "name": "Bevolkingskenmerken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.272Z",
         "updated_at": "2022-07-26T14:42:03.272Z",
         "deleted_at": null,
@@ -6615,7 +6551,6 @@
     "pk": 2889,
     "fields": {
         "name": "Culturele antropologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.273Z",
         "updated_at": "2022-07-26T14:42:03.273Z",
         "deleted_at": null,
@@ -6637,7 +6572,6 @@
     "pk": 2890,
     "fields": {
         "name": "Filosofie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.275Z",
         "updated_at": "2022-07-26T14:42:03.275Z",
         "deleted_at": null,
@@ -6659,7 +6593,6 @@
     "pk": 2891,
     "fields": {
         "name": "Geschiedenis",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.276Z",
         "updated_at": "2022-07-26T14:42:03.276Z",
         "deleted_at": null,
@@ -6681,7 +6614,6 @@
     "pk": 2892,
     "fields": {
         "name": "Godsdienst",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.277Z",
         "updated_at": "2022-07-26T14:42:03.277Z",
         "deleted_at": null,
@@ -6703,7 +6635,6 @@
     "pk": 2893,
     "fields": {
         "name": "Politicologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.279Z",
         "updated_at": "2022-07-26T14:42:03.279Z",
         "deleted_at": null,
@@ -6725,7 +6656,6 @@
     "pk": 2894,
     "fields": {
         "name": "Sociale geografie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.280Z",
         "updated_at": "2022-07-26T14:42:03.280Z",
         "deleted_at": null,
@@ -6747,7 +6677,6 @@
     "pk": 2895,
     "fields": {
         "name": "Sociale wetenschappen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.281Z",
         "updated_at": "2022-07-26T14:42:03.281Z",
         "deleted_at": null,
@@ -6769,7 +6698,6 @@
     "pk": 2896,
     "fields": {
         "name": "Sociologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.283Z",
         "updated_at": "2022-07-26T14:42:03.283Z",
         "deleted_at": null,
@@ -6791,7 +6719,6 @@
     "pk": 2897,
     "fields": {
         "name": "gezondheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.284Z",
         "updated_at": "2022-07-26T14:42:03.284Z",
         "deleted_at": null,
@@ -6813,7 +6740,6 @@
     "pk": 2898,
     "fields": {
         "name": "Actieonderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.291Z",
         "updated_at": "2022-07-26T14:42:03.291Z",
         "deleted_at": null,
@@ -6835,7 +6761,6 @@
     "pk": 2899,
     "fields": {
         "name": "Ademhaling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.292Z",
         "updated_at": "2022-07-26T14:42:03.292Z",
         "deleted_at": null,
@@ -6857,7 +6782,6 @@
     "pk": 2900,
     "fields": {
         "name": "ADL hulpmiddelen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.293Z",
         "updated_at": "2022-07-26T14:42:03.294Z",
         "deleted_at": null,
@@ -6879,7 +6803,6 @@
     "pk": 2901,
     "fields": {
         "name": "Afstemmen media op persoon",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.295Z",
         "updated_at": "2022-07-26T14:42:03.295Z",
         "deleted_at": null,
@@ -6901,7 +6824,6 @@
     "pk": 2902,
     "fields": {
         "name": "Agisme en stereotypering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.296Z",
         "updated_at": "2022-07-26T14:42:03.296Z",
         "deleted_at": null,
@@ -6923,7 +6845,6 @@
     "pk": 2903,
     "fields": {
         "name": "Analyse gezondheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.297Z",
         "updated_at": "2022-07-26T14:42:03.297Z",
         "deleted_at": null,
@@ -6945,7 +6866,6 @@
     "pk": 2904,
     "fields": {
         "name": "Argumenteren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.299Z",
         "updated_at": "2022-07-26T14:42:03.299Z",
         "deleted_at": null,
@@ -6967,7 +6887,6 @@
     "pk": 2905,
     "fields": {
         "name": "Autonomie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.300Z",
         "updated_at": "2022-07-26T14:42:03.300Z",
         "deleted_at": null,
@@ -6989,7 +6908,6 @@
     "pk": 2906,
     "fields": {
         "name": "Begeleidingsmethoden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.302Z",
         "updated_at": "2022-07-26T14:42:03.302Z",
         "deleted_at": null,
@@ -7011,7 +6929,6 @@
     "pk": 2907,
     "fields": {
         "name": "Begrenzing eigen domein",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.303Z",
         "updated_at": "2022-07-26T14:42:03.303Z",
         "deleted_at": null,
@@ -7033,7 +6950,6 @@
     "pk": 2908,
     "fields": {
         "name": "Beheersing Nederlandse taal",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.304Z",
         "updated_at": "2022-07-26T14:42:03.304Z",
         "deleted_at": null,
@@ -7055,7 +6971,6 @@
     "pk": 2909,
     "fields": {
         "name": "Belangen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.306Z",
         "updated_at": "2022-07-26T14:42:03.306Z",
         "deleted_at": null,
@@ -7077,7 +6992,6 @@
     "pk": 2910,
     "fields": {
         "name": "Beleid inzake ouderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.307Z",
         "updated_at": "2022-07-26T14:42:03.307Z",
         "deleted_at": null,
@@ -7099,7 +7013,6 @@
     "pk": 2911,
     "fields": {
         "name": "Beperkingen in communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.308Z",
         "updated_at": "2022-07-26T14:42:03.308Z",
         "deleted_at": null,
@@ -7121,7 +7034,6 @@
     "pk": 2912,
     "fields": {
         "name": "Beperkingen (omgaan met)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.310Z",
         "updated_at": "2022-07-26T14:42:03.310Z",
         "deleted_at": null,
@@ -7143,7 +7055,6 @@
     "pk": 2913,
     "fields": {
         "name": "Beperkte middelen en fysieke omstandigheden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.311Z",
         "updated_at": "2022-07-26T14:42:03.311Z",
         "deleted_at": null,
@@ -7165,7 +7076,6 @@
     "pk": 2914,
     "fields": {
         "name": "Beroepscode morele sensitiviteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.313Z",
         "updated_at": "2022-07-26T14:42:03.313Z",
         "deleted_at": null,
@@ -7187,7 +7097,6 @@
     "pk": 2915,
     "fields": {
         "name": "Beroepscode professioneel gedrag",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.314Z",
         "updated_at": "2022-07-26T14:42:03.314Z",
         "deleted_at": null,
@@ -7209,7 +7118,6 @@
     "pk": 2916,
     "fields": {
         "name": "Beroepscode professionele relatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.315Z",
         "updated_at": "2022-07-26T14:42:03.315Z",
         "deleted_at": null,
@@ -7231,7 +7139,6 @@
     "pk": 2917,
     "fields": {
         "name": "Beroepsvereniging",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.317Z",
         "updated_at": "2022-07-26T14:42:03.317Z",
         "deleted_at": null,
@@ -7253,7 +7160,6 @@
     "pk": 2918,
     "fields": {
         "name": "Beschrijvende statistiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.319Z",
         "updated_at": "2022-07-26T14:42:03.319Z",
         "deleted_at": null,
@@ -7275,7 +7181,6 @@
     "pk": 2919,
     "fields": {
         "name": "Besluitvormingsprocessen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.320Z",
         "updated_at": "2022-07-26T14:42:03.320Z",
         "deleted_at": null,
@@ -7297,7 +7202,6 @@
     "pk": 2920,
     "fields": {
         "name": "Betrouwbaarheid van verpleegkundige informatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.322Z",
         "updated_at": "2022-07-26T14:42:03.322Z",
         "deleted_at": null,
@@ -7319,7 +7223,6 @@
     "pk": 2921,
     "fields": {
         "name": "Bewaken kwaliteit van communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.323Z",
         "updated_at": "2022-07-26T14:42:03.323Z",
         "deleted_at": null,
@@ -7341,7 +7244,6 @@
     "pk": 2922,
     "fields": {
         "name": "Beweging",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.324Z",
         "updated_at": "2022-07-26T14:42:03.324Z",
         "deleted_at": null,
@@ -7363,7 +7265,6 @@
     "pk": 2923,
     "fields": {
         "name": "Casemanagement",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.326Z",
         "updated_at": "2022-07-26T14:42:03.326Z",
         "deleted_at": null,
@@ -7385,7 +7286,6 @@
     "pk": 2924,
     "fields": {
         "name": "Cel- en weefselleer",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.327Z",
         "updated_at": "2022-07-26T14:42:03.327Z",
         "deleted_at": null,
@@ -7407,7 +7307,6 @@
     "pk": 2925,
     "fields": {
         "name": "Centrale zenuwstelsel",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.328Z",
         "updated_at": "2022-07-26T14:42:03.328Z",
         "deleted_at": null,
@@ -7429,7 +7328,6 @@
     "pk": 2926,
     "fields": {
         "name": "Coachen (psychologie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.329Z",
         "updated_at": "2022-07-26T14:42:03.329Z",
         "deleted_at": null,
@@ -7451,7 +7349,6 @@
     "pk": 2927,
     "fields": {
         "name": "Coaching en begeleiding op de werkvloer",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.330Z",
         "updated_at": "2022-07-26T14:42:03.330Z",
         "deleted_at": null,
@@ -7473,7 +7370,6 @@
     "pk": 2928,
     "fields": {
         "name": "Collectieve preventieve activiteiten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.332Z",
         "updated_at": "2022-07-26T14:42:03.332Z",
         "deleted_at": null,
@@ -7495,7 +7391,6 @@
     "pk": 2929,
     "fields": {
         "name": "Communicatie anderstaligen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.333Z",
         "updated_at": "2022-07-26T14:42:03.333Z",
         "deleted_at": null,
@@ -7517,7 +7412,6 @@
     "pk": 2930,
     "fields": {
         "name": "Communicatie kwetsbare doelgroepen (sociale marketing en actieve benadering)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.335Z",
         "updated_at": "2022-07-26T14:42:03.335Z",
         "deleted_at": null,
@@ -7539,7 +7433,6 @@
     "pk": 2931,
     "fields": {
         "name": "Communicatie kwetsbare doelgroepen (werving, bereik en benadering)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.336Z",
         "updated_at": "2022-07-26T14:42:03.336Z",
         "deleted_at": null,
@@ -7561,7 +7454,6 @@
     "pk": 2932,
     "fields": {
         "name": "Communicatieniveau’s",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.338Z",
         "updated_at": "2022-07-26T14:42:03.338Z",
         "deleted_at": null,
@@ -7583,7 +7475,6 @@
     "pk": 2933,
     "fields": {
         "name": "Communicatiestoornissen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.339Z",
         "updated_at": "2022-07-26T14:42:03.339Z",
         "deleted_at": null,
@@ -7605,7 +7496,6 @@
     "pk": 2934,
     "fields": {
         "name": "Communicatie via verschillende media",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.341Z",
         "updated_at": "2022-07-26T14:42:03.341Z",
         "deleted_at": null,
@@ -7627,7 +7517,6 @@
     "pk": 2935,
     "fields": {
         "name": "Communicator",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.342Z",
         "updated_at": "2022-07-26T14:42:03.342Z",
         "deleted_at": null,
@@ -7649,7 +7538,6 @@
     "pk": 2936,
     "fields": {
         "name": "Competenties patiëntveiligheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.343Z",
         "updated_at": "2022-07-26T14:42:03.343Z",
         "deleted_at": null,
@@ -7671,7 +7559,6 @@
     "pk": 2937,
     "fields": {
         "name": "Complementaire zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.345Z",
         "updated_at": "2022-07-26T14:42:03.345Z",
         "deleted_at": null,
@@ -7693,7 +7580,6 @@
     "pk": 2938,
     "fields": {
         "name": "Computervaardigheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.346Z",
         "updated_at": "2022-07-26T14:42:03.346Z",
         "deleted_at": null,
@@ -7715,7 +7601,6 @@
     "pk": 2939,
     "fields": {
         "name": "Conflicthantering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.347Z",
         "updated_at": "2022-07-26T14:42:03.347Z",
         "deleted_at": null,
@@ -7737,7 +7622,6 @@
     "pk": 2940,
     "fields": {
         "name": "Continuïteit van zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.348Z",
         "updated_at": "2022-07-26T14:42:03.348Z",
         "deleted_at": null,
@@ -7759,7 +7643,6 @@
     "pk": 2941,
     "fields": {
         "name": "Coördinatie van zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.349Z",
         "updated_at": "2022-07-26T14:42:03.349Z",
         "deleted_at": null,
@@ -7781,7 +7664,6 @@
     "pk": 2942,
     "fields": {
         "name": "Copingstijlen ",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.351Z",
         "updated_at": "2022-07-26T14:42:03.351Z",
         "deleted_at": null,
@@ -7803,7 +7685,6 @@
     "pk": 2943,
     "fields": {
         "name": "Critical appraisal of a topic",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.352Z",
         "updated_at": "2022-07-26T14:42:03.352Z",
         "deleted_at": null,
@@ -7825,7 +7706,6 @@
     "pk": 2944,
     "fields": {
         "name": "Culturele achtergronden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.354Z",
         "updated_at": "2022-07-26T14:42:03.354Z",
         "deleted_at": null,
@@ -7847,7 +7727,6 @@
     "pk": 2945,
     "fields": {
         "name": "Cultuurgebonden gezondheidsproblemen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.355Z",
         "updated_at": "2022-07-26T14:42:03.355Z",
         "deleted_at": null,
@@ -7869,7 +7748,6 @@
     "pk": 2946,
     "fields": {
         "name": "Demografische kenmerken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.357Z",
         "updated_at": "2022-07-26T14:42:03.357Z",
         "deleted_at": null,
@@ -7891,7 +7769,6 @@
     "pk": 2947,
     "fields": {
         "name": "Denkprocessen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.358Z",
         "updated_at": "2022-07-26T14:42:03.358Z",
         "deleted_at": null,
@@ -7913,7 +7790,6 @@
     "pk": 2948,
     "fields": {
         "name": "Deskundigheidsbevordering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.359Z",
         "updated_at": "2022-07-26T14:42:03.359Z",
         "deleted_at": null,
@@ -7935,7 +7811,6 @@
     "pk": 2949,
     "fields": {
         "name": "Didactiek bij digitaal lesmateriaal",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.361Z",
         "updated_at": "2022-07-26T14:42:03.361Z",
         "deleted_at": null,
@@ -7957,7 +7832,6 @@
     "pk": 2950,
     "fields": {
         "name": "Didactisch materiaal",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.362Z",
         "updated_at": "2022-07-26T14:42:03.362Z",
         "deleted_at": null,
@@ -7979,7 +7853,6 @@
     "pk": 2951,
     "fields": {
         "name": "Diergeneeskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.363Z",
         "updated_at": "2022-07-26T14:42:03.363Z",
         "deleted_at": null,
@@ -8001,7 +7874,6 @@
     "pk": 2952,
     "fields": {
         "name": "Diversiteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.364Z",
         "updated_at": "2022-07-26T14:42:03.364Z",
         "deleted_at": null,
@@ -8023,7 +7895,6 @@
     "pk": 2953,
     "fields": {
         "name": "Domotica, e-health, robotica",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.366Z",
         "updated_at": "2022-07-26T14:42:03.366Z",
         "deleted_at": null,
@@ -8045,7 +7916,6 @@
     "pk": 2954,
     "fields": {
         "name": "Draaglast en draagkracht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.367Z",
         "updated_at": "2022-07-26T14:42:03.367Z",
         "deleted_at": null,
@@ -8067,7 +7937,6 @@
     "pk": 2955,
     "fields": {
         "name": "DSM-V (classificatiesysteem)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.369Z",
         "updated_at": "2022-07-26T14:42:03.369Z",
         "deleted_at": null,
@@ -8089,7 +7958,6 @@
     "pk": 2956,
     "fields": {
         "name": "EHBO",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.370Z",
         "updated_at": "2022-07-26T14:42:03.370Z",
         "deleted_at": null,
@@ -8111,7 +7979,6 @@
     "pk": 2957,
     "fields": {
         "name": "Eigen regievoering patiënt",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.371Z",
         "updated_at": "2022-07-26T14:42:03.371Z",
         "deleted_at": null,
@@ -8133,7 +8000,6 @@
     "pk": 2958,
     "fields": {
         "name": "Eigen werkwijzen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.373Z",
         "updated_at": "2022-07-26T14:42:03.373Z",
         "deleted_at": null,
@@ -8155,7 +8021,6 @@
     "pk": 2959,
     "fields": {
         "name": "Emoties",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.374Z",
         "updated_at": "2022-07-26T14:42:03.374Z",
         "deleted_at": null,
@@ -8177,7 +8042,6 @@
     "pk": 2960,
     "fields": {
         "name": "Empathie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.375Z",
         "updated_at": "2022-07-26T14:42:03.375Z",
         "deleted_at": null,
@@ -8199,7 +8063,6 @@
     "pk": 2961,
     "fields": {
         "name": "Empowerment",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.376Z",
         "updated_at": "2022-07-26T14:42:03.376Z",
         "deleted_at": null,
@@ -8221,7 +8084,6 @@
     "pk": 2962,
     "fields": {
         "name": "Empowerment (besluitvorming)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.378Z",
         "updated_at": "2022-07-26T14:42:03.378Z",
         "deleted_at": null,
@@ -8243,7 +8105,6 @@
     "pk": 2963,
     "fields": {
         "name": "Epidemiologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.379Z",
         "updated_at": "2022-07-26T14:42:03.379Z",
         "deleted_at": null,
@@ -8265,7 +8126,6 @@
     "pk": 2964,
     "fields": {
         "name": "Ergonomisch werken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.380Z",
         "updated_at": "2022-07-26T14:42:03.380Z",
         "deleted_at": null,
@@ -8287,7 +8147,6 @@
     "pk": 2965,
     "fields": {
         "name": "Ervaringsdeskundigheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.381Z",
         "updated_at": "2022-07-26T14:42:03.381Z",
         "deleted_at": null,
@@ -8309,7 +8168,6 @@
     "pk": 2966,
     "fields": {
         "name": "Ethiek en cultuur (kenmerken en gebruiken)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.383Z",
         "updated_at": "2022-07-26T14:42:03.383Z",
         "deleted_at": null,
@@ -8331,7 +8189,6 @@
     "pk": 2967,
     "fields": {
         "name": "Ethische code (morele sensitiviteit)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.384Z",
         "updated_at": "2022-07-26T14:42:03.384Z",
         "deleted_at": null,
@@ -8353,7 +8210,6 @@
     "pk": 2968,
     "fields": {
         "name": "Farmaceutisch beleid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.385Z",
         "updated_at": "2022-07-26T14:42:03.386Z",
         "deleted_at": null,
@@ -8375,7 +8231,6 @@
     "pk": 2969,
     "fields": {
         "name": "Feedback",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.387Z",
         "updated_at": "2022-07-26T14:42:03.387Z",
         "deleted_at": null,
@@ -8397,7 +8252,6 @@
     "pk": 2970,
     "fields": {
         "name": "Financieel management",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.388Z",
         "updated_at": "2022-07-26T14:42:03.388Z",
         "deleted_at": null,
@@ -8419,7 +8273,6 @@
     "pk": 2971,
     "fields": {
         "name": "Financiering van de zorg ouderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.390Z",
         "updated_at": "2022-07-26T14:42:03.390Z",
         "deleted_at": null,
@@ -8441,7 +8294,6 @@
     "pk": 2972,
     "fields": {
         "name": "Gebruiken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.391Z",
         "updated_at": "2022-07-26T14:42:03.391Z",
         "deleted_at": null,
@@ -8463,7 +8315,6 @@
     "pk": 2973,
     "fields": {
         "name": "Gedragsbeïnvloeding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.393Z",
         "updated_at": "2022-07-26T14:42:03.393Z",
         "deleted_at": null,
@@ -8485,7 +8336,6 @@
     "pk": 2974,
     "fields": {
         "name": "Gedragsdeterminanten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.394Z",
         "updated_at": "2022-07-26T14:42:03.394Z",
         "deleted_at": null,
@@ -8507,7 +8357,6 @@
     "pk": 2975,
     "fields": {
         "name": "Gedragsverandering (sociale cognitiemodellen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.395Z",
         "updated_at": "2022-07-26T14:42:03.395Z",
         "deleted_at": null,
@@ -8529,7 +8378,6 @@
     "pk": 2976,
     "fields": {
         "name": "Gedragsverandering (stages of change-model)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.396Z",
         "updated_at": "2022-07-26T14:42:03.396Z",
         "deleted_at": null,
@@ -8551,7 +8399,6 @@
     "pk": 2977,
     "fields": {
         "name": "Gedragsverandering (theoretische modellen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.398Z",
         "updated_at": "2022-07-26T14:42:03.398Z",
         "deleted_at": null,
@@ -8573,7 +8420,6 @@
     "pk": 2978,
     "fields": {
         "name": "Gegevens verzamelen (methodiek)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.399Z",
         "updated_at": "2022-07-26T14:42:03.399Z",
         "deleted_at": null,
@@ -8595,7 +8441,6 @@
     "pk": 2979,
     "fields": {
         "name": "Geneeskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.400Z",
         "updated_at": "2022-07-26T14:42:03.400Z",
         "deleted_at": null,
@@ -8617,7 +8462,6 @@
     "pk": 2980,
     "fields": {
         "name": "Geneesmiddelen (hoofdgroepen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.402Z",
         "updated_at": "2022-07-26T14:42:03.402Z",
         "deleted_at": null,
@@ -8639,7 +8483,6 @@
     "pk": 2981,
     "fields": {
         "name": "Geneesmiddelen (registratie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.403Z",
         "updated_at": "2022-07-26T14:42:03.403Z",
         "deleted_at": null,
@@ -8661,7 +8504,6 @@
     "pk": 2982,
     "fields": {
         "name": "Geneesmiddelen (verstrekken)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.405Z",
         "updated_at": "2022-07-26T14:42:03.405Z",
         "deleted_at": null,
@@ -8683,7 +8525,6 @@
     "pk": 2983,
     "fields": {
         "name": "Geneesmiddelen (voorschrijven)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.406Z",
         "updated_at": "2022-07-26T14:42:03.406Z",
         "deleted_at": null,
@@ -8705,7 +8546,6 @@
     "pk": 2984,
     "fields": {
         "name": "Geneesmiddelen (werking, effect en interactie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.407Z",
         "updated_at": "2022-07-26T14:42:03.407Z",
         "deleted_at": null,
@@ -8727,7 +8567,6 @@
     "pk": 2985,
     "fields": {
         "name": "Geriatrische problematiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.409Z",
         "updated_at": "2022-07-26T14:42:03.409Z",
         "deleted_at": null,
@@ -8749,7 +8588,6 @@
     "pk": 2986,
     "fields": {
         "name": "Geschiedenis van de verpleegkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.410Z",
         "updated_at": "2022-07-26T14:42:03.410Z",
         "deleted_at": null,
@@ -8771,7 +8609,6 @@
     "pk": 2987,
     "fields": {
         "name": "Gesprekstechnieken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.411Z",
         "updated_at": "2022-07-26T14:42:03.411Z",
         "deleted_at": null,
@@ -8793,7 +8630,6 @@
     "pk": 2988,
     "fields": {
         "name": "Gevoelsreflecties",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.412Z",
         "updated_at": "2022-07-26T14:42:03.413Z",
         "deleted_at": null,
@@ -8815,7 +8651,6 @@
     "pk": 2989,
     "fields": {
         "name": "Gewoontevorming en verslaving",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.414Z",
         "updated_at": "2022-07-26T14:42:03.414Z",
         "deleted_at": null,
@@ -8837,7 +8672,6 @@
     "pk": 2990,
     "fields": {
         "name": "Gezamenlijke besluitvorming",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.415Z",
         "updated_at": "2022-07-26T14:42:03.415Z",
         "deleted_at": null,
@@ -8859,7 +8693,6 @@
     "pk": 2991,
     "fields": {
         "name": "Gezamenlijke besluitvorming",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.416Z",
         "updated_at": "2022-07-26T14:42:03.416Z",
         "deleted_at": null,
@@ -8881,7 +8714,6 @@
     "pk": 2992,
     "fields": {
         "name": "Gezamenlijke besluitvorming (communicatie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.418Z",
         "updated_at": "2022-07-26T14:42:03.418Z",
         "deleted_at": null,
@@ -8903,7 +8735,6 @@
     "pk": 2993,
     "fields": {
         "name": "Gezond gedrag bevorderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.419Z",
         "updated_at": "2022-07-26T14:42:03.419Z",
         "deleted_at": null,
@@ -8925,7 +8756,6 @@
     "pk": 2994,
     "fields": {
         "name": "Gezondheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.421Z",
         "updated_at": "2022-07-26T14:42:03.421Z",
         "deleted_at": null,
@@ -8947,7 +8777,6 @@
     "pk": 2995,
     "fields": {
         "name": "Gezondheidsbevorderaar",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.422Z",
         "updated_at": "2022-07-26T14:42:03.422Z",
         "deleted_at": null,
@@ -8969,7 +8798,6 @@
     "pk": 2996,
     "fields": {
         "name": "Gezondheidsbevorderende interventies en richtlijnen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.423Z",
         "updated_at": "2022-07-26T14:42:03.423Z",
         "deleted_at": null,
@@ -8991,7 +8819,6 @@
     "pk": 2997,
     "fields": {
         "name": "Gezondheidsvaardigheden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.425Z",
         "updated_at": "2022-07-26T14:42:03.425Z",
         "deleted_at": null,
@@ -9013,7 +8840,6 @@
     "pk": 2998,
     "fields": {
         "name": "Gezondheidsvoorlichting via E-healthprogramma’s",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.426Z",
         "updated_at": "2022-07-26T14:42:03.426Z",
         "deleted_at": null,
@@ -9035,7 +8861,6 @@
     "pk": 2999,
     "fields": {
         "name": "Gezond ouder worden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.427Z",
         "updated_at": "2022-07-26T14:42:03.427Z",
         "deleted_at": null,
@@ -9057,7 +8882,6 @@
     "pk": 3000,
     "fields": {
         "name": "Grenzen aan/van preventie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.429Z",
         "updated_at": "2022-07-26T14:42:03.429Z",
         "deleted_at": null,
@@ -9079,7 +8903,6 @@
     "pk": 3001,
     "fields": {
         "name": "Groepsdynamica",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.430Z",
         "updated_at": "2022-07-26T14:42:03.430Z",
         "deleted_at": null,
@@ -9101,7 +8924,6 @@
     "pk": 3002,
     "fields": {
         "name": "Healthcounseling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.431Z",
         "updated_at": "2022-07-26T14:42:03.431Z",
         "deleted_at": null,
@@ -9123,7 +8945,6 @@
     "pk": 3003,
     "fields": {
         "name": "Houding van zelfstandigheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.432Z",
         "updated_at": "2022-07-26T14:42:03.432Z",
         "deleted_at": null,
@@ -9145,7 +8966,6 @@
     "pk": 3004,
     "fields": {
         "name": "Hulpmiddelen om te communiceren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.434Z",
         "updated_at": "2022-07-26T14:42:03.434Z",
         "deleted_at": null,
@@ -9167,7 +8987,6 @@
     "pk": 3005,
     "fields": {
         "name": "ICT bij communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.435Z",
         "updated_at": "2022-07-26T14:42:03.435Z",
         "deleted_at": null,
@@ -9189,7 +9008,6 @@
     "pk": 3006,
     "fields": {
         "name": "Indiceren van zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.436Z",
         "updated_at": "2022-07-26T14:42:03.436Z",
         "deleted_at": null,
@@ -9211,7 +9029,6 @@
     "pk": 3007,
     "fields": {
         "name": "Infectiepreventie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.438Z",
         "updated_at": "2022-07-26T14:42:03.438Z",
         "deleted_at": null,
@@ -9233,7 +9050,6 @@
     "pk": 3008,
     "fields": {
         "name": "Initiatie samenwerking",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.439Z",
         "updated_at": "2022-07-26T14:42:03.439Z",
         "deleted_at": null,
@@ -9255,7 +9071,6 @@
     "pk": 3009,
     "fields": {
         "name": "Innoveren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.441Z",
         "updated_at": "2022-07-26T14:42:03.441Z",
         "deleted_at": null,
@@ -9277,7 +9092,6 @@
     "pk": 3010,
     "fields": {
         "name": "Integraal gezondheidsbeleid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.442Z",
         "updated_at": "2022-07-26T14:42:03.442Z",
         "deleted_at": null,
@@ -9299,7 +9113,6 @@
     "pk": 3011,
     "fields": {
         "name": "Integrale zorg (wonen, welzijn, zorg en zingeving)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.443Z",
         "updated_at": "2022-07-26T14:42:03.443Z",
         "deleted_at": null,
@@ -9321,7 +9134,6 @@
     "pk": 3012,
     "fields": {
         "name": "Interactie modellen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.445Z",
         "updated_at": "2022-07-26T14:42:03.445Z",
         "deleted_at": null,
@@ -9343,7 +9155,6 @@
     "pk": 3013,
     "fields": {
         "name": "Interculturalisatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.446Z",
         "updated_at": "2022-07-26T14:42:03.446Z",
         "deleted_at": null,
@@ -9365,7 +9176,6 @@
     "pk": 3014,
     "fields": {
         "name": "Intra- en interdisciplinaire overdracht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.447Z",
         "updated_at": "2022-07-26T14:42:03.447Z",
         "deleted_at": null,
@@ -9387,7 +9197,6 @@
     "pk": 3015,
     "fields": {
         "name": "Inzet EBP",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.448Z",
         "updated_at": "2022-07-26T14:42:03.448Z",
         "deleted_at": null,
@@ -9409,7 +9218,6 @@
     "pk": 3016,
     "fields": {
         "name": "Inzet informatie- en communicatietechnologie (ICT)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.449Z",
         "updated_at": "2022-07-26T14:42:03.449Z",
         "deleted_at": null,
@@ -9431,7 +9239,6 @@
     "pk": 3017,
     "fields": {
         "name": "Kennisborging en kennisdeling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.451Z",
         "updated_at": "2022-07-26T14:42:03.451Z",
         "deleted_at": null,
@@ -9453,7 +9260,6 @@
     "pk": 3018,
     "fields": {
         "name": "Kenniscentra",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.452Z",
         "updated_at": "2022-07-26T14:42:03.452Z",
         "deleted_at": null,
@@ -9475,7 +9281,6 @@
     "pk": 3019,
     "fields": {
         "name": "Kennisoverdracht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.453Z",
         "updated_at": "2022-07-26T14:42:03.454Z",
         "deleted_at": null,
@@ -9497,7 +9302,6 @@
     "pk": 3020,
     "fields": {
         "name": "Kennis over kwetsbare groepen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.455Z",
         "updated_at": "2022-07-26T14:42:03.455Z",
         "deleted_at": null,
@@ -9519,7 +9323,6 @@
     "pk": 3021,
     "fields": {
         "name": "Kennis/technieken ICT",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.456Z",
         "updated_at": "2022-07-26T14:42:03.456Z",
         "deleted_at": null,
@@ -9541,7 +9344,6 @@
     "pk": 3022,
     "fields": {
         "name": "Ketenzorg, zorgprogramma’s",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.458Z",
         "updated_at": "2022-07-26T14:42:03.458Z",
         "deleted_at": null,
@@ -9563,7 +9365,6 @@
     "pk": 3023,
     "fields": {
         "name": "Klinische paden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.459Z",
         "updated_at": "2022-07-26T14:42:03.459Z",
         "deleted_at": null,
@@ -9585,7 +9386,6 @@
     "pk": 3024,
     "fields": {
         "name": "Klinisch redeneren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.460Z",
         "updated_at": "2022-07-26T14:42:03.460Z",
         "deleted_at": null,
@@ -9607,7 +9407,6 @@
     "pk": 3025,
     "fields": {
         "name": "Kwalitatief onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.461Z",
         "updated_at": "2022-07-26T14:42:03.461Z",
         "deleted_at": null,
@@ -9629,7 +9428,6 @@
     "pk": 3026,
     "fields": {
         "name": "Kwaliteit leermiddelen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.463Z",
         "updated_at": "2022-07-26T14:42:03.463Z",
         "deleted_at": null,
@@ -9651,7 +9449,6 @@
     "pk": 3027,
     "fields": {
         "name": "Kwaliteit patiëntveiligheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.464Z",
         "updated_at": "2022-07-26T14:42:03.464Z",
         "deleted_at": null,
@@ -9673,7 +9470,6 @@
     "pk": 3028,
     "fields": {
         "name": "Kwaliteitsregister verpleegkundigen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.465Z",
         "updated_at": "2022-07-26T14:42:03.465Z",
         "deleted_at": null,
@@ -9695,7 +9491,6 @@
     "pk": 3029,
     "fields": {
         "name": "Kwaliteit van zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.466Z",
         "updated_at": "2022-07-26T14:42:03.466Z",
         "deleted_at": null,
@@ -9717,7 +9512,6 @@
     "pk": 3030,
     "fields": {
         "name": "Kwaliteit van zorg leveren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.468Z",
         "updated_at": "2022-07-26T14:42:03.468Z",
         "deleted_at": null,
@@ -9739,7 +9533,6 @@
     "pk": 3031,
     "fields": {
         "name": "Kwantitatief onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.469Z",
         "updated_at": "2022-07-26T14:42:03.469Z",
         "deleted_at": null,
@@ -9761,7 +9554,6 @@
     "pk": 3032,
     "fields": {
         "name": "Kwetsbare groepen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.471Z",
         "updated_at": "2022-07-26T14:42:03.471Z",
         "deleted_at": null,
@@ -9783,7 +9575,6 @@
     "pk": 3033,
     "fields": {
         "name": "Leerlijn",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.472Z",
         "updated_at": "2022-07-26T14:42:03.472Z",
         "deleted_at": null,
@@ -9805,7 +9596,6 @@
     "pk": 3034,
     "fields": {
         "name": "Leerpsychologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.473Z",
         "updated_at": "2022-07-26T14:42:03.473Z",
         "deleted_at": null,
@@ -9827,7 +9617,6 @@
     "pk": 3035,
     "fields": {
         "name": "Lef en authenticiteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.474Z",
         "updated_at": "2022-07-26T14:42:03.474Z",
         "deleted_at": null,
@@ -9849,7 +9638,6 @@
     "pk": 3036,
     "fields": {
         "name": "Les",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.476Z",
         "updated_at": "2022-07-26T14:42:03.476Z",
         "deleted_at": null,
@@ -9871,7 +9659,6 @@
     "pk": 3037,
     "fields": {
         "name": "Lesontwerp",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.477Z",
         "updated_at": "2022-07-26T14:42:03.477Z",
         "deleted_at": null,
@@ -9893,7 +9680,6 @@
     "pk": 3038,
     "fields": {
         "name": "Lesplan",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.478Z",
         "updated_at": "2022-07-26T14:42:03.478Z",
         "deleted_at": null,
@@ -9915,7 +9701,6 @@
     "pk": 3039,
     "fields": {
         "name": "Levensbeschouwelijk/ideologische overtuigingen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.479Z",
         "updated_at": "2022-07-26T14:42:03.479Z",
         "deleted_at": null,
@@ -9937,7 +9722,6 @@
     "pk": 3040,
     "fields": {
         "name": "Levensbeschouwing en religie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.480Z",
         "updated_at": "2022-07-26T14:42:03.480Z",
         "deleted_at": null,
@@ -9959,7 +9743,6 @@
     "pk": 3041,
     "fields": {
         "name": "Levensfasen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.481Z",
         "updated_at": "2022-07-26T14:42:03.481Z",
         "deleted_at": null,
@@ -9981,7 +9764,6 @@
     "pk": 3042,
     "fields": {
         "name": "Literatuuronderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.482Z",
         "updated_at": "2022-07-26T14:42:03.482Z",
         "deleted_at": null,
@@ -10003,7 +9785,6 @@
     "pk": 3043,
     "fields": {
         "name": "Luisteren, samenvatten, doorvragen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.484Z",
         "updated_at": "2022-07-26T14:42:03.484Z",
         "deleted_at": null,
@@ -10025,7 +9806,6 @@
     "pk": 3044,
     "fields": {
         "name": "Maatschappelijke en politieke ontwikkelingen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.485Z",
         "updated_at": "2022-07-26T14:42:03.485Z",
         "deleted_at": null,
@@ -10047,7 +9827,6 @@
     "pk": 3045,
     "fields": {
         "name": "Mantelzorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.486Z",
         "updated_at": "2022-07-26T14:42:03.486Z",
         "deleted_at": null,
@@ -10069,7 +9848,6 @@
     "pk": 3046,
     "fields": {
         "name": "Medicatieveiligheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.487Z",
         "updated_at": "2022-07-26T14:42:03.487Z",
         "deleted_at": null,
@@ -10091,7 +9869,6 @@
     "pk": 3047,
     "fields": {
         "name": "Meldingen incidenten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.489Z",
         "updated_at": "2022-07-26T14:42:03.489Z",
         "deleted_at": null,
@@ -10113,7 +9890,6 @@
     "pk": 3048,
     "fields": {
         "name": "Mensenrechten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.490Z",
         "updated_at": "2022-07-26T14:42:03.490Z",
         "deleted_at": null,
@@ -10135,7 +9911,6 @@
     "pk": 3049,
     "fields": {
         "name": "Methoden en modellen kwaliteitszorg niaZ, hkZ",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.491Z",
         "updated_at": "2022-07-26T14:42:03.491Z",
         "deleted_at": null,
@@ -10157,7 +9932,6 @@
     "pk": 3050,
     "fields": {
         "name": "Methoden en modellen kwaliteitszorg screening",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.492Z",
         "updated_at": "2022-07-26T14:42:03.492Z",
         "deleted_at": null,
@@ -10179,7 +9953,6 @@
     "pk": 3051,
     "fields": {
         "name": "Moreel beraad",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.494Z",
         "updated_at": "2022-07-26T14:42:03.494Z",
         "deleted_at": null,
@@ -10201,7 +9974,6 @@
     "pk": 3052,
     "fields": {
         "name": "Moreel-ethische context (morele sensitiviteit)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.495Z",
         "updated_at": "2022-07-26T14:42:03.495Z",
         "deleted_at": null,
@@ -10223,7 +9995,6 @@
     "pk": 3053,
     "fields": {
         "name": "Morele en ethische waarden professionele relatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.496Z",
         "updated_at": "2022-07-26T14:42:03.496Z",
         "deleted_at": null,
@@ -10245,7 +10016,6 @@
     "pk": 3054,
     "fields": {
         "name": "Morele en ethische waarden sensitiviteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.497Z",
         "updated_at": "2022-07-26T14:42:03.497Z",
         "deleted_at": null,
@@ -10267,7 +10037,6 @@
     "pk": 3055,
     "fields": {
         "name": "Morele sensitiviteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.499Z",
         "updated_at": "2022-07-26T14:42:03.499Z",
         "deleted_at": null,
@@ -10289,7 +10058,6 @@
     "pk": 3056,
     "fields": {
         "name": "Motivatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.500Z",
         "updated_at": "2022-07-26T14:42:03.500Z",
         "deleted_at": null,
@@ -10311,7 +10079,6 @@
     "pk": 3057,
     "fields": {
         "name": "Motiverende gespreksvoering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.501Z",
         "updated_at": "2022-07-26T14:42:03.501Z",
         "deleted_at": null,
@@ -10333,7 +10100,6 @@
     "pk": 3058,
     "fields": {
         "name": "Multidisciplinair samenwerken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.503Z",
         "updated_at": "2022-07-26T14:42:03.503Z",
         "deleted_at": null,
@@ -10355,7 +10121,6 @@
     "pk": 3059,
     "fields": {
         "name": "Multimorbiditeit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.504Z",
         "updated_at": "2022-07-26T14:42:03.504Z",
         "deleted_at": null,
@@ -10377,7 +10142,6 @@
     "pk": 3060,
     "fields": {
         "name": "Neuropsychologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.505Z",
         "updated_at": "2022-07-26T14:42:03.505Z",
         "deleted_at": null,
@@ -10399,7 +10163,6 @@
     "pk": 3061,
     "fields": {
         "name": "Nieuwe ideeën ontwikkelen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.506Z",
         "updated_at": "2022-07-26T14:42:03.506Z",
         "deleted_at": null,
@@ -10421,7 +10184,6 @@
     "pk": 3062,
     "fields": {
         "name": "Nieuwe ontwikkelingen ICT",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.508Z",
         "updated_at": "2022-07-26T14:42:03.508Z",
         "deleted_at": null,
@@ -10443,7 +10205,6 @@
     "pk": 3063,
     "fields": {
         "name": "Onafhankelijke eigen mening",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.509Z",
         "updated_at": "2022-07-26T14:42:03.509Z",
         "deleted_at": null,
@@ -10465,7 +10226,6 @@
     "pk": 3064,
     "fields": {
         "name": "Onderhandelingsmodellen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.510Z",
         "updated_at": "2022-07-26T14:42:03.510Z",
         "deleted_at": null,
@@ -10487,7 +10247,6 @@
     "pk": 3065,
     "fields": {
         "name": "Ondersteund gesprek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.511Z",
         "updated_at": "2022-07-26T14:42:03.511Z",
         "deleted_at": null,
@@ -10509,7 +10268,6 @@
     "pk": 3066,
     "fields": {
         "name": "Ondersteuning en begeleiding bij verandering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.513Z",
         "updated_at": "2022-07-26T14:42:03.513Z",
         "deleted_at": null,
@@ -10531,7 +10289,6 @@
     "pk": 3067,
     "fields": {
         "name": "Onderzoek behoefte doelgroep",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.514Z",
         "updated_at": "2022-07-26T14:42:03.514Z",
         "deleted_at": null,
@@ -10553,7 +10310,6 @@
     "pk": 3068,
     "fields": {
         "name": "Onderzoekend vermogen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.515Z",
         "updated_at": "2022-07-26T14:42:03.515Z",
         "deleted_at": null,
@@ -10575,7 +10331,6 @@
     "pk": 3069,
     "fields": {
         "name": "Onderzoek gedragsdeterminanten doelgroep",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.516Z",
         "updated_at": "2022-07-26T14:42:03.516Z",
         "deleted_at": null,
@@ -10597,7 +10352,6 @@
     "pk": 3070,
     "fields": {
         "name": "Ontwikkelen communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.518Z",
         "updated_at": "2022-07-26T14:42:03.518Z",
         "deleted_at": null,
@@ -10619,7 +10373,6 @@
     "pk": 3071,
     "fields": {
         "name": "Ontwikkelingspsychologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.519Z",
         "updated_at": "2022-07-26T14:42:03.519Z",
         "deleted_at": null,
@@ -10641,7 +10394,6 @@
     "pk": 3072,
     "fields": {
         "name": "Opvattingen van gezondheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.520Z",
         "updated_at": "2022-07-26T14:42:03.520Z",
         "deleted_at": null,
@@ -10663,7 +10415,6 @@
     "pk": 3073,
     "fields": {
         "name": "Organisatie, aansturing en bewaken activiteiten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.522Z",
         "updated_at": "2022-07-26T14:42:03.522Z",
         "deleted_at": null,
@@ -10685,7 +10436,6 @@
     "pk": 3074,
     "fields": {
         "name": "Organisatiestructuren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.523Z",
         "updated_at": "2022-07-26T14:42:03.523Z",
         "deleted_at": null,
@@ -10707,7 +10457,6 @@
     "pk": 3075,
     "fields": {
         "name": "Organisator",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.524Z",
         "updated_at": "2022-07-26T14:42:03.524Z",
         "deleted_at": null,
@@ -10729,7 +10478,6 @@
     "pk": 3076,
     "fields": {
         "name": "Organiseren van werk",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.526Z",
         "updated_at": "2022-07-26T14:42:03.526Z",
         "deleted_at": null,
@@ -10751,7 +10499,6 @@
     "pk": 3077,
     "fields": {
         "name": "Orthopedagogiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.527Z",
         "updated_at": "2022-07-26T14:42:03.527Z",
         "deleted_at": null,
@@ -10773,7 +10520,6 @@
     "pk": 3078,
     "fields": {
         "name": "Parafraseren en spiegelen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.528Z",
         "updated_at": "2022-07-26T14:42:03.528Z",
         "deleted_at": null,
@@ -10795,7 +10541,6 @@
     "pk": 3079,
     "fields": {
         "name": "Participeren in kwaliteitszorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.529Z",
         "updated_at": "2022-07-26T14:42:03.529Z",
         "deleted_at": null,
@@ -10817,7 +10562,6 @@
     "pk": 3080,
     "fields": {
         "name": "Patiëntenrol",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.530Z",
         "updated_at": "2022-07-26T14:42:03.530Z",
         "deleted_at": null,
@@ -10839,7 +10583,6 @@
     "pk": 3081,
     "fields": {
         "name": "Patiëntsysteem",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.532Z",
         "updated_at": "2022-07-26T14:42:03.532Z",
         "deleted_at": null,
@@ -10861,7 +10604,6 @@
     "pk": 3082,
     "fields": {
         "name": "Persoonlijke verzorging",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.533Z",
         "updated_at": "2022-07-26T14:42:03.533Z",
         "deleted_at": null,
@@ -10883,7 +10625,6 @@
     "pk": 3083,
     "fields": {
         "name": "Persoonlijkheidsleer",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.534Z",
         "updated_at": "2022-07-26T14:42:03.534Z",
         "deleted_at": null,
@@ -10905,7 +10646,6 @@
     "pk": 3084,
     "fields": {
         "name": "Persoonsgerichte communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.536Z",
         "updated_at": "2022-07-26T14:42:03.536Z",
         "deleted_at": null,
@@ -10927,7 +10667,6 @@
     "pk": 3085,
     "fields": {
         "name": "Persoonsgerichte interculturele communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.537Z",
         "updated_at": "2022-07-26T14:42:03.537Z",
         "deleted_at": null,
@@ -10949,7 +10688,6 @@
     "pk": 3086,
     "fields": {
         "name": "Persoonsgerichte zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.539Z",
         "updated_at": "2022-07-26T14:42:03.539Z",
         "deleted_at": null,
@@ -10971,7 +10709,6 @@
     "pk": 3087,
     "fields": {
         "name": "Planmatige voorlichting (gedragsverandering)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.540Z",
         "updated_at": "2022-07-26T14:42:03.540Z",
         "deleted_at": null,
@@ -10993,7 +10730,6 @@
     "pk": 3088,
     "fields": {
         "name": "Planmatige voorlichting (Preffi, Refka, Intervention Mapping)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.541Z",
         "updated_at": "2022-07-26T14:42:03.541Z",
         "deleted_at": null,
@@ -11015,7 +10751,6 @@
     "pk": 3089,
     "fields": {
         "name": "Politiek/overheid en zorg (gezamenlijke besluitvorming)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.542Z",
         "updated_at": "2022-07-26T14:42:03.542Z",
         "deleted_at": null,
@@ -11037,7 +10772,6 @@
     "pk": 3090,
     "fields": {
         "name": "Polyfarmacie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.544Z",
         "updated_at": "2022-07-26T14:42:03.544Z",
         "deleted_at": null,
@@ -11059,7 +10793,6 @@
     "pk": 3091,
     "fields": {
         "name": "Praktijkgericht onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.545Z",
         "updated_at": "2022-07-26T14:42:03.545Z",
         "deleted_at": null,
@@ -11081,7 +10814,6 @@
     "pk": 3092,
     "fields": {
         "name": "Prevalentie, incidentie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.546Z",
         "updated_at": "2022-07-26T14:42:03.546Z",
         "deleted_at": null,
@@ -11103,7 +10835,6 @@
     "pk": 3093,
     "fields": {
         "name": "Preventie en de-escalatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.547Z",
         "updated_at": "2022-07-26T14:42:03.547Z",
         "deleted_at": null,
@@ -11125,7 +10856,6 @@
     "pk": 3094,
     "fields": {
         "name": "Preventiegericht analyseren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.549Z",
         "updated_at": "2022-07-26T14:42:03.549Z",
         "deleted_at": null,
@@ -11147,7 +10877,6 @@
     "pk": 3095,
     "fields": {
         "name": "Preventie (sociale systeem)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.550Z",
         "updated_at": "2022-07-26T14:42:03.550Z",
         "deleted_at": null,
@@ -11169,7 +10898,6 @@
     "pk": 3096,
     "fields": {
         "name": "Preventie: voorzieningen, wetgeving en gezondheidsvoorlichting",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.552Z",
         "updated_at": "2022-07-26T14:42:03.552Z",
         "deleted_at": null,
@@ -11191,7 +10919,6 @@
     "pk": 3097,
     "fields": {
         "name": "Primary healthcare",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.553Z",
         "updated_at": "2022-07-26T14:42:03.553Z",
         "deleted_at": null,
@@ -11213,7 +10940,6 @@
     "pk": 3098,
     "fields": {
         "name": "Privacy en geheimhouding (wetgeving)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.554Z",
         "updated_at": "2022-07-26T14:42:03.554Z",
         "deleted_at": null,
@@ -11235,7 +10961,6 @@
     "pk": 3099,
     "fields": {
         "name": "Professional en Kwaliteitsbevorderaar",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.556Z",
         "updated_at": "2022-07-26T14:42:03.556Z",
         "deleted_at": null,
@@ -11257,7 +10982,6 @@
     "pk": 3100,
     "fields": {
         "name": "Professionalisering gedrag",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.557Z",
         "updated_at": "2022-07-26T14:42:03.557Z",
         "deleted_at": null,
@@ -11279,7 +11003,6 @@
     "pk": 3101,
     "fields": {
         "name": "Professioneel en persoonlijk leiderschap",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.559Z",
         "updated_at": "2022-07-26T14:42:03.559Z",
         "deleted_at": null,
@@ -11301,7 +11024,6 @@
     "pk": 3102,
     "fields": {
         "name": "Professioneel gedrag",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.560Z",
         "updated_at": "2022-07-26T14:42:03.560Z",
         "deleted_at": null,
@@ -11323,7 +11045,6 @@
     "pk": 3103,
     "fields": {
         "name": "Professionele reflectie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.561Z",
         "updated_at": "2022-07-26T14:42:03.561Z",
         "deleted_at": null,
@@ -11345,7 +11066,6 @@
     "pk": 3104,
     "fields": {
         "name": "Professionele relatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.563Z",
         "updated_at": "2022-07-26T14:42:03.563Z",
         "deleted_at": null,
@@ -11367,7 +11087,6 @@
     "pk": 3105,
     "fields": {
         "name": "Profileren (leiderschap)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.564Z",
         "updated_at": "2022-07-26T14:42:03.564Z",
         "deleted_at": null,
@@ -11389,7 +11108,6 @@
     "pk": 3106,
     "fields": {
         "name": "Profilering (multidisciplinair samenwerken)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.566Z",
         "updated_at": "2022-07-26T14:42:03.566Z",
         "deleted_at": null,
@@ -11411,7 +11129,6 @@
     "pk": 3107,
     "fields": {
         "name": "Psychische stoornissen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.567Z",
         "updated_at": "2022-07-26T14:42:03.567Z",
         "deleted_at": null,
@@ -11433,7 +11150,6 @@
     "pk": 3108,
     "fields": {
         "name": "Psychologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.569Z",
         "updated_at": "2022-07-26T14:42:03.569Z",
         "deleted_at": null,
@@ -11455,7 +11171,6 @@
     "pk": 3109,
     "fields": {
         "name": "Psychologisch communicatieverloop",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.570Z",
         "updated_at": "2022-07-26T14:42:03.570Z",
         "deleted_at": null,
@@ -11477,7 +11192,6 @@
     "pk": 3110,
     "fields": {
         "name": "Psychologische communicatievormen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.571Z",
         "updated_at": "2022-07-26T14:42:03.571Z",
         "deleted_at": null,
@@ -11499,7 +11213,6 @@
     "pk": 3111,
     "fields": {
         "name": "Psychologische Interactiepatronen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.573Z",
         "updated_at": "2022-07-26T14:42:03.573Z",
         "deleted_at": null,
@@ -11521,7 +11234,6 @@
     "pk": 3112,
     "fields": {
         "name": "Rapportage en elektronische overdracht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.574Z",
         "updated_at": "2022-07-26T14:42:03.574Z",
         "deleted_at": null,
@@ -11543,7 +11255,6 @@
     "pk": 3113,
     "fields": {
         "name": "Reanimatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.575Z",
         "updated_at": "2022-07-26T14:42:03.575Z",
         "deleted_at": null,
@@ -11565,7 +11276,6 @@
     "pk": 3114,
     "fields": {
         "name": "Reflectieve EBP-professional",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.577Z",
         "updated_at": "2022-07-26T14:42:03.577Z",
         "deleted_at": null,
@@ -11587,7 +11297,6 @@
     "pk": 3115,
     "fields": {
         "name": "Richtlijnontwikkeling (kwaliteitszorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.578Z",
         "updated_at": "2022-07-26T14:42:03.578Z",
         "deleted_at": null,
@@ -11609,7 +11318,6 @@
     "pk": 3116,
     "fields": {
         "name": "Richtlijn voor verpleegkundige verslaglegging",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.579Z",
         "updated_at": "2022-07-26T14:42:03.579Z",
         "deleted_at": null,
@@ -11631,7 +11339,6 @@
     "pk": 3117,
     "fields": {
         "name": "Samenwerkingspartner",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.580Z",
         "updated_at": "2022-07-26T14:42:03.580Z",
         "deleted_at": null,
@@ -11653,7 +11360,6 @@
     "pk": 3118,
     "fields": {
         "name": "Samenwerkingsprocessen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.582Z",
         "updated_at": "2022-07-26T14:42:03.582Z",
         "deleted_at": null,
@@ -11675,7 +11381,6 @@
     "pk": 3119,
     "fields": {
         "name": "Sociale kaart",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.583Z",
         "updated_at": "2022-07-26T14:42:03.583Z",
         "deleted_at": null,
@@ -11697,7 +11402,6 @@
     "pk": 3120,
     "fields": {
         "name": "Sociale media (deskundigheidsbevordering)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.585Z",
         "updated_at": "2022-07-26T14:42:03.585Z",
         "deleted_at": null,
@@ -11719,7 +11423,6 @@
     "pk": 3121,
     "fields": {
         "name": "Sociale media/internet als communicatiemiddel",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.586Z",
         "updated_at": "2022-07-26T14:42:03.586Z",
         "deleted_at": null,
@@ -11741,7 +11444,6 @@
     "pk": 3122,
     "fields": {
         "name": "Sociale omgeving",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.587Z",
         "updated_at": "2022-07-26T14:42:03.587Z",
         "deleted_at": null,
@@ -11763,7 +11465,6 @@
     "pk": 3123,
     "fields": {
         "name": "Stofwisseling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.589Z",
         "updated_at": "2022-07-26T14:42:03.589Z",
         "deleted_at": null,
@@ -11785,7 +11486,6 @@
     "pk": 3124,
     "fields": {
         "name": "Strategieën voor educatie en voorlichting",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.590Z",
         "updated_at": "2022-07-26T14:42:03.590Z",
         "deleted_at": null,
@@ -11807,7 +11507,6 @@
     "pk": 3125,
     "fields": {
         "name": "Succceservaring (gezond gedrag bevorderen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.591Z",
         "updated_at": "2022-07-26T14:42:03.592Z",
         "deleted_at": null,
@@ -11829,7 +11528,6 @@
     "pk": 3126,
     "fields": {
         "name": "Systeemtheorie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.593Z",
         "updated_at": "2022-07-26T14:42:03.593Z",
         "deleted_at": null,
@@ -11851,7 +11549,6 @@
     "pk": 3127,
     "fields": {
         "name": "Talentontwikkeling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.594Z",
         "updated_at": "2022-07-26T14:42:03.594Z",
         "deleted_at": null,
@@ -11873,7 +11570,6 @@
     "pk": 3128,
     "fields": {
         "name": "Theoretische modellen (gevalideerde zorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.595Z",
         "updated_at": "2022-07-26T14:42:03.595Z",
         "deleted_at": null,
@@ -11895,7 +11591,6 @@
     "pk": 3129,
     "fields": {
         "name": "Theorieën en modellen persoonsgerichte communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.597Z",
         "updated_at": "2022-07-26T14:42:03.597Z",
         "deleted_at": null,
@@ -11917,7 +11612,6 @@
     "pk": 3130,
     "fields": {
         "name": "Therapietrouw",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.598Z",
         "updated_at": "2022-07-26T14:42:03.598Z",
         "deleted_at": null,
@@ -11939,7 +11633,6 @@
     "pk": 3131,
     "fields": {
         "name": "Toets",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.599Z",
         "updated_at": "2022-07-26T14:42:03.599Z",
         "deleted_at": null,
@@ -11961,7 +11654,6 @@
     "pk": 3132,
     "fields": {
         "name": "Toolkit preventie ouderenproblematiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.601Z",
         "updated_at": "2022-07-26T14:42:03.601Z",
         "deleted_at": null,
@@ -11983,7 +11675,6 @@
     "pk": 3133,
     "fields": {
         "name": "Transities in de zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.602Z",
         "updated_at": "2022-07-26T14:42:03.602Z",
         "deleted_at": null,
@@ -12005,7 +11696,6 @@
     "pk": 3134,
     "fields": {
         "name": "Transmurale verpleegkundige zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.603Z",
         "updated_at": "2022-07-26T14:42:03.603Z",
         "deleted_at": null,
@@ -12027,7 +11717,6 @@
     "pk": 3135,
     "fields": {
         "name": "Transport",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.605Z",
         "updated_at": "2022-07-26T14:42:03.605Z",
         "deleted_at": null,
@@ -12049,7 +11738,6 @@
     "pk": 3136,
     "fields": {
         "name": "Triage (principes)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.606Z",
         "updated_at": "2022-07-26T14:42:03.606Z",
         "deleted_at": null,
@@ -12071,7 +11759,6 @@
     "pk": 3137,
     "fields": {
         "name": "UF: Ziektekunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.608Z",
         "updated_at": "2022-07-26T14:42:03.608Z",
         "deleted_at": null,
@@ -12093,7 +11780,6 @@
     "pk": 3138,
     "fields": {
         "name": "Uitscheiding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.609Z",
         "updated_at": "2022-07-26T14:42:03.609Z",
         "deleted_at": null,
@@ -12115,7 +11801,6 @@
     "pk": 3139,
     "fields": {
         "name": "Uitvoeren van zorg",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.610Z",
         "updated_at": "2022-07-26T14:42:03.610Z",
         "deleted_at": null,
@@ -12137,7 +11822,6 @@
     "pk": 3140,
     "fields": {
         "name": "Vaardig met ict",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.611Z",
         "updated_at": "2022-07-26T14:42:03.611Z",
         "deleted_at": null,
@@ -12159,7 +11843,6 @@
     "pk": 3141,
     "fields": {
         "name": "Veel voorkomende gezondheidsproblemen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.613Z",
         "updated_at": "2022-07-26T14:42:03.613Z",
         "deleted_at": null,
@@ -12181,7 +11864,6 @@
     "pk": 3142,
     "fields": {
         "name": "Veiligheid bevorderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.614Z",
         "updated_at": "2022-07-26T14:42:03.614Z",
         "deleted_at": null,
@@ -12203,7 +11885,6 @@
     "pk": 3143,
     "fields": {
         "name": "Veiligheid en privacy (verpleegkundige informatie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.615Z",
         "updated_at": "2022-07-26T14:42:03.615Z",
         "deleted_at": null,
@@ -12225,7 +11906,6 @@
     "pk": 3144,
     "fields": {
         "name": "Veiligheidsbeleid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.617Z",
         "updated_at": "2022-07-26T14:42:03.617Z",
         "deleted_at": null,
@@ -12247,7 +11927,6 @@
     "pk": 3145,
     "fields": {
         "name": "Veiligheidsmanagementsystemen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.618Z",
         "updated_at": "2022-07-26T14:42:03.618Z",
         "deleted_at": null,
@@ -12269,7 +11948,6 @@
     "pk": 3146,
     "fields": {
         "name": "Verbale en non-verbale communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.619Z",
         "updated_at": "2022-07-26T14:42:03.619Z",
         "deleted_at": null,
@@ -12291,7 +11969,6 @@
     "pk": 3147,
     "fields": {
         "name": "Vergadertechnieken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.621Z",
         "updated_at": "2022-07-26T14:42:03.621Z",
         "deleted_at": null,
@@ -12313,7 +11990,6 @@
     "pk": 3148,
     "fields": {
         "name": "Verkeerskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.622Z",
         "updated_at": "2022-07-26T14:42:03.622Z",
         "deleted_at": null,
@@ -12335,7 +12011,6 @@
     "pk": 3149,
     "fields": {
         "name": "Veroudering en levensloop",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.623Z",
         "updated_at": "2022-07-26T14:42:03.623Z",
         "deleted_at": null,
@@ -12357,7 +12032,6 @@
     "pk": 3150,
     "fields": {
         "name": "Verpleegkundig argumenteren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.625Z",
         "updated_at": "2022-07-26T14:42:03.625Z",
         "deleted_at": null,
@@ -12379,7 +12053,6 @@
     "pk": 3151,
     "fields": {
         "name": "Verpleegkundig besluitvormingsproces (keuzehulp)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.626Z",
         "updated_at": "2022-07-26T14:42:03.626Z",
         "deleted_at": null,
@@ -12401,7 +12074,6 @@
     "pk": 3152,
     "fields": {
         "name": "Verpleegkundig diagnosticeren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.627Z",
         "updated_at": "2022-07-26T14:42:03.627Z",
         "deleted_at": null,
@@ -12423,7 +12095,6 @@
     "pk": 3153,
     "fields": {
         "name": "Verpleegkundig dialoog (gestuurde zorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.629Z",
         "updated_at": "2022-07-26T14:42:03.629Z",
         "deleted_at": null,
@@ -12445,7 +12116,6 @@
     "pk": 3154,
     "fields": {
         "name": "Verpleegkundige analysemodellen (leefstijl en gezondheid)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.630Z",
         "updated_at": "2022-07-26T14:42:03.630Z",
         "deleted_at": null,
@@ -12467,7 +12137,6 @@
     "pk": 3155,
     "fields": {
         "name": "Verpleegkundige beroepscodes (nationaal en internationaal)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.632Z",
         "updated_at": "2022-07-26T14:42:03.632Z",
         "deleted_at": null,
@@ -12489,7 +12158,6 @@
     "pk": 3156,
     "fields": {
         "name": "Verpleegkundige classificatiesystemen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.633Z",
         "updated_at": "2022-07-26T14:42:03.633Z",
         "deleted_at": null,
@@ -12511,7 +12179,6 @@
     "pk": 3157,
     "fields": {
         "name": "Verpleegkundige disease management",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.635Z",
         "updated_at": "2022-07-26T14:42:03.635Z",
         "deleted_at": null,
@@ -12533,7 +12200,6 @@
     "pk": 3158,
     "fields": {
         "name": "Verpleegkundige interventies",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.636Z",
         "updated_at": "2022-07-26T14:42:03.636Z",
         "deleted_at": null,
@@ -12555,7 +12221,6 @@
     "pk": 3159,
     "fields": {
         "name": "Verpleegkundige ketenprocessen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.637Z",
         "updated_at": "2022-07-26T14:42:03.637Z",
         "deleted_at": null,
@@ -12577,7 +12242,6 @@
     "pk": 3160,
     "fields": {
         "name": "Verpleegkundige ketenzorg/processen (samenwerking)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.639Z",
         "updated_at": "2022-07-26T14:42:03.639Z",
         "deleted_at": null,
@@ -12599,7 +12263,6 @@
     "pk": 3161,
     "fields": {
         "name": "Verpleegkundige kwaliteit van onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.640Z",
         "updated_at": "2022-07-26T14:42:03.640Z",
         "deleted_at": null,
@@ -12621,7 +12284,6 @@
     "pk": 3162,
     "fields": {
         "name": "Verpleegkundige leefstijlbegeleiding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.642Z",
         "updated_at": "2022-07-26T14:42:03.642Z",
         "deleted_at": null,
@@ -12643,7 +12305,6 @@
     "pk": 3163,
     "fields": {
         "name": "Verpleegkundige methodiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.643Z",
         "updated_at": "2022-07-26T14:42:03.643Z",
         "deleted_at": null,
@@ -12665,7 +12326,6 @@
     "pk": 3164,
     "fields": {
         "name": "Verpleegkundige Netwerken (in kaart brengen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.645Z",
         "updated_at": "2022-07-26T14:42:03.645Z",
         "deleted_at": null,
@@ -12687,7 +12347,6 @@
     "pk": 3165,
     "fields": {
         "name": "Verpleegkundige onderzoekscyclus",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.646Z",
         "updated_at": "2022-07-26T14:42:03.646Z",
         "deleted_at": null,
@@ -12709,7 +12368,6 @@
     "pk": 3166,
     "fields": {
         "name": "Verpleegkundige positionering in samenwerking",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.647Z",
         "updated_at": "2022-07-26T14:42:03.647Z",
         "deleted_at": null,
@@ -12731,7 +12389,6 @@
     "pk": 3167,
     "fields": {
         "name": "Verpleegkundige principes (EBP)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.649Z",
         "updated_at": "2022-07-26T14:42:03.649Z",
         "deleted_at": null,
@@ -12753,7 +12410,6 @@
     "pk": 3168,
     "fields": {
         "name": "Verpleegkundige principes persoonlijke communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.651Z",
         "updated_at": "2022-07-26T14:42:03.651Z",
         "deleted_at": null,
@@ -12775,7 +12431,6 @@
     "pk": 3169,
     "fields": {
         "name": "Verpleegkundige professionele netwerken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.652Z",
         "updated_at": "2022-07-26T14:42:03.652Z",
         "deleted_at": null,
@@ -12797,7 +12452,6 @@
     "pk": 3170,
     "fields": {
         "name": "Verpleegkundige reflectievaardigheden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.654Z",
         "updated_at": "2022-07-26T14:42:03.654Z",
         "deleted_at": null,
@@ -12819,7 +12473,6 @@
     "pk": 3171,
     "fields": {
         "name": "Verpleegkundige samenwerking (invullen eigen rol)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.655Z",
         "updated_at": "2022-07-26T14:42:03.655Z",
         "deleted_at": null,
@@ -12841,7 +12494,6 @@
     "pk": 3172,
     "fields": {
         "name": "Verpleegkundige samenwerkingspartners",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.657Z",
         "updated_at": "2022-07-26T14:42:03.657Z",
         "deleted_at": null,
@@ -12863,7 +12515,6 @@
     "pk": 3173,
     "fields": {
         "name": "Verpleegkundige samenwerkingsvormen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.659Z",
         "updated_at": "2022-07-26T14:42:03.659Z",
         "deleted_at": null,
@@ -12885,7 +12536,6 @@
     "pk": 3174,
     "fields": {
         "name": "Verpleegkundige screeningsmethoden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.660Z",
         "updated_at": "2022-07-26T14:42:03.660Z",
         "deleted_at": null,
@@ -12907,7 +12557,6 @@
     "pk": 3175,
     "fields": {
         "name": "Verpleegkundige sociale determinanten",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.662Z",
         "updated_at": "2022-07-26T14:42:03.662Z",
         "deleted_at": null,
@@ -12929,7 +12578,6 @@
     "pk": 3176,
     "fields": {
         "name": "Verpleegkundige Standaarden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.664Z",
         "updated_at": "2022-07-26T14:42:03.664Z",
         "deleted_at": null,
@@ -12951,7 +12599,6 @@
     "pk": 3177,
     "fields": {
         "name": "Verpleegkundige theorieën",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.665Z",
         "updated_at": "2022-07-26T14:42:03.665Z",
         "deleted_at": null,
@@ -12973,7 +12620,6 @@
     "pk": 3178,
     "fields": {
         "name": "Verpleegkundige vakgroepen en vakliteratuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.667Z",
         "updated_at": "2022-07-26T14:42:03.667Z",
         "deleted_at": null,
@@ -12995,7 +12641,6 @@
     "pk": 3179,
     "fields": {
         "name": "Verpleegkundige verslaglegging van (praktijk)onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.668Z",
         "updated_at": "2022-07-26T14:42:03.668Z",
         "deleted_at": null,
@@ -13017,7 +12662,6 @@
     "pk": 3180,
     "fields": {
         "name": "Verpleegkundige visies en theorieën",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.670Z",
         "updated_at": "2022-07-26T14:42:03.670Z",
         "deleted_at": null,
@@ -13039,7 +12683,6 @@
     "pk": 3181,
     "fields": {
         "name": "Verpleegkundige werkbegeleiding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.671Z",
         "updated_at": "2022-07-26T14:42:03.671Z",
         "deleted_at": null,
@@ -13061,7 +12704,6 @@
     "pk": 3182,
     "fields": {
         "name": "Verpleegkundige zorg ((her) indiceren)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.673Z",
         "updated_at": "2022-07-26T14:42:03.673Z",
         "deleted_at": null,
@@ -13083,7 +12725,6 @@
     "pk": 3183,
     "fields": {
         "name": "Verpleegkundig handelen (bronnen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.675Z",
         "updated_at": "2022-07-26T14:42:03.675Z",
         "deleted_at": null,
@@ -13105,7 +12746,6 @@
     "pk": 3184,
     "fields": {
         "name": "Verpleegkundig handelen (richtlijnen en protocollen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.677Z",
         "updated_at": "2022-07-26T14:42:03.677Z",
         "deleted_at": null,
@@ -13127,7 +12767,6 @@
     "pk": 3185,
     "fields": {
         "name": "Verpleegkundig handelen (standaarden)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.678Z",
         "updated_at": "2022-07-26T14:42:03.678Z",
         "deleted_at": null,
@@ -13149,7 +12788,6 @@
     "pk": 3186,
     "fields": {
         "name": "Verpleegkundig leiderschap",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.680Z",
         "updated_at": "2022-07-26T14:42:03.680Z",
         "deleted_at": null,
@@ -13171,7 +12809,6 @@
     "pk": 3187,
     "fields": {
         "name": "Verpleegkundig ondernemerschap",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.681Z",
         "updated_at": "2022-07-26T14:42:03.681Z",
         "deleted_at": null,
@@ -13193,7 +12830,6 @@
     "pk": 3188,
     "fields": {
         "name": "Verpleegkundig wetenschappelijk onderzoek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.683Z",
         "updated_at": "2022-07-26T14:42:03.683Z",
         "deleted_at": null,
@@ -13215,7 +12851,6 @@
     "pk": 3189,
     "fields": {
         "name": "Verpleegtechnische vaardigheden",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.684Z",
         "updated_at": "2022-07-26T14:42:03.684Z",
         "deleted_at": null,
@@ -13237,7 +12872,6 @@
     "pk": 3190,
     "fields": {
         "name": "Verpleging en verzorging",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.686Z",
         "updated_at": "2022-07-26T14:42:03.686Z",
         "deleted_at": null,
@@ -13259,7 +12893,6 @@
     "pk": 3191,
     "fields": {
         "name": "Verstandelijke beperkingen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.687Z",
         "updated_at": "2022-07-26T14:42:03.687Z",
         "deleted_at": null,
@@ -13281,7 +12914,6 @@
     "pk": 3192,
     "fields": {
         "name": "Verwerken van informatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.688Z",
         "updated_at": "2022-07-26T14:42:03.688Z",
         "deleted_at": null,
@@ -13303,7 +12935,6 @@
     "pk": 3193,
     "fields": {
         "name": "Visie op de oudere mens",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.689Z",
         "updated_at": "2022-07-26T14:42:03.689Z",
         "deleted_at": null,
@@ -13325,7 +12956,6 @@
     "pk": 3194,
     "fields": {
         "name": "Visie op zorg ouderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.691Z",
         "updated_at": "2022-07-26T14:42:03.691Z",
         "deleted_at": null,
@@ -13347,7 +12977,6 @@
     "pk": 3195,
     "fields": {
         "name": "Visies op kwaliteit",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.692Z",
         "updated_at": "2022-07-26T14:42:03.692Z",
         "deleted_at": null,
@@ -13369,7 +12998,6 @@
     "pk": 3196,
     "fields": {
         "name": "Visies op verplegen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.693Z",
         "updated_at": "2022-07-26T14:42:03.693Z",
         "deleted_at": null,
@@ -13391,7 +13019,6 @@
     "pk": 3197,
     "fields": {
         "name": "Voorbehouden handelingen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.694Z",
         "updated_at": "2022-07-26T14:42:03.694Z",
         "deleted_at": null,
@@ -13413,7 +13040,6 @@
     "pk": 3198,
     "fields": {
         "name": "Voor- en nadelen gebruikte media (psychologie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.695Z",
         "updated_at": "2022-07-26T14:42:03.695Z",
         "deleted_at": null,
@@ -13435,7 +13061,6 @@
     "pk": 3199,
     "fields": {
         "name": "Voorlichting  individueel en groepen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.697Z",
         "updated_at": "2022-07-26T14:42:03.697Z",
         "deleted_at": null,
@@ -13457,7 +13082,6 @@
     "pk": 3200,
     "fields": {
         "name": "Voorlichtingshulpmiddelen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.698Z",
         "updated_at": "2022-07-26T14:42:03.698Z",
         "deleted_at": null,
@@ -13479,7 +13103,6 @@
     "pk": 3201,
     "fields": {
         "name": "Voortplanting",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.700Z",
         "updated_at": "2022-07-26T14:42:03.700Z",
         "deleted_at": null,
@@ -13501,7 +13124,6 @@
     "pk": 3202,
     "fields": {
         "name": "Vormen van leidinggeven",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.702Z",
         "updated_at": "2022-07-26T14:42:03.702Z",
         "deleted_at": null,
@@ -13523,7 +13145,6 @@
     "pk": 3203,
     "fields": {
         "name": "Vraaggestuurde vs aanbodgerichte zorg (ethisch)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.703Z",
         "updated_at": "2022-07-26T14:42:03.703Z",
         "deleted_at": null,
@@ -13545,7 +13166,6 @@
     "pk": 3204,
     "fields": {
         "name": "Vroegsignalering en risicobeoordeling",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.704Z",
         "updated_at": "2022-07-26T14:42:03.704Z",
         "deleted_at": null,
@@ -13567,7 +13187,6 @@
     "pk": 3205,
     "fields": {
         "name": "Warme overdracht (communicatie)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.706Z",
         "updated_at": "2022-07-26T14:42:03.706Z",
         "deleted_at": null,
@@ -13589,7 +13208,6 @@
     "pk": 3206,
     "fields": {
         "name": "Warmtehuishouding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.707Z",
         "updated_at": "2022-07-26T14:42:03.707Z",
         "deleted_at": null,
@@ -13611,7 +13229,6 @@
     "pk": 3207,
     "fields": {
         "name": "Weerstand",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.708Z",
         "updated_at": "2022-07-26T14:42:03.708Z",
         "deleted_at": null,
@@ -13633,7 +13250,6 @@
     "pk": 3208,
     "fields": {
         "name": "Wet BIG",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.710Z",
         "updated_at": "2022-07-26T14:42:03.710Z",
         "deleted_at": null,
@@ -13655,7 +13271,6 @@
     "pk": 3209,
     "fields": {
         "name": "Wetgeving (Coördinatie van zorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.711Z",
         "updated_at": "2022-07-26T14:42:03.711Z",
         "deleted_at": null,
@@ -13677,7 +13292,6 @@
     "pk": 3210,
     "fields": {
         "name": "Wetgeving (kwaliteitszorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.712Z",
         "updated_at": "2022-07-26T14:42:03.712Z",
         "deleted_at": null,
@@ -13699,7 +13313,6 @@
     "pk": 3211,
     "fields": {
         "name": "Wetgeving (meldingsplicht)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.714Z",
         "updated_at": "2022-07-26T14:42:03.714Z",
         "deleted_at": null,
@@ -13721,7 +13334,6 @@
     "pk": 3212,
     "fields": {
         "name": "Wetgeving (Zelfmanagement versterken)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.715Z",
         "updated_at": "2022-07-26T14:42:03.715Z",
         "deleted_at": null,
@@ -13743,7 +13355,6 @@
     "pk": 3213,
     "fields": {
         "name": "WGBO",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.717Z",
         "updated_at": "2022-07-26T14:42:03.717Z",
         "deleted_at": null,
@@ -13765,7 +13376,6 @@
     "pk": 3214,
     "fields": {
         "name": "Wijkgerichte gezondheidsbenadering (community-benadering, bemoeizorg)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.718Z",
         "updated_at": "2022-07-26T14:42:03.718Z",
         "deleted_at": null,
@@ -13787,7 +13397,6 @@
     "pk": 3215,
     "fields": {
         "name": "Woonvoorzieningen ouderen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.720Z",
         "updated_at": "2022-07-26T14:42:03.720Z",
         "deleted_at": null,
@@ -13809,7 +13418,6 @@
     "pk": 3216,
     "fields": {
         "name": "Zelfmanagement (fasen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.721Z",
         "updated_at": "2022-07-26T14:42:03.721Z",
         "deleted_at": null,
@@ -13831,7 +13439,6 @@
     "pk": 3217,
     "fields": {
         "name": "Zelfmanagement versterken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.722Z",
         "updated_at": "2022-07-26T14:42:03.722Z",
         "deleted_at": null,
@@ -13853,7 +13460,6 @@
     "pk": 3218,
     "fields": {
         "name": "Zelfmanagement zorgvrager (principes)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.723Z",
         "updated_at": "2022-07-26T14:42:03.723Z",
         "deleted_at": null,
@@ -13875,7 +13481,6 @@
     "pk": 3219,
     "fields": {
         "name": "Ziekteinzicht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.725Z",
         "updated_at": "2022-07-26T14:42:03.725Z",
         "deleted_at": null,
@@ -13897,7 +13502,6 @@
     "pk": 3220,
     "fields": {
         "name": "Ziekten en complicaties (bij ouderen)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.726Z",
         "updated_at": "2022-07-26T14:42:03.726Z",
         "deleted_at": null,
@@ -13919,7 +13523,6 @@
     "pk": 3221,
     "fields": {
         "name": "Zintuigen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.727Z",
         "updated_at": "2022-07-26T14:42:03.727Z",
         "deleted_at": null,
@@ -13941,7 +13544,6 @@
     "pk": 3222,
     "fields": {
         "name": "Zorgbenadering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.728Z",
         "updated_at": "2022-07-26T14:42:03.728Z",
         "deleted_at": null,
@@ -13963,7 +13565,6 @@
     "pk": 3223,
     "fields": {
         "name": "Zorg (complexiteit)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.729Z",
         "updated_at": "2022-07-26T14:42:03.729Z",
         "deleted_at": null,
@@ -13985,7 +13586,6 @@
     "pk": 3224,
     "fields": {
         "name": "Zorgethische theorieën",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.730Z",
         "updated_at": "2022-07-26T14:42:03.730Z",
         "deleted_at": null,
@@ -14007,7 +13607,6 @@
     "pk": 3225,
     "fields": {
         "name": "Zorginnovatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.731Z",
         "updated_at": "2022-07-26T14:42:03.731Z",
         "deleted_at": null,
@@ -14029,7 +13628,6 @@
     "pk": 3226,
     "fields": {
         "name": "Zorg (meet- en screening instrumenten)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.733Z",
         "updated_at": "2022-07-26T14:42:03.733Z",
         "deleted_at": null,
@@ -14051,7 +13649,6 @@
     "pk": 3227,
     "fields": {
         "name": "Zorgmodellen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.734Z",
         "updated_at": "2022-07-26T14:42:03.734Z",
         "deleted_at": null,
@@ -14073,7 +13670,6 @@
     "pk": 3228,
     "fields": {
         "name": "Zorgorganisatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.735Z",
         "updated_at": "2022-07-26T14:42:03.735Z",
         "deleted_at": null,
@@ -14095,7 +13691,6 @@
     "pk": 3229,
     "fields": {
         "name": "Zorgsysteem",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.737Z",
         "updated_at": "2022-07-26T14:42:03.737Z",
         "deleted_at": null,
@@ -14117,7 +13712,6 @@
     "pk": 3230,
     "fields": {
         "name": "Zorgsystemen, zorgorganisaties en zorgverzekering",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.738Z",
         "updated_at": "2022-07-26T14:42:03.738Z",
         "deleted_at": null,
@@ -14139,7 +13733,6 @@
     "pk": 3231,
     "fields": {
         "name": "Zorgtoewijzing",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.740Z",
         "updated_at": "2022-07-26T14:42:03.740Z",
         "deleted_at": null,
@@ -14161,7 +13754,6 @@
     "pk": 3232,
     "fields": {
         "name": "Zorgverlener",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.741Z",
         "updated_at": "2022-07-26T14:42:03.741Z",
         "deleted_at": null,
@@ -14183,7 +13775,6 @@
     "pk": 3233,
     "fields": {
         "name": "interdisciplinair",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.742Z",
         "updated_at": "2022-07-26T14:42:03.742Z",
         "deleted_at": null,
@@ -14205,7 +13796,6 @@
     "pk": 3234,
     "fields": {
         "name": "Delen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.744Z",
         "updated_at": "2022-07-26T14:42:03.744Z",
         "deleted_at": null,
@@ -14227,7 +13817,6 @@
     "pk": 3235,
     "fields": {
         "name": "Leerplan",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.746Z",
         "updated_at": "2022-07-26T14:42:03.746Z",
         "deleted_at": null,
@@ -14249,7 +13838,6 @@
     "pk": 3236,
     "fields": {
         "name": "Maken",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.747Z",
         "updated_at": "2022-07-26T14:42:03.747Z",
         "deleted_at": null,
@@ -14271,7 +13859,6 @@
     "pk": 3237,
     "fields": {
         "name": "Schermontwerp en presentatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.749Z",
         "updated_at": "2022-07-26T14:42:03.749Z",
         "deleted_at": null,
@@ -14293,7 +13880,6 @@
     "pk": 3238,
     "fields": {
         "name": "Zoeken en beoordelen van bronnen",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.750Z",
         "updated_at": "2022-07-26T14:42:03.750Z",
         "deleted_at": null,
@@ -14315,7 +13901,6 @@
     "pk": 3239,
     "fields": {
         "name": "kunst_cultuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.751Z",
         "updated_at": "2022-07-26T14:42:03.751Z",
         "deleted_at": null,
@@ -14337,7 +13922,6 @@
     "pk": 3240,
     "fields": {
         "name": "Beeldende vormgeving",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.753Z",
         "updated_at": "2022-07-26T14:42:03.753Z",
         "deleted_at": null,
@@ -14359,7 +13943,6 @@
     "pk": 3241,
     "fields": {
         "name": "Documentaire informatievoorziening",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.755Z",
         "updated_at": "2022-07-26T14:42:03.755Z",
         "deleted_at": null,
@@ -14381,7 +13964,6 @@
     "pk": 3242,
     "fields": {
         "name": "Kunstgeschiedenis",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.756Z",
         "updated_at": "2022-07-26T14:42:03.756Z",
         "deleted_at": null,
@@ -14403,7 +13985,6 @@
     "pk": 3243,
     "fields": {
         "name": "Literatuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.757Z",
         "updated_at": "2022-07-26T14:42:03.757Z",
         "deleted_at": null,
@@ -14425,7 +14006,6 @@
     "pk": 3244,
     "fields": {
         "name": "Muziek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.758Z",
         "updated_at": "2022-07-26T14:42:03.758Z",
         "deleted_at": null,
@@ -14447,7 +14027,6 @@
     "pk": 3245,
     "fields": {
         "name": "Theaterwetenschap",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.760Z",
         "updated_at": "2022-07-26T14:42:03.760Z",
         "deleted_at": null,
@@ -14469,7 +14048,6 @@
     "pk": 3246,
     "fields": {
         "name": "onderwijs_opvoeding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.761Z",
         "updated_at": "2022-07-26T14:42:03.761Z",
         "deleted_at": null,
@@ -14491,7 +14069,6 @@
     "pk": 3247,
     "fields": {
         "name": "Andragologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.763Z",
         "updated_at": "2022-07-26T14:42:03.763Z",
         "deleted_at": null,
@@ -14513,7 +14090,6 @@
     "pk": 3248,
     "fields": {
         "name": "Huishoudkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.764Z",
         "updated_at": "2022-07-26T14:42:03.764Z",
         "deleted_at": null,
@@ -14535,7 +14111,6 @@
     "pk": 3249,
     "fields": {
         "name": "Onderwijskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.766Z",
         "updated_at": "2022-07-26T14:42:03.766Z",
         "deleted_at": null,
@@ -14557,7 +14132,6 @@
     "pk": 3250,
     "fields": {
         "name": "Pedagogiek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.767Z",
         "updated_at": "2022-07-26T14:42:03.767Z",
         "deleted_at": null,
@@ -14579,7 +14153,6 @@
     "pk": 3251,
     "fields": {
         "name": "recht_bestuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.769Z",
         "updated_at": "2022-07-26T14:42:03.769Z",
         "deleted_at": null,
@@ -14601,7 +14174,6 @@
     "pk": 3252,
     "fields": {
         "name": "Auteursrechten en licenties",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.771Z",
         "updated_at": "2022-07-26T14:42:03.771Z",
         "deleted_at": null,
@@ -14623,7 +14195,6 @@
     "pk": 3253,
     "fields": {
         "name": "Bestuurskunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.772Z",
         "updated_at": "2022-07-26T14:42:03.772Z",
         "deleted_at": null,
@@ -14645,7 +14216,6 @@
     "pk": 3254,
     "fields": {
         "name": "Recht",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.773Z",
         "updated_at": "2022-07-26T14:42:03.773Z",
         "deleted_at": null,
@@ -14667,7 +14237,6 @@
     "pk": 3255,
     "fields": {
         "name": "Wetgeving (meldcode huiselijk geweld)",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.774Z",
         "updated_at": "2022-07-26T14:42:03.774Z",
         "deleted_at": null,
@@ -14689,7 +14258,6 @@
     "pk": 3256,
     "fields": {
         "name": "taal_communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.776Z",
         "updated_at": "2022-07-26T14:42:03.776Z",
         "deleted_at": null,
@@ -14711,7 +14279,6 @@
     "pk": 3257,
     "fields": {
         "name": "Arabisch",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.778Z",
         "updated_at": "2022-07-26T14:42:03.778Z",
         "deleted_at": null,
@@ -14733,7 +14300,6 @@
     "pk": 3258,
     "fields": {
         "name": "Chinees",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.780Z",
         "updated_at": "2022-07-26T14:42:03.780Z",
         "deleted_at": null,
@@ -14755,7 +14321,6 @@
     "pk": 3259,
     "fields": {
         "name": "Communicatiewetenschap",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.781Z",
         "updated_at": "2022-07-26T14:42:03.781Z",
         "deleted_at": null,
@@ -14777,7 +14342,6 @@
     "pk": 3260,
     "fields": {
         "name": "Duits",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.783Z",
         "updated_at": "2022-07-26T14:42:03.783Z",
         "deleted_at": null,
@@ -14799,7 +14363,6 @@
     "pk": 3261,
     "fields": {
         "name": "Engels",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.784Z",
         "updated_at": "2022-07-26T14:42:03.784Z",
         "deleted_at": null,
@@ -14821,7 +14384,6 @@
     "pk": 3262,
     "fields": {
         "name": "Evalueren",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.786Z",
         "updated_at": "2022-07-26T14:42:03.786Z",
         "deleted_at": null,
@@ -14843,7 +14405,6 @@
     "pk": 3263,
     "fields": {
         "name": "Frans",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.787Z",
         "updated_at": "2022-07-26T14:42:03.787Z",
         "deleted_at": null,
@@ -14865,7 +14426,6 @@
     "pk": 3264,
     "fields": {
         "name": "Griekse en Latijnse taal en cultuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.789Z",
         "updated_at": "2022-07-26T14:42:03.789Z",
         "deleted_at": null,
@@ -14887,7 +14447,6 @@
     "pk": 3265,
     "fields": {
         "name": "Italiaans",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.790Z",
         "updated_at": "2022-07-26T14:42:03.790Z",
         "deleted_at": null,
@@ -14909,7 +14468,6 @@
     "pk": 3266,
     "fields": {
         "name": "Nederlands",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.791Z",
         "updated_at": "2022-07-26T14:42:03.791Z",
         "deleted_at": null,
@@ -14931,7 +14489,6 @@
     "pk": 3267,
     "fields": {
         "name": "Portugees",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.793Z",
         "updated_at": "2022-07-26T14:42:03.793Z",
         "deleted_at": null,
@@ -14953,7 +14510,6 @@
     "pk": 3268,
     "fields": {
         "name": "Russisch",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.794Z",
         "updated_at": "2022-07-26T14:42:03.794Z",
         "deleted_at": null,
@@ -14975,7 +14531,6 @@
     "pk": 3269,
     "fields": {
         "name": "Spaans",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.795Z",
         "updated_at": "2022-07-26T14:42:03.795Z",
         "deleted_at": null,
@@ -14997,7 +14552,6 @@
     "pk": 3270,
     "fields": {
         "name": "techniek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.797Z",
         "updated_at": "2022-07-26T14:42:03.797Z",
         "deleted_at": null,
@@ -15019,7 +14573,6 @@
     "pk": 3271,
     "fields": {
         "name": "Bouwkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.799Z",
         "updated_at": "2022-07-26T14:42:03.799Z",
         "deleted_at": null,
@@ -15041,7 +14594,6 @@
     "pk": 3272,
     "fields": {
         "name": "Civiele techniek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.800Z",
         "updated_at": "2022-07-26T14:42:03.800Z",
         "deleted_at": null,
@@ -15063,7 +14615,6 @@
     "pk": 3273,
     "fields": {
         "name": "Elektrotechniek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.802Z",
         "updated_at": "2022-07-26T14:42:03.802Z",
         "deleted_at": null,
@@ -15085,7 +14636,6 @@
     "pk": 3274,
     "fields": {
         "name": "Materiaalkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.803Z",
         "updated_at": "2022-07-26T14:42:03.803Z",
         "deleted_at": null,
@@ -15107,7 +14657,6 @@
     "pk": 3275,
     "fields": {
         "name": "Mijnbouwkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.804Z",
         "updated_at": "2022-07-26T14:42:03.804Z",
         "deleted_at": null,
@@ -15129,7 +14678,6 @@
     "pk": 3276,
     "fields": {
         "name": "Procestechnologie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.806Z",
         "updated_at": "2022-07-26T14:42:03.806Z",
         "deleted_at": null,
@@ -15151,7 +14699,6 @@
     "pk": 3277,
     "fields": {
         "name": "Werktuigbouwkunde",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.807Z",
         "updated_at": "2022-07-26T14:42:03.807Z",
         "deleted_at": null,
@@ -15173,7 +14720,6 @@
     "pk": 3278,
     "fields": {
         "name": "aarde_milieu",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.810Z",
         "updated_at": "2022-07-26T14:42:03.810Z",
         "deleted_at": null,
@@ -15195,7 +14741,6 @@
     "pk": 3279,
     "fields": {
         "name": "economie_bedrijf",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.812Z",
         "updated_at": "2022-07-26T14:42:03.812Z",
         "deleted_at": null,
@@ -15217,7 +14762,6 @@
     "pk": 3280,
     "fields": {
         "name": "exact_informatica",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.814Z",
         "updated_at": "2022-07-26T14:42:03.814Z",
         "deleted_at": null,
@@ -15239,7 +14783,6 @@
     "pk": 3281,
     "fields": {
         "name": "gedrag_maatschappij",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.815Z",
         "updated_at": "2022-07-26T14:42:03.815Z",
         "deleted_at": null,
@@ -15261,7 +14804,6 @@
     "pk": 3282,
     "fields": {
         "name": "gezondheid",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.817Z",
         "updated_at": "2022-07-26T14:42:03.817Z",
         "deleted_at": null,
@@ -15283,7 +14825,6 @@
     "pk": 3283,
     "fields": {
         "name": "interdisciplinair",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.819Z",
         "updated_at": "2022-07-26T14:42:03.819Z",
         "deleted_at": null,
@@ -15305,7 +14846,6 @@
     "pk": 3284,
     "fields": {
         "name": "kunst_cultuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.820Z",
         "updated_at": "2022-07-26T14:42:03.820Z",
         "deleted_at": null,
@@ -15327,7 +14867,6 @@
     "pk": 3285,
     "fields": {
         "name": "onderwijs_opvoeding",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.822Z",
         "updated_at": "2022-07-26T14:42:03.822Z",
         "deleted_at": null,
@@ -15349,7 +14888,6 @@
     "pk": 3286,
     "fields": {
         "name": "recht_bestuur",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.823Z",
         "updated_at": "2022-07-26T14:42:03.823Z",
         "deleted_at": null,
@@ -15371,7 +14909,6 @@
     "pk": 3287,
     "fields": {
         "name": "taal_communicatie",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.825Z",
         "updated_at": "2022-07-26T14:42:03.825Z",
         "deleted_at": null,
@@ -15393,7 +14930,6 @@
     "pk": 3288,
     "fields": {
         "name": "techniek",
-        "site": 1,
         "created_at": "2022-07-26T14:42:03.827Z",
         "updated_at": "2024-02-22T09:03:39.939Z",
         "deleted_at": null,
