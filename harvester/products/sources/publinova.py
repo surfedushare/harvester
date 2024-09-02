@@ -50,15 +50,6 @@ class PublinovaProductExtraction(PublinovaExtractor):
         return authors
 
     @classmethod
-    def get_provider(cls, node):
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": "publinova",
-            "name": "Publinova"
-        }
-
-    @classmethod
     def get_organizations(cls, node):
         root = cls.get_provider(node)
         root["type"] = "repository"

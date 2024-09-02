@@ -82,7 +82,7 @@ OBJECTIVE = {
     "access_rights": lambda info: "OpenAccess",  # as agreed upon with an email by Emile Bijk on 1 December 2022
     "product_id": HkuFileExtraction.get_product_id,
     "is_link": lambda info: False,
-    "provider": lambda info: "hku",
+    "provider": HkuFileExtraction.get_provider,
 }
 
 SEEDING_PHASES = [

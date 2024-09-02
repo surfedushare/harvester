@@ -58,20 +58,8 @@ class SharekitMetadataExtraction:
         ]
 
     @classmethod
-    def get_provider(cls, node):
-        if not node["attributes"]:
-            return
-        owner = node["attributes"]["owner"]
-        return {
-            "ror": None,
-            "external_id": owner["id"],
-            "slug": None,
-            "name": owner["name"]
-        }
-
-    @classmethod
     def get_organizations(cls, node):
-        root = cls.get_provider(node)
+        root = SharekitExtractor.get_provider(node)
         if not root:
             return
         root["type"] = "unknown"
@@ -191,7 +179,7 @@ OBJECTIVE = {
     "description": "$.attributes.abstract",
     "copyright": SharekitMetadataExtraction.get_copyright,
     "authors": SharekitMetadataExtraction.get_authors,
-    "provider": SharekitMetadataExtraction.get_provider,
+    "provider": SharekitExtractor.get_provider,
     "organizations": SharekitMetadataExtraction.get_organizations,
     "publishers": SharekitMetadataExtraction.get_publishers,
     "publisher_date": SharekitMetadataExtraction.get_publisher_date,

@@ -123,4 +123,9 @@ class TestHanzeFileExtraction(TestCase):
         self.assertTrue(self.seeds[2]["is_link"])
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], "hanze")
+        self.assertEqual(self.seeds[0]["provider"], {
+            "name": "Hanze",
+            "slug": "hanze",
+            "external_id": None,
+            "ror": None,
+        })

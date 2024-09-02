@@ -76,15 +76,6 @@ class HkuProductExtraction(HkuExtractor):
         return publisher_datetime.strftime("%Y-%m-%d")
 
     @classmethod
-    def get_provider(cls, node):
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": "hku",
-            "name": "Hogeschool voor de Kunsten Utrecht",
-        }
-
-    @classmethod
     def get_organizations(cls, node):
         root = cls.get_provider(node)
         root["type"] = "institute"

@@ -150,5 +150,5 @@ class EdurepExtractor(BaseExtractor):
             "ror": None,
             "external_id": None,
             "slug": None,
-            "name": provider_name
+            "name": provider_name or "Edurep"
         }

@@ -117,4 +117,9 @@ class TestBuasFileExtraction(TestCase):
         self.assertFalse(self.seeds[2]["is_link"])
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], "buas")
+        self.assertEqual(self.seeds[0]["provider"], {
+            "name": "Buas",
+            "slug": "buas",
+            "external_id": None,
+            "ror": None,
+        })

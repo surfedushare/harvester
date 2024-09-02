@@ -81,6 +81,10 @@ class PureFileExtraction(PureExtractor):
             access_rights = "RestrictedAccess"
         return access_rights
 
+    @classmethod
+    def get_provider(cls, info: ElectronicVersionInfo):
+        return super().get_provider(info.product)
+
 
 def build_objective(extract_processor: Type[PureFileExtraction], source_set: str) -> dict:
     provider, set_name = source_set.split(":")
@@ -99,5 +103,5 @@ def build_objective(extract_processor: Type[PureFileExtraction], source_set: str
         "access_rights": extract_processor.get_access_rights,
         "product_id": lambda info: info.product["uuid"],
         "is_link": lambda info: info.is_link,
-        "provider": lambda info: provider,
+        "provider": extract_processor.get_provider,
     }

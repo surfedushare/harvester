@@ -140,7 +140,10 @@ class TestEdurepProductExtraction(TestCase):
 
     def test_organizations(self):
         seeds = self.seeds
-        self.assertIsNone(seeds[0]['organizations']['root']['name'])
+        self.assertEqual(
+            seeds[0]['organizations']['root']['name'], "Edurep",
+            "Expected default organization to be Edurep"
+        )
         self.assertEqual(
             seeds[3]['organizations']['root']['name'],
             'AERES Hogeschool; HAS Hogeschool; Van Hall Larenstein',

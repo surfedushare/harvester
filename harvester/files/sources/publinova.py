@@ -89,7 +89,7 @@ OBJECTIVE = {
     "access_rights": lambda info: "OpenAccess",
     "product_id": lambda info: info.product["id"],
     "is_link": lambda info: False,
-    "provider": lambda info: "publinova",
+    "provider": PublinovaFileExtraction.get_provider,
 }
 
 

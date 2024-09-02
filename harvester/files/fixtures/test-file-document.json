@@ -52,7 +52,12 @@
                 "state": "active",
                 "title": "Docentenhandleiding",
                 "is_link": false,
-                "provider": "Hogeschool Rotterdam",
+                "provider": {
+                    "name": "Hogeschool Rotterdam",
+                    "slug": null,
+                    "external_id": null,
+                    "ror": null
+                },
                 "copyright": null,
                 "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 "product_id": "e9e212d6-e609-4d0b-903f-1f966bf8b420",

@@ -124,10 +124,7 @@ class SharekitFileExtraction:
 
     @classmethod
     def get_provider(cls, info: FileInfo) -> str | None:
-        publishers = info.product["attributes"].get("publishers", []) or []
-        if isinstance(publishers, str):
-            publishers = [publishers]
-        return publishers[0] if len(publishers) else "sharekit"
+        return SharekitExtractor.get_provider(info.product)
 
     @classmethod
     def get_priority(cls, info: FileInfo) -> int:

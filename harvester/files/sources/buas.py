@@ -5,6 +5,7 @@ from files.sources.pure import PureFileExtraction, build_objective
 
 class BuasFileExtractor(PureFileExtraction):
     source_slug = "buas"
+    source_name = "Buas"
     file_url_property = "fileURL"
 
 

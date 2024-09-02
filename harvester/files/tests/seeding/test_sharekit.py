@@ -198,8 +198,12 @@ class TestSharekitFileExtraction(TestCase):
         self.assertTrue(self.seeds[1]["is_link"])
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], "SURFnet")
-        self.assertEqual(self.seeds[5]["provider"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertEqual(self.seeds[0]["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+            "ror": None,
+        })
 
     def test_type(self):
         self.assertEqual(self.seeds[0]["type"], "document")

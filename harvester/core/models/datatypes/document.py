@@ -20,13 +20,7 @@ from core.utils.decoders import HarvesterJSONDecoder
 def document_metadata_default() -> dict:
     current_time = now()
     return {
-        "srn": None,
-        "provider": {
-            "name": None,
-            "external_id": None,
-            "slug": None,
-            "ror": None
-        },
+        "provider": None,
         "hash": None,
         "created_at": current_time,
         "modified_at": current_time,
@@ -116,6 +110,20 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             self.finish_processing(current_time, commit=False)
         elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
+        # Update metadata about document provider.
+        # We only set the provider once to make sure ownership remains constant during document lifetime.
+        # Providers have different properties to identify through, but clients want a single string to work with.
+        provider = self.properties.get("provider")
+        if not provider:
+            self.metadata["provider"] = None
+        elif provider.get("name"):
+            self.metadata["provider"] = provider["name"]
+        elif provider.get("slug"):
+            self.metadata["provider"] = provider["slug"]
+        elif provider.get("ror"):
+            self.metadata["provider"] = provider["ror"]
+        elif provider.get("external_id"):
+            self.metadata["provider"] = provider["external_id"]
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)
