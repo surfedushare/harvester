@@ -19,6 +19,11 @@ def default_document_tasks():
             "depends_on": ["$.publisher_year"],
             "checks": ["has_publisher_year"],
             "resources": []
+        },
+        "deactivate_invalid_products": {
+            "depends_on": ["$.modified_at"],
+            "checks": [],
+            "resources": []
         }
     }
     if settings.PROJECT == "edusources":
