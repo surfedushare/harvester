@@ -56,7 +56,7 @@ class TestHarvestStudyVocabulary(TestCase):
         )
         self.assertTrue(value.is_manual, "Expected values to be manual to prevent automatic deletion")
         self.assertEqual(
-            value.field.name, "study_vocabulary",
+            value.field.name, "study_vocabulary.keyword",
             "Expected field to be a keyword Open Search field"
         )
         self.assertTrue(value.translation.nl)
