@@ -60,7 +60,7 @@ class Command(base.LabelCommand):
                 print(f"Loading metadata {metadata_model}")
                 clazz = apps.get_model(metadata_model)
                 load_file = os.path.join(get_dumps_path(clazz), f"{clazz.get_name()}.dump.json")
-                call_command("loaddata", load_file)
+                call_command("loaddata", load_file, ignorenonexistent=True)
 
     @staticmethod
     def reset_postgres_sequences(app_label):
