@@ -30,15 +30,20 @@ search_client_mock.search = MagicMock(return_value={
 
 class TestMetadataFieldManager(TestCase):
 
-    @patch("metadata.models.field.get_opensearch_client", return_value=search_client_mock)
+    fixtures = ["test-metadata-edusources"]
+
+    @patch("search.clients.get_opensearch_client", return_value=search_client_mock)
     def test_fetch_value_frequencies(self, client_mock):
         frequencies = MetadataField.objects.fetch_value_frequencies()
         # Check dummy return values
         self.assertEqual(client_mock.call_count, 1)
         self.assertEqual(frequencies, {"field1": {"value1": 1, "value2": 2, "value3": 3}})
-        # See if call to ES was made correctly
+        # See if call to OpenSearch was made correctly
         args, kwargs = search_client_mock.search.call_args
-        self.assertEqual(kwargs["index"], ["edusources-nl", "edusources-en", "edusources-unk"])
+        self.assertEqual(
+            kwargs["index"], ["edusources-products"],
+            "Expected 'products' entity to result in 'products:default' configuration preset"
+        )
         fields = kwargs["body"]["aggs"]
         for field in MetadataField.objects.all():
             self.assertIn(field.name, fields)

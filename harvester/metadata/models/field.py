@@ -1,37 +1,42 @@
+from collections import defaultdict
+
 from django.conf import settings
 from django.db import models
 from rest_framework import serializers
 
-from search_client.opensearch.configuration.presets import get_all_preset_keys
-from search.clients import get_opensearch_client
+from search_client.opensearch.configuration.presets import get_all_preset_keys, is_valid_preset_search_configuration
+from search.clients import get_search_client
 from metadata.models import MetadataTranslation, MetadataTranslationSerializer, MetadataValueSerializer
 
 
 class MetadataFieldManager(models.Manager):
 
-    def fetch_value_frequencies(self, **kwargs):
-        client = get_opensearch_client()
-        aggregation_query = {
-            field.name: {
+    def fetch_value_frequencies(self, **kwargs) -> dict:
+        value_frequencies = {}
+
+        # Load relevant data from the database and prepare queries
+        aggregation_terms_by_entity = defaultdict(dict)
+        for field in self.annotate(size=models.Count("metadatavalue")).filter(**kwargs).iterator():
+            preset = is_valid_preset_search_configuration(settings.PLATFORM, field.entity)
+            aggregation_terms_by_entity[preset][field.name] = {
                 "terms": {
                     "field": field.name,
                     "size": field.size + 500,
                 }
             }
-            for field in self.annotate(size=models.Count("metadatavalue")).filter(**kwargs).iterator()
-        }
-        indices = [f"{settings.PROJECT}-{language}" for language in ["nl", "en", "unk"]]
-        response = client.search(
-            index=indices,
-            body={"aggs": aggregation_query}
-        )
-        return {
-            field_name: {
+
+        # Execute queries using the correct index for all terms
+        for preset, terms in aggregation_terms_by_entity.items():
+            client = get_search_client(presets=[preset])
+            aliases = client.configuration.get_aliases()
+            response = client.client.search(index=aliases, body={"aggs": terms})
+            for field_name, aggregation in response["aggregations"].items():
+                value_frequencies[field_name] = {
                 bucket["key"]: bucket["doc_count"]
                 for bucket in aggregation["buckets"]
             }
-            for field_name, aggregation in response["aggregations"].items()
-        }
+
+        return value_frequencies
 
 
 ENTITY_CHOICES = [
