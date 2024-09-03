@@ -19,7 +19,8 @@ def create_version_copy(dataset_version, version, created_at):
     version_copy.is_current = False
     version_copy.version = version
     version_copy.created_at = created_at
-    version_copy.index = OpenSearchIndex.objects.create(configuration={})
+    version_copy.index = OpenSearchIndex.build("products", version_copy.dataset.name, version_copy.version)
+    version_copy.index.save()
     version_copy.save()
     return version_copy
 
@@ -44,7 +45,8 @@ def set_tika_pipeline(dataset_version):
 
 
 def update_generated_version(dataset_version: DatasetVersion, version=None):
-    dataset_version.index = OpenSearchIndex.objects.create(configuration={})
+    dataset_version.index = OpenSearchIndex.build("products", dataset_version.dataset.name, dataset_version.version)
+    dataset_version.index.save()
     if version:
         dataset_version.version = version
         dataset_version.is_current = False
@@ -106,8 +108,14 @@ class TestCleanData(TestCase):
         self.assertEqual(HttpTikaResource.objects.count(), 40, "Expected one HttpTikaResource per Document")
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
-        self.assertEqual(self.search_client.indices.exists.call_count, 42)
-        self.assertEqual(self.search_client.indices.delete.call_count, 42)
+        self.assertEqual(
+            self.search_client.indices.exists.call_count, 9,
+            "Expected 0.0.0, 0.0.7 and 0.0.14 to be checked for deletion when last DatasetVersions instance was cleaned"
+        )
+        self.assertEqual(
+            self.search_client.indices.delete.call_count, 9,
+            "Expected 0.0.0, 0.0.7 and 0.0.14 to be deleted when last DatasetVersions instance was cleaned"
+        )
 
     def test_clean_data_duplicated_resources(self):
         # We'll add old Resources to new Documents and make sure these resources do not get deleted
@@ -146,5 +154,11 @@ class TestCleanData(TestCase):
         self.assertEqual(HttpTikaResource.objects.count(), 0)
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
-        self.assertEqual(self.search_client.indices.exists.call_count, 42)
-        self.assertEqual(self.search_client.indices.delete.call_count, 42)
+        self.assertEqual(
+            self.search_client.indices.exists.call_count, 9,
+            "Expected 0.0.0, 0.0.7 and 0.0.14 to be checked for deletion when last DatasetVersions instance was cleaned"
+        )
+        self.assertEqual(
+            self.search_client.indices.delete.call_count, 9,
+            "Expected 0.0.0, 0.0.7 and 0.0.14 to be deleted when last DatasetVersions instance was cleaned"
+        )

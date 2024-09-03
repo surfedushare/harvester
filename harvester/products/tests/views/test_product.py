@@ -276,6 +276,7 @@ class TestResearchProductDocumentView(TestDocumentView):
         "set": "sharekit:edusources",
         "state": "active",
         "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
+        "score": 1.0,
         "published_at": "2017-09-27",
         "modified_at": "2021-04-15",
         "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",

@@ -32,14 +32,23 @@ def run_harvester_task(ctx, mode, command, environment=None):
 @task(
     name="migrate",
     help={
-        "mode": "Mode you want to migrate: development, acceptance or production. Must match APPLICATION_MODE"
+        "mode": "Mode you want to migrate: development, acceptance or production. Must match APPLICATION_MODE.",
+        "app_label": "The app label you want to migrate.",
+        "migration": "The migration number of the app label that you want to migrate to."
     }
 )
-def harvester_migrate(ctx, mode):
+def harvester_migrate(ctx, mode, app_label=None, migration=None):
     """
     Executes migration task on container cluster for development, acceptance or production environment on AWS
     """
+    if (app_label and not migration) or (not app_label and migration):
+        raise Exit(
+            "Specify both app_label and migration to run a specific migration or specify neither to run all migrations."
+        )
+
     command = ["python", "manage.py", "migrate"]
+    if migration:
+        command += [app_label, migration]
     environment = [
         {
             "name": "DET_POSTGRES_USER",
@@ -175,25 +184,6 @@ def clean_data(ctx, mode):
     """
     command = ["python", "manage.py", "clean_data"]
 
-    run_harvester_task(ctx, mode, command)
-
-
-@task(help={
-    "mode": "Mode you want to create indices for: localhost, development, acceptance or production. "
-            "Must match APPLICATION_MODE",
-    "dataset": "Name of the dataset (a Greek letter) that you want to create indices for",
-    "version": "Version of the harvester that created the dataset version you want to index. "
-               "Defaults to latest version",
-})
-def index_dataset_version(ctx, mode, dataset, version=None, skip_evaluation=False):
-    """
-    Starts a task on the AWS container cluster or localhost to create the ES indices for a DatasetVersion
-    """
-    command = ["python", "manage.py", "index_dataset_version", f"--dataset={dataset}"]
-    if version:
-        command += [f"--harvester-version={version}"]
-    if skip_evaluation:
-        command += ["--skip-evaluation"]
     run_harvester_task(ctx, mode, command)
 
 
