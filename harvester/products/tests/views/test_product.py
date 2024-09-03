@@ -98,7 +98,8 @@ class TestDocumentView(TestCase):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": False,
             },
             {
                 "dai": None,
@@ -106,7 +107,8 @@ class TestDocumentView(TestCase):
                 "name": "Astrid Bulte",
                 "email": None,
                 "orcid": None,
-                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
+                "is_external": False,
             },
             {
                 "dai": None,
@@ -114,7 +116,8 @@ class TestDocumentView(TestCase):
                 "name": "Hans Poorthuis",
                 "email": None,
                 "orcid": None,
-                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
+                "is_external": False,
             }
         ],
         "has_parts": [],
@@ -360,7 +363,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": False,
             },
             {
                 "dai": None,
@@ -368,7 +372,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Astrid Bulte",
                 "email": None,
                 "orcid": None,
-                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
+                "is_external": False,
             },
             {
                 "dai": None,
@@ -376,7 +381,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Hans Poorthuis",
                 "email": None,
                 "orcid": None,
-                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
+                "is_external": False,
             }
         ],
         "has_parts": [],
@@ -409,7 +415,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": False,
             }
         ],
         "contacts": [
@@ -419,7 +426,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": False,
             }
         ],
         "subtitle": None
