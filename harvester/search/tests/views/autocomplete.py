@@ -1,6 +1,6 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client import DocumentTypes
+from search_client.constants import Platforms
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -23,9 +23,9 @@ class TestAutoCompleteView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialAutoCompleteView(OpenSearchTestCaseMixin, TestAutoCompleteView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductAutoCompleteView(OpenSearchTestCaseMixin, TestAutoCompleteView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA

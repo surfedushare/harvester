@@ -38,7 +38,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
                 for document in batch:
                     language = document.get_analyzer_language()
                     search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
-                    search_document_batch.append(("all", document.to_search(use_multilingual_fields=False)))
+                    search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
                 errors += index.push(search_document_batch, is_done=False)
             # All documents have been pushed. We'll mark the push as done.
             index.pushed_at = current_time

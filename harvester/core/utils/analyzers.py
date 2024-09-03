@@ -9,5 +9,6 @@ class AnalyzerLanguages(Enum):
     UNKNOWN = "unk"
 
 
-def get_analyzer_language(language: str) -> str:
-    return language if language in settings.OPENSEARCH_LANGUAGE_CODES else AnalyzerLanguages.UNKNOWN.value
+def get_analyzer_language(language: str, as_enum: bool = False) -> str | AnalyzerLanguages:
+    language_code = language if language in settings.OPENSEARCH_LANGUAGE_CODES else AnalyzerLanguages.UNKNOWN.value
+    return AnalyzerLanguages(language_code) if as_enum else language_code

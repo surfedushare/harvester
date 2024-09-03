@@ -28,12 +28,8 @@ class TestOpenSearchIndexModel(TestCase):
         instance.save()
         instance.delete()  # we're testing this
         for language in ["en", "nl", "unk"]:
-            self.search_client.indices.delete.assert_any_call(
-                index=f"edusources-testing--test-001-{language}"
-            )
-        self.search_client.indices.delete.assert_any_call(
-            index="edusources-testing--test-001"
-        )
+            self.search_client.indices.delete.assert_any_call(index=f"edusources-testing--test-001-{language}")
+        self.search_client.indices.delete.assert_any_call(index="edusources-testing--test-001")
 
     def test_get_remote_names(self):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")

@@ -181,6 +181,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             data["overwrite"] = None
         if merge_derivatives:
             data.update(self.get_derivatives_data())
+        data["provider"] = self.metadata["provider"]  # this is a string value constant during document lifetime
         return data
 
     def to_search(self, use_multilingual_fields: bool = False) -> dict:

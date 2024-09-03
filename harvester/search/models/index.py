@@ -9,7 +9,8 @@ from django.utils.timezone import make_aware
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
 
-from search_client.opensearch.configuration import create_open_search_index_configuration
+from search_client.opensearch.indices import build_products_index_configuration
+from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search.clients import get_opensearch_client
 
 
@@ -28,7 +29,7 @@ class OpenSearchIndex(models.Model):
     def build(cls, app_label: str, dataset: str, version: str) -> OpenSearchIndex:
         index = cls(
             entity=app_label,
-            name=f"{settings.OPENSEARCH_ALIAS_PREFIX}-{app_label}--{dataset}-{version}"
+            name=f"{settings.PLATFORM.value}-{app_label}--{dataset}-{version}"
         )
         index.clean()
         return index
@@ -117,12 +118,12 @@ class OpenSearchIndex(models.Model):
     def promote_language_index_to_latest(self, language: str) -> None:
         alias_prefix, dataset_info = self.name.split("--")
         alias = f"{alias_prefix}-{language}"
-        legacy_alias = f"{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
+        legacy_alias = f"{settings.PLATFORM.value}-{language}"
         # The index pattern should target all datasets and versions,
         # but stay clear from deleting cross project and cross language indices to prevent data loss
         # as well as targeting protected AWS indices to prevent errors
         index_pattern = f"{alias_prefix}--*-*-{language}"
-        legacy_pattern = f"*-*-*-{settings.OPENSEARCH_ALIAS_PREFIX}-{language}"
+        legacy_pattern = f"*-*-*-{settings.PLATFORM.value}-{language}"
         try:
             # NB: this is still being used at the time of writing.
             # The plan is to move away from language based aliases soon and then this becomes obsolete.
@@ -176,11 +177,7 @@ class OpenSearchIndex(models.Model):
         if settings.OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS:
             decompound_word_list = settings.OPENSEARCH_DECOMPOUND_WORD_LISTS.dutch
         if language is None:
-            return create_open_search_index_configuration(
-                "unk",
-                settings.DOCUMENT_TYPE,
-                decompound_word_list=decompound_word_list
-            )
+            return build_products_index_configuration(settings.DOCUMENT_TYPE, decompound_word_list)
         return create_open_search_index_configuration(
             language,
             settings.DOCUMENT_TYPE,

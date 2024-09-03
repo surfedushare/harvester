@@ -1,45 +1,41 @@
-from opensearchpy import OpenSearch, RequestsHttpConnection
+from typing import Type
 
 from django.conf import settings
+from rest_framework.serializers import Serializer
+from pydantic import BaseModel
+from opensearchpy import OpenSearch
 
-from search_client import SearchClient
-
-
-def get_search_client(document_type=None, alias_prefix=None):
-    document_type = document_type or settings.DOCUMENT_TYPE
-    kwargs = {}
-    if "amazonaws.com" in settings.OPENSEARCH_HOST:
-        kwargs["basic_auth"] = ("supersurf", settings.OPENSEARCH_PASSWORD,)
-        kwargs["verify_certs"] = settings.OPENSEARCH_VERIFY_CERTS
-    return SearchClient(
-        settings.OPENSEARCH_HOST,
-        document_type,
-        alias_prefix if alias_prefix else settings.OPENSEARCH_ALIAS_PREFIX,
-        search_results_key="results",
-        **kwargs
-    )
+from search_client.constants import Entities
+from search_client.opensearch import SearchClient, OpenSearchClientBuilder
+from search_client.opensearch.configuration import SearchConfiguration
 
 
-def get_opensearch_client():
+def prepare_results_for_response(models: list[BaseModel], serializers: dict[Entities: Type[Serializer]],
+                                 raise_exception: bool = True) -> list[dict]:
+    results = []
+    for model in models:
+        serializer = serializers[model.entity]
+        result = serializer(data=model.model_dump(mode="json"))
+        result.is_valid(raise_exception=raise_exception)
+        results.append(result.data)
+    return results
 
-    opensearch_url = settings.OPENSEARCH_HOST
-    protocol_config = {}
-    if opensearch_url.startswith("https"):
-        protocol_config = {
-            "scheme": "https",
-            "port": 443,
-            "use_ssl": True,
-            "verify_certs": settings.OPENSEARCH_VERIFY_CERTS,
-        }
 
-    if settings.IS_AWS:
+def get_opensearch_client() -> OpenSearch:
+    host = settings.OPENSEARCH_HOST
+    http_auth = None
+    if "amazonaws.com" in host:
         http_auth = ("supersurf", settings.OPENSEARCH_PASSWORD)
-    else:
-        http_auth = (None, None)
+    return OpenSearchClientBuilder.from_host(host, http_auth).build()
 
-    return OpenSearch(
-        [opensearch_url],
-        http_auth=http_auth,
-        connection_class=RequestsHttpConnection,
-        **protocol_config
+
+def get_search_client(configuration: SearchConfiguration = None, presets: list[str] = None) -> SearchClient:
+    opensearch_client = get_opensearch_client()
+    client = SearchClient(
+        opensearch_client, settings.PLATFORM,
+        presets=presets,
+        configuration=configuration
     )
+    if settings.OPENSEARCH_ALIAS_PREFIX:
+        client.configuration.alias_prefix = settings.OPENSEARCH_ALIAS_PREFIX
+    return client

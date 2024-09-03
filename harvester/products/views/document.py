@@ -1,10 +1,7 @@
-from django.conf import settings
 from rest_framework import serializers
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
-
-from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
-from search_client.constants import DocumentTypes
+from search_client.constants import Entities
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
                                  SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
 from products.models import ProductDocument
@@ -67,18 +64,7 @@ class MetadataProductDetailView(DatasetVersionDocumentDetailView):
     exclude_deletes_unless_modified_since_filter = True
 
 
-class SearchProductGenericViewMixin:
-
-    def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
-            return SimpleLearningMaterialResultSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
-            return ResearchProductResultSerializer
-        else:
-            raise AssertionError("DocumentListView expected application to use different DOCUMENT_TYPE")
-
-
-class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericViewMixin, DatasetVersionDocumentListView):
+class SearchProductListView(SearchDocumentListViewMixin, DatasetVersionDocumentListView):
     """
     Returns a list of the most recent products.
     The dataformat is identical to how a search endpoint would return the product.
@@ -104,11 +90,11 @@ class SearchProductListView(SearchDocumentListViewMixin, SearchProductGenericVie
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
+    entity = Entities.PRODUCTS
     exclude_deletes_unless_modified_since_filter = True
 
 
-class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGenericViewMixin,
-                              DatasetVersionDocumentDetailView):
+class SearchProductDetailView(SearchDocumentRetrieveViewMixin, DatasetVersionDocumentDetailView):
     """
     Returns the most recent version of a product, using its SURF Resource Name as an identifier,
     in the same format a search result would return it.
@@ -134,4 +120,5 @@ class SearchProductDetailView(SearchDocumentRetrieveViewMixin, SearchProductGene
     **video**: For a product with a video that supports additional metadata this object will contain
     the duration and the embed_url of that video
     """
+    entity = Entities.PRODUCTS
     exclude_deletes_unless_modified_since_filter = True
