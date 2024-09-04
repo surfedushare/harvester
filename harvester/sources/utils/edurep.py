@@ -131,7 +131,7 @@ class EdurepExtractor(BaseExtractor):
         nodes = contribution_element.find_all('czp:vcard')
         for node in nodes:
             publisher = cls.parse_vcard_element(node, external_id)
-            if hasattr(publisher, "fn"):
+            if hasattr(publisher, "fn") and publisher.fn.value:
                 publishers.append(publisher.fn.value)
         return publishers
 
@@ -150,5 +150,5 @@ class EdurepExtractor(BaseExtractor):
             "ror": None,
             "external_id": None,
             "slug": None,
-            "name": provider_name
+            "name": provider_name or "Edurep"
         }

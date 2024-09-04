@@ -12,7 +12,7 @@ class HttpTikaResourceFactory(factory.django.DjangoModelFactory):
 
     class Params:
         url = ""
-        return_type = "text"
+        return_type = "xml"
 
     status = 200
     data_hash = ""

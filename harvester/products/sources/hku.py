@@ -29,7 +29,7 @@ class HkuProductExtraction(HkuExtractor):
             return "nl"
         elif language == "Engels":
             return "en"
-        return "unk"
+        return
 
     @classmethod
     def get_copyright(cls, node):
@@ -74,15 +74,6 @@ class HkuProductExtraction(HkuExtractor):
             return
         publisher_datetime = date_parser(publisher_date, default=datetime(year=1970, month=1, day=1))
         return publisher_datetime.strftime("%Y-%m-%d")
-
-    @classmethod
-    def get_provider(cls, node):
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": "hku",
-            "name": "Hogeschool voor de Kunsten Utrecht",
-        }
 
     @classmethod
     def get_organizations(cls, node):

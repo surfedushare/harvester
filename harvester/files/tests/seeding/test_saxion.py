@@ -127,6 +127,10 @@ class TestSaxionFileExtraction(TestCase):
     def test_get_set(self):
         self.assertEqual(self.seeds[0]["set"], "saxion:kenniscentra")
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "en")
+        self.assertEqual(self.seeds[2]["language"], "nl")
+
     def test_get_url(self):
         self.assertEqual(self.seeds[0]["url"], "https://resolver.saxion.nl/getfile/0CFB5656-CD05-4D48-8ADE98638765CF2E")
 

@@ -5,6 +5,7 @@ from itertools import groupby
 from functools import reduce
 from datetime import datetime
 from copy import deepcopy
+from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
@@ -143,6 +144,11 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     def __str__(self) -> str:
         return "{} (v={}, id={})".format(self.dataset.name, self.version, self.id)
 
+    def get_numeric_version(self) -> tuple[Decimal, int]:
+        major, minor, patch = self.version.split(".")
+        version = Decimal(f"{major}.{minor}")
+        return version, int(patch)
+
     @property
     def model_key(self) -> tuple[str, int]:
         return f"{self._meta.app_label}.{self._meta.model_name}", self.id,
@@ -151,10 +157,9 @@ class HarvestDatasetVersion(HarvestObjectMixin):
         by_language = defaultdict(list)
         documents = self.documents.filter(**filters)
         for document in documents:
-            language = document.get_language()
-            if language not in settings.OPENSEARCH_ANALYSERS:
-                language = "unk"
-            by_language[language] += list(document.to_search())
+            language = document.get_analyzer_language()
+            by_language[language] += list(document.to_search(use_multilingual_fields=False))
+            by_language["all"] += list(document.to_search(use_multilingual_fields=False))
         return by_language
 
     def set_current(self) -> None:

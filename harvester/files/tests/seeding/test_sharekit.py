@@ -157,6 +157,10 @@ class TestSharekitFileExtraction(TestCase):
             "5af0e26f-c4d2-4ddd-94ab-7dd0bd531751:0ed38cdc914e5e8a6aa1248438a1e2032a14b0de",
         )
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "en")
+        self.assertEqual(self.seeds[2]["language"], "nl")
+
     def test_get_mime_type(self):
         self.assertEqual(
             self.seeds[0]["mime_type"], "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -194,8 +198,12 @@ class TestSharekitFileExtraction(TestCase):
         self.assertTrue(self.seeds[1]["is_link"])
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], "SURFnet")
-        self.assertEqual(self.seeds[5]["provider"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertEqual(self.seeds[0]["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+            "ror": None,
+        })
 
     def test_type(self):
         self.assertEqual(self.seeds[0]["type"], "document")

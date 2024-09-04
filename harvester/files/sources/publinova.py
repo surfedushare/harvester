@@ -1,6 +1,7 @@
 from typing import Iterator
 from dataclasses import dataclass
 from hashlib import sha1
+from sentry_sdk import capture_message
 
 from sources.utils.publinova import PublinovaExtractor
 from files.models import Set, FileDocument
@@ -45,6 +46,14 @@ class PublinovaFileExtraction(PublinovaExtractor):
     #############################
 
     @classmethod
+    def get_language(cls, info: FileInfo):
+        language = info.product.get("language", None)
+        if not language:
+            return
+        capture_message(f"Received a language from Publinova: {language}", level="warning")
+        return language
+
+    @classmethod
     def get_url(cls, info: FileInfo) -> str | None:
         if info.file is None:
             return
@@ -71,6 +80,7 @@ OBJECTIVE = {
     "state": PublinovaFileExtraction.get_product_state,
     "set": lambda info: "publinova:publinova",
     "external_id": PublinovaFileExtraction.get_external_id,
+    "language": PublinovaFileExtraction.get_language,
     # Generic metadata
     "url": PublinovaFileExtraction.get_url,
     "hash": PublinovaFileExtraction.get_hash,
@@ -79,7 +89,7 @@ OBJECTIVE = {
     "access_rights": lambda info: "OpenAccess",
     "product_id": lambda info: info.product["id"],
     "is_link": lambda info: False,
-    "provider": lambda info: "publinova",
+    "provider": PublinovaFileExtraction.get_provider,
 }
 
 

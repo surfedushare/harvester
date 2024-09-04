@@ -8,6 +8,18 @@ from sources.utils.base import BaseExtractor
 class SharekitExtractor(BaseExtractor):
 
     @classmethod
+    def get_provider(cls, product):
+        if not product["attributes"]:
+            return
+        owner = product["attributes"]["owner"]
+        return {
+            "ror": None,
+            "external_id": owner["id"],
+            "slug": None,
+            "name": owner["name"]
+        }
+
+    @classmethod
     def extract_channel(cls, response_data: dict) -> str | None:
         endpoint = response_data.get("links", {}).get("self", None)
         if not endpoint:

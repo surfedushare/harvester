@@ -84,7 +84,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
-            "tika_return_type": "text",
+            "tika_return_type": "xml",
             "resource": "files.httptikaresource",
             "method": "put",
             "args": ["$.url"],
@@ -101,37 +101,37 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
     tika_processor(Document.objects.filter(id__in=document_ids))
 
 
-@app.task(name="tika_xml", base=DatabaseConnectionResetTask)
-def tika_xml_task(app_label: str, document_ids: list[int]) -> None:
+@app.task(name="tika_plain", base=DatabaseConnectionResetTask)
+def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Document = models["Document"]
 
-    tika_xml_processor = HttpPipelineProcessor({
+    tika_plain_processor = HttpPipelineProcessor({
         "pipeline_app_label": app_label,
         "pipeline_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "tika_xml",
+        "pipeline_phase": "tika_plain",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
-            "tika_return_type": "xml",
+            "tika_return_type": "text",
             "resource": "files.httptikaresource",
             "method": "put",
             "args": ["$.url"],
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/tika_xml",
+            "to_property": "derivatives/tika_plain",
             "objective": {
                 "@": "$",
-                "#xmls": tika_content_extraction,
+                "#plains": tika_content_extraction,
             }
         }
     })
-    tika_xml_processor(Document.objects.filter(id__in=document_ids))
+    tika_plain_processor(Document.objects.filter(id__in=document_ids))
 
 
 def get_embed_url(node):
@@ -139,7 +139,10 @@ def get_embed_url(node):
     url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
     if not url_regex:
         return
-    return url_regex[0]
+    url = url_regex[0]
+    if not url.startswith("http"):
+        url = f"https://{url}"
+    return url
 
 
 def get_previews(node):

@@ -20,13 +20,7 @@ from core.utils.decoders import HarvesterJSONDecoder
 def document_metadata_default() -> dict:
     current_time = now()
     return {
-        "srn": None,
-        "provider": {
-            "name": None,
-            "external_id": None,
-            "slug": None,
-            "ror": None
-        },
+        "provider": None,
         "hash": None,
         "created_at": current_time,
         "modified_at": current_time,
@@ -116,6 +110,20 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             self.finish_processing(current_time, commit=False)
         elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
+        # Update metadata about document provider.
+        # We only set the provider once to make sure ownership remains constant during document lifetime.
+        # Providers have different properties to identify through, but clients want a single string to work with.
+        provider = self.properties.get("provider")
+        if not provider:
+            self.metadata["provider"] = None
+        elif provider.get("name"):
+            self.metadata["provider"] = provider["name"]
+        elif provider.get("slug"):
+            self.metadata["provider"] = provider["slug"]
+        elif provider.get("ror"):
+            self.metadata["provider"] = provider["ror"]
+        elif provider.get("external_id"):
+            self.metadata["provider"] = provider["external_id"]
         # Calculates the properties hash and (re)sets it.
         # The modified_at metadata only changes when the hash changes, not when we first create the hash.
         properties_string = json.dumps(self.properties, sort_keys=True, default=str)
@@ -164,7 +172,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 data[key] = value
         return data
 
-    def to_data(self, merge_derivatives: bool = True) -> dict:
+    def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
         data = deepcopy(self.properties)
         if self.overwrite:
             data["overwrite"] = self.overwrite.id
@@ -175,18 +183,17 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             data.update(self.get_derivatives_data())
         return data
 
-    def to_search(self) -> list[dict]:
+    def to_search(self, use_multilingual_fields: bool = False) -> dict:
         # Decide whether to delete or not from the index
         if self.state != self.States.ACTIVE:
-            yield {
+            return {
                 "_id": self.properties["srn"],
                 "_op_type": "delete"
             }
-            return
         # Get the basic document information including from document overwrites
-        search_data = self.to_data()
+        search_data = self.to_data(use_multilingual_fields=use_multilingual_fields)
         search_data["_id"] = self.properties["srn"]
-        yield search_data
+        return search_data
 
     def __eq__(self, other):
         # We won't try equality with anything but a HarvestDocument of the same class

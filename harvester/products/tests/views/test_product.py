@@ -141,7 +141,11 @@ class TestDocumentView(TestCase):
             "exact_informatica"
         ],
         "ideas": [],
-        "study_vocabulary": [],
+        "study_vocabulary": [
+            "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
+            "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
+            "applied-science"
+        ],
         "technical_type": "document",
         "publishers": [
             "Hogeschool Utrecht",
@@ -235,7 +239,9 @@ class TestDocumentView(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         if self.format == "raw":
-            data.pop("properties")  # these are expected to change often and shouldn't fail the tests
+            # These are expected to change often in the raw data format and shouldn't fail the tests
+            data.pop("properties")
+            data.pop("derivatives")
         self.assertEqual(data, self.expected_document_output)
 
     def test_detail_not_found(self):
@@ -438,16 +444,6 @@ class TestRawDocumentView(TestDocumentView):
             "created_at": "2024-04-17T14:19:12.720000Z",
             "deleted_at": None,
             "modified_at": "2024-04-17T14:19:12.720000Z"
-        },
-        "derivatives": {
-            "normalize_disciplines": {
-                "learning_material_disciplines_normalized": [
-                    "exact_informatica"
-                ]
-            },
-            "normalize_publisher_year": {
-                "publisher_year_normalized": "older-than"
-            }
         }
     }
     expected_product_count = 16  # 1 original and 15 copies including all deletes

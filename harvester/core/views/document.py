@@ -36,7 +36,9 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
         if self.exclude_deletes_unless_modified_since_filter and not modified_since_filter:
             queryset = dataset_version.documents.filter(state=HarvestDocument.States.ACTIVE)
         else:
-            queryset = dataset_version.documents.all()
+            queryset = dataset_version.documents \
+                .exclude(state=HarvestDocument.States.INACTIVE) \
+                .exclude(state=HarvestDocument.States.SKIPPED)
         if modified_since_filter:
             queryset = queryset.filter(metadata__modified_at__gte=modified_since_filter)
         queryset = queryset.order_by("-id")

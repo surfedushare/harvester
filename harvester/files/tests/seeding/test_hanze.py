@@ -87,6 +87,10 @@ class TestHanzeFileExtraction(TestCase):
             "01ea0ee1-a419-42ee-878b-439b44562098:01df6be8b59f65074350ca33c8eded52ea106222"
         )
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "nl")
+        self.assertEqual(self.seeds[1]["language"], "en")
+
     def test_get_url(self):
         self.assertEqual(
             self.seeds[0]["url"],
@@ -119,4 +123,9 @@ class TestHanzeFileExtraction(TestCase):
         self.assertTrue(self.seeds[2]["is_link"])
 
     def test_get_provider(self):
-        self.assertEqual(self.seeds[0]["provider"], "hanze")
+        self.assertEqual(self.seeds[0]["provider"], {
+            "name": "Hanze",
+            "slug": "hanze",
+            "external_id": None,
+            "ror": None,
+        })

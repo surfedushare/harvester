@@ -145,7 +145,7 @@ class TestPublinovaProductExtraction(TestCase):
 
     def test_get_language(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["language"], "unk")
+        self.assertIsNone(seeds[0]["language"])
 
     def test_get_keywords(self):
         seeds = self.seeds

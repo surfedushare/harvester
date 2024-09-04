@@ -72,7 +72,11 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
         if not obj.index:
             return 0
         es_client = get_opensearch_client()
-        indices = obj.index.get_remote_names()
+        version, patch = obj.get_numeric_version()
+        if version >= 1.41 and patch >= 16:
+            indices = [obj.index.get_remote_name()]
+        else:
+            indices = obj.index.get_remote_names(include_multilingual_index=False)
         try:
             counts = es_client.count(index=",".join(indices))
         except NotFoundError:

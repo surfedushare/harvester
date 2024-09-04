@@ -4,6 +4,15 @@ from sources.utils.base import BaseExtractor
 class HkuExtractor(BaseExtractor):
 
     @classmethod
+    def get_provider(cls, node):
+        return {
+            "ror": None,
+            "external_id": None,
+            "slug": "hku",
+            "name": "Hogeschool voor de Kunsten Utrecht",
+        }
+
+    @classmethod
     def build_product_id(cls, identifier):
         if not identifier:
             return identifier

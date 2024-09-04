@@ -1,6 +1,5 @@
 from unittest.mock import patch
 from datetime import timedelta
-from time import sleep
 
 from django.test import TestCase
 from django.utils.timezone import now
@@ -21,10 +20,10 @@ class TestSyncOpenSearchIndices(TestCase):
     start_time = None
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.start_time = now()
-        sleep(1)  # create a little bit of a delta to ensure documents aren't excluded because of time restrictions
+    def setUpTestData(cls):
+        # Set start time, but create a little bit of a delta to ensure documents aren't excluded,
+        # because of time restrictions
+        cls.start_time = now() - timedelta(seconds=1)
         # The inactive data shouldn't be indexed, because the Dataset indicates no indexing is required
         inactive_dataset, inactive_dataset_version, inactive_sets, inactive_documents = create_datatype_models(
             "testing", ["simple_set"],
@@ -70,18 +69,23 @@ class TestSyncOpenSearchIndices(TestCase):
     @patch("search.models.index.streaming_bulk")
     def test_sync_opensearch_indices(self, streaming_bulk_mock, get_search_client_mock):
         sync_opensearch_indices("testing")
-        # Check if data was send to search engine
-        self.assertEqual(streaming_bulk_mock.call_count, 3, "Expected a separate call for nl, en and unk")
+        # Check if data was sent to search engine
+        self.assertEqual(streaming_bulk_mock.call_count, 4, "Expected a separate call for nl, en, unk and all")
         for args, kwargs in streaming_bulk_mock.call_args_list:
             client, docs = args
             alias, dataset_info = kwargs["index"].split("--")
-            dataset, version, language = dataset_info.split("-")
-            if language == "nl":
+            # Check language based call when appropriate and strip the language postfix
+            if dataset_info.endswith("nl"):
                 self.assertEqual(len(docs), 3)
-            elif language == "en":
+                dataset_info = dataset_info[:-3]
+            elif dataset_info.endswith("en"):
                 self.assertEqual(len(docs), 4)
-            elif language == "unk":
+                dataset_info = dataset_info[:-3]
+            elif dataset_info.endswith("unk"):
                 self.assertEqual(len(docs), 3)
+                dataset_info = dataset_info[:-4]
+            # Non-language asserts from here
+            dataset, version = dataset_info.split("-")
             self.assertEqual(dataset, "test")
             self.assertEqual(version, "003", "Only expected one dataset version to get indexed")
         # Check that pushed_at was updated

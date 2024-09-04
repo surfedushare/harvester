@@ -6,6 +6,7 @@ from django.db import models
 from django.conf import settings
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
+from core.utils.analyzers import get_analyzer_language
 from metadata.models import MetadataValue
 from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
@@ -28,6 +29,11 @@ def default_document_tasks():
         tasks["normalize_disciplines"] = {
             "depends_on": ["$.learning_material.disciplines"],
             "checks": ["has_disciplines"],
+            "resources": []
+        }
+        tasks["lookup_consortium_translations"] = {
+            "depends_on": ["$.learning_material.consortium"],
+            "checks": ["has_consortium"],
             "resources": []
         }
     return tasks
@@ -56,13 +62,22 @@ class ProductDocument(HarvestDocument):
             .exists()
 
     @property
+    def has_consortium(self) -> bool:
+        consortium = self.properties.get("learning_material", {}).get("consortium")
+        if not consortium:
+            return False
+        return MetadataValue.objects \
+            .filter(field__name="learning_material_disciplines_normalized", value=consortium) \
+            .exists()
+
+    @property
     def has_publisher_year(self) -> bool:
         publisher_year = self.properties.get("publisher_year")
         if not publisher_year:
             return False
         return MetadataValue.objects.filter(field__name="publisher_year", value=publisher_year).exists()
 
-    def get_language(self) -> str:
+    def get_analyzer_language(self) -> str:
         return self.metadata["language"]
 
     @staticmethod
@@ -154,16 +169,43 @@ class ProductDocument(HarvestDocument):
 
     def get_derivatives_data(self) -> dict:
         data = super().get_derivatives_data()
-        if "learning_material_disciplines_normalized" not in data:
-            data["learning_material_disciplines_normalized"] = []
+        if "study_vocabulary" not in data:
+            data["study_vocabulary"] = {}
         if "disciplines_normalized" not in data:
-            data["disciplines_normalized"] = []
+            data["disciplines_normalized"] = {}
+        if "consortium" not in data:
+            data["consortium"] = {}
+        if "publisher_year_normalized" not in data:
+            data["publisher_year_normalized"] = None
         return data
 
-    def to_data(self, merge_derivatives: bool = True, for_search: bool = True) -> dict:
+    @staticmethod
+    def transform_multilingual_fields(data: dict, use_multilingual_fields: bool) -> dict:
+        if use_multilingual_fields:
+            return data
+        # When not using multilingual fields we only transform if we receive a dict for certain fields.
+        # The dict indicates that tasks have returned multilingual field data,
+        # but caller wants multilingual indices format.
+        if isinstance(data["disciplines_normalized"], dict):
+            disciplines = data["disciplines_normalized"].get("keyword", [])
+            data["disciplines_normalized"] = disciplines
+            data["learning_material_disciplines_normalized"] = disciplines
+            pass
+        if isinstance(data["consortium"], dict):
+            data["consortium"] = data["consortium"].get("nl")
+        if isinstance(data["study_vocabulary"], dict):
+            dutch_terms = data["study_vocabulary"].get("nl", [])
+            data["study_vocabulary"] = data["study_vocabulary"].get("keyword", [])
+            data["study_vocabulary_terms"] = dutch_terms
+        return data
+
+    def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
+                use_multilingual_fields: bool = False) -> dict:
+        # Generic transforms
         data = super().to_data(merge_derivatives)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
+        # Transforms based on the main file
         if len(data["files"]):
             data = self.update_files_data(data)
         else:
@@ -171,17 +213,22 @@ class ProductDocument(HarvestDocument):
                 "url": None, "mime_type": None, "text": None, "previews": None, "video": None,
                 "technical_type": data.get("technical_type"),
             })
+        # Platform specific transforms
         learning_material = data.pop("learning_material", {})
         if learning_material:
-            learning_material["learning_material_disciplines"] = learning_material["disciplines"]
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
+            if ("consortium" in data and data["consortium"]) or use_multilingual_fields:
+                learning_material.pop("consortium", None)  # prevents overwriting derivatives data
             data.update(learning_material)
         research_product = data.pop("research_product", {})
         if research_product:
             research_product.pop("parties", None)  # parties equals publishers for now and we ignore parties
             data.update(research_product)
+        # Index related transforms
+        data = self.transform_multilingual_fields(data, use_multilingual_fields=use_multilingual_fields)
         if for_search:
             data = self.transform_search_data(data)
+        # Done
         return data
 
     def set_metadata(self, current_time=None, new=False) -> None:
@@ -189,8 +236,7 @@ class ProductDocument(HarvestDocument):
         language = self.metadata.get("language", None)
         if language is None:
             source_language = self.properties.get("language", None)
-            language_codes = settings.OPENSEARCH_LANGUAGE_CODES
-            self.metadata["language"] = source_language if source_language in language_codes else "unk"
+            self.metadata["language"] = get_analyzer_language(source_language)
 
 
 class Overwrite(HarvestOverwrite):

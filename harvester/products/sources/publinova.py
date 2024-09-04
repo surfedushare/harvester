@@ -26,9 +26,9 @@ class PublinovaProductExtraction(PublinovaExtractor):
     def get_language(cls, node):
         language = node.get("language", None)
         if not language:
-            return "unk"
+            return
         capture_message(f"Received a language from Publinova: {language}", level="warning")
-        return "unk"
+        return language
 
     @classmethod
     def get_copyright(cls, node):
@@ -48,15 +48,6 @@ class PublinovaProductExtraction(PublinovaExtractor):
             author["external_id"] = external_id
             author.pop("about", None)
         return authors
-
-    @classmethod
-    def get_provider(cls, node):
-        return {
-            "ror": None,
-            "external_id": None,
-            "slug": "publinova",
-            "name": "Publinova"
-        }
 
     @classmethod
     def get_organizations(cls, node):

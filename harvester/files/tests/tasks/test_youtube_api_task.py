@@ -57,7 +57,7 @@ class TestYoutubeAPITask(TestCase):
                               'full_size': 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
                               'preview_small': 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg'
                           },
-                          'embed_url': 'www.youtube.com/embed/dQw4w9WgXcQ',
+                          'embed_url': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
                           'definition': 'hd',
                           'description': 'this is a description'})
         self.assertFalse(success.is_not_found)

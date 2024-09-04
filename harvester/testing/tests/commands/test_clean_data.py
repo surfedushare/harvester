@@ -109,11 +109,11 @@ class TestCleanData(TestCase):
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
         self.assertEqual(
-            self.search_client.indices.exists.call_count, 9,
+            self.search_client.indices.exists.call_count, 12,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be checked for deletion when last DatasetVersions instance was cleaned"
         )
         self.assertEqual(
-            self.search_client.indices.delete.call_count, 9,
+            self.search_client.indices.delete.call_count, 12,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be deleted when last DatasetVersions instance was cleaned"
         )
 
@@ -155,10 +155,10 @@ class TestCleanData(TestCase):
         # Check if indices were removed properly as well
         self.assertEqual(get_search_client.call_count, 14, "Not sure why there are two calls per removed index")
         self.assertEqual(
-            self.search_client.indices.exists.call_count, 9,
+            self.search_client.indices.exists.call_count, 12,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be checked for deletion when last DatasetVersions instance was cleaned"
         )
         self.assertEqual(
-            self.search_client.indices.delete.call_count, 9,
+            self.search_client.indices.delete.call_count, 12,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be deleted when last DatasetVersions instance was cleaned"
         )

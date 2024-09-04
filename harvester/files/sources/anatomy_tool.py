@@ -96,6 +96,11 @@ class AnatomyToolFileExtraction(BaseExtractor):
         return f"{product_id}:{file_hash}"
 
     @classmethod
+    def get_language(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> None | str:
+        node = file_info.product.find('language')
+        return node.text.strip() if node else None
+
+    @classmethod
     def get_title(cls, soup: bs4.BeautifulSoup, file_info: FileInfo) -> str | None:
         el = file_info.product
         node = el.find('title')
@@ -152,6 +157,7 @@ OBJECTIVE = {
     "@": get_file_infos,
     "external_id": AnatomyToolFileExtraction.get_external_id,
     "set": AnatomyToolFileExtraction.get_set,
+    "language": AnatomyToolFileExtraction.get_language,
     "url": AnatomyToolFileExtraction.get_url,
     "hash": AnatomyToolFileExtraction.get_hash,
     "title": AnatomyToolFileExtraction.get_title,

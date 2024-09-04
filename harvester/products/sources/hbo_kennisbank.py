@@ -9,13 +9,6 @@ from sources.utils.hbo_kennisbank import HBOKennisbankExtractor
 
 class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
 
-    language_mapping = {
-        "nl": "nl",
-        "en": "en",
-        "dut": "nl",
-        "eng": "en"
-    }
-
     #############################
     # OAI-PMH
     #############################
@@ -54,13 +47,6 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
             if url:
                 urls.append(url)
         return urls
-
-    @classmethod
-    def get_language(cls, soup, el):
-        language_term = el.find("languageTerm")
-        if not language_term:
-            return "unk"
-        return cls.language_mapping.get(language_term.text.strip(), "unk")
 
     @classmethod
     def get_title(cls, soup, el):
@@ -169,7 +155,7 @@ def build_objective(extract_processor: Type[HBOKennisbankProductExtractor]) -> d
         "provider": extract_processor.get_provider,
         "doi": extract_processor.get_doi,
         "files": extract_processor.get_files,
-        "language": extract_processor.get_language,
+        "language": extract_processor.get_product_language,
         "title": extract_processor.get_title,
         "description": extract_processor.get_description,
         "copyright": extract_processor.get_copyright,

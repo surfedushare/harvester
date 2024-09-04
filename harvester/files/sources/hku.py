@@ -38,6 +38,15 @@ class HkuFileExtraction(HkuExtractor):
         return f"{product_id}:{file_hash}"
 
     @classmethod
+    def get_language(cls, file_info: FileInfo):
+        language = file_info.product["language"]
+        if language == "Nederlands":
+            return "nl"
+        elif language == "Engels":
+            return "en"
+        return "unk"
+
+    @classmethod
     def get_url(cls, file_info: FileInfo) -> str:
         return file_info.data["raw"].strip()
 
@@ -64,6 +73,7 @@ OBJECTIVE = {
     "@": get_file_info,
     "external_id": HkuFileExtraction.get_external_id,
     "set": lambda node: "hku:hku",
+    "language": HkuFileExtraction.get_language,
     # Generic metadata
     "url": HkuFileExtraction.get_url,
     "hash": HkuFileExtraction.get_hash,
@@ -72,7 +82,7 @@ OBJECTIVE = {
     "access_rights": lambda info: "OpenAccess",  # as agreed upon with an email by Emile Bijk on 1 December 2022
     "product_id": HkuFileExtraction.get_product_id,
     "is_link": lambda info: False,
-    "provider": lambda info: "hku",
+    "provider": HkuFileExtraction.get_provider,
 }
 
 SEEDING_PHASES = [

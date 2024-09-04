@@ -24,9 +24,3 @@ MBO_EDUCATIONAL_LEVELS = {
     "Beroepsonderwijs en Volwasseneneducatie",
     "Volwasseneneducatie",
 }
-
-
-SITE_SHORTHAND_BY_DOMAIN = {
-    "harvester.prod.surfedushare.nl": "edusources",
-    "harvester.publinova.nl": "publinova",
-}

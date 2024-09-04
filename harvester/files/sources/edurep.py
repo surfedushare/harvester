@@ -58,6 +58,11 @@ class EdurepFileExtraction(object):
         return f"edurep:{info.product.find('setSpec').text.strip()}"
 
     @classmethod
+    def get_language(cls, soup, info: FileInfo):
+        node = info.product.find('czp:language')
+        return node.text.strip() if node else None
+
+    @classmethod
     def get_url(cls, soup, info: FileInfo) -> str | None:
         if not info.url:
             return
@@ -102,6 +107,7 @@ OBJECTIVE = {
     "state": EdurepFileExtraction.get_state,
     "external_id": EdurepFileExtraction.get_external_id,
     "set": EdurepFileExtraction.get_set,
+    "language": EdurepFileExtraction.get_language,
     # Generic metadata
     "url": EdurepFileExtraction.get_url,
     "hash": EdurepFileExtraction.get_hash,

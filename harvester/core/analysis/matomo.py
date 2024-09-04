@@ -15,7 +15,7 @@ def _create_or_increase_query_ranking(search_client, dataset_version, query_stri
     document = Document.objects.filter(dataset_version=dataset_version, reference=external_id).last()
     if not document:
         return external_id
-    language = document.get_language() or "unk"
+    language = document.get_analyzer_language() or "unk"
     query, _ = Query.objects.get_or_create(query=query_string)
     ranking, _ = QueryRanking.objects.get_or_create(query=query, user=user)
     alias = f"edusources-{language}"

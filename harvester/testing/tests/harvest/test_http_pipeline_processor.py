@@ -45,7 +45,7 @@ class TestHttpPipelineProcessor(TestCase):
             "batch_size": 2,
             "asynchronous": False,
             "retrieve_data": {
-                "tika_return_type": "text",
+                "tika_return_type": "xml",
                 "resource": resource,
                 "method": "put",
                 "args": ["$.url"],
@@ -99,7 +99,7 @@ class TestHttpPipelineProcessor(TestCase):
             "batch_size": 2,
             "asynchronous": True,
             "retrieve_data": {
-                "tika_return_type": "text",
+                "tika_return_type": "xml",
                 "resource": resource,
                 "method": "put",
                 "args": ["$.url"],

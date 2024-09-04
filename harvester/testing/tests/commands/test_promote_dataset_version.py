@@ -43,21 +43,45 @@ class TestPromoteDatasetVersion(TestCase):
         # Indices should not get recreated
         self.assertEqual(self.search_client.indices.delete.call_count, 0)
         self.assertEqual(self.search_client.indices.create.call_count, 0)
-        # Latest alias should update
-        self.assertEqual(self.search_client.indices.put_alias.call_count, 6)
+        # Latest alias should be created
+        self.assertEqual(self.search_client.indices.put_alias.call_count, 4)
         for args, kwargs in self.search_client.indices.put_alias.call_args_list:
             content_key, identifier = kwargs["index"].split("--")
             project, entity = content_key.split("-")
             self.assertEqual(project, "edusources")
             self.assertEqual(entity, "products")
-            version_name, version_number, language = identifier.split("-")
+            try:
+                version_name, version_number, language = identifier.split("-")
+                self.assertIn(language, ["nl", "en", "unk"])
+                self.assertIn(kwargs["name"], [
+                    "edusources-nl", "edusources-en", "edusources-unk",
+                ])
+            except ValueError:
+                version_name, version_number = identifier.split("-")
+                self.assertIn(kwargs["name"], [
+                    "edusources-products", "edusources-products", "edusources-products",
+                ])
             self.assertEqual(version_name, "test")
             self.assertEqual(version_number, "001")
-            self.assertIn(language, ["nl", "en", "unk"])
-            self.assertIn(kwargs["name"], [
-                "edusources-nl", "edusources-en", "edusources-unk",
-                "edusources-products-nl", "edusources-products-en", "edusources-products-unk",
-            ])
+        # Old indices should get deleted
+        self.assertEqual(self.search_client.indices.delete_alias.call_count, 10)
+        for language in ["nl", "en", "unk"]:
+            self.search_client.indices.delete_alias.assert_any_call(
+                index=f"edusources-products--*-*-{language}",
+                name=f"edusources-products-{language}"
+            )
+            self.search_client.indices.delete_alias.assert_any_call(
+                index=f"edusources-products--*-*-{language}",
+                name=f"edusources-{language}"
+            )
+            self.search_client.indices.delete_alias.assert_any_call(
+                index=f"*-*-*-edusources-{language}",
+                name=f"edusources-{language}"
+            )
+            self.search_client.indices.delete_alias.assert_any_call(
+                index="edusources-products--*-*",
+                name="edusources-products"
+            )
 
     def assert_is_current(self, expected_is_current):
         self.assertEqual(ProductDatasetVersion.objects.all().count(), 1,

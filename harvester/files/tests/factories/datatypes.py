@@ -49,7 +49,7 @@ class FileDocumentFactory(factory.django.DjangoModelFactory):
 
     class Params:
         harvest_source = "sharekit"
-        provider = "surf"  # not a real provider
+        provider = {"slug": "surf"}  # not a real provider
         url = "https://maken.wikiwijs.nl/124977/Zorgwekkend_gedrag___kopie_1"
         mime_type = None
         title = "Zorgwekkend gedrag"

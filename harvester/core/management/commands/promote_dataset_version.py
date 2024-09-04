@@ -46,7 +46,7 @@ class Command(BaseCommand):
 
         index = dataset_version.index
         logger.info(f"Promoting index {index.name} to latest")
-        dataset_version.index.promote_all_to_latest()  # when merging languages into one index we can remove "all"
+        dataset_version.index.promote_all_to_latest()
         dataset_version.set_index_promoted()
         dataset_version.set_current()
 

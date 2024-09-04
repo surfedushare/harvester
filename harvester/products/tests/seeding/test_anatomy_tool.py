@@ -70,6 +70,10 @@ class TestAnatomyToolProductExtraction(TestCase):
             "cache_only": False
         })
 
+    def test_get_language(self):
+        self.assertEqual(self.seeds[0]["language"], "x-none")
+        self.assertEqual(self.seeds[1]["language"], "en")
+
     def test_get_modified_at(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["modified_at"], "2020-10-28T02:39:34Z")

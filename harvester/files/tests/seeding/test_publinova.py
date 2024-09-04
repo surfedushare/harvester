@@ -120,6 +120,9 @@ class TestPublinovaFileExtraction(TestCase):
             "5be6dfeb-b9ad-41a8-b4f5-94b9438e4257:b1e07b1c3e68ae63abf8da023169609d50266a01"
         )
 
+    def test_get_language(self):
+        self.assertIsNone(self.seeds[0]["language"])
+
     def test_get_url(self):
         self.assertEqual(
             self.seeds[0]["url"],

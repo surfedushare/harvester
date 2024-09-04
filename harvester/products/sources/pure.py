@@ -39,7 +39,7 @@ class PureProductExtraction(PureExtractor):
         locale = cls.get_locale(node)
         if locale in ["en_GB", "nl_NL"]:
             return locale[:2]
-        return "unk"
+        return
 
     @classmethod
     def get_title(cls, node):
