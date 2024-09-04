@@ -36,7 +36,7 @@ class TestHarvestStudyVocabulary(TestCase):
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
     def test_same_number_applied_science(self, fake_deepl):
-        with self.assertNumQueries(879):
+        with self.assertNumQueries(877):
             call_command("harvest_study_vocabulary", "--vocabulary=applied-science")
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")

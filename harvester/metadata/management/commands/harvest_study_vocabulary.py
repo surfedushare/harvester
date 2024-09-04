@@ -84,11 +84,11 @@ class Command(BaseCommand):
 
         vocabulary = options["vocabulary"]
 
-        field_translation, _ = MetadataTranslation.objects.get_or_create(
-            nl="vakvocabulaire",
-            en="study_vocabulary",
-            is_fuzzy=True
-        )
+        field_translation = MetadataTranslation.objects.filter(nl="vakvocabulaire", en="study_vocabulary").last()
+        if not field_translation:
+            field_translation = MetadataTranslation.objects.create(
+                nl="vakvocabulaire", en="study_vocabulary", is_fuzzy=True
+            )
         field, _ = MetadataField.objects.get_or_create(
             name="study_vocabulary.keyword",
             defaults={"translation": field_translation, "is_manual": True, "is_hidden": True}
