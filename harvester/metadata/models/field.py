@@ -32,9 +32,9 @@ class MetadataFieldManager(models.Manager):
             response = client.client.search(index=aliases, body={"aggs": terms})
             for field_name, aggregation in response["aggregations"].items():
                 value_frequencies[field_name] = {
-                bucket["key"]: bucket["doc_count"]
-                for bucket in aggregation["buckets"]
-            }
+                    bucket["key"]: bucket["doc_count"]
+                    for bucket in aggregation["buckets"]
+                }
 
         return value_frequencies
 

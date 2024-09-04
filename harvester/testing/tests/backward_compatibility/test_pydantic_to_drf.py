@@ -1,5 +1,3 @@
-import json
-
 from django.test import TestCase
 from rest_framework.exceptions import ValidationError
 
@@ -22,8 +20,7 @@ class TestPydanticToDRFConversion(TestCase):
             for topic in ["math", "biology"]:
                 data = factory(topic=topic)
                 learning_material = LearningMaterial(**data)
-                learning_material_json = learning_material.model_dump_json()
-                untyped_learning_material = json.loads(learning_material_json)
+                untyped_learning_material = learning_material.model_dump(mode="json")
                 serializer = SimpleLearningMaterialResultSerializer(data=untyped_learning_material)
                 try:
                     serializer.is_valid(raise_exception=True)
@@ -38,8 +35,7 @@ class TestPydanticToDRFConversion(TestCase):
             for topic in ["math", "biology"]:
                 data = generate_nl_material(topic=topic)
                 research_product = ResearchProduct(**data)
-                research_product_json = research_product.model_dump_json()
-                untyped_research_product = json.loads(research_product_json)
+                untyped_research_product = research_product.model_dump(mode="json")
                 serializer = ResearchProductResultSerializer(data=untyped_research_product)
                 try:
                     serializer.is_valid(raise_exception=True)
