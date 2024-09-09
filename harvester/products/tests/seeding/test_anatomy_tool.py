@@ -81,8 +81,24 @@ class TestAnatomyToolProductExtraction(TestCase):
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
-            {'name': 'O. Paul Gobée', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None},
-            {'name': 'Prof. X. Test', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None}
+            {
+                "name": "O. Paul Gobée",
+                "email": None,
+                "external_id": None,
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": None,
+            },
+            {
+                "name": "Prof. X. Test",
+                "email": None,
+                "external_id": None,
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": None,
+            }
         ])
 
     def test_lom_educational_level(self):

@@ -57,7 +57,8 @@ class HkuProductExtraction(HkuExtractor):
                 "external_id": cls.build_person_id(person.get("person_id", None)),
                 "dai": None,
                 "orcid": None,
-                "isni": None
+                "isni": None,
+                "is_external": False,
             }
             for person in node["persons"]["person"]
         ]

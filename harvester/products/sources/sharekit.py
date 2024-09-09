@@ -53,6 +53,7 @@ class SharekitMetadataExtraction:
                 "dai": author["person"]["dai"],
                 "orcid": author["person"]["orcid"],
                 "isni": author["person"]["isni"],
+                "is_external": bool(int(author.get("external"))) if author.get("external") else False,
             }
             for author in authors
         ]

@@ -151,18 +151,24 @@ class TestGreeniProductExtraction(TestCase):
 
     def test_authors_property(self):
         self.assertEqual(self.seeds[0]['authors'], [
-            {'name': 'F. Timmermans',
-             'email': None,
-             'external_id': "PUBVHL:person:a47515e171fc035e986276e6877a2094aed68632",
-             'dai': None,
-             'orcid': None,
-             'isni': None},
-            {'name': 'J. Oudhof',
-             'email': None,
-             'external_id': "PUBVHL:person:002a7f69fa093f78886994644ca0cf292c37c9ef",
-             'dai': None,
-             'orcid': None,
-             'isni': None},
+            {
+                "name": "F. Timmermans",
+                "email": None,
+                "external_id": "PUBVHL:person:a47515e171fc035e986276e6877a2094aed68632",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": None,
+            },
+            {
+                "name": "J. Oudhof",
+                "email": None,
+                "external_id": "PUBVHL:person:002a7f69fa093f78886994644ca0cf292c37c9ef",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": None,
+            },
         ])
 
     def test_get_organizations(self):

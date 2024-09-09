@@ -161,7 +161,7 @@ class TestPublinovaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]['authors'], [
             {
-                "name": "Support 1 SURF", "email": "s1@surf.nl", "dai": None,
+                "name": "Support 1 SURF", "email": "s1@surf.nl", "dai": None, "is_external": None,
                 "isni": None, "orcid": None, "external_id": "a8986f6c-69e3-4c05-9f0a-903c554644f6"
             }
         ])

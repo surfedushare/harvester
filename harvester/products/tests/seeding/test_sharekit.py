@@ -106,32 +106,37 @@ class TestSharekitProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["modified_at"], "2017-12-11T12:52:09Z")
 
+    maxDiff = None
+
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[2]['authors'], [
             {
-                'name': 'Ruudje Cock',
-                'email': 'Ruudje Cock',
-                'external_id': '83e7c163-075e-4eb2-8247-d975cf047dba',
-                'dai': None,
-                'orcid': None,
-                'isni': None
+                "name": "Ruudje Cock",
+                "email": "Ruudje Cock",
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": False
             },
             {
-                'name': 'A. Puist',
-                'email': 'A. Puist',
-                'external_id': '1174c1b9-f010-4a0a-98c0-2ceeefd0b506',
-                'dai': None,
-                'orcid': None,
-                'isni': None
+                "name": "A. Puist",
+                "email": "A. Puist",
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": False,
             },
             {
-                'name': 'Hans Kazan',
-                'email': 'Hans Kazan',
-                'external_id': 'c0ab267a-ad56-480c-a13a-90b325f45b5d',
-                'dai': None,
-                'orcid': None,
-                'isni': None
+                "name": "Hans Kazan",
+                "email": "Hans Kazan",
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": True
             },
         ])
 
