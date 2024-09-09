@@ -115,7 +115,15 @@ class TestEdurepProductExtraction(TestCase):
     def test_authors_property(self):
         seeds = self.seeds
         self.assertEqual(seeds[3]['authors'], [
-            {'name': 'Ruud Kok', 'email': None, 'external_id': None, 'dai': None, 'orcid': None, 'isni': None}
+            {
+                "name": "Ruud Kok",
+                "email": None,
+                "external_id": None,
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": None,
+            }
         ])
 
     def test_publishers_property(self):
