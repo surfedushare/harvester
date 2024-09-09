@@ -12,21 +12,22 @@ logger = logging.getLogger("harvester")
 
 def get_or_create_metadata_value(term, field, parent):
     try:
-        return MetadataValue.objects.get(value=str(term["value"]))
+        return MetadataValue.objects.get(value=str(term["value"]), field=field)
     except MetadataValue.DoesNotExist:
         pass
-
-    vocabulary = MetadataValue(value=term["value"], is_manual=True)
     translation = MetadataTranslation.objects.create(
         nl=term["name"],
         en=translate_with_deepl(term["name"]),
         is_fuzzy=True
     )
-    vocabulary.translation = translation
-    vocabulary.field = field
-    vocabulary.name = term["name"]
-    vocabulary.parent = parent
-    vocabulary.save()
+    vocabulary = MetadataValue.objects.create(
+        name=term["name"],
+        field=field,
+        parent=parent,
+        value=term["value"],
+        translation=translation,
+        is_manual=True
+    )
     return vocabulary
 
 
