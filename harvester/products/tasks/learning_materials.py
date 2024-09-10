@@ -80,9 +80,10 @@ def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> N
             .select_related("translation") \
             .filter(value=document.properties["learning_material"]["consortium"]) \
             .last()
+        default_consortium = document.properties.get("learning_material").get("consortium")
         document.derivatives["lookup_consortium_translations"] = {
             "consortium": {
-                "keyword": consortium_value.value if consortium_value else None,
+                "keyword": consortium_value.value if consortium_value else default_consortium,
                 "nl": consortium_value.translation.nl if consortium_value else None,
                 "en": consortium_value.translation.en if consortium_value else None
             }

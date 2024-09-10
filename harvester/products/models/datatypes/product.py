@@ -70,12 +70,7 @@ class ProductDocument(HarvestDocument):
 
     @property
     def has_consortium(self) -> bool:
-        consortium = self.properties.get("learning_material", {}).get("consortium")
-        if not consortium:
-            return False
-        return MetadataValue.objects \
-            .filter(field__name="consortium.keyword", value=consortium) \
-            .exists()
+        return self.properties.get("learning_material", {}).get("consortium")
 
     @property
     def has_publisher_year(self) -> bool:
