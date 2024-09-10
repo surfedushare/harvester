@@ -88,7 +88,7 @@ def migrate_metadata_field_to_entities(apps, schema_editor):
         # Copy MetadataValues and share MetadataTranslations with existing fields where appropriate.
         if not original_field:
             continue
-        values = []
+        parents_by_value = {}
         for value in MetadataValue.objects.filter(field=original_field, deleted_at__isnull=True):
             value = deepcopy(value)
             value.pk = None
@@ -96,6 +96,9 @@ def migrate_metadata_field_to_entities(apps, schema_editor):
             value.created_at = None
             value.updated_at = None
             value.field = field
+            if value.parent:
+                value.parent = parents_by_value[value.parent.value]
+                value.parent.save()
             translation = deepcopy(value.translation)
             translation.pk = None
             translation.id = None
@@ -103,8 +106,8 @@ def migrate_metadata_field_to_entities(apps, schema_editor):
             translation.updated_at = None
             translation.save()
             value.translation = translation
-            values.append(value)
-        MetadataValue.objects.bulk_create(values)
+            value.save()
+            parents_by_value[value.value] = value
 
 
 def reverse_metadata_field_to_entities():
