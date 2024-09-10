@@ -56,7 +56,8 @@ class ProductDocument(HarvestDocument):
         study_vocabulary_ids = self.properties.get("learning_material", {}).get("study_vocabulary", [])
         if not study_vocabulary_ids:
             return False
-        return MetadataValue.objects.filter(field__name="study_vocabulary", value__in=study_vocabulary_ids).exists()
+        return MetadataValue.objects.filter(field__name="study_vocabulary.keyword", value__in=study_vocabulary_ids) \
+            .exists()
 
     @property
     def has_disciplines(self) -> bool:
@@ -64,7 +65,7 @@ class ProductDocument(HarvestDocument):
         if not discipline_ids:
             return False
         return MetadataValue.objects \
-            .filter(field__name="learning_material_disciplines_normalized", value__in=discipline_ids) \
+            .filter(field__name="disciplines_normalized.keyword", value__in=discipline_ids) \
             .exists()
 
     @property
@@ -73,7 +74,7 @@ class ProductDocument(HarvestDocument):
         if not consortium:
             return False
         return MetadataValue.objects \
-            .filter(field__name="learning_material_disciplines_normalized", value=consortium) \
+            .filter(field__name="consortium.keyword", value=consortium) \
             .exists()
 
     @property
