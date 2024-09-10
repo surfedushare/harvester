@@ -99,7 +99,7 @@ class TestDocumentView(TestCase):
                 "email": None,
                 "orcid": None,
                 "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
-                "is_external": False,
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -108,7 +108,7 @@ class TestDocumentView(TestCase):
                 "email": None,
                 "orcid": None,
                 "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
-                "is_external": False,
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -117,7 +117,7 @@ class TestDocumentView(TestCase):
                 "email": None,
                 "orcid": None,
                 "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
-                "is_external": False,
+                "is_external": None,
             }
         ],
         "has_parts": [],
@@ -364,7 +364,7 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "email": None,
                 "orcid": None,
                 "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
-                "is_external": False,
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -373,7 +373,7 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "email": None,
                 "orcid": None,
                 "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
-                "is_external": False,
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -382,7 +382,7 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "email": None,
                 "orcid": None,
                 "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
-                "is_external": False,
+                "is_external": None,
             }
         ],
         "has_parts": [],
@@ -416,7 +416,7 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "email": None,
                 "orcid": None,
                 "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
-                "is_external": False,
+                "is_external": None,
             }
         ],
         "contacts": [
@@ -427,7 +427,7 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "email": None,
                 "orcid": None,
                 "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
-                "is_external": False,
+                "is_external": None,
             }
         ],
         "subtitle": None
