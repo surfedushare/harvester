@@ -107,6 +107,20 @@ def migrate_metadata_field_to_entities(apps, schema_editor):
         MetadataValue.objects.bulk_create(values)
 
 
+def reverse_metadata_field_to_entities():
+    from metadata.models import MetadataField, MetadataTranslation, MetadataValue
+    field_names = [
+        "study_vocabulary.keyword", "disciplines_normalized.keyword", "published_at", "modified_at", "language",
+        "licenses", "technical_types"
+    ]
+    for field_name in field_names:
+        field = MetadataField.objects.get(name=field_name)
+        MetadataValue.objects.filter(field__name=field_name).delete()
+        MetadataTranslation.objects.filter(metadatavalue__field__name=field_name).delete()
+        field.delete()
+        field.translation.delete()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
