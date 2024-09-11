@@ -61,12 +61,7 @@ class ProductDocument(HarvestDocument):
 
     @property
     def has_disciplines(self) -> bool:
-        discipline_ids = self.properties.get("learning_material", {}).get("disciplines", [])
-        if not discipline_ids:
-            return False
-        return MetadataValue.objects \
-            .filter(field__name="disciplines_normalized.keyword", value__in=discipline_ids) \
-            .exists()
+        return self.properties.get("learning_material", {}).get("disciplines")
 
     @property
     def has_consortium(self) -> bool:
