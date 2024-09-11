@@ -121,7 +121,9 @@ def reverse_metadata_field_to_entities(apps, schema_editor):
     MetadataField.objects.filter(name__in=LEGACY_FIELDS).update(entity="products")
 
     for field_name in NEW_FIELDS:
-        field = MetadataField.objects.get(name=field_name)
+        field = MetadataField.objects.filter(name=field_name).last()
+        if not field:
+            continue
         MetadataValue.objects.filter(field__name=field_name).delete()
         MetadataTranslation.objects.filter(metadatavalue__field__name=field_name).delete()
         field.delete()
