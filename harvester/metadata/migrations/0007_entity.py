@@ -21,7 +21,7 @@ def migrate_metadata_field_to_entities(apps, schema_editor):
 
     new_fields = {
         "study_vocabulary.keyword": {
-            "is_manual": True,
+            "is_manual": False,
             "is_hidden": False,
             "entity": "products:default",
         },
