@@ -111,7 +111,7 @@ class TestBuasProductExtraction(TestCase):
         self.assertEqual(self.seeds[0]['authors'], [
             {
                 'name': 'KJ Dinnie', 'email': None, 'external_id': '6f1bbf4a-b32a-4923-9f47-bb764f3dbbde',
-                'dai': None, 'orcid': None, 'isni': None
+                'dai': None, 'orcid': None, 'isni': None, "is_external": False,
             }
         ])
 

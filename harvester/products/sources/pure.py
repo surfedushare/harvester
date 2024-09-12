@@ -84,7 +84,8 @@ class PureProductExtraction(PureExtractor):
                     # do not yield any name or other identity information.
                     # We skip the (useless) data silently
                     continue
-            person_data = person.get("person", person.get("externalPerson", {}))
+            is_external = "externalPerson" in person
+            person_data = person.get("person", {}) if not is_external else person.get("externalPerson", {})
             authors.append({
                 "name": full_name,
                 "email": None,
@@ -93,7 +94,8 @@ class PureProductExtraction(PureExtractor):
                                                f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
                 "dai": None,
                 "orcid": None,
-                "isni": None
+                "isni": None,
+                "is_external": is_external,
             })
         # We'll put the first organization author as first author in the list
         # Within Publinova this person will become the owner and contact person

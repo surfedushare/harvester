@@ -112,6 +112,7 @@ class EdurepProductExtraction:
                     "dai": None,
                     "orcid": None,
                     "isni": None,
+                    "is_external": None
                 })
         return authors
 

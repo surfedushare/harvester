@@ -46,6 +46,7 @@ class PublinovaProductExtraction(PublinovaExtractor):
         for author in authors:
             external_id = author.pop("id")
             author["external_id"] = external_id
+            author["is_external"] = None
             author.pop("about", None)
         return authors
 

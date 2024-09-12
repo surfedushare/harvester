@@ -126,17 +126,17 @@ class TestHkuProductExtraction(TestCase):
         self.assertEqual(self.seeds[1]['authors'], [
             {
                 "name": "Liesbet van Roes", "email": None, "external_id": "hku:person:6699976",
-                "dai": None, "orcid": None, "isni": None
+                "dai": None, "orcid": None, "isni": None, "is_external": False
             },
             {
                 "name": "Mic Haring", "email": "mic.haring@hku.nl", "external_id": "hku:person:6699827",
-                "dai": None, "orcid": None, "isni": None
+                "dai": None, "orcid": None, "isni": None, "is_external": False
             }
         ])
         self.assertEqual(self.seeds[2]['authors'], [
             {
                 "name": "Ketels", "email": "n.ketels@hku.nl", "external_id": "hku:person:6699884",
-                "dai": None, "orcid": None, "isni": None
+                "dai": None, "orcid": None, "isni": None, "is_external": False
             }
 
         ])

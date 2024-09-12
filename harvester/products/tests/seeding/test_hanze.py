@@ -137,20 +137,22 @@ class TestHanzeProductExtraction(TestCase):
     def test_authors_property(self):
         self.assertEqual(self.seeds[0]['authors'], [
             {
-                'name': 'Woogie Boogie',
-                'email': None,
-                'external_id': 'f515d64c-ae09-487f-b32d-a57a66cbecd5',
-                'dai': None,
-                'orcid': None,
-                'isni': None
+                "name": "Woogie Boogie",
+                "email": None,
+                "external_id": "f515d64c-ae09-487f-b32d-a57a66cbecd5",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": False
             },
             {
-                'name': 'Teefje Wentel',
-                'email': None,
-                'external_id': 'e5c04d5d-0f00-4586-9f89-42ccc81f850f',
-                'dai': None,
-                'orcid': None,
-                'isni': None
+                "name": "Teefje Wentel",
+                "email": None,
+                "external_id": "e5c04d5d-0f00-4586-9f89-42ccc81f850f",
+                "dai": None,
+                "orcid": None,
+                "isni": None,
+                "is_external": True
             }
         ])
 
