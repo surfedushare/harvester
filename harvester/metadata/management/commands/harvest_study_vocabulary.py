@@ -12,21 +12,22 @@ logger = logging.getLogger("harvester")
 
 def get_or_create_metadata_value(term, field, parent):
     try:
-        return MetadataValue.objects.get(value=str(term["value"]))
+        return MetadataValue.objects.get(value=str(term["value"]), field=field)
     except MetadataValue.DoesNotExist:
         pass
-
-    vocabulary = MetadataValue(value=term["value"], is_manual=True)
     translation = MetadataTranslation.objects.create(
         nl=term["name"],
         en=translate_with_deepl(term["name"]),
         is_fuzzy=True
     )
-    vocabulary.translation = translation
-    vocabulary.field = field
-    vocabulary.name = term["name"]
-    vocabulary.parent = parent
-    vocabulary.save()
+    vocabulary = MetadataValue.objects.create(
+        name=term["name"],
+        field=field,
+        parent=parent,
+        value=term["value"],
+        translation=translation,
+        is_manual=True
+    )
     return vocabulary
 
 
@@ -84,13 +85,13 @@ class Command(BaseCommand):
 
         vocabulary = options["vocabulary"]
 
-        field_translation, _ = MetadataTranslation.objects.get_or_create(
-            nl="vakvocabulaire",
-            en="study_vocabulary",
-            is_fuzzy=True
-        )
+        field_translation = MetadataTranslation.objects.filter(nl="vakvocabulaire", en="study_vocabulary").last()
+        if not field_translation:
+            field_translation = MetadataTranslation.objects.create(
+                nl="vakvocabulaire", en="study_vocabulary", is_fuzzy=True
+            )
         field, _ = MetadataField.objects.get_or_create(
-            name="study_vocabulary",
+            name="study_vocabulary.keyword",
             defaults={"translation": field_translation, "is_manual": True, "is_hidden": True}
         )
 

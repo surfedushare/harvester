@@ -105,17 +105,11 @@ node_modules/
 
 /data
 /static
-service/surf/apps/materials/static/portal
 service/uwsgi/sites-enabled
 media/
 postgres/dumps/*.sql
 logs/
 environments/info.json
 harvester/harvester/bin/
-portal/tests/e2e/videos/
-portal/tests/e2e/screenshots/
-portal/webpack-stats.json
 nginx/ip-whitelist.conf
 harvester/sources/factories/fixtures
-acc-to-localhost.sh
-upgrade-acceptance.sh

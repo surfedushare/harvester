@@ -4,7 +4,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from search_client import DocumentTypes
+from search_client.constants import Platforms
 from products.models import DatasetVersion, ProductDocument
 
 
@@ -21,6 +21,7 @@ class TestDocumentView(TestCase):
         "set": "sharekit:edusources",
         "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
         "state": "active",
+        "entity": "products",
         "published_at": "2017-09-27",
         "modified_at": "2021-04-15",
         "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
@@ -44,7 +45,9 @@ class TestDocumentView(TestCase):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/x-zip",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "previews": None,
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -67,7 +70,8 @@ class TestDocumentView(TestCase):
                     "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/"
                                      "files/previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
                                      "-thumbnail-200x150.png"
-                }
+                },
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -81,7 +85,9 @@ class TestDocumentView(TestCase):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "text/html",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "previews": None,
+                "video": None,
             }
         ],
         "aggregation_level": "4",
@@ -92,7 +98,8 @@ class TestDocumentView(TestCase):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -100,7 +107,8 @@ class TestDocumentView(TestCase):
                 "name": "Astrid Bulte",
                 "email": None,
                 "orcid": None,
-                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -108,7 +116,8 @@ class TestDocumentView(TestCase):
                 "name": "Hans Poorthuis",
                 "email": None,
                 "orcid": None,
-                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
+                "is_external": None,
             }
         ],
         "has_parts": [],
@@ -124,13 +133,8 @@ class TestDocumentView(TestCase):
             "scheikunde",
             "structuur"
         ],
-        "score": 1.0,
-        "provider": {
-            "ror": None,
-            "name": "Stimuleringsregeling Open en Online Onderwijs",
-            "slug": None,
-            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
-        },
+        "score": 0.0,
+        "provider": "Stimuleringsregeling Open en Online Onderwijs",
         "doi": None,
         "lom_educational_levels": [
             "HBO"
@@ -275,14 +279,15 @@ class TestDocumentView(TestCase):
         self.assertEqual(data["detail"], "Missing a current dataset version to retrieve data")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT)
+@override_settings(PLATFORM=Platforms.PUBLINOVA)
 class TestResearchProductDocumentView(TestDocumentView):
     expected_document_output = {
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "set": "sharekit:edusources",
         "state": "active",
         "external_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
-        "score": 1.0,
+        "entity": "products",
+        "score": 0.0,
         "published_at": "2017-09-27",
         "modified_at": "2021-04-15",
         "url": "https://surfsharekit.nl/objectstore/88c687c8-fbc4-4d69-a27d-45d9f30d642b",
@@ -306,7 +311,9 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/x-zip",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "video": None,
+                "previews": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -329,7 +336,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                     "preview_small": "https://surfpol-harvester-content-prod.s3.amazonaws.com/thumbnails/files/"
                                      "previews/pdf/20240219154612151932.9f71f782-09de-48b1-a10f-15d882471df7"
                                      "-thumbnail-200x150.png"
-                }
+                },
+                "video": None,
             },
             {
                 "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
@@ -343,7 +351,9 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "priority": 0,
                 "copyright": "cc-by-sa-40",
                 "mime_type": "text/html",
-                "access_rights": "OpenAccess"
+                "access_rights": "OpenAccess",
+                "video": None,
+                "previews": None,
             }
         ],
         "authors": [
@@ -353,7 +363,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -361,7 +372,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Astrid Bulte",
                 "email": None,
                 "orcid": None,
-                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506"
+                "external_id": "1174c1b9-f010-4a0a-98c0-2ceeefd0b506",
+                "is_external": None,
             },
             {
                 "dai": None,
@@ -369,7 +381,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Hans Poorthuis",
                 "email": None,
                 "orcid": None,
-                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d"
+                "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
+                "is_external": None,
             }
         ],
         "has_parts": [],
@@ -402,7 +415,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": None,
             }
         ],
         "contacts": [
@@ -412,7 +426,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "name": "Ruud Kok",
                 "email": None,
                 "orcid": None,
-                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba"
+                "external_id": "83e7c163-075e-4eb2-8247-d975cf047dba",
+                "is_external": None,
             }
         ],
         "subtitle": None
@@ -432,15 +447,9 @@ class TestRawDocumentView(TestDocumentView):
         "identity": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "state": "active",
         "metadata": {
-            "srn": None,
             "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
             "language": "nl",
-            "provider": {
-                "ror": None,
-                "name": None,
-                "slug": None,
-                "external_id": None
-            },
+            "provider": "Stimuleringsregeling Open en Online Onderwijs",
             "created_at": "2024-04-17T14:19:12.720000Z",
             "deleted_at": None,
             "modified_at": "2024-04-17T14:19:12.720000Z"

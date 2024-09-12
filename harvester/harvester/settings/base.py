@@ -23,6 +23,7 @@ from celery.schedules import crontab
 from system_configuration.main import create_configuration_and_session, MODE, PROJECT
 from system_configuration.packaging import get_package_info
 from search_client.version import VERSION as SEARCH_CLIENT_VERSION
+from search_client.constants import Platforms
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,6 +38,7 @@ environment, session = create_configuration_and_session()
 credentials = session.get_credentials()
 IS_AWS = environment.aws.is_aws
 ENVIRONMENT = environment.service.env
+PLATFORM = Platforms(PROJECT)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -45,7 +47,7 @@ ENVIRONMENT = environment.service.env
 SECRET_KEY = environment.secrets.django.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = MODE == "localhost"
+DEBUG = environment.django.debug
 
 # We're disabling the ALLOWED_HOSTS check, because containers will run in a VPC environment
 # This environment is expected to be unreachable with disallowed hosts.
@@ -247,17 +249,11 @@ REST_FRAMEWORK = {
 # OpenSearch (AWS ElasticSearch)
 
 OPENSEARCH_HOST = environment.opensearch.host
-OPENSEARCH_VERIFY_CERTS = environment.opensearch.verify_certs  # ignored when protocol != https
-OPENSEARCH_ANALYSERS = {
-    'en': 'english',
-    'nl': 'dutch',
-    'unk': 'standard'
-}
-OPENSEARCH_LANGUAGE_CODES = list(OPENSEARCH_ANALYSERS.keys())
+OPENSEARCH_LANGUAGE_CODES = ["en", "nl", "unk"]
 OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS = environment.opensearch.enable_decompound_analyzers
 OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
-OPENSEARCH_ALIAS_PREFIX = environment.opensearch.alias_prefix
+OPENSEARCH_ALIAS_PREFIX = None
 
 
 # Tika
@@ -497,7 +493,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 # Debug Toolbar
 # https://django-debug-toolbar.readthedocs.io/en/latest/
 
-if DEBUG:
+if DEBUG and sys.argv[1:2] != ['test']:
     # Activation
     INSTALLED_APPS += [
         'debug_toolbar'

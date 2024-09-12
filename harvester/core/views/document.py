@@ -1,10 +1,13 @@
+from typing import Type
 from urllib.parse import unquote
 
+from django.apps import apps
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_417_EXPECTATION_FAILED
+from pydantic import BaseModel
 
 from harvester.schema import HarvesterSchema
 from harvester.pagination import HarvesterPageNumberPagination
@@ -17,6 +20,10 @@ class NoCurrentDatasetVersionException(Exception):
 
 
 class DatasetVersionDocumentBaseView(generics.GenericAPIView):
+    """
+    This generic view will load the correct DatasetVersion based on the request.resolver_match.
+    The DatasetVersion instance returns the queryset for the views or raises a NoCurrentDatasetVersionException.
+    """
 
     schema = HarvesterSchema()
     exclude_deletes_unless_modified_since_filter = False
@@ -76,7 +83,27 @@ class DatasetVersionDocumentDetailView(RetrieveModelMixin, DatasetVersionDocumen
             )
 
 
-class SearchDocumentListViewMixin:
+class SearchDocumentGenericViewMixin:
+    """
+    This generic view helps to load the correct serializer and data transformer based on the entity attribute.
+
+    NB: This class and subclasses can't look at request.resolver_match to determine the entity,
+    because get_serializer_class needs a static definition for the documentation generator.
+    """
+
+    entity = None
+
+    def get_serializer_class(self):
+        app_config = apps.get_app_config(self.entity.value)
+        return app_config.result_serializer
+
+    @classmethod
+    def get_transformer_class(cls) -> Type[BaseModel]:
+        app_config = apps.get_app_config(cls.entity.value)
+        return app_config.result_transformer
+
+
+class SearchDocumentListViewMixin(SearchDocumentGenericViewMixin):
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -86,16 +113,21 @@ class SearchDocumentListViewMixin:
         return queryset
 
     def get_serializer(self, *args, **kwargs):
+        transformer = self.get_transformer_class()
         if len(args):
-            objects = [doc.to_data() for doc in args[0]]
+            objects = [
+                transformer(**doc.to_data()).model_dump(mode="json")
+                for doc in args[0]
+            ]
             args = (objects, *args[1:])
         return super().get_serializer(*args, **kwargs)
 
 
-class SearchDocumentRetrieveViewMixin:
+class SearchDocumentRetrieveViewMixin(SearchDocumentGenericViewMixin):
 
     def get_serializer(self, *args, **kwargs):
+        transformer = self.get_transformer_class()
         if len(args):
-            obj = args[0].to_data()
+            obj = transformer(**args[0].to_data()).model_dump(mode="json")
             args = (obj, *args[1:])
         return super().get_serializer(*args, **kwargs)

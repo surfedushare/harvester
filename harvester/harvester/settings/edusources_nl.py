@@ -1,5 +1,5 @@
 from harvester.settings.base import *
-from search_client import DocumentTypes
+from search_client.constants import DocumentTypes
 
 
 DOCUMENT_TYPE = DocumentTypes.LEARNING_MATERIAL

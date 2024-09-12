@@ -25,6 +25,8 @@ flower==2.0.1
 
 # Harvester search
 opensearch-py==2.7.1
+pydantic==2.8.2
+email-validator==2.2.0
 
 # Harvester other
 vobject==0.9.7

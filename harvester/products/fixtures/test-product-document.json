@@ -192,15 +192,9 @@
             "overwrite": null,
             "state": "active",
             "metadata": {
-                "srn": null,
                 "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
                 "language": "nl",
-                "provider": {
-                    "ror": null,
-                    "name": null,
-                    "slug": null,
-                    "external_id": null
-                },
+                "provider": "Stimuleringsregeling Open en Online Onderwijs",
                 "created_at": "2024-04-17T14:19:12.720Z",
                 "deleted_at": null,
                 "modified_at": "2024-04-17T14:19:12.720Z"
