@@ -87,6 +87,9 @@ INSTALLED_APPS = [
     'versatileimagefield',
     'mptt',
     'datagrowth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount.providers.openid_connect',
 
     'core',
     'metadata',
@@ -108,6 +111,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'harvester.urls'
@@ -176,6 +180,35 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# All-Auth Authorization
+# https://docs.allauth.org/en/latest/
+# https://docs.allauth.org/en/latest/socialaccount/providers/openid_connect.html
+
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        # Optional PKCE defaults to False, but may be required by your provider
+        # Applies to all APPS.
+        # "OAUTH_PKCE_ENABLED": True,
+        "APPS": [
+            {
+                "provider_id": "conext",  # callback: /accounts/oidc/conext/login/callback/
+                "name": "SURFConext",
+                "client_id": environment.conext.client_id,
+                "secret": environment.secrets.conext.conext_secret_key,
+                "settings": {
+                    "server_url": environment.conext.server,
+                    # Optional token endpoint authentication method.
+                    # May be one of "client_secret_basic", "client_secret_post"
+                    # If omitted, a method from the the server's
+                    # token auth methods list is used
+                    # "token_auth_method": "client_secret_basic",
+                },
+            },
+        ]
+    }
+}
 
 
 # Internationalization

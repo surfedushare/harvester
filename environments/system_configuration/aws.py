@@ -83,5 +83,8 @@ AWS_SECRET_CONFIGURATIONS = {
     },
     "publinova": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/publinova"
+    },
+    "conext": {
+        "conext_secret_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials"
     }
 }

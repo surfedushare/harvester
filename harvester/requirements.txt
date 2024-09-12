@@ -16,6 +16,7 @@ pymsteams==0.2.3
 django-admin-confirm==1.0.0
 django-log-formatter-json==0.2.0
 ujson==3.2.0  # implicit dependency of django-log-formatter-json
+django-allauth[socialaccount]==64.2.1
 
 # Harvester Celery
 celery==5.4.0

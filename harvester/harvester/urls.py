@@ -57,6 +57,7 @@ urlpatterns = [
     path('', include('testing.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include((api_urlpatterns, "v1",))),
+    path('accounts/', include('allauth.urls')),
     *products_webhooks,
     path('', core_views.health_check, name="health-check")
 ]
