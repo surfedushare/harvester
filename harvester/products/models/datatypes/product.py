@@ -233,7 +233,7 @@ class ProductDocument(HarvestDocument):
         content_container = ContentContainer(contents=[product_content])
         # Transforms based on the files as well as content preparation
         if len(data["files"]):
-            data = self.update_files_data(data, content_container)
+            data = self.update_files_data(data, content_container, use_multilingual_fields)
         else:
             data.update({
                 "url": None, "mime_type": None, "previews": None, "video": None,
