@@ -7,7 +7,8 @@ DOCUMENT_TYPE = DocumentTypes.RESEARCH_PRODUCT
 SHAREKIT_TEST_ORGANIZATIONS = [
     "Publinova test",
     "ArtEZ University of the Arts",
-    "NHL Stenden Hogeschool"
+    "NHL Stenden Hogeschool",
+    "Hogeschool Inholland",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
