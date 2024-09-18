@@ -78,14 +78,15 @@ class ProductDocument(HarvestDocument):
         return self.metadata["language"]
 
     @staticmethod
-    def update_files_data(data: dict, content_container: ContentContainer) -> dict:
+    def update_files_data(data: dict, content_container: ContentContainer,
+                          use_multilingual_fields: bool = False) -> dict:
         # Prepare lookups
         file_identities = [
             f"{data['set']}:{data['external_id']}:{sha1(url.encode('utf-8')).hexdigest()}"
             for url in data["files"]
         ]
         files_by_identity = {
-            file_document.identity: file_document.to_data()
+            file_document.identity: file_document.to_data(use_multilingual_fields=use_multilingual_fields)
             for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False,
                                                              dataset_version__is_current=True)
         }
@@ -217,7 +218,7 @@ class ProductDocument(HarvestDocument):
     def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
                 use_multilingual_fields: bool = False) -> dict:
         # Generic transforms
-        data = super().to_data(merge_derivatives)
+        data = super().to_data(merge_derivatives, use_multilingual_fields)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
         # Add content of the product to a ContentContainer
