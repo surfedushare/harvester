@@ -1,6 +1,7 @@
 import re
 from unidecode import unidecode
 from hashlib import sha1
+from copy import copy
 
 from django.db import models
 from django.conf import settings
@@ -129,15 +130,17 @@ class ProductDocument(HarvestDocument):
             file_info = files_by_identity.get(file_identity, {})
             if not file_info:
                 continue
-            if "text" in file_info:
-                del file_info["text"]
             if file_info["is_link"] and not file_info["title"]:
                 links_index = links_in_order.index(file_identity)
                 file_info["title"] = f"URL {links_index+1}"
             elif not file_info["is_link"] and not file_info["title"] and settings.DEFAULT_FILE_TITLES_TEMPLATE:
                 files_index = files_in_order.index(file_identity)
                 file_info["title"] = settings.DEFAULT_FILE_TITLES_TEMPLATE.format(ix=files_index+1)
-            files.append(file_info)
+            # Removing the text from file objects to safe index space, product.texts is used for full text search
+            file_output = copy(file_info)
+            if "text" in file_output:
+                del file_output["text"]
+            files.append(file_output)
         data["files"] = files
         # Add contents of files in order to a ContentContainer and create other in-order lists
         licenses = []
