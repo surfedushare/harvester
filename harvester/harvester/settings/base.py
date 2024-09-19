@@ -73,7 +73,6 @@ except Exception:
 # Application definition
 
 INSTALLED_APPS = [
-    'harvester',  # first to override runserver command
     'admin_confirm',  # needs to override admin templates
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,6 +83,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
+
+    'harvester',  # overrides third party templates and modifies rest_framework
+
     'versatileimagefield',
     'mptt',
     'datagrowth',
