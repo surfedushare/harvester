@@ -13,9 +13,9 @@ from search.loading import load_data_models
 from search.models import OpenSearchIndex
 
 
-def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
-                                   logger: HarvestLogger, recreate: bool = False,
-                                   push_since: datetime = None, batch_size: int = 100) -> OpenSearchIndex | None:
+def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logger: HarvestLogger,
+                                   recreate: bool = False, push_since: datetime = None,
+                                   batch_size: int = 100, context: str = None) -> OpenSearchIndex | None:
     # Prepare variables.
     errors = []
     current_time = make_aware(datetime.now())
@@ -45,7 +45,8 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion,
             index.save()
     except DatabaseError:
         index = None
-        logger.warning("Unable to acquire a database lock for sync_opensearch_indices")
+        message_context = "" if not context else f"for {context}"
+        logger.warning(f"Unable to acquire a database lock {message_context}")
     logger.open_search_errors(errors)
     return index
 
@@ -75,7 +76,7 @@ def sync_opensearch_indices(app_label: str) -> None:
     )
 
     # Acquire lock and push recently modified documents to the index
-    _push_dataset_version_to_index(dataset_version, logger)
+    _push_dataset_version_to_index(dataset_version, logger, context="sync_opensearch_indices")
 
 
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
@@ -103,7 +104,8 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         logger.info(f"Pushing index for: {app_label}")
         index = _push_dataset_version_to_index(
             dataset_version, logger,
-            recreate=recreate_indices, push_since=index_since
+            recreate=recreate_indices, push_since=index_since,
+            context="index_dataset_versions"
         )
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
