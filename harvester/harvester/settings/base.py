@@ -73,7 +73,6 @@ except Exception:
 # Application definition
 
 INSTALLED_APPS = [
-    'harvester',  # first to override runserver command
     'admin_confirm',  # needs to override admin templates
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,9 +83,16 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
+
+    'harvester',  # overrides third party templates and modifies rest_framework
+
     'versatileimagefield',
     'mptt',
     'datagrowth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.openid_connect',
 
     'core',
     'metadata',
@@ -108,6 +114,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'harvester.urls'
@@ -176,6 +183,40 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# All-Auth Authorization
+# https://docs.allauth.org/en/latest/
+# https://docs.allauth.org/en/latest/socialaccount/providers/openid_connect.html
+# Conext
+# https://wiki.surfnet.nl/display/surfconextdev/Connect+in+5+Steps
+# https://wiki.surfnet.nl/display/surfconextdev/Connect+to+the+Test+environment
+# https://wiki.surfnet.nl/display/surfconextdev/Aansluiten+op+SURFconext+Invite
+# https://wiki.surfnet.nl/display/surfconextdev/Autorisatieregels
+
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "APPS": [
+            {
+                "provider_id": "conext",  # callback: /accounts/oidc/conext/login/callback/
+                "name": "SURFConext",
+                "client_id": environment.conext.client_id,
+                "secret": environment.secrets.conext.conext_secret_key,
+                "settings": {
+                    "server_url": environment.conext.server,
+                },
+            },
+        ]
+    }
+}
+SOCIALACCOUNT_ADAPTER = 'harvester.login.HarvesterSocialAccountAdapter'
+
+# The settings below disable normal login methods when SURFConext handles logins.
+ENABLE_SURFCONEXT_LOGIN = environment.conext.is_enabled
+if ENABLE_SURFCONEXT_LOGIN:
+    LOGIN_URL = "/accounts/oidc/conext/login/"
+SOCIALACCOUNT_ONLY = ENABLE_SURFCONEXT_LOGIN
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 # Internationalization

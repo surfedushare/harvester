@@ -59,6 +59,11 @@ aws:
   is_aws: false
   load_secrets: true
 
+conext:
+  is_enabled: false
+  client_id: "harvester.surfedushare.nl"
+  server: "https://connect.test.surfconext.nl"
+
 secrets:
   postgres:
     password: "qwerty"

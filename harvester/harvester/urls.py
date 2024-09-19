@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 from rest_framework.schemas import get_schema_view
 
 from core import views as core_views
@@ -38,9 +39,11 @@ schema_view = get_schema_view(
     patterns=metadata_public + search_public + products_public,
     url="/api/v1/"
 )
-swagger_view = TemplateView.as_view(
-    template_name='swagger/swagger-ui.html',
-    extra_context={'schema_url': 'v1:openapi-schema'}
+swagger_view = login_required(
+    TemplateView.as_view(
+        template_name='swagger/swagger-ui.html',
+        extra_context={'schema_url': 'v1:openapi-schema'}
+    )
 )
 
 
@@ -57,6 +60,7 @@ urlpatterns = [
     path('', include('testing.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include((api_urlpatterns, "v1",))),
+    path('accounts/', include('allauth.urls')),
     *products_webhooks,
     path('', core_views.health_check, name="health-check")
 ]
