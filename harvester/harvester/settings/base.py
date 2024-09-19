@@ -99,6 +99,7 @@ INSTALLED_APPS = [
 
     'products',
     'files',
+    'projects',
     'testing',
 ]
 
