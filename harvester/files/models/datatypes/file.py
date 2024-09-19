@@ -173,9 +173,10 @@ class FileDocument(HarvestDocument):
         self.is_analysis_allowed = self.get_analysis_allowed()
 
     def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
+        raw_data = super().to_data(merge_derivatives=False, use_multilingual_fields=use_multilingual_fields)
         data = {
             key: value
-            for key, value in super().to_data(merge_derivatives=False).items() if key in WHITELISTED_OUTPUT_FIELDS
+            for key, value in raw_data.items() if key in WHITELISTED_OUTPUT_FIELDS
         }
         if "tika" in self.derivatives:
             text = strip_tags(self.derivatives["tika"]["texts"][0])

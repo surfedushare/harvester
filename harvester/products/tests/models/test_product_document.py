@@ -110,6 +110,12 @@ class FileDocumentTestCase(TestCase):
     def test_multilingual_indices_to_data(self):
         product = ProductDocument.objects.get(id=1)
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [
             "exact_informatica"
         ])
@@ -174,6 +180,12 @@ class FileDocumentTestCase(TestCase):
         product = ProductDocument.objects.get(id=1)
         product.derivatives = self.build_multilingual_derivatives()
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [
             "exact_informatica"
         ])
@@ -192,22 +204,39 @@ class FileDocumentTestCase(TestCase):
             "Applied Science"
         ])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertEqual(data["text"], "Fake Tika text 1", "Expected multilingual indices to have full text field")
+        self.assertNotIn("texts", data, "Expected multilingual indices to not have multilingual fields")
+
+    maxDiff = None
 
     def test_multilingual_indices_to_data_without_derivatives(self):
         product = ProductDocument.objects.get(id=1)
+        FileDocument.objects.all().update(derivatives={})
         product.derivatives = {}
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [])
         self.assertEqual(data["disciplines_normalized"], [])
         self.assertIsNone(data["publisher_year_normalized"])
         self.assertEqual(data["study_vocabulary"], [])
         self.assertEqual(data["study_vocabulary_terms"], [])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertIsNone(
+            data["text"],
+            "Expected multilingual indices to have None as full text field without derivatives"
+        )
+        self.assertNotIn("texts", data, "Expected multilingual indices to not have multilingual fields")
 
     def test_multilingual_fields_to_data(self):
         product = ProductDocument.objects.get(id=1)
         product.derivatives = self.build_multilingual_derivatives()
         data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["provider"], "Stimuleringsregeling Open en Online Onderwijs")
         self.assertEqual(data["disciplines_normalized"], {
             "keyword": ["exact_informatica"],
             "en": ["Exact sciences and Informatics"],

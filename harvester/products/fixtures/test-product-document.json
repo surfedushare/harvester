@@ -283,7 +283,12 @@
                 "state": "active",
                 "title": "IMSCP_94812.zip",
                 "is_link": false,
-                "provider": "Hogeschool Utrecht",
+                "provider": {
+                    "ror": null,
+                    "name": "Hogeschool Utrecht",
+                    "slug": null,
+                    "external_id": null
+                },
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/x-zip",
                 "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
@@ -328,12 +333,7 @@
             "metadata": {
                 "srn": null,
                 "hash": "c646744cd910142b234b69fdf51df6d6c74858d7",
-                "provider": {
-                    "ror": null,
-                    "name": null,
-                    "slug": null,
-                    "external_id": null
-                },
+                "provider": "Hogeschool Utrecht",
                 "created_at": "2024-04-17T14:19:15.512Z",
                 "deleted_at": null,
                 "modified_at": "2024-04-17T14:19:15.512Z"
@@ -422,7 +422,12 @@
                 "state": "active",
                 "title": null,
                 "is_link": true,
-                "provider": "Hogeschool Utrecht",
+                "provider": {
+                    "ror": null,
+                    "name": "Hogeschool Utrecht",
+                    "slug": null,
+                    "external_id": null
+                },
                 "copyright": "cc-by-sa-40",
                 "mime_type": "text/html",
                 "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
@@ -467,12 +472,7 @@
             "metadata": {
                 "srn": null,
                 "hash": "c27b242e0d8534362844c8b27d0b6c80c65bb40b",
-                "provider": {
-                    "ror": null,
-                    "name": null,
-                    "slug": null,
-                    "external_id": null
-                },
+                "provider": "Hogeschool Utrecht",
                 "created_at": "2024-04-17T14:19:15.512Z",
                 "deleted_at": null,
                 "modified_at": "2024-04-17T14:19:15.512Z"
@@ -561,7 +561,12 @@
                 "state": "active",
                 "title": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
                 "is_link": false,
-                "provider": "Hogeschool Utrecht",
+                "provider": {
+                    "ror": null,
+                    "name": "Hogeschool Utrecht",
+                    "slug": null,
+                    "external_id": null
+                },
                 "copyright": "cc-by-sa-40",
                 "mime_type": "application/pdf",
                 "product_id": "63903863-6c93-4bda-b850-277f3c9ec00e",
@@ -616,12 +621,7 @@
             "metadata": {
                 "srn": null,
                 "hash": "4b204811753695b3af14ceb2ebf119b2d57fd2ba",
-                "provider": {
-                    "ror": null,
-                    "name": null,
-                    "slug": null,
-                    "external_id": null
-                },
+                "provider": "Hogeschool Utrecht",
                 "created_at": "2024-04-17T14:19:15.512Z",
                 "deleted_at": null,
                 "modified_at": "2024-04-17T14:19:15.512Z"
