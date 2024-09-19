@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     'datagrowth',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.openid_connect',
 
     'core',
@@ -187,12 +188,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # All-Auth Authorization
 # https://docs.allauth.org/en/latest/
 # https://docs.allauth.org/en/latest/socialaccount/providers/openid_connect.html
+# Conext
+# https://wiki.surfnet.nl/display/surfconextdev/Connect+in+5+Steps
+# https://wiki.surfnet.nl/display/surfconextdev/Connect+to+the+Test+environment
+# https://wiki.surfnet.nl/display/surfconextdev/Aansluiten+op+SURFconext+Invite
+# https://wiki.surfnet.nl/display/surfconextdev/Autorisatieregels
 
 SOCIALACCOUNT_PROVIDERS = {
     "openid_connect": {
-        # Optional PKCE defaults to False, but may be required by your provider
-        # Applies to all APPS.
-        # "OAUTH_PKCE_ENABLED": True,
         "APPS": [
             {
                 "provider_id": "conext",  # callback: /accounts/oidc/conext/login/callback/
@@ -201,16 +204,19 @@ SOCIALACCOUNT_PROVIDERS = {
                 "secret": environment.secrets.conext.conext_secret_key,
                 "settings": {
                     "server_url": environment.conext.server,
-                    # Optional token endpoint authentication method.
-                    # May be one of "client_secret_basic", "client_secret_post"
-                    # If omitted, a method from the the server's
-                    # token auth methods list is used
-                    # "token_auth_method": "client_secret_basic",
                 },
             },
         ]
     }
 }
+SOCIALACCOUNT_ADAPTER = 'harvester.login.HarvesterSocialAccountAdapter'
+
+# The settings below disable normal login methods when SURFConext handles logins.
+ENABLE_SURFCONEXT_LOGIN = environment.conext.is_enabled
+if ENABLE_SURFCONEXT_LOGIN:
+    LOGIN_URL = "/accounts/oidc/conext/login/"
+SOCIALACCOUNT_ONLY = ENABLE_SURFCONEXT_LOGIN
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 # Internationalization
