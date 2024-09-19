@@ -14,6 +14,7 @@ django:
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-publinova.json"
     - "products/fixtures/initial-common.json"
+    - "projects/fixtures/initial-common.json"
     - "files/fixtures/initial-common.json"
   users:
     usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/publinova"
