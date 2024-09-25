@@ -656,6 +656,11 @@ SOURCES = {
     "saxion": {
         "endpoint": "https://dataaccess.saxion.nl",
         "api_key": None
+    },
+    "sia": {
+        "endpoint": "https://api.nwosia.nl",
+        "api_key": environment.secrets.sia.api_key,
+        "contact_email": environment.secrets.sia.contact_email
     }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
