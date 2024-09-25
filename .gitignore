@@ -99,17 +99,21 @@ ENV/
 node_modules/
 .venv/
 
+# Intelij and OS files
 .idea/
 .DS_Store
 *.iml
 
+# Data storage and media
 /data
 /static
-service/uwsgi/sites-enabled
 media/
 postgres/dumps/*.sql
-logs/
-environments/info.json
-harvester/harvester/bin/
+
+# Repository state
 nginx/ip-whitelist.conf
 harvester/sources/factories/fixtures
+harvester/files/bin/
+
+# Project build files
+environments/info.json
