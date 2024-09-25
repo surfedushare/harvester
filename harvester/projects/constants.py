@@ -6,7 +6,7 @@ SEED_DEFAULTS = {
     # Generic metadata
     "title": None,
     "description": None,
-    "status": None,
+    "project_status": None,
     "started_at": None,
     "ended_at": None,
     "coordinates": [],
@@ -14,11 +14,12 @@ SEED_DEFAULTS = {
     "persons": [],
     "keywords": [],
     "products": [],
+    "photo_url": None,
     # Research project metadata
     "research_project": {
         "owners": [],
         "contacts": [],
         "parties": [],
-        "research_themes": [],
+        "themes": [],
     }
 }

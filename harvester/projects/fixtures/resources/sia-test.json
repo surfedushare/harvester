@@ -1,0 +1,105 @@
+[
+    {
+        "model": "projects.siaprojectidsresource",
+        "pk": 1,
+        "fields": {
+            "uri": "api.nwosia.nl/v1/projecten",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-09-24T11:54:16.826Z",
+            "modified_at": "2024-09-24T11:54:16.827Z",
+            "purge_at": "2024-10-24T11:47:46.452Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "args": [],
+                "kwargs": {},
+                "method": "get",
+                "url": "https://api.nwosia.nl/v1/projecten",
+                "headers": {
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate",
+                    "accept": "application/json",
+                    "Connection": "keep-alive"
+                },
+                "data": null,
+                "backoff_delay": 0
+            },
+            "head": {
+                "content-type": "application/json"
+            },
+            "body": "sia/sia-ids.json"
+        }
+    },
+    {
+        "model": "projects.siaprojectdetailsresource",
+        "pk": 1,
+        "fields": {
+            "uri": "api.nwosia.nl/v1/projecten/315",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-09-24T11:54:16.826Z",
+            "modified_at": "2024-09-24T11:54:16.826Z",
+            "purge_at": "2024-10-24T11:57:25.016Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "args": [
+                    315
+                ],
+                "kwargs": {},
+                "method": "get",
+                "url": "https://api.nwosia.nl/v1/projecten/315",
+                "headers": {
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate",
+                    "accept": "application/json",
+                    "Connection": "keep-alive"
+                },
+                "data": null,
+                "backoff_delay": 0
+            },
+            "head": {
+                "content-type": "application/json"
+            },
+            "body": "sia/sia-project.315.json"
+        }
+    },
+    {
+        "model": "projects.siaprojectdetailsresource",
+        "pk": 2,
+        "fields": {
+            "uri": "api.nwosia.nl/v1/projecten/1676",
+            "status": 403,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2024-09-24T11:54:16.826Z",
+            "modified_at": "2024-09-24T11:54:16.826Z",
+            "purge_at": "2024-10-24T11:57:25.016Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "args": [
+                    1676
+                ],
+                "kwargs": {},
+                "method": "get",
+                "url": "https://api.nwosia.nl/v1/projecten/1676",
+                "headers": {
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate",
+                    "accept": "application/json",
+                    "Connection": "keep-alive"
+                },
+                "data": null,
+                "backoff_delay": 0
+            },
+            "head": {
+                "content-type": "application/json"
+            },
+            "body": "sia/sia-project.1676.json"
+        }
+    }
+]
