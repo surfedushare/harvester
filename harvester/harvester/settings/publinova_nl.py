@@ -9,6 +9,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
     "ArtEZ University of the Arts",
     "NHL Stenden Hogeschool",
     "Hogeschool Inholland",
+    "Hogeschool KPZ",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
