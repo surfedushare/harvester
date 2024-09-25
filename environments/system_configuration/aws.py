@@ -86,4 +86,8 @@ AWS_SECRET_CONFIGURATIONS = {
     "publinova": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/publinova"
     },
+    "sia": {
+        "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sia",
+        "contact_email": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sia"
+    },
 }
