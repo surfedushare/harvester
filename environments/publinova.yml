@@ -9,6 +9,7 @@ postgres:
 django:
   domain: "harvester.{environment_code}.publinova.nl"
   fixtures:
+    - "core/fixtures/initial-common.json"
     - "metadata/fixtures/initial-metadata-publinova.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-publinova.json"
@@ -19,3 +20,6 @@ django:
 
 harvester:
   sources_middleware_api: "https://sources.{environment_code}.publinova.nl/api/v1/"
+
+conext:
+  client_id: "harvester.prod.publinova.nl"

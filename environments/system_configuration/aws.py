@@ -56,6 +56,7 @@ AWS_SECRET_CONFIGURATIONS = {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",
         "sharekit_webhook_secret": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",
         "publinova_webhook_secret": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",
+        "publinova_conext_secret": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",
     },
     "matomo": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/matomo-api-key",
@@ -84,7 +85,4 @@ AWS_SECRET_CONFIGURATIONS = {
     "publinova": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/publinova"
     },
-    "conext": {
-        "conext_secret_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials"
-    }
 }

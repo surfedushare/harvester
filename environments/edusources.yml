@@ -9,6 +9,7 @@ postgres:
 django:
   domain: "harvester.{environment_code}.surfedushare.nl"
   fixtures:
+    - "core/fixtures/initial-common.json"
     - "metadata/fixtures/initial-metadata-edusources.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-edusources.json"
@@ -19,3 +20,7 @@ django:
 
 harvester:
   sources_middleware_api: null
+
+conext:
+  is_enabled: false
+  client_id: none
