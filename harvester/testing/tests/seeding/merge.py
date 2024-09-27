@@ -58,7 +58,9 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             document_generator("merge", 20, 10, self.set, ENTITY_SEQUENCE_PROPERTIES["merge"], {"days": 1},
                                soft_deletes=True)
         )
-        TestDocument.objects.all().update(finished_at=self.current_time, pending_at=None)
+        TestDocument.objects.all().update(
+            finished_at=self.current_time, pending_at=None, pipeline={"tika": {"success": True}}
+        )
         self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")
         self.updated_document.properties["title"] = "title for 1 before update"
         self.updated_document.clean()

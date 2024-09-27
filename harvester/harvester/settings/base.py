@@ -224,8 +224,8 @@ SOCIALACCOUNT_PROVIDERS = {
 SOCIALACCOUNT_ADAPTER = 'harvester.login.HarvesterSocialAccountAdapter'
 
 # The settings below disable normal login methods when SURFConext handles logins.
-if ENABLE_SURFCONEXT_LOGIN:
-    LOGIN_URL = "/accounts/oidc/conext/login/"
+
+LOGIN_URL = "/accounts/oidc/conext/login/" if ENABLE_SURFCONEXT_LOGIN else "/admin/login/"
 SOCIALACCOUNT_ONLY = ENABLE_SURFCONEXT_LOGIN
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
