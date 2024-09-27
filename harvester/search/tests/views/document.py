@@ -1,6 +1,6 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client import DocumentTypes
+from search_client.constants import Platforms, Entities
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -92,7 +92,7 @@ class TestDocumentSearchView(DocumentAPITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(data["results"]), 2)
         self.assertEqual(data["results_total"], {"value": 2, "is_precise": True})
-        self.assertEqual(data["results"][0]["published_at"], "2017-04-16T22:35:09+02:00")
+        self.assertEqual(data["results"][0]["published_at"], "2017-04-16")
         self.assertEqual(data["page"], 1)
         self.assertEqual(data["page_size"], 10)
         self.assertIsNone(data["filter_counts"])
@@ -138,7 +138,7 @@ class TestDocumentSearchView(DocumentAPITestCase):
 class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-edusources"]
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
     def test_search_including_filter_counts(self):
         search_url = reverse("v1:search:search-documents") + "?include_filter_counts=1"
@@ -164,17 +164,14 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         self.assertEqual(data["page_size"], 10)
         self.assertEqual(data["filter_counts"], {
             "publishers.keyword-Wikiwijs Maken": 2,
-            "learning_material_disciplines-exact_informatica": 2,
             "technical_type-document": 2,
             "learning_material_disciplines_normalized-exact_informatica": 2,
             "lom_educational_levels-HBO": 2,
             "language.keyword-nl": 2,
-            "harvest_source-surfsharekit": 1,
-            "harvest_source-wikiwijsmaken": 1,
             "authors.name.keyword-Marc de Graaf": 2,
             "authors.name.keyword-Michel van Ast": 2,
             "authors.name.keyword-Theo van den Bogaart": 2,
-            "copyright.keyword-cc-by-30": 2
+            "copyright.keyword-cc-by-40": 2
         })
 
     def test_search_filter_does_not_exist(self):
@@ -200,17 +197,20 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         })
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-publinova"]
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
 
 class TestDocumentFindView(DocumentAPITestCase):
 
     def test_find(self):
-        search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10",))
+        search_url = reverse(
+            "v1:search:find-document-detail",
+            args=("sharekit:edusources:3522b79c-928c-4249-a7f7-d2bcb3077f10",)
+        )
         response = self.client.get(search_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -222,10 +222,13 @@ class TestDocumentFindView(DocumentAPITestCase):
         When making detail requests to find such Documents the client should URL encode the external_id.
         """
         self.index_document(
-            self.document_type, is_last_document=True,
-            external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
+            Entities.PRODUCTS, is_last_entity_document=True,
+            source="sharekit:test", external_id="3522b79c-928c-4249-a7f7-d2bcb3077f10/1"
         )
-        search_url = reverse("v1:search:find-document-detail", args=("3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",))
+        search_url = reverse(
+            "v1:search:find-document-detail",
+            args=("sharekit:test:3522b79c-928c-4249-a7f7-d2bcb3077f10%2F1",)
+        )
         response = self.client.get(search_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -241,12 +244,12 @@ class TestDocumentFindView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
 
 class TestDocumentsFindView(DocumentAPITestCase):
@@ -254,9 +257,9 @@ class TestDocumentsFindView(DocumentAPITestCase):
     def test_find(self):
         search_url = reverse("v1:search:find-document-details")
         post_data = {
-            "external_ids": [
-                "3522b79c-928c-4249-a7f7-d2bcb3077f10",
-                "abc",
+            "srns": [
+                "sharekit:edusources:3522b79c-928c-4249-a7f7-d2bcb3077f10",
+                "sharekit:test:abc",
                 "def"  # does not exist
             ]
         }
@@ -270,7 +273,7 @@ class TestDocumentsFindView(DocumentAPITestCase):
     def test_not_found(self):
         search_url = reverse("v1:search:find-document-details")
         post_data = {
-            "external_ids": [
+            "srns": [
                 "def"  # does not exist
             ]
         }
@@ -283,9 +286,9 @@ class TestDocumentsFindView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA

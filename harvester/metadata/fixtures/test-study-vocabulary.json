@@ -389,7 +389,6 @@
     "pk": 9331,
     "fields": {
         "name": "informatievaardigheid",
-        "site": 1,
         "created_at": "2023-05-09T01:02:16.620Z",
         "updated_at": "2023-09-20T08:19:01.172Z",
         "deleted_at": null,
@@ -411,7 +410,6 @@
     "pk": 9332,
     "fields": {
         "name": "Publiceren en communiceren",
-        "site": 1,
         "created_at": "2023-05-09T01:02:16.873Z",
         "updated_at": "2023-09-20T08:18:52.867Z",
         "deleted_at": null,
@@ -433,7 +431,6 @@
     "pk": 9333,
     "fields": {
         "name": "Publiceren (van eindproduct)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:17.096Z",
         "updated_at": "2023-09-20T08:18:52.869Z",
         "deleted_at": null,
@@ -455,7 +452,6 @@
     "pk": 9334,
     "fields": {
         "name": "Valoriseren van bevindingen (outreach)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:17.335Z",
         "updated_at": "2023-09-20T08:18:52.871Z",
         "deleted_at": null,
@@ -477,7 +473,6 @@
     "pk": 9335,
     "fields": {
         "name": "Communiceren (van eindproduct)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:17.566Z",
         "updated_at": "2023-09-20T08:18:52.868Z",
         "deleted_at": null,
@@ -499,7 +494,6 @@
     "pk": 9336,
     "fields": {
         "name": "Organiseren en verwerken",
-        "site": 1,
         "created_at": "2023-05-09T01:02:17.790Z",
         "updated_at": "2023-09-20T08:18:52.840Z",
         "deleted_at": null,
@@ -521,7 +515,6 @@
     "pk": 9337,
     "fields": {
         "name": "Gebruik en verwerken van informatie (ethisch)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:18.024Z",
         "updated_at": "2023-09-20T08:18:52.842Z",
         "deleted_at": null,
@@ -543,7 +536,6 @@
     "pk": 9338,
     "fields": {
         "name": "Privacygevoelige informatie",
-        "site": 1,
         "created_at": "2023-05-09T01:02:18.249Z",
         "updated_at": "2023-09-20T08:18:52.846Z",
         "deleted_at": null,
@@ -565,7 +557,6 @@
     "pk": 9339,
     "fields": {
         "name": "Auteursrecht",
-        "site": 1,
         "created_at": "2023-05-09T01:02:18.442Z",
         "updated_at": "2023-09-20T08:18:52.843Z",
         "deleted_at": null,
@@ -587,7 +578,6 @@
     "pk": 9340,
     "fields": {
         "name": "Bronvermelding",
-        "site": 1,
         "created_at": "2023-05-09T01:02:18.691Z",
         "updated_at": "2023-09-20T08:18:52.845Z",
         "deleted_at": null,
@@ -609,7 +599,6 @@
     "pk": 9341,
     "fields": {
         "name": "Synthetiseren of creëren van nieuwe informatie",
-        "site": 1,
         "created_at": "2023-05-09T01:02:18.944Z",
         "updated_at": "2023-09-20T08:18:52.849Z",
         "deleted_at": null,
@@ -631,7 +620,6 @@
     "pk": 9342,
     "fields": {
         "name": "Samenwerken (in teams)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:19.147Z",
         "updated_at": "2023-09-20T08:18:52.848Z",
         "deleted_at": null,
@@ -653,7 +641,6 @@
     "pk": 9343,
     "fields": {
         "name": "Manage proces en zoekresultaten",
-        "site": 1,
         "created_at": "2023-05-09T01:02:19.411Z",
         "updated_at": "2023-09-20T08:18:52.847Z",
         "deleted_at": null,
@@ -675,7 +662,6 @@
     "pk": 9344,
     "fields": {
         "name": "Analyseren van zoekresultaten (informatieanalyse)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:19.652Z",
         "updated_at": "2023-09-20T08:18:52.841Z",
         "deleted_at": null,
@@ -697,7 +683,6 @@
     "pk": 9345,
     "fields": {
         "name": "Plannen en zoeken",
-        "site": 1,
         "created_at": "2023-05-09T01:02:19.837Z",
         "updated_at": "2023-09-20T08:18:52.862Z",
         "deleted_at": null,
@@ -719,7 +704,6 @@
     "pk": 9346,
     "fields": {
         "name": "Selecteren informatiebronnen en zoeksystemen",
-        "site": 1,
         "created_at": "2023-05-09T01:02:20.106Z",
         "updated_at": "2023-09-20T08:18:52.863Z",
         "deleted_at": null,
@@ -741,7 +725,6 @@
     "pk": 9347,
     "fields": {
         "name": "Zoeken naar informatie",
-        "site": 1,
         "created_at": "2023-05-09T01:02:20.405Z",
         "updated_at": "2023-09-20T08:18:52.866Z",
         "deleted_at": null,
@@ -763,7 +746,6 @@
     "pk": 9348,
     "fields": {
         "name": "Selecteren zoektermen",
-        "site": 1,
         "created_at": "2023-05-09T01:02:20.594Z",
         "updated_at": "2023-09-20T08:18:52.865Z",
         "deleted_at": null,
@@ -785,7 +767,6 @@
     "pk": 9349,
     "fields": {
         "name": "Oriënteren en specificeren",
-        "site": 1,
         "created_at": "2023-05-09T01:02:20.828Z",
         "updated_at": "2023-09-20T08:18:52.850Z",
         "deleted_at": null,
@@ -807,7 +788,6 @@
     "pk": 9350,
     "fields": {
         "name": "Formuleren van onderzoeksvraag",
-        "site": 1,
         "created_at": "2023-05-09T01:02:21.054Z",
         "updated_at": "2023-09-20T08:18:52.851Z",
         "deleted_at": null,
@@ -829,7 +809,6 @@
     "pk": 9351,
     "fields": {
         "name": "Zoeken ter oriëntatie",
-        "site": 1,
         "created_at": "2023-05-09T01:02:21.290Z",
         "updated_at": "2023-09-20T08:18:52.861Z",
         "deleted_at": null,
@@ -851,7 +830,6 @@
     "pk": 9352,
     "fields": {
         "name": "Oriënteren op informatielandschap",
-        "site": 1,
         "created_at": "2023-05-09T01:02:21.487Z",
         "updated_at": "2023-09-20T08:18:52.853Z",
         "deleted_at": null,
@@ -873,7 +851,6 @@
     "pk": 9353,
     "fields": {
         "name": "Aard en verschijningsvormen van informatie/data",
-        "site": 1,
         "created_at": "2023-05-09T01:02:21.762Z",
         "updated_at": "2023-09-20T08:18:52.854Z",
         "deleted_at": null,
@@ -895,7 +872,6 @@
     "pk": 9354,
     "fields": {
         "name": "Rol en totstandkoming van netwerken",
-        "site": 1,
         "created_at": "2023-05-09T01:02:21.952Z",
         "updated_at": "2023-09-20T08:18:52.857Z",
         "deleted_at": null,
@@ -917,7 +893,6 @@
     "pk": 9355,
     "fields": {
         "name": "Werking en structuur van het internet",
-        "site": 1,
         "created_at": "2023-05-09T01:02:22.184Z",
         "updated_at": "2023-09-20T08:18:52.859Z",
         "deleted_at": null,
@@ -939,7 +914,6 @@
     "pk": 9356,
     "fields": {
         "name": "Individu in het informatielandschap",
-        "site": 1,
         "created_at": "2023-05-09T01:02:22.402Z",
         "updated_at": "2023-09-20T08:18:52.856Z",
         "deleted_at": null,
@@ -961,7 +935,6 @@
     "pk": 9357,
     "fields": {
         "name": "Waarde van informatie/data",
-        "site": 1,
         "created_at": "2023-05-09T01:02:22.625Z",
         "updated_at": "2023-09-20T08:18:52.858Z",
         "deleted_at": null,
@@ -983,7 +956,6 @@
     "pk": 9358,
     "fields": {
         "name": "Identificeren van informatiebehoefte",
-        "site": 1,
         "created_at": "2023-05-09T01:02:22.810Z",
         "updated_at": "2023-09-20T08:18:52.852Z",
         "deleted_at": null,
@@ -1005,7 +977,6 @@
     "pk": 9359,
     "fields": {
         "name": "Kritisch beoordelen",
-        "site": 1,
         "created_at": "2023-05-09T01:02:23.026Z",
         "updated_at": "2023-09-20T08:18:52.827Z",
         "deleted_at": null,
@@ -1027,7 +998,6 @@
     "pk": 9360,
     "fields": {
         "name": "Evalueren van zoekproces (kritisch)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:23.265Z",
         "updated_at": "2023-09-20T08:18:52.839Z",
         "deleted_at": null,
@@ -1049,7 +1019,6 @@
     "pk": 9361,
     "fields": {
         "name": "Beoordelen van resultaten (kritisch)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:23.497Z",
         "updated_at": "2023-09-20T08:18:52.836Z",
         "deleted_at": null,
@@ -1071,7 +1040,6 @@
     "pk": 9362,
     "fields": {
         "name": "Beoordelingscriteria (relevantie/betrouwbaarheid)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:23.715Z",
         "updated_at": "2023-09-20T08:18:52.837Z",
         "deleted_at": null,
@@ -1093,7 +1061,6 @@
     "pk": 9363,
     "fields": {
         "name": "Informatieverwerking (lezen, luisteren e.d.)",
-        "site": 1,
         "created_at": "2023-05-09T01:02:23.976Z",
         "updated_at": "2023-09-20T08:18:52.838Z",
         "deleted_at": null,

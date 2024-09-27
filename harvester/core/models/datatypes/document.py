@@ -82,8 +82,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
         # Deletes shouldn't update anything but state information
-        if content.get("state") == self.States.DELETED.value:
-            super().update({"state": self.States.DELETED.value}, commit=commit)
+        if content.get("state") == self.States.DELETED:
+            super().update({"state": self.States.DELETED}, commit=commit)
             return
         # See if pipeline task need to re-run due to changes
         for dependency_key, task_names in self.get_property_dependencies().items():
@@ -181,6 +181,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             data["overwrite"] = None
         if merge_derivatives:
             data.update(self.get_derivatives_data())
+        if use_multilingual_fields:
+            data["provider"] = self.metadata["provider"]  # this is a string value constant during document lifetime
         return data
 
     def to_search(self, use_multilingual_fields: bool = False) -> dict:

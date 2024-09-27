@@ -68,7 +68,8 @@ TECHNICAL_TYPE_CHOICES = sorted([
 
 
 WHITELISTED_OUTPUT_FIELDS = {
-    "srn", "url", "hash", "state", "title", "type", "is_link", "copyright", "mime_type", "access_rights", "priority"
+    "srn", "url", "hash", "state", "title", "type", "is_link", "copyright", "mime_type", "access_rights", "priority",
+    "language", "provider",
 }
 
 
@@ -171,13 +172,17 @@ class FileDocument(HarvestDocument):
         self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
 
-    def to_data(self, merge_derivatives: bool = True) -> dict:
+    def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
+        raw_data = super().to_data(merge_derivatives=False, use_multilingual_fields=use_multilingual_fields)
         data = {
             key: value
-            for key, value in super().to_data(merge_derivatives=False).items() if key in WHITELISTED_OUTPUT_FIELDS
+            for key, value in raw_data.items() if key in WHITELISTED_OUTPUT_FIELDS
         }
         if "tika" in self.derivatives:
-            data["text"] = strip_tags(self.derivatives["tika"]["texts"][0])
+            text = strip_tags(self.derivatives["tika"]["texts"][0])
+            if text and len(text) >= 1000000:
+                text = " ".join(text.split(" ")[:10000])
+            data["text"] = text
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
             data["video"] = youtube_data

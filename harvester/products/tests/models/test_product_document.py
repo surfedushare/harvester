@@ -110,6 +110,12 @@ class FileDocumentTestCase(TestCase):
     def test_multilingual_indices_to_data(self):
         product = ProductDocument.objects.get(id=1)
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [
             "exact_informatica"
         ])
@@ -128,6 +134,8 @@ class FileDocumentTestCase(TestCase):
             "Applied Science"
         ])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertEqual(data["text"], "Fake Tika text 1", "Expected multilingual indices to have full text field")
+        self.assertNotIn("texts", data, "Expected multilingual indices to not have multilingual fields")
 
     @staticmethod
     def build_multilingual_derivatives():
@@ -174,6 +182,12 @@ class FileDocumentTestCase(TestCase):
         product = ProductDocument.objects.get(id=1)
         product.derivatives = self.build_multilingual_derivatives()
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [
             "exact_informatica"
         ])
@@ -192,22 +206,39 @@ class FileDocumentTestCase(TestCase):
             "Applied Science"
         ])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertEqual(data["text"], "Fake Tika text 1", "Expected multilingual indices to have full text field")
+        self.assertNotIn("texts", data, "Expected multilingual indices to not have multilingual fields")
+
+    maxDiff = None
 
     def test_multilingual_indices_to_data_without_derivatives(self):
         product = ProductDocument.objects.get(id=1)
+        FileDocument.objects.all().update(derivatives={})
         product.derivatives = {}
         data = product.to_data(for_search=False)
+        self.assertEqual(data["provider"], {
+            "name": "Stimuleringsregeling Open en Online Onderwijs",
+            "slug": None,
+            "ror": None,
+            "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
+        })
         self.assertEqual(data["learning_material_disciplines_normalized"], [])
         self.assertEqual(data["disciplines_normalized"], [])
         self.assertIsNone(data["publisher_year_normalized"])
         self.assertEqual(data["study_vocabulary"], [])
         self.assertEqual(data["study_vocabulary_terms"], [])
         self.assertEqual(data["consortium"], "Stimuleringsregeling Open en Online Onderwijs")
+        self.assertIsNone(
+            data["text"],
+            "Expected multilingual indices to have None as full text field without derivatives"
+        )
+        self.assertNotIn("texts", data, "Expected multilingual indices to not have multilingual fields")
 
     def test_multilingual_fields_to_data(self):
         product = ProductDocument.objects.get(id=1)
         product.derivatives = self.build_multilingual_derivatives()
         data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["provider"], "Stimuleringsregeling Open en Online Onderwijs")
         self.assertEqual(data["disciplines_normalized"], {
             "keyword": ["exact_informatica"],
             "en": ["Exact sciences and Informatics"],
@@ -235,11 +266,155 @@ class FileDocumentTestCase(TestCase):
             "en": "Stimuleringsregeling Open en Online Onderwijs",
             "nl": "Stimuleringsregeling Open en Online Onderwijs",
         })
+        self.assertNotIn("text", data, "Expected multilingual field index to not have a single full text field")
+        self.assertEqual(data["texts"], {
+            "en": {
+                "transcriptions": [],
+                "descriptions": [],
+                "subtitles": [],
+                "titles": [],
+                "contents": []
+            },
+            "nl": {
+                "transcriptions": [],
+                "descriptions": [
+                    {
+                        "text": "Geen samenvatting",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+                        "provider": "Stimuleringsregeling Open en Online Onderwijs",
+                        "by_machine": False
+                    }
+                ],
+                "subtitles": [],
+                "titles": [
+                    {
+                        "text": "Didactiek van macro-meso-micro denken bij scheikunde",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+                        "provider": "Stimuleringsregeling Open en Online Onderwijs",
+                        "by_machine": False
+                    }
+                ],
+                "contents": []
+            },
+            "unk": {
+                "transcriptions": [],
+                "descriptions": [],
+                "subtitles": [],
+                "titles": [
+                    {
+                        "text": "IMSCP_94812.zip",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "339df213a16895868ba4bfc635b7d3348348e33a",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "URL 1",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    }
+                ],
+                "contents": [
+                    {
+                        "text": "Fake Tika text 1",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "Fake Tika text 3",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "339df213a16895868ba4bfc635b7d3348348e33a",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "Fake Tika text 2",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    }
+                ]
+            }
+        })
 
     def test_multilingual_fields_to_data_without_derivatives(self):
         product = ProductDocument.objects.get(id=1)
+        FileDocument.objects.all().update(derivatives={})
         product.derivatives = {}
         data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["provider"], "Stimuleringsregeling Open en Online Onderwijs")
         self.assertEqual(data["disciplines_normalized"], {})
         self.assertEqual(data["study_vocabulary"], {})
         self.assertEqual(data["consortium"], {})
+        self.assertNotIn("text", data, "Expected multilingual field index to not have a single full text field")
+        self.assertEqual(data["texts"], {
+            "en": {
+                "transcriptions": [],
+                "descriptions": [],
+                "subtitles": [],
+                "titles": [],
+                "contents": []
+            },
+            "nl": {
+                "transcriptions": [],
+                "descriptions": [
+                    {
+                        "text": "Geen samenvatting",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+                        "provider": "Stimuleringsregeling Open en Online Onderwijs",
+                        "by_machine": False
+                    }
+                ],
+                "subtitles": [],
+                "titles": [
+                    {
+                        "text": "Didactiek van macro-meso-micro denken bij scheikunde",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+                        "provider": "Stimuleringsregeling Open en Online Onderwijs",
+                        "by_machine": False
+                    }
+                ],
+                "contents": []
+            },
+            "unk": {
+                "transcriptions": [],
+                "descriptions": [],
+                "subtitles": [],
+                "titles": [
+                    {
+                        "text": "IMSCP_94812.zip",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "Didactiek van macro-meso-micro denken bij scheikunde.pdf",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "339df213a16895868ba4bfc635b7d3348348e33a",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    },
+                    {
+                        "text": "URL 1",
+                        "document": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:"
+                                    "ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b",
+                        "provider": "Hogeschool Utrecht",
+                        "by_machine": False
+                    }
+                ],
+                "contents": []
+            }
+        })

@@ -1,86 +1,39 @@
 from django.conf import settings
 from django.test import TestCase, tag
+
 from opensearchpy import OpenSearch
 
-from search_client import SearchClient
-from search_client.constants import LANGUAGES, DocumentTypes
-from search_client.opensearch.configuration import create_open_search_index_configuration
-from search_client.factories import generate_nl_material, generate_nl_product
+from search_client.opensearch import OpenSearchClientBuilder
+from search_client.constants import Entities, Platforms
+from search_client.test.cases import SearchClientIntegrationTestCaseMixin
 
 
 @tag("search")
-class OpenSearchTestCaseMixin(object):
+class OpenSearchTestCaseMixin(SearchClientIntegrationTestCaseMixin):
 
-    search = None
-    instance = None
-    document_type = None
-    alias_prefix = "test"
+    platform = None  # should be set on inheriting classes
 
     @classmethod
-    def index_body(cls, language):
-        return create_open_search_index_configuration(language, DocumentTypes.LEARNING_MATERIAL)
-
-    @classmethod
-    def index_document(cls, document_type, is_last_document=False, **kwargs):
-        match document_type:
-            case DocumentTypes.LEARNING_MATERIAL:
-                generate_document = generate_nl_material
-            case DocumentTypes.RESEARCH_PRODUCT:
-                generate_document = generate_nl_product
-            case _:
-                raise ValueError(f"Invalid document type to index_document: {document_type}")
-        body = generate_document(**kwargs)
-        index_kwargs = {
-            "id": body["srn"],
-            "index": cls.get_alias("nl"),
-            "body": body
-        }
-        if is_last_document:
-            index_kwargs["refresh"] = True
-        cls.search.index(**index_kwargs)
-
-    @classmethod
-    def get_alias(cls, language):
-        return f"{cls.alias_prefix}-{language}"
+    def setup_opensearch_client(cls) -> OpenSearch:
+        return OpenSearchClientBuilder.from_host(settings.OPENSEARCH_HOST).build()
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Setup indices
-        cls.search = OpenSearch(
-            [settings.OPENSEARCH_HOST]
-        )
-        for language in LANGUAGES:
-            cls.search.indices.create(
-                cls.get_alias(language),
-                ignore=400,
-                body=cls.index_body('nl')
-            )
         # Add some mock data to the indices
-        cls.index_document(cls.document_type)
+        cls.index_document(Entities.PRODUCTS)
         cls.index_document(
-            cls.document_type, is_last_document=True,
-            source="surfsharekit", external_id="abc", title=f"Nog een {cls.document_type}", publisher_date="2020-03-18"
+            Entities.PRODUCTS, is_last_entity_document=True,
+            source="sharekit:test", external_id="abc", title=f"Nog een {Entities.PRODUCTS.value}",
+            publisher_date="2020-03-18"
         )
-        # Create a SURF SearchClient
-        cls.instance = SearchClient(settings.OPENSEARCH_HOST, cls.document_type, cls.alias_prefix)
-
-    @classmethod
-    def tearDownClass(cls):
-        for language in LANGUAGES:
-            cls.search.indices.delete(
-                cls.get_alias(language)
-            )
-        cls.search.close()
-        cls.instance.client.close()
-        super().tearDownClass()
 
 
 class DocumentAPITestCase(TestCase):
 
-    document_type = None
+    platform = None
     required_properties = {
-        DocumentTypes.LEARNING_MATERIAL: [
+        Platforms.EDUSOURCES: [
             "title",
             "url",
             "files",
@@ -93,7 +46,6 @@ class DocumentAPITestCase(TestCase):
             "keywords",
             "authors",
             "publishers",
-            "studies",
             "harvest_source",
             "has_parts",
             "is_part_of",
@@ -102,7 +54,7 @@ class DocumentAPITestCase(TestCase):
             "technical_type",
             "disciplines",
         ],
-        DocumentTypes.RESEARCH_PRODUCT: [
+        Platforms.PUBLINOVA: [
             "title",
             "url",
             "files",
@@ -127,5 +79,5 @@ class DocumentAPITestCase(TestCase):
     }
 
     def assert_result_properties(self, result):
-        for property_ in self.required_properties[self.document_type]:
+        for property_ in self.required_properties[self.platform]:
             self.assertIn(property_, result)

@@ -1,6 +1,7 @@
 from django.test import override_settings
 from django.urls import reverse
-from search_client import DocumentTypes
+
+from search_client.constants import Platforms, Entities
 from search.tests.views.base import OpenSearchTestCaseMixin, DocumentAPITestCase
 
 
@@ -28,39 +29,37 @@ class TestSimilarityView(DocumentAPITestCase):
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialSimilarityView(OpenSearchTestCaseMixin, TestSimilarityView):
-    document_type = DocumentTypes.LEARNING_MATERIAL
+    platform = Platforms.EDUSOURCES
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.index_document(cls.document_type, external_id="def", source="surfsharekit")
-        cls.index_document(cls.document_type, external_id="123", source="surfsharekit")
-        cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, external_id="def", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, external_id="123", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, is_last_entity_document=True, external_id="456", source="surfsharekit")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityView):
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.index_document(cls.document_type, external_id="def", source="surfsharekit")
-        cls.index_document(cls.document_type, external_id="123", source="surfsharekit")
-        cls.index_document(cls.document_type, is_last_document=True, external_id="456", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, external_id="def", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, external_id="123", source="surfsharekit")
+        cls.index_document(Entities.PRODUCTS, is_last_entity_document=True, external_id="456", source="surfsharekit")
 
 
-@override_settings(DOCUMENT_TYPE=DocumentTypes.RESEARCH_PRODUCT, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestAuthorSimilarityView(OpenSearchTestCaseMixin, DocumentAPITestCase):
 
-    document_type = DocumentTypes.RESEARCH_PRODUCT
+    platform = Platforms.PUBLINOVA
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.index_document(
-            cls.document_type, external_id="123", topic="biology", is_last_document=True
-        )
+        cls.index_document(Entities.PRODUCTS, external_id="123", topic="biology", is_last_entity_document=True)
 
     def test_author_similarity(self):
         similarity_params = "?author_name=Theo van den Bogaart"

@@ -7,7 +7,7 @@ from metadata.models import MetadataValue, MetadataField, MetadataTranslation
 
 
 class MetadataFieldAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_hidden', 'is_manual', 'english_as_dutch', 'value_output_order',)
+    list_display = ('name', 'entity', 'is_hidden', 'is_manual', 'english_as_dutch', 'value_output_order',)
 
 
 class MetadataTranslationAdmin(admin.ModelAdmin):
@@ -72,8 +72,8 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
     autocomplete_fields = ("translation", "parent",)
     list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'frequency', 'deleted_at',)
     list_display_links = ('indented_title',)
-    list_filter = ('is_hidden', 'site', 'field', TrashListFilter)
-    readonly_fields = ('frequency', 'deleted_at', 'site',)
+    list_filter = ('is_hidden', 'field', TrashListFilter)
+    readonly_fields = ('frequency', 'deleted_at',)
 
     actions = [unhide_filters, trash_nodes, restore_nodes]
 

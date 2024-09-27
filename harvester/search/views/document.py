@@ -1,6 +1,5 @@
 from urllib.parse import unquote
 
-from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.shortcuts import Http404
 from rest_framework.generics import GenericAPIView
@@ -9,11 +8,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from search_client import DocumentTypes
-from search_client.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
 from harvester.schema import HarvesterSchema
-from metadata.models import MetadataField
-from search.clients import get_search_client
+from search.clients import get_search_client, prepare_results_for_response
+from search.views.base import validate_presets, load_results_serializers
 
 
 class DocumentSearchFilterSerializer(serializers.Serializer):
@@ -32,11 +29,12 @@ class DocumentSearchSerializer(serializers.Serializer):
     page_size = serializers.IntegerField(required=False, default=10, validators=[MinValueValidator(0)])
 
     results_total = serializers.DictField(read_only=True)
+    results = serializers.ListField(read_only=True, child=serializers.DictField())
 
     def validate_filters(self, filters):
         if not filters:
             return filters
-        filter_fields = self.context.get("filter_fields", None)
+        filter_fields = self.context.get("filter_fields", set())
         for metadata_filter in filters:
             field_id = metadata_filter.get("external_id", None)
             if field_id not in filter_fields:
@@ -46,19 +44,13 @@ class DocumentSearchSerializer(serializers.Serializer):
     def validate_ordering(self, ordering):
         if not ordering:
             return
-        filter_fields = self.context.get("filter_fields", [])
+        elif ordering == "string":  # This is the default used by the docs, which we ignore here for easy of use.
+            return
+        filter_fields = self.context.get("filter_fields", set())
         ordering_field = ordering[1:] if ordering.startswith("-") else ordering
         if ordering_field not in filter_fields:
             raise ValidationError(detail=f"Invalid value for ordering: '{ordering}'")
         return ordering
-
-
-class LearningMaterialSearchSerializer(DocumentSearchSerializer):
-    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
-
-
-class ResearchProductSearchSerializer(DocumentSearchSerializer):
-    results = ResearchProductResultSerializer(many=True, read_only=True)
 
 
 class DocumentSearchAPIView(GenericAPIView):
@@ -103,7 +95,8 @@ class DocumentSearchAPIView(GenericAPIView):
 
     ## Response body
 
-    **results**: An array containing the search results.
+    **results**: An array containing the search results. The format of results depends on
+    the returned entities. Please refer to "products" endpoints or other entity endpoints for details.
 
     **results_total**: Object with information about the total amount of found documents.
     The "value" key gives the found documents count. The "is_precise" key is true when the value is exact
@@ -116,18 +109,14 @@ class DocumentSearchAPIView(GenericAPIView):
     """
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
-
-    def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
-            return LearningMaterialSearchSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
-            return ResearchProductSearchSerializer
-        else:
-            raise AssertionError("DocumentSearchAPIView expected application to use different DOCUMENT_TYPE")
+    serializer_class = DocumentSearchSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["filter_fields"] = MetadataField.objects.all().values_list("name", flat=True)
+        presets = validate_presets(self.request)
+        client = get_search_client(presets=presets)
+        context["filter_fields"] = client.configuration.get_valid_filter_fields()
+        context["presets"] = presets
         return context
 
     def post(self, request, *args, **kwargs):
@@ -135,80 +124,77 @@ class DocumentSearchAPIView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        include_filter_counts = request.GET.get("include_filter_counts", None)
-        if include_filter_counts == "1":
-            data["drilldown_names"] = serializer.context["filter_fields"].exclude(name="publisher_date")
+        presets = serializer.context["presets"]
+        include_filter_counts = request.GET.get("include_filter_counts", None) == "1"
         if not data["search_text"] and not data["ordering"]:
             data["ordering"] = "-publisher_date"
         # Execute search and return results
-        client = get_search_client()
-        response = client.search(**data)
+        client = get_search_client(presets=presets)
+        response = client.search(aggregate_filter_counts=include_filter_counts, **data)
+        result_serializers = load_results_serializers(presets)
+        results = prepare_results_for_response(response["results"], result_serializers)
         return Response({
-            "results": response["results"],
+            "results": results,
             "results_total": response["results_total"],
             "did_you_mean": response["did_you_mean"],
             "page": data["page"],
             "page_size": data["page_size"],
-            "filter_counts": response["drilldowns"] if include_filter_counts == "1" else None
+            "filter_counts": response.get("aggregations", response["drilldowns"]) if include_filter_counts else None
         })
+
+
+class DocumentSearchDetailSerializer(serializers.Serializer):
+    pass
 
 
 class DocumentSearchDetailAPIView(GenericAPIView):
     """
-    Searches for a document with the specified external_id.
-    It raises a 404 if the document is not found.
-    Otherwise it returns the document as an object.
+    Searches for a document with the specified SURF Resource Name.
+    It raises a 404 if the document is not found. Otherwise it returns the document as an object.
+    The format of the result depends on the returned entity. Please refer to "products" endpoints or
+    other entity endpoints for details.
     """
 
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
-
-    def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
-            return SimpleLearningMaterialResultSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
-            return ResearchProductResultSerializer
-        else:
-            raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
+    serializer_class = DocumentSearchDetailSerializer
 
     def get_object(self):
-        client = get_search_client()
-        reference = unquote(self.kwargs["external_id"])
-        response = client.get_documents_by_id([reference])
-        records = response.get("results", [])
-        if not records:
+        presets = validate_presets(self.request)
+        client = get_search_client(presets=presets)
+        reference = unquote(self.kwargs["srn"])
+        response = client.get_documents_by_srn([reference])
+        results = response.get("results", [])
+        if not results:
             raise Http404()
-        document = records[0]
-        return document
+        document = results[0]
+        result_serializers = load_results_serializers(presets)
+        results = prepare_results_for_response([document], result_serializers)
+        return results[0]
 
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         return Response(instance)
 
 
-class LearningMaterialDetailsSerializer(serializers.Serializer):
-    external_ids = serializers.ListField(child=serializers.CharField(), write_only=True)
-    results = SimpleLearningMaterialResultSerializer(many=True, read_only=True)
+class DocumentSearchDetailsSerializer(serializers.Serializer):
+    srns = serializers.ListField(child=serializers.CharField(), write_only=True)
     results_total = serializers.DictField(read_only=True)
-
-
-class ResearchProductDetailsSerializer(serializers.Serializer):
-    external_ids = serializers.ListField(child=serializers.CharField(), write_only=True)
-    results = ResearchProductResultSerializer(many=True, read_only=True)
-    results_total = serializers.DictField(read_only=True)
+    results = serializers.ListField(read_only=True, child=serializers.DictField())
 
 
 class DocumentSearchDetailsAPIView(GenericAPIView):
     """
-    Searches for documents with the specified external ids.
+    Searches for documents with the specified SURF Resource Names (SRNs).
 
     ## Request body
 
-    **external_ids**: A list of external ids to find documents for
+    **srns**: A list of SURF Resource Names to find documents for
 
     ## Response body
 
-    **results**: The list of documents that match the external ids
+    **results**: The list of documents that match the SURF Resource Names. The format of results depends on
+    the returned entities. Please refer to "products" endpoints or other entity endpoints for details.
 
     **results_total**: Object with information about the total amount of found documents.
     The "value" key gives the found documents count. This could be less than the amount of given external ids
@@ -219,24 +205,19 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
     max_page_size = 100
-
-    def get_serializer_class(self):
-        if settings.DOCUMENT_TYPE == DocumentTypes.LEARNING_MATERIAL:
-            return LearningMaterialDetailsSerializer
-        elif settings.DOCUMENT_TYPE == DocumentTypes.RESEARCH_PRODUCT:
-            return ResearchProductDetailsSerializer
-        else:
-            raise AssertionError("DocumentSearchDetailAPIView expected application to use different DOCUMENT_TYPE")
+    serializer_class = DocumentSearchDetailsSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
-        external_ids = serializer.validated_data["external_ids"]
-        if len(external_ids) > self.max_page_size:
+        srns = serializer.validated_data["srns"]
+        if len(srns) > self.max_page_size:
             raise ValidationError(detail=f"Can't process more than {self.max_page_size} external ids at a time")
-        client = get_search_client()
-        response = client.get_documents_by_id(external_ids, page_size=self.max_page_size)
-        results = response.get("results", [])
+        presets = validate_presets(self.request)
+        client = get_search_client(presets=presets)
+        response = client.get_documents_by_srn(srns, page_size=self.max_page_size)
+        result_serializers = load_results_serializers(presets)
+        results = prepare_results_for_response(response.get("results", []), result_serializers)
         return Response({
             "results": results,
             "results_total": {

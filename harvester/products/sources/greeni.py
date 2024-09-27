@@ -11,7 +11,7 @@ class GreeniProductExtractor(HBOKennisbankProductExtractor):
         state = super().get_oaipmh_record_state(soup, el)
         metadata = el.find("metadata")
         if metadata and metadata.string and not metadata.string.strip():  # detects an empty (non-self-closing) element
-            state = "inactive"
+            state = "deleted"
         return state
 
     @classmethod

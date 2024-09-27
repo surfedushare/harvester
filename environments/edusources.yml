@@ -6,9 +6,6 @@ postgres:
   user: "harvester_edusources"
   application_user: "harvester_edusources"
 
-opensearch:
-  alias_prefix: "edusources"
-
 django:
   domain: "harvester.{environment_code}.surfedushare.nl"
   fixtures:
