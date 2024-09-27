@@ -1,0 +1,76 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "administrator",
+        "permissions": [
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "view_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "view_token",
+                "authtoken",
+                "token"
+            ],
+            [
+                "view_tokenproxy",
+                "authtoken",
+                "tokenproxy"
+            ],
+            [
+                "view_metadatafield",
+                "metadata",
+                "metadatafield"
+            ],
+            [
+                "add_metadatatranslation",
+                "metadata",
+                "metadatatranslation"
+            ],
+            [
+                "change_metadatatranslation",
+                "metadata",
+                "metadatatranslation"
+            ],
+            [
+                "delete_metadatatranslation",
+                "metadata",
+                "metadatatranslation"
+            ],
+            [
+                "view_metadatatranslation",
+                "metadata",
+                "metadatatranslation"
+            ],
+            [
+                "add_metadatavalue",
+                "metadata",
+                "metadatavalue"
+            ],
+            [
+                "change_metadatavalue",
+                "metadata",
+                "metadatavalue"
+            ],
+            [
+                "delete_metadatavalue",
+                "metadata",
+                "metadatavalue"
+            ],
+            [
+                "view_metadatavalue",
+                "metadata",
+                "metadatavalue"
+            ]
+        ]
+    }
+}
+]

@@ -145,7 +145,7 @@ class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
 
     def changelist_view(self, request, extra_context=None):
         # Filter on current dataset version if no filter is being used
-        if not request.GET and "?" not in request.META['REQUEST_URI']:
+        if not request.GET and "?" not in request.META.get('REQUEST_URI', ''):
             parameters = request.GET.copy()
             parameters["dataset_version__is_current__exact"] = "1"
             request.GET = parameters
