@@ -76,6 +76,12 @@ class HarvestObjectMixin(models.Model):
         if commit:
             self.save()
 
+    def prepare_processing(self, current_time: datetime = None, commit: bool = True):
+        self.pending_at = current_time or now()
+        self.finished_at = None
+        if commit:
+            self.save()
+
     def finish_processing(self, current_time: datetime = None, commit: bool = True):
         self.pending_at = None
         self.finished_at = current_time or now()
