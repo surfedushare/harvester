@@ -82,8 +82,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
         # Deletes shouldn't update anything but state information
-        if content.get("state") == self.States.DELETED.value:
-            super().update({"state": self.States.DELETED.value}, commit=commit)
+        if content.get("state") == self.States.DELETED:
+            super().update({"state": self.States.DELETED}, commit=commit)
             return
         # See if pipeline task need to re-run due to changes
         for dependency_key, task_names in self.get_property_dependencies().items():
