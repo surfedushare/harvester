@@ -94,7 +94,8 @@ def build_configuration_defaults(environment):
                 "tags": {
                     "central": f"{environment_code}-central",
                     "edusources": f"{environment_code}-edusources",
-                    "publinova": f"{environment_code}-publinova"
+                    "mbodata": f"{environment_code}-mbodata",
+                    "publinova": f"{environment_code}-publinova",
                 }
             }
         },
@@ -108,7 +109,10 @@ def build_configuration_defaults(environment):
                 "registry": "017973353230.dkr.ecr.eu-central-1.amazonaws.com"
             },
             "repositories": ["harvester", "harvester-nginx"],
-            "task_definition_families": ["web", "celery", "central", "command-edusources", "command-publinova"]
+            "task_definition_families": [
+                "web", "celery", "central",
+                "command-edusources", "command-publinova", "command-mbodata"
+            ]
         },
         "secrets": dict()
     })

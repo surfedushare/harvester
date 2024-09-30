@@ -197,6 +197,7 @@ ENABLE_SURFCONEXT_LOGIN = environment.conext.is_enabled
 CONEXT_SECRETS = {
     Platforms.PUBLINOVA: environment.secrets.harvester.publinova_conext_secret,
     Platforms.EDUSOURCES: None,  # currently by default disabled
+    Platforms.MBODATA: None,  # currently by default disabled
 }
 CONEXT_SUPERUSER_MEMBERS = [
     "urn:mace:surf.nl:invite.test.surfconext.nl:0e9ec18f-373c-4df1-af67-223adf7f68ca:manager"

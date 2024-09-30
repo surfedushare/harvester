@@ -60,7 +60,7 @@ class SimilarityAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.PLATFORM is Platforms.EDUSOURCES:
+        if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
             return LearningMaterialSimilaritySerializer
         elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductSimilaritySerializer
@@ -91,7 +91,7 @@ class AuthorSuggestionsAPIView(GenericAPIView):
     schema = HarvesterSchema()
 
     def get_serializer_class(self):
-        if settings.PLATFORM is Platforms.EDUSOURCES:
+        if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
             return LearningMaterialAuthorSuggestionSerializer
         elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductAuthorSuggestionSerializer

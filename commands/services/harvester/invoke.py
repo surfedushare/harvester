@@ -13,15 +13,19 @@ def run_harvester_task(ctx, mode, command, environment=None):
             ctx.run(" ".join(command), echo=True)
         return
     # For remotes we need to determine which target(s) we want to run commands for
-    target_input = input("Which projects do you want to run this command for (e)dusources, (p)ublinova or (b)oth? ")
+    target_input = input(
+        "Which projects do you want to run this command for (e)dusources, (p)ublinova, (m)bodata or (a)ll? "
+    )
     targets = []
     match target_input:
         case "e":
             targets.append("edusources")
         case "p":
             targets.append("publinova")
-        case "b":
-            targets += ["edusources", "publinova"]
+        case "m":
+            targets.append("mbodata")
+        case "a":
+            targets += ["edusources", "publinova", "mbodata"]
         case _:
             raise Exit("Aborted running harvester command, because of invalid target input", code=1)
     # On AWS we trigger a harvester task on the container cluster to run the command for us
