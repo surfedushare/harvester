@@ -175,13 +175,17 @@ def sync_preview_media(ctx, source="production"):
 
 @task(help={
     "mode": "Mode you want to clean data for: localhost, development, acceptance or production. "
-            "Must match APPLICATION_MODE"
+            "Must match APPLICATION_MODE",
+    "force_user_deletes": "Whether to forcefully delete Django users marked as staff accounts"
 })
-def clean_data(ctx, mode):
+def clean_data(ctx, mode, force_user_deletes=False):
     """
     Starts a clean up tasks on the AWS container cluster or localhost
     """
     command = ["python", "manage.py", "clean_data"]
+
+    if force_user_deletes:
+        command += ["--force-user-deletes"]
 
     run_harvester_task(ctx, mode, command)
 
