@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('sites', '0002_alter_domain_unique'),
     ]
 
     operations = [

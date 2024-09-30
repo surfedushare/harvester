@@ -53,7 +53,6 @@ DEBUG = environment.django.debug
 # This environment is expected to be unreachable with disallowed hosts.
 # It hurts to have this setting enabled on AWS, because health checks don't pass the domain check.
 ALLOWED_HOSTS = ["*"]
-SITE_ID = 1
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -80,7 +79,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
 
