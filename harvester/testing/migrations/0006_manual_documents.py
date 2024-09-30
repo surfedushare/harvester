@@ -9,7 +9,7 @@ import testing.models.manual.product
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sources', '0014_delete_legacy_apps'),
+        ('sources', '0001_new_harvester'),
         ('testing', '0005_test_check_url'),
     ]
 

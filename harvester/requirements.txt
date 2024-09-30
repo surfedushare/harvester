@@ -64,4 +64,3 @@ devtools==0.12.2
 
 # Patched packages
 youtube-dl@git+https://github.com/ytdl-org/youtube-dl.git@master
-git+https://github.com/fako/django-json-field.git
