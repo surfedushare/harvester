@@ -18,7 +18,7 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://wszoeken.edurep.kennisnet.nl"
-    sharekit: "https://api.surfsharekit.nl"
+    sharekit: "https://api.surfsharekit.nl"  # gets overridden in settings for Edusources
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
