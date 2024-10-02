@@ -1,0 +1,14 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        {% block inner_content %}{% endblock %}
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@ class HttpSeedingProcessorTestCase(TestCase):
         self.set = Set.objects.create(name="test", identifier="srn", dataset_version=self.dataset_version)
         self.ignored_document = TestDocument(
             collection=self.set,
-            pipeline={},
+            pipeline={"tika": {"success": True}},
             properties={
                 "state": "active"
             },

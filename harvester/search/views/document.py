@@ -125,11 +125,11 @@ class DocumentSearchAPIView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         presets = serializer.context["presets"]
-        include_filter_counts = request.GET.get("include_filter_counts", None) == "1"
-        if not data["search_text"] and not data["ordering"]:
-            data["ordering"] = "-publisher_date"
-        # Execute search and return results
         client = get_search_client(presets=presets)
+        include_filter_counts = request.GET.get("include_filter_counts", None) == "1"
+        if not data["search_text"] and not data["ordering"] and client.configuration.distance_feature_field:
+            data["ordering"] = f"-{client.configuration.distance_feature_field}"
+        # Execute search and return results
         response = client.search(aggregate_filter_counts=include_filter_counts, **data)
         result_serializers = load_results_serializers(presets)
         results = prepare_results_for_response(response["results"], result_serializers)

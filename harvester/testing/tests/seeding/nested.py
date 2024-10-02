@@ -47,7 +47,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.updated_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={},
+            pipeline={"tika": {"success": True}},
             properties={
                 "state": "active",
                 "set": "surf:testing",
@@ -92,7 +92,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.deleted_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={},
+            pipeline={"tika": {"success": True}},
             properties={
                 "state": "active",
                 "set": "surf:testing",

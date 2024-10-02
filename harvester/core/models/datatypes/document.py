@@ -102,14 +102,18 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         if new:
             self.metadata["created_at"] = current_time
             self.metadata["modified_at"] = current_time
+            self.prepare_processing(current_time, commit=False)
         # Update metadata about deletion
         self.state = self.properties.get("state", None)
         if self.state != self.States.ACTIVE and not new:
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
+        elif self.state == self.States.ACTIVE and self.pipeline:
+            self.metadata["deleted_at"] = None
         elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
+            self.prepare_processing(current_time, commit=False)
         # Update metadata about document provider.
         # We only set the provider once to make sure ownership remains constant during document lifetime.
         # Providers have different properties to identify through, but clients want a single string to work with.

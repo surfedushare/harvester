@@ -48,6 +48,10 @@ class TestGreeniProductSeeding(TestCase):
                     self.assertIsNone(product.pending_at)
                     self.assertIsNotNone(product.finished_at)
         self.assertEqual(self.set.documents.count(), 100)
+        # The asserts below check that a Document added as deleted will override itself if it enters "active",
+        # further down the records list.
+        document = ProductDocument.objects.get(identity="greeni:PUBVHL:oai:www.greeni.nl:VBS:2:139717")
+        self.assertEqual(document.state, ProductDocument.States.ACTIVE)
 
     def test_delta_seeding(self):
         # Load the initial data, set all tasks as completed and create delta Resource
