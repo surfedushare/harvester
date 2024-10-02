@@ -11,6 +11,7 @@ class ElectronicVersionInfo:
     is_link: bool
     data: dict
     access_info: dict
+    license_info: dict
     product: dict
 
 
@@ -32,6 +33,7 @@ def get_electronic_version_info(pure_data: dict) -> Iterator[ElectronicVersionIn
                 is_link=is_link,
                 data=data,
                 access_info=electronic_version.get("accessType", {}) or {},
+                license_info=electronic_version.get("licenseType", {}) or {},
                 product=product,
             )
 
@@ -82,6 +84,13 @@ class PureFileExtraction(PureExtractor):
         return access_rights
 
     @classmethod
+    def get_copyright(cls, info: ElectronicVersionInfo) -> str:
+        copyright_ = "yes"
+        if copyright_uri := info.license_info.get("uri"):
+            _, copyright_ = os.path.split(copyright_uri)
+        return copyright_
+
+    @classmethod
     def get_provider(cls, info: ElectronicVersionInfo):
         return super().get_provider(info.product)
 
@@ -101,6 +110,7 @@ def build_objective(extract_processor: Type[PureFileExtraction], source_set: str
         "mime_type": extract_processor.get_mime_type,
         "title": extract_processor.get_title,
         "access_rights": extract_processor.get_access_rights,
+        "copyright": extract_processor.get_copyright,
         "product_id": lambda info: info.product["uuid"],
         "is_link": lambda info: info.is_link,
         "provider": extract_processor.get_provider,

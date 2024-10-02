@@ -115,6 +115,12 @@ class TestHanzeFileExtraction(TestCase):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess")
         self.assertEqual(self.seeds[2]["access_rights"], "RestrictedAccess")
 
+    def test_get_copyright(self):
+        self.assertEqual(self.seeds[0]["copyright"], "unspecified")
+        self.assertEqual(self.seeds[1]["copyright"], "other")
+        self.assertEqual(self.seeds[4]["copyright"], "yes")
+        self.assertEqual(self.seeds[9]["copyright"], "cc_by_nc")
+
     def test_get_product_id(self):
         self.assertEqual(self.seeds[0]["product_id"], "01ea0ee1-a419-42ee-878b-439b44562098")
 

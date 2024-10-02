@@ -109,6 +109,9 @@ class TestBuasFileExtraction(TestCase):
     def test_get_access_rights(self):
         self.assertEqual(self.seeds[0]["access_rights"], "OpenAccess")
 
+    def test_get_copyright(self):
+        self.assertEqual(self.seeds[0]["copyright"], "yes")
+
     def test_get_product_id(self):
         self.assertEqual(self.seeds[0]["product_id"], "28aca36e-17b8-48eb-a4a3-70610dbf73f6")
 
