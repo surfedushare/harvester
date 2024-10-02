@@ -19,6 +19,8 @@ def main():
     from django.core.management.commands.runserver import Command as runserver
     if PROJECT == "publinova":
         runserver.default_port = "8889"
+    elif PROJECT == "mbodata":
+        runserver.default_port = "8890"
     else:
         runserver.default_port = "8888"
     # Execute the command

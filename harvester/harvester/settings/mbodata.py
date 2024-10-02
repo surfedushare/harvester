@@ -8,8 +8,4 @@ SHAREKIT_TEST_ORGANIZATIONS = ["SURF edusources test"]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = ["study_vocabulary"]
 
-SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = True
-
-# This is a temporary override to allow testing new Sharekit features using Edusources acceptance.
-if MODE == "acceptance":
-    SHAREKIT_BASE_URL = "https://api.acc.surfsharekit.nl"
+SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False

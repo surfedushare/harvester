@@ -14,5 +14,7 @@ from system_configuration.main import PROJECT
 # This bypasses the DJANGO_SETTINGS_MODULE environment variable.
 if PROJECT == "edusources":
     from .edusources_nl import *
+elif PROJECT == "mbodata":
+    from .mbodata import *
 else:
     from .publinova_nl import *

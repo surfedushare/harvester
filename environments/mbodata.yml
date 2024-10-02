@@ -1,0 +1,24 @@
+aws:
+  harvest_content_bucket: "mbodata-harvester-content-{environment_code}"
+
+postgres:
+  database: "harvester_mbodata"
+  user: "harvester_mbodata"
+  application_user: "harvester_mbodata"
+
+django:
+  domain: "harvester.{environment_code}.data-scope.com"
+  fixtures:
+    - "sources/fixtures/initial-common.json"
+    - "sources/fixtures/initial-mbodata.json"
+    - "products/fixtures/initial-common.json"
+    - "files/fixtures/initial-common.json"
+  users:
+    usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/edusources"
+
+harvester:
+  sources_middleware_api: null
+
+conext:
+  is_enabled: false
+  client_id: none

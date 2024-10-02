@@ -8,13 +8,10 @@ import mptt.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('metadata', '0001_initial'), ('metadata', '0002_load_data'), ('metadata', '0003_disciplines_and_studies'), ('metadata', '0004_educational_levels'), ('metadata', '0005_studyvocabularyresource'), ('metadata', '0006_value_output_order'), ('metadata', '0007_entity'), ('metadata', '0008_new_fields')]
-
     initial = True
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('sites', '0002_alter_domain_unique'),
     ]
 
     operations = [

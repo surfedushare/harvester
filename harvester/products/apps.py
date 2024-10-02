@@ -19,7 +19,7 @@ class ProductsConfig(AppConfig):
         The "result_transformer" is already a search_client serializer
         """
         from products.views.serializers import SimpleLearningMaterialResultSerializer, ResearchProductResultSerializer
-        if settings.PLATFORM is Platforms.EDUSOURCES:
+        if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
             return SimpleLearningMaterialResultSerializer
         elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProductResultSerializer
@@ -32,7 +32,7 @@ class ProductsConfig(AppConfig):
         Until our views support Pydantic models for serialization, the search_client serializers are only used for
         transformations and validation. Although validations shouldn't ever fail, because we load internal data.
         """
-        if settings.PLATFORM is Platforms.EDUSOURCES:
+        if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
             return LearningMaterial
         elif settings.PLATFORM is Platforms.PUBLINOVA:
             return ResearchProduct
