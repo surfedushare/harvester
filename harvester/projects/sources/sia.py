@@ -40,9 +40,9 @@ class SiaProjectExtraction:
 
     @classmethod
     def get_parties(cls, node):
-        contact_parties = [{"name": node["contactinformatie"]["naam"]}] if node.get("contactinformatie") else []
-        network_parties = [{"name": network_party["naam"]} for network_party in node.get("netwerkleden", [])]
-        consortium_parties = [{"name": network_party["naam"]} for network_party in node.get("consortiumpartners", [])]
+        contact_parties = [node["contactinformatie"]["naam"]] if node.get("contactinformatie") else []
+        network_parties = [network_party["naam"] for network_party in node.get("netwerkleden", [])]
+        consortium_parties = [network_party["naam"] for network_party in node.get("consortiumpartners", [])]
         return contact_parties + consortium_parties + network_parties
 
     @classmethod
