@@ -103,19 +103,22 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
             return
         date_str = date_issued.text.strip().strip("[]?")
         default_datetime = datetime(year=1970, month=1, day=1)
-        return date_parser(date_str, default=default_datetime).strftime("%Y-%m-%d")
+        try:
+            publisher_date = date_parser(date_str, default=default_datetime)
+        except ParserError:
+            return
+        return publisher_date.strftime("%Y-%m-%d")
 
     @classmethod
     def get_publisher_year(cls, soup, el):
         date_issued = el.find("dateIssued")
         if not date_issued:
             return
-        publication_datetime = None
         try:
-            publication_datetime = date_parser(date_issued.text)
+            publication_datetime = date_parser(date_issued.text.strip().strip("[]?"))
         except ParserError:
-            pass
-        return publication_datetime.year if publication_datetime else None
+            return
+        return publication_datetime.year
 
     @classmethod
     def get_organizations(cls, soup, el):
