@@ -21,3 +21,4 @@ class ProjectDocument(HarvestDocument):
         research_product = data.pop("research_project", {})
         if research_product:
             data.update(research_product)
+        return data
