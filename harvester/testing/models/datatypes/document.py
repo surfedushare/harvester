@@ -41,7 +41,7 @@ class TestDocument(HarvestDocument):
                 self.pending_at = None
                 self.finished_at = now()
 
-    def get_analyzer_language(self):
+    def get_analyzer_language(self) -> str:
         return get_analyzer_language(self.properties.get("language", None))
 
 
