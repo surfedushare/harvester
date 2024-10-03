@@ -60,8 +60,7 @@ aws:
   load_secrets: true
 
 conext:
-  is_enabled: false  # this gets overridden for Edusources and MBO
-  client_id: none  # this is specific per project not per environment
+  is_enabled: false
   server: "https://connect.test.surfconext.nl"
 
 secrets:
