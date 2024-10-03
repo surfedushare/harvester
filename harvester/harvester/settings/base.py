@@ -227,6 +227,9 @@ SOCIALACCOUNT_ADAPTER = 'harvester.login.HarvesterSocialAccountAdapter'
 LOGIN_URL = "/accounts/oidc/conext/login/" if ENABLE_SURFCONEXT_LOGIN else "/admin/login/"
 SOCIALACCOUNT_ONLY = ENABLE_SURFCONEXT_LOGIN
 ACCOUNT_EMAIL_VERIFICATION = "none"
+# Keep logins around for a year, clean_data command will delete users and sessions on January 1st
+if ENABLE_SURFCONEXT_LOGIN:
+    SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
 
 
 # Internationalization
