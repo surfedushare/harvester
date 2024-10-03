@@ -101,7 +101,7 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
         date_issued = el.find("dateIssued")
         if not date_issued:
             return
-        date_str = date_issued.text.strip().strip("[]")
+        date_str = date_issued.text.strip().strip("[]?")
         default_datetime = datetime(year=1970, month=1, day=1)
         return date_parser(date_str, default=default_datetime).strftime("%Y-%m-%d")
 
