@@ -31,6 +31,15 @@ def unhide_filters(modeladmin, request, queryset):
         obj.save()
 
 
+def hide_filters(modeladmin, request, queryset):
+    for obj in queryset:
+        for descendent in obj.get_descendants():
+            descendent.is_hidden = True
+            descendent.save()
+        obj.is_hidden = True
+        obj.save()
+
+
 def trash_nodes(modeladmin, request, queryset):
     for obj in queryset:
         obj.delete()
@@ -42,6 +51,7 @@ def restore_nodes(modeladmin, request, queryset):
 
 
 unhide_filters.short_description = "Unhide all selected filters and its descendents"
+hide_filters.short_description = "Hide all selected filters and its descendents"
 trash_nodes.short_description = "Trash selected %(verbose_name_plural)s"
 restore_nodes.short_description = "Restore selected %(verbose_name_plural)s"
 
@@ -75,7 +85,7 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
     list_filter = ('is_hidden', 'field', TrashListFilter)
     readonly_fields = ('frequency', 'deleted_at',)
 
-    actions = [unhide_filters, trash_nodes, restore_nodes]
+    actions = [unhide_filters, hide_filters, trash_nodes, restore_nodes]
 
     def get_actions(self, request):
         actions = super().get_actions(request)
