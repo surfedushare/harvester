@@ -6,6 +6,7 @@ from datetime import datetime
 from django.dispatch import receiver
 from django.db import models
 
+from PIL.Image import DecompressionBombError
 import pdf2image
 from pdf2image.exceptions import PDFPageCountError
 from versatileimagefield.fields import VersatileImageField
@@ -28,6 +29,9 @@ class PdfThumbnailResource(HttpFileResource):
             image = pdf2image.convert_from_bytes(file.read(), single_file=True, fmt="png")[0]
         except PDFPageCountError:
             self.status = 1
+            return
+        except DecompressionBombError:
+            self.status = 2
             return
         # Defer a file name from the URL
         path = urlparse(response.url).path
