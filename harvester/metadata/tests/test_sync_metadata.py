@@ -26,7 +26,7 @@ class TestSyncMetadata(TestCase):
             self.assertIsNone(value_instance.deleted_at)
         else:
             self.assertIsNotNone(value_instance.deleted_at)
-        if (is_update or is_insert) and not is_deleted:
+        if is_update or is_insert or is_deleted:
             self.assertGreater(value_instance.updated_at, self.test_time)
         else:
             self.assertLess(value_instance.updated_at, self.test_time)
@@ -34,8 +34,7 @@ class TestSyncMetadata(TestCase):
         return value_instance
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.test_time = now()
         cls.test_frequencies = {
             "technical_type": {
@@ -65,7 +64,7 @@ class TestSyncMetadata(TestCase):
         # Check cross field value remain the same
         self.assert_metadata_value(
             "material_types", "document",
-            frequency=0,
+            frequency=300,
             is_update=False
         )
         # Check deletes
@@ -80,17 +79,17 @@ class TestSyncMetadata(TestCase):
             frequency=1,
             is_insert=True
         )
-        # Everything not included in frequencies remains unchanged
+        # Everything not included in frequencies gets deleted
         upsert_ids = [document.id, video.id, pdf.id]
         for value in MetadataValue.objects.filter(field__name="technical_type").exclude(id__in=upsert_ids):
             self.assertEqual(value.frequency, 0)
-            self.assertLess(value.updated_at, self.test_time)
+            self.assertGreater(value.deleted_at, self.test_time)
 
     def test_sync_metadata_nested(self):
         frequencies = copy(self.test_frequencies)
         frequencies["harvest_source"] = {
             "edusources": 3,
-            "edusourcesprivate": 0,
+            "wikiwijsmaken": 0,
             "MIT": 1
         }
         with patch(self.fetch_value_frequencies_target, return_value=frequencies):
@@ -100,18 +99,9 @@ class TestSyncMetadata(TestCase):
         sharekit = self.assert_metadata_value("harvest_source", "sharekit", 0)
         self.assert_metadata_value("harvest_source", "edusources", 3, parent=sharekit)
         # Check deletes
-        self.assert_metadata_value(
-            "harvest_source", "edusourcesprivate",
-            frequency=0,
-            is_deleted=True,
-            parent=sharekit
-        )
+        self.assert_metadata_value("harvest_source", "wikiwijsmaken", frequency=0, is_deleted=True)
         # Check inserts
-        self.assert_metadata_value(
-            "harvest_source", "MIT",
-            frequency=1,
-            is_insert=True
-        )
+        self.assert_metadata_value("harvest_source", "MIT", frequency=1, is_insert=True)
 
     def test_sync_metadata_restore_deleted(self):
         for value in MetadataValue.objects.filter(value__in=["edusources", "document"]):

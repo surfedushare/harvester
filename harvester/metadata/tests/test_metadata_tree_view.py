@@ -13,6 +13,9 @@ class TestMetadataTreeView(TestCase):
         super().setUp()
         self.user = User.objects.create(username="supersurf")
         self.client.force_login(self.user)
+        self.expected_field_count = MetadataField.objects \
+            .filter(is_hidden=False, entity__in=["products", "products:multilingual-indices"]) \
+            .count()
 
     @staticmethod
     def find_field_in_response(response, field_name):
@@ -32,7 +35,7 @@ class TestMetadataTreeView(TestCase):
     def test_metadata_tree_view(self):
         response = self.client.get("/api/v1/metadata/tree/")
         data = response.json()
-        self.assertEqual(len(data), MetadataField.objects.filter(is_hidden=False).count())
+        self.assertEqual(len(data), self.expected_field_count)
         for field in data:
             self.assertIsNone(field["field"])
             self.assert_metadata_node_structure(field)
@@ -44,7 +47,7 @@ class TestMetadataTreeView(TestCase):
         max_children = 2
         response = self.client.get(f"/api/v1/metadata/tree/?max_children={max_children}")
         data = response.json()
-        self.assertEqual(len(data), MetadataField.objects.filter(is_hidden=False).count())
+        self.assertEqual(len(data), self.expected_field_count)
         for field in data:
             self.assertIsNone(field["field"])
             self.assert_metadata_node_structure(field)
@@ -60,7 +63,7 @@ class TestMetadataTreeView(TestCase):
         self.assertIsNotNone(document.deleted_at)
         response = self.client.get("/api/v1/metadata/tree/")
         data = response.json()
-        self.assertEqual(len(data), MetadataField.objects.filter(is_hidden=False).count())
+        self.assertEqual(len(data), self.expected_field_count)
         technical_type = next(field for field in data if field["value"] == "technical_type")
         for child in technical_type["children"]:
             self.assertNotEqual(child["value"], "document")
@@ -69,64 +72,34 @@ class TestMetadataTreeView(TestCase):
         self.assertIsNotNone(material_type_document)
 
     def test_metadata_tree_frequency_order(self):
-        # Default order is expected to be frequency, so no changes required
-        # Check API output order
-        response = self.client.get("/api/v1/metadata/tree/")
-        disciplines = self.find_field_in_response(response, "learning_material_disciplines_normalized")
-        self.assertEqual([value["value"] for value in disciplines["children"]], [
-            "gedrag_maatschappij",
-            "interdisciplinair",
-            "techniek",
-            "aarde_milieu",
-            "economie_bedrijf",
-            "exact_informatica",
-            "gezondheid",
-            "kunst_cultuur",
-            "onderwijs_opvoeding",
-            "recht_bestuur",
-            "taal_communicatie"
-        ])
-
-    def test_metadata_tree_manual_order(self):
         # Setup manual order for disciplines
-        learning_material_disciplines = MetadataField.objects.get(name="learning_material_disciplines_normalized")
-        learning_material_disciplines.value_output_order = learning_material_disciplines.ValueOutputOrders.MANUAL
+        learning_material_disciplines = MetadataField.objects.get(name="publisher_year_normalized")
+        learning_material_disciplines.value_output_order = learning_material_disciplines.ValueOutputOrders.FREQUENCY
         learning_material_disciplines.save()
         # Check API output order
         response = self.client.get("/api/v1/metadata/tree/")
-        disciplines = self.find_field_in_response(response, "learning_material_disciplines_normalized")
+        disciplines = self.find_field_in_response(response, "publisher_year_normalized")
         self.assertEqual([value["value"] for value in disciplines["children"]], [
-            "techniek",
-            "aarde_milieu",
-            "economie_bedrijf",
-            "exact_informatica",
-            "gedrag_maatschappij",
-            "gezondheid",
-            "interdisciplinair",
-            "kunst_cultuur",
-            "onderwijs_opvoeding",
-            "recht_bestuur",
-            "taal_communicatie"
+            "older-than", "2022", "2021", "2023", "2024"
+        ])
+
+    def test_metadata_tree_manual_order(self):
+        # Order for publisher_year normalized is expected to be frequency, so no changes required
+        # Check API output order
+        response = self.client.get("/api/v1/metadata/tree/")
+        disciplines = self.find_field_in_response(response, "publisher_year_normalized")
+        self.assertEqual([value["value"] for value in disciplines["children"]], [
+            "2024", "2023", "2022", "2021", "older-than"
         ])
 
     def test_metadata_tree_alphabetical_order(self):
         # Setup manual order for disciplines
-        learning_material_disciplines = MetadataField.objects.get(name="learning_material_disciplines_normalized")
+        learning_material_disciplines = MetadataField.objects.get(name="publisher_year_normalized")
         learning_material_disciplines.value_output_order = learning_material_disciplines.ValueOutputOrders.ALPHABETICAL
         learning_material_disciplines.save()
         # Check API output order
         response = self.client.get("/api/v1/metadata/tree/")
-        disciplines = self.find_field_in_response(response, "learning_material_disciplines_normalized")
+        disciplines = self.find_field_in_response(response, "publisher_year_normalized")
         self.assertEqual([value["value"] for value in disciplines["children"]], [
-            "aarde_milieu",
-            "economie_bedrijf",
-            "exact_informatica",
-            "gedrag_maatschappij",
-            "gezondheid",
-            "interdisciplinair",
-            "kunst_cultuur",
-            "onderwijs_opvoeding",
-            "recht_bestuur",
-            "taal_communicatie",
-            "techniek"
+            "2021", "2022", "2023", "2024", "older-than"
         ])

@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from metadata.models import MetadataField, MetadataValue, MetadataTranslation
 from testing.utils.factories import create_datatype_models
 from products.tasks import lookup_consortium_translations
 from products.models import ProductDocument
@@ -8,6 +9,12 @@ from products.models import ProductDocument
 class TestLookupConsortiumTranslations(TestCase):
 
     fixtures = ["test-metadata-edusources"]
+
+    @classmethod
+    def setUpTestData(cls):
+        consortium_field = MetadataField.objects.get(name="consortium.keyword")
+        translation = MetadataTranslation.objects.create(en="SURF", nl="Stichting Universitaire Reken Faciliteiten")
+        MetadataValue.objects.create(value="surf", translation=translation, field=consortium_field)
 
     def setUp(self) -> None:
         super().setUp()

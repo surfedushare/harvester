@@ -1,242 +1,418 @@
 [
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 1,
-    "fields": {
-        "created_at": "2022-01-11T10:08:09.744Z",
-        "updated_at": "2022-01-11T10:08:09.744Z",
-        "nl": "Auteurs",
-        "en": "Authors",
-        "is_fuzzy": false
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2002,
+        "fields": {
+            "created_at": "2022-01-11T10:08:21.760Z",
+            "updated_at": "2022-01-11T10:08:21.760Z",
+            "nl": "Copyright",
+            "en": "Copyright",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2012,
+        "fields": {
+            "created_at": "2022-01-11T10:08:21.810Z",
+            "updated_at": "2022-01-11T10:08:21.810Z",
+            "nl": "Taal",
+            "en": "Language",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2013,
+        "fields": {
+            "created_at": "2022-01-11T10:08:21.812Z",
+            "updated_at": "2022-01-11T10:08:21.812Z",
+            "nl": "Gepubliceerd op",
+            "en": "Published at",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2014,
+        "fields": {
+            "created_at": "2022-01-11T10:08:21.814Z",
+            "updated_at": "2022-01-11T10:08:21.814Z",
+            "nl": "Themas",
+            "en": "Themes",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2030,
+        "fields": {
+            "created_at": "2022-01-11T10:08:21.898Z",
+            "updated_at": "2022-01-11T10:08:21.898Z",
+            "nl": "Soort",
+            "en": "Type",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 14430,
+        "fields": {
+            "created_at": "2022-02-14T10:44:22.702Z",
+            "updated_at": "2024-02-28T10:30:01.661Z",
+            "nl": "Instelling",
+            "en": "Institute",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 1,
+        "fields": {
+            "created_at": "2022-01-11T10:08:09.744Z",
+            "updated_at": "2022-01-11T10:08:09.744Z",
+            "nl": "Auteurs",
+            "en": "Authors",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 20279,
+        "fields": {
+            "created_at": "2022-04-06T06:03:29.912Z",
+            "updated_at": "2022-04-06T06:03:29.912Z",
+            "nl": "Bronsysteem",
+            "en": "Harvest source",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 32776,
+        "fields": {
+            "created_at": "2023-07-12T13:56:26.782Z",
+            "updated_at": "2023-07-12T13:56:26.782Z",
+            "nl": "Publicatie jaar",
+            "en": "Publication year",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 43806,
+        "fields": {
+            "created_at": "2024-02-26T10:57:04.682Z",
+            "updated_at": "2024-02-26T10:57:04.682Z",
+            "nl": "Bestandstype",
+            "en": "File type",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 43816,
+        "fields": {
+            "created_at": "2024-02-26T12:23:28.030Z",
+            "updated_at": "2024-02-26T12:23:28.030Z",
+            "nl": "Publicatie jaar",
+            "en": "Publication year",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46248,
+        "fields": {
+            "created_at": "2024-09-30T07:39:15.180Z",
+            "updated_at": "2024-09-30T07:39:15.180Z",
+            "nl": "published_at",
+            "en": "published_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46249,
+        "fields": {
+            "created_at": "2024-09-30T07:39:15.205Z",
+            "updated_at": "2024-09-30T07:39:15.205Z",
+            "nl": "modified_at",
+            "en": "modified_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46250,
+        "fields": {
+            "created_at": "2024-09-30T07:39:15.231Z",
+            "updated_at": "2024-09-30T07:39:15.231Z",
+            "nl": "Taal",
+            "en": "Language",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46258,
+        "fields": {
+            "created_at": "2024-09-30T07:39:15.294Z",
+            "updated_at": "2024-09-30T07:39:15.294Z",
+            "nl": "Copyright",
+            "en": "Copyright",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46269,
+        "fields": {
+            "created_at": "2024-09-30T07:39:15.348Z",
+            "updated_at": "2024-09-30T07:39:15.348Z",
+            "nl": "Bestandstype",
+            "en": "File type",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 2,
+        "fields": {
+            "name": "copyright.keyword",
+            "entity": "products:multilingual-indices",
+            "created_at": "2022-01-11T10:08:21.761Z",
+            "updated_at": "2022-01-11T10:08:21.761Z",
+            "translation": 2002,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 3,
+        "fields": {
+            "name": "language.keyword",
+            "entity": "products:multilingual-indices",
+            "created_at": "2022-01-11T10:08:21.811Z",
+            "updated_at": "2024-02-26T13:39:58.331Z",
+            "translation": 2012,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 4,
+        "fields": {
+            "name": "publisher_date",
+            "entity": "products:multilingual-indices",
+            "created_at": "2022-01-11T10:08:21.813Z",
+            "updated_at": "2022-01-11T10:08:21.813Z",
+            "translation": 2013,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 5,
+        "fields": {
+            "name": "research_themes",
+            "entity": "products",
+            "created_at": "2022-01-11T10:08:21.815Z",
+            "updated_at": "2022-01-11T10:08:21.815Z",
+            "translation": 2014,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 6,
+        "fields": {
+            "name": "research_object_type",
+            "entity": "products",
+            "created_at": "2022-01-11T10:08:21.899Z",
+            "updated_at": "2022-01-11T10:08:21.899Z",
+            "translation": 2030,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 7,
+        "fields": {
+            "name": "publishers.keyword",
+            "entity": "products",
+            "created_at": "2022-02-14T10:44:34.013Z",
+            "updated_at": "2024-02-26T13:40:14.282Z",
+            "translation": 14430,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "alphabetical"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 8,
+        "fields": {
+            "name": "authors.name.keyword",
+            "entity": "products",
+            "created_at": "2022-02-15T08:29:57.403Z",
+            "updated_at": "2022-02-15T08:29:57.403Z",
+            "translation": 1,
+            "is_hidden": true,
+            "is_manual": false,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 9,
+        "fields": {
+            "name": "harvest_source",
+            "entity": "products",
+            "created_at": "2022-04-06T06:03:37.777Z",
+            "updated_at": "2024-02-26T14:40:12.893Z",
+            "translation": 20279,
+            "is_hidden": true,
+            "is_manual": false,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 10,
+        "fields": {
+            "name": "publisher_year",
+            "entity": "products",
+            "created_at": "2023-07-12T13:56:30.902Z",
+            "updated_at": "2024-04-22T09:02:01.242Z",
+            "translation": 32776,
+            "is_hidden": true,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 11,
+        "fields": {
+            "name": "technical_type",
+            "entity": "products:multilingual-indices",
+            "created_at": "2024-02-26T10:57:13.377Z",
+            "updated_at": "2024-02-26T13:39:46.238Z",
+            "translation": 43806,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 12,
+        "fields": {
+            "name": "publisher_year_normalized",
+            "entity": "products",
+            "created_at": "2024-02-26T12:23:33.578Z",
+            "updated_at": "2024-02-26T12:23:33.578Z",
+            "translation": 43816,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 16,
+        "fields": {
+            "name": "published_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:39:15.188Z",
+            "updated_at": "2024-09-30T07:39:15.188Z",
+            "translation": 46248,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 17,
+        "fields": {
+            "name": "modified_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:39:15.220Z",
+            "updated_at": "2024-09-30T07:39:15.220Z",
+            "translation": 46249,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 18,
+        "fields": {
+            "name": "language",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:39:15.235Z",
+            "updated_at": "2024-09-30T07:39:15.235Z",
+            "translation": 46250,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 19,
+        "fields": {
+            "name": "licenses",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:39:15.297Z",
+            "updated_at": "2024-09-30T07:39:15.297Z",
+            "translation": 46258,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 20,
+        "fields": {
+            "name": "technical_types",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:39:15.353Z",
+            "updated_at": "2024-09-30T07:39:15.353Z",
+            "translation": 46269,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
     }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 2002,
-    "fields": {
-        "created_at": "2022-01-11T10:08:21.760Z",
-        "updated_at": "2022-01-11T10:08:21.760Z",
-        "nl": "Copyright",
-        "en": "Copyright",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 2012,
-    "fields": {
-        "created_at": "2022-01-11T10:08:21.810Z",
-        "updated_at": "2022-01-11T10:08:21.810Z",
-        "nl": "Taal",
-        "en": "Language",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 2013,
-    "fields": {
-        "created_at": "2022-01-11T10:08:21.812Z",
-        "updated_at": "2022-01-11T10:08:21.812Z",
-        "nl": "Gepubliceerd op",
-        "en": "Published at",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 2014,
-    "fields": {
-        "created_at": "2022-01-11T10:08:21.814Z",
-        "updated_at": "2022-01-11T10:08:21.814Z",
-        "nl": "Themas",
-        "en": "Themes",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 2030,
-    "fields": {
-        "created_at": "2022-01-11T10:08:21.898Z",
-        "updated_at": "2022-01-11T10:08:21.898Z",
-        "nl": "Soort",
-        "en": "Type",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 14430,
-    "fields": {
-        "created_at": "2022-02-14T10:44:22.702Z",
-        "updated_at": "2022-02-14T10:44:22.702Z",
-        "nl": "Uitgever",
-        "en": "Publisher",
-        "is_fuzzy": true
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 20279,
-    "fields": {
-        "created_at": "2022-04-06T06:03:29.912Z",
-        "updated_at": "2022-04-06T06:03:29.912Z",
-        "nl": "Bronsysteem",
-        "en": "Harvest source",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 20280,
-    "fields": {
-        "created_at": "2022-04-06T06:03:29.912Z",
-        "updated_at": "2022-04-06T06:03:29.912Z",
-        "nl": "Publicatie jaar",
-        "en": "Publication year",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatatranslation",
-    "pk": 20281,
-    "fields": {
-        "created_at": "2022-04-06T06:03:29.912Z",
-        "updated_at": "2022-04-06T06:03:29.912Z",
-        "nl": "Publicatie jaar",
-        "en": "Publication year",
-        "is_fuzzy": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 2,
-    "fields": {
-        "name": "copyright.keyword",
-        "created_at": "2022-01-11T10:08:21.761Z",
-        "updated_at": "2022-01-11T10:08:21.761Z",
-        "translation": 2002,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 3,
-    "fields": {
-        "name": "language.keyword",
-        "created_at": "2022-01-11T10:08:21.811Z",
-        "updated_at": "2022-01-11T10:08:21.811Z",
-        "translation": 2012,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 4,
-    "fields": {
-        "name": "publisher_date",
-        "created_at": "2022-01-11T10:08:21.813Z",
-        "updated_at": "2022-01-11T10:08:21.813Z",
-        "translation": 2013,
-        "is_hidden": false,
-        "is_manual": true,
-        "english_as_dutch": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 5,
-    "fields": {
-        "name": "research_themes",
-        "created_at": "2022-01-11T10:08:21.815Z",
-        "updated_at": "2022-01-11T10:08:21.815Z",
-        "translation": 2014,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 6,
-    "fields": {
-        "name": "research_object_type",
-        "created_at": "2022-01-11T10:08:21.899Z",
-        "updated_at": "2022-01-11T10:08:21.899Z",
-        "translation": 2030,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": false
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 7,
-    "fields": {
-        "name": "publishers.keyword",
-        "created_at": "2022-02-14T10:44:34.013Z",
-        "updated_at": "2022-02-14T10:44:46.275Z",
-        "translation": 14430,
-        "is_hidden": true,
-        "is_manual": false,
-        "english_as_dutch": true
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 8,
-    "fields": {
-        "name": "authors.name.keyword",
-        "created_at": "2022-02-15T08:29:57.403Z",
-        "updated_at": "2022-02-15T08:29:57.403Z",
-        "translation": 1,
-        "is_hidden": true,
-        "is_manual": false,
-        "english_as_dutch": true
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 9,
-    "fields": {
-        "name": "harvest_source",
-        "created_at": "2022-04-06T06:03:37.777Z",
-        "updated_at": "2022-04-06T06:03:37.777Z",
-        "translation": 20279,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": true
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 10,
-    "fields": {
-        "name": "publisher_year",
-        "created_at": "2022-04-06T06:03:37.777Z",
-        "updated_at": "2022-04-06T06:03:37.777Z",
-        "translation": 20280,
-        "is_hidden": true,
-        "is_manual": false,
-        "english_as_dutch": true
-    }
-},
-{
-    "model": "metadata.metadatafield",
-    "pk": 10,
-    "fields": {
-        "name": "publisher_year_normalized",
-        "created_at": "2022-04-06T06:03:37.777Z",
-        "updated_at": "2022-04-06T06:03:37.777Z",
-        "translation": 20281,
-        "is_hidden": false,
-        "is_manual": false,
-        "english_as_dutch": true
-    }
-}
 ]
