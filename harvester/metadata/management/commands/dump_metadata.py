@@ -104,5 +104,6 @@ class Command(BaseCommand):
         # Write to file
         logger.info("Dumping metadata")
         dump_objects = translation_dumps + field_dumps + value_dumps
+        logger.info(f"Total amount of objects: {len(dump_objects)}")
         with open(f"{entity}-metadata-dump.json", "w") as json_file:
             json.dump(dump_objects, json_file, indent=4)
