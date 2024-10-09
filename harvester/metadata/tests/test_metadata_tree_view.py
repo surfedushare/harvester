@@ -16,6 +16,9 @@ class TestMetadataTreeView(TestCase):
         self.expected_field_count = MetadataField.objects \
             .filter(is_hidden=False, entity__in=["products", "products:multilingual-indices"]) \
             .count()
+        self.expected_products_field_count = MetadataField.objects \
+            .filter(is_hidden=False, entity__in=["products", "products:default"]) \
+            .count()
 
     @staticmethod
     def find_field_in_response(response, field_name):
@@ -103,3 +106,14 @@ class TestMetadataTreeView(TestCase):
         self.assertEqual([value["value"] for value in disciplines["children"]], [
             "2021", "2022", "2023", "2024", "older-than"
         ])
+
+    def test_metadata_tree_product_entity(self):
+        response = self.client.get("/api/v1/metadata/tree/?entity=products:default")
+        data = response.json()
+        self.assertEqual(len(data), self.expected_products_field_count)
+        for field in data:
+            self.assertIsNone(field["field"])
+            self.assert_metadata_node_structure(field)
+            for child in field["children"]:
+                self.assertEqual(child["field"], field["value"])
+                self.assert_metadata_node_structure(child)
