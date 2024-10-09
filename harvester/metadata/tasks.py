@@ -33,18 +33,21 @@ def sync_metadata():
 
     frequencies = MetadataField.objects.fetch_value_frequencies(is_manual=False)
 
+    current_time = now()
     metadata_updates = []
     for metadata_value in MetadataValue.objects.all().iterator():
         if metadata_value.field.name not in frequencies:
             continue
         frequency = frequencies[metadata_value.field.name].pop(metadata_value.value, 0)
         if not frequency and not metadata_value.is_manual:
-            metadata_value.deleted_at = now()
+            metadata_value.frequency = 0
+            metadata_value.updated_at = current_time
+            metadata_value.deleted_at = current_time
             metadata_updates.append(metadata_value)
             continue
         metadata_value.frequency = frequency
         metadata_value.deleted_at = None
-        metadata_value.updated_at = now()
+        metadata_value.updated_at = current_time
         metadata_updates.append(metadata_value)
     MetadataValue.objects.bulk_update(metadata_updates, fields=["value", "frequency", "updated_at", "deleted_at"])
 
