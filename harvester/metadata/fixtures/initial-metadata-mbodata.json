@@ -1,0 +1,546 @@
+[
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 1,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.849Z",
+            "updated_at": "2022-01-12T12:14:02.849Z",
+            "nl": "Bron",
+            "en": "Source",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 9,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.898Z",
+            "updated_at": "2022-01-12T12:14:02.898Z",
+            "nl": "Publicatiejaar",
+            "en": "Publication year",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 43,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.094Z",
+            "updated_at": "2022-01-12T12:14:03.094Z",
+            "nl": "Bruikbaar als",
+            "en": "Useable as",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 48,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.121Z",
+            "updated_at": "2024-08-22T12:40:22.152Z",
+            "nl": "Soort materiaal",
+            "en": "Type of Material",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 81,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.306Z",
+            "updated_at": "2022-01-12T12:14:03.306Z",
+            "nl": "Uitgever",
+            "en": "Publisher",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 180,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.881Z",
+            "updated_at": "2022-01-12T12:14:03.881Z",
+            "nl": "Samenwerkingsverband",
+            "en": "Consortium",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 192,
+        "fields": {
+            "created_at": "2022-01-12T12:14:04.014Z",
+            "updated_at": "2022-01-12T12:14:04.014Z",
+            "nl": "Onderwijsniveau",
+            "en": "Educational level",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 622,
+        "fields": {
+            "created_at": "2022-01-12T12:14:06.697Z",
+            "updated_at": "2022-01-12T12:14:06.697Z",
+            "nl": "Auteur",
+            "en": "Author",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3169,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.915Z",
+            "updated_at": "2022-08-10T09:54:53.921Z",
+            "nl": "Vakgebied",
+            "en": "Discipline",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10687,
+        "fields": {
+            "created_at": "2024-04-22T08:44:05.380Z",
+            "updated_at": "2024-08-22T11:07:15.745Z",
+            "nl": "Publicatiejaar",
+            "en": "Publication year",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11626,
+        "fields": {
+            "created_at": "2024-09-30T07:33:26.924Z",
+            "updated_at": "2024-09-30T07:33:26.924Z",
+            "nl": "Vakgebied",
+            "en": "Discipline",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11709,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.238Z",
+            "updated_at": "2024-09-30T07:33:27.238Z",
+            "nl": "published_at",
+            "en": "published_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11710,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.244Z",
+            "updated_at": "2024-09-30T07:33:27.244Z",
+            "nl": "modified_at",
+            "en": "modified_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11711,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.249Z",
+            "updated_at": "2024-09-30T07:33:27.249Z",
+            "nl": "Taal",
+            "en": "Language",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11720,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.290Z",
+            "updated_at": "2024-09-30T07:33:27.290Z",
+            "nl": "Gebruiksrechten",
+            "en": "Copyright",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11745,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.398Z",
+            "updated_at": "2024-09-30T07:33:27.398Z",
+            "nl": "Bestandstype",
+            "en": "File type",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3174,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.939Z",
+            "updated_at": "2022-08-01T06:39:52.939Z",
+            "nl": "Aarde en Milieu",
+            "en": "Earth and environment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3175,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.944Z",
+            "updated_at": "2022-08-01T06:39:52.944Z",
+            "nl": "Aardrijkskunde",
+            "en": "Geography",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3180,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.964Z",
+            "updated_at": "2022-08-01T06:39:52.964Z",
+            "nl": "Economie en Bedrijf",
+            "en": "Economics and Organization",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3181,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.969Z",
+            "updated_at": "2022-08-01T06:39:52.969Z",
+            "nl": "Bedrijfskunde",
+            "en": "Administration",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 1,
+        "fields": {
+            "name": "harvest_source",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:02.852Z",
+            "updated_at": "2022-01-12T12:14:02.852Z",
+            "translation": 1,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 2,
+        "fields": {
+            "name": "publisher_year",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:02.899Z",
+            "updated_at": "2024-08-12T08:40:24.978Z",
+            "translation": 9,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 5,
+        "fields": {
+            "name": "aggregation_level",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.096Z",
+            "updated_at": "2022-01-12T12:14:03.096Z",
+            "translation": 43,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 6,
+        "fields": {
+            "name": "material_types",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.122Z",
+            "updated_at": "2024-08-22T12:40:24.193Z",
+            "translation": 48,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 7,
+        "fields": {
+            "name": "publishers.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.307Z",
+            "updated_at": "2022-01-12T12:14:03.307Z",
+            "translation": 81,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 8,
+        "fields": {
+            "name": "consortium.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.882Z",
+            "updated_at": "2024-10-07T08:06:05.939Z",
+            "translation": 180,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 9,
+        "fields": {
+            "name": "lom_educational_levels",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:04.015Z",
+            "updated_at": "2022-01-12T12:14:04.015Z",
+            "translation": 192,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 13,
+        "fields": {
+            "name": "authors.name.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:06.698Z",
+            "updated_at": "2022-01-12T12:14:06.698Z",
+            "translation": 622,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 17,
+        "fields": {
+            "name": "disciplines",
+            "entity": "products",
+            "created_at": "2022-08-01T06:39:52.916Z",
+            "updated_at": "2024-09-04T11:39:01.208Z",
+            "translation": 3169,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 20,
+        "fields": {
+            "name": "publisher_year_normalized",
+            "entity": "products",
+            "created_at": "2024-04-22T08:44:30.579Z",
+            "updated_at": "2024-08-22T11:07:17.601Z",
+            "translation": 10687,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 22,
+        "fields": {
+            "name": "disciplines_normalized.keyword",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:26.926Z",
+            "updated_at": "2024-09-30T07:33:26.926Z",
+            "translation": 11626,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 23,
+        "fields": {
+            "name": "published_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.240Z",
+            "updated_at": "2024-09-30T07:33:27.240Z",
+            "translation": 11709,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 24,
+        "fields": {
+            "name": "modified_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.247Z",
+            "updated_at": "2024-09-30T07:33:27.247Z",
+            "translation": 11710,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 25,
+        "fields": {
+            "name": "language",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.251Z",
+            "updated_at": "2024-09-30T07:33:27.251Z",
+            "translation": 11711,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 26,
+        "fields": {
+            "name": "licenses",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.292Z",
+            "updated_at": "2024-09-30T07:33:27.292Z",
+            "translation": 11720,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 27,
+        "fields": {
+            "name": "technical_types",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.400Z",
+            "updated_at": "2024-09-30T07:33:27.400Z",
+            "translation": 11745,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3152,
+        "fields": {
+            "name": "aarde_milieu",
+            "created_at": "2022-08-01T06:39:52.940Z",
+            "updated_at": "2024-10-09T10:08:39.426Z",
+            "deleted_at": "2024-10-09T10:08:39.426Z",
+            "field": 17,
+            "value": "aarde_milieu",
+            "translation": 3174,
+            "frequency": 511,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 12,
+            "tree_id": 913,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3153,
+        "fields": {
+            "name": "Aardrijkskunde",
+            "created_at": "2022-08-01T06:39:52.945Z",
+            "updated_at": "2024-10-09T10:08:39.428Z",
+            "deleted_at": "2024-10-09T10:08:39.428Z",
+            "field": 17,
+            "value": "c001f86a-4f8f-4420-bd78-381c615ecedc",
+            "translation": 3175,
+            "frequency": 5,
+            "parent": 3152,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 913,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3158,
+        "fields": {
+            "name": "economie_bedrijf",
+            "created_at": "2022-08-01T06:39:52.965Z",
+            "updated_at": "2024-10-09T10:08:39.430Z",
+            "deleted_at": "2024-10-09T10:08:39.430Z",
+            "field": 17,
+            "value": "economie_bedrijf",
+            "translation": 3180,
+            "frequency": 258,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 16,
+            "tree_id": 1679,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3159,
+        "fields": {
+            "name": "Bedrijfskunde",
+            "created_at": "2022-08-01T06:39:52.970Z",
+            "updated_at": "2024-10-09T10:08:39.432Z",
+            "deleted_at": "2024-10-09T10:08:39.432Z",
+            "field": 17,
+            "value": "92161d11-91ce-48e2-b79a-8aa2df8b7022",
+            "translation": 3181,
+            "frequency": 7,
+            "parent": 3158,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1679,
+            "level": 1
+        }
+    }
+]

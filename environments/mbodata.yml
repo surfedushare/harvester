@@ -9,6 +9,8 @@ postgres:
 django:
   domain: "harvester.{environment_code}.data-scope.com"
   fixtures:
+    - "core/fixtures/initial-common.json"
+    - "metadata/fixtures/initial-metadata-mbodata.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-mbodata.json"
     - "products/fixtures/initial-common.json"
