@@ -667,6 +667,10 @@ WEBHOOKS = {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },
+    "sharekit:edusourcesmbo": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
     "sharekit:nppo": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
