@@ -10,7 +10,8 @@ from metadata.models import MetadataValue
 
 class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["study-vocabulary-resources"]
+    fixtures = ["initial-metadata-edusources", "initial-study-vocabulary-edusources"]
+    resource_fixtures = ["skos-vocabulary-resources"]
 
     @classmethod
     def setUpClass(cls):
@@ -31,12 +32,12 @@ class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
         call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
         call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
         total_objects = MetadataValue.objects.count()
-        self.assertEqual(total_objects, 33,
+        self.assertEqual(total_objects, 37,
                          "When the command runs twice it should not duplicate values.")
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
     def test_same_number_applied_science(self, fake_deepl):
-        with self.assertNumQueries(172):
+        with self.assertNumQueries(165):
             call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
 
     @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
@@ -63,4 +64,4 @@ class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
         self.assertTrue(value.translation.nl)
         self.assertTrue(value.translation.en)
         self.assertTrue(value.translation.is_fuzzy)
-        self.assertEqual(fake_deepl.call_count, 33)
+        self.assertEqual(fake_deepl.call_count, 32)

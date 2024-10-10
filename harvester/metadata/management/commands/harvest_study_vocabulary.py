@@ -1,18 +1,16 @@
 import logging
-import pandas as pd
+import polars as pl
 from django.core.management.base import BaseCommand
 from metadata.utils.translate import translate_with_deepl
-from metadata.models import StudyVocabularyResource, MetadataField, MetadataTranslation, MetadataValue
-from datagrowth.configuration import create_config
-from datagrowth.processors import ExtractProcessor
+from metadata.models import MetadataField, MetadataTranslation, MetadataValue, SkosMetadataSource
 
 
 logger = logging.getLogger("harvester")
 
 
-def get_or_create_metadata_value(term, field, parent):
+def get_or_create_metadata_value(term, field, parent) -> MetadataValue:
     try:
-        return MetadataValue.objects.get(value=str(term["value"]), field=field)
+        return MetadataValue.objects.get(value=term["value"], field=field)
     except MetadataValue.DoesNotExist:
         pass
     translation = MetadataTranslation.objects.create(
@@ -20,7 +18,7 @@ def get_or_create_metadata_value(term, field, parent):
         en=translate_with_deepl(term["name"]),
         is_fuzzy=True
     )
-    vocabulary = MetadataValue.objects.create(
+    return MetadataValue.objects.create(
         name=term["name"],
         field=field,
         parent=parent,
@@ -28,7 +26,6 @@ def get_or_create_metadata_value(term, field, parent):
         translation=translation,
         is_manual=True
     )
-    return vocabulary
 
 
 class Command(BaseCommand):
@@ -85,60 +82,42 @@ class Command(BaseCommand):
 
         vocabulary = options["vocabulary"]
 
-        field_translation = MetadataTranslation.objects.filter(nl="vakvocabulaire", en="study_vocabulary").last()
-        if not field_translation:
-            field_translation = MetadataTranslation.objects.create(
-                nl="vakvocabulaire", en="study_vocabulary", is_fuzzy=True
-            )
-        field, _ = MetadataField.objects.get_or_create(
-            name="study_vocabulary.keyword",
-            defaults={"translation": field_translation, "is_manual": True, "is_hidden": True}
-        )
-
         if vocabulary is not None:
-            self.export_vocabulary(key=vocabulary, field=field)
+            skos_path = self.domain_dictionary[vocabulary]["path"]
+            source = SkosMetadataSource.objects.get(skos_url__endswith=skos_path)
+            self.create_vocabulary(key=vocabulary, source=source)
         else:
             for key in self.domain_dictionary:
-                self.export_vocabulary(key=key, field=field)
+                skos_path = self.domain_dictionary[vocabulary]["path"]
+                source = SkosMetadataSource.objects.get(skos_url__endswith=skos_path)
+                self.create_vocabulary(key=key, source=source)
 
-    def export_vocabulary(self, key, field):
-
-        config = create_config("extract_processor", {
-            "objective": {
-                "@": "$.@graph",
-                "value": "$.@id",
-                "parent_id": "$.skos:broader.@id",
-                "language": "$.skos:prefLabel.@language",
-                "name": "$.skos:prefLabel.@value"
-            }
-        })
-
-        extractor = ExtractProcessor(config=config)
-
-        raw_source = StudyVocabularyResource().get(self.domain_dictionary[key]["path"])
-        raw_source.close()
-        searched_source = extractor.extract(*raw_source.content)
-        vocab_frame = pd.DataFrame.from_records(searched_source)
-        # This drops the object that indicates the context of the vocabulary.
-        vocab_frame = vocab_frame.dropna(subset=["language", "name"])
-        # Nodes without parent should have root as parent.
-        vocab_frame = vocab_frame.fillna(value="root")
-        vocab_frame = vocab_frame.astype("string")
-        vocab_frame = vocab_frame.reset_index(drop=True)
-        vocab_groups = vocab_frame.groupby("parent_id").groups
-        root = get_or_create_metadata_value(field=field, term=self.domain_dictionary[key], parent=None)
-        for sub_root in vocab_groups["root"].tolist():
-            self.depth_first_algorithm(value=sub_root, parent=root, field=field, groups=vocab_groups,
-                                       frame=vocab_frame, output_list=[])
+    def create_vocabulary(self, key: str, source: SkosMetadataSource) -> None:
+        df = (
+            source.to_data_frame()
+            .group_by("parent_id")
+            .agg(
+                pl.struct(pl.all()).alias("group")
+            )
+        )
+        groups = {
+            parent_id: group
+            for parent_id, group in df.collect().select(['parent_id', 'group']).iter_rows()
+        }
+        for term in groups["root"]:
+            self.create_values_depth_first(
+                term=term,
+                parent=source.parent_value,
+                field=source.target_field,
+                groups=groups
+            )
 
         logger.info('Done with study vocabulary harvest: ' + key)
 
-    def depth_first_algorithm(self, value, parent, field, groups, frame, output_list):
-        new_term = get_or_create_metadata_value(term=frame.iloc[value], field=field, parent=parent)
-        output_list.append(new_term)
-        try:
-            for sub_values in groups[frame.iloc[value].value].tolist():
-                output_list = self.depth_first_algorithm(sub_values, new_term, field, groups, frame, output_list)
-        except KeyError:
-            pass
-        return output_list
+    def create_values_depth_first(self, term: dict, parent: MetadataValue, field: MetadataField,
+                                  groups: dict[str, list[dict]]) -> None:
+        value_instance = get_or_create_metadata_value(term=term, field=field, parent=parent)
+        if term["value"] not in groups:  # no more children to process
+            return
+        for child_term in groups[term["value"]]:
+            self.create_values_depth_first(child_term, value_instance, field, groups)

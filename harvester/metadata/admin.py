@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
 
-from metadata.models import MetadataValue, MetadataField, MetadataTranslation
+from metadata.models import MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource
 
 
 class MetadataFieldAdmin(admin.ModelAdmin):
@@ -110,6 +110,12 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
         return fields
 
 
+class SkosMetadataSourceAdmin(admin.ModelAdmin):
+    list_display = ("name", "created_at", "modified_at",)
+    autocomplete_fields = ("parent_value",)
+
+
 admin.site.register(MetadataValue, MetadataValueAdmin)
 admin.site.register(MetadataField, MetadataFieldAdmin)
 admin.site.register(MetadataTranslation, MetadataTranslationAdmin)
+admin.site.register(SkosMetadataSource, SkosMetadataSourceAdmin)

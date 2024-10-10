@@ -1,4 +1,6 @@
 from metadata.models.translation import MetadataTranslation, MetadataTranslationSerializer
 from metadata.models.value import MetadataValue, MetadataValueSerializer
 from metadata.models.field import MetadataField, MetadataFieldSerializer
-from metadata.models.study_vocabulary import StudyVocabularyResource
+from metadata.models.sources import SkosMetadataSource
+from metadata.models.resources.study_vocabulary import StudyVocabularyResource
+from metadata.models.resources.skos_vocabulary import SkosVocabularyResource
