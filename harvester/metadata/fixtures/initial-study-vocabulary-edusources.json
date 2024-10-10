@@ -1,0 +1,164 @@
+[
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 10954,
+    "fields": {
+        "created_at": "2024-09-30T07:33:23.112Z",
+        "updated_at": "2024-09-30T07:33:23.112Z",
+        "nl": "Applied Science",
+        "en": "Applied Science",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 11128,
+    "fields": {
+        "created_at": "2024-09-30T07:33:24.041Z",
+        "updated_at": "2024-09-30T07:33:24.041Z",
+        "nl": "Information Literacy",
+        "en": "Information Literacy",
+        "is_fuzzy": false
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 11161,
+    "fields": {
+        "created_at": "2024-09-30T07:33:24.445Z",
+        "updated_at": "2024-09-30T07:33:24.445Z",
+        "nl": "Vaktherapie",
+        "en": "Vaktherapie",
+        "is_fuzzy": true
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 11194,
+    "fields": {
+        "created_at": "2024-09-30T07:33:24.593Z",
+        "updated_at": "2024-09-30T07:33:24.593Z",
+        "nl": "Verpleegkunde",
+        "en": "Nursing",
+        "is_fuzzy": true
+    }
+},
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 11584,
+    "fields": {
+        "created_at": "2024-09-30T07:33:26.704Z",
+        "updated_at": "2024-09-30T07:33:26.704Z",
+        "nl": "ZIeZO Meten",
+        "en": "ZIeZO Meten",
+        "is_fuzzy": true
+    }
+},
+
+
+{
+    "model": "metadata.metadatavalue",
+    "pk": 10916,
+    "fields": {
+        "name": "applied-science",
+        "created_at": "2024-09-30T07:33:23.113Z",
+        "updated_at": "2024-10-07T10:30:02.980Z",
+        "deleted_at": null,
+        "field": 21,
+        "value": "applied-science",
+        "translation": 10954,
+        "frequency": 5,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 348,
+        "tree_id": 1074,
+        "level": 0
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 11090,
+    "fields": {
+        "name": "informatievaardigheid",
+        "created_at": "2024-09-30T07:33:24.042Z",
+        "updated_at": "2024-10-07T10:30:04.995Z",
+        "deleted_at": null,
+        "field": 21,
+        "value": "informatievaardigheid",
+        "translation": 11128,
+        "frequency": 517,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 66,
+        "tree_id": 2143,
+        "level": 0
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 11123,
+    "fields": {
+        "name": "vaktherapie",
+        "created_at": "2024-09-30T07:33:24.446Z",
+        "updated_at": "2024-10-07T10:30:06.811Z",
+        "deleted_at": null,
+        "field": 21,
+        "value": "vaktherapie",
+        "translation": 11161,
+        "frequency": 61,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 66,
+        "tree_id": 3662,
+        "level": 0
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 11156,
+    "fields": {
+        "name": "verpleegkunde",
+        "created_at": "2024-09-30T07:33:24.593Z",
+        "updated_at": "2024-10-07T10:30:07.246Z",
+        "deleted_at": null,
+        "field": 21,
+        "value": "verpleegkunde",
+        "translation": 11194,
+        "frequency": 798,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 780,
+        "tree_id": 3683,
+        "level": 0
+    }
+},
+{
+    "model": "metadata.metadatavalue",
+    "pk": 11546,
+    "fields": {
+        "name": "ziezo-meten",
+        "created_at": "2024-09-30T07:33:26.704Z",
+        "updated_at": "2024-10-07T10:30:07.750Z",
+        "deleted_at": null,
+        "field": 21,
+        "value": "ziezo-meten",
+        "translation": 11584,
+        "frequency": 72,
+        "parent": null,
+        "is_manual": true,
+        "is_hidden": false,
+        "lft": 1,
+        "rght": 84,
+        "tree_id": 3803,
+        "level": 0
+    }
+}
+]
