@@ -3,7 +3,9 @@ from django.utils.html import format_html
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
 
-from metadata.models import MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource
+from datagrowth.resources.admin import HttpResourceAdmin
+from metadata.models import (MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource,
+                             SkosVocabularyResource)
 
 
 class MetadataFieldAdmin(admin.ModelAdmin):
@@ -119,3 +121,4 @@ admin.site.register(MetadataValue, MetadataValueAdmin)
 admin.site.register(MetadataField, MetadataFieldAdmin)
 admin.site.register(MetadataTranslation, MetadataTranslationAdmin)
 admin.site.register(SkosMetadataSource, SkosMetadataSourceAdmin)
+admin.site.register(SkosVocabularyResource, HttpResourceAdmin)

@@ -85,12 +85,10 @@ class Command(BaseCommand):
         if vocabulary is not None:
             skos_path = self.domain_dictionary[vocabulary]["path"]
             source = SkosMetadataSource.objects.get(skos_url__endswith=skos_path)
-            self.create_vocabulary(key=vocabulary, source=source)
+            self.create_vocabulary(key=source.name, source=source)
         else:
-            for key in self.domain_dictionary:
-                skos_path = self.domain_dictionary[vocabulary]["path"]
-                source = SkosMetadataSource.objects.get(skos_url__endswith=skos_path)
-                self.create_vocabulary(key=key, source=source)
+            for source in SkosMetadataSource.objects.all():
+                self.create_vocabulary(key=source.name, source=source)
 
     def create_vocabulary(self, key: str, source: SkosMetadataSource) -> None:
         df = (
@@ -112,7 +110,7 @@ class Command(BaseCommand):
                 groups=groups
             )
 
-        logger.info('Done with study vocabulary harvest: ' + key)
+        logger.info('Done with SKOS vocabulary harvest: ' + key)
 
     def create_values_depth_first(self, term: dict, parent: MetadataValue, field: MetadataField,
                                   groups: dict[str, list[dict]]) -> None:
