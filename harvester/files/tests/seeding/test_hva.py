@@ -122,6 +122,9 @@ class TestHvaFileExtraction(TestCase):
         self.assertEqual(self.seeds[3]["access_rights"], "ClosedAccess")
         self.assertEqual(self.seeds[4]["access_rights"], "OpenAccess")
 
+    def test_copyright(self):
+        self.assertEqual(self.seeds[0]["copyright"], "yes")
+
     def test_product_id(self):
         self.assertEqual(self.seeds[0]["product_id"], "d7126f6d-c412-43c8-ad2a-6acb7613917d")
         self.assertEqual(self.seeds[3]["product_id"], "341fa580-d385-4484-9566-e94c99643e7e")

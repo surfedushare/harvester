@@ -51,6 +51,7 @@ AWS_SECRET_CONFIGURATIONS = {
     "sharekit": {
         "edusources": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
         "publinova": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
+        "mbodata": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/sharekit",
     },
     "harvester": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:harvester/credentials",

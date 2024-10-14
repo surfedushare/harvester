@@ -6,6 +6,7 @@ from django.apps import apps
 from django.utils.timezone import make_aware
 from django.core.management.base import BaseCommand
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 from core.loading import load_harvest_models, load_task_resources
 
@@ -15,7 +16,17 @@ class Command(BaseCommand):
     A convenience command to delete any data that is considered stale
     """
 
+    def add_arguments(self, parser):
+        super().add_arguments(parser)
+        parser.add_argument('-fu', '--force-user-deletes', action="store_true")
+
     def handle(self, **options):
+        self._delete_dataset_versions_and_resources()
+        if settings.ENABLE_SURFCONEXT_LOGIN:
+            self._delete_users_data(options["force_user_deletes"])
+
+    @staticmethod
+    def _delete_dataset_versions_and_resources():
         purge_time = make_aware(datetime.now()) - timedelta(**settings.DATA_RETENTION_PURGE_AFTER)
         task_resources = load_task_resources()
         for app_label, resources in task_resources.items():
@@ -44,3 +55,10 @@ class Command(BaseCommand):
                     filters = reduce(lambda x, y: x | y, document_phase_filters)
                     if not models["Document"].objects.filter(filters).exists():
                         resource.delete()
+
+    @staticmethod
+    def _delete_users_data(force=False):
+        filters = {"is_staff": True}
+        if not force:
+            filters["date_joined__year__lt"] = datetime.now().year
+        User.objects.filter(**filters).delete()

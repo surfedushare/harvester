@@ -9,12 +9,9 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [('core', '0001_initial'), ('core', '0002_harvest_resources'), ('core', '0003_add_chromescreenshotresource'), ('core', '0004_add_youtubethumnbailresource'), ('core', '0005_sharekit_repository'), ('core', '0006_harvest_refactor'), ('core', '0007_harvest_refactor_data'), ('core', '0008_cleanup_command'), ('core', '0009_sharekit_speedup'), ('core', '0010_sync_lock'), ('core', '0011_harvest_refactor_cleanup'), ('core', '0012_json_field'), ('core', '0013_unknown_language'), ('core', '0014_httptikaresource'), ('core', '0015_pipeline_processors'), ('core', '0016_extensions'), ('core', '0017_dataset_is_latest'), ('core', '0018_extructresource'), ('core', '0019_dynamic_extraction'), ('core', '0020_dynamic_extraction_data'), ('core', '0021_secure_dynamic_extraction'), ('core', '0022_anatomy_tool'), ('core', '0023_thumbnails_update'), ('core', '0024_pdf_thumbnails'), ('core', '0025_delete_old_resources'), ('core', '0026_alter_objectiveproperty_property'), ('core', '0027_query_annotations'), ('core', '0028_rename_is_addition'), ('core', '0029_matomo'), ('core', '0030_hanze'), ('core', '0031_publisher_year'), ('core', '0032_remove_screenshots'), ('core', '0033_deleted_at_extensions'), ('core', '0034_dataset_version_order'), ('core', '0035_dataset_version_simplification'), ('core', '0036_han_oaipmh'), ('core', '0037_hva_source'), ('core', '0038_hku_source'), ('core', '0039_greeni_source'), ('core', '0040_buas_source'), ('core', '0041_disciplines_and_studies'), ('core', '0042_educational_levels'), ('core', '0043_site_indices'), ('core', '0044_hanze_refactor'), ('core', '0045_remove_extract_mappings'), ('core', '0046_edurep_jsonsearch'), ('core', '0047_publinova_products'), ('core', '0048_alter_harvestsource_repository'), ('core', '0049_alter_harvestsource_repository'), ('core', '0050_remove_deprecated_resources'), ('core', '0051_delete_core_legacy')]
-
     initial = True
 
     dependencies = [
-        ('sites', '0002_alter_domain_unique'),
         ('contenttypes', '0002_remove_content_type_name'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

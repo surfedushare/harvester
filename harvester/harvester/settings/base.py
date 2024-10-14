@@ -53,7 +53,6 @@ DEBUG = environment.django.debug
 # This environment is expected to be unreachable with disallowed hosts.
 # It hurts to have this setting enabled on AWS, because health checks don't pass the domain check.
 ALLOWED_HOSTS = ["*"]
-SITE_ID = 1
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -80,7 +79,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
 
@@ -199,6 +197,7 @@ ENABLE_SURFCONEXT_LOGIN = environment.conext.is_enabled
 CONEXT_SECRETS = {
     Platforms.PUBLINOVA: environment.secrets.harvester.publinova_conext_secret,
     Platforms.EDUSOURCES: None,  # currently by default disabled
+    Platforms.MBODATA: None,  # currently by default disabled
 }
 CONEXT_SUPERUSER_MEMBERS = [
     "urn:mace:surf.nl:invite.test.surfconext.nl:0e9ec18f-373c-4df1-af67-223adf7f68ca:manager"
@@ -665,6 +664,10 @@ SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 
 WEBHOOKS = {
     "sharekit:edusources": {
+        "secret": environment.secrets.harvester.sharekit_webhook_secret,
+        "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
+    },
+    "sharekit:edusourcesmbo": {
         "secret": environment.secrets.harvester.sharekit_webhook_secret,
         "allowed_ips": environment.harvester.webhook_allowed_ips.sharekit
     },

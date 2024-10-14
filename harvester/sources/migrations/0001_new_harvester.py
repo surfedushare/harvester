@@ -8,8 +8,6 @@ import sources.models.harvest
 
 class Migration(migrations.Migration):
 
-    replaces = [('sources', '0001_han_oaipmh'), ('sources', '0002_hva_source'), ('sources', '0003_hku_source'), ('sources', '0004_greeni_source'), ('sources', '0005_is_extracted'), ('sources', '0006_buas_source'), ('sources', '0007_hanze_refactor'), ('sources', '0008_edurep_jsonsearch'), ('sources', '0009_publinova_products'), ('sources', '0010_saxionoaipmhresource'), ('sources', '0011_harvest_sources'), ('sources', '0012_edurep_xml'), ('sources', '0013_anatomy_tool'), ('sources', '0014_delete_legacy_apps'), ('sources', '0015_sharekit'), ('sources', '0016_remove_han_edurep_json'), ('sources', '0017_simplify_source_resources')]
-
     initial = True
 
     dependencies = [

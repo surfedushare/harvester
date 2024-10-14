@@ -111,6 +111,15 @@ This takes care of important things like database and (external) API credentials
 source activate.sh
 ```
 
+It's possible to specify for which project you want to activate an environment.
+Especially when running Django commands outside of Docker containers it's important to specify for which project
+you intent to run these commands. To do this you can set the ``APPLICATION_PROJECT`` environment variable manually,
+or you can specify a project as argument to ``activate.sh`` like so:
+
+```bash
+source activate.sh publinova
+```
+
 After you've loaded your environment you can run all components of the project in containers with:
 
 ```bash

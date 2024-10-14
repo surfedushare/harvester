@@ -3,6 +3,7 @@ from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
 
 from search_client.opensearch.client import SearchClient
@@ -55,6 +56,7 @@ class MetadataTreeView(generics.ListAPIView):
     **frequency**: How many results match this node in the entire dataset.
 
     """
+    permission_classes = (AllowAny,)
     serializer_class = MetadataFieldSerializer
     schema = HarvesterSchema()
     pagination_class = None
@@ -82,6 +84,7 @@ class MetadataTreeView(generics.ListAPIView):
 class MetadataFieldValuesView(generics.ListAPIView):
 
     queryset = MetadataValue.objects.filter(deleted_at__isnull=True)
+    permission_classes = (AllowAny,)
     serializer_class = MetadataValueSerializer
     schema = HarvesterSchema()
     pagination_class = PageNumberPagination

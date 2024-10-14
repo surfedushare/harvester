@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sources', '0013_anatomy_tool'),
+        ('sources', '0001_new_harvester'),
         ('products', '0002_finished_at'),
     ]
 

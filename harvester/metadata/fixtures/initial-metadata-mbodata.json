@@ -1,0 +1,4860 @@
+[
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 1,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.849Z",
+            "updated_at": "2022-01-12T12:14:02.849Z",
+            "nl": "Bron",
+            "en": "Source",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.854Z",
+            "updated_at": "2022-01-12T12:14:02.854Z",
+            "nl": "anatomy_tool",
+            "en": "anatomy_tool",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 4,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.871Z",
+            "updated_at": "2022-01-12T12:14:02.871Z",
+            "nl": "WUR Library 4 Learning",
+            "en": "WUR Library 4 Learning",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 5,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.877Z",
+            "updated_at": "2024-01-11T14:06:43.167Z",
+            "nl": "SURFsharekit",
+            "en": "SURFsharekit",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 6,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.882Z",
+            "updated_at": "2022-01-12T12:14:02.882Z",
+            "nl": "Edusources",
+            "en": "Edusources",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8942,
+        "fields": {
+            "created_at": "2023-03-09T14:52:24.273Z",
+            "updated_at": "2023-06-08T09:24:11.514Z",
+            "nl": "Wikiwijs Delen",
+            "en": "Wikiwijs Delen",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.893Z",
+            "updated_at": "2022-01-12T12:14:02.893Z",
+            "nl": "Wikiwijs Maken",
+            "en": "Wikiwijs Maken",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 9,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.898Z",
+            "updated_at": "2022-01-12T12:14:02.898Z",
+            "nl": "Publicatiejaar",
+            "en": "Publication year",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10312,
+        "fields": {
+            "created_at": "2024-01-08T11:30:10.794Z",
+            "updated_at": "2024-01-08T11:30:10.794Z",
+            "nl": "2024",
+            "en": "2024",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8801,
+        "fields": {
+            "created_at": "2023-01-03T02:31:01.626Z",
+            "updated_at": "2023-01-03T02:31:01.626Z",
+            "nl": "2023",
+            "en": "2023",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 14,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.922Z",
+            "updated_at": "2022-01-12T12:14:02.922Z",
+            "nl": "2022",
+            "en": "2022",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 13,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.916Z",
+            "updated_at": "2022-01-12T12:14:02.916Z",
+            "nl": "2021",
+            "en": "2021",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 15,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.927Z",
+            "updated_at": "2024-01-09T14:50:16.999Z",
+            "nl": "Ouder dan 2021",
+            "en": "Older than 2021",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10359,
+        "fields": {
+            "created_at": "2024-02-01T14:30:11.637Z",
+            "updated_at": "2024-02-01T14:30:11.637Z",
+            "nl": "1819",
+            "en": "1819",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10361,
+        "fields": {
+            "created_at": "2024-02-02T15:30:13.354Z",
+            "updated_at": "2024-02-02T15:30:13.354Z",
+            "nl": "1990",
+            "en": "1990",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10370,
+        "fields": {
+            "created_at": "2024-02-09T12:30:12.866Z",
+            "updated_at": "2024-02-09T12:30:12.866Z",
+            "nl": "2000",
+            "en": "2000",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10351,
+        "fields": {
+            "created_at": "2024-01-30T11:30:13.436Z",
+            "updated_at": "2024-01-30T11:30:13.436Z",
+            "nl": "2001",
+            "en": "2001",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 17,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.938Z",
+            "updated_at": "2022-01-12T12:14:02.938Z",
+            "nl": "1713",
+            "en": "1713",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 18,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.943Z",
+            "updated_at": "2022-01-12T12:14:02.943Z",
+            "nl": "1716",
+            "en": "1716",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 19,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.948Z",
+            "updated_at": "2022-01-12T12:14:02.948Z",
+            "nl": "1795",
+            "en": "1795",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 20,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.954Z",
+            "updated_at": "2022-01-12T12:14:02.954Z",
+            "nl": "1797",
+            "en": "1797",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 21,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.959Z",
+            "updated_at": "2022-01-12T12:14:02.959Z",
+            "nl": "1970",
+            "en": "1970",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8792,
+        "fields": {
+            "created_at": "2022-12-22T14:31:02.569Z",
+            "updated_at": "2022-12-22T14:31:02.569Z",
+            "nl": "2002",
+            "en": "2002",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10372,
+        "fields": {
+            "created_at": "2024-02-09T14:30:12.296Z",
+            "updated_at": "2024-02-09T14:30:12.296Z",
+            "nl": "2006",
+            "en": "2006",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10364,
+        "fields": {
+            "created_at": "2024-02-05T14:30:13.335Z",
+            "updated_at": "2024-02-05T14:30:13.335Z",
+            "nl": "2007",
+            "en": "2007",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10117,
+        "fields": {
+            "created_at": "2023-09-01T09:30:17.007Z",
+            "updated_at": "2023-09-01T09:30:17.007Z",
+            "nl": "2008",
+            "en": "2008",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 28,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.001Z",
+            "updated_at": "2022-01-12T12:14:03.001Z",
+            "nl": "2009",
+            "en": "2009",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 29,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.007Z",
+            "updated_at": "2022-01-12T12:14:03.007Z",
+            "nl": "2010",
+            "en": "2010",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 27,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.996Z",
+            "updated_at": "2022-01-12T12:14:02.996Z",
+            "nl": "2011",
+            "en": "2011",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 26,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.990Z",
+            "updated_at": "2022-01-12T12:14:02.990Z",
+            "nl": "2012",
+            "en": "2012",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 25,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.985Z",
+            "updated_at": "2022-01-12T12:14:02.985Z",
+            "nl": "2013",
+            "en": "2013",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 24,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.979Z",
+            "updated_at": "2022-01-12T12:14:02.979Z",
+            "nl": "2014",
+            "en": "2014",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 23,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.973Z",
+            "updated_at": "2022-01-12T12:14:02.973Z",
+            "nl": "2015",
+            "en": "2015",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 22,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.965Z",
+            "updated_at": "2022-01-12T12:14:02.965Z",
+            "nl": "2016",
+            "en": "2016",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 16,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.933Z",
+            "updated_at": "2022-01-12T12:14:02.933Z",
+            "nl": "2017",
+            "en": "2017",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.900Z",
+            "updated_at": "2022-01-12T12:14:02.900Z",
+            "nl": "2018",
+            "en": "2018",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.906Z",
+            "updated_at": "2022-01-12T12:14:02.906Z",
+            "nl": "2019",
+            "en": "2019",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 12,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.911Z",
+            "updated_at": "2022-01-12T12:14:02.911Z",
+            "nl": "2020",
+            "en": "2020",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 43,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.094Z",
+            "updated_at": "2022-01-12T12:14:03.094Z",
+            "nl": "Bruikbaar als",
+            "en": "Useable as",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 44,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.097Z",
+            "updated_at": "2022-01-12T12:14:03.097Z",
+            "nl": "Fragment",
+            "en": "Fragment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 45,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.103Z",
+            "updated_at": "2022-01-12T12:14:03.103Z",
+            "nl": "Leerobject",
+            "en": "Learning object",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 46,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.109Z",
+            "updated_at": "2022-01-12T12:14:03.109Z",
+            "nl": "Les",
+            "en": "Lesson",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 47,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.115Z",
+            "updated_at": "2022-01-12T12:14:03.115Z",
+            "nl": "Cursus",
+            "en": "Course",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 48,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.121Z",
+            "updated_at": "2024-08-22T12:40:22.152Z",
+            "nl": "Soort materiaal",
+            "en": "Type of Material",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10569,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.651Z",
+            "updated_at": "2024-03-05T17:30:33.651Z",
+            "nl": "problem statement",
+            "en": "problem statement",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 49,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.123Z",
+            "updated_at": "2024-01-09T15:14:21.599Z",
+            "nl": "Betoog",
+            "en": "Argument",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 50,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.129Z",
+            "updated_at": "2022-01-12T12:14:03.129Z",
+            "nl": "document",
+            "en": "document",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 51,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.135Z",
+            "updated_at": "2024-01-09T15:15:00.267Z",
+            "nl": "Evaluatie en toets",
+            "en": "Evaluation and test",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 52,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.141Z",
+            "updated_at": "2022-01-12T12:14:03.141Z",
+            "nl": "evaluatie- en toetsmateriaal",
+            "en": "evaluation and testing material",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 55,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.157Z",
+            "updated_at": "2024-01-09T15:15:12.302Z",
+            "nl": "Experiment",
+            "en": "Experiment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 56,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.163Z",
+            "updated_at": "2024-01-09T15:15:22.599Z",
+            "nl": "Game/spel",
+            "en": "Game",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 57,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.172Z",
+            "updated_at": "2024-01-09T15:15:36.510Z",
+            "nl": "Gereedschap",
+            "en": "Tool",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 58,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.177Z",
+            "updated_at": "2024-01-09T15:16:01.637Z",
+            "nl": "Gesloten opdracht",
+            "en": "Closed assignment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 59,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.183Z",
+            "updated_at": "2024-01-09T15:16:13.123Z",
+            "nl": "Handleiding",
+            "en": "Manual",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 60,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.189Z",
+            "updated_at": "2024-01-09T15:16:23.291Z",
+            "nl": "Informatiebron",
+            "en": "Information resource",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 61,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.194Z",
+            "updated_at": "2024-01-09T15:16:33.982Z",
+            "nl": "Instructie",
+            "en": "Instruction",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 62,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.201Z",
+            "updated_at": "2024-01-09T15:18:47.693Z",
+            "nl": "Kennisoverdracht",
+            "en": "Knowledge transfer",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 63,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.206Z",
+            "updated_at": "2024-01-09T15:18:57.671Z",
+            "nl": "Opdracht",
+            "en": "Excercise",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 54,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.151Z",
+            "updated_at": "2022-01-12T12:14:03.151Z",
+            "nl": "opdracht",
+            "en": "exercise",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 65,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.214Z",
+            "updated_at": "2022-01-12T12:14:03.214Z",
+            "nl": "open opdracht",
+            "en": "open assignment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 67,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.222Z",
+            "updated_at": "2024-01-09T15:19:13.582Z",
+            "nl": "Practicum",
+            "en": "Practicum",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 68,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.227Z",
+            "updated_at": "2024-01-09T15:19:27.266Z",
+            "nl": "Professionaliseringsmateriaal",
+            "en": "Professionalization material",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 69,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.233Z",
+            "updated_at": "2022-01-12T12:14:03.233Z",
+            "nl": "professionaliseringsmateriaal",
+            "en": "professionalization material",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 71,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.242Z",
+            "updated_at": "2024-01-09T15:19:38.499Z",
+            "nl": "Vragenlijst",
+            "en": "Questionnaire",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 72,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.253Z",
+            "updated_at": "2024-01-09T15:19:49.120Z",
+            "nl": "Referentiemateriaal",
+            "en": "References",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 73,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.258Z",
+            "updated_at": "2024-01-09T15:20:11.489Z",
+            "nl": "Toetsmatrijs",
+            "en": "Rubric",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 75,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.269Z",
+            "updated_at": "2024-01-09T15:20:43.482Z",
+            "nl": "Simulatie",
+            "en": "Simulation",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 2709,
+        "fields": {
+            "created_at": "2022-04-11T17:30:07.071Z",
+            "updated_at": "2024-01-09T15:20:57.927Z",
+            "nl": "Software",
+            "en": "Software",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 9921,
+        "fields": {
+            "created_at": "2023-06-14T14:30:08.402Z",
+            "updated_at": "2024-01-09T15:22:49.168Z",
+            "nl": "Toetsmatrijs",
+            "en": "Test matrix",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 76,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.275Z",
+            "updated_at": "2024-01-09T15:23:34.349Z",
+            "nl": "Onbekend",
+            "en": "Unknown",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 77,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.280Z",
+            "updated_at": "2024-01-09T15:24:02.029Z",
+            "nl": "Verkenning en onderzoek",
+            "en": "Exploration and research",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 78,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.286Z",
+            "updated_at": "2022-01-12T12:14:03.286Z",
+            "nl": "verkennings- en onderzoeksmateriaal",
+            "en": "exploration and research materials",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 79,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.296Z",
+            "updated_at": "2024-01-09T15:24:36.236Z",
+            "nl": "Visualisatie",
+            "en": "Visualization",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 80,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.301Z",
+            "updated_at": "2024-01-09T15:24:52.903Z",
+            "nl": "Zelftoets",
+            "en": "Self assessment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 74,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.264Z",
+            "updated_at": "2024-01-09T15:20:24.726Z",
+            "nl": "Zelf-assessment",
+            "en": "Self assessment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 81,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.306Z",
+            "updated_at": "2022-01-12T12:14:03.306Z",
+            "nl": "Uitgever",
+            "en": "Publisher",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 180,
+        "fields": {
+            "created_at": "2022-01-12T12:14:03.881Z",
+            "updated_at": "2022-01-12T12:14:03.881Z",
+            "nl": "Samenwerkingsverband",
+            "en": "Consortium",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 192,
+        "fields": {
+            "created_at": "2022-01-12T12:14:04.014Z",
+            "updated_at": "2022-01-12T12:14:04.014Z",
+            "nl": "Onderwijsniveau",
+            "en": "Educational level",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10535,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.236Z",
+            "nl": "MBO niveau 1",
+            "en": "MBO niveau 1",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10534,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.260Z",
+            "nl": "MBO niveau 2",
+            "en": "MBO niveau 2",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10533,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.263Z",
+            "nl": "MBO niveau 3",
+            "en": "MBO niveau 3",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10532,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.267Z",
+            "nl": "MBO niveau 4",
+            "en": "MBO niveau 4",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10531,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.269Z",
+            "nl": "MBO",
+            "en": "MBO",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10530,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-05-14T10:51:12.272Z",
+            "nl": "MBO",
+            "en": "MBO",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10529,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-03-05T17:30:33.650Z",
+            "nl": "MBO",
+            "en": "MBO",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10528,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-03-05T17:30:33.650Z",
+            "nl": "MBO, Niveau 1: Assistentenopleiding",
+            "en": "MBO, Niveau 1: Assistentenopleiding",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10527,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-03-05T17:30:33.650Z",
+            "nl": "MBO, Niveau 2: Basisberoepsopleiding",
+            "en": "MBO, Niveau 2: Basisberoepsopleiding",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10526,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-03-05T17:30:33.650Z",
+            "nl": "MBO, Niveau 3: Vakopleiding",
+            "en": "MBO, Niveau 3: Vakopleiding",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10525,
+        "fields": {
+            "created_at": "2024-03-05T17:30:33.650Z",
+            "updated_at": "2024-03-05T17:30:33.650Z",
+            "nl": "MBO, Niveau 4: Middenkaderopleiding",
+            "en": "MBO, Niveau 4: Middenkaderopleiding",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 193,
+        "fields": {
+            "created_at": "2022-01-12T12:14:04.016Z",
+            "updated_at": "2022-07-27T09:28:12.968Z",
+            "nl": "HBO",
+            "en": "UAS",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8938,
+        "fields": {
+            "created_at": "2023-03-09T14:52:24.273Z",
+            "updated_at": "2023-12-20T11:52:18.729Z",
+            "nl": "HBO-bachelor",
+            "en": "UAS Bachelor",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8939,
+        "fields": {
+            "created_at": "2023-03-09T14:52:24.273Z",
+            "updated_at": "2023-12-20T11:53:45.743Z",
+            "nl": "HBO-master",
+            "en": "UAS Master",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 194,
+        "fields": {
+            "created_at": "2022-01-12T12:14:04.021Z",
+            "updated_at": "2022-01-12T12:14:04.021Z",
+            "nl": "WO",
+            "en": "University",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8940,
+        "fields": {
+            "created_at": "2023-03-09T14:52:24.273Z",
+            "updated_at": "2023-12-20T11:54:07.004Z",
+            "nl": "WO-bachelor",
+            "en": "University Bachelor",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 8941,
+        "fields": {
+            "created_at": "2023-03-09T14:52:24.273Z",
+            "updated_at": "2023-12-20T11:54:24.270Z",
+            "nl": "WO-master",
+            "en": "University Master",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 622,
+        "fields": {
+            "created_at": "2022-01-12T12:14:06.697Z",
+            "updated_at": "2022-01-12T12:14:06.697Z",
+            "nl": "Auteur",
+            "en": "Author",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3169,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.915Z",
+            "updated_at": "2022-08-10T09:54:53.921Z",
+            "nl": "Vakgebied",
+            "en": "Discipline",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10687,
+        "fields": {
+            "created_at": "2024-04-22T08:44:05.380Z",
+            "updated_at": "2024-08-22T11:07:15.745Z",
+            "nl": "Publicatiejaar",
+            "en": "Publication year",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10692,
+        "fields": {
+            "created_at": "2024-04-22T09:30:11.893Z",
+            "updated_at": "2024-04-22T09:30:11.893Z",
+            "nl": "2024",
+            "en": "2024",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10691,
+        "fields": {
+            "created_at": "2024-04-22T09:30:11.893Z",
+            "updated_at": "2024-04-22T09:30:11.893Z",
+            "nl": "2023",
+            "en": "2023",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10689,
+        "fields": {
+            "created_at": "2024-04-22T09:30:11.893Z",
+            "updated_at": "2024-04-22T09:30:11.893Z",
+            "nl": "2022",
+            "en": "2022",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10690,
+        "fields": {
+            "created_at": "2024-04-22T09:30:11.893Z",
+            "updated_at": "2024-04-22T09:30:11.893Z",
+            "nl": "2021",
+            "en": "2021",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10688,
+        "fields": {
+            "created_at": "2024-04-22T09:30:11.893Z",
+            "updated_at": "2024-08-12T08:39:31.919Z",
+            "nl": "Ouder dan 2021",
+            "en": "Older than 2021",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11626,
+        "fields": {
+            "created_at": "2024-09-30T07:33:26.924Z",
+            "updated_at": "2024-09-30T07:33:26.924Z",
+            "nl": "Vakgebied",
+            "en": "Discipline",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11709,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.238Z",
+            "updated_at": "2024-09-30T07:33:27.238Z",
+            "nl": "published_at",
+            "en": "published_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11710,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.244Z",
+            "updated_at": "2024-09-30T07:33:27.244Z",
+            "nl": "modified_at",
+            "en": "modified_at",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11711,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.249Z",
+            "updated_at": "2024-09-30T07:33:27.249Z",
+            "nl": "Taal",
+            "en": "Language",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11712,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.256Z",
+            "updated_at": "2024-09-30T07:33:27.256Z",
+            "nl": "Engels",
+            "en": "English",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11713,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.259Z",
+            "updated_at": "2024-09-30T07:33:27.259Z",
+            "nl": "Nederlands",
+            "en": "Dutch",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11714,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.262Z",
+            "updated_at": "2024-09-30T07:33:27.262Z",
+            "nl": "other",
+            "en": "other",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11715,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.264Z",
+            "updated_at": "2024-09-30T07:33:27.264Z",
+            "nl": "Onbekend",
+            "en": "Unknown",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11716,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.269Z",
+            "updated_at": "2024-09-30T07:33:27.269Z",
+            "nl": "Duits",
+            "en": "German",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11717,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.273Z",
+            "updated_at": "2024-09-30T07:33:27.273Z",
+            "nl": "Spaans",
+            "en": "Spanish",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11718,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.278Z",
+            "updated_at": "2024-09-30T07:33:27.278Z",
+            "nl": "Latijn",
+            "en": "Latin",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11719,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.287Z",
+            "updated_at": "2024-09-30T07:33:27.287Z",
+            "nl": "Geen",
+            "en": "None",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11720,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.290Z",
+            "updated_at": "2024-09-30T07:33:27.290Z",
+            "nl": "Gebruiksrechten",
+            "en": "Copyright",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11721,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.301Z",
+            "updated_at": "2024-09-30T07:33:27.301Z",
+            "nl": "Beeld en Geluid",
+            "en": "Beeld en Geluid",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11722,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.306Z",
+            "updated_at": "2024-09-30T07:33:27.306Z",
+            "nl": "YouTube",
+            "en": "YouTube",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11723,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.310Z",
+            "updated_at": "2024-09-30T07:33:27.310Z",
+            "nl": "CC BY (Naamsvermelding)",
+            "en": "CC BY (Attribution)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11724,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.315Z",
+            "updated_at": "2024-09-30T07:33:27.315Z",
+            "nl": "cc-by-30",
+            "en": "cc-by-30",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11725,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.320Z",
+            "updated_at": "2024-09-30T07:33:27.320Z",
+            "nl": "cc-by-40",
+            "en": "cc-by-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11726,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.322Z",
+            "updated_at": "2024-09-30T07:33:27.322Z",
+            "nl": "CC BY (Naamsvermelding)",
+            "en": "CC BY (Attribution)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11727,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.325Z",
+            "updated_at": "2024-09-30T07:33:27.325Z",
+            "nl": "CC BY-NC (Naamsvermelding-NietCommercieel)",
+            "en": "CC BY-NC (Attribution-Noncommercial)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11728,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.330Z",
+            "updated_at": "2024-09-30T07:33:27.330Z",
+            "nl": "cc-by-nc-40",
+            "en": "cc-by-nc-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11729,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.333Z",
+            "updated_at": "2024-09-30T07:33:27.333Z",
+            "nl": "CC BY-NC-ND (Naamsvermelding-NietCommercieel-GeenAfgeleideWerken)",
+            "en": "CC BY-NC-ND (Attribution-Noncommercial-NoDerivatives)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11730,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.337Z",
+            "updated_at": "2024-09-30T07:33:27.337Z",
+            "nl": "cc-by-nc-nd-30",
+            "en": "cc-by-nc-nd-30",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11731,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.341Z",
+            "updated_at": "2024-09-30T07:33:27.341Z",
+            "nl": "cc-by-nc-nd-40",
+            "en": "cc-by-nc-nd-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11732,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.344Z",
+            "updated_at": "2024-09-30T07:33:27.344Z",
+            "nl": "CC BY-NC-SA (Naamsvermelding-NietCommercieel-GelijkDelen)",
+            "en": "CC BY-NC-SA (Attribution-Noncommercial-ShareAlike)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11733,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.348Z",
+            "updated_at": "2024-09-30T07:33:27.348Z",
+            "nl": "cc-by-nc-sa-30",
+            "en": "cc-by-nc-sa-30",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11734,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.353Z",
+            "updated_at": "2024-09-30T07:33:27.353Z",
+            "nl": "cc-by-nc-sa-40",
+            "en": "cc-by-nc-sa-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11735,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.355Z",
+            "updated_at": "2024-09-30T07:33:27.355Z",
+            "nl": "CC BY-ND (Naamsvermelding-GeenAfgeleideWerken)",
+            "en": "CC BY-ND (Attribution-NonDerivative)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11736,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.360Z",
+            "updated_at": "2024-09-30T07:33:27.360Z",
+            "nl": "cc-by-nd-30",
+            "en": "cc-by-nd-30",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11737,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.364Z",
+            "updated_at": "2024-09-30T07:33:27.364Z",
+            "nl": "cc-by-nd-40",
+            "en": "cc-by-nd-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11738,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.367Z",
+            "updated_at": "2024-09-30T07:33:27.367Z",
+            "nl": "CC BY-SA (Naamsvermelding-GelijkDelen)",
+            "en": "CC BY-SA (Attribution-ShareAlike)",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11739,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.371Z",
+            "updated_at": "2024-09-30T07:33:27.371Z",
+            "nl": "cc-by-sa-30",
+            "en": "cc-by-sa-30",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11740,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.375Z",
+            "updated_at": "2024-09-30T07:33:27.375Z",
+            "nl": "cc-by-sa-40",
+            "en": "cc-by-sa-40",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11741,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.378Z",
+            "updated_at": "2024-09-30T07:33:27.378Z",
+            "nl": "Geen",
+            "en": "None",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11742,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.384Z",
+            "updated_at": "2024-09-30T07:33:27.384Z",
+            "nl": "cc0-10",
+            "en": "cc0-10",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11743,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.392Z",
+            "updated_at": "2024-09-30T07:33:27.392Z",
+            "nl": "pdm-10",
+            "en": "pdm-10",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11744,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.395Z",
+            "updated_at": "2024-09-30T07:33:27.395Z",
+            "nl": "Alle rechten voorbehouden",
+            "en": "All rights reserved",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11745,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.398Z",
+            "updated_at": "2024-09-30T07:33:27.398Z",
+            "nl": "Bestandstype",
+            "en": "File type",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11747,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.407Z",
+            "updated_at": "2024-09-30T07:33:27.407Z",
+            "nl": "Afbeelding",
+            "en": "Image",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11748,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.410Z",
+            "updated_at": "2024-09-30T07:33:27.410Z",
+            "nl": "App",
+            "en": "App",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11749,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.412Z",
+            "updated_at": "2024-09-30T07:33:27.412Z",
+            "nl": "Audio",
+            "en": "Audio",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11751,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.417Z",
+            "updated_at": "2024-09-30T07:33:27.417Z",
+            "nl": "Document",
+            "en": "Document",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11753,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.422Z",
+            "updated_at": "2024-09-30T07:33:27.422Z",
+            "nl": "Presentatie",
+            "en": "Presentation",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11755,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.429Z",
+            "updated_at": "2024-09-30T07:33:27.429Z",
+            "nl": "Spreadsheet",
+            "en": "Spreadsheet",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11756,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.434Z",
+            "updated_at": "2024-09-30T07:33:27.434Z",
+            "nl": "Onbekend",
+            "en": "Unknown",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11757,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.436Z",
+            "updated_at": "2024-09-30T07:33:27.436Z",
+            "nl": "Video",
+            "en": "Video",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 11758,
+        "fields": {
+            "created_at": "2024-09-30T07:33:27.439Z",
+            "updated_at": "2024-09-30T07:33:27.439Z",
+            "nl": "Website",
+            "en": "Website",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 10953,
+        "fields": {
+            "created_at": "2024-09-30T07:33:23.081Z",
+            "updated_at": "2024-09-30T07:33:23.081Z",
+            "nl": "vakvocabulaire",
+            "en": "study_vocabulary",
+            "is_fuzzy": true
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3174,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.939Z",
+            "updated_at": "2022-08-01T06:39:52.939Z",
+            "nl": "Aarde en Milieu",
+            "en": "Earth and environment",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3175,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.944Z",
+            "updated_at": "2022-08-01T06:39:52.944Z",
+            "nl": "Aardrijkskunde",
+            "en": "Geography",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3180,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.964Z",
+            "updated_at": "2022-08-01T06:39:52.964Z",
+            "nl": "Economie en Bedrijf",
+            "en": "Economics and Organization",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 3181,
+        "fields": {
+            "created_at": "2022-08-01T06:39:52.969Z",
+            "updated_at": "2022-08-01T06:39:52.969Z",
+            "nl": "Bedrijfskunde",
+            "en": "Administration",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 1,
+        "fields": {
+            "name": "harvest_source",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:02.852Z",
+            "updated_at": "2022-01-12T12:14:02.852Z",
+            "translation": 1,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 2,
+        "fields": {
+            "name": "publisher_year",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:02.899Z",
+            "updated_at": "2024-08-12T08:40:24.978Z",
+            "translation": 9,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 5,
+        "fields": {
+            "name": "aggregation_level",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.096Z",
+            "updated_at": "2022-01-12T12:14:03.096Z",
+            "translation": 43,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 6,
+        "fields": {
+            "name": "material_types",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.122Z",
+            "updated_at": "2024-08-22T12:40:24.193Z",
+            "translation": 48,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 7,
+        "fields": {
+            "name": "publishers.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.307Z",
+            "updated_at": "2022-01-12T12:14:03.307Z",
+            "translation": 81,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 8,
+        "fields": {
+            "name": "consortium.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:03.882Z",
+            "updated_at": "2024-10-07T08:06:05.939Z",
+            "translation": 180,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 9,
+        "fields": {
+            "name": "lom_educational_levels",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:04.015Z",
+            "updated_at": "2022-01-12T12:14:04.015Z",
+            "translation": 192,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 13,
+        "fields": {
+            "name": "authors.name.keyword",
+            "entity": "products",
+            "created_at": "2022-01-12T12:14:06.698Z",
+            "updated_at": "2022-01-12T12:14:06.698Z",
+            "translation": 622,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": true,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 17,
+        "fields": {
+            "name": "disciplines",
+            "entity": "products",
+            "created_at": "2022-08-01T06:39:52.916Z",
+            "updated_at": "2024-09-04T11:39:01.208Z",
+            "translation": 3169,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 20,
+        "fields": {
+            "name": "publisher_year_normalized",
+            "entity": "products",
+            "created_at": "2024-04-22T08:44:30.579Z",
+            "updated_at": "2024-08-22T11:07:17.601Z",
+            "translation": 10687,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 22,
+        "fields": {
+            "name": "disciplines_normalized.keyword",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:26.926Z",
+            "updated_at": "2024-09-30T07:33:26.926Z",
+            "translation": 11626,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 23,
+        "fields": {
+            "name": "published_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.240Z",
+            "updated_at": "2024-09-30T07:33:27.240Z",
+            "translation": 11709,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 24,
+        "fields": {
+            "name": "modified_at",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.247Z",
+            "updated_at": "2024-09-30T07:33:27.247Z",
+            "translation": 11710,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 25,
+        "fields": {
+            "name": "language",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.251Z",
+            "updated_at": "2024-09-30T07:33:27.251Z",
+            "translation": 11711,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 26,
+        "fields": {
+            "name": "licenses",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.292Z",
+            "updated_at": "2024-09-30T07:33:27.292Z",
+            "translation": 11720,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 27,
+        "fields": {
+            "name": "technical_types",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:27.400Z",
+            "updated_at": "2024-09-30T07:33:27.400Z",
+            "translation": 11745,
+            "is_hidden": false,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 21,
+        "fields": {
+            "name": "study_vocabulary.keyword",
+            "entity": "products:default",
+            "created_at": "2024-09-30T07:33:23.085Z",
+            "updated_at": "2024-10-09T10:56:29.702Z",
+            "translation": 10953,
+            "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 1,
+        "fields": {
+            "name": "anatomy_tool",
+            "created_at": "2022-01-12T12:14:02.863Z",
+            "updated_at": "2024-10-07T10:30:02.859Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "anatomy_tool",
+            "translation": 2,
+            "frequency": 4829,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 989,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3,
+        "fields": {
+            "name": "l4l",
+            "created_at": "2022-01-12T12:14:02.875Z",
+            "updated_at": "2024-10-07T10:30:05.453Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "l4l",
+            "translation": 4,
+            "frequency": 1099,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2484,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 4,
+        "fields": {
+            "name": "Sharekit",
+            "created_at": "2022-01-12T12:14:02.880Z",
+            "updated_at": "2024-10-07T10:30:06.463Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "sharekit",
+            "translation": 5,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 3385,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 5,
+        "fields": {
+            "name": "edusources",
+            "created_at": "2022-01-12T12:14:02.885Z",
+            "updated_at": "2024-10-07T10:30:06.464Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "edusources",
+            "translation": 6,
+            "frequency": 4365,
+            "parent": 4,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3385,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8907,
+        "fields": {
+            "name": "WikiwijsDelen",
+            "created_at": "2023-03-09T14:52:24.293Z",
+            "updated_at": "2024-10-07T10:30:07.649Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "WikiwijsDelen",
+            "translation": 8942,
+            "frequency": 1485,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3731,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 7,
+        "fields": {
+            "name": "wikiwijsmaken",
+            "created_at": "2022-01-12T12:14:02.896Z",
+            "updated_at": "2024-10-07T10:30:07.652Z",
+            "deleted_at": null,
+            "field": 1,
+            "value": "wikiwijsmaken",
+            "translation": 8,
+            "frequency": 252,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3733,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10276,
+        "fields": {
+            "name": "2024",
+            "created_at": "2024-01-08T11:30:10.802Z",
+            "updated_at": "2024-10-07T10:30:02.338Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2024",
+            "translation": 10312,
+            "frequency": 379,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 659,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8766,
+        "fields": {
+            "name": "2023",
+            "created_at": "2023-01-03T02:31:01.631Z",
+            "updated_at": "2024-10-07T10:30:02.339Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2023",
+            "translation": 8801,
+            "frequency": 1022,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 660,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 12,
+        "fields": {
+            "name": "2022",
+            "created_at": "2022-01-12T12:14:02.925Z",
+            "updated_at": "2024-10-07T10:30:02.341Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2022",
+            "translation": 14,
+            "frequency": 2002,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 661,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11,
+        "fields": {
+            "name": "2021",
+            "created_at": "2022-01-12T12:14:02.920Z",
+            "updated_at": "2024-10-07T10:30:02.342Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2021",
+            "translation": 13,
+            "frequency": 1466,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 662,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 13,
+        "fields": {
+            "name": "Ouder dan",
+            "created_at": "2022-01-12T12:14:02.931Z",
+            "updated_at": "2024-10-07T10:30:06.086Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "older-than",
+            "translation": 15,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 52,
+            "tree_id": 3053,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10323,
+        "fields": {
+            "name": "1819",
+            "created_at": "2024-02-01T14:30:11.647Z",
+            "updated_at": "2024-10-07T10:30:06.087Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1819",
+            "translation": 10359,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10325,
+        "fields": {
+            "name": "1990",
+            "created_at": "2024-02-02T15:30:13.363Z",
+            "updated_at": "2024-10-07T10:30:06.088Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1990",
+            "translation": 10361,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10334,
+        "fields": {
+            "name": "2000",
+            "created_at": "2024-02-09T12:30:12.871Z",
+            "updated_at": "2024-10-07T10:30:06.089Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2000",
+            "translation": 10370,
+            "frequency": 2,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 6,
+            "rght": 7,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10315,
+        "fields": {
+            "name": "2001",
+            "created_at": "2024-01-30T11:30:13.442Z",
+            "updated_at": "2024-10-07T10:30:06.090Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2001",
+            "translation": 10351,
+            "frequency": 2,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 8,
+            "rght": 9,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 15,
+        "fields": {
+            "name": "1713",
+            "created_at": "2022-01-12T12:14:02.941Z",
+            "updated_at": "2024-10-07T10:30:06.091Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1713",
+            "translation": 17,
+            "frequency": 2,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 10,
+            "rght": 11,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 16,
+        "fields": {
+            "name": "1716",
+            "created_at": "2022-01-12T12:14:02.946Z",
+            "updated_at": "2024-10-07T10:30:06.092Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1716",
+            "translation": 18,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 12,
+            "rght": 13,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 17,
+        "fields": {
+            "name": "1795",
+            "created_at": "2022-01-12T12:14:02.952Z",
+            "updated_at": "2024-10-07T10:30:06.093Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1795",
+            "translation": 19,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 14,
+            "rght": 15,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 18,
+        "fields": {
+            "name": "1797",
+            "created_at": "2022-01-12T12:14:02.957Z",
+            "updated_at": "2024-10-07T10:30:06.094Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1797",
+            "translation": 20,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 16,
+            "rght": 17,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 19,
+        "fields": {
+            "name": "1970",
+            "created_at": "2022-01-12T12:14:02.963Z",
+            "updated_at": "2024-10-07T10:30:06.095Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "1970",
+            "translation": 21,
+            "frequency": 48,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 18,
+            "rght": 19,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8757,
+        "fields": {
+            "name": "2002",
+            "created_at": "2022-12-22T14:31:02.574Z",
+            "updated_at": "2024-10-07T10:30:06.095Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2002",
+            "translation": 8792,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 20,
+            "rght": 21,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10336,
+        "fields": {
+            "name": "2006",
+            "created_at": "2024-02-09T14:30:12.300Z",
+            "updated_at": "2024-10-07T10:30:06.096Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2006",
+            "translation": 10372,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 22,
+            "rght": 23,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10328,
+        "fields": {
+            "name": "2007",
+            "created_at": "2024-02-05T14:30:13.346Z",
+            "updated_at": "2024-10-07T10:30:06.097Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2007",
+            "translation": 10364,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 24,
+            "rght": 25,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10081,
+        "fields": {
+            "name": "2008",
+            "created_at": "2023-09-01T09:30:17.012Z",
+            "updated_at": "2024-10-07T10:30:06.098Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2008",
+            "translation": 10117,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 26,
+            "rght": 27,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 26,
+        "fields": {
+            "name": "2009",
+            "created_at": "2022-01-12T12:14:03.005Z",
+            "updated_at": "2024-10-07T10:30:06.099Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2009",
+            "translation": 28,
+            "frequency": 1,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 28,
+            "rght": 29,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 27,
+        "fields": {
+            "name": "2010",
+            "created_at": "2022-01-12T12:14:03.011Z",
+            "updated_at": "2024-10-07T10:30:06.101Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2010",
+            "translation": 29,
+            "frequency": 4,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 30,
+            "rght": 31,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 25,
+        "fields": {
+            "name": "2011",
+            "created_at": "2022-01-12T12:14:02.999Z",
+            "updated_at": "2024-10-07T10:30:06.101Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2011",
+            "translation": 27,
+            "frequency": 13,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 32,
+            "rght": 33,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 24,
+        "fields": {
+            "name": "2012",
+            "created_at": "2022-01-12T12:14:02.994Z",
+            "updated_at": "2024-10-07T10:30:06.102Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2012",
+            "translation": 26,
+            "frequency": 14,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 34,
+            "rght": 35,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 23,
+        "fields": {
+            "name": "2013",
+            "created_at": "2022-01-12T12:14:02.988Z",
+            "updated_at": "2024-10-07T10:30:06.103Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2013",
+            "translation": 25,
+            "frequency": 13,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 36,
+            "rght": 37,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 22,
+        "fields": {
+            "name": "2014",
+            "created_at": "2022-01-12T12:14:02.983Z",
+            "updated_at": "2024-10-07T10:30:06.104Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2014",
+            "translation": 24,
+            "frequency": 43,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 38,
+            "rght": 39,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 21,
+        "fields": {
+            "name": "2015",
+            "created_at": "2022-01-12T12:14:02.977Z",
+            "updated_at": "2024-10-07T10:30:06.105Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2015",
+            "translation": 23,
+            "frequency": 130,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 40,
+            "rght": 41,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 20,
+        "fields": {
+            "name": "2016",
+            "created_at": "2022-01-12T12:14:02.968Z",
+            "updated_at": "2024-10-07T10:30:06.106Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2016",
+            "translation": 22,
+            "frequency": 413,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 42,
+            "rght": 43,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 14,
+        "fields": {
+            "name": "2017",
+            "created_at": "2022-01-12T12:14:02.936Z",
+            "updated_at": "2024-10-07T10:30:06.106Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2017",
+            "translation": 16,
+            "frequency": 728,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 44,
+            "rght": 45,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8,
+        "fields": {
+            "name": "2018",
+            "created_at": "2022-01-12T12:14:02.904Z",
+            "updated_at": "2024-10-07T10:30:06.108Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2018",
+            "translation": 10,
+            "frequency": 782,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 46,
+            "rght": 47,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 9,
+        "fields": {
+            "name": "2019",
+            "created_at": "2022-01-12T12:14:02.909Z",
+            "updated_at": "2024-10-07T10:30:06.109Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2019",
+            "translation": 11,
+            "frequency": 2447,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 48,
+            "rght": 49,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10,
+        "fields": {
+            "name": "2020",
+            "created_at": "2022-01-12T12:14:02.914Z",
+            "updated_at": "2024-10-07T10:30:06.110Z",
+            "deleted_at": null,
+            "field": 2,
+            "value": "2020",
+            "translation": 12,
+            "frequency": 2510,
+            "parent": 13,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 50,
+            "rght": 51,
+            "tree_id": 3053,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 39,
+        "fields": {
+            "name": "Fragment (Niv. 1)",
+            "created_at": "2022-01-12T12:14:03.101Z",
+            "updated_at": "2024-10-07T10:30:04.325Z",
+            "deleted_at": null,
+            "field": 5,
+            "value": "1",
+            "translation": 44,
+            "frequency": 6342,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1872,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 40,
+        "fields": {
+            "name": "Informatiebron (Niv. 2)",
+            "created_at": "2022-01-12T12:14:03.106Z",
+            "updated_at": "2024-10-07T10:30:04.994Z",
+            "deleted_at": null,
+            "field": 5,
+            "value": "2",
+            "translation": 45,
+            "frequency": 2704,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2142,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 41,
+        "fields": {
+            "name": "Les (Niv. 3)",
+            "created_at": "2022-01-12T12:14:03.113Z",
+            "updated_at": "2024-10-07T10:30:05.492Z",
+            "deleted_at": null,
+            "field": 5,
+            "value": "3",
+            "translation": 46,
+            "frequency": 2297,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2522,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 42,
+        "fields": {
+            "name": "Serie Lessen (Niv. 4)",
+            "created_at": "2022-01-12T12:14:03.119Z",
+            "updated_at": "2024-10-07T10:30:06.459Z",
+            "deleted_at": null,
+            "field": 5,
+            "value": "4",
+            "translation": 47,
+            "frequency": 687,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3380,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10533,
+        "fields": {
+            "name": "problem statement",
+            "created_at": "2024-03-05T17:30:33.677Z",
+            "updated_at": "2024-10-07T10:30:01.645Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "problem statement",
+            "translation": 10569,
+            "frequency": 1,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 455,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 43,
+        "fields": {
+            "name": "betoog",
+            "created_at": "2022-01-12T12:14:03.127Z",
+            "updated_at": "2024-10-07T10:30:03.596Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "betoog",
+            "translation": 49,
+            "frequency": 288,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1204,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 44,
+        "fields": {
+            "name": "document",
+            "created_at": "2022-01-12T12:14:03.133Z",
+            "updated_at": "2024-10-07T10:30:03.945Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "document",
+            "translation": 50,
+            "frequency": 300,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1540,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 45,
+        "fields": {
+            "name": "evaluatie_en_toets",
+            "created_at": "2022-01-12T12:14:03.139Z",
+            "updated_at": "2024-10-07T10:30:04.241Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "evaluatie_en_toets",
+            "translation": 51,
+            "frequency": 11,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1793,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 46,
+        "fields": {
+            "name": "evaluatie- en toetsmateriaal",
+            "created_at": "2022-01-12T12:14:03.146Z",
+            "updated_at": "2024-10-07T10:30:04.242Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "evaluatie- en toetsmateriaal",
+            "translation": 52,
+            "frequency": 114,
+            "parent": 45,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1793,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 48,
+        "fields": {
+            "name": "experiment",
+            "created_at": "2022-01-12T12:14:03.161Z",
+            "updated_at": "2024-10-07T10:30:04.258Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "experiment",
+            "translation": 55,
+            "frequency": 7,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1807,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 49,
+        "fields": {
+            "name": "game-spel",
+            "created_at": "2022-01-12T12:14:03.166Z",
+            "updated_at": "2024-10-07T10:30:04.361Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "game-spel",
+            "translation": 56,
+            "frequency": 19,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1909,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 50,
+        "fields": {
+            "name": "gereedschap",
+            "created_at": "2022-01-12T12:14:03.175Z",
+            "updated_at": "2024-10-07T10:30:04.391Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "gereedschap",
+            "translation": 57,
+            "frequency": 149,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1932,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 51,
+        "fields": {
+            "name": "gesloten opdracht",
+            "created_at": "2022-01-12T12:14:03.181Z",
+            "updated_at": "2024-10-07T10:30:04.401Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "gesloten opdracht",
+            "translation": 58,
+            "frequency": 297,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1942,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 52,
+        "fields": {
+            "name": "handleiding",
+            "created_at": "2022-01-12T12:14:03.187Z",
+            "updated_at": "2024-10-07T10:30:04.820Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "handleiding",
+            "translation": 59,
+            "frequency": 384,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1992,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 53,
+        "fields": {
+            "name": "informatiebron",
+            "created_at": "2022-01-12T12:14:03.192Z",
+            "updated_at": "2024-10-07T10:30:04.993Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "informatiebron",
+            "translation": 60,
+            "frequency": 2468,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2141,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 54,
+        "fields": {
+            "name": "instructie",
+            "created_at": "2022-01-12T12:14:03.198Z",
+            "updated_at": "2024-10-07T10:30:05.107Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "instructie",
+            "translation": 61,
+            "frequency": 408,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2160,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 55,
+        "fields": {
+            "name": "kennisoverdracht",
+            "created_at": "2022-01-12T12:14:03.204Z",
+            "updated_at": "2024-10-07T10:30:05.402Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "kennisoverdracht",
+            "translation": 62,
+            "frequency": 716,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2433,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 56,
+        "fields": {
+            "name": "opdracht",
+            "created_at": "2022-01-12T12:14:03.209Z",
+            "updated_at": "2024-10-07T10:30:06.064Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "opdracht",
+            "translation": 63,
+            "frequency": 197,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 3032,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 47,
+        "fields": {
+            "name": "exercise",
+            "created_at": "2022-01-12T12:14:03.155Z",
+            "updated_at": "2024-10-07T10:30:06.065Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "exercise",
+            "translation": 54,
+            "frequency": 86,
+            "parent": 56,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3032,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 57,
+        "fields": {
+            "name": "open opdracht",
+            "created_at": "2022-01-12T12:14:03.217Z",
+            "updated_at": "2024-10-07T10:30:06.066Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "open opdracht",
+            "translation": 65,
+            "frequency": 449,
+            "parent": 56,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 3032,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 58,
+        "fields": {
+            "name": "practicum",
+            "created_at": "2022-01-12T12:14:03.225Z",
+            "updated_at": "2024-10-07T10:30:06.231Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "practicum",
+            "translation": 67,
+            "frequency": 7,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3158,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 59,
+        "fields": {
+            "name": "professionaliseringsmateriaal",
+            "created_at": "2022-01-12T12:14:03.231Z",
+            "updated_at": "2024-10-07T10:30:06.250Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "professionaliseringsmateriaal",
+            "translation": 68,
+            "frequency": 294,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 3174,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 60,
+        "fields": {
+            "name": "professionaliserings-materiaal",
+            "created_at": "2022-01-12T12:14:03.236Z",
+            "updated_at": "2024-10-07T10:30:06.251Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "professionaliserings-materiaal",
+            "translation": 69,
+            "frequency": 93,
+            "parent": 59,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3174,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 61,
+        "fields": {
+            "name": "questionnaire",
+            "created_at": "2022-01-12T12:14:03.250Z",
+            "updated_at": "2024-10-07T10:30:06.290Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "questionnaire",
+            "translation": 71,
+            "frequency": 13,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3211,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 62,
+        "fields": {
+            "name": "referentiemateriaal",
+            "created_at": "2022-01-12T12:14:03.256Z",
+            "updated_at": "2024-10-07T10:30:06.320Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "referentiemateriaal",
+            "translation": 72,
+            "frequency": 20,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3238,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 63,
+        "fields": {
+            "name": "rubric",
+            "created_at": "2022-01-12T12:14:03.262Z",
+            "updated_at": "2024-10-07T10:30:06.395Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "rubric",
+            "translation": 73,
+            "frequency": 11,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3324,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 65,
+        "fields": {
+            "name": "simulatie",
+            "created_at": "2022-01-12T12:14:03.273Z",
+            "updated_at": "2024-10-07T10:30:06.493Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "simulatie",
+            "translation": 75,
+            "frequency": 13,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3413,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 2689,
+        "fields": {
+            "name": "software",
+            "created_at": "2022-04-11T17:30:07.076Z",
+            "updated_at": "2024-10-07T10:30:06.510Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "software",
+            "translation": 2709,
+            "frequency": 5,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3432,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 9885,
+        "fields": {
+            "name": "toetsmatrijs",
+            "created_at": "2023-06-14T14:30:08.406Z",
+            "updated_at": "2024-10-07T10:30:06.680Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "toetsmatrijs",
+            "translation": 9921,
+            "frequency": 1,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3584,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 66,
+        "fields": {
+            "name": "unknown",
+            "created_at": "2022-01-12T12:14:03.278Z",
+            "updated_at": "2024-10-07T10:30:06.730Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "unknown",
+            "translation": 76,
+            "frequency": 6422,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3631,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 67,
+        "fields": {
+            "name": "verkenning_en_onderzoek",
+            "created_at": "2022-01-12T12:14:03.284Z",
+            "updated_at": "2024-10-07T10:30:06.856Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "verkenning_en_onderzoek",
+            "translation": 77,
+            "frequency": 4,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 3677,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 68,
+        "fields": {
+            "name": "verkennings- en onderzoeksmateriaal",
+            "created_at": "2022-01-12T12:14:03.294Z",
+            "updated_at": "2024-10-07T10:30:06.857Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "verkennings- en onderzoeksmateriaal",
+            "translation": 78,
+            "frequency": 130,
+            "parent": 67,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3677,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 69,
+        "fields": {
+            "name": "visualisatie",
+            "created_at": "2022-01-12T12:14:03.299Z",
+            "updated_at": "2024-10-07T10:30:07.621Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "visualisatie",
+            "translation": 79,
+            "frequency": 39,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3698,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 70,
+        "fields": {
+            "name": "zelftoets",
+            "created_at": "2022-01-12T12:14:03.304Z",
+            "updated_at": "2024-10-07T10:30:07.711Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "zelftoets",
+            "translation": 80,
+            "frequency": 21,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 3800,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 64,
+        "fields": {
+            "name": "self assessment",
+            "created_at": "2022-01-12T12:14:03.267Z",
+            "updated_at": "2024-10-07T10:30:07.712Z",
+            "deleted_at": null,
+            "field": 6,
+            "value": "self assessment",
+            "translation": 74,
+            "frequency": 6,
+            "parent": 70,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3800,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10499,
+        "fields": {
+            "name": "Volwasseneneducatie, Niveau 1",
+            "created_at": "2024-03-05T17:30:33.676Z",
+            "updated_at": "2024-10-07T10:30:01.901Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Volwasseneneducatie, Niveau 1",
+            "translation": 10535,
+            "frequency": 15,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 491,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10498,
+        "fields": {
+            "name": "Volwasseneneducatie, Niveau 2",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.931Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Volwasseneneducatie, Niveau 2",
+            "translation": 10534,
+            "frequency": 18,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 492,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10497,
+        "fields": {
+            "name": "Volwasseneneducatie, Niveau 3",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.934Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Volwasseneneducatie, Niveau 3",
+            "translation": 10533,
+            "frequency": 20,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 493,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10496,
+        "fields": {
+            "name": "Volwasseneneducatie, Niveau 4",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.942Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Volwasseneneducatie, Niveau 4",
+            "translation": 10532,
+            "frequency": 21,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 494,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10495,
+        "fields": {
+            "name": "Volwasseneneducatie",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.946Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Volwasseneneducatie",
+            "translation": 10531,
+            "frequency": 21,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 495,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10494,
+        "fields": {
+            "name": "Beroepsonderwijs en Volwasseneneducatie",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.948Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "Beroepsonderwijs en Volwasseneneducatie",
+            "translation": 10530,
+            "frequency": 28,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 496,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10493,
+        "fields": {
+            "name": "MBO",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.950Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "MBO",
+            "translation": 10529,
+            "frequency": 49,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 10,
+            "tree_id": 497,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10492,
+        "fields": {
+            "name": "MBO, Niveau 1: Assistentenopleiding",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.953Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "MBO, Niveau 1: Assistentenopleiding",
+            "translation": 10528,
+            "frequency": 76,
+            "parent": 10493,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 497,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10491,
+        "fields": {
+            "name": "MBO, Niveau 2: Basisberoepsopleiding",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.956Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "MBO, Niveau 2: Basisberoepsopleiding",
+            "translation": 10527,
+            "frequency": 83,
+            "parent": 10493,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 497,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10490,
+        "fields": {
+            "name": "MBO, Niveau 3: Vakopleiding",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.967Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "MBO, Niveau 3: Vakopleiding",
+            "translation": 10526,
+            "frequency": 92,
+            "parent": 10493,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 6,
+            "rght": 7,
+            "tree_id": 497,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10489,
+        "fields": {
+            "name": "MBO, Niveau 4: Middenkaderopleiding",
+            "created_at": "2024-03-05T17:30:33.675Z",
+            "updated_at": "2024-10-07T10:30:01.975Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "MBO, Niveau 4: Middenkaderopleiding",
+            "translation": 10525,
+            "frequency": 107,
+            "parent": 10493,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 8,
+            "rght": 9,
+            "tree_id": 497,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 179,
+        "fields": {
+            "name": "HBO",
+            "created_at": "2022-01-12T12:14:04.019Z",
+            "updated_at": "2024-10-07T10:30:04.865Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "HBO",
+            "translation": 193,
+            "frequency": 8562,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 2035,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8903,
+        "fields": {
+            "name": "HBO - Bachelor",
+            "created_at": "2023-03-09T14:52:24.293Z",
+            "updated_at": "2024-10-07T10:30:04.866Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "HBO - Bachelor",
+            "translation": 8938,
+            "frequency": 1692,
+            "parent": 179,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 2035,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8904,
+        "fields": {
+            "name": "HBO - Master",
+            "created_at": "2023-03-09T14:52:24.293Z",
+            "updated_at": "2024-10-07T10:30:04.867Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "HBO - Master",
+            "translation": 8939,
+            "frequency": 225,
+            "parent": 179,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 2035,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 180,
+        "fields": {
+            "name": "WO",
+            "created_at": "2022-01-12T12:14:04.025Z",
+            "updated_at": "2024-10-07T10:30:07.675Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "WO",
+            "translation": 194,
+            "frequency": 9146,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 3760,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8905,
+        "fields": {
+            "name": "WO - Bachelor",
+            "created_at": "2023-03-09T14:52:24.293Z",
+            "updated_at": "2024-10-07T10:30:07.676Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "WO - Bachelor",
+            "translation": 8940,
+            "frequency": 136,
+            "parent": 180,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3760,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 8906,
+        "fields": {
+            "name": "WO - Master",
+            "created_at": "2023-03-09T14:52:24.293Z",
+            "updated_at": "2024-10-07T10:30:07.677Z",
+            "deleted_at": null,
+            "field": 9,
+            "value": "WO - Master",
+            "translation": 8941,
+            "frequency": 111,
+            "parent": 180,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 3760,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10655,
+        "fields": {
+            "name": "2024",
+            "created_at": "2024-04-22T09:30:11.906Z",
+            "updated_at": "2024-10-07T10:30:01.071Z",
+            "deleted_at": null,
+            "field": 20,
+            "value": "2024",
+            "translation": 10692,
+            "frequency": 379,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 270,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10654,
+        "fields": {
+            "name": "2023",
+            "created_at": "2024-04-22T09:30:11.906Z",
+            "updated_at": "2024-10-07T10:30:01.072Z",
+            "deleted_at": null,
+            "field": 20,
+            "value": "2023",
+            "translation": 10691,
+            "frequency": 1022,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 271,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10652,
+        "fields": {
+            "name": "2022",
+            "created_at": "2024-04-22T09:30:11.906Z",
+            "updated_at": "2024-10-07T10:30:01.073Z",
+            "deleted_at": null,
+            "field": 20,
+            "value": "2022",
+            "translation": 10689,
+            "frequency": 2002,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 272,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10653,
+        "fields": {
+            "name": "2021",
+            "created_at": "2024-04-22T09:30:11.906Z",
+            "updated_at": "2024-10-07T10:30:01.074Z",
+            "deleted_at": null,
+            "field": 20,
+            "value": "2021",
+            "translation": 10690,
+            "frequency": 1466,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 273,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 10651,
+        "fields": {
+            "name": "older-than",
+            "created_at": "2024-04-22T09:30:11.905Z",
+            "updated_at": "2024-10-07T10:30:01.075Z",
+            "deleted_at": null,
+            "field": 20,
+            "value": "older-than",
+            "translation": 10688,
+            "frequency": 7161,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 274,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11670,
+        "fields": {
+            "name": "en",
+            "created_at": "2024-09-30T07:33:27.257Z",
+            "updated_at": "2024-10-07T10:30:04.205Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "en",
+            "translation": 11712,
+            "frequency": 5613,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1752,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11671,
+        "fields": {
+            "name": "nl",
+            "created_at": "2024-09-30T07:33:27.260Z",
+            "updated_at": "2024-10-07T10:30:05.982Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "nl",
+            "translation": 11713,
+            "frequency": 3967,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2994,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11672,
+        "fields": {
+            "name": "other",
+            "created_at": "2024-09-30T07:33:27.262Z",
+            "updated_at": "2024-10-07T10:30:06.080Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "other",
+            "translation": 11714,
+            "frequency": 4,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3047,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11673,
+        "fields": {
+            "name": "unk",
+            "created_at": "2024-09-30T07:33:27.265Z",
+            "updated_at": "2024-10-07T10:30:06.726Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "unk",
+            "translation": 11715,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 10,
+            "tree_id": 3630,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11674,
+        "fields": {
+            "name": "de",
+            "created_at": "2024-09-30T07:33:27.269Z",
+            "updated_at": "2024-10-07T10:30:06.727Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "de",
+            "translation": 11716,
+            "frequency": 6,
+            "parent": 11673,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 3630,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11675,
+        "fields": {
+            "name": "es",
+            "created_at": "2024-09-30T07:33:27.274Z",
+            "updated_at": "2024-10-07T10:30:06.727Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "es",
+            "translation": 11717,
+            "frequency": 2,
+            "parent": 11673,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 3630,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11676,
+        "fields": {
+            "name": "la",
+            "created_at": "2024-09-30T07:33:27.279Z",
+            "updated_at": "2024-10-07T10:30:06.728Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "la",
+            "translation": 11718,
+            "frequency": 282,
+            "parent": 11673,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 6,
+            "rght": 7,
+            "tree_id": 3630,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11677,
+        "fields": {
+            "name": "x-none",
+            "created_at": "2024-09-30T07:33:27.288Z",
+            "updated_at": "2024-10-07T10:30:06.729Z",
+            "deleted_at": null,
+            "field": 25,
+            "value": "x-none",
+            "translation": 11719,
+            "frequency": 2156,
+            "parent": 11673,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 8,
+            "rght": 9,
+            "tree_id": 3630,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11678,
+        "fields": {
+            "name": "Beeld en Geluid",
+            "created_at": "2024-09-30T07:33:27.301Z",
+            "updated_at": "2024-10-07T10:30:01.018Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "Beeld en Geluid",
+            "translation": 11721,
+            "frequency": 1,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 211,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11679,
+        "fields": {
+            "name": "YouTube",
+            "created_at": "2024-09-30T07:33:27.307Z",
+            "updated_at": "2024-10-07T10:30:01.048Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "YouTube",
+            "translation": 11722,
+            "frequency": 8,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 246,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11680,
+        "fields": {
+            "name": "cc-by",
+            "created_at": "2024-09-30T07:33:27.311Z",
+            "updated_at": "2024-10-07T10:30:03.728Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by",
+            "translation": 11723,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 1319,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11681,
+        "fields": {
+            "name": "cc-by-30",
+            "created_at": "2024-09-30T07:33:27.315Z",
+            "updated_at": "2024-10-07T10:30:03.729Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-30",
+            "translation": 11724,
+            "frequency": 170,
+            "parent": 11680,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1319,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11682,
+        "fields": {
+            "name": "cc-by-40",
+            "created_at": "2024-09-30T07:33:27.320Z",
+            "updated_at": "2024-10-07T10:30:03.730Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-40",
+            "translation": 11725,
+            "frequency": 2140,
+            "parent": 11680,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 1319,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11683,
+        "fields": {
+            "name": "cc-by",
+            "created_at": "2024-09-30T07:33:27.323Z",
+            "updated_at": "2024-10-07T10:30:03.733Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "",
+            "translation": 11726,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1321,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11684,
+        "fields": {
+            "name": "cc-by-nc",
+            "created_at": "2024-09-30T07:33:27.325Z",
+            "updated_at": "2024-10-07T10:30:03.735Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc",
+            "translation": 11727,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 4,
+            "tree_id": 1323,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11685,
+        "fields": {
+            "name": "cc-by-nc-40",
+            "created_at": "2024-09-30T07:33:27.331Z",
+            "updated_at": "2024-10-07T10:30:03.736Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-40",
+            "translation": 11728,
+            "frequency": 963,
+            "parent": 11684,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1323,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11686,
+        "fields": {
+            "name": "cc-by-nc-nd",
+            "created_at": "2024-09-30T07:33:27.333Z",
+            "updated_at": "2024-10-07T10:30:03.738Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-nd",
+            "translation": 11729,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 1325,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11687,
+        "fields": {
+            "name": "cc-by-nc-nd-30",
+            "created_at": "2024-09-30T07:33:27.337Z",
+            "updated_at": "2024-10-07T10:30:03.739Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-nd-30",
+            "translation": 11730,
+            "frequency": 8,
+            "parent": 11686,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1325,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11688,
+        "fields": {
+            "name": "cc-by-nc-nd-40",
+            "created_at": "2024-09-30T07:33:27.342Z",
+            "updated_at": "2024-10-07T10:30:03.740Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-nd-40",
+            "translation": 11731,
+            "frequency": 1659,
+            "parent": 11686,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 1325,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11689,
+        "fields": {
+            "name": "cc-by-nc-sa",
+            "created_at": "2024-09-30T07:33:27.344Z",
+            "updated_at": "2024-10-07T10:30:03.744Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-sa",
+            "translation": 11732,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 1327,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11690,
+        "fields": {
+            "name": "cc-by-nc-sa-30",
+            "created_at": "2024-09-30T07:33:27.349Z",
+            "updated_at": "2024-10-07T10:30:03.744Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-sa-30",
+            "translation": 11733,
+            "frequency": 50,
+            "parent": 11689,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1327,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11691,
+        "fields": {
+            "name": "cc-by-nc-sa-40",
+            "created_at": "2024-09-30T07:33:27.353Z",
+            "updated_at": "2024-10-07T10:30:03.745Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nc-sa-40",
+            "translation": 11734,
+            "frequency": 2926,
+            "parent": 11689,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 1327,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11692,
+        "fields": {
+            "name": "cc-by-nd",
+            "created_at": "2024-09-30T07:33:27.356Z",
+            "updated_at": "2024-10-07T10:30:03.750Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nd",
+            "translation": 11735,
+            "frequency": 5,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 1329,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11693,
+        "fields": {
+            "name": "cc-by-nd-30",
+            "created_at": "2024-09-30T07:33:27.360Z",
+            "updated_at": "2024-10-07T10:30:03.751Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nd-30",
+            "translation": 11736,
+            "frequency": 2,
+            "parent": 11692,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1329,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11694,
+        "fields": {
+            "name": "cc-by-nd-40",
+            "created_at": "2024-09-30T07:33:27.365Z",
+            "updated_at": "2024-10-07T10:30:03.751Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-nd-40",
+            "translation": 11737,
+            "frequency": 104,
+            "parent": 11692,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 1329,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11695,
+        "fields": {
+            "name": "cc-by-sa",
+            "created_at": "2024-09-30T07:33:27.368Z",
+            "updated_at": "2024-10-07T10:30:03.755Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-sa",
+            "translation": 11738,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 1331,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11696,
+        "fields": {
+            "name": "cc-by-sa-30",
+            "created_at": "2024-09-30T07:33:27.372Z",
+            "updated_at": "2024-10-07T10:30:03.756Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-sa-30",
+            "translation": 11739,
+            "frequency": 67,
+            "parent": 11695,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1331,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11697,
+        "fields": {
+            "name": "cc-by-sa-40",
+            "created_at": "2024-09-30T07:33:27.376Z",
+            "updated_at": "2024-10-07T10:30:03.758Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc-by-sa-40",
+            "translation": 11740,
+            "frequency": 2249,
+            "parent": 11695,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 1331,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11698,
+        "fields": {
+            "name": "none",
+            "created_at": "2024-09-30T07:33:27.379Z",
+            "updated_at": "2024-10-07T10:30:05.990Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "no",
+            "translation": 11741,
+            "frequency": 0,
+            "parent": null,
+            "is_manual": true,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 6,
+            "tree_id": 2999,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11699,
+        "fields": {
+            "name": "cc0-10",
+            "created_at": "2024-09-30T07:33:27.385Z",
+            "updated_at": "2024-10-07T10:30:05.991Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "cc0-10",
+            "translation": 11742,
+            "frequency": 6,
+            "parent": 11698,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 2999,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11700,
+        "fields": {
+            "name": "pdm-10",
+            "created_at": "2024-09-30T07:33:27.393Z",
+            "updated_at": "2024-10-07T10:30:05.992Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "pdm-10",
+            "translation": 11743,
+            "frequency": 856,
+            "parent": 11698,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 4,
+            "rght": 5,
+            "tree_id": 2999,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11701,
+        "fields": {
+            "name": "yes",
+            "created_at": "2024-09-30T07:33:27.395Z",
+            "updated_at": "2024-10-07T10:30:07.693Z",
+            "deleted_at": null,
+            "field": 26,
+            "value": "yes",
+            "translation": 11744,
+            "frequency": 623,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3779,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11703,
+        "fields": {
+            "name": "Afbeelding",
+            "created_at": "2024-09-30T07:33:27.407Z",
+            "updated_at": "2024-10-07T10:30:02.787Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "image",
+            "translation": 11747,
+            "frequency": 3916,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 940,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11704,
+        "fields": {
+            "name": "App",
+            "created_at": "2024-09-30T07:33:27.410Z",
+            "updated_at": "2024-10-07T10:30:02.979Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "app",
+            "translation": 11748,
+            "frequency": 2,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1073,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11705,
+        "fields": {
+            "name": "Audio",
+            "created_at": "2024-09-30T07:33:27.413Z",
+            "updated_at": "2024-10-07T10:30:03.467Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "audio",
+            "translation": 11749,
+            "frequency": 1,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1106,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11707,
+        "fields": {
+            "name": "Document",
+            "created_at": "2024-09-30T07:33:27.418Z",
+            "updated_at": "2024-10-07T10:30:03.946Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "document",
+            "translation": 11751,
+            "frequency": 2313,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1542,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11709,
+        "fields": {
+            "name": "Presentatie",
+            "created_at": "2024-09-30T07:33:27.423Z",
+            "updated_at": "2024-10-07T10:30:06.232Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "presentation",
+            "translation": 11753,
+            "frequency": 572,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3159,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11711,
+        "fields": {
+            "name": "Spreadsheet",
+            "created_at": "2024-09-30T07:33:27.430Z",
+            "updated_at": "2024-10-07T10:30:06.525Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "spreadsheet",
+            "translation": 11755,
+            "frequency": 32,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3448,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11712,
+        "fields": {
+            "name": "unknown",
+            "created_at": "2024-09-30T07:33:27.434Z",
+            "updated_at": "2024-10-07T10:30:06.734Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "unknown",
+            "translation": 11756,
+            "frequency": 121,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3634,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11713,
+        "fields": {
+            "name": "Video",
+            "created_at": "2024-09-30T07:33:27.437Z",
+            "updated_at": "2024-10-07T10:30:07.613Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "video",
+            "translation": 11757,
+            "frequency": 162,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3689,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 11714,
+        "fields": {
+            "name": "Website",
+            "created_at": "2024-09-30T07:33:27.440Z",
+            "updated_at": "2024-10-07T10:30:07.634Z",
+            "deleted_at": null,
+            "field": 27,
+            "value": "website",
+            "translation": 11758,
+            "frequency": 5236,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 3715,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3152,
+        "fields": {
+            "name": "aarde_milieu",
+            "created_at": "2022-08-01T06:39:52.940Z",
+            "updated_at": "2024-10-09T10:50:57.674Z",
+            "deleted_at": "2024-10-09T10:50:57.673Z",
+            "field": 17,
+            "value": "aarde_milieu",
+            "translation": 3174,
+            "frequency": 511,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 12,
+            "tree_id": 913,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3153,
+        "fields": {
+            "name": "Aardrijkskunde",
+            "created_at": "2022-08-01T06:39:52.945Z",
+            "updated_at": "2024-10-09T10:50:57.686Z",
+            "deleted_at": "2024-10-09T10:50:57.686Z",
+            "field": 17,
+            "value": "c001f86a-4f8f-4420-bd78-381c615ecedc",
+            "translation": 3175,
+            "frequency": 5,
+            "parent": 3152,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 913,
+            "level": 1
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3158,
+        "fields": {
+            "name": "economie_bedrijf",
+            "created_at": "2022-08-01T06:39:52.965Z",
+            "updated_at": "2024-10-09T10:50:57.688Z",
+            "deleted_at": "2024-10-09T10:50:57.688Z",
+            "field": 17,
+            "value": "economie_bedrijf",
+            "translation": 3180,
+            "frequency": 258,
+            "parent": null,
+            "is_manual": false,
+            "is_hidden": true,
+            "lft": 1,
+            "rght": 16,
+            "tree_id": 1679,
+            "level": 0
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 3159,
+        "fields": {
+            "name": "Bedrijfskunde",
+            "created_at": "2022-08-01T06:39:52.970Z",
+            "updated_at": "2024-10-09T10:50:57.690Z",
+            "deleted_at": "2024-10-09T10:50:57.690Z",
+            "field": 17,
+            "value": "92161d11-91ce-48e2-b79a-8aa2df8b7022",
+            "translation": 3181,
+            "frequency": 7,
+            "parent": 3158,
+            "is_manual": false,
+            "is_hidden": false,
+            "lft": 2,
+            "rght": 3,
+            "tree_id": 1679,
+            "level": 1
+        }
+    }
+]

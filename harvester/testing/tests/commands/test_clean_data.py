@@ -1,9 +1,10 @@
 from unittest.mock import patch
 from datetime import datetime, timedelta
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.management import call_command
 from django.utils.timezone import make_aware
+from django.contrib.auth.models import User
 
 from search.models import OpenSearchIndex
 from files.models import FileDocument, HttpTikaResource, DatasetVersion, Set, Dataset
@@ -62,9 +63,9 @@ class TestCleanData(TestCase):
 
     def setUp(self):
         super().setUp()
-
+        # Seed generation
         file_seeds = list(seed_generator("sharekit", 10, app_label="files", sequence_properties=SEQUENCE_PROPERTIES))
-
+        # Creating documents
         active_dataset, active_dataset_version, active_sets, active_documents = create_datatype_models(
             "files", ["test"], file_seeds[0:5], 5
         )
@@ -88,6 +89,12 @@ class TestCleanData(TestCase):
             for _ in range(0, 2):
                 dataset_version_copy = create_version_copy(inactive_dataset_version, version, created_time)
                 set_tika_pipeline(dataset_version_copy)
+        # Create users
+        last_year_join_date = make_aware(datetime.now() - timedelta(days=365))
+        this_year_join_date = make_aware(datetime.now())
+        User.objects.create(username="last_year_staff", is_staff=True, date_joined=last_year_join_date)
+        User.objects.create(username="this_year_staff", is_staff=True, date_joined=this_year_join_date)
+        User.objects.create(username="service", is_staff=False, date_joined=last_year_join_date)
 
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
     def test_clean_data(self, get_search_client):
@@ -162,3 +169,33 @@ class TestCleanData(TestCase):
             self.search_client.indices.delete.call_count, 12,
             "Expected 0.0.0, 0.0.7 and 0.0.14 to be deleted when last DatasetVersions instance was cleaned"
         )
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    def test_delete_old_users(self, get_search_client):
+        get_search_client.reset_mock()
+        # Test with user deletes disabled
+        call_command("clean_data")
+        self.assertTrue(User.objects.filter(username="this_year_staff").exists())
+        self.assertTrue(User.objects.filter(username="service").exists())
+        self.assertTrue(User.objects.filter(username="last_year_staff").exists())
+        # Test with user deletes enabled
+        with override_settings(ENABLE_SURFCONEXT_LOGIN=True):
+            call_command("clean_data")
+        self.assertTrue(User.objects.filter(username="this_year_staff").exists())
+        self.assertTrue(User.objects.filter(username="service").exists())
+        self.assertFalse(User.objects.filter(username="last_year_staff").exists())
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    def test_force_delete_users(self, get_search_client):
+        get_search_client.reset_mock()
+        # Test with user deletes disabled
+        call_command("clean_data", "--force-user-deletes")
+        self.assertTrue(User.objects.filter(username="this_year_staff").exists())
+        self.assertTrue(User.objects.filter(username="service").exists())
+        self.assertTrue(User.objects.filter(username="last_year_staff").exists())
+        # Test with user deletes enabled
+        with override_settings(ENABLE_SURFCONEXT_LOGIN=True):
+            call_command("clean_data", "--force-user-deletes")
+        self.assertFalse(User.objects.filter(username="this_year_staff").exists())
+        self.assertTrue(User.objects.filter(username="service").exists())
+        self.assertFalse(User.objects.filter(username="last_year_staff").exists())

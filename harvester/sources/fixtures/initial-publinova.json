@@ -150,7 +150,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "PUBVHL"
+            "PUBVHL", "PUBHAS"
         ],
         "delete_policy": "transient",
         "purge_interval": {
@@ -168,7 +168,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "PUBVHL"
+            "PUBVHL", "PUBHAS"
         ],
         "delete_policy": "transient",
         "purge_interval": {
