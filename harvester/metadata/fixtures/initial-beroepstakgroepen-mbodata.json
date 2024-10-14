@@ -1,0 +1,40 @@
+[
+{
+    "model": "metadata.metadatatranslation",
+    "pk": 11746,
+    "fields": {
+        "created_at": "2024-10-14T14:49:12.469Z",
+        "updated_at": "2024-10-14T14:49:12.469Z",
+        "nl": "Bedrijfstakgroepen",
+        "en": "Industry groups",
+        "is_fuzzy": true
+    }
+},
+{
+    "model": "metadata.metadatafield",
+    "pk": 28,
+    "fields": {
+        "name": "bedrijfstakgroepen",
+        "entity": "products:default",
+        "created_at": "2024-10-14T14:49:15.843Z",
+        "updated_at": "2024-10-14T14:49:30.081Z",
+        "translation": 11746,
+        "is_hidden": false,
+        "is_manual": true,
+        "english_as_dutch": false,
+        "value_output_order": "manual"
+    }
+},
+{
+    "model": "metadata.skosmetadatasource",
+    "pk": 1,
+    "fields": {
+        "name": "Disciplines (NL-LOM)",
+        "skos_url": "https://vocabulaires.edurep.nl/type/vak/mbo_opleidingsdomeinen_en_studierichtingen/mbo_opleidingsdomeinen_en_studierichtingen-2015.01.skos.json",
+        "target_field": 28,
+        "parent_value": null,
+        "created_at": "2024-10-14T14:51:33.088Z",
+        "modified_at": "2024-10-14T14:51:33.088Z"
+    }
+}
+]
