@@ -8,9 +8,9 @@ from datagrowth.resources.testing import ResourceFixturesMixin
 from metadata.models import MetadataValue
 
 
-class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
+class TestHarvestSkosSources(ResourceFixturesMixin, TestCase):
 
-    fixtures = ["initial-metadata-edusources", "initial-study-vocabulary-edusources"]
+    fixtures = ["initial-metadata-edusources", "initial-skos-sources-edusources"]
     resource_fixtures = ["skos-vocabulary-resources"]
 
     @classmethod
