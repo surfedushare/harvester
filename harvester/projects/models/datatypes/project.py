@@ -6,7 +6,13 @@ from projects.constants import SEED_DEFAULTS
 
 
 def default_document_tasks():
-    return {}
+    return {
+        "deactivate_invalid_projects": {
+            "depends_on": ["$.modified_at"],
+            "checks": [],
+            "resources": []
+        }
+    }
 
 
 class ProjectDocument(HarvestDocument):
