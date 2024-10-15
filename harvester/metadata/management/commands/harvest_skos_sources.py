@@ -29,68 +29,26 @@ def get_or_create_metadata_value(term, field, parent) -> MetadataValue:
 
 
 class Command(BaseCommand):
+    """
+    Some info about SKOS: https://www.forumstandaardisatie.nl/open-standaarden/skos
+    """
 
     def add_arguments(self, parser):
         super().add_arguments(parser)
-        parser.add_argument('--vocabulary',
-                            choices=["applied-science", "informatievaardigheid", "vaktherapie", "verpleegkunde"])
-
-    domain_dictionary = {
-        "applied-science": {
-            "path": "applied-science/applied-science-2021.skos.json",
-            "nl": "Toegepaste Wetenschappen",
-            "en": "Applied Science",
-            "value": "applied-science",
-            "name": "applied-science",
-            "language": "nl"
-        },
-        "informatievaardigheid": {
-            "path": "informatievaardigheid/informatievaardigheid-2020.skos.json",
-            "nl": "Informatievaardigheid",
-            "en": "Information literacy",
-            "value": "informatievaardigheid",
-            "name": "informatievaardigheid",
-            "language": "nl"
-        },
-        "vaktherapie": {
-            "path": "vaktherapie/vaktherapie-2020.skos.json",
-            "nl": "Vaktherapie",
-            "en": "Information literacy",
-            "value": "vaktherapie",
-            "name": "vaktherapie",
-            "language": "nl"
-        },
-        "verpleegkunde": {
-            "path": "verpleegkunde/verpleegkunde-2019.skos.json",
-            "nl": "Verpleegkunde",
-            "en": "Nursing",
-            "value": "verpleegkunde",
-            "name": "verpleegkunde",
-            "language": "nl"
-        },
-        "ziezo-meten": {
-            "path": "ziezo-meten/ziezo-meten-2022.skos.json",
-            "nl": "Ziezo Meten",
-            "en": "Ziezo Meten",
-            "value": "ziezo-meten",
-            "name": "ziezo-meten",
-            "language": "nl"
-        }
-    }
+        parser.add_argument('--source', type=str, required=False)
 
     def handle(self, **options):
 
-        vocabulary = options["vocabulary"]
+        source = options.get("source")
 
-        if vocabulary is not None:
-            skos_path = self.domain_dictionary[vocabulary]["path"]
-            source = SkosMetadataSource.objects.get(skos_url__endswith=skos_path)
-            self.create_vocabulary(key=source.name, source=source)
+        if source is not None:
+            source = SkosMetadataSource.objects.get(name=source)
+            self.create_values(key=source.name, source=source)
         else:
             for source in SkosMetadataSource.objects.all():
-                self.create_vocabulary(key=source.name, source=source)
+                self.create_values(key=source.name, source=source)
 
-    def create_vocabulary(self, key: str, source: SkosMetadataSource) -> None:
+    def create_values(self, key: str, source: SkosMetadataSource) -> None:
         df = (
             source.to_data_frame()
             .group_by("parent_id")
@@ -110,7 +68,7 @@ class Command(BaseCommand):
                 groups=groups
             )
 
-        logger.info('Done with SKOS vocabulary harvest: ' + key)
+        logger.info('Done with SKOS harvest: ' + key)
 
     def create_values_depth_first(self, term: dict, parent: MetadataValue, field: MetadataField,
                                   groups: dict[str, list[dict]]) -> None:
