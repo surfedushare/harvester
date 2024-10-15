@@ -11,6 +11,7 @@ django:
   fixtures:
     - "core/fixtures/initial-common.json"
     - "metadata/fixtures/initial-metadata-edusources.json"
+    - "metadata/fixtures/initial-skos-sources-edusources.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-edusources.json"
     - "products/fixtures/initial-common.json"

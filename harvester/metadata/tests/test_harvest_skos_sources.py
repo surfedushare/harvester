@@ -8,9 +8,10 @@ from datagrowth.resources.testing import ResourceFixturesMixin
 from metadata.models import MetadataValue
 
 
-class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
+class TestHarvestSkosSources(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["study-vocabulary-resources"]
+    fixtures = ["initial-metadata-edusources", "initial-skos-sources-edusources"]
+    resource_fixtures = ["skos-vocabulary-resources"]
 
     @classmethod
     def setUpClass(cls):
@@ -26,22 +27,22 @@ class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
         })
         super().tearDownClass()
 
-    @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
+    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
     def test_no_duplicates(self, fake_deepl):
-        call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
-        call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
+        call_command("harvest_skos_sources", "--source=Informatievaardigheid")
+        call_command("harvest_skos_sources", "--source=Informatievaardigheid")
         total_objects = MetadataValue.objects.count()
-        self.assertEqual(total_objects, 33,
+        self.assertEqual(total_objects, 37,
                          "When the command runs twice it should not duplicate values.")
 
-    @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
+    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
     def test_same_number_applied_science(self, fake_deepl):
-        with self.assertNumQueries(172):
-            call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
+        with self.assertNumQueries(165):
+            call_command("harvest_skos_sources", "--source=Informatievaardigheid")
 
-    @patch("metadata.management.commands.harvest_study_vocabulary.translate_with_deepl", return_value="Translated")
+    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
     def test_data_contains_right_values(self, fake_deepl):
-        call_command("harvest_study_vocabulary", "--vocabulary=informatievaardigheid")
+        call_command("harvest_skos_sources", "--source=Informatievaardigheid")
         value = MetadataValue.objects.get(
             value="http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe")
         self.assertEqual(value.name, "Plannen en zoeken")
@@ -63,4 +64,4 @@ class TestHarvestStudyVocabulary(ResourceFixturesMixin, TestCase):
         self.assertTrue(value.translation.nl)
         self.assertTrue(value.translation.en)
         self.assertTrue(value.translation.is_fuzzy)
-        self.assertEqual(fake_deepl.call_count, 33)
+        self.assertEqual(fake_deepl.call_count, 32)

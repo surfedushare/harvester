@@ -1662,46 +1662,13 @@
     },
     {
         "model": "metadata.metadatatranslation",
-        "pk": 3174,
+        "pk": 11746,
         "fields": {
-            "created_at": "2022-08-01T06:39:52.939Z",
-            "updated_at": "2022-08-01T06:39:52.939Z",
-            "nl": "Aarde en Milieu",
-            "en": "Earth and environment",
-            "is_fuzzy": false
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
-        "pk": 3175,
-        "fields": {
-            "created_at": "2022-08-01T06:39:52.944Z",
-            "updated_at": "2022-08-01T06:39:52.944Z",
-            "nl": "Aardrijkskunde",
-            "en": "Geography",
-            "is_fuzzy": false
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
-        "pk": 3180,
-        "fields": {
-            "created_at": "2022-08-01T06:39:52.964Z",
-            "updated_at": "2022-08-01T06:39:52.964Z",
-            "nl": "Economie en Bedrijf",
-            "en": "Economics and Organization",
-            "is_fuzzy": false
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
-        "pk": 3181,
-        "fields": {
-            "created_at": "2022-08-01T06:39:52.969Z",
-            "updated_at": "2022-08-01T06:39:52.969Z",
-            "nl": "Bedrijfskunde",
-            "en": "Administration",
-            "is_fuzzy": false
+            "created_at": "2024-10-14T14:49:12.469Z",
+            "updated_at": "2024-10-14T14:49:12.469Z",
+            "nl": "Bedrijfstakgroepen",
+            "en": "Industry groups",
+            "is_fuzzy": true
         }
     },
     {
@@ -1954,6 +1921,21 @@
             "updated_at": "2024-10-09T10:56:29.702Z",
             "translation": 10953,
             "is_hidden": true,
+            "is_manual": true,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 28,
+        "fields": {
+            "name": "bedrijfstakgroepen",
+            "entity": "products:default",
+            "created_at": "2024-10-14T14:49:15.843Z",
+            "updated_at": "2024-10-14T14:49:30.081Z",
+            "translation": 11746,
+            "is_hidden": false,
             "is_manual": true,
             "english_as_dutch": false,
             "value_output_order": "manual"
@@ -4771,90 +4753,6 @@
             "rght": 2,
             "tree_id": 3715,
             "level": 0
-        }
-    },
-    {
-        "model": "metadata.metadatavalue",
-        "pk": 3152,
-        "fields": {
-            "name": "aarde_milieu",
-            "created_at": "2022-08-01T06:39:52.940Z",
-            "updated_at": "2024-10-09T10:50:57.674Z",
-            "deleted_at": "2024-10-09T10:50:57.673Z",
-            "field": 17,
-            "value": "aarde_milieu",
-            "translation": 3174,
-            "frequency": 511,
-            "parent": null,
-            "is_manual": false,
-            "is_hidden": true,
-            "lft": 1,
-            "rght": 12,
-            "tree_id": 913,
-            "level": 0
-        }
-    },
-    {
-        "model": "metadata.metadatavalue",
-        "pk": 3153,
-        "fields": {
-            "name": "Aardrijkskunde",
-            "created_at": "2022-08-01T06:39:52.945Z",
-            "updated_at": "2024-10-09T10:50:57.686Z",
-            "deleted_at": "2024-10-09T10:50:57.686Z",
-            "field": 17,
-            "value": "c001f86a-4f8f-4420-bd78-381c615ecedc",
-            "translation": 3175,
-            "frequency": 5,
-            "parent": 3152,
-            "is_manual": false,
-            "is_hidden": false,
-            "lft": 2,
-            "rght": 3,
-            "tree_id": 913,
-            "level": 1
-        }
-    },
-    {
-        "model": "metadata.metadatavalue",
-        "pk": 3158,
-        "fields": {
-            "name": "economie_bedrijf",
-            "created_at": "2022-08-01T06:39:52.965Z",
-            "updated_at": "2024-10-09T10:50:57.688Z",
-            "deleted_at": "2024-10-09T10:50:57.688Z",
-            "field": 17,
-            "value": "economie_bedrijf",
-            "translation": 3180,
-            "frequency": 258,
-            "parent": null,
-            "is_manual": false,
-            "is_hidden": true,
-            "lft": 1,
-            "rght": 16,
-            "tree_id": 1679,
-            "level": 0
-        }
-    },
-    {
-        "model": "metadata.metadatavalue",
-        "pk": 3159,
-        "fields": {
-            "name": "Bedrijfskunde",
-            "created_at": "2022-08-01T06:39:52.970Z",
-            "updated_at": "2024-10-09T10:50:57.690Z",
-            "deleted_at": "2024-10-09T10:50:57.690Z",
-            "field": 17,
-            "value": "92161d11-91ce-48e2-b79a-8aa2df8b7022",
-            "translation": 3181,
-            "frequency": 7,
-            "parent": 3158,
-            "is_manual": false,
-            "is_hidden": false,
-            "lft": 2,
-            "rght": 3,
-            "tree_id": 1679,
-            "level": 1
         }
     }
 ]
