@@ -92,7 +92,7 @@ class MetadataFieldSerializer(serializers.ModelSerializer):
         return None
 
     def get_children(self, obj):
-        children = obj.metadatavalue_set.filter(deleted_at__isnull=True) \
+        children = obj.metadatavalue_set.filter(is_hidden=False, deleted_at__isnull=True) \
             .select_related("translation") \
             .get_cached_trees()
         match obj.value_output_order:

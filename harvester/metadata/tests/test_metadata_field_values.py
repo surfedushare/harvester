@@ -54,6 +54,16 @@ class TestMetadataFieldValuesView(TestCase):
         for value in data["results"]:
             self.assert_metadata_node_structure(value)
 
+    def test_metadata_field_hidden_values(self):
+        value = MetadataValue.objects.get(field__name=self.field, value="2024")
+        value.is_hidden = True
+        value.save()
+        response = self.client.get(f"/api/v1/metadata/field-values/{self.field}/")
+        data = self.assert_response_structure(response)
+        self.assertEqual(data["count"], self.field_values_queryset.count() - 1)
+        for value in data["results"]:
+            self.assert_metadata_node_structure(value)
+
     def test_metadata_field_values_frequency_order(self):
         # Setup manual order for disciplines
         learning_material_disciplines = MetadataField.objects.get(name="publisher_year_normalized")

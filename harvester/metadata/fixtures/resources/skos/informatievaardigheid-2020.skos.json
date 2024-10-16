@@ -1,0 +1,614 @@
+{
+    "@context": {
+        "dcterms": "http://purl.org/dc/terms/",
+        "edurep": "https://purl.edurep.nl/terms/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "sdo": "https://schema.org/",
+        "sh": "http://www.w3.org/ns/shacl#",
+        "skos": "http://www.w3.org/2004/02/skos/core#",
+        "void": "http://rdfs.org/ns/void#"
+    },
+    "@graph": [
+        {
+            "@id": "http://purl.edustandaard.nl/concept/309cfd60-4e65-447c-8614-364d6e9ef764",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Formuleren van onderzoeksvraag"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/323ccd74-ca00-4be6-aa71-2a3a8c304321",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/eb779bda-3d03-4c85-b11a-6c3274d43a05"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Privacygevoelige informatie"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/8f984395-e090-41be-96df-503f53ddaa09",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Publiceren (van eindproduct)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/30babed7-1c3d-44f4-a85a-cdd532d2891f",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Zoeken ter oriëntatie"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/14dd511c-1b60-4970-8b3c-bcc77a6f0177",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Valoriseren van bevindingen (outreach)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/eb779bda-3d03-4c85-b11a-6c3274d43a05",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Gebruik en verwerken van informatie (ethisch)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Publiceren en communiceren"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/8be85f45-bbc3-48e5-ab27-a11745509e13",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Evalueren van zoekproces (kritisch)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/21b77733-0bf3-4a33-b436-7adf5435e6f8",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Synthetiseren of creëren van nieuwe informatie"
+            }
+        },
+        {
+            "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa",
+            "@type": [
+                "skos:ConceptScheme",
+                "sdo:DefinedTermSet",
+                "void:Dataset"
+            ],
+            "dcterms:created": "2020-09-23",
+            "dcterms:description": "Deze begrippenverzameling bevat de vakvocabulaire Informatievaardigheid.",
+            "dcterms:identifier": "informatievaardigheid",
+            "dcterms:modified": "2020-09-23",
+            "dcterms:title": {
+                "@language": "nl",
+                "@value": "Informatievaardigheid"
+            },
+            "sdo:version": "2020",
+            "skos:hasTopConcept": [
+                {
+                    "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001"
+                },
+                {
+                    "@id": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe"
+                },
+                {
+                    "@id": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea"
+                },
+                {
+                    "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+                },
+                {
+                    "@id": "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877"
+                }
+            ],
+            "void:class": {
+                "@id": "edurep:Discipline"
+            },
+            "void:entities": 32,
+            "void:properties": 14,
+            "void:triples": 205
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/dc330ebd-4899-4d6c-af7b-50a0e6abfbd4",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Aard en verschijningsvormen van informatie/data"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Oriënteren op informatielandschap"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/6ff965a6-48e2-4fdd-a69f-e87ddf316c76",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Selecteren informatiebronnen en zoeksystemen"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Organiseren en verwerken"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/5273fae8-2571-43a0-9942-93aaea79053c",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Samenwerken (in teams)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/a3d62ae7-04ab-43a8-ade5-86978bf4e7b5",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Zoeken naar informatie"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/c5688c4a-3ed2-4676-9388-6dcecc74ea3f",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Selecteren zoektermen"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/a975b13a-e2bb-498c-b0e2-1491c24d0aa9",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/eb779bda-3d03-4c85-b11a-6c3274d43a05"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Auteursrecht"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/598b9817-a153-400e-8710-78acadf70cbe",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Plannen en zoeken"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/0ef1cc7c-dc9a-44cc-852a-954cf3627a60",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/eb779bda-3d03-4c85-b11a-6c3274d43a05"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Bronvermelding"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/77297d60-714c-4cd1-9129-3e9267463a63",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Manage proces en zoekresultaten"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/f17690ae-2304-44c8-bc0a-a07f4c7789c6",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/54442802-9865-4492-8358-d4bacaa62296"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Beoordelingscriteria (relevantie/betrouwbaarheid)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Oriënteren en specificeren"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/70d1b5e1-1ac0-43a2-aba3-39e6d25c75fb",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Rol en totstandkoming van netwerken"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/44ac0fe3-a4cb-436c-9df4-a3d241f4538d",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/c7854b24-1331-4418-b6cb-a44bfc960ed8"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Analyseren van zoekresultaten (informatieanalyse)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/9805b56e-4fe8-46b2-9fb0-76ee2026d47b",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/2b1ad07f-d8b0-49ab-b4d2-eecf319f4001"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Identificeren van informatiebehoefte"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/62575053-9688-4f60-878b-97de17e5c109",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/6b823085-5534-4d04-a147-6d85b0a1c4ea"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Communiceren (van eindproduct)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/3d65c3de-c6ab-4267-b852-ff425a5dafe3",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Werking en structuur van het internet"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/0c8a7a84-4572-488e-858e-38b6b125b689",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Individu in het informatielandschap"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/c2d0aee0-19be-47f0-85b0-90ac17cd22c5",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/8c08655f-04ab-4866-ba84-f564cbfc9baa"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Waarde van informatie/data"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/54442802-9865-4492-8358-d4bacaa62296",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Beoordelen van resultaten (kritisch)"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/f5e496d1-1585-4c7f-b15f-2345cd830877",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Kritisch beoordelen"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/concept/f33ecc26-b9cf-4714-b8f7-216081453a2e",
+            "@type": [
+                "skos:Concept",
+                "edurep:Discipline"
+            ],
+            "dcterms:source": "http://purl.edustandaard.nl/concept",
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/concept/54442802-9865-4492-8358-d4bacaa62296"
+            },
+            "skos:inScheme": {
+                "@id": "urn:uuid:992d9e87-4b5b-4139-9874-7f1da8ba3bfa"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Informatieverwerking (lezen, luisteren e.d.)"
+            }
+        }
+    ]
+}

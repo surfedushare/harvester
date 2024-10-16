@@ -46,6 +46,15 @@ class TestMetadataTreeView(TestCase):
                 self.assertEqual(child["field"], field["value"])
                 self.assert_metadata_node_structure(child)
 
+    def test_metadata_tree_view_hidden_values(self):
+        response = self.client.get("/api/v1/metadata/tree/")
+        data = response.json()
+        self.assertEqual(len(data), self.expected_field_count)
+        material_types = next(
+            (field for field in data if field["value"] == "material_types")
+        )
+        self.assertEqual(len(material_types["children"]), 19)
+
     def test_metadata_tree_view_max_children(self):
         max_children = 2
         response = self.client.get(f"/api/v1/metadata/tree/?max_children={max_children}")
@@ -61,11 +70,16 @@ class TestMetadataTreeView(TestCase):
                 self.assert_metadata_node_structure(child)
 
     def test_metadata_tree_view_deletes(self):
+        # Revealing material_types-document, because we want to check interaction with technical_type.document
+        MetadataValue.objects.filter(field__name="material_types", value="document").update(is_hidden=False)
+        # Deleting technical_type.document
         document = MetadataValue.objects.get(field__name="technical_type", value="document")
         document.delete()
         self.assertIsNotNone(document.deleted_at)
+        # Running the API request
         response = self.client.get("/api/v1/metadata/tree/")
         data = response.json()
+        # Asserting response data
         self.assertEqual(len(data), self.expected_field_count)
         technical_type = next(field for field in data if field["value"] == "technical_type")
         for child in technical_type["children"]:
