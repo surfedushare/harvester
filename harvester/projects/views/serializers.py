@@ -14,7 +14,7 @@ class ProjectSerializer(serializers.Serializer):
 
     title = serializers.CharField(allow_null=True, allow_blank=True)
     description = serializers.CharField(allow_null=True, allow_blank=True)
-    status = serializers.CharField(default="finished")
+    project_status = serializers.CharField(default="finished")
     started_at = serializers.DateField(allow_null=True)
     ended_at = serializers.DateField(allow_null=True)
     coordinates = serializers.ListField(child=serializers.FloatField())
