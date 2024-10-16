@@ -111,8 +111,11 @@ class OpenSearchIndex(models.Model):
         return errors
 
     def promote_all_to_latest(self) -> None:
-        for language in settings.OPENSEARCH_LANGUAGE_CODES:
-            self.promote_language_index_to_latest(language)
+        # The legacy language indices we only create for products
+        if self.entity == "products":
+            for language in settings.OPENSEARCH_LANGUAGE_CODES:
+                self.promote_language_index_to_latest(language)
+        # New style indices are created for all entities
         self.promote_to_latest()
 
     def promote_language_index_to_latest(self, language: str) -> None:
