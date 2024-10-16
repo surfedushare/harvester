@@ -87,16 +87,15 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
     def index_count(self, obj):
         if not obj.index:
             return 0
-        version = obj.index.version
-        if version in self._index_count_cache:
-            return self._index_count_cache[version]
+        remote_name = obj.index.get_remote_name()
+        if remote_name in self._index_count_cache:
+            return self._index_count_cache[remote_name]
 
         es_client = get_opensearch_client()
         try:
-            remote_name = obj.index.get_remote_name()
             counts = es_client.count(index=remote_name)
             index_count = counts.get("count", 0)
-            self._index_count_cache[version] = index_count
+            self._index_count_cache[remote_name] = index_count
         except NotFoundError:
             return 0
         return index_count
