@@ -27,4 +27,5 @@ class ProjectSerializer(serializers.Serializer):
     contacts = serializers.ListField(child=serializers.DictField())
     owners = serializers.ListField(child=serializers.DictField())
     parties = serializers.ListField(child=serializers.CharField())
-    research_themes = serializers.ListField(child=serializers.CharField())
+    themes = serializers.ListField(child=serializers.CharField())
+    research_themes = serializers.ListField(child=serializers.CharField(), source="themes", default=list)

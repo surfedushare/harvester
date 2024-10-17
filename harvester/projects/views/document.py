@@ -18,14 +18,13 @@ class MetadataProjectDocumentSerializer(serializers.ModelSerializer):
 
     srn = serializers.CharField(source="identity")
     title = serializers.CharField(source="properties.title")
-    language = serializers.CharField(source="properties.language")
     created_at = serializers.DateTimeField(source="metadata.created_at")
     modified_at = serializers.DateTimeField(source="metadata.modified_at")
     reference = serializers.CharField(source="properties.external_id")
 
     class Meta:
         model = ProjectDocument
-        fields = ("id", "state", "srn", "title", "reference", "language", "created_at", "modified_at")
+        fields = ("id", "state", "srn", "title", "reference", "created_at", "modified_at")
 
 
 class RawProjectListView(DatasetVersionDocumentListView):
@@ -69,6 +68,20 @@ class SearchProjectListView(SearchDocumentListViewMixin, DatasetVersionDocumentL
     Returns a list of the most recent projects.
     The dataformat is identical to how a search endpoint would return the project.
     This endpoint is useful for systems that want a local copy of all possible search results.
+
+    When using the ``modified_since`` parameter the projects will be limited to projects that have been modified
+    by this service since that date. Note that this service may decide to refresh data,
+    even though sources didn't change that data.
+
+    Most properties for a ProjectDocument are automatically documented through the interactive documentation.
+    However there are a few special properties that we'll document here.
+
+    **coordinates**: Consists of two floats that represent GPS coordinates.
+
+    **products**: Will be a list of SRN's. Send these to the ``find/documents`` endpoint to get product objects.
+
+    **persons, contacts and owners**: Will be a list of objects containing a name, email and external_id.
+    Only the email is a required property.
     """
     entity = Entities.PROJECTS
     exclude_deletes_unless_modified_since_filter = True
@@ -79,6 +92,16 @@ class SearchProjectDetailView(SearchDocumentRetrieveViewMixin, DatasetVersionDoc
     Returns the most recent version of a project, using its SURF Resource Name as an identifier,
     in the same format a search result would return it.
     This is useful if a system wants to update their copy of a project.
+
+    Most properties for a ProjectDocument are automatically documented through the interactive documentation.
+    However there are a few special properties that we'll document here.
+
+    **coordinates**: Consists of two floats that represent GPS coordinates.
+
+    **products**: Will be a list of SRN's. Send these to the ``find/documents`` endpoint to get product objects.
+
+    **persons, contacts and owners**: Will be a list of objects containing a name, email and external_id.
+    Only the email is a required property.
     """
     entity = Entities.PROJECTS
     exclude_deletes_unless_modified_since_filter = True
