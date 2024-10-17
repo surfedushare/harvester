@@ -70,6 +70,10 @@ class SearchProductListView(SearchDocumentListViewMixin, DatasetVersionDocumentL
     The dataformat is identical to how a search endpoint would return the product.
     This endpoint is useful for systems that want a local copy of all possible search results.
 
+    When using the ``modified_since`` parameter the products will be limited to products that have been modified
+    by this service since that date. Note that this service may decide to refresh data,
+    even though sources didn't change that data.
+
     Most properties for a ProductDocument are automatically documented through the interactive documentation.
     However there are a few special properties that we'll document here.
 

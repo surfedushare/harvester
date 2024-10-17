@@ -21,10 +21,12 @@ class ProjectSerializer(serializers.Serializer):
     goal = serializers.CharField(allow_null=True, allow_blank=True)
     keywords = serializers.ListField(child=serializers.CharField())
     products = serializers.ListField(child=serializers.CharField())
+    previews = serializers.DictField(default=None, allow_null=True)
 
     # Research project specific
     persons = serializers.ListField(child=serializers.DictField())
     contacts = serializers.ListField(child=serializers.DictField())
     owners = serializers.ListField(child=serializers.DictField())
     parties = serializers.ListField(child=serializers.CharField())
-    research_themes = serializers.ListField(child=serializers.CharField())
+    themes = serializers.ListField(child=serializers.CharField())
+    research_themes = serializers.ListField(child=serializers.CharField(), source="themes", default=list)
