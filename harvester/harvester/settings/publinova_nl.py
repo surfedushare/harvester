@@ -10,6 +10,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
     "NHL Stenden Hogeschool",
     "Hogeschool Inholland",
     "Hogeschool KPZ",
+    "Christelijke Hogeschool Ede",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
