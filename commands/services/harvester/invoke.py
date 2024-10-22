@@ -80,7 +80,7 @@ def load_data(ctx, mode, source, app_label=None):
         raise Exit("Cowardly refusing to use production as a destination environment")
 
     if not app_label:
-        app_labels = ["files", "products"]
+        app_labels = ["files", "products", "projects"]
     else:
         app_labels = [app_label]
 
@@ -225,11 +225,12 @@ def dump_data(ctx, mode, app_label=None):
     Starts a task on the AWS container cluster to dump a specific Django app and its models
     """
     if not app_label:
-        app_labels = ["files", "products"]
+        app_labels = ["files", "products", "projects"]
     else:
         app_labels = [app_label]
 
     for label in app_labels:
+        print(f"Start dumping data for: {label}")
         command = ["python", "manage.py", "dump_harvester_data", label]
         run_harvester_task(ctx, mode, command)
 

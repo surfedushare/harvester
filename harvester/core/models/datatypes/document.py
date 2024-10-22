@@ -176,6 +176,9 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 data[key] = value
         return data
 
+    def get_analyzer_language(self) -> str:
+        return "unk"
+
     def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
         data = deepcopy(self.properties)
         if self.overwrite:

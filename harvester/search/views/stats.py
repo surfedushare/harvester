@@ -11,6 +11,7 @@ class StatsSerializer(serializers.Serializer):
 
     documents = serializers.IntegerField()
     products = serializers.IntegerField(default=None, allow_null=True)
+    projects = serializers.IntegerField(default=None, allow_null=True)
 
 
 class SearchStatsAPIView(generics.RetrieveAPIView):
