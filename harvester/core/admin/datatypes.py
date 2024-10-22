@@ -4,6 +4,7 @@ from django.contrib import admin, messages
 from django import forms
 from django.utils.html import format_html
 from django.urls import reverse
+from django.db.models import Q, Count
 
 from admin_confirm import AdminConfirmMixin
 from admin_confirm.admin import confirm_action
@@ -60,28 +61,44 @@ class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.Mode
     readonly_fields = ("is_current", "is_index_promoted",)
     form = DataStorageAdminForm
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._index_count_cache = {}
+
+    def changelist_view(self, request, extra_context=None):
+        # Reset the index cache for a new list request
+        self._index_count_cache = {}
+        return super().changelist_view(request, extra_context)
+
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         form.Meta.model = self.model
         return form
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.annotate(
+            harvest_count=Count("documents", filter=Q(documents__state="active"))
+        )
+
     def harvest_count(self, obj):
-        return obj.documents.filter(state="active").count()
+        return obj.harvest_count
 
     def index_count(self, obj):
         if not obj.index:
             return 0
+        remote_name = obj.index.get_remote_name()
+        if remote_name in self._index_count_cache:
+            return self._index_count_cache[remote_name]
+
         es_client = get_opensearch_client()
-        version, patch = obj.get_numeric_version()
-        if version >= 1.41 and patch >= 16:
-            indices = [obj.index.get_remote_name()]
-        else:
-            indices = obj.index.get_remote_names(include_multilingual_index=False)
         try:
-            counts = es_client.count(index=",".join(indices))
+            counts = es_client.count(index=remote_name)
+            index_count = counts.get("count", 0)
+            self._index_count_cache[remote_name] = index_count
         except NotFoundError:
-            counts = {}
-        return counts.get("count", 0)
+            return 0
+        return index_count
 
     @confirm_action
     def promote_dataset_version_index(self, request, queryset):

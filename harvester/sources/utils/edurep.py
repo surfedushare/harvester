@@ -16,6 +16,27 @@ class EdurepExtractor(BaseExtractor):
     #############################
 
     @classmethod
+    def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str) -> list[str]:
+        entries = element.find_all(string=classification_type)
+        identifiers = set()
+        for entry in entries:
+            classification_element = entry.find_parent('czp:classification')
+            if not classification_element:
+                continue
+            raw_identifiers = classification_element.find_all("czp:id")
+            taxon_path = classification_element.find("czp:taxonpath")
+            source = taxon_path.find("czp:source") if taxon_path else None
+            if source:
+                source = source.find("czp:langstring").text.strip()
+                identifiers.update([
+                    f"{source}/{identifier.text.strip()}"
+                    for identifier in raw_identifiers
+                ])
+            else:
+                identifiers.update([identifier.text.strip() for identifier in raw_identifiers])
+        return list(identifiers)
+
+    @classmethod
     def find_all_classification_blocks(cls, element, classification_type, output_type):
         assert output_type in ["czp:entry", "czp:id"]
         entries = element.find_all(string=classification_type)

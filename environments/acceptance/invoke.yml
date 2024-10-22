@@ -18,7 +18,7 @@ harvester:
     keep_versions: 3
   repositories:
     edurep: "https://wszoeken.edurep.kennisnet.nl"
-    sharekit: "https://api.surfsharekit.nl"  # gets overridden in settings for Edusources
+    sharekit: "https://api.surfsharekit.nl"
     han: "https://repository.han.nl"
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
@@ -55,5 +55,4 @@ aws:
 
 conext:
   is_enabled: false
-  client_id: "harvester.surfedushare.nl"
   server: "https://connect.test.surfconext.nl"

@@ -1,0 +1,14 @@
+[
+{
+    "model": "metadata.skosmetadatasource",
+    "pk": 1,
+    "fields": {
+        "name": "Disciplines (NL-LOM)",
+        "skos_url": "https://vocabulaires.edurep.nl/type/vak/mbo_opleidingsdomeinen_en_studierichtingen/mbo_opleidingsdomeinen_en_studierichtingen-2015.01.skos.json",
+        "target_field": 28,
+        "parent_value": null,
+        "created_at": "2024-10-14T14:51:33.088Z",
+        "modified_at": "2024-10-14T14:51:33.088Z"
+    }
+}
+]

@@ -186,10 +186,10 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
-        studies = cls.get_studies(soup, el)
         return [
-            f"http://purl.edustandaard.nl/concept/{study}"
-            for study in studies
+            identifier
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline")
+            if "/concept/" in identifier
         ]
 
     @classmethod
