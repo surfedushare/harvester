@@ -6,33 +6,18 @@ from rest_framework.exceptions import ValidationError
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
 from harvester.schema import HarvesterSchema
-from core.models import Extension, Document
 
 
-class ExtensionPropertiesSerializer(serializers.Serializer):
-
-    state = serializers.ChoiceField(required=False, choices=Document.States.choices)
-
-    external_id = serializers.CharField()
-    published_at = serializers.DateField(required=False)
-    doi = serializers.CharField(required=False, allow_null=True)
-    title = serializers.CharField(required=False)
-    description = serializers.CharField(required=False)
-    language = serializers.CharField(required=False, max_length=2)
-    copyright = serializers.ChoiceField(required=False, choices=settings.COPYRIGHT_VALUES)
-    research_object_type = serializers.CharField(allow_null=True)
-
-    authors = serializers.ListField(child=serializers.DictField(), default=[])
-    parties = serializers.ListField(child=serializers.CharField(), default=[])
-    projects = serializers.ListField(child=serializers.CharField(), default=[])
-    research_themes = serializers.ListField(child=serializers.CharField(), default=[])
-    keywords = serializers.ListField(child=serializers.CharField(), default=[])
-
-    is_part_of = serializers.ListField(child=serializers.CharField(), required=False)
-    has_parts = serializers.ListField(child=serializers.CharField(), required=False)
+class MetricsOverrideSerializer(serializers.Serializer):
+    view_count = serializers.IntegerField(default=0, min_value=0)
+    star_1 = serializers.IntegerField(default=0, min_value=0)
+    star_2 = serializers.IntegerField(default=0, min_value=0)
+    star_3 = serializers.IntegerField(default=0, min_value=0)
+    star_4 = serializers.IntegerField(default=0, min_value=0)
+    star_5 = serializers.IntegerField(default=0, min_value=0)
 
 
-class ExtensionSerializer(DocumentBaseSerializer, ExtensionPropertiesSerializer):
+class ExtensionSerializer(DocumentBaseSerializer):
 
     id = serializers.CharField(read_only=True)
     is_addition = serializers.BooleanField(required=False, default=False)
@@ -55,36 +40,7 @@ class ExtensionSerializer(DocumentBaseSerializer, ExtensionPropertiesSerializer)
     is_part_of = serializers.ListField(child=serializers.CharField(), write_only=True, required=False)
     has_parts = serializers.ListField(child=serializers.CharField(), write_only=True, required=False)
 
-    def validate_external_id(self, external_id):
-        path_external_id = self.context["view"].kwargs.get("external_id")
-        if path_external_id and path_external_id != external_id:
-            raise ValidationError("External id in path and body do not match.")
-        return external_id
 
-    def validate_published_at(self, published_at):
-        return published_at.strftime("%Y-%m-%d")
-
-    def validate_relation_ids(self, ids):
-        if not len(ids):
-            return
-        document_ids = {
-            external_id
-            for external_id in Document.objects.filter(reference__in=ids).values_list("reference", flat=True)
-        }
-        extension_ids = {
-            external_id for external_id in Extension.objects.filter(id__in=ids).values_list("id", flat=True)
-        }
-        for external_id in ids:
-            if external_id not in document_ids and external_id not in extension_ids:
-                raise ValidationError(f"Document or Extension with id '{external_id}' does not exist.")
-
-    def validate_is_part_of(self, is_part_of):
-        self.validate_relation_ids(is_part_of)
-        return is_part_of
-
-    def validate_has_parts(self, has_parts):
-        self.validate_relation_ids(has_parts)
-        return has_parts
 
     def validate(self, attrs):
         external_id = attrs["external_id"]
@@ -132,7 +88,6 @@ class ExtensionSerializer(DocumentBaseSerializer, ExtensionPropertiesSerializer)
         return super().update(instance, validated_data)
 
     class Meta:
-        model = Extension
         fields = ("id", "created_at", "modified_at", "properties", "is_addition", "external_id", "state",
                   "title", "description", "language", "published_at", "copyright",
                   "authors", "parties", "projects", "research_themes", "keywords", "is_part_of", "has_parts")
