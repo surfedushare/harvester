@@ -45,7 +45,7 @@ pytz==2021.3
 urlobject==2.4.3
 lxml==4.9.4
 pandas==2.2.3
-polars==1.9.0
+polars==1.10.0
 beautifulsoup4==4.12.3
 
 # AWS
