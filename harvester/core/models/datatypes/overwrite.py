@@ -22,5 +22,22 @@ class HarvestOverwrite(DocumentBase):
         else:
             super().delete(using=using, keep_parents=keep_parents)
 
+    def get_metrics_overwrite(self) -> dict:
+        metrics = self.properties.get("metrics", {})
+        if not metrics:
+            return {
+                "views": 0,
+                "stars": {
+                    "average": 0.0,
+                    "star_1": 0,
+                    "star_2": 0,
+                    "star_3": 0,
+                    "star_4": 0,
+                    "star_5": 0,
+                }
+            }
+        # TODO: add calculations
+        # TODO: add index fields for boost on search
+
     class Meta:
         abstract = True
