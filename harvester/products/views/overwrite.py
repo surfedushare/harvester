@@ -14,29 +14,12 @@ from products.views.serializers.overwrite import ProductOverwriteSerializer
 
 class ProductOverwriteListView(generics.ListAPIView):
     """
-    Returns a list of all existing Overwrites (GET).
+    Returns a list of all existing Overwrites.
 
     An Overwrite is a way for anybody to enrich/alter the data that is coming from sources.
     When documents from sources get indexed by the search engine
     the properties of an Overwrite will replace or supplement the values from source documents.
     The module responsible for loading data into the search engine may transform the format to suit the engine.
-
-    ## Request body
-
-    Notice that the properties that you can overwrite are restricted.
-    Currently only "metrics" are allowed to be overwritten. Examples are star ratings and view counts.
-    In the future "content" properties like title may also be modified through this API.
-
-    Please consult the example request body below,
-    to see the most up-to-date overview of which overwrites are possible.
-
-    ## Response body
-
-    The response contains a list of Overwrites (GET).
-    Any overwrites that will be applied during data output are visible in the ``properties`` property.
-    See request body to learn more about which properties can be Overwritten.
-    Note that the module responsible for loading data into the search engine may transform the format of overwrites,
-    to suit the engine.
     """
     queryset = Overwrite.objects.filter(deleted_at__isnull=True)
     serializer_class = ProductOverwriteSerializer
@@ -52,19 +35,18 @@ class ProductOverwriteListView(generics.ListAPIView):
 
 class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
-    This endpoint allows you to retrieve, update or delete an Overwrite.
+    This endpoint allows you to retrieve (GET), update (PUT, PATCH) or delete (DELETE) an Overwrite.
 
     An Overwrite is a way for anybody to enrich/alter the data that is coming from sources.
     When documents from sources get indexed by the search engine
     the properties of an Overwrite will replace or supplement the values from source documents.
     The module responsible for loading data into the search engine may transform the format to suit the engine.
 
-    ## Request body
+    ## Request body (create/update only)
 
-    To update or create an Override you should PUT it to this endpoint.
+    To update or create an Override you should PUT or PATCH it to this endpoint.
     Beware that a PUT may fail if other clients are trying to update an Overwrite at the exact same time.
-
-    When performing a GET you can read which Overwrites have been created if any.
+    PATCH will wait for resource locks to be released, but it only allows to update a single property at a time.
 
     Notice that the properties that you can overwrite are restricted.
     Currently only "metrics" are allowed to be overwritten. Examples are star ratings and view counts.
