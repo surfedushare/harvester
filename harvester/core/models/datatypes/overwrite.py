@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.db import models
 from django.utils import timezone
 
@@ -23,7 +25,7 @@ class HarvestOverwrite(DocumentBase):
             super().delete(using=using, keep_parents=keep_parents)
 
     def get_metrics_overwrite(self) -> dict:
-        metrics = self.properties.get("metrics", {})
+        metrics = deepcopy(self.properties.get("metrics", {}))
         if not metrics:
             return {
                 "views": 0,
@@ -36,8 +38,20 @@ class HarvestOverwrite(DocumentBase):
                     "star_5": 0,
                 }
             }
-        # TODO: add calculations
-        # TODO: add index fields for boost on search
+        views = metrics.pop("views", 0)
+        star_sum = 0
+        star_count = 0
+        for star_key, star_value in metrics.items():
+            _, multiplier = star_key.split("_")
+            multiplier = int(multiplier)
+            star_sum += star_value * multiplier
+            star_count += star_value
+        stars = metrics
+        stars["average"] = round(star_sum / star_count, 1) if star_count else 0.0
+        return {
+            "views": views,
+            "stars": stars,
+        }
 
     def __str__(self) -> str:
         return self.id

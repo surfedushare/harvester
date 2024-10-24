@@ -418,3 +418,23 @@ class FileDocumentTestCase(TestCase):
                 "contents": []
             }
         })
+
+    def test_overwrite_metrics(self):
+        product = ProductDocument.objects.get(id=1)
+        data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["overwrite"], data["srn"])
+        self.assertEqual(data["metrics"], {
+            "views": 1,
+            "stars": {
+                "star_1": 5,
+                "star_2": 4,
+                "star_3": 3,
+                "star_4": 2,
+                "star_5": 1,
+                "average": 2.3,
+            },
+        })
+        product.overwrite = None
+        no_overwrite_data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertIsNone(no_overwrite_data["overwrite"])
+        self.assertIsNone(no_overwrite_data["metrics"])
