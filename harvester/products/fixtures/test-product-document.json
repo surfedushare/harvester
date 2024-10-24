@@ -189,7 +189,7 @@
             "finished_at": "2024-04-17T14:19:38.635Z",
             "dataset_version": 1,
             "collection": null,
-            "overwrite": null,
+            "overwrite": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
             "state": "active",
             "metadata": {
                 "hash": "a867e8e5fb9639cb69596f59d70631a5a5551f7b",
@@ -228,6 +228,28 @@
                     ]
                 }
             }
+        }
+    },
+    {
+        "model": "products.overwrite",
+        "pk": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
+        "fields": {
+            "created_at": "2024-10-22T14:26:49.590Z",
+            "modified_at": "2024-10-22T14:26:49.590Z",
+            "identity": null,
+            "reference": null,
+            "collection": null,
+            "properties": {
+                "metrics": {
+                    "views": 1,
+                    "star_1": 5,
+                    "star_2": 4,
+                    "star_3": 3,
+                    "star_4": 2,
+                    "star_5": 1
+                }
+            },
+            "deleted_at": null
         }
     },
     {

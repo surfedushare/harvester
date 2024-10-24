@@ -12,6 +12,8 @@ public_api_patterns = urlpatterns = [
         name="metadata-product-detail"
     ),
     path('product/metadata/', views.MetadataProductListView.as_view(), name="metadata-products"),
+    path('product/overwrite/', views.ProductOverwriteListView.as_view(), name="product-overwrite-list"),
+    path('product/overwrite/<str:srn>/', views.ProductOverwriteDetailView.as_view(), name="product-overwrite-detail"),
     path('product/<str:srn>/', views.SearchProductDetailView.as_view(), name="product-detail"),
     path('product/', views.SearchProductListView.as_view(), name="list-products"),
 ]
