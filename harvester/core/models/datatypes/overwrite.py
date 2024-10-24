@@ -39,5 +39,8 @@ class HarvestOverwrite(DocumentBase):
         # TODO: add calculations
         # TODO: add index fields for boost on search
 
+    def __str__(self) -> str:
+        return self.id
+
     class Meta:
         abstract = True
