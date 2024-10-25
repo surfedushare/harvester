@@ -4,6 +4,7 @@ from django.http import Http404
 from django.utils.timezone import now
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.exceptions import ValidationError
 
 from harvester.schema import HarvesterSchema
 from core.loading import load_harvest_models
@@ -71,10 +72,15 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
         try:
             return super().get_object()
         except Http404:
-            self._is_create = True
-            if self.request.method in ["GET", "DELETE"]:
-                raise
-            return None
+            deleted_instance = Overwrite.objects.filter().filter(id=self.kwargs["srn"]).first()
+            if not deleted_instance:
+                if self.request.method in ["GET", "DELETE"]:
+                    raise
+                self._is_create = True
+                return None  # this will lead to creation of the Overwrite
+            elif self.request.method == "PATCH":
+                raise ValidationError("Unable to patch an Overwrite that is marked as deleted.")
+            return deleted_instance
 
     def update(self, request, *args, **kwargs):
         response = super().update(request, *args, **kwargs)

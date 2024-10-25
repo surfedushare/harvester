@@ -9,4 +9,4 @@ class ProductOverwriteSerializer(OverwriteSerializer):
 
     class Meta:
         model = Overwrite
-        fields = ("id", "srn", "created_at", "modified_at", "properties", "metrics",)
+        fields = ("id", "srn", "created_at", "modified_at", "deleted_at", "properties", "metrics",)

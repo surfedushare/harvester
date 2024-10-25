@@ -26,7 +26,7 @@ class HarvestOverwrite(DocumentBase):
 
     def get_metrics_overwrite(self) -> dict:
         metrics = deepcopy(self.properties.get("metrics", {}))
-        if not metrics:
+        if not metrics or self.deleted_at:
             return {
                 "views": 0,
                 "stars": {

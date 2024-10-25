@@ -17,13 +17,14 @@ class TestProductOverwriteAPI(TestCase):
     def setUpTestData(cls):
         cls.user = User.objects.create(username="supersurf")
         cls.test_srn = "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e"
+        cls.start_test = now()
 
     def setUp(self):
         super().setUp()
         self.client.force_login(self.user)
 
     def assert_overwrite(self, overwrite: dict, srn: str):
-        expected_keys = {"id", "created_at", "modified_at", "properties"}
+        expected_keys = {"id", "created_at", "modified_at",  "deleted_at", "properties"}
         for key in overwrite.keys():
             self.assertIn(key, expected_keys)
         self.assertEqual(overwrite["id"], srn)
@@ -124,6 +125,7 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
+        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
 
     def test_create_partial_data(self):
         """
@@ -157,13 +159,13 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
+        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
 
     def test_update(self):
         """
         Updating an existing Overwrite with a PUT means that all properties will get overridden.
         There is no merging done for properties.
         """
-        datetime_begin_test = now()
         # Put the Override
         body = {
             "srn": self.test_srn,
@@ -188,15 +190,13 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, datetime_begin_test,
-                           "Expected modified_at of document to get updated")
+        self.assertGreater(document.modified_at, self.start_test,"Expected modified_at of document to get updated")
 
     def test_update_partial_data(self):
         """
         Updating an existing Overwrite with a PUT means that all properties will get overridden
         and defaults are used when properties are missing. There is no merging done for properties.
         """
-        datetime_begin_test = now()
         # Put the Override
         body = {
             "srn": self.test_srn,
@@ -223,8 +223,7 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, datetime_begin_test,
-                           "Expected modified_at of document to get updated")
+        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
 
     def test_update_under_lock(self):
         """
@@ -261,6 +260,45 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
+        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
+
+    def test_update_soft_delete(self):
+        """
+        Creating an Overwrite with a PATCH can only occur with a limited set of properties.
+        """
+        # We first delete the existing Overwrite to make sure were testing correctly
+        self.delete_test_overwrite(hard=False)
+        # Put the Override
+        body = {
+            "srn": self.test_srn,
+            "metrics": {
+                "views": 1
+            }
+        }
+        url = f"/api/v1/product/overwrite/{self.test_srn}/"
+        response = self.client.put(url, body, content_type="application/json")
+        # Asserts
+        expected_overwrites = {
+            "metrics": {
+                "views": 1,
+                "star_1": 0,
+                "star_2": 0,
+                "star_3": 0,
+                "star_4": 0,
+                "star_5": 0,
+            }
+        }
+        self.assertEqual(response.status_code, 200)
+        document = ProductDocument.objects.get(identity=self.test_srn)
+        self.assertIsNotNone(document.overwrite)
+        self.assertIsNotNone(document.overwrite.deleted_at)
+        response_data = response.json()
+        self.assert_overwrite(response_data, self.test_srn)
+        self.assertEqual(response_data["properties"], expected_overwrites)
+        document = ProductDocument.objects.get(identity=self.test_srn)
+        self.assertIsNotNone(document.overwrite)
+        self.assertEqual(document.overwrite.properties, expected_overwrites)
+        self.assertGreater(document.modified_at, self.start_test,"Expected modified_at of document to get updated")
 
     def test_patch_create(self):
         """
@@ -295,6 +333,7 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
+        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
 
     def test_patch_create_invalid(self):
         """
@@ -316,6 +355,7 @@ class TestProductOverwriteAPI(TestCase):
         self.assertEqual(response.status_code, 400)
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNone(document.overwrite)
+        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
 
     def test_patch_update(self):
         """
@@ -347,8 +387,7 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
-        self.assertGreater(document.modified_at, datetime_begin_test,
-                           "Expected modified_at of document to get updated")
+        self.assertGreater(document.modified_at, self.start_test,"Expected modified_at of document to get updated")
 
     def test_patch_update_invalid(self):
         """
@@ -378,6 +417,7 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
+        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
 
     def test_patch_update_under_lock(self):
         """
@@ -410,17 +450,50 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
+        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+
+    def test_patch_soft_delete(self):
+        """
+        Creating an Overwrite with a PATCH can only occur with a limited set of properties.
+        """
+        # We first delete the existing Overwrite to make sure were testing correctly
+        self.delete_test_overwrite(hard=False)
+        # Patch the Override
+        body = {
+            "srn": self.test_srn,
+            "metrics": {
+                "views": 1
+            }
+        }
+        url = f"/api/v1/product/overwrite/{self.test_srn}/"
+        response = self.client.patch(url, body, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        document = ProductDocument.objects.get(identity=self.test_srn)
+        self.assertIsNotNone(document.overwrite)
+        self.assertIsNotNone(document.overwrite.deleted_at)
+        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
 
     def test_delete(self):
-        datetime_begin_test = now()
         response = self.client.delete(f"/api/v1/product/overwrite/{self.test_srn}/", content_type="application/json")
         self.assertEqual(response.status_code, 204)
         document = ProductDocument.objects.get(identity=self.test_srn)
-        self.assertGreater(document.modified_at, datetime_begin_test,
-                           "Expected modified_at of document to get updated")
+        self.assertGreater(document.modified_at, self.start_test,"Expected modified_at of document to get updated")
         overwrite = Overwrite.objects.get(id=self.test_srn)
-        self.assertGreater(overwrite.deleted_at, datetime_begin_test)
-        # Check whether the deleted extensions are truly not returned by the API
+        self.assertGreater(overwrite.deleted_at, self.start_test)
+        # Check whether soft deleted Overwrites are still accessible
+        response = self.client.get(f"/api/v1/product/overwrite/{self.test_srn}/", content_type="application_json")
+        self.assertEqual(response.status_code, 200)
+        response_data = response.json()
+        self.assert_overwrite(response_data, self.test_srn)
+        self.assertIsNotNone(response_data["deleted_at"])
+        # Proceed with a hard delete
+        hard_delete_time = now()
+        response = self.client.delete(f"/api/v1/product/overwrite/{self.test_srn}/", content_type="application/json")
+        self.assertEqual(response.status_code, 204)
+        document = ProductDocument.objects.get(identity=self.test_srn)
+        self.assertIsNone(document.overwrite)
+        self.assertGreater(document.modified_at, hard_delete_time, "Expected modified_at of document to get updated")
+        # Check whether the deleted Overwrites are truly not returned by the API
         response = self.client.get(f"/api/v1/product/overwrite/{self.test_srn}/", content_type="application_json")
         self.assertEqual(response.status_code, 404)
 
