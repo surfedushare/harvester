@@ -73,8 +73,6 @@ class OverwriteSerializer(DocumentBaseSerializer):
         metrics = validated_data["metrics"]
         for metric, value in metrics.items():
             overwrite.properties["metrics"][metric] += value
-        from devtools import debug
-        debug(overwrite.properties)
         overwrite.save()
         # Update modified_at for all possible documents as all documents have essentially changed with the Overwrite.
         Document.objects.filter(identity=srn).update(modified_at=now())
