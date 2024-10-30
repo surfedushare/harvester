@@ -60,6 +60,13 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DOMAIN = environment.django.domain
 PROTOCOL = environment.django.protocol
 
+SESSION_COOKIE_SECURE = PROTOCOL == "https"
+CSRF_COOKIE_SECURE = PROTOCOL == "https"
+CORS_ALLOWED_ORIGINS = [
+    f"{PROTOCOL}://{DOMAIN}",
+]
+if ENVIRONMENT != "production":
+    CORS_ALLOW_ALL_ORIGINS = True
 
 # Detect our own IP address
 try:
