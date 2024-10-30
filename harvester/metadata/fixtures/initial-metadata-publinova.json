@@ -467,7 +467,7 @@
         "model": "metadata.metadatafield",
         "pk": 22,
         "fields": {
-            "name": "provider.name",
+            "name": "provider",
             "entity": "products:default",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
@@ -482,7 +482,7 @@
         "model": "metadata.metadatafield",
         "pk": 23,
         "fields": {
-            "name": "provider.name",
+            "name": "provider",
             "entity": "projects:default",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
