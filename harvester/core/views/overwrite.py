@@ -1,6 +1,7 @@
 from typing import Type
 
 from django.db import transaction, DatabaseError
+from django.db.models import ObjectDoesNotExist
 from django.utils.timezone import now
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError, APIException
@@ -49,6 +50,17 @@ class OverwriteSerializer(DocumentBaseSerializer):
             )
         return super().validate(attrs)
 
+    def _set_current_document_modified_at(self, srn: str) -> None:
+        Document: Type[HarvestDocument] = self.context["Document"]
+        DatasetVersion: Type[HarvestDocument] = self.context["DatasetVersion"]
+        try:
+            cdv = DatasetVersion.objects.get_current_version()
+            doc = Document.objects.get(identity=srn, dataset_version=cdv)
+        except ObjectDoesNotExist:
+            return
+        doc.metadata["modified_at"] = now()
+        doc.save()
+
     def create(self, validated_data):
         srn = validated_data.pop("srn")
         metrics = validated_data.pop("metrics")
@@ -59,13 +71,13 @@ class OverwriteSerializer(DocumentBaseSerializer):
             }
         })
         Document: Type[HarvestDocument] = self.context["Document"]
-        Document.objects.filter(identity=srn).update(modified_at=now(), overwrite=overwrite)
+        Document.objects.filter(identity=srn).update(overwrite=overwrite)
+        self._set_current_document_modified_at(srn)
         return overwrite
 
     def partial_update(self, instance: HarvestOverwrite, validated_data: dict):
         # Acquire a lock on the specified Overwrite
         # And write metrics data as the sum of old and new data.
-        Document: Type[HarvestDocument] = self.context["Document"]
         Overwrite: Type[HarvestOverwrite] = self.Meta.model
         with transaction.atomic():
             overwrite, created = Overwrite.objects.select_for_update(nowait=False).get_or_create(pk=instance.pk)
@@ -74,8 +86,7 @@ class OverwriteSerializer(DocumentBaseSerializer):
         for metric, value in metrics.items():
             overwrite.properties["metrics"][metric] += value
         overwrite.save()
-        # Update modified_at for all possible documents as all documents have essentially changed with the Overwrite.
-        Document.objects.filter(identity=srn).update(modified_at=now())
+        self._set_current_document_modified_at(srn)
         return overwrite
 
     def update(self, instance: HarvestOverwrite, validated_data):
@@ -83,7 +94,6 @@ class OverwriteSerializer(DocumentBaseSerializer):
             return self.partial_update(instance, validated_data)
         # Acquire a lock on the specified Overwrite
         # And write data as the new Overwrite properties
-        Document: Type[HarvestDocument] = self.context["Document"]
         Overwrite: Type[HarvestOverwrite] = self.Meta.model
         with transaction.atomic():
             try:
@@ -93,6 +103,5 @@ class OverwriteSerializer(DocumentBaseSerializer):
         srn = validated_data.pop("srn")
         overwrite.properties = validated_data
         overwrite.save()
-        # Update modified_at for all possible documents as all documents have essentially changed with the Overwrite.
-        Document.objects.filter(identity=srn).update(modified_at=now())
+        self._set_current_document_modified_at(srn)
         return overwrite

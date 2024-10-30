@@ -125,7 +125,10 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_create_partial_data(self):
         """
@@ -159,7 +162,10 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_update(self):
         """
@@ -223,7 +229,10 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_update_under_lock(self):
         """
@@ -260,7 +269,10 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
-        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
+        self.assertLess(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document to not change and not trigger index updates."
+        )
 
     def test_patch_create(self):
         """
@@ -295,7 +307,10 @@ class TestProductOverwriteAPI(TestCase):
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNotNone(document.overwrite)
         self.assertEqual(document.overwrite.properties, expected_overwrites)
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_patch_create_anonymous(self):
         """
@@ -335,7 +350,10 @@ class TestProductOverwriteAPI(TestCase):
         self.assertEqual(response.status_code, 400)
         document = ProductDocument.objects.get(identity=self.test_srn)
         self.assertIsNone(document.overwrite)
-        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
+        self.assertLess(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document to not change and not trigger index updates."
+        )
 
     def test_patch_update(self):
         """
@@ -366,7 +384,10 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_patch_update_anonymous(self):
         """
@@ -413,7 +434,10 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
-        self.assertLess(document.modified_at, self.start_test, "Expected modified_at of document to not change")
+        self.assertLess(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document to not change and not trigger index updates."
+        )
 
     def test_patch_update_under_lock(self):
         """
@@ -446,7 +470,10 @@ class TestProductOverwriteAPI(TestCase):
                 "star_5": 1,
             }
         })
-        self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+        self.assertGreater(
+            document.metadata["modified_at"], self.start_test,
+            "Expected modified_at of document metadata to get updated to propagate to search index correctly"
+        )
 
     def test_srn_mismatch(self):
         url = f"/api/v1/product/overwrite/{self.test_srn}/"

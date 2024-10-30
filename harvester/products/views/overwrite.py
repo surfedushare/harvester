@@ -82,6 +82,7 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateAPIView):
         context = super().get_serializer_context()
         models = load_harvest_models("products")
         context["Document"] = models["Document"]
+        context["DatasetVersion"] = models["DatasetVersion"]
         return context
 
     def get_permissions(self):
