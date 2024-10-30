@@ -3,7 +3,7 @@
         "model": "projects.siaprojectidsresource",
         "pk": 1,
         "fields": {
-            "uri": "api.nwosia.nl/v1/projecten",
+            "uri": "api.gaustat.nl/v1/projecten",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2024-09-24T11:54:16.826Z",
@@ -16,7 +16,7 @@
                 "args": [],
                 "kwargs": {},
                 "method": "get",
-                "url": "https://api.nwosia.nl/v1/projecten",
+                "url": "https://api.gaustat.nl/v1/projecten",
                 "headers": {
                     "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
                     "Accept-Encoding": "gzip, deflate",
@@ -36,7 +36,7 @@
         "model": "projects.siaprojectdetailsresource",
         "pk": 1,
         "fields": {
-            "uri": "api.nwosia.nl/v1/projecten/315",
+            "uri": "api.gaustat.nl/v1/projecten/315",
             "status": 200,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2024-09-24T11:54:16.826Z",
@@ -51,7 +51,7 @@
                 ],
                 "kwargs": {},
                 "method": "get",
-                "url": "https://api.nwosia.nl/v1/projecten/315",
+                "url": "https://api.gaustat.nl/v1/projecten/315",
                 "headers": {
                     "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
                     "Accept-Encoding": "gzip, deflate",
@@ -71,7 +71,7 @@
         "model": "projects.siaprojectdetailsresource",
         "pk": 2,
         "fields": {
-            "uri": "api.nwosia.nl/v1/projecten/1676",
+            "uri": "api.gaustat.nl/v1/projecten/1676",
             "status": 403,
             "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
             "created_at": "2024-09-24T11:54:16.826Z",
@@ -86,7 +86,7 @@
                 ],
                 "kwargs": {},
                 "method": "get",
-                "url": "https://api.nwosia.nl/v1/projecten/1676",
+                "url": "https://api.gaustat.nl/v1/projecten/1676",
                 "headers": {
                     "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
                     "Accept-Encoding": "gzip, deflate",
