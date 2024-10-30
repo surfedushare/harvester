@@ -27,7 +27,7 @@ class TestHarvestSkosSources(ResourceFixturesMixin, TestCase):
         })
         super().tearDownClass()
 
-    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
+    @patch("metadata.utils.operations.translate_with_deepl", return_value="Translated")
     def test_no_duplicates(self, fake_deepl):
         call_command("harvest_skos_sources", "--source=Informatievaardigheid")
         call_command("harvest_skos_sources", "--source=Informatievaardigheid")
@@ -35,12 +35,12 @@ class TestHarvestSkosSources(ResourceFixturesMixin, TestCase):
         self.assertEqual(total_objects, 37,
                          "When the command runs twice it should not duplicate values.")
 
-    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
+    @patch("metadata.utils.operations.translate_with_deepl", return_value="Translated")
     def test_same_number_applied_science(self, fake_deepl):
         with self.assertNumQueries(165):
             call_command("harvest_skos_sources", "--source=Informatievaardigheid")
 
-    @patch("metadata.management.commands.harvest_skos_sources.translate_with_deepl", return_value="Translated")
+    @patch("metadata.utils.operations.translate_with_deepl", return_value="Translated")
     def test_data_contains_right_values(self, fake_deepl):
         call_command("harvest_skos_sources", "--source=Informatievaardigheid")
         value = MetadataValue.objects.get(

@@ -1,4 +1,5 @@
-from metadata.models import MetadataValue
+from metadata.models import MetadataField, MetadataValue, MetadataTranslation
+from metadata.utils.translate import translate_with_deepl
 
 
 def normalize_field_values(field_name: str, *args, is_singular: bool = False, as_models=False):
@@ -29,3 +30,38 @@ def normalize_field_values(field_name: str, *args, is_singular: bool = False, as
     if not normalized_values:
         return None if is_singular else normalized_values
     return normalized_values[0] if is_singular else normalized_values
+
+
+def get_or_create_metadata_value(term: str, field: MetadataField, parent: MetadataValue | None = None,
+                                 nl: str | None = None, en: str | None = None) -> MetadataValue:
+    try:
+        return MetadataValue.objects.get(value=term, field=field)
+    except MetadataValue.DoesNotExist:
+        pass
+    en = en or translate_with_deepl(nl)
+    translation = MetadataTranslation.objects.create(nl=nl, en=en, is_fuzzy=True)
+    return MetadataValue.objects.create(
+        name=nl,
+        field=field,
+        parent=parent,
+        value=term,
+        translation=translation,
+        is_manual=True
+    )
+
+
+def get_or_create_metadata_field(field: str, entity: str, nl: str, en: str,
+                                 english_as_dutch: bool = False) -> MetadataField:
+    try:
+        return MetadataField.objects.get(name=field, entity=entity)
+    except MetadataField.DoesNotExist:
+        pass
+    translation = MetadataTranslation.objects.create(nl=nl, en=en, is_fuzzy=True)
+    return MetadataField.objects.create(
+        name=field,
+        entity=entity,
+        translation=translation,
+        is_hidden=True,
+        is_manual=False,  # setting this to true is considered deprecated
+        english_as_dutch=english_as_dutch
+    )
