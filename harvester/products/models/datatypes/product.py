@@ -224,6 +224,8 @@ class ProductDocument(HarvestDocument):
         data = super().to_data(merge_derivatives, use_multilingual_fields)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
+        if use_multilingual_fields:
+            data["published_at"] = data["publisher_date"]
         # Add content of the product to a ContentContainer
         product_content = Content(
             srn=data["srn"],
