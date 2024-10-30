@@ -1,6 +1,7 @@
 from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from harvester.schema import HarvesterSchema
 from core.loading import load_harvest_models
@@ -82,3 +83,8 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateAPIView):
         models = load_harvest_models("products")
         context["Document"] = models["Document"]
         return context
+
+    def get_permissions(self):
+        if self.request.method == "PATCH":
+            return [AllowAny()]
+        return [IsAuthenticated()]

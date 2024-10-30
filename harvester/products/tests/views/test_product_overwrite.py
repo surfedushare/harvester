@@ -297,6 +297,24 @@ class TestProductOverwriteAPI(TestCase):
         self.assertEqual(document.overwrite.properties, expected_overwrites)
         self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
 
+    def test_patch_create_anonymous(self):
+        """
+        Test whether anonymous users are allowed to create an Overwrite using PATCH. Only tests access.
+        """
+        self.client.logout()
+        # We first delete the existing Overwrite to make sure were testing correctly
+        self.delete_test_overwrite()
+        # Patch the Override
+        body = {
+            "srn": self.test_srn,
+            "metrics": {
+                "views": 1,
+            }
+        }
+        url = f"/api/v1/product/overwrite/{self.test_srn}/"
+        response = self.client.patch(url, body, content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+
     def test_patch_create_invalid(self):
         """
         Creating an Overwrite with a PATCH can only occur with a limited set of properties.
@@ -349,6 +367,23 @@ class TestProductOverwriteAPI(TestCase):
             }
         })
         self.assertGreater(document.modified_at, self.start_test, "Expected modified_at of document to get updated")
+
+    def test_patch_update_anonymous(self):
+        """
+        Test whether anonymous users are allowed to update an Overwrite using PATCH. Only tests access.
+        """
+        self.client.logout()
+        # Patch the Override
+        body = {
+            "srn": self.test_srn,
+            "metrics": {
+                "views": 1
+            }
+        }
+        url = f"/api/v1/product/overwrite/{self.test_srn}/"
+        response = self.client.patch(url, body, content_type="application/json")
+        # Asserts
+        self.assertEqual(response.status_code, 200)
 
     def test_patch_update_invalid(self):
         """
