@@ -156,7 +156,18 @@ class TestDocumentView(TestCase):
             "SURFnet"
         ],
         "consortium": "Stimuleringsregeling Open en Online Onderwijs",
-        "subtitle": None
+        "subtitle": None,
+        "metrics": {
+            "views": 1,
+            "stars": {
+                "average": 2.3,
+                "star_1": 5,
+                "star_2": 4,
+                "star_3": 3,
+                "star_4": 2,
+                "star_5": 1
+            }
+        }
     }
     expected_product_count = 13  # 1 original, 15 copies and minus 3 deletes
 
@@ -430,7 +441,18 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "is_external": None,
             }
         ],
-        "subtitle": None
+        "subtitle": None,
+        "metrics": {
+            "views": 1,
+            "stars": {
+                "average": 2.3,
+                "star_1": 5,
+                "star_2": 4,
+                "star_3": 3,
+                "star_4": 2,
+                "star_5": 1
+            }
+        }
     }
 
 

@@ -25,3 +25,4 @@ class BaseSearchResultSerializer(serializers.Serializer):
     has_parts = serializers.ListField(child=serializers.CharField())
     is_part_of = serializers.ListField(child=serializers.CharField())
     keywords = serializers.ListField(child=serializers.CharField())
+    metrics = serializers.DictField(default=None, allow_null=True)

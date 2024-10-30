@@ -183,9 +183,10 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         data = deepcopy(self.properties)
         if self.overwrite:
             data["overwrite"] = self.overwrite.id
-            data.update(self.overwrite)
+            data["metrics"] = self.overwrite.get_metrics_overwrite()
         else:
             data["overwrite"] = None
+            data["metrics"] = None
         if merge_derivatives:
             data.update(self.get_derivatives_data())
         if use_multilingual_fields:
