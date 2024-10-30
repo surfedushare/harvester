@@ -1,14 +1,9 @@
-from typing import Type, cast
-
 from django.http import Http404
-from django.utils.timezone import now
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.exceptions import ValidationError
 
 from harvester.schema import HarvesterSchema
 from core.loading import load_harvest_models
-from core.models.datatypes import HarvestDocument
 from products.models import Overwrite
 from products.views.serializers.overwrite import ProductOverwriteSerializer
 
@@ -34,9 +29,9 @@ class ProductOverwriteListView(generics.ListAPIView):
         return context
 
 
-class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ProductOverwriteDetailView(generics.RetrieveUpdateAPIView):
     """
-    This endpoint allows you to retrieve (GET), update (PUT, PATCH) or delete (DELETE) an Overwrite.
+    This endpoint allows you to retrieve (GET), update (PUT, PATCH) an Overwrite.
 
     An Overwrite is a way for anybody to enrich/alter the data that is coming from sources.
     When documents from sources get indexed by the search engine
@@ -58,8 +53,7 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     ## Response body
 
-    The response contains an Overwrite (GET, PUT or PATCH) or an empty response (DELETE).
-    See request body to learn more about the properties of an Overwrite.
+    The response contains an Overwrite. See request body to learn more about the properties of an Overwrite.
     Note that the module responsible for loading data into the search engine may transform the format of overwrites,
     to suit the engine.
     """
@@ -72,15 +66,10 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
         try:
             return super().get_object()
         except Http404:
-            deleted_instance = Overwrite.objects.filter().filter(id=self.kwargs["srn"]).first()
-            if not deleted_instance:
-                if self.request.method in ["GET", "DELETE"]:
-                    raise
-                self._is_create = True
-                return None  # this will lead to creation of the Overwrite
-            elif self.request.method == "PATCH":
-                raise ValidationError("Unable to patch an Overwrite that is marked as deleted.")
-            return deleted_instance
+            self._is_create = True
+            if self.request.method == "GET":
+                raise
+            return None
 
     def update(self, request, *args, **kwargs):
         response = super().update(request, *args, **kwargs)
@@ -93,9 +82,3 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateDestroyAPIView):
         models = load_harvest_models("products")
         context["Document"] = models["Document"]
         return context
-
-    def destroy(self, request, *args, **kwargs):
-        models = load_harvest_models("products")
-        Document: Type[HarvestDocument] = cast(Type[HarvestDocument], models["Document"])
-        Document.objects.filter(identity=kwargs["srn"]).update(modified_at=now())
-        return super().destroy(request, *args, **kwargs)
