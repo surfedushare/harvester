@@ -7,7 +7,7 @@ from metadata.models import MetadataField, MetadataValue
 
 class TestMetadataFieldValuesView(TestCase):
 
-    fixtures = ["test-metadata-edusources"]
+    fixtures = ["test-metadata"]
     field = "publisher_year_normalized"
 
     def setUp(self):

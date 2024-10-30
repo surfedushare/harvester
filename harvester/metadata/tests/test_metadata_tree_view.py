@@ -7,7 +7,7 @@ from metadata.models import MetadataField, MetadataValue
 
 class TestMetadataTreeView(TestCase):
 
-    fixtures = ["test-metadata-edusources"]
+    fixtures = ["test-metadata"]
 
     def setUp(self):
         super().setUp()
