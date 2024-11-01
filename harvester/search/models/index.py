@@ -9,7 +9,8 @@ from django.utils.timezone import make_aware
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
 
-from search_client.opensearch.indices import build_products_index_configuration
+from search_client.constants import Entities
+from search_client.opensearch.indices import build_products_index_configuration, build_projects_index_configuration
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search.clients import get_opensearch_client
 
@@ -163,26 +164,29 @@ class OpenSearchIndex(models.Model):
             }
             self.configuration["all"] = self.get_index_config()
 
+    def get_index_config(self, language: str = None) -> dict:
+        """
+        Returns the elasticsearch index configuration.
+        Configures the analysers based on the language passed in.
+        """
+        decompound_word_list = None
+        entity = Entities(self.entity)
+        if entity is Entities.PRODUCTS:
+            if settings.OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS:
+                decompound_word_list = settings.OPENSEARCH_DECOMPOUND_WORD_LISTS.dutch
+            if language is None:
+                return build_products_index_configuration(settings.DOCUMENT_TYPE, decompound_word_list)
+            return create_open_search_index_configuration(
+                language,
+                settings.DOCUMENT_TYPE,
+                decompound_word_list=decompound_word_list
+            )
+        elif entity is Entities.PROJECTS:
+            return build_projects_index_configuration()
+
     def __str__(self) -> str:
         return self.name
 
     class Meta:
         verbose_name = "OpenSearch index"
         verbose_name_plural = "OpenSearch indices"
-
-    @staticmethod
-    def get_index_config(language: str = None) -> dict:
-        """
-        Returns the elasticsearch index configuration.
-        Configures the analysers based on the language passed in.
-        """
-        decompound_word_list = None
-        if settings.OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS:
-            decompound_word_list = settings.OPENSEARCH_DECOMPOUND_WORD_LISTS.dutch
-        if language is None:
-            return build_products_index_configuration(settings.DOCUMENT_TYPE, decompound_word_list)
-        return create_open_search_index_configuration(
-            language,
-            settings.DOCUMENT_TYPE,
-            decompound_word_list=decompound_word_list
-        )
