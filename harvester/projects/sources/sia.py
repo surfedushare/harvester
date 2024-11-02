@@ -59,7 +59,7 @@ OBJECTIVE = {
     "@": "$",
     "state": SiaProjectExtraction.get_state,
     "set": lambda node: "sia:sia",
-    "merge_id": "$.id",  #
+    "merge_id": "$.id",
     "external_id": SiaProjectExtraction.get_external_id,
     "provider": SiaProjectExtraction.get_provider,
     # Generic metadata
@@ -96,7 +96,11 @@ SEEDING_PHASES = [
         "contribute_data": {
             "objective": {
                 "@": "$",
-                "merge_id": "$.id"
+                "state": lambda node: "inactive",
+                "set": lambda node: "sia:sia",
+                "merge_id": "$.id",
+                "external_id": SiaProjectExtraction.get_external_id,
+                "provider": SiaProjectExtraction.get_provider,
             }
         }
     },
