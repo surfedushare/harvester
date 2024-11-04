@@ -9,9 +9,14 @@ from products.models import ProductDocument
 
 class RawProductDocumentSerializer(DocumentBaseSerializer):
 
+    transform = serializers.SerializerMethodField()
+
+    def get_transform(self, obj):
+        return obj.to_data(merge_derivatives=True, use_multilingual_fields=True)
+
     class Meta:
         model = ProductDocument
-        fields = DocumentBaseSerializer.default_fields + ("state", "metadata", "derivatives")
+        fields = DocumentBaseSerializer.default_fields + ("state", "metadata", "derivatives", "transform",)
 
 
 class MetadataProductDocumentSerializer(serializers.ModelSerializer):
