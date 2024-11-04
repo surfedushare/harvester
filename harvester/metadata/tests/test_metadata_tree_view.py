@@ -134,3 +134,27 @@ class TestMetadataTreeView(TestCase):
             for child in field["children"]:
                 self.assertEqual(child["field"], field["value"])
                 self.assert_metadata_node_structure(child)
+
+
+class TestMetadataTreeHTMLView(TestCase):
+
+    fixtures = ["test-metadata"]
+
+    def setUp(self):
+        super().setUp()
+        self.user = User.objects.create(username="supersurf")
+        self.client.force_login(self.user)
+
+    def test_html_tree(self):
+        response = self.client.get("/metadata/tree/plain/?field=language")
+        self.assertEqual(response.status_code, 200)
+
+    def test_html_tree_unauthorized(self):
+        self.client.logout()
+        response = self.client.get("/metadata/tree/plain/?field=language")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "/admin/login/?next=/metadata/tree/plain/%3Ffield%3Dlanguage")
+
+    def test_html_tree_invalid(self):
+        response = self.client.get("/metadata/tree/plain/?field=lang")
+        self.assertEqual(response.status_code, 404)

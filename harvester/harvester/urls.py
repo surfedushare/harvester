@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.schemas import get_schema_view
 
 from core import views as core_views
-from metadata.urls import public_api_patterns as metadata_public
+from metadata.urls import public_api_patterns as metadata_public, html_patterns as metadata_html_patterns
 from search.urls import public_api_patterns as search_public
 from products.urls import public_api_patterns as products_public, webhook_urlpatterns as products_webhooks
 from projects.urls import public_api_patterns as projects_public
@@ -64,6 +64,7 @@ urlpatterns = [
     path('api/v1/', include((api_urlpatterns, "v1",))),
     path('accounts/', include('allauth.urls')),
     *products_webhooks,
+    *metadata_html_patterns,
     path('', core_views.health_check, name="health-check")
 ]
 
