@@ -53,7 +53,10 @@ class TestMetadataTreeView(TestCase):
         material_types = next(
             (field for field in data if field["value"] == "material_types")
         )
-        self.assertEqual(len(material_types["children"]), 19)
+        self.assertEqual(
+            len(material_types["children"]), 25,
+            "Expected hidden values to show in response for frontends to use as translations and in calculations."
+        )
 
     def test_metadata_tree_view_max_children(self):
         max_children = 2
