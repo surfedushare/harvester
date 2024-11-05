@@ -180,9 +180,12 @@ class EdurepProductExtraction:
         return EdurepExtractor.get_educational_levels(el)
 
     @classmethod
-    def get_studies(cls, soup, el):
-        blocks = EdurepExtractor.find_all_classification_blocks(el, "discipline", "czp:id")
-        return list(set([block.text.strip() for block in blocks]))
+    def get_disciplines(cls, soup, el):
+        return [
+            identifier
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline")
+            if "/begrippenkader/" in identifier
+        ]
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
@@ -222,9 +225,8 @@ OBJECTIVE = {
     "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
     "learning_material.material_types": EdurepProductExtraction.get_material_types,
     "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
-    "learning_material.studies": EdurepProductExtraction.get_studies,
     "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
-    "learning_material.disciplines": EdurepProductExtraction.get_studies,
+    "learning_material.disciplines": EdurepProductExtraction.get_disciplines,
     "learning_material.consortium": EdurepProductExtraction.get_consortium,
 }
 
