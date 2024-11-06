@@ -415,6 +415,7 @@ if not DEBUG:
         integrations=[DjangoIntegration(), CeleryIntegration()],
         send_default_pii=False  # GDPR requirement
     )
+    sentry_sdk.set_tag("surf.platform", PLATFORM.value)
     # We kill all DisallowedHost logging on the servers,
     # because it happens so frequently that we can't do much about it
     ignore_logger('django.security.DisallowedHost')
