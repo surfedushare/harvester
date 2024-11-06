@@ -94,12 +94,14 @@ class SearchDocumentGenericViewMixin:
     entity = None
 
     def get_serializer_class(self):
-        app_config = apps.get_app_config(self.entity.value)
+        entity = self.entity if isinstance(self.entity, str) else self.entity.value
+        app_config = apps.get_app_config(entity)
         return app_config.result_serializer
 
     @classmethod
     def get_transformer_class(cls) -> Type[BaseModel]:
-        app_config = apps.get_app_config(cls.entity.value)
+        entity = cls.entity if isinstance(cls.entity, str) else cls.entity.value
+        app_config = apps.get_app_config(entity)
         return app_config.result_transformer
 
 
