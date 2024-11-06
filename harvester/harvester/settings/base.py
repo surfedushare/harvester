@@ -106,8 +106,8 @@ INSTALLED_APPS = [
     'sources',
 
     'products',
-    'files',
     'projects',
+    'files',
     'testing',
 ]
 
