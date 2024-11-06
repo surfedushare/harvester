@@ -180,6 +180,13 @@ class FileDocument(HarvestDocument):
         }
         if "tika" in self.derivatives:
             text = strip_tags(self.derivatives["tika"]["texts"][0])
+            lines = []
+            for line in text.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                lines.append(line)
+            text = "\n".join(lines)
             if text and len(text) >= 1000000:
                 text = " ".join(text.split(" ")[:10000])
             data["text"] = text

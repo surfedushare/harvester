@@ -1,6 +1,9 @@
 from django.conf import settings
+from django.http import Http404
+from django.views.generic import TemplateView
 from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
@@ -103,3 +106,17 @@ class MetadataFieldValuesView(generics.ListAPIView):
             case _:
                 pass
         return queryset
+
+
+class MetadataTreeHTMLView(LoginRequiredMixin, TemplateView):
+    template_name = "tree.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        field_name = self.request.GET.get("field")
+        if not field_name or not MetadataField.objects.filter(name=field_name).exists():
+            raise Http404(f"Metadata field {field_name} does not exist")
+        context["nodes"] = MetadataValue.objects \
+            .select_related("translation") \
+            .filter(deleted_at__isnull=True, field__name=field_name)
+        return context

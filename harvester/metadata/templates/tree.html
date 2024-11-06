@@ -1,0 +1,18 @@
+{% load mptt_tags %}
+
+<ul class="root">
+    {% spaceless %}
+    {% recursetree nodes %}
+    {% if node.is_leaf_node %}
+        <li>{{ node.translation.en }}</li>
+    {% else %}
+        <li>
+            {{ node.translation.en }}
+            <ul class="children">
+                {{ children }}
+            </ul>
+        </li>
+    {% endif %}
+    {% endrecursetree %}
+    {% endspaceless %}
+</ul>

@@ -257,6 +257,7 @@ class TestDocumentView(TestCase):
             # These are expected to change often in the raw data format and shouldn't fail the tests
             data.pop("properties")
             data.pop("derivatives")
+            data.pop("transform")
         self.assertEqual(data, self.expected_document_output)
 
     def test_detail_not_found(self):
