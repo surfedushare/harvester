@@ -29,7 +29,7 @@ class MetadataProjectDocumentSerializer(serializers.ModelSerializer):
 
 class RawProjectListView(DatasetVersionDocumentListView):
     """
-    Returns a list of the most recent products.
+    Returns a list of the most recent projects.
     The dataformat is an internal dataformat which is not guaranteed to remain constant over time.
     This endpoint is mostly meant for debugging purposes.
     """
@@ -38,7 +38,7 @@ class RawProjectListView(DatasetVersionDocumentListView):
 
 class MetadataProjectListView(DatasetVersionDocumentListView):
     """
-    Returns a list of the most recent products, but it only returns the metadata.
+    Returns a list of the most recent projects, but it only returns the metadata.
     This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProjectDocumentSerializer
@@ -47,7 +47,7 @@ class MetadataProjectListView(DatasetVersionDocumentListView):
 
 class RawProjectDetailView(DatasetVersionDocumentDetailView):
     """
-    Returns the most recent version of a product using its SURF Resource Name as an identifier.
+    Returns the most recent version of a project using its SURF Resource Name as an identifier.
     The dataformat is an internal dataformat which is not guaranteed to remain constant over time.
     This endpoint is mostly meant for debugging purposes.
     """
@@ -56,7 +56,7 @@ class RawProjectDetailView(DatasetVersionDocumentDetailView):
 
 class MetadataProjectDetailView(DatasetVersionDocumentDetailView):
     """
-    Returns the most recent version of a product using its SURF Resource Name as an identifier,
+    Returns the most recent version of a project using its SURF Resource Name as an identifier,
     but it only returns the metadata. This is useful for things like a sitemap where only the metadata is important.
     """
     serializer_class = MetadataProjectDocumentSerializer

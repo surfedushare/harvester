@@ -43,9 +43,7 @@ class TestDeactivateInvalidProjects(TestCase):
             self.seeds, len(self.seeds)
         )
 
-    maxDiff = None
-
-    def test_deactivate_invalid_products(self):
+    def test_deactivate_invalid_projects(self):
         deactivate_invalid_projects("projects", [doc.id for doc in self.documents])
 
         valid_document = ProjectDocument.objects.get(identity="surf:testing:1")
