@@ -57,7 +57,7 @@ def transform_discipline_values_to_skos(apps, schema_editor):
         # Load the SKOS values which will be manual by default
         call_command("harvest_skos_sources", "--source", skos_discipline_source)
         # Mark the manual values as hidden instead
-        MetadataValue.objects.filter(field__name="disciplines", is_manual=True).update(is_manual=False, is_hidden=True)
+        MetadataValue.objects.filter(field__name="disciplines", is_manual=True).update(is_hidden=True)
 
     # Remove all normalized values that were never really normalized
     MetadataValue.objects.filter(field__name="disciplines_normalized.keyword", is_hidden=True).delete()
