@@ -260,6 +260,4 @@ class TestEdurepProductExtraction(TestCase):
     def test_get_disciplines(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
-        self.assertEqual(seeds[1]["learning_material"]["disciplines"], [
-            "http://purl.edustandaard.nl/begrippenkader/2be994a1-678c-4927-9cd9-5e85169cca76"
-        ])
+        self.assertEqual(seeds[1]["learning_material"]["disciplines"], ["8f984395-e090-41be-96df-503f53ddaa09"])
