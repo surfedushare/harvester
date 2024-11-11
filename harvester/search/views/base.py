@@ -7,7 +7,6 @@ from rest_framework.request import Request
 from rest_framework.serializers import Serializer
 
 from search_client.constants import Entities
-from search_client.opensearch import SearchClient
 from search_client.opensearch.configuration import is_valid_preset_search_configuration
 
 

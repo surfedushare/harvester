@@ -9,7 +9,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
 
-from search_client.opensearch.client import SearchClient
 from search_client.opensearch.configuration import is_valid_preset_search_configuration
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField, MetadataFieldSerializer, MetadataValue, MetadataValueSerializer
