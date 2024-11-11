@@ -24,6 +24,7 @@ from system_configuration.main import create_configuration_and_session, MODE, PR
 from system_configuration.packaging import get_package_info
 from search_client.version import VERSION as SEARCH_CLIENT_VERSION
 from search_client.constants import Platforms
+from search_client.opensearch.client import SearchClient
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -316,6 +317,7 @@ OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS = environment.opensearch.enable_decompoun
 OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = None
+OPENSEARCH_PRESET_DEFAULT = SearchClient.preset_default
 
 
 # Tika

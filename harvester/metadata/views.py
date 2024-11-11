@@ -65,7 +65,7 @@ class MetadataTreeView(generics.ListAPIView):
     pagination_class = None
 
     def get_entities(self) -> list[str]:
-        entity_input = self.request.GET.get("entity", SearchClient.preset_default)
+        entity_input = self.request.GET.get("entity", settings.OPENSEARCH_PRESET_DEFAULT)
         try:
             entity_validated_input = is_valid_preset_search_configuration(settings.PLATFORM, entity_input)
         except ValueError:
