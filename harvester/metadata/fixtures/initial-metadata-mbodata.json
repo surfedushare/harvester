@@ -837,17 +837,6 @@
     },
     {
         "model": "metadata.metadatatranslation",
-        "pk": 180,
-        "fields": {
-            "created_at": "2022-01-12T12:14:03.881Z",
-            "updated_at": "2022-01-12T12:14:03.881Z",
-            "nl": "Samenwerkingsverband",
-            "en": "Consortium",
-            "is_fuzzy": false
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
         "pk": 192,
         "fields": {
             "created_at": "2022-01-12T12:14:04.014Z",
@@ -1057,17 +1046,6 @@
     },
     {
         "model": "metadata.metadatatranslation",
-        "pk": 3169,
-        "fields": {
-            "created_at": "2022-08-01T06:39:52.915Z",
-            "updated_at": "2022-08-10T09:54:53.921Z",
-            "nl": "Vakgebied",
-            "en": "Discipline",
-            "is_fuzzy": false
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
         "pk": 10687,
         "fields": {
             "created_at": "2024-04-22T08:44:05.380Z",
@@ -1130,17 +1108,6 @@
             "nl": "Ouder dan 2021",
             "en": "Older than 2021",
             "is_fuzzy": true
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
-        "pk": 11626,
-        "fields": {
-            "created_at": "2024-09-30T07:33:26.924Z",
-            "updated_at": "2024-09-30T07:33:26.924Z",
-            "nl": "Vakgebied",
-            "en": "Discipline",
-            "is_fuzzy": false
         }
     },
     {
@@ -1726,21 +1693,6 @@
     },
     {
         "model": "metadata.metadatafield",
-        "pk": 8,
-        "fields": {
-            "name": "consortium.keyword",
-            "entity": "products",
-            "created_at": "2022-01-12T12:14:03.882Z",
-            "updated_at": "2024-10-07T08:06:05.939Z",
-            "translation": 180,
-            "is_hidden": false,
-            "is_manual": true,
-            "english_as_dutch": true,
-            "value_output_order": "frequency"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
         "pk": 9,
         "fields": {
             "name": "lom_educational_levels",
@@ -1771,21 +1723,6 @@
     },
     {
         "model": "metadata.metadatafield",
-        "pk": 17,
-        "fields": {
-            "name": "disciplines",
-            "entity": "products",
-            "created_at": "2022-08-01T06:39:52.916Z",
-            "updated_at": "2024-09-04T11:39:01.208Z",
-            "translation": 3169,
-            "is_hidden": true,
-            "is_manual": true,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
         "pk": 20,
         "fields": {
             "name": "publisher_year_normalized",
@@ -1797,21 +1734,6 @@
             "is_manual": true,
             "english_as_dutch": false,
             "value_output_order": "manual"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
-        "pk": 22,
-        "fields": {
-            "name": "disciplines_normalized.keyword",
-            "entity": "products:default",
-            "created_at": "2024-09-30T07:33:26.926Z",
-            "updated_at": "2024-09-30T07:33:26.926Z",
-            "translation": 11626,
-            "is_hidden": true,
-            "is_manual": true,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
         }
     },
     {
