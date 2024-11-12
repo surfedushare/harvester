@@ -246,7 +246,7 @@ class TestEdurepProductExtraction(TestCase):
     def test_get_keywords(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
-        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK'])
+        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK', 'btgtgo'])
 
     def test_get_aggregation_level(self):
         seeds = self.seeds
