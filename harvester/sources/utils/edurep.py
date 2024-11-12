@@ -16,14 +16,16 @@ class EdurepExtractor(BaseExtractor):
     #############################
 
     @classmethod
-    def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str) -> list[str]:
+    def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str,
+                                            id_type: str) -> list[str]:
+        assert id_type in ["czp:entry", "czp:id"]
         entries = element.find_all(string=classification_type)
         identifiers = set()
         for entry in entries:
             classification_element = entry.find_parent('czp:classification')
             if not classification_element:
                 continue
-            raw_identifiers = classification_element.find_all("czp:id")
+            raw_identifiers = classification_element.find_all(id_type)
             taxon_path = classification_element.find("czp:taxonpath")
             source = taxon_path.find("czp:source") if taxon_path else None
             if source:

@@ -181,14 +181,17 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_disciplines(cls, soup, el):
-        blocks = EdurepExtractor.find_all_classification_blocks(el, "discipline", "czp:id")
-        return list(set([block.text.strip() for block in blocks]))
+        return [
+            identifier.replace("http://purl.edustandaard.nl/begrippenkader/", "")
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline", "czp:entry")
+            if "/begrippenkader/" in identifier
+        ]
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
         return [
             identifier
-            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline")
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline", "czp:id")
             if "/concept/" in identifier
         ]
 
