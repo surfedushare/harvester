@@ -101,7 +101,7 @@ class TestEdurepProductSeeding(TestCase):
                 else:
                     self.assertIsNone(product.pending_at)
                     self.assertIsNotNone(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 2)
+        self.assertEqual(self.set.documents.count(), 3)
 
 
 class TestEdurepProductExtraction(TestCase):
@@ -318,10 +318,12 @@ class TestEdurepMBOProductExtraction(TestCase):
 
     def test_get_is_part_of(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["is_part_of"], [], "Expected material to have empty list by default")
-        self.assertEqual(seeds[1]["is_part_of"], ["edurep:l4l:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["is_part_of"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[2]["is_part_of"], ["edurep:l4l:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
 
     def test_get_has_parts(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["has_parts"], [], "Expected material to have empty list by default")
-        self.assertEqual(seeds[1]["has_parts"], ["edurep:l4l:55e89b31-1374-4a45-bcda-715c99a7372e"])
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["has_parts"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[2]["has_parts"], ["edurep:l4l:55e89b31-1374-4a45-bcda-715c99a7372e"])

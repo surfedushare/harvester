@@ -84,9 +84,8 @@ class EdurepExtractor(BaseExtractor):
         """
         Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
         """
-        educational_level_state = cls._get_educational_level_state(product)
         header = product.find('header')
-        return header.get("status", educational_level_state)
+        return header.get("status", 'active')
 
     @classmethod
     def get_educational_levels(cls, product):
@@ -97,7 +96,7 @@ class EdurepExtractor(BaseExtractor):
         return levels
 
     @classmethod
-    def _get_educational_level_state(cls, product):
+    def _get_higher_education_level_state(cls, product):
         """
         Returns the desired state of the record based on (non NL-LOM) educational levels
         """
@@ -134,8 +133,13 @@ class EdurepExtractor(BaseExtractor):
     @classmethod
     def iterate_valid_higher_education_products(cls, soup: bs4.BeautifulSoup):
         for product in soup.find_all("record"):
+            # Deleted products don't specify education level so we pass those through
             product_state = cls.get_oaipmh_record_state(product)
-            educational_level_state = cls._get_educational_level_state(product)
+            if product_state == "deleted":
+                yield product
+                continue
+            # For regular products we check the educational level to meet higher education criteria
+            educational_level_state = cls._get_higher_education_level_state(product)
             if educational_level_state == "inactive" and product_state != "deleted":
                 continue
             yield product
@@ -143,9 +147,17 @@ class EdurepExtractor(BaseExtractor):
     @classmethod
     def iterate_valid_vocational_education_products(cls, soup: bs4.BeautifulSoup):
         for product in soup.find_all("record"):
+            # Deleted products don't specify keywords so we pass those through
+            product_state = cls.get_oaipmh_record_state(product)
+            if product_state == "deleted":
+                yield product
+                continue
+            # For regular products we check if keywords match the criteria
             for keyword in cls.get_keywords(soup, product):
-                if keyword.lower() in MBO_INDUSTRY_KEYWORDS:
+                if keyword.lower() in MBO_INDUSTRY_KEYWORDS or product_state == "deleted":
                     yield product
+                    break
+
 
     #############################
     # GENERIC TRANSFORMATIONS
