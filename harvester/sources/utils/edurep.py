@@ -158,7 +158,6 @@ class EdurepExtractor(BaseExtractor):
                     yield product
                     break
 
-
     #############################
     # GENERIC TRANSFORMATIONS
     #############################
