@@ -1,8 +1,11 @@
+from copy import deepcopy
+
 from django.test import TestCase
 
+from search_client.constants import Platforms
 from core.processors import HttpSeedingProcessor
 from products.models import Set, ProductDocument
-from products.sources.edurep import SEEDING_PHASES
+from products.sources.edurep import SEEDING_PHASES, build_objective
 from sources.factories.edurep.extraction import EdurepOAIPMHFactory
 
 
@@ -79,6 +82,26 @@ class TestEdurepProductSeeding(TestCase):
         for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
             self.assertEqual(batch, [])
         self.assertEqual(self.set.documents.count(), 0)
+
+    def test_mbo_seeding(self):
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.MBODATA)
+        processor = HttpSeedingProcessor(self.set, {
+            "phases": seeding_phases
+        })
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 1)
 
 
 class TestEdurepProductExtraction(TestCase):

@@ -7,6 +7,11 @@ from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
 from sources.utils.base import BaseExtractor
 
 
+MBO_INDUSTRY_KEYWORDS = {
+    "btgtgo"
+}
+
+
 class EdurepExtractor(BaseExtractor):
 
     logger = logging.getLogger("harvester")
@@ -103,7 +108,7 @@ class EdurepExtractor(BaseExtractor):
         return "active" if has_higher_level and not has_lower_level else "inactive"
 
     @classmethod
-    def iterate_valid_products(cls, soup: bs4.BeautifulSoup):
+    def iterate_valid_higher_education_products(cls, soup: bs4.BeautifulSoup):
         for product in soup.find_all("record"):
             product_state = cls.get_oaipmh_record_state(product)
             educational_level_state = cls._get_educational_level_state(product)
@@ -111,9 +116,24 @@ class EdurepExtractor(BaseExtractor):
                 continue
             yield product
 
+    @classmethod
+    def iterate_valid_vocational_education_products(cls, soup: bs4.BeautifulSoup):
+        for product in soup.find_all("record"):
+            for keyword in cls.get_keywords(soup, product):
+                if keyword.lower() in MBO_INDUSTRY_KEYWORDS:
+                    yield product
+
     #############################
     # GENERIC TRANSFORMATIONS
     #############################
+
+    @classmethod
+    def get_keywords(cls, soup, el):
+        nodes = el.find_all('czp:keyword')
+        return [
+            node.find('czp:langstring').text.strip()
+            for node in nodes
+        ]
 
     @classmethod
     def get_copyright(cls, product):

@@ -1,8 +1,10 @@
 import bs4
 from datetime import datetime
-
 from dateutil.parser import parse as date_parser
 
+from django.conf import settings
+
+from core.constants import Platforms
 from sources.utils.edurep import EdurepExtractor
 
 
@@ -52,14 +54,6 @@ class EdurepProductExtraction:
     def get_language(cls, soup, el):
         node = el.find('czp:language')
         return node.text.strip() if node else None
-
-    @classmethod
-    def get_keywords(cls, soup, el):
-        nodes = el.find_all('czp:keyword')
-        return [
-            node.find('czp:langstring').text.strip()
-            for node in nodes
-        ]
 
     @classmethod
     def get_description(cls, soup, el):
@@ -132,7 +126,7 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_consortium(cls, soup, el):
-        hbovpk_keywords = [keyword for keyword in cls.get_keywords(soup, el) if "hbovpk" in keyword.lower()]
+        hbovpk_keywords = [keyword for keyword in EdurepExtractor.get_keywords(soup, el) if "hbovpk" in keyword.lower()]
         if hbovpk_keywords:
             return "HBO Verpleegkunde"
 
@@ -200,35 +194,44 @@ class EdurepProductExtraction:
         return EdurepExtractor.get_copyright_description(el)
 
 
-OBJECTIVE = {
-    # Essential objective keys for system functioning
-    "@": EdurepExtractor.iterate_valid_products,
-    "state": EdurepProductExtraction.get_oaipmh_record_state,
-    "external_id": EdurepProductExtraction.get_oaipmh_external_id,
-    "set": EdurepProductExtraction.get_set,
-    # Generic metadata
-    "modified_at": EdurepProductExtraction.get_oaipmh_modified_at,
-    "files": EdurepProductExtraction.get_files,
-    "title": EdurepProductExtraction.get_title,
-    "language": EdurepProductExtraction.get_language,
-    "keywords": EdurepProductExtraction.get_keywords,
-    "description": EdurepProductExtraction.get_description,
-    "copyright": EdurepProductExtraction.get_copyright,
-    "copyright_description": EdurepProductExtraction.get_copyright_description,
-    "authors": EdurepProductExtraction.get_authors,
-    "provider": EdurepProductExtraction.get_provider,
-    "organizations": EdurepProductExtraction.get_organizations,
-    "publishers": EdurepProductExtraction.get_publishers,
-    "publisher_date": EdurepProductExtraction.get_publisher_date,
-    "publisher_year": EdurepProductExtraction.get_publisher_year,
-    # Learning material metadata
-    "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
-    "learning_material.material_types": EdurepProductExtraction.get_material_types,
-    "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
-    "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
-    "learning_material.disciplines": EdurepProductExtraction.get_disciplines,
-    "learning_material.consortium": EdurepProductExtraction.get_consortium,
-}
+def build_objective(platform: Platforms) -> dict:
+    if platform is Platforms.EDUSOURCES:
+        valid_products = EdurepExtractor.iterate_valid_higher_education_products
+    else:
+        valid_products = EdurepExtractor.iterate_valid_vocational_education_products
+    return {
+        # Essential objective keys for system functioning
+        "@": valid_products,
+        "state": EdurepProductExtraction.get_oaipmh_record_state,
+        "external_id": EdurepProductExtraction.get_oaipmh_external_id,
+        "set": EdurepProductExtraction.get_set,
+        # Generic metadata
+        "modified_at": EdurepProductExtraction.get_oaipmh_modified_at,
+        "files": EdurepProductExtraction.get_files,
+        "title": EdurepProductExtraction.get_title,
+        "language": EdurepProductExtraction.get_language,
+        "keywords": EdurepExtractor.get_keywords,
+        "description": EdurepProductExtraction.get_description,
+        "copyright": EdurepProductExtraction.get_copyright,
+        "copyright_description": EdurepProductExtraction.get_copyright_description,
+        "authors": EdurepProductExtraction.get_authors,
+        "provider": EdurepProductExtraction.get_provider,
+        "organizations": EdurepProductExtraction.get_organizations,
+        "publishers": EdurepProductExtraction.get_publishers,
+        "publisher_date": EdurepProductExtraction.get_publisher_date,
+        "publisher_year": EdurepProductExtraction.get_publisher_year,
+        # Learning material metadata
+        "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
+        "learning_material.material_types": EdurepProductExtraction.get_material_types,
+        "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
+        "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
+        "learning_material.disciplines": EdurepProductExtraction.get_disciplines,
+        "learning_material.consortium": EdurepProductExtraction.get_consortium,
+    }
+
+
+OBJECTIVE = build_objective(settings.PLATFORM)
+
 
 SEEDING_PHASES = [
     {
