@@ -21,6 +21,30 @@ class EdurepExtractor(BaseExtractor):
     #############################
 
     @classmethod
+    def find_all_relation_identifiers(cls, element: bs4.BeautifulSoup, relation_type: str) -> list[str]:
+        relations = element.find_all(string=relation_type)
+        identifiers = set()
+        for relation in relations:
+            relation_element = relation.find_parent('czp:relation')
+            if not relation_element:
+                continue
+            catalog_entries = relation_element.find_all('czp:catalogentry')
+            for entry in catalog_entries:
+                catalog = entry.find('czp:catalog')
+                if not catalog:
+                    continue
+                match catalog_value := catalog.text.strip():
+                    case "uri":
+                        catalog_prefix = "urn:"
+                    case "UUID":
+                        catalog_prefix = "urn:uuid:"
+                    case _:
+                        catalog_prefix = catalog_value + ":"
+                raw_identifier = entry.find('czp:entry').text.strip()
+                identifiers.add(raw_identifier.replace(catalog_prefix, ""))
+        return list(identifiers)
+
+    @classmethod
     def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str,
                                             id_type: str) -> list[str]:
         assert id_type in ["czp:entry", "czp:id"]

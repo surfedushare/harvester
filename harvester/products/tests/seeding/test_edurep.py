@@ -101,7 +101,7 @@ class TestEdurepProductSeeding(TestCase):
                 else:
                     self.assertIsNone(product.pending_at)
                     self.assertIsNotNone(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 1)
+        self.assertEqual(self.set.documents.count(), 2)
 
 
 class TestEdurepProductExtraction(TestCase):
@@ -284,3 +284,44 @@ class TestEdurepProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
         self.assertEqual(seeds[1]["learning_material"]["disciplines"], ["Zoeken en beoordelen van bronnen"])
+
+    def test_get_is_part_of(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["is_part_of"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["is_part_of"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[4]["is_part_of"], ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
+
+    def test_get_has_parts(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["has_parts"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[4]["has_parts"], ["55e89b31-1374-4a45-bcda-715c99a7372e"])
+
+
+class TestEdurepMBOProductExtraction(TestCase):
+
+    set = None
+    seeds = []
+
+    @classmethod
+    def setUpTestData(cls):  # NB: loads Edurep data using MBO extractor
+        EdurepOAIPMHFactory.create_common_responses()
+        cls.set = Set.objects.create(name="edurep", identifier="srn")
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.MBODATA)
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": seeding_phases
+        })
+        cls.seeds = []
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+
+    def test_get_is_part_of(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["is_part_of"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[1]["is_part_of"], ["edurep:l4l:3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
+
+    def test_get_has_parts(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[1]["has_parts"], ["edurep:l4l:55e89b31-1374-4a45-bcda-715c99a7372e"])

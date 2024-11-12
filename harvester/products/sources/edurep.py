@@ -193,12 +193,40 @@ class EdurepProductExtraction:
     def get_copyright_description(cls, soup, el):
         return EdurepExtractor.get_copyright_description(el)
 
+    @classmethod
+    def get_is_part_of(cls, soup, el):
+        return EdurepExtractor.find_all_relation_identifiers(el, "ispartof")
+
+    @classmethod
+    def get_has_parts(cls, soup, el):
+        return EdurepExtractor.find_all_relation_identifiers(el, "haspart")
+
+    @classmethod
+    def get_srn_is_part_of(cls, soup, el):
+        set_prefix = cls.get_set(soup, el)
+        return [
+            f"{set_prefix}:{identifier}"
+            for identifier in EdurepExtractor.find_all_relation_identifiers(el, "ispartof")
+        ]
+
+    @classmethod
+    def get_srn_has_parts(cls, soup, el):
+        set_prefix = cls.get_set(soup, el)
+        return [
+            f"{set_prefix}:{identifier}"
+            for identifier in EdurepExtractor.find_all_relation_identifiers(el, "haspart")
+        ]
+
 
 def build_objective(platform: Platforms) -> dict:
     if platform is Platforms.EDUSOURCES:
         valid_products = EdurepExtractor.iterate_valid_higher_education_products
+        is_part_of_extractor = EdurepProductExtraction.get_is_part_of
+        has_parts_extractor = EdurepProductExtraction.get_has_parts
     else:
         valid_products = EdurepExtractor.iterate_valid_vocational_education_products
+        is_part_of_extractor = EdurepProductExtraction.get_srn_is_part_of
+        has_parts_extractor = EdurepProductExtraction.get_srn_has_parts
     return {
         # Essential objective keys for system functioning
         "@": valid_products,
@@ -220,6 +248,8 @@ def build_objective(platform: Platforms) -> dict:
         "publishers": EdurepProductExtraction.get_publishers,
         "publisher_date": EdurepProductExtraction.get_publisher_date,
         "publisher_year": EdurepProductExtraction.get_publisher_year,
+        "is_part_of": is_part_of_extractor,
+        "has_parts": has_parts_extractor,
         # Learning material metadata
         "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
         "learning_material.material_types": EdurepProductExtraction.get_material_types,
