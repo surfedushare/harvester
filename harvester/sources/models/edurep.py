@@ -11,7 +11,7 @@ logger = logging.getLogger("harvester")
 
 class EdurepOAIPMH(HttpResource):
 
-    URI_TEMPLATE = settings.EDUREP_BASE_URL + "/edurep/oai?set={}&from={}"
+    URI_TEMPLATE = settings.SOURCES["edurep"]["endpoint"] + "/edurep/oai?set={}&from={}"
     PARAMETERS = {
         "verb": "ListRecords",
         "metadataPrefix": "lom"
