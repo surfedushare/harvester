@@ -6,6 +6,9 @@ SEED_DEFAULTS = {
     "provider": None,
     # Generic metadata
     "name": None,
+    "description": None,
     "ror": None,
-    # TODO: to be completed
+    "type": None,
+    "secretary": None,
+    "parents": []
 }

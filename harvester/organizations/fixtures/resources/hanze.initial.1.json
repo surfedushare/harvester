@@ -1,0 +1,655 @@
+{
+    "count": 20,
+    "pageInformation": {
+        "offset": 10,
+        "size": 10
+    },
+    "items": [
+        {
+            "uuid": "8c230190-fff5-43c6-9834-6b969c4296d9",
+            "name": {
+                "en_GB": "Youth, Education and Society",
+                "nl_NL": "Jeugd, Educatie en Samenleving"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "121"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2739231,
+                    "id": "121",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059702,
+                    "id": "KCAR160",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059701,
+                    "value": {
+                        "en_GB": "<p>The research group Youth, Education and Society contributes to the healthy growth and participation of youth in the Northern Netherlands. We do this by engaging in practice-oriented and innovative research projects, in which we want to answer questions such as:</p>\n<p>How do youth professionals in the social educational domain work in practice and what can they do to stimulate the development of all children?\u00a0<br/>Can we improve or innovate this effectively and meaningfully?<br/>How do new partnerships such as integral child centers, district teams and appropriate education partnerships work and how can we use interprofessional cooperation to stimulate the growth of all children and youth?</p>\n<p><strong>Who are we?</strong><br/>The research group Youth, Education and Society is a network organization. It consists of four learning assignments Diversity in Learning and Behaviour, Language Functioning &amp; Healthy Ageing, Youth &amp; Environment and Integrated Approach Child Abuse and two collaborating professorships Arts Education and Movement Education and Youth Sport. Together we make a greater or lesser contribution to the core theme of Healthy Ageing.\u00a0</p>",
+                        "nl_NL": "<p>Het lectoraat Jeugd, Educatie en Samenleving levert een bijdrage aan het gezond opgroeien en de participatie van de jeugd in Noord-Nederland. Dat doen we door ons bezig te houden met praktijkgerichte en innovatieve onderzoeksprojecten, waarin we antwoord willen geven op vragen als:</p>\n<p>Hoe werken jeugdprofessionals in het sociaal educatieve domein in de praktijk en wat kunnen zij doen om de ontwikkeling van alle kinderen te stimuleren? Kunnen we dit effectief en betekenisvol verbeteren of vernieuwen? Hoe werken nieuwe samenwerkingsverbanden zoals integrale kindcentra, wijkteams en samenwerkingsverbanden passend onderwijs en hoe kunnen we interprofessionele samenwerking inzetten om de opgroeikansen van alle kinderen en jongeren te stimuleren?</p>\n<p><strong>Wie zijn wij?</strong><br/>Het lectoraat Jeugd, Educatie en Samenleving is een netwerkorganisatie. Het bestaat uit vier leeropdrachten Diversiteit in Leren en Gedrag, Talig functioneren &amp; Gezond ouder worden, Jeugd &amp; Leefomgeving en Integrale Aanpak Kindermishandeling en twee samenwerkende lectoraten Kunsteducatie en Bewegingsonderwijs en jeugdsport. Met elkaar leveren we meer of minder een bijdrage aan het kernthema Kansengelijkheid &amp; Participatie het gebied van Healthy Ageing.\u00a0</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "20d5e949-f7f2-4bb1-9711-bc984024a62a",
+            "name": {
+                "en_GB": "Sports Science",
+                "nl_NL": "Praktijkgerichte Sportwetenschap"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "134"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2739264,
+                    "id": "134",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059750,
+                    "id": "KCAR180",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059749,
+                    "value": {
+                        "en_GB": "<p><strong>Applied sports science</strong></p>\n<p>This Research Group does research about five central themes. Each theme has a coordinator and one or more doctoral candidates, who conduct long-term research concerning the central theme. Teacher-researchers are involved in research projects as well. They safeguard that there is a strong link between the research and the curriculum.</p>",
+                        "nl_NL": "<p><strong>Praktijkgerichte Sportwetenschap</strong></p>\n<p>\u200bBinnen het lectoraat wordt onderzoek gedaan rond vijf centrale thema's. Deze hebben allen een co\u00f6rdinator en \u00e9\u00e9n of meer promovendi die langdurig onderzoek doen naar de centrale thematiek. Daarnaast zijn er docent-onderzoekers betrokken bij onderzoeksprojecten. Zij zorgen voor een sterke koppeling tussen onderzoek en onderwijs.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "1365128c-0a82-4685-b9b3-cca551f3becd",
+            "name": {
+                "en_GB": "Nursing Diagnostics",
+                "nl_NL": "Verpleegkundige diagnostiek"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "138"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2739430,
+                    "id": "138",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059718,
+                    "id": "KCAR220",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059717,
+                    "value": {
+                        "en_GB": "<p><span>The Research Group Nursing Diagnosis is part of the Centre of Expertise Healthy Ageing and the School of Nursing at Hanze University of Applied Sciences Groningen. This research group seeks to establish the connection between research, education and the nursing practice by working intensively with other\u00a0research groups\u00a0at Hanze University and elsewhere, but also with healthcare institutions, umbrella organisations, professional organisations and educational and research institutions. The research group also engages in intensive knowledge exchanges on the basis of partnerships between healthcare institutions and research groups from various universities and (university) medical centres. The research group also uses the services of external and internal (senior) researchers and project team members.</span><br/><span>We have clustered our research into three lines of research:\u00a0</span><em>Family Care</em><span>,\u00a0</span><em>Preclinical, Mobile &amp; Emergency</em><span>\u00a0</span><em>and\u00a0</em><em>Intensive Care\u00a0</em><span>and\u00a0</span><em>Accessibility</em><span>. Many of our professors and researchers work with each other in\u00a0</span><em>Erasmus projects</em><span>.</span></p>",
+                        "nl_NL": "<p>Het lectoraat Verpleegkundige Diagnostiek (VD) maakt deel uit van het Centre of Expertise Healthy Ageing en de Academie voor Verpleegkunde van de Hanzehogeschool Groningen. Het lectoraat zoekt de verbinding tussen onderzoek, onderwijs en verpleegkundige praktijkvoering. Het lectoraat kent verschillende leeropdrachten die onder leiding van verschillende lectoren ingevuld worden.</p>\n<p>De algemene overkoepelende leeropdracht is\u00a0<em>bij te dragen aan kennisdeling door middel van het uitvoeren van toegepast wetenschappelijk onderzoek dat diagnostisch en verpleegkundig van aard is</em>.</p>\n<p>Zo bestaan er verschillende leeropdrachten binnen de programmalijn 'Family Care' (familiezorg en sociaal-systemisch denken en werken), de programmalijn 'Value Based Health Care (waarde-gedreven zorg), de programmalijn 'Critical Care' (ambulancezorg, spoedeisende hulp en intensive zorg) en de programmalijn 'Accessibility' (toegankelijkheid tot de maatschappij voor mensen met een beperking). Hiernaast is er ook een overkoepelende programmalijn 'Verpleegkundige Diagnostiek'. Deze is verbindend van aard, wat wil zeggen dat er verbindingen worden gelegd tussen de andere programmalijnen zodat innovatief vervolgonderzoek ge\u00efnitieerd kan worden dat meetbare effecten oplevert binnen de verpleegkundige zorgverlening en bij de zorgvrager.</p>\n<p>Door intensief samen te werken met zorginstellingen, koepelorganisaties, beroepsorganisaties, universitaire centra (i.e. UMCG) en gerelateerde onderwijs- en onderzoeksinstellingen, dragen we bij aan de kwaliteit van de verpleegkundige zorg en aan de kwaliteit van leven van met name zorgvragers en hun directe naasten die zorg ontvangen van verpleegkundigen. Daarnaast vindt er een intensieve kennisuitwisseling plaats op basis van samenwerkingsverbanden tussen zorginstellingen en onderzoeksgroepen van verschillende universiteiten en (Universitaire) Medische Centra. Binnen het lectoraat zijn, naast de lectoren, ondermeer projectleiders, (senior)docent-onderzoekers, postdocs en bachelor-, master- en PhD-studenten actief.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "1fb9e76f-8192-4101-8604-2e140e876cf5",
+            "name": {
+                "en_GB": "Energy Transition",
+                "nl_NL": "Energietransitie"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "139"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2739534,
+                    "id": "139",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059647,
+                    "id": "KEKC140",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059646,
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "2149592a-90bf-4854-8fda-7a156b2395d9"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "76333ca7-9cba-4d5f-b3ec-f06873bb1f2c",
+            "name": {
+                "en_GB": "Labour Participation",
+                "nl_NL": "Arbeidsparticipatie"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_area",
+                "term": {
+                    "en_GB": "Research Area",
+                    "nl_NL": "Leeropdracht"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "105"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2740363,
+                    "id": "105",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3057125,
+                    "id": "KARB140",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3057124,
+                    "value": {
+                        "en_GB": "<p>Labour is important for a person's material and immaterial well-being. People get an income to live independently through labour. Therefore, employment eases financial burdens. Having too little money to pay the bills is a stress factor that has a huge impact on a person's psychological well-being and puts pressures on social relationships. But employment offers more than just an income. It also links up with the human need for personal development. Employment offers people social contacts and a daily structure. Employment makes demands on cognitive functions such as our memory and concentration, which results in a person having a good feeling about himself or herself. And, more importantly, somebody who works meets the social standard of an autonomous individual who does not have to rely on institutes such as the Social Services or other benefits agency.</p>",
+                        "nl_NL": "<p>Arbeid is belangrijk voor het materi\u00eble en immateri\u00eble welbevinden. Door middel van arbeid kan men zelfstandig in zijn inkomen voorzien. Arbeid verlicht daarmee financi\u00eble noden. Te weinig geld om rond te komen is een stressfactor die een grote aanslag pleegt op het psychisch welbevinden en sociale relaties onder druk zetten. Maar arbeid biedt meer dan een inkomen alleen. Het sluit aan op de menselijke behoefte om zich te ontwikkelen. Arbeid biedt sociale contacten en een dag- en nachtstructuur. Arbeid doet een beroep op cognitieve functies zoals geheugen en concentratie, waardoor iemand beter in zijn vel komt te zitten. En niet minder belangrijk, iemand die werkt voldoet aan de maatschappelijke norm van autonoom individu die niet afhankelijk is van instituties als sociale diensten of andere uitkeringsinstanties.</p>\n<p>Meer dan 1 miljoen burgers zijn echter verstoken van arbeid. Het is belangrijk dat werklozen zo snel mogelijk weer aan het werk komen. Gelukkig vinden ze steeds beter de weg naar betaald werk. Instellingen als UWV en sociale diensten helpen hen daarbij. Het kan echter altijd beter. Maar hoe? De sociale diensten van de vier grote noordelijke gemeenten Assen, Emmen, Groningen en Leeuwarden buigen zich regelmatig over deze vraag. Ze zijn daarbij in contact gekomen met de Hanzehogeschool Groningen. Immers bij het beantwoorden van deze hoe-vraag is ook een rol weggelegd voor onderzoek en praktijkinnovatie. Gezamenlijk hebben zij de basis gelegd voor het bijzondere lectoraat Arbeidsparticipatie.\u200b\u200b\u200b</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "1b49583b-573c-4da1-8815-f737ebc652da"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "1b49583b-573c-4da1-8815-f737ebc652da",
+            "name": {
+                "en_GB": "Human Capital",
+                "nl_NL": "Human Capital"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "148"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2740619,
+                    "id": "148",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3057117,
+                    "id": "KARB180",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3057116,
+                    "value": {
+                        "nl_NL": "<p>Het lectoraat\u00a0Human Capital\u00a0richt zich op het verbeteren van de wisselwerking tussen regels en arbeidsmarkt. De missie is meer flexibiliteit en meer zekerheid via betere spelregels.\u00a0</p>\n<p>Oude spelregels op de arbeidsmarkt en in de sociale zekerheid passen niet altijd meer optimaal bij veranderende omstandigheden op en om die arbeidsmarkt. De institutionele vormgeving van de arbeidsmarkt werd en wordt daarom gemoderniseerd.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "414006e2-1f9b-43ae-ac95-a95f5192e78f"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "c8320fce-fba0-4b47-bbfd-b1f8f9f41821",
+            "name": {
+                "en_GB": "Art & Sustainability",
+                "nl_NL": "Art & Sustainability"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "152"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2740936,
+                    "id": "152",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059874,
+                    "id": "KCKS140",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059873,
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "64540675-9071-43d6-a7df-e53ac7b51d95"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "1b2ee039-7d55-4de9-a387-966a3e4e4cb8",
+            "name": {
+                "en_GB": "Image in Context",
+                "nl_NL": "Image in Context"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "153"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2741019,
+                    "id": "153",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059882,
+                    "id": "KCKS160",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059881,
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "64540675-9071-43d6-a7df-e53ac7b51d95"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "6899f046-9985-4305-bbfc-3cba5c50d79d",
+            "name": {
+                "en_GB": "Real Estate",
+                "nl_NL": "Vastgoed"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "154"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2741103,
+                    "id": "154",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3056991,
+                    "id": "KCNR120",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3056990,
+                    "value": {
+                        "nl_NL": "<p>Het lectoraat Vastgoed doet onderzoek naar toekomstbestendig vastgoed in een maatschappelijke context. Voorbeelden hiervan zijn vitale binnensteden en kernen, leefbare wijken, bloeiende werklocaties, creatieve broedplaatsen, huisvesting van precaire doelgroepen, herbestemming van erfgoed, duurzame gebiedsontwikkeling en placemaking.\u00a0</p>\n<p>Vanuit een gebiedsgerichte en integrale benadering dragen we met praktijkgerichte kennis bij aan de waardering, de (her)ontwikkeling en het beheer van vitale werk-, woon- en leefgebieden. En cre\u00ebren we impact voor onderwijs, praktijk en samenleving in zowel het stedelijke als het landelijke gebied. Hierbij staan\u00a0meervoudige waardecreatie\u00a0(economisch, sociaal, ruimtelijk, cultureel), actieve betrokkenheid van eindgebruikers, en aandacht voor\u00a0inclusiviteit\u00a0en\u00a0ethiek centraal.</p>\n<p>Het onderzoek van het lectoraat richt zich met name op drie actuele gebiedsopgaven rondom wonen, werken en ontmoeten/verblijven. Dit zijn: (1) de transformatie van binnensteden en centrumgebieden; (2) de (her)ontwikkeling en beheer van (innovatieve) werklocaties, en (3) de totstandkoming van inclusieve woon- en leefgemeenschappen.</p>\n<p>Praktijkgericht onderzoek betekent voor het lectoraat Vastgoed het ontwikkelen van kennis\u00a0<em>met</em>\u00a0de praktijk,\u00a0<em>voor</em>\u00a0de praktijk,\u00a0<em>over</em>de praktijk en\u00a0<em>in</em>\u00a0de praktijk. Ons uitgangspunt voor de interactie tussen onderwijs, onderzoek en praktijk is om die situaties aan te grijpen waar de kennisvraag van de professional en de kennisvraag van aankomend professional elkaar raken. Op die manier wordt kennisdeling kennisvermenigvuldiging.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "be7d02b9-56d1-4f45-b3ef-f742333bf776"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "7dc46e48-8f46-4406-8eb4-a445fe030ada",
+            "name": {
+                "en_GB": "Facility Management",
+                "nl_NL": "Facility Management"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "156"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2741376,
+                    "id": "156",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3056975,
+                    "id": "KCNR200",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3056974,
+                    "value": {
+                        "en_GB": "<p>The Facility Management professorship conducts research at the intersection of space and organization. The research group focuses on a built environment that promotes health and well-being. The focus is on healthcare, education, offices and urban development.</p>",
+                        "nl_NL": "<p>Het lectoraat Facility Management doet onderzoek op het snijvlak van ruimte en organisatie. Het lectoraat richt zich daarbij op een gebouwde omgeving waarmee de gezondheid en het welzijn bevorderd kan worden.\u00a0De focus ligt op zorg, onderwijs, kantoren en stadsontwikkeling.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "be7d02b9-56d1-4f45-b3ef-f742333bf776"
+                }
+            ],
+            "systemName": "Organization"
+        }
+    ]
+}
