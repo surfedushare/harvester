@@ -329,3 +329,8 @@ class TestEdurepMBOProductExtraction(TestCase):
         self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
         self.assertEqual(seeds[1]["has_parts"], [], "Expected material to have empty list by default")
         self.assertEqual(seeds[2]["has_parts"], ["edurep:l4l:55e89b31-1374-4a45-bcda-715c99a7372e"])
+
+    def test_get_keywords(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
+        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK'], "Expected BTG keywords to get ignored")

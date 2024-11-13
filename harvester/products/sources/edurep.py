@@ -5,7 +5,7 @@ from dateutil.parser import parse as date_parser
 from django.conf import settings
 
 from core.constants import Platforms
-from sources.utils.edurep import EdurepExtractor
+from sources.utils.edurep import EdurepExtractor, MBO_INDUSTRY_KEYWORDS
 
 
 class EdurepProductExtraction:
@@ -220,14 +220,21 @@ class EdurepProductExtraction:
             for identifier in EdurepExtractor.find_all_relation_identifiers(el, "haspart")
         ]
 
+    @classmethod
+    def get_vocational_education_keywords(cls, soup, el):
+        keywords = EdurepExtractor.get_keywords(soup, el)
+        return [keyword for keyword in keywords if keyword.lower() not in MBO_INDUSTRY_KEYWORDS]
+
 
 def build_objective(platform: Platforms) -> dict:
     if platform is Platforms.EDUSOURCES:
         valid_products = EdurepExtractor.iterate_valid_higher_education_products
+        keywords_extractor = EdurepExtractor.get_keywords
         is_part_of_extractor = EdurepProductExtraction.get_is_part_of
         has_parts_extractor = EdurepProductExtraction.get_has_parts
     else:
         valid_products = EdurepExtractor.iterate_valid_vocational_education_products
+        keywords_extractor = EdurepProductExtraction.get_vocational_education_keywords
         is_part_of_extractor = EdurepProductExtraction.get_srn_is_part_of
         has_parts_extractor = EdurepProductExtraction.get_srn_has_parts
     return {
@@ -241,7 +248,7 @@ def build_objective(platform: Platforms) -> dict:
         "files": EdurepProductExtraction.get_files,
         "title": EdurepProductExtraction.get_title,
         "language": EdurepProductExtraction.get_language,
-        "keywords": EdurepExtractor.get_keywords,
+        "keywords": keywords_extractor,
         "description": EdurepProductExtraction.get_description,
         "copyright": EdurepProductExtraction.get_copyright,
         "copyright_description": EdurepProductExtraction.get_copyright_description,
