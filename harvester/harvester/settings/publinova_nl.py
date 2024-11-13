@@ -7,7 +7,6 @@ DOCUMENT_TYPE = DocumentTypes.RESEARCH_PRODUCT
 SHAREKIT_TEST_ORGANIZATIONS = [
     "Publinova test",
     "ArtEZ University of the Arts",
-    "NHL Stenden Hogeschool",
     "Hogeschool Inholland",
     "Hogeschool KPZ",
     "Christelijke Hogeschool Ede",
