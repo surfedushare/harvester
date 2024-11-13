@@ -674,6 +674,14 @@ SOURCES = {
         "endpoint": "https://api.gaustat.nl",
         "api_key": environment.secrets.sia.api_key,
         "contact_email": environment.secrets.sia.contact_email
+    },
+    "sharekit": {
+        "endpoint": environment.harvester.repositories.sharekit,
+        "api_key": getattr(environment.secrets.sharekit, environment.project.name)
+    },
+    "edurep": {
+        "endpoint": environment.harvester.repositories.edurep,
+        "api_key": None,
     }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
