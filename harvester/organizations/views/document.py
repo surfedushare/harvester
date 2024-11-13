@@ -1,7 +1,6 @@
 from rest_framework import serializers
-
 from datagrowth.datatypes.views import DocumentBaseSerializer
-from search_client.constants import Entities
+
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
                                  SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
 from organizations.models import OrganizationDocument

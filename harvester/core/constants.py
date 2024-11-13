@@ -1,4 +1,4 @@
-from search_client.constants import Platforms  # noqa: F401; we're encapsulating the search-client here
+from search_client.constants import Platforms, Entities  # noqa: F401; we're encapsulating the search-client here
 
 
 class DeletePolicies:
