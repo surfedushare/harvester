@@ -2,7 +2,8 @@ from rest_framework import serializers
 from datagrowth.datatypes.views import DocumentBaseSerializer
 
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
-                                 SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
+                                 SearchDocumentListViewMixin as TransformDocumentListViewMixin,
+                                 SearchDocumentRetrieveViewMixin as TransformDocumentRetrieveViewMixin)
 from organizations.models import OrganizationDocument
 
 
@@ -62,7 +63,7 @@ class MetadataOrganizationDetailView(DatasetVersionDocumentDetailView):
     exclude_deletes_unless_modified_since_filter = True
 
 
-class OrganizationListView(SearchDocumentListViewMixin, DatasetVersionDocumentListView):
+class OrganizationListView(TransformDocumentListViewMixin, DatasetVersionDocumentListView):
     """
     Returns a list of the most recent organizations.
     The dataformat is considered stable within an API version.
@@ -71,26 +72,16 @@ class OrganizationListView(SearchDocumentListViewMixin, DatasetVersionDocumentLi
     When using the ``modified_since`` parameter the organizations will be limited to organizations
     that have been modified by this service since that date. Note that this service may decide to refresh data,
     even though sources didn't change that data.
-
-    Most properties for an OrganizationDocument are automatically documented through the interactive documentation.
-    However there are a few special properties that we'll document here.
-
-    # TODO: fill out the gaps, rename base classes
     """
     entity = "organizations"
     exclude_deletes_unless_modified_since_filter = True
 
 
-class OrganizationDetailView(SearchDocumentRetrieveViewMixin, DatasetVersionDocumentDetailView):
+class OrganizationDetailView(TransformDocumentRetrieveViewMixin, DatasetVersionDocumentDetailView):
     """
     Returns the most recent version of an organization, using its SURF Resource Name as an identifier,
     in a stable format within an API version.
     This is useful if a system wants to update their copy of an organization.
-
-    Most properties for an OrganizationDocument are automatically documented through the interactive documentation.
-    However there are a few special properties that we'll document here.
-
-    # TODO: fill out the gaps, rename base classes
     """
     entity = "organizations"
     exclude_deletes_unless_modified_since_filter = True

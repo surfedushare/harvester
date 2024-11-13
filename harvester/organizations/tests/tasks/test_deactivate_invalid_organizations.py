@@ -17,9 +17,9 @@ class TestDeactivateInvalidOrganizations(TestCase):
                 "set": "surf:testing",
                 "name": "Name 1",
                 "ror": "roarrrr",
+                "type": "organisation"
             },
             {
-                # TODO: more failure/default testing
                 "state": "active",
                 "external_id": 2,
                 "set": "surf:testing",
@@ -31,6 +31,7 @@ class TestDeactivateInvalidOrganizations(TestCase):
                 "external_id": "3",
                 "set": "surf:testing",
                 "name": "Name 2",
+                "type": "organization"
             }
         ]
         self.dataset, self.dataset_version, self.sets, self.documents = create_datatype_models(
@@ -50,7 +51,7 @@ class TestDeactivateInvalidOrganizations(TestCase):
         invalid_document = OrganizationDocument.objects.get(identity="surf:testing:2")
         self.assertTrue(invalid_document.pipeline["deactivate_invalid_organizations"]["success"])
         validation_errors = invalid_document.pipeline["deactivate_invalid_organizations"]["validation"]
-        self.assertTrue(validation_errors.startswith("1 validation error for "))
+        self.assertTrue(validation_errors.startswith("2 validation errors for "))
         self.assertEqual(invalid_document.state, OrganizationDocument.States.INACTIVE)
 
         default_document = OrganizationDocument.objects.get(identity="surf:testing:3")
