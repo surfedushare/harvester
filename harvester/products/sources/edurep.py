@@ -57,11 +57,14 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_description(cls, soup, el):
-        node = el.find('czp:description')
-        if node is None:
+        general = el.find('czp:general')
+        if general is None:
             return
-        translation = node.find('czp:langstring')
-        return translation.text.strip() if translation else None
+        description = general.find('czp:description')
+        if description is None:
+            return
+        translation = description.find('czp:langstring')
+        return translation.text.strip() or None if translation else None
 
     @classmethod
     def get_material_types(cls, soup, el):

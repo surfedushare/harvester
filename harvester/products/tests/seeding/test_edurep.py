@@ -245,6 +245,8 @@ class TestEdurepProductExtraction(TestCase):
             seeds[2]["description"], "Instruction on how to use a Vortex mixer",
             "Expected no newlines or carriage returns in the description"
         )
+        self.assertIsNone(seeds[3]["description"], "Expected empty czp:general description to lead to None value")
+        self.assertIsNone(seeds[4]["description"], "Expected missing czp:general description to lead to None value")
 
     def test_get_copyright(self):
         seeds = self.seeds
