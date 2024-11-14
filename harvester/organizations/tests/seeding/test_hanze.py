@@ -98,7 +98,8 @@ class TestSharekitOrganizationExtraction(ResourceFixturesMixin, TestCase):
 
     def test_get_ror(self):
         self.assertEqual(self.seeds[0]["ror"], "00xqtxw43")
-        self.assertIsNone(self.seeds[1]["ror"])
+        self.assertIsNone(self.seeds[1]["ror"], "Expected None when no ROR is present")
+        self.assertIsNone(self.seeds[2]["ror"], "Expected None when no identifiers are present at all")
 
     def test_get_type(self):
         self.assertEqual(self.seeds[0]["type"], "university")

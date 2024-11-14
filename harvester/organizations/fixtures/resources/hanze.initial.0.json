@@ -130,24 +130,6 @@
                     "nl_NL": "Lectoraat"
                 }
             },
-            "identifiers": [
-                {
-                    "typeDiscriminator": "PrimaryId",
-                    "idSource": "synchronisedOrganisation",
-                    "value": "103"
-                },
-                {
-                    "typeDiscriminator": "ClassifiedId",
-                    "pureId": 2735850,
-                    "id": "103",
-                    "type": {
-                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
-                        "term": {
-                            "en_GB": "Organisation ID"
-                        }
-                    }
-                }
-            ],
             "profileInformations": [
                 {
                     "pureId": 16379813,

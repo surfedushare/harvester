@@ -45,7 +45,7 @@ class HanzeOrganizationExtraction(PureExtractor):
 
     @classmethod
     def get_ror(cls, node):
-        for identifier in node["identifiers"]:
+        for identifier in node.get("identifiers", []):
             identifier_type = cls.parse_type_value(identifier.get("type", {}))
             if identifier_type == "ror_id":
                 return identifier["id"]
