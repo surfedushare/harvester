@@ -130,22 +130,6 @@
                     "nl_NL": "Lectoraat"
                 }
             },
-            "profileInformations": [
-                {
-                    "pureId": 16379813,
-                    "value": {
-                        "en_GB": "<p>Professor Heinrich Wörtche focuses on the outer layer of the Internet of Things (IoT), the Smart Connection Level, that connects the physical outer world with the inner cyber world. This connecting layer is formed by sensors that transfer measurement data about the status of and changes in the physical outer world to the inner cyber world. At the technical level, the focus is on miniature sensor technology, printed electronics, artificial intelligence running on microprocessors embedded in sensors and the use of intelligent network technology such as e.g. 5G technology. The Sensors &amp; Smart Systems focus area comprises four research lines \"embedded AI\", \"connectivity\", \"cyber physical lab\", and \"printed sensors\".</p>",
-                        "nl_NL": "<p>Lector Heinrich Wörtche richt zich met deze leeropdracht op de buitenste laag van de Internet of Things (IoT), het Smart Connection Level, de laag die de fysieke buitenwereld met de innerlijke cyberwereld verbindt. Deze verbindende laag wordt gevormd door sensoren die meetgegevens over de status van en veranderingen in de fysieke buitenwereld overbrengen naar de binnenste cyberwereld. Op technisch vlak ligt de focus op miniatuur sensortechnologie, geprinte elektronica, kunstmatige intelligentie die draait op microprocessoren die in sensoren zijn ingebed en het gebruik van intelligente netwerktechnologie zoals b.v. 5G-technologie. Het aandachtsgebied Sensors &amp; Smart Systems omvat vier onderzoekslijnen ‘embedded AI’, ‘connectivity’, ‘cyber physical lab’ en ‘printed sensors’.</p>"
-                    },
-                    "type": {
-                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
-                        "term": {
-                            "en_GB": "Organisation profile",
-                            "nl_NL": "Organisatieprofiel"
-                        }
-                    }
-                }
-            ],
             "parents": [
                 {
                     "systemName": "Organization",

@@ -31,7 +31,7 @@ class HanzeOrganizationExtraction(PureExtractor):
 
     @classmethod
     def get_description(cls, node):
-        for profile_information in node["profileInformations"]:
+        for profile_information in node.get("profileInformations", []):
             profile_information_type = cls.parse_type_value(profile_information["type"])
             if profile_information_type == "organisation_profile":
                 break

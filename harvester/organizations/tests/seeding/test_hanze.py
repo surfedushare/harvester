@@ -94,7 +94,8 @@ class TestSharekitOrganizationExtraction(ResourceFixturesMixin, TestCase):
 
     def test_get_description(self):
         self.assertTrue(self.seeds[0]["description"].startswith("<p>Together with students, professionals,"))
-        self.assertIsNone(self.seeds[1]["description"])
+        self.assertIsNone(self.seeds[1]["description"], "Expected None when no description value is present")
+        self.assertIsNone(self.seeds[2]["description"], "Expected None when no profile information is present")
 
     def test_get_ror(self):
         self.assertEqual(self.seeds[0]["ror"], "00xqtxw43")
