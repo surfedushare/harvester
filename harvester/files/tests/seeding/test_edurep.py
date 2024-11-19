@@ -1,9 +1,12 @@
+from copy import deepcopy
+
 from django.test import TestCase
 
+from core.constants import Platforms
 from core.processors import HttpSeedingProcessor
 from sources.factories.edurep.extraction import EdurepOAIPMHFactory
 from files.models import Set as FileSet, FileDocument
-from files.sources.edurep import SEEDING_PHASES
+from files.sources.edurep import SEEDING_PHASES, build_file_infos_iterator
 
 
 class TestEdurepFileSeeding(TestCase):
@@ -105,6 +108,26 @@ class TestEdurepFileSeeding(TestCase):
         self.assertEqual(self.set.documents.count(), 1)
         document = self.set.documents.first()
         self.assertEqual(document.properties["state"], FileDocument.States.DELETED)
+
+    def test_mbo_seeding(self):
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"]["@"] = build_file_infos_iterator(Platforms.MBODATA)
+        processor = HttpSeedingProcessor(self.set, {
+            "phases": seeding_phases
+        })
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, FileDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == FileDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 2)
 
 
 class TestEdurepFileExtraction(TestCase):

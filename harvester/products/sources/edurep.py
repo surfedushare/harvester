@@ -1,9 +1,11 @@
 import bs4
 from datetime import datetime
-
 from dateutil.parser import parse as date_parser
 
-from sources.utils.edurep import EdurepExtractor
+from django.conf import settings
+
+from core.constants import Platforms
+from sources.utils.edurep import EdurepExtractor, MBO_INDUSTRY_KEYWORDS
 
 
 class EdurepProductExtraction:
@@ -54,20 +56,15 @@ class EdurepProductExtraction:
         return node.text.strip() if node else None
 
     @classmethod
-    def get_keywords(cls, soup, el):
-        nodes = el.find_all('czp:keyword')
-        return [
-            node.find('czp:langstring').text.strip()
-            for node in nodes
-        ]
-
-    @classmethod
     def get_description(cls, soup, el):
-        node = el.find('czp:description')
-        if node is None:
+        general = el.find('czp:general')
+        if general is None:
             return
-        translation = node.find('czp:langstring')
-        return translation.text.strip() if translation else None
+        description = general.find('czp:description')
+        if description is None:
+            return
+        translation = description.find('czp:langstring')
+        return translation.text.strip() or None if translation else None
 
     @classmethod
     def get_material_types(cls, soup, el):
@@ -132,7 +129,7 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_consortium(cls, soup, el):
-        hbovpk_keywords = [keyword for keyword in cls.get_keywords(soup, el) if "hbovpk" in keyword.lower()]
+        hbovpk_keywords = [keyword for keyword in EdurepExtractor.get_keywords(soup, el) if "hbovpk" in keyword.lower()]
         if hbovpk_keywords:
             return "HBO Verpleegkunde"
 
@@ -181,14 +178,17 @@ class EdurepProductExtraction:
 
     @classmethod
     def get_disciplines(cls, soup, el):
-        blocks = EdurepExtractor.find_all_classification_blocks(el, "discipline", "czp:id")
-        return list(set([block.text.strip() for block in blocks]))
+        return [
+            identifier.replace("http://purl.edustandaard.nl/begrippenkader/", "")
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline", "czp:entry")
+            if "/begrippenkader/" in identifier
+        ]
 
     @classmethod
     def get_study_vocabulary(cls, soup, el):
         return [
             identifier
-            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline")
+            for identifier in EdurepExtractor.find_all_classification_identifiers(el, "discipline", "czp:id")
             if "/concept/" in identifier
         ]
 
@@ -196,36 +196,82 @@ class EdurepProductExtraction:
     def get_copyright_description(cls, soup, el):
         return EdurepExtractor.get_copyright_description(el)
 
+    @classmethod
+    def get_is_part_of(cls, soup, el):
+        return EdurepExtractor.find_all_relation_identifiers(el, "ispartof")
 
-OBJECTIVE = {
-    # Essential objective keys for system functioning
-    "@": EdurepExtractor.iterate_valid_products,
-    "state": EdurepProductExtraction.get_oaipmh_record_state,
-    "external_id": EdurepProductExtraction.get_oaipmh_external_id,
-    "set": EdurepProductExtraction.get_set,
-    # Generic metadata
-    "modified_at": EdurepProductExtraction.get_oaipmh_modified_at,
-    "files": EdurepProductExtraction.get_files,
-    "title": EdurepProductExtraction.get_title,
-    "language": EdurepProductExtraction.get_language,
-    "keywords": EdurepProductExtraction.get_keywords,
-    "description": EdurepProductExtraction.get_description,
-    "copyright": EdurepProductExtraction.get_copyright,
-    "copyright_description": EdurepProductExtraction.get_copyright_description,
-    "authors": EdurepProductExtraction.get_authors,
-    "provider": EdurepProductExtraction.get_provider,
-    "organizations": EdurepProductExtraction.get_organizations,
-    "publishers": EdurepProductExtraction.get_publishers,
-    "publisher_date": EdurepProductExtraction.get_publisher_date,
-    "publisher_year": EdurepProductExtraction.get_publisher_year,
-    # Learning material metadata
-    "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
-    "learning_material.material_types": EdurepProductExtraction.get_material_types,
-    "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
-    "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
-    "learning_material.disciplines": EdurepProductExtraction.get_disciplines,
-    "learning_material.consortium": EdurepProductExtraction.get_consortium,
-}
+    @classmethod
+    def get_has_parts(cls, soup, el):
+        return EdurepExtractor.find_all_relation_identifiers(el, "haspart")
+
+    @classmethod
+    def get_srn_is_part_of(cls, soup, el):
+        set_prefix = cls.get_set(soup, el)
+        return [
+            f"{set_prefix}:{identifier}"
+            for identifier in EdurepExtractor.find_all_relation_identifiers(el, "ispartof")
+        ]
+
+    @classmethod
+    def get_srn_has_parts(cls, soup, el):
+        set_prefix = cls.get_set(soup, el)
+        return [
+            f"{set_prefix}:{identifier}"
+            for identifier in EdurepExtractor.find_all_relation_identifiers(el, "haspart")
+        ]
+
+    @classmethod
+    def get_vocational_education_keywords(cls, soup, el):
+        keywords = EdurepExtractor.get_keywords(soup, el)
+        return [keyword for keyword in keywords if keyword.lower() not in MBO_INDUSTRY_KEYWORDS]
+
+
+def build_objective(platform: Platforms) -> dict:
+    if platform is Platforms.EDUSOURCES:
+        valid_products = EdurepExtractor.iterate_valid_higher_education_products
+        keywords_extractor = EdurepExtractor.get_keywords
+        is_part_of_extractor = EdurepProductExtraction.get_is_part_of
+        has_parts_extractor = EdurepProductExtraction.get_has_parts
+    else:
+        valid_products = EdurepExtractor.iterate_valid_vocational_education_products
+        keywords_extractor = EdurepProductExtraction.get_vocational_education_keywords
+        is_part_of_extractor = EdurepProductExtraction.get_srn_is_part_of
+        has_parts_extractor = EdurepProductExtraction.get_srn_has_parts
+    return {
+        # Essential objective keys for system functioning
+        "@": valid_products,
+        "state": EdurepProductExtraction.get_oaipmh_record_state,
+        "external_id": EdurepProductExtraction.get_oaipmh_external_id,
+        "set": EdurepProductExtraction.get_set,
+        # Generic metadata
+        "modified_at": EdurepProductExtraction.get_oaipmh_modified_at,
+        "files": EdurepProductExtraction.get_files,
+        "title": EdurepProductExtraction.get_title,
+        "language": EdurepProductExtraction.get_language,
+        "keywords": keywords_extractor,
+        "description": EdurepProductExtraction.get_description,
+        "copyright": EdurepProductExtraction.get_copyright,
+        "copyright_description": EdurepProductExtraction.get_copyright_description,
+        "authors": EdurepProductExtraction.get_authors,
+        "provider": EdurepProductExtraction.get_provider,
+        "organizations": EdurepProductExtraction.get_organizations,
+        "publishers": EdurepProductExtraction.get_publishers,
+        "publisher_date": EdurepProductExtraction.get_publisher_date,
+        "publisher_year": EdurepProductExtraction.get_publisher_year,
+        "is_part_of": is_part_of_extractor,
+        "has_parts": has_parts_extractor,
+        # Learning material metadata
+        "learning_material.aggregation_level": EdurepProductExtraction.get_aggregation_level,
+        "learning_material.material_types": EdurepProductExtraction.get_material_types,
+        "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
+        "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
+        "learning_material.disciplines": EdurepProductExtraction.get_disciplines,
+        "learning_material.consortium": EdurepProductExtraction.get_consortium,
+    }
+
+
+OBJECTIVE = build_objective(settings.PLATFORM)
+
 
 SEEDING_PHASES = [
     {
