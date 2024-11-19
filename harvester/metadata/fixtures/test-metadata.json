@@ -2740,28 +2740,6 @@
     },
     {
         "model": "metadata.metadatatranslation",
-        "pk": 11709,
-        "fields": {
-            "created_at": "2024-09-30T07:33:27.238Z",
-            "updated_at": "2024-09-30T07:33:27.238Z",
-            "nl": "published_at",
-            "en": "published_at",
-            "is_fuzzy": true
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
-        "pk": 11710,
-        "fields": {
-            "created_at": "2024-09-30T07:33:27.244Z",
-            "updated_at": "2024-09-30T07:33:27.244Z",
-            "nl": "modified_at",
-            "en": "modified_at",
-            "is_fuzzy": true
-        }
-    },
-    {
-        "model": "metadata.metadatatranslation",
         "pk": 11711,
         "fields": {
             "created_at": "2024-09-30T07:33:27.249Z",
@@ -3311,6 +3289,17 @@
         }
     },
     {
+        "model": "metadata.metadatatranslation",
+        "pk": 221,
+        "fields": {
+            "created_at": "2022-01-12T12:14:02.849Z",
+            "updated_at": "2022-01-12T12:14:02.849Z",
+            "nl": "Bron",
+            "en": "Source",
+            "is_fuzzy": false
+        }
+    },
+    {
         "model": "metadata.metadatafield",
         "pk": 1,
         "fields": {
@@ -3582,36 +3571,6 @@
     },
     {
         "model": "metadata.metadatafield",
-        "pk": 23,
-        "fields": {
-            "name": "published_at",
-            "entity": "products:default",
-            "created_at": "2024-09-30T07:33:27.240Z",
-            "updated_at": "2024-09-30T07:33:27.240Z",
-            "translation": 11709,
-            "is_hidden": true,
-            "is_manual": true,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
-        "pk": 24,
-        "fields": {
-            "name": "modified_at",
-            "entity": "products:default",
-            "created_at": "2024-09-30T07:33:27.247Z",
-            "updated_at": "2024-09-30T07:33:27.247Z",
-            "translation": 11710,
-            "is_hidden": true,
-            "is_manual": true,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
         "pk": 25,
         "fields": {
             "name": "language",
@@ -3650,6 +3609,21 @@
             "updated_at": "2024-09-30T07:33:27.400Z",
             "translation": 11745,
             "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 28,
+        "fields": {
+            "name": "harvest_source",
+            "entity": "projects",
+            "created_at": "2022-01-12T12:14:02.852Z",
+            "updated_at": "2022-01-12T12:14:02.852Z",
+            "translation": 221,
+            "is_hidden": true,
             "is_manual": false,
             "english_as_dutch": false,
             "value_output_order": "frequency"

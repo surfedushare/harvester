@@ -8,7 +8,7 @@ from products.models import ProductDocument
 
 class TestLookupConsortiumTranslations(TestCase):
 
-    fixtures = ["test-metadata-edusources"]
+    fixtures = ["test-metadata"]
 
     @classmethod
     def setUpTestData(cls):

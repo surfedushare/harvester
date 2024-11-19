@@ -246,7 +246,7 @@ class TestEdurepProductExtraction(TestCase):
     def test_get_keywords(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
-        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK'])
+        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK', 'btgtgo'])
 
     def test_get_aggregation_level(self):
         seeds = self.seeds
@@ -260,4 +260,7 @@ class TestEdurepProductExtraction(TestCase):
     def test_get_disciplines(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
-        self.assertEqual(seeds[1]["learning_material"]["disciplines"], ["8f984395-e090-41be-96df-503f53ddaa09"])
+        self.assertEqual(set(seeds[1]["learning_material"]["disciplines"]), {
+            "2be994a1-678c-4927-9cd9-5e85169cca76",
+            "8f984395-e090-41be-96df-503f53ddaa09",
+        })

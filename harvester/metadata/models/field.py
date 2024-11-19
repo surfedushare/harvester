@@ -31,7 +31,7 @@ class MetadataFieldManager(models.Manager):
             aliases = client.configuration.get_aliases()
             response = client.client.search(index=aliases, body={"aggs": terms})
             for field_name, aggregation in response["aggregations"].items():
-                value_frequencies[field_name] = {
+                value_frequencies[f"{preset}--{field_name}"] = {
                     bucket["key"]: bucket["doc_count"]
                     for bucket in aggregation["buckets"]
                 }
@@ -92,7 +92,7 @@ class MetadataFieldSerializer(serializers.ModelSerializer):
         return None
 
     def get_children(self, obj):
-        children = obj.metadatavalue_set.filter(is_hidden=False, deleted_at__isnull=True) \
+        children = obj.metadatavalue_set.filter(deleted_at__isnull=True) \
             .select_related("translation") \
             .get_cached_trees()
         match obj.value_output_order:

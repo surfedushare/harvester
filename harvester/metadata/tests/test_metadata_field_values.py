@@ -7,7 +7,7 @@ from metadata.models import MetadataField, MetadataValue
 
 class TestMetadataFieldValuesView(TestCase):
 
-    fixtures = ["test-metadata-edusources"]
+    fixtures = ["test-metadata"]
     field = "publisher_year_normalized"
 
     def setUp(self):
@@ -60,7 +60,10 @@ class TestMetadataFieldValuesView(TestCase):
         value.save()
         response = self.client.get(f"/api/v1/metadata/field-values/{self.field}/")
         data = self.assert_response_structure(response)
-        self.assertEqual(data["count"], self.field_values_queryset.count() - 1)
+        self.assertEqual(
+            data["count"], self.field_values_queryset.count(),
+            "Expected hidden values to show in response for frontends to use as translations and in calculations."
+        )
         for value in data["results"]:
             self.assert_metadata_node_structure(value)
 

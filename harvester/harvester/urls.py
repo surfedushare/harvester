@@ -22,9 +22,10 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.schemas import get_schema_view
 
 from core import views as core_views
-from metadata.urls import public_api_patterns as metadata_public
+from metadata.urls import public_api_patterns as metadata_public, html_patterns as metadata_html_patterns
 from search.urls import public_api_patterns as search_public
 from products.urls import public_api_patterns as products_public, webhook_urlpatterns as products_webhooks
+from projects.urls import public_api_patterns as projects_public
 
 
 api_description = """
@@ -36,7 +37,7 @@ Or you have to send an Authorization header with a value of "Token <your-api-tok
 schema_view = get_schema_view(
     title="Harvester API",
     description=api_description,
-    patterns=metadata_public + search_public + products_public,
+    patterns=metadata_public + search_public + products_public + projects_public,
     url="/api/v1/"
 )
 swagger_view = login_required(
@@ -54,6 +55,7 @@ api_urlpatterns = [
     path('', include('metadata.urls')),
     path('', include('search.urls')),
     path('', include('products.urls')),
+    path('', include('projects.urls')),
 ]
 
 urlpatterns = [
@@ -62,6 +64,7 @@ urlpatterns = [
     path('api/v1/', include((api_urlpatterns, "v1",))),
     path('accounts/', include('allauth.urls')),
     *products_webhooks,
+    *metadata_html_patterns,
     path('', core_views.health_check, name="health-check")
 ]
 

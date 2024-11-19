@@ -1,9 +1,11 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.utils.timezone import now
 from django.urls import reverse
 from celery import current_app as app
 
+from search_client.opensearch.configuration.presets import is_valid_preset_search_configuration
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.utils.notifications import send_admin_notification
 from metadata.models import MetadataField, MetadataValue, MetadataTranslation
@@ -36,9 +38,11 @@ def sync_metadata():
     current_time = now()
     metadata_updates = []
     for metadata_value in MetadataValue.objects.all().iterator():
-        if metadata_value.field.name not in frequencies:
+        preset = is_valid_preset_search_configuration(settings.PLATFORM, metadata_value.field.entity)
+        field_key = f"{preset}--{metadata_value.field.name}"
+        if field_key not in frequencies:
             continue
-        frequency = frequencies[metadata_value.field.name].pop(metadata_value.value, 0)
+        frequency = frequencies[field_key].pop(metadata_value.value, 0)
         if not frequency and not metadata_value.is_manual:
             metadata_value.frequency = 0
             metadata_value.updated_at = current_time
@@ -53,8 +57,10 @@ def sync_metadata():
 
     metadata_inserts = []
     translation_inserts = []
-    for field_name, field_frequencies in frequencies.items():
-        field = MetadataField.objects.get(name=field_name)
+    for field_key, field_frequencies in frequencies.items():
+        entity_type, field_name = field_key.split("--")
+        entity, subtype = entity_type.split(":")
+        field = MetadataField.objects.get(name=field_name, entity__startswith=entity)
         for value, frequency in field_frequencies.items():
             translation = _translate_metadata_value(field, value)
             translation_inserts.append(translation)

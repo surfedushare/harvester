@@ -7,7 +7,7 @@ postgres:
   application_user: "harvester_mbodata"
 
 django:
-  domain: "harvester.{environment_code}.data-scope.com"
+  domain: "mbodata.{environment_code}.edusources.nl"
   fixtures:
     - "core/fixtures/initial-common.json"
     - "metadata/fixtures/initial-metadata-mbodata.json"

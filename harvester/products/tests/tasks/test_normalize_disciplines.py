@@ -7,7 +7,7 @@ from products.models import ProductDocument
 
 class TestNormalizeDisciplines(TestCase):
 
-    fixtures = ["test-metadata-edusources"]
+    fixtures = ["test-metadata"]
 
     def setUp(self) -> None:
         super().setUp()

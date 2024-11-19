@@ -14,7 +14,7 @@ class FileDocumentAdmin(DocumentAdmin):
     list_display = DocumentAdmin.list_display + \
         ("product_link", "is_not_found", "is_analysis_allowed", "redirects",)
     list_filter = DocumentAdmin.list_filter + ("type", "mime_type", "is_not_found", "is_analysis_allowed", "redirects",)
-    readonly_fields = DocumentAdmin.readonly_fields + ("is_analysis_allowed",)
+    readonly_fields = DocumentAdmin.readonly_fields + ("is_analysis_allowed", "pending_tasks",)
 
     def product_link(self, obj):
         product_id = obj.properties.get("product_id", None)
@@ -23,6 +23,9 @@ class FileDocumentAdmin(DocumentAdmin):
         product_list_url = reverse("admin:products_productdocument_changelist")
         product_list_url += f"?q={product_id}&dataset_version__is_current__exact=1"
         return format_html('<a style="text-decoration: underline" href="{}">product</a>', product_list_url)
+
+    def pending_tasks(self, obj):
+        return ", ".join(obj.get_pending_tasks()) or "None"
 
 
 admin.site.register(Dataset, DatasetAdmin)

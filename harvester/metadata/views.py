@@ -1,12 +1,14 @@
 from django.conf import settings
+from django.http import Http404
+from django.views.generic import TemplateView
 from django.views.decorators.gzip import gzip_page
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
 
-from search_client.opensearch.client import SearchClient
 from search_client.opensearch.configuration import is_valid_preset_search_configuration
 from harvester.schema import HarvesterSchema
 from metadata.models import MetadataField, MetadataFieldSerializer, MetadataValue, MetadataValueSerializer
@@ -62,7 +64,7 @@ class MetadataTreeView(generics.ListAPIView):
     pagination_class = None
 
     def get_entities(self) -> list[str]:
-        entity_input = self.request.GET.get("entity", SearchClient.preset_default)
+        entity_input = self.request.GET.get("entity", settings.OPENSEARCH_PRESET_DEFAULT)
         try:
             entity_validated_input = is_valid_preset_search_configuration(settings.PLATFORM, entity_input)
         except ValueError:
@@ -90,7 +92,7 @@ class MetadataFieldValuesView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def filter_queryset(self, queryset):
-        queryset = queryset.filter(is_hidden=False, field__name=self.kwargs["field"])
+        queryset = queryset.filter(field__name=self.kwargs["field"])
         startswith = self.kwargs.get("startswith", None)
         if startswith:
             queryset = queryset.filter(value__istartswith=startswith)
@@ -103,3 +105,17 @@ class MetadataFieldValuesView(generics.ListAPIView):
             case _:
                 pass
         return queryset
+
+
+class MetadataTreeHTMLView(LoginRequiredMixin, TemplateView):
+    template_name = "tree.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        field_name = self.request.GET.get("field")
+        if not field_name or not MetadataField.objects.filter(name=field_name).exists():
+            raise Http404(f"Metadata field {field_name} does not exist")
+        context["nodes"] = MetadataValue.objects \
+            .select_related("translation") \
+            .filter(deleted_at__isnull=True, field__name=field_name)
+        return context

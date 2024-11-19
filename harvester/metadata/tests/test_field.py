@@ -39,7 +39,10 @@ class TestMetadataFieldManager(TestCase):
         frequencies = MetadataField.objects.fetch_value_frequencies()
         # Check dummy return values
         self.assertEqual(client_mock.call_count, 2, "Expected a client initialization per entity type")
-        self.assertEqual(frequencies, {"field1": {"value1": 1, "value2": 2, "value3": 3}})
+        self.assertEqual(frequencies, {
+            "products:default--field1": {"value1": 1, "value2": 2, "value3": 3},
+            "products:multilingual-indices--field1": {"value1": 1, "value2": 2, "value3": 3}
+        })
         # See if calls to OpenSearch were made correctly
         # First the default products call
         products_args, products_kwargs = search_client_mock.search.call_args_list[0]

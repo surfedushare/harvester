@@ -72,7 +72,8 @@ class SharekitMetadataExtraction:
 
     @classmethod
     def get_consortium(cls, node):
-        consortium = node["attributes"].get("consortium", None)
+        owner = node["attributes"].get("owner", {})
+        consortium = owner.get("name") if owner.get("type") == "consortium" else None
         if consortium is None:
             consortium_keywords = [
                 keyword for keyword in node["attributes"].get("keywords", [])

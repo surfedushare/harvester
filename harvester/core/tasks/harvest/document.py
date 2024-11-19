@@ -1,3 +1,5 @@
+from time import sleep
+
 from django.utils.timezone import now
 from celery import current_app as app
 
@@ -13,11 +15,16 @@ def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocumen
                             recursion_depth: int = 0) -> None:
     if not len(documents):
         return
-    if recursion_depth >= 10:
+    elif recursion_depth >= 10:
         raise RecursionError("Maximum harvest_documents recursion reached")
+    elif recursion_depth % 2:
+        # Give system/cloud a bit of time to process documents fully
+        sleep(recursion_depth)
+
     models = load_harvest_models(app_label)
     documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
     pending = validate_pending_harvest_instances(documents, model=models["Document"])
+
     if len(pending):
         recursive_callback_signature = dispatch_document_tasks.si(
             app_label,

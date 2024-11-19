@@ -100,13 +100,17 @@ class TestSharekitProductExtraction(TestCase):
             "external_id": "33838b37-28f1-4269-b026-86f6577d53cb",
             "slug": None,
             "name": "Stimuleringsregeling Open en Online Onderwijs"
-        })
+        }, "Expected consortium provider to get extracted")
+        self.assertEqual(self.seeds[1]["provider"], {
+            "ror": None,
+            "external_id": "6bfd7354-895b-4f17-b96f-78abbf515bd9",
+            "slug": None,
+            "name": "TU Delft"
+        }, "Expected non-consortium provider to get extracted")
 
     def test_modified_at(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["modified_at"], "2017-12-11T12:52:09Z")
-
-    maxDiff = None
 
     def test_authors_property(self):
         seeds = self.seeds

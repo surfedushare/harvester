@@ -76,7 +76,7 @@ class TestProductSearchView(DocumentAPITestCase):
             self.assertEqual(response.status_code, expected_status_code)
             if response.status_code == 200:
                 data = response.json()
-                self.assertEqual(data, {"documents": 2, "products": 2})
+                self.assertEqual(data, {"documents": 2, "products": 2, "projects": None})
 
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")

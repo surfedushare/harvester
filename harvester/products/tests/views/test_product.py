@@ -156,7 +156,18 @@ class TestDocumentView(TestCase):
             "SURFnet"
         ],
         "consortium": "Stimuleringsregeling Open en Online Onderwijs",
-        "subtitle": None
+        "subtitle": None,
+        "metrics": {
+            "views": 1,
+            "stars": {
+                "average": 2.3,
+                "star_1": 5,
+                "star_2": 4,
+                "star_3": 3,
+                "star_4": 2,
+                "star_5": 1
+            }
+        }
     }
     expected_product_count = 13  # 1 original, 15 copies and minus 3 deletes
 
@@ -246,6 +257,7 @@ class TestDocumentView(TestCase):
             # These are expected to change often in the raw data format and shouldn't fail the tests
             data.pop("properties")
             data.pop("derivatives")
+            data.pop("transform")
         self.assertEqual(data, self.expected_document_output)
 
     def test_detail_not_found(self):
@@ -430,7 +442,18 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "is_external": None,
             }
         ],
-        "subtitle": None
+        "subtitle": None,
+        "metrics": {
+            "views": 1,
+            "stars": {
+                "average": 2.3,
+                "star_1": 5,
+                "star_2": 4,
+                "star_3": 3,
+                "star_4": 2,
+                "star_5": 1
+            }
+        }
     }
 
 

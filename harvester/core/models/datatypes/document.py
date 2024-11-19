@@ -176,13 +176,17 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 data[key] = value
         return data
 
+    def get_analyzer_language(self) -> str:
+        return "unk"
+
     def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
         data = deepcopy(self.properties)
         if self.overwrite:
             data["overwrite"] = self.overwrite.id
-            data.update(self.overwrite)
+            data["metrics"] = self.overwrite.get_metrics_overwrite()
         else:
             data["overwrite"] = None
+            data["metrics"] = None
         if merge_derivatives:
             data.update(self.get_derivatives_data())
         if use_multilingual_fields:

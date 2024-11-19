@@ -1,31 +1,11 @@
 import logging
 import polars as pl
 from django.core.management.base import BaseCommand
-from metadata.utils.translate import translate_with_deepl
-from metadata.models import MetadataField, MetadataTranslation, MetadataValue, SkosMetadataSource
+from metadata.utils.operations import get_or_create_metadata_value
+from metadata.models import MetadataField, MetadataValue, SkosMetadataSource
 
 
 logger = logging.getLogger("harvester")
-
-
-def get_or_create_metadata_value(term, field, parent) -> MetadataValue:
-    try:
-        return MetadataValue.objects.get(value=term["value"], field=field)
-    except MetadataValue.DoesNotExist:
-        pass
-    translation = MetadataTranslation.objects.create(
-        nl=term["name"],
-        en=translate_with_deepl(term["name"]),
-        is_fuzzy=True
-    )
-    return MetadataValue.objects.create(
-        name=term["name"],
-        field=field,
-        parent=parent,
-        value=term["value"],
-        translation=translation,
-        is_manual=True
-    )
 
 
 class Command(BaseCommand):
@@ -72,7 +52,7 @@ class Command(BaseCommand):
 
     def create_values_depth_first(self, term: dict, parent: MetadataValue, field: MetadataField,
                                   groups: dict[str, list[dict]]) -> None:
-        value_instance = get_or_create_metadata_value(term=term, field=field, parent=parent)
+        value_instance = get_or_create_metadata_value(term=term["value"], field=field, parent=parent, nl=term["name"])
         if term["value"] not in groups:  # no more children to process
             return
         for child_term in groups[term["value"]]:

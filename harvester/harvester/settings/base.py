@@ -24,6 +24,7 @@ from system_configuration.main import create_configuration_and_session, MODE, PR
 from system_configuration.packaging import get_package_info
 from search_client.version import VERSION as SEARCH_CLIENT_VERSION
 from search_client.constants import Platforms
+from search_client.opensearch.client import SearchClient
 from search_client.opensearch.logging import OpensearchHandler, create_opensearch_handler
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -60,6 +61,13 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DOMAIN = environment.django.domain
 PROTOCOL = environment.django.protocol
 
+SESSION_COOKIE_SECURE = PROTOCOL == "https"
+CSRF_COOKIE_SECURE = PROTOCOL == "https"
+CORS_ALLOWED_ORIGINS = [
+    f"{PROTOCOL}://{DOMAIN}",
+]
+if ENVIRONMENT != "production":
+    CORS_ALLOW_ALL_ORIGINS = True
 
 # Detect our own IP address
 try:
@@ -99,6 +107,7 @@ INSTALLED_APPS = [
 
     'products',
     'files',
+    'projects',
     'testing',
 ]
 
@@ -308,6 +317,7 @@ OPENSEARCH_ENABLE_DECOMPOUND_ANALYZERS = environment.opensearch.enable_decompoun
 OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = None
+OPENSEARCH_PRESET_DEFAULT = SearchClient.preset_default
 
 
 # Tika
@@ -407,6 +417,7 @@ if not DEBUG:
         integrations=[DjangoIntegration(), CeleryIntegration()],
         send_default_pii=False  # GDPR requirement
     )
+    sentry_sdk.set_tag("surf.platform", PLATFORM.value)
     # We kill all DisallowedHost logging on the servers,
     # because it happens so frequently that we can't do much about it
     ignore_logger('django.security.DisallowedHost')
@@ -658,6 +669,19 @@ SOURCES = {
     "saxion": {
         "endpoint": "https://dataaccess.saxion.nl",
         "api_key": None
+    },
+    "sia": {
+        "endpoint": "https://api.gaustat.nl",
+        "api_key": environment.secrets.sia.api_key,
+        "contact_email": environment.secrets.sia.contact_email
+    },
+    "sharekit": {
+        "endpoint": environment.harvester.repositories.sharekit,
+        "api_key": getattr(environment.secrets.sharekit, environment.project.name)
+    },
+    "edurep": {
+        "endpoint": environment.harvester.repositories.edurep,
+        "api_key": None,
     }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api

@@ -20,7 +20,7 @@ class HarvesterSchema(AutoSchema):
     def get_operation(self, path, method):
         operation = super().get_operation(path, method)
         if path.startswith("/product"):
-            operation["tags"] = ["Download products"]
+            operation["tags"] = ["Products"]
             for parameter in operation["parameters"]:
                 if parameter["name"] == "page":
                     parameter["schema"]["default"] = 1
@@ -34,6 +34,26 @@ class HarvesterSchema(AutoSchema):
                         "required": False,
                         "description": "Specify from which point in time onward "
                                        "you want to get changes to the product entities.",
+                        'schema': {
+                            'type': 'datetime',
+                        }
+                    }
+                ]
+        elif path.startswith("/project"):
+            operation["tags"] = ["Projects"]
+            for parameter in operation["parameters"]:
+                if parameter["name"] == "page":
+                    parameter["schema"]["default"] = 1
+                if parameter["name"] == "page_size":
+                    parameter["schema"]["default"] = 10
+            if not path.endswith("/{srn}/"):
+                operation["parameters"] += [
+                    {
+                        "name": "modified_since",
+                        "in": "query",
+                        "required": False,
+                        "description": "Specify from which point in time onward "
+                                       "you want to get changes to the project entities.",
                         'schema': {
                             'type': 'datetime',
                         }

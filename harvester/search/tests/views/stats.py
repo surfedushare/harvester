@@ -11,7 +11,7 @@ class TestStatsView(DocumentAPITestCase):
         response = self.client.get(stats_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(data, {"documents": 2, "products": None})
+        self.assertEqual(data, {"documents": 2, "products": None, "projects": None})
 
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
