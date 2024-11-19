@@ -1,0 +1,430 @@
+{
+    "meta": {
+        "totalCount": 2760
+    },
+    "filters": [],
+    "links": {
+        "first": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=1",
+        "self": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=1",
+        "next": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=2",
+        "last": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=111"
+    },
+    "data": [
+        {
+            "attributes": {
+                "name": "Zuyd Hogeschool",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "1182b099-53c5-465a-9505-c852d31b1a6e"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Windesheim",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "13bfd6d1-c7b5-442d-9058-5c2868875621"
+        },
+        {
+            "attributes": {
+                "name": "Projectgroep Vaktherapie",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "consortium",
+                "type": null,
+                "description": "Dit consortium is ontstaan in 2020",
+                "inactive": 0,
+                "consortiumChildren": [
+                    {
+                        "id": "8200fbf4-3a09-4f28-a37f-2d8eeb08d07c",
+                        "name": "Hogeschool van Arnhem en Nijmegen",
+                        "ror": null,
+                        "level": "organisation",
+                        "type": null,
+                        "description": null,
+                        "inactive": 0,
+                        "secretary": 1
+                    },
+                    {
+                        "id": "2ca20b3f-dad2-439c-9121-248cc336fe08",
+                        "name": "NHL Stenden Hogeschool",
+                        "ror": null,
+                        "level": "organisation",
+                        "type": "CentreOfExpertise",
+                        "description": null,
+                        "inactive": 0,
+                        "secretary": 0
+                    },
+                    {
+                        "id": "9bc007df-82c3-4bcb-9b94-1dfd5d77f9ca",
+                        "name": "Hogeschool Utrecht",
+                        "ror": "https://ror.org/04zdhre16",
+                        "level": "organisation",
+                        "type": null,
+                        "description": null,
+                        "inactive": 0,
+                        "secretary": 0
+                    },
+                    {
+                        "id": "1182b099-53c5-465a-9505-c852d31b1a6e",
+                        "name": "Zuyd Hogeschool",
+                        "ror": null,
+                        "level": "organisation",
+                        "type": null,
+                        "description": null,
+                        "inactive": 0,
+                        "secretary": 0
+                    }
+                ]
+            },
+            "type": "institute",
+            "id": "1a9deaac-54a5-4c05-9756-8d6e8192a126"
+        },
+        {
+            "attributes": {
+                "name": "Driestar Educatief",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "214b3cba-a3ae-48c4-92e7-47a7768daee1"
+        },
+        {
+            "attributes": {
+                "name": "NHL Stenden Hogeschool",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": "CentreOfExpertise",
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "2ca20b3f-dad2-439c-9121-248cc336fe08"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool KPZ",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "3533b9f6-ec0e-4921-ace8-dfbfb24d45c5"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Leiden",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "37f9d11b-0a73-45b2-9855-150b7f57efa0"
+        },
+        {
+            "attributes": {
+                "name": "Codarts Rotterdam",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "39bed0c7-dd08-4349-b834-3ab3f6621005"
+        },
+        {
+            "attributes": {
+                "name": "Rijksuniversiteit Groningen",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "497ef655-718d-41b9-b202-d07323aed83b"
+        },
+        {
+            "attributes": {
+                "name": "Amsterdamse Hogeschool voor de Kunsten",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "58f0a049-3c3a-4984-9e48-40c08485b73c"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Inholland",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "5b390024-0f92-4c7e-b87b-a797852bda95"
+        },
+        {
+            "attributes": {
+                "name": "HZ University of Applied Sciences",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "682bb044-a393-49cf-8066-cd4683e34911"
+        },
+        {
+            "attributes": {
+                "name": "TU Delft",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "6bfd7354-895b-4f17-b96f-78abbf515bd9"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool van Arnhem en Nijmegen",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "8200fbf4-3a09-4f28-a37f-2d8eeb08d07c"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Rotterdam",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "8c5bf373-c0b4-428b-9ef1-9d161c13d3f1"
+        },
+        {
+            "attributes": {
+                "name": "Fontys",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "97581db2-0a84-4f86-b804-49a9c575b0f9"
+        },
+        {
+            "attributes": {
+                "name": "Marnix Academie",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "98a2eb95-1506-4c7e-b532-c262e9522038"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Utrecht",
+                "parentId": null,
+                "parentName": null,
+                "ror": "https://ror.org/04zdhre16",
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "9bc007df-82c3-4bcb-9b94-1dfd5d77f9ca"
+        },
+        {
+            "attributes": {
+                "name": "Wageningen University & Research",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "a93ad03d-fea5-4b00-b823-c4f3db07f980"
+        },
+        {
+            "attributes": {
+                "name": "Vrije Universiteit Amsterdam",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "b4539e8e-3fb0-4571-a5c1-3e52800e4da7"
+        },
+        {
+            "attributes": {
+                "name": "Tilburg University",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "be6c91ae-8fbe-4cb7-bd45-7a01a717c43f"
+        },
+        {
+            "attributes": {
+                "name": "Radboud Universiteit",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "c7181c14-bbaf-4976-9233-5de3f7f9d692"
+        },
+        {
+            "attributes": {
+                "name": "Avans Hogeschool",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "d87a5c92-550a-4a18-bb01-1938d959a4b7"
+        },
+        {
+            "attributes": {
+                "name": "Hanzehogeschool Groningen",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "e1fcbb93-b378-491d-bfbc-532e8ba892eb"
+        },
+        {
+            "attributes": {
+                "name": "Universiteit van Amsterdam",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "eb1925d9-d662-4cd9-af61-b27585a803c7"
+        }
+    ]
+}

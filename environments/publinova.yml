@@ -13,6 +13,7 @@ django:
     - "metadata/fixtures/initial-metadata-publinova.json"
     - "sources/fixtures/initial-common.json"
     - "sources/fixtures/initial-publinova.json"
+    - "organizations/fixtures/initial-common.json"
     - "products/fixtures/initial-common.json"
     - "projects/fixtures/initial-common.json"
     - "files/fixtures/initial-common.json"

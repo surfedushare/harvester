@@ -105,9 +105,10 @@ INSTALLED_APPS = [
     'search',
     'sources',
 
+    'organizations',
     'products',
-    'files',
     'projects',
+    'files',
     'testing',
 ]
 

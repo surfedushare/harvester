@@ -89,6 +89,9 @@ class SearchDocumentGenericViewMixin:
 
     NB: This class and subclasses can't look at request.resolver_match to determine the entity,
     because get_serializer_class needs a static definition for the documentation generator.
+
+    NB: The entity will be a core.constants.Entities which is imported from search_client.constants.
+    It's not possible to add enum values, but not all entities are searchable. Therefor we also allow strings as entity.
     """
 
     entity = None

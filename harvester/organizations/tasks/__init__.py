@@ -1,0 +1,1 @@
+from organizations.tasks.organizations import deactivate_invalid_organizations
