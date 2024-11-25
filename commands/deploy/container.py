@@ -63,9 +63,10 @@ def publish_tika_image(ctx, docker_login=False):
 
 @task(help={
     "commit": "The commit hash a new build should include in its info.json. Will also be used to tag the new image.",
-    "docker_login": "Specify this flag to login to AWS registry. Needed only once per session"
+    "docker_login": "Specify this flag to login to AWS registry. Needed only once per session.",
+    "no_cache": "Add this flag to make a build without cached layers."
 })
-def build(ctx, commit=None, docker_login=False):
+def build(ctx, commit=None, docker_login=False, no_cache=False):
     """
     Uses Docker to build an image for a Django project
     """
@@ -80,16 +81,16 @@ def build(ctx, commit=None, docker_login=False):
     # Gather necessary info and call Docker to build
     target_info = TARGETS["harvester"]
     name = target_info['name']
-    # TODO: remove later: latest_remote_image = f"{REPOSITORY}/{name}:latest"
+    no_cache_flag = "--no-cache" if no_cache else ""
     ctx.run(
         f"docker build "
         f"--progress=plain "
-        f"--platform=linux/amd64 -f harvester/Dockerfile -t {name}:{commit} .",
+        f"--platform=linux/amd64 -f harvester/Dockerfile -t {name}:{commit} . {no_cache_flag}",
         pty=True,
         echo=True
     )
     ctx.run(
-        f"docker build --platform=linux/amd64 -f nginx/Dockerfile-nginx -t {name}-nginx:{commit} .",
+        f"docker build --platform=linux/amd64 -f nginx/Dockerfile-nginx -t {name}-nginx:{commit} . {no_cache_flag}",
         pty=True,
         echo=True
     )
