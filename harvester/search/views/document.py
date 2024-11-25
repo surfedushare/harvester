@@ -24,6 +24,7 @@ class DocumentSearchSerializer(serializers.Serializer):
     search_text = serializers.CharField(required=True, allow_blank=True, write_only=True)
     filters = DocumentSearchFilterSerializer(many=True, write_only=True, default=[])
     ordering = serializers.CharField(required=False, allow_blank=True, default=None, allow_null=True, write_only=True)
+    min_score = serializers.FloatField(required=False, allow_null=False, default=0.0, write_only=True)
 
     page = serializers.IntegerField(required=False, default=1, validators=[MinValueValidator(1)])
     page_size = serializers.IntegerField(required=False, default=10, validators=[MinValueValidator(0)])
@@ -93,6 +94,12 @@ class DocumentSearchAPIView(GenericAPIView):
     By default ordering is ascending.
     If you specify the minus sign (for instance: "-publisher_date") the ordering will be descending.
 
+    **min_score**: Specified a cut-off threshold for the minimum score. This property can be used to temporarily limit
+    the amount of returned search results. However using it is
+    [considered bad practice](https://discuss.elastic.co/t/return-only-high-quality-results-in-elasticsearch-query/180033),
+    because scores are *relative* to the corpus. This means that even a score of 0.5 might be very relevant for
+    certain queries with SURF's data.
+
     ## Response body
 
     **results**: An array containing the search results. The format of results depends on
@@ -106,7 +113,7 @@ class DocumentSearchAPIView(GenericAPIView):
 
     **page**: The current page number.
 
-    """
+    """  # noqa: E501
     permission_classes = (AllowAny,)
     schema = HarvesterSchema()
     serializer_class = DocumentSearchSerializer
