@@ -242,3 +242,9 @@ class TestSharekitProductExtraction(TestCase):
         seeds = self.seeds
         self.assertIsNone(seeds[0]["technical_type"], "Expected unknown technical types to be None for product")
         self.assertEqual(seeds[3]["technical_type"], "video", "Expected technicalFormat to be used when present")
+
+    def test_projects(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["research_product"]["projects"], ["sia:sia:KIEM.LSH.03.021"])
+        self.assertEqual(seeds[1]["research_product"]["projects"], ["raid:1"])
+        self.assertEqual(seeds[2]["research_product"]["projects"], [])

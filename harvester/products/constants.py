@@ -37,6 +37,7 @@ SEED_DEFAULTS = {
     "research_product": {
         "research_object_type": None,
         "research_themes": [],
-        "parties": []
+        "parties": [],
+        "projects": []
     }
 }
