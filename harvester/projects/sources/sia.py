@@ -92,6 +92,7 @@ SEEDING_PHASES = [
             "method": "get",
             "args": [],
             "kwargs": {},
+            "backoff_delays": [30, 45, 60, 30, 45, 60],
         },
         "contribute_data": {
             "objective": {
