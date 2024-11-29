@@ -99,8 +99,12 @@
                     "external_id": "33838b37-28f1-4269-b026-86f6577d53cb"
                 },
                 "copyright": "cc-by-sa-40",
-                "has_parts": [],
-                "is_part_of": [],
+                "has_parts": [
+                    "child"
+                ],
+                "is_part_of": [
+                    "parent"
+                ],
                 "publishers": [
                     "Hogeschool Utrecht",
                     "SURFnet"
