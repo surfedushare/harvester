@@ -67,7 +67,6 @@ OBJECTIVE = {
     "description": HanzeOrganizationExtraction.get_description,
     "ror": HanzeOrganizationExtraction.get_ror,
     "type": HanzeOrganizationExtraction.get_type,
-    "secretary": lambda node: False,
     "parents": HanzeOrganizationExtraction.get_parents,
 }
 

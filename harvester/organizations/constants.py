@@ -9,6 +9,7 @@ SEED_DEFAULTS = {
     "description": None,
     "ror": None,
     "type": None,
-    "secretary": False,
-    "parents": []
+    "secretary": None,
+    "parents": [],
+    "members": [],
 }
