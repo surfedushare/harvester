@@ -26,7 +26,7 @@ class Organization(BaseOrganization):
 
     description: str | None = Field(default=None)
 
-    type: str
+    type: str | None = Field(default=None)
     secretary: BaseOrganization | None = Field(default=None, description="Secretary of collaboration organization")
     parents: list[BaseOrganization] = Field(default=[], description="Parent organizations within educational context")
     members: list[GenericOrganization] = Field(

@@ -52,7 +52,7 @@ class TestDeactivateInvalidOrganizations(TestCase):
         invalid_document = OrganizationDocument.objects.get(identity="surf:testing:2")
         self.assertTrue(invalid_document.pipeline["deactivate_invalid_organizations"]["success"])
         validation_errors = invalid_document.pipeline["deactivate_invalid_organizations"]["validation"]
-        self.assertTrue(validation_errors.startswith("2 validation errors for "))
+        self.assertTrue(validation_errors.startswith("1 validation error for "))
         self.assertEqual(invalid_document.state, OrganizationDocument.States.INACTIVE)
         self.assertEqual(invalid_document.properties["state"], OrganizationDocument.States.INACTIVE)
 
