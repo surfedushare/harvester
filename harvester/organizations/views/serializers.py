@@ -7,7 +7,7 @@ from search_client.serializers.core import Provider, EntityStates
 
 class BaseOrganization(BaseModel):
     srn: str
-    name: str
+    name: str | None = Field(default=None)
     ror: str | None = Field(default=None, description="Research Organization Registry identifier")
     is_root: bool | None = Field(default=None)
 
@@ -56,7 +56,7 @@ class OrganizationSerializer(serializers.Serializer):
     provider = serializers.CharField(default=None, allow_null=True)
     state = serializers.CharField(default="active")
 
-    name = serializers.CharField(allow_null=False, allow_blank=False)
+    name = serializers.CharField(allow_null=True, allow_blank=False)
     description = serializers.CharField(allow_null=True, allow_blank=False)
     ror = serializers.CharField(allow_null=True, allow_blank=False)
     type = serializers.CharField(allow_null=False, allow_blank=False)
