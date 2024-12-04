@@ -1617,6 +1617,17 @@
         }
     },
     {
+        "model": "metadata.metadatatranslation",
+        "pk": 11747,
+        "fields": {
+            "created_at": "2024-10-14T14:49:12.469Z",
+            "updated_at": "2024-10-14T14:49:12.469Z",
+            "nl": "Sectoren",
+            "en": "Sectors",
+            "is_fuzzy": true
+        }
+    },
+    {
         "model": "metadata.metadatafield",
         "pk": 1,
         "fields": {
@@ -1800,12 +1811,27 @@
         "model": "metadata.metadatafield",
         "pk": 28,
         "fields": {
-            "name": "industries",
+            "name": "industries.keyword",
             "entity": "products:default",
             "created_at": "2024-10-14T14:49:15.843Z",
             "updated_at": "2024-10-14T14:49:30.081Z",
             "translation": 11746,
             "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 29,
+        "fields": {
+            "name": "sectors.keyword",
+            "entity": "products:default",
+            "created_at": "2024-10-14T14:49:15.843Z",
+            "updated_at": "2024-10-14T14:49:30.081Z",
+            "translation": 11747,
+            "is_hidden": true,
             "is_manual": true,
             "english_as_dutch": false,
             "value_output_order": "manual"
