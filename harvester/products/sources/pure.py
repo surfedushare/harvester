@@ -42,14 +42,6 @@ class PureProductExtraction(PureExtractor):
         return
 
     @classmethod
-    def get_title(cls, node):
-        title = node["title"]["value"]
-        if "subTitle" in node and cls.support_subtitle:
-            subtitle = node["subTitle"]["value"]
-            title = f"{title}: {subtitle}"
-        return title
-
-    @classmethod
     def get_description(cls, node):
         if "abstract" not in node:
             return
@@ -174,7 +166,8 @@ def build_objective(extract_processor: Type[PureProductExtraction], source_set: 
         "modified_at": modified_at_extractor,
         "doi": extract_processor.get_doi,
         "files": extract_processor.get_files,
-        "title": extract_processor.get_title,
+        "title": "$.title.value",
+        "subtitle": "$.subTitle.value",
         "language": extract_processor.get_language,
         "keywords": extract_processor.get_keywords,
         "description": description_extractor,
