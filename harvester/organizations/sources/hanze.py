@@ -52,7 +52,14 @@ class HanzeOrganizationExtraction(PureExtractor):
 
     @classmethod
     def get_parents(cls, node):
-        return [parent["uuid"] for parent in node.get("parents", [])]
+        srn_prefix = f"{cls.source_slug}:hanze"
+        return [
+            {
+                "srn": f"{srn_prefix}:{parent["uuid"]}",
+                "name": None
+            }
+            for parent in node.get("parents", [])
+        ]
 
 
 OBJECTIVE = {
@@ -67,7 +74,6 @@ OBJECTIVE = {
     "description": HanzeOrganizationExtraction.get_description,
     "ror": HanzeOrganizationExtraction.get_ror,
     "type": HanzeOrganizationExtraction.get_type,
-    "secretary": lambda node: False,
     "parents": HanzeOrganizationExtraction.get_parents,
 }
 

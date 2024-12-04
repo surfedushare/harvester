@@ -120,8 +120,8 @@ class TestDocumentView(TestCase):
                 "is_external": None,
             }
         ],
-        "has_parts": [],
-        "is_part_of": [],
+        "has_parts": ["child"],
+        "is_part_of": ["parent"],
         "keywords": [
             "correspondentie",
             "Didactiek",
@@ -397,8 +397,8 @@ class TestResearchProductDocumentView(TestDocumentView):
                 "is_external": None,
             }
         ],
-        "has_parts": [],
-        "is_part_of": [],
+        "has_parts": ["child"],
+        "is_part_of": ["parent"],
         "keywords": [
             "correspondentie",
             "Didactiek",

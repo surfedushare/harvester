@@ -226,6 +226,12 @@ class ProductDocument(HarvestDocument):
         data["harvest_source"] = set_name
         if use_multilingual_fields:
             data["published_at"] = data["publisher_date"]
+            data["is_part_of"] = [
+                f"{data["set"]}:{parent_id}" for parent_id in data["is_part_of"]
+            ]
+            data["has_parts"] = [
+                f"{data["set"]}:{child_id}" for child_id in data["has_parts"]
+            ]
         # Add content of the product to a ContentContainer
         product_content = Content(
             srn=data["srn"],

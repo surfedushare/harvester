@@ -19,11 +19,12 @@ def deactivate_invalid_organizations(app_label: str, document_ids: list[int]) ->
             Validator(**document.to_data(merge_derivatives=True))
             validation_output = None
         except pydantic.ValidationError as exc:
-            document.state = document.States.INACTIVE
+            document.properties["state"] = document.States.INACTIVE
             validation_output = str(exc)
         # For all documents we mark this task as completed to continue the harvesting process
         document.pipeline["deactivate_invalid_organizations"] = {
             "success": True,
             "validation": validation_output,
         }
+        document.clean()
         document.save()
