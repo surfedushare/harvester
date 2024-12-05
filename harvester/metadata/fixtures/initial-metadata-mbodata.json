@@ -1727,12 +1727,12 @@
     "model": "metadata.metadatavalue",
     "pk": 5,
     "fields": {
-        "name": "edusources",
+        "name": "edusourcesmbo",
         "created_at": "2022-01-12T12:14:02.885Z",
         "updated_at": "2024-10-07T10:30:06.464Z",
         "deleted_at": null,
         "field": 1,
-        "value": "edusources",
+        "value": "edusourcesmbo",
         "translation": 6,
         "frequency": 4365,
         "parent": 4,
@@ -2198,7 +2198,7 @@
         "translation": 44,
         "frequency": 6342,
         "parent": null,
-        "is_manual": false,
+        "is_manual": true,
         "is_hidden": false,
         "lft": 1,
         "rght": 2,
@@ -2219,7 +2219,7 @@
         "translation": 45,
         "frequency": 2704,
         "parent": null,
-        "is_manual": false,
+        "is_manual": true,
         "is_hidden": false,
         "lft": 1,
         "rght": 2,
@@ -2240,7 +2240,7 @@
         "translation": 46,
         "frequency": 2297,
         "parent": null,
-        "is_manual": false,
+        "is_manual": true,
         "is_hidden": false,
         "lft": 1,
         "rght": 2,
@@ -2261,7 +2261,7 @@
         "translation": 47,
         "frequency": 687,
         "parent": null,
-        "is_manual": false,
+        "is_manual": true,
         "is_hidden": false,
         "lft": 1,
         "rght": 2,
@@ -3825,27 +3825,6 @@
 },
 {
     "model": "metadata.metadatavalue",
-    "pk": 11680,
-    "fields": {
-        "name": "cc-by",
-        "created_at": "2024-09-30T07:33:27.311Z",
-        "updated_at": "2024-12-04T14:39:21.445Z",
-        "deleted_at": "2024-12-04T14:39:21.444Z",
-        "field": 26,
-        "value": "cc-by",
-        "translation": 11723,
-        "frequency": 0,
-        "parent": null,
-        "is_manual": true,
-        "is_hidden": false,
-        "lft": 1,
-        "rght": 2,
-        "tree_id": 1323,
-        "level": 0
-    }
-},
-{
-    "model": "metadata.metadatavalue",
     "pk": 11681,
     "fields": {
         "name": "cc-by-30",
@@ -3859,8 +3838,8 @@
         "parent": 11683,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 9,
-        "rght": 10,
+        "lft": 11,
+        "rght": 12,
         "tree_id": 3805,
         "level": 2
     }
@@ -3880,8 +3859,8 @@
         "parent": 11683,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 7,
-        "rght": 8,
+        "lft": 9,
+        "rght": 10,
         "tree_id": 3805,
         "level": 2
     }
@@ -3901,8 +3880,8 @@
         "parent": 11715,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 6,
-        "rght": 11,
+        "lft": 8,
+        "rght": 13,
         "tree_id": 3805,
         "level": 1
     }
@@ -4153,8 +4132,8 @@
         "parent": 11715,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 12,
-        "rght": 17,
+        "lft": 14,
+        "rght": 19,
         "tree_id": 3805,
         "level": 1
     }
@@ -4174,8 +4153,8 @@
         "parent": 11695,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 13,
-        "rght": 14,
+        "lft": 15,
+        "rght": 16,
         "tree_id": 3805,
         "level": 2
     }
@@ -4195,8 +4174,8 @@
         "parent": 11695,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 15,
-        "rght": 16,
+        "lft": 17,
+        "rght": 18,
         "tree_id": 3805,
         "level": 2
     }
@@ -4205,21 +4184,21 @@
     "model": "metadata.metadatavalue",
     "pk": 11698,
     "fields": {
-        "name": "none",
+        "name": "NL-LOM value \"no\"",
         "created_at": "2024-09-30T07:33:27.379Z",
-        "updated_at": "2024-12-04T14:30:25.148Z",
-        "deleted_at": "2024-12-04T14:30:25.148Z",
+        "updated_at": "2024-12-05T08:43:33.378Z",
+        "deleted_at": null,
         "field": 26,
         "value": "no",
         "translation": 11741,
         "frequency": 0,
-        "parent": null,
+        "parent": 11715,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 1,
-        "rght": 2,
-        "tree_id": 3003,
-        "level": 0
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 3805,
+        "level": 1
     }
 },
 {
@@ -4237,8 +4216,8 @@
         "parent": 11715,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 2,
-        "rght": 3,
+        "lft": 4,
+        "rght": 5,
         "tree_id": 3805,
         "level": 1
     }
@@ -4258,8 +4237,8 @@
         "parent": 11715,
         "is_manual": true,
         "is_hidden": false,
-        "lft": 4,
-        "rght": 5,
+        "lft": 6,
+        "rght": 7,
         "tree_id": 3805,
         "level": 1
     }
@@ -4490,7 +4469,7 @@
         "is_manual": true,
         "is_hidden": false,
         "lft": 1,
-        "rght": 18,
+        "rght": 20,
         "tree_id": 3805,
         "level": 0
     }
@@ -4715,7 +4694,7 @@
         "name": "licenses",
         "entity": "products:default",
         "created_at": "2024-09-30T07:33:27.292Z",
-        "updated_at": "2024-09-30T07:33:27.292Z",
+        "updated_at": "2024-12-04T15:07:24.150Z",
         "translation": 11720,
         "is_hidden": false,
         "is_manual": false,
