@@ -93,3 +93,26 @@ def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> N
             "success": True
         }
         document.save()
+
+
+@app.task(name="lookup_industries_translations", base=DatabaseConnectionResetTask)
+@atomic()
+def lookup_industries_translations(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Document = models["Document"]
+    for document in Document.objects.filter(id__in=document_ids).select_for_update():
+        industries = MetadataValue.objects \
+            .select_related("translation") \
+            .filter(value__in=document.properties["learning_material"]["industries"], field__name="industries.keyword")
+        document.derivatives["lookup_industries_translations"] = {
+            "industries": {
+                "keyword": [industry.value for industry in industries],
+                "nl": [industry.translation.nl for industry in industries],
+                "en": [industry.translation.en for industry in industries],
+            }
+        }
+        # For all documents we mark this task as completed to continue the harvesting process
+        document.pipeline["lookup_industries_translations"] = {
+            "success": True
+        }
+        document.save()

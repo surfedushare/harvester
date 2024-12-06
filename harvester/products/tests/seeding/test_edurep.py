@@ -335,10 +335,10 @@ class TestEdurepMBOProductExtraction(TestCase):
         self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
         self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK'], "Expected BTG keywords to get ignored")
 
-    def test_get_disciplines(self):
+    def test_get_industries(self):
         seeds = self.seeds
-        self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
+        self.assertEqual(seeds[0]["learning_material"]["industries"], [], "Deleted item should have empty list")
         self.assertEqual(
-            seeds[1]["learning_material"]["disciplines"],
+            seeds[1]["learning_material"]["industries"],
             ["http://purl.edustandaard.nl/begrippenkader/2be994a1-678c-4927-9cd9-5e85169cca76"]
         )

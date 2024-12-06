@@ -221,11 +221,9 @@ def build_objective(platform: Platforms) -> dict:
     if platform is Platforms.EDUSOURCES:
         valid_products = EdurepExtractor.iterate_valid_higher_education_products
         keywords_extractor = EdurepExtractor.get_keywords
-        disciplines_extractor = EdurepProductExtraction.get_discipline_labels
     else:
         valid_products = EdurepExtractor.iterate_valid_vocational_education_products
         keywords_extractor = EdurepProductExtraction.get_vocational_education_keywords
-        disciplines_extractor = EdurepProductExtraction.get_discipline_ids
     return {
         # Essential objective keys for system functioning
         "@": valid_products,
@@ -254,7 +252,8 @@ def build_objective(platform: Platforms) -> dict:
         "learning_material.material_types": EdurepProductExtraction.get_material_types,
         "learning_material.lom_educational_levels": EdurepProductExtraction.get_educational_levels,
         "learning_material.study_vocabulary": EdurepProductExtraction.get_study_vocabulary,
-        "learning_material.disciplines": disciplines_extractor,
+        "learning_material.disciplines": EdurepProductExtraction.get_discipline_labels,
+        "learning_material.industries": EdurepProductExtraction.get_discipline_ids,
         "learning_material.consortium": EdurepProductExtraction.get_consortium,
     }
 

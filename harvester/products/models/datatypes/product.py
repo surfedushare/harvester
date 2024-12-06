@@ -6,6 +6,7 @@ from copy import copy
 from django.db import models
 from django.conf import settings
 
+from core.constants import Platforms
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from core.utils.analyzers import get_analyzer_language
 from core.utils.contents import ContentContainer, Content
@@ -27,7 +28,7 @@ def default_document_tasks():
             "resources": []
         }
     }
-    if settings.PROJECT == "edusources":
+    if settings.PLATFORM is Platforms.EDUSOURCES:
         tasks["lookup_study_vocabulary_parents"] = {
             "depends_on": ["$.learning_material.study_vocabulary"],
             "checks": ["has_study_vocabulary"],
@@ -38,6 +39,13 @@ def default_document_tasks():
             "checks": ["has_disciplines"],
             "resources": []
         }
+    elif settings.PLATFORM is Platforms.MBODATA:
+        tasks["lookup_industries_translations"] = {
+            "depends_on": ["$.learning_material.industries"],
+            "checks": ["has_industries"],
+            "resources": []
+        }
+    if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
         tasks["lookup_consortium_translations"] = {
             "depends_on": ["$.learning_material.consortium"],
             "checks": ["has_consortium"],
@@ -67,6 +75,10 @@ class ProductDocument(HarvestDocument):
     @property
     def has_consortium(self) -> bool:
         return self.properties.get("learning_material", {}).get("consortium")
+
+    @property
+    def has_industries(self) -> bool:
+        return self.properties.get("learning_material", {}).get("industries")
 
     @property
     def has_publisher_year(self) -> bool:
@@ -193,6 +205,8 @@ class ProductDocument(HarvestDocument):
             data["disciplines_normalized"] = {}
         if "consortium" not in data:
             data["consortium"] = {}
+        if "industries" not in data:
+            data["industries"] = {}
         if "publisher_year_normalized" not in data:
             data["publisher_year_normalized"] = None
         return data
@@ -254,6 +268,7 @@ class ProductDocument(HarvestDocument):
         learning_material = data.pop("learning_material", {})
         if learning_material:
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
+            learning_material.pop("industries", None)  # prevents overwriting derivatives data
             if ("consortium" in data and data["consortium"]) or use_multilingual_fields:
                 learning_material.pop("consortium", None)  # prevents overwriting derivatives data
             data.update(learning_material)
