@@ -171,6 +171,20 @@ class SharekitMetadataExtraction:
             projects.append(raid_id)
         return projects
 
+    @classmethod
+    def get_industries(cls, node):
+        industries = node["attributes"].get("mboDiscipline", [])
+        if not industries:
+            return []
+        return [industry["source"] for industry in industries]
+
+    @classmethod
+    def get_sectors(cls, node):
+        sectors = node["attributes"].get("mboDomain", [])
+        if not sectors:
+            return []
+        return [sector["source"] for sector in sectors]
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -204,6 +218,8 @@ OBJECTIVE = {
     "learning_material.study_vocabulary": SharekitMetadataExtraction.get_study_vocabulary,
     "learning_material.disciplines": SharekitMetadataExtraction.get_learning_material_disciplines,
     "learning_material.consortium": SharekitMetadataExtraction.get_consortium,
+    "learning_material.industries": SharekitMetadataExtraction.get_industries,
+    "learning_material.sectors": SharekitMetadataExtraction.get_sectors,
     # Research product metadata
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,

@@ -248,3 +248,20 @@ class TestSharekitProductExtraction(TestCase):
         self.assertEqual(seeds[0]["research_product"]["projects"], ["sia:sia:KIEM.LSH.03.021"])
         self.assertEqual(seeds[1]["research_product"]["projects"], ["raid:1"])
         self.assertEqual(seeds[2]["research_product"]["projects"], [])
+
+    def test_industries(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["learning_material"]["industries"], [
+            "http://purl.edustandaard.nl/begrippenkader/3ed67cca-37f6-4d7b-b1eb-872f6671caf7",
+            "http://purl.edustandaard.nl/begrippenkader/6276c656-2285-47ca-a7d0-7c833a0ce882"
+        ])
+        self.assertEqual(seeds[1]["learning_material"]["industries"], [])
+
+    def test_sectors(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["learning_material"]["sectors"], [
+            "http://purl.edustandaard.nl/begrippenkader/0a44c8c0-d992-42f7-a00b-00d0e3412a27",
+            "http://purl.edustandaard.nl/begrippenkader/ee7d7dc3-6234-4738-971b-f44893af7cf5",
+            "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+        ])
+        self.assertEqual(seeds[1]["learning_material"]["sectors"], [])
