@@ -162,6 +162,15 @@ class SharekitMetadataExtraction:
             return []
         return has_parts if isinstance(has_parts, list) else [has_parts]
 
+    @classmethod
+    def get_projects(cls, node):
+        projects = []
+        if sia_id := node["attributes"].get("siaFileNum", None):
+            projects.append(f"sia:sia:{sia_id}")
+        if raid_id := node["attributes"].get("raid", None):
+            projects.append(raid_id)
+        return projects
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -198,6 +207,7 @@ OBJECTIVE = {
     # Research product metadata
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,
+    "research_product.projects": SharekitMetadataExtraction.get_projects,
 }
 
 

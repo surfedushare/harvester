@@ -1,8 +1,11 @@
+from copy import deepcopy
+
 from django.test import TestCase
 
+from search_client.constants import Platforms
 from core.processors import HttpSeedingProcessor
 from products.models import Set, ProductDocument
-from products.sources.edurep import SEEDING_PHASES
+from products.sources.edurep import SEEDING_PHASES, build_objective
 from sources.factories.edurep.extraction import EdurepOAIPMHFactory
 
 
@@ -79,6 +82,26 @@ class TestEdurepProductSeeding(TestCase):
         for batch in self.processor("edurep", "2020-02-10T13:08:39Z"):
             self.assertEqual(batch, [])
         self.assertEqual(self.set.documents.count(), 0)
+
+    def test_mbo_seeding(self):
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.MBODATA)
+        processor = HttpSeedingProcessor(self.set, {
+            "phases": seeding_phases
+        })
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
+            self.assertIsInstance(batch, list)
+            for product in batch:
+                self.assertIsInstance(product, ProductDocument)
+                self.assertIsNotNone(product.identity)
+                self.assertTrue(product.properties)
+                if product.state == ProductDocument.States.ACTIVE:
+                    self.assertTrue(product.pending_at)
+                    self.assertIsNone(product.finished_at)
+                else:
+                    self.assertIsNone(product.pending_at)
+                    self.assertIsNotNone(product.finished_at)
+        self.assertEqual(self.set.documents.count(), 3)
 
 
 class TestEdurepProductExtraction(TestCase):
@@ -222,6 +245,8 @@ class TestEdurepProductExtraction(TestCase):
             seeds[2]["description"], "Instruction on how to use a Vortex mixer",
             "Expected no newlines or carriage returns in the description"
         )
+        self.assertIsNone(seeds[3]["description"], "Expected empty czp:general description to lead to None value")
+        self.assertIsNone(seeds[4]["description"], "Expected missing czp:general description to lead to None value")
 
     def test_get_copyright(self):
         seeds = self.seeds
@@ -260,7 +285,60 @@ class TestEdurepProductExtraction(TestCase):
     def test_get_disciplines(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["learning_material"]["disciplines"], [], "Deleted item should have empty list")
-        self.assertEqual(set(seeds[1]["learning_material"]["disciplines"]), {
-            "2be994a1-678c-4927-9cd9-5e85169cca76",
-            "8f984395-e090-41be-96df-503f53ddaa09",
+        self.assertEqual(seeds[1]["learning_material"]["disciplines"], ["Zoeken en beoordelen van bronnen"])
+
+    def test_get_is_part_of(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["is_part_of"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["is_part_of"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[4]["is_part_of"], ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
+
+    def test_get_has_parts(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["has_parts"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[4]["has_parts"], ["55e89b31-1374-4a45-bcda-715c99a7372e"])
+
+
+class TestEdurepMBOProductExtraction(TestCase):
+
+    set = None
+    seeds = []
+
+    @classmethod
+    def setUpTestData(cls):  # NB: loads Edurep data using MBO extractor
+        EdurepOAIPMHFactory.create_common_responses()
+        cls.set = Set.objects.create(name="edurep", identifier="srn")
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.MBODATA)
+        processor = HttpSeedingProcessor(cls.set, {
+            "phases": seeding_phases
         })
+        cls.seeds = []
+        for batch in processor("edurep", "1970-01-01T00:00:00Z"):
+            cls.seeds += [doc.properties for doc in batch]
+
+    def test_get_is_part_of(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["is_part_of"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[2]["is_part_of"], ["3c2b4e81-e9a1-41bc-8b6a-97bfe7e4048b"])
+
+    def test_get_has_parts(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["has_parts"], [], "Expected deleted material to have empty list")
+        self.assertEqual(seeds[1]["has_parts"], [], "Expected material to have empty list by default")
+        self.assertEqual(seeds[2]["has_parts"], ["55e89b31-1374-4a45-bcda-715c99a7372e"])
+
+    def test_get_keywords(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["keywords"], [], "Deleted item should have empty list")
+        self.assertEqual(seeds[1]["keywords"], ['Exercise', '#HBOVPK'], "Expected BTG keywords to get ignored")
+
+    def test_get_industries(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["learning_material"]["industries"], [], "Deleted item should have empty list")
+        self.assertEqual(
+            seeds[1]["learning_material"]["industries"],
+            ["http://purl.edustandaard.nl/begrippenkader/2be994a1-678c-4927-9cd9-5e85169cca76"]
+        )

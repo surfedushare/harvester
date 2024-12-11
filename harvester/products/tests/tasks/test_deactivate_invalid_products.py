@@ -42,15 +42,18 @@ class TestDeactivateInvalidProducts(TestCase):
             "deactivate_invalid_products": {"success": True, "validation": None}
         })
         self.assertEqual(valid_document.state, ProductDocument.States.ACTIVE)
+        self.assertEqual(valid_document.properties["state"], ProductDocument.States.ACTIVE)
 
         invalid_document = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertTrue(invalid_document.pipeline["deactivate_invalid_products"]["success"])
         validation_errors = invalid_document.pipeline["deactivate_invalid_products"]["validation"]
         self.assertTrue(validation_errors.startswith("2 validation errors for "))
         self.assertEqual(invalid_document.state, ProductDocument.States.INACTIVE)
+        self.assertEqual(invalid_document.properties["state"], ProductDocument.States.INACTIVE)
 
         default_document = ProductDocument.objects.get(identity="surf:testing:3")
         self.assertEqual(default_document.pipeline, {
             "deactivate_invalid_products": {"success": True, "validation": None}
         })
         self.assertEqual(default_document.state, ProductDocument.States.ACTIVE)
+        self.assertEqual(default_document.properties["state"], ProductDocument.States.ACTIVE)

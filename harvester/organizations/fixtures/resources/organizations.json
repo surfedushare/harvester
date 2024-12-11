@@ -1,0 +1,200 @@
+[
+{
+    "model": "organizations.sharekitorganizationresource",
+    "pk": 1,
+    "fields": {
+        "uri": "api.test.surfsharekit.nl/api/jsonapi/channel/v1/nppo/institutes?page%5Bsize%5D=25",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2024-11-13T08:30:05.129Z",
+        "modified_at": "2024-11-13T08:30:05.129Z",
+        "purge_at": "2024-12-13T08:29:51.971Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "url": "https://api.test.surfsharekit.nl/api/jsonapi/channel/v1/nppo/institutes?page%5Bsize%5D=25",
+            "args": [
+                "nppo"
+            ],
+            "data": null,
+            "kwargs": {},
+            "method": "get",
+            "headers": {
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate"
+            },
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 13 Nov 2024 08:29:52 GMT",
+            "vary": "X-Forwarded-Protocol,Authorization",
+            "server": "Apache",
+            "connection": "Keep-Alive",
+            "keep-alive": "timeout=5, max=100",
+            "content-type": "application/vnd.api+json",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-frame-options": "deny",
+            "x-xss-protection": "1; mode=block",
+            "transfer-encoding": "chunked",
+            "permissions-policy": "fullscreen=(self), sync-xhr=(self), geolocation=(), midi=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()",
+            "x-content-type-options": "nosniff",
+            "content-security-policy": "default-src data: 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'",
+            "strict-transport-security": "max-age=31536000; includeSubDomains"
+        },
+        "body": "sharekit.initial.0.json"
+    }
+},
+{
+    "model": "organizations.sharekitorganizationresource",
+    "pk": 2,
+    "fields": {
+        "uri": "api.test.surfsharekit.nl/api/jsonapi/channel/v1/nppo/institutes?page%5Bnumber%5D=2&page%5Bsize%5D=25",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2024-11-13T08:31:02.874Z",
+        "modified_at": "2024-11-13T08:31:02.874Z",
+        "purge_at": "2024-12-13T08:30:42.804Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "url": "https://api.test.surfsharekit.nl/api/jsonapi/channel/v1/nppo/institutes?page%5Bsize%5D=25&page%5Bnumber%5D=2",
+            "args": [
+                "nppo"
+            ],
+            "data": null,
+            "kwargs": {},
+            "method": "get",
+            "headers": {
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate"
+            },
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 13 Nov 2024 08:30:42 GMT",
+            "vary": "X-Forwarded-Protocol,Authorization",
+            "server": "Apache",
+            "connection": "Keep-Alive",
+            "keep-alive": "timeout=5, max=100",
+            "content-type": "application/vnd.api+json",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-frame-options": "deny",
+            "x-xss-protection": "1; mode=block",
+            "transfer-encoding": "chunked",
+            "permissions-policy": "fullscreen=(self), sync-xhr=(self), geolocation=(), midi=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()",
+            "x-content-type-options": "nosniff",
+            "content-security-policy": "default-src data: 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'",
+            "strict-transport-security": "max-age=31536000; includeSubDomains"
+        },
+        "body": "sharekit.initial.1.json"
+    }
+},
+{
+    "model": "organizations.hanzeorganizationresource",
+    "pk": 1,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/organizations",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2024-11-13T08:34:20.274Z",
+        "modified_at": "2024-11-13T08:34:20.274Z",
+        "purge_at": "2024-12-13T08:34:02.613Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "url": "https://apimanagement.hanze.nl/nppo/organizations",
+            "args": [],
+            "data": null,
+            "kwargs": {},
+            "method": "get",
+            "headers": {
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate"
+            },
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 13 Nov 2024 08:34:03 GMT",
+            "cf-ray": "8e1d6ba2cd209fc0-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "content-type": "application/json",
+            "cache-control": "private, max-age=14400",
+            "cf-cache-status": "DYNAMIC",
+            "referrer-policy": "origin",
+            "x-frame-options": "SAMEORIGIN",
+            "content-encoding": "gzip",
+            "transfer-encoding": "chunked",
+            "permissions-policy": "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()",
+            "x-content-type-options": "nosniff",
+            "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js-agent.newrelic.com https://bam.nr-data.net https://unpkg.com; frame-ancestors 'self'; connect-src 'self' https://bam.nr-data.net; img-src 'self' data:; frame-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; form-action 'self'; object-src 'none'; child-src 'self';",
+            "strict-transport-security": "max-age=63072000; includeSubDomains",
+            "access-control-allow-origin": "*",
+            "access-control-allow-headers": "api-key",
+            "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS,HEAD",
+            "access-control-allow-credentials": "true"
+        },
+        "body": "hanze.initial.0.json"
+    }
+},
+{
+    "model": "organizations.hanzeorganizationresource",
+    "pk": 2,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/organizations?offset=10&size=10",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2024-11-13T08:35:01.114Z",
+        "modified_at": "2024-11-13T08:35:01.114Z",
+        "purge_at": "2024-12-13T08:34:47.557Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "url": "https://apimanagement.hanze.nl/nppo/organizations?size=10&offset=10",
+            "args": [],
+            "data": null,
+            "kwargs": {},
+            "method": "get",
+            "headers": {
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate"
+            },
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 13 Nov 2024 08:34:47 GMT",
+            "cf-ray": "8e1d6cb77c9e9fc0-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "content-type": "application/json",
+            "cache-control": "private, max-age=14400",
+            "cf-cache-status": "DYNAMIC",
+            "referrer-policy": "origin",
+            "x-frame-options": "SAMEORIGIN",
+            "content-encoding": "gzip",
+            "transfer-encoding": "chunked",
+            "permissions-policy": "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()",
+            "x-content-type-options": "nosniff",
+            "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js-agent.newrelic.com https://bam.nr-data.net https://unpkg.com; frame-ancestors 'self'; connect-src 'self' https://bam.nr-data.net; img-src 'self' data:; frame-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; form-action 'self'; object-src 'none'; child-src 'self';",
+            "strict-transport-security": "max-age=63072000; includeSubDomains",
+            "access-control-allow-origin": "*",
+            "access-control-allow-headers": "api-key",
+            "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS,HEAD",
+            "access-control-allow-credentials": "true"
+        },
+        "body": "hanze.initial.1.json"
+    }
+}
+]

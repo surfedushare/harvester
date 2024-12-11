@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.views.serializers.base import BaseSearchResultSerializer
+from products.views.serializers.base import BaseSearchResultSerializer, AuthorSerializer
 
 
 class ResearchProductResultSerializer(BaseSearchResultSerializer):
@@ -8,9 +8,9 @@ class ResearchProductResultSerializer(BaseSearchResultSerializer):
     doi = serializers.CharField(default=None, allow_null=True)
     type = serializers.CharField(allow_null=True)
     research_object_type = serializers.CharField(default=None, allow_null=True)
-    parties = serializers.ListField(child=serializers.CharField(), default=[])
-    research_themes = serializers.ListField(child=serializers.CharField(), default=[])
-    projects = serializers.ListField(child=serializers.CharField(), default=[])
-    owners = serializers.ListField(child=serializers.DictField(), default=[])
-    contacts = serializers.ListField(child=serializers.DictField(), default=[])
+    parties = serializers.ListField(child=serializers.CharField())
+    research_themes = serializers.ListField(child=serializers.CharField())
+    projects = serializers.ListField(child=serializers.CharField())
+    owners = AuthorSerializer(many=True)
+    contacts = AuthorSerializer(many=True)
     subtitle = serializers.CharField(allow_null=True)

@@ -3,7 +3,9 @@ from typing import Iterator
 from hashlib import sha1
 from collections import namedtuple
 
+from django.conf import settings
 
+from core.constants import Platforms
 from sources.utils.edurep import EdurepExtractor
 from files.models import Set, FileDocument
 
@@ -13,14 +15,22 @@ logger = logging.getLogger("harvester")
 FileInfo = namedtuple("FileInfo", ["product", "mime_type", "url"])
 
 
-def get_file_infos(edurep_soup) -> FileInfo:
-    for product in EdurepExtractor.iterate_valid_products(edurep_soup):
-        mime_types = product.find_all('czp:format')
-        urls = product.find_all('czp:location')
-        if not urls:
-            yield FileInfo(product, None, None)
-        for mime_type, url in zip(mime_types, urls):
-            yield FileInfo(product, mime_type, url)
+def build_file_infos_iterator(platform: Platforms):
+    if platform is Platforms.EDUSOURCES:
+        valid_product_iterator = EdurepExtractor.iterate_valid_higher_education_products
+    else:
+        valid_product_iterator = EdurepExtractor.iterate_valid_vocational_education_products
+
+    def get_file_infos(edurep_soup) -> FileInfo:
+        for product in valid_product_iterator(edurep_soup):
+            mime_types = product.find_all('czp:format')
+            urls = product.find_all('czp:location')
+            if not urls:
+                yield FileInfo(product, None, None)
+            for mime_type, url in zip(mime_types, urls):
+                yield FileInfo(product, mime_type, url)
+
+    return get_file_infos
 
 
 def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
@@ -32,7 +42,7 @@ def back_fill_deletes(seed: dict, harvest_set: Set) -> Iterator[dict]:
         yield doc.properties
 
 
-class EdurepFileExtraction(object):
+class EdurepFileExtraction:
 
     @classmethod
     def get_state(cls, soup, info: FileInfo) -> str:
@@ -103,7 +113,7 @@ class EdurepFileExtraction(object):
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": get_file_infos,
+    "@": build_file_infos_iterator(settings.PLATFORM),
     "state": EdurepFileExtraction.get_state,
     "external_id": EdurepFileExtraction.get_external_id,
     "set": EdurepFileExtraction.get_set,

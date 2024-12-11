@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
-from search_client.constants import Entities
+from core.constants import Entities
 from core.views.document import (DatasetVersionDocumentListView, DatasetVersionDocumentDetailView,
                                  SearchDocumentListViewMixin, SearchDocumentRetrieveViewMixin)
 from projects.models import ProjectDocument
@@ -76,12 +76,7 @@ class SearchProjectListView(SearchDocumentListViewMixin, DatasetVersionDocumentL
     Most properties for a ProjectDocument are automatically documented through the interactive documentation.
     However there are a few special properties that we'll document here.
 
-    **coordinates**: Consists of two floats that represent GPS coordinates.
-
     **products**: Will be a list of SRN's. Send these to the ``find/documents`` endpoint to get product objects.
-
-    **persons, contacts and owners**: Will be a list of objects containing a name, email and external_id.
-    Only the email is a required property.
     """
     entity = Entities.PROJECTS
     exclude_deletes_unless_modified_since_filter = True
@@ -96,12 +91,7 @@ class SearchProjectDetailView(SearchDocumentRetrieveViewMixin, DatasetVersionDoc
     Most properties for a ProjectDocument are automatically documented through the interactive documentation.
     However there are a few special properties that we'll document here.
 
-    **coordinates**: Consists of two floats that represent GPS coordinates.
-
     **products**: Will be a list of SRN's. Send these to the ``find/documents`` endpoint to get product objects.
-
-    **persons, contacts and owners**: Will be a list of objects containing a name, email and external_id.
-    Only the email is a required property.
     """
     entity = Entities.PROJECTS
     exclude_deletes_unless_modified_since_filter = True

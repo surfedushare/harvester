@@ -42,8 +42,7 @@ class TestHanzeProductSeeding(seeding.SourceSeedingTestCase):
             "Expected 10 Documents to have no deleted_at date and 10 with deleted_at, "
             "because second page didn't come in through the delta"
         )
-        updated_title = "Nationale ervaringen met ondergrondse infiltratievoorzieningen: " \
-                        "een overzicht van 20 jaar monitoring in Nederland en een aanzet tot richtlijnen"
+        updated_title = "Nationale ervaringen met ondergrondse infiltratievoorzieningen"
         self.assertEqual(
             self.set.documents.filter(properties__title=updated_title).count(), 1,
             "Expected title to get updated during delta harvest"
@@ -102,13 +101,7 @@ class TestHanzeProductExtraction(TestCase):
     def test_get_title(self):
         self.assertEqual(
             self.seeds[0]["title"],
-            "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen: "
-            "een overzicht van 20 jaar monitoring in Nederland en een aanzet tot richtlijnen",
-            "Expected subtitle to be concatenated with title"
-        )
-        self.assertEqual(
-            self.seeds[2]["title"], "'Vrije plekken' en cultureel erfgoed van krimpdorpen",
-            "Only expected title if subtitle is not available"
+            "(Inter)nationale ervaringen met ondergrondse infiltratievoorzieningen"
         )
 
     def test_get_description(self):

@@ -53,11 +53,10 @@
         "source": 2,
         "type": "products",
         "is_available": true,
-        "is_manual": true,
+        "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "WikiwijsDelen",
-            "wikiwijsmaken"
+            "metaplus"
         ],
         "delete_policy": "transient",
         "purge_interval": {
@@ -72,11 +71,10 @@
         "source": 2,
         "type": "files",
         "is_available": true,
-        "is_manual": true,
+        "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "WikiwijsDelen",
-            "wikiwijsmaken"
+            "metaplus"
         ],
         "delete_policy": "transient",
         "purge_interval": {

@@ -1,4 +1,11 @@
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from rest_framework import serializers
+
+
+class ContactSerializer(serializers.Serializer):
+    name = serializers.CharField(allow_null=True, default=None)
+    email = serializers.EmailField(allow_null=True, default=None)
+    external_id = serializers.CharField(allow_null=True, default=None)
 
 
 class ProjectSerializer(serializers.Serializer):
@@ -16,16 +23,19 @@ class ProjectSerializer(serializers.Serializer):
     project_status = serializers.CharField(default="finished")
     started_at = serializers.DateField(allow_null=True)
     ended_at = serializers.DateField(allow_null=True)
-    coordinates = serializers.ListField(child=serializers.FloatField())
+    coordinates = serializers.ListField(
+        child=serializers.FloatField(),
+        validators=[MinLengthValidator(2), MaxLengthValidator(2)]
+    )
     goal = serializers.CharField(allow_null=True, allow_blank=True)
     keywords = serializers.ListField(child=serializers.CharField())
     products = serializers.ListField(child=serializers.CharField())
     previews = serializers.DictField(default=None, allow_null=True)
 
     # Research project specific
-    persons = serializers.ListField(child=serializers.DictField())
-    contacts = serializers.ListField(child=serializers.DictField())
-    owners = serializers.ListField(child=serializers.DictField())
+    persons = ContactSerializer(many=True)
+    contacts = ContactSerializer(many=True)
+    owners = ContactSerializer(many=True)
     parties = serializers.ListField(child=serializers.CharField())
     themes = serializers.ListField(child=serializers.CharField())
     research_themes = serializers.ListField(child=serializers.CharField(), source="themes", default=list)

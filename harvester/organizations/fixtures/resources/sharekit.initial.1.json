@@ -1,0 +1,390 @@
+{
+    "meta": {
+        "totalCount": 2760
+    },
+    "filters": [],
+    "links": {
+        "first": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=1",
+        "prev": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=1",
+        "self": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=2",
+        "next": null,
+        "last": "/api/jsonapi/channel/v1/nppo/institutes?page[size]=25&page[number]=2"
+    },
+    "data": [
+        {
+            "attributes": {
+                "name": "Hogeschool van Amsterdam",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": "CentreOfExpertise",
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "ebbc2a32-a7df-4db5-8c23-e881464fe9f7"
+        },
+        {
+            "attributes": {
+                "name": "Nyenrode Business Universiteit",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f02626c1-288e-4b57-9279-58673050f725"
+        },
+        {
+            "attributes": {
+                "name": "Christelijke Hogeschool Ede",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f1680d81-aa70-4192-99b6-b2c1a20afb4f"
+        },
+        {
+            "attributes": {
+                "name": "Hogeschool Viaa",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f176c40a-0ee0-4f60-87d2-66aa9b6796c9"
+        },
+        {
+            "attributes": {
+                "name": "De Haagse Hogeschool",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f6a98e74-cb22-4f65-97b9-2ff68770de2a"
+        },
+        {
+            "attributes": {
+                "name": "Maastricht University",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "fc69b5a9-f2c4-4f64-9287-b2750086fcf5"
+        },
+        {
+            "attributes": {
+                "name": "SURFmarket",
+                "parentId": null,
+                "parentName": null,
+                "ror": null,
+                "level": "organisation",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "2e9f187a-1329-4872-87a3-b421cc7a026c"
+        },
+        {
+            "attributes": {
+                "name": "AAFM Academie voor Algemeen en Financieel Management",
+                "parentId": "d87a5c92-550a-4a18-bb01-1938d959a4b7",
+                "parentName": "Avans Hogeschool",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f29e2cc7-4aa4-4856-8893-3c800b16c808"
+        },
+        {
+            "attributes": {
+                "name": "Aanpak jeugdcriminaliteit",
+                "parentId": "c7a56355-403f-4d7b-b3cc-209ec6fd665e",
+                "parentName": "Faculteit SW/TP",
+                "ror": null,
+                "level": "lectorate",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "877c38ed-471f-4665-bfeb-86df7e7978a7"
+        },
+        {
+            "attributes": {
+                "name": "AB&I Academie voor Bouw en Infra",
+                "parentId": "d87a5c92-550a-4a18-bb01-1938d959a4b7",
+                "parentName": "Avans Hogeschool",
+                "ror": null,
+                "level": "discipline",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "d65330fd-c040-4b86-a1a7-9c8396d6750f"
+        },
+        {
+            "attributes": {
+                "name": "ABCT Academie voor Bouwkunde en Civiele Techniek",
+                "parentId": "d87a5c92-550a-4a18-bb01-1938d959a4b7",
+                "parentName": "Avans Hogeschool",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "f9e08570-7dd0-4815-80d9-362dfc621e17"
+        },
+        {
+            "attributes": {
+                "name": "ABM Academie voor Bouw en Management",
+                "parentId": "d87a5c92-550a-4a18-bb01-1938d959a4b7",
+                "parentName": "Avans Hogeschool",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "df5e60c7-3002-44dc-b2e7-9b3041a2c152"
+        },
+        {
+            "attributes": {
+                "name": "Academie Architectuur en Stedenbouw",
+                "parentId": "37b3c9ac-6df6-4962-afab-d49c67eada5c",
+                "parentName": "Fontys Hogeschool voor de Kunsten",
+                "ror": null,
+                "level": "discipline",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "1ae5a780-a23b-40a4-8245-ee3af7f11ab0"
+        },
+        {
+            "attributes": {
+                "name": "Academie Educatie",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "71c2f3a7-97d8-4670-8d37-713aa9697208"
+        },
+        {
+            "attributes": {
+                "name": "Academie Gezondheidszorg",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "b9fd0b16-9f4c-4b60-aa37-dced5ef89929"
+        },
+        {
+            "attributes": {
+                "name": "Academie Health Care",
+                "parentId": "f176c40a-0ee0-4f60-87d2-66aa9b6796c9",
+                "parentName": "Hogeschool Viaa",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "a718de90-cb10-4fa1-ab4c-3dd03c369aa8"
+        },
+        {
+            "attributes": {
+                "name": "Academie Journalistiek & Communicatie",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "800ff650-e45b-4eb5-a124-b0461604a78c"
+        },
+        {
+            "attributes": {
+                "name": "Academie Mens & Organisatie",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "543044e7-2802-4e93-b344-d187f9423ab0"
+        },
+        {
+            "attributes": {
+                "name": "Academie Social Work en Theologie",
+                "parentId": "f176c40a-0ee0-4f60-87d2-66aa9b6796c9",
+                "parentName": "Hogeschool Viaa",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "e8e2f4f4-fe71-4dac-89b6-085eb588e71e"
+        },
+        {
+            "attributes": {
+                "name": "Academie Sociale Studies",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "d4ac4b53-eb8c-4ad1-a23f-06220734908e"
+        },
+        {
+            "attributes": {
+                "name": "academie sociale studies - master contextuele hulpverlening",
+                "parentId": "d4ac4b53-eb8c-4ad1-a23f-06220734908e",
+                "parentName": "Academie Sociale Studies",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "6bf2ab76-b450-4092-80b6-215ca4b3c66e"
+        },
+        {
+            "attributes": {
+                "name": "Academie Theologie",
+                "parentId": "f1680d81-aa70-4192-99b6-b2c1a20afb4f",
+                "parentName": "Christelijke Hogeschool Ede",
+                "ror": null,
+                "level": null,
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "2298e855-1eb6-49b3-9674-68fb95bf39e6"
+        },
+        {
+            "attributes": {
+                "name": "Academie Theologie",
+                "parentId": "f176c40a-0ee0-4f60-87d2-66aa9b6796c9",
+                "parentName": "Hogeschool Viaa",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "53c14474-5626-4848-ad4f-52f78434e37e"
+        },
+        {
+            "attributes": {
+                "name": "Academie voor Architectuur, Bouwkunde & Civiele Techniek [tot 1 september 2017]",
+                "parentId": "e1fcbb93-b378-491d-bfbc-532e8ba892eb",
+                "parentName": "Hanzehogeschool Groningen",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 1,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "094bcd01-d544-414a-9207-5198ce431003"
+        },
+        {
+            "attributes": {
+                "name": "Academie Minerva - Beeldende Kunst en Vormgeving",
+                "parentId": "e1fcbb93-b378-491d-bfbc-532e8ba892eb",
+                "parentName": "Hanzehogeschool Groningen",
+                "ror": null,
+                "level": "department",
+                "type": null,
+                "description": null,
+                "inactive": 0,
+                "consortiumChildren": []
+            },
+            "type": "institute",
+            "id": "212a0c0b-a1c1-4098-b2c2-9a3bf8d99fcf"
+        }
+    ]
+}

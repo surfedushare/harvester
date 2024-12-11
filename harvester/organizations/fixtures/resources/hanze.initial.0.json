@@ -1,0 +1,596 @@
+{
+    "count": 20,
+    "pageInformation": {
+        "offset": 0,
+        "size": 10
+    },
+    "items": [
+        {
+            "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a",
+            "name": {
+                "en_GB": "Hanze University of Applied Sciences",
+                "nl_NL": "Hanze"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/university",
+                "term": {
+                    "en_GB": "University",
+                    "nl_NL": "Universiteit"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "0"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2735661,
+                    "id": "0",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 47502219,
+                    "id": "00xqtxw43",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/ror_id",
+                        "term": {
+                            "en_GB": "ROR ID",
+                            "nl_NL": "ROR-ID"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 15883561,
+                    "value": {
+                        "en_GB": "<p>Together with students, professionals, employees and partners, we help build a powerful region. With up-to-date education and practice-oriented research, we contribute to practical solutions for social issues. Our motivation? We use our talents for the world around us: share your talent. move the world.</p>\n<p>Hanze University of Applied Sciences conducts practice-oriented research with a positive and sustainable impact on our environment. We develop knowledge and translate it into practical solutions for social issues. We don't do this alone. We work together with a wide range of partners, from companies and citizens to governments and international research institutions, in ever-changing learning communities. We need each other to tackle today's challenges. The world of tomorrow starts with sharing knowledge and insights of today.</p>",
+                        "nl_NL": "<p>Samen met studenten, professionals, medewerkers en partners bouwen we mee aan een krachtige regio. Met actueel onderwijs en praktijkgericht onderzoek dragen we bij aan praktische oplossingen voor maatschappelijke vraagstukken. Onze motivatie? We zetten onze talenten in voor de wereld om ons heen: share your talent. move the world.</p>\n<p>De Hanze doet aan praktijkgericht onderzoek met positieve en duurzame invloed op onze omgeving. We ontwikkelen kennis en vertalen deze naar praktische oplossingen voor maatschappelijke vraagstukken. We doen dit niet alleen. We werken samen met uiteenlopende partners, van bedrijven en burgers tot overheden en internationale onderzoeksinstellingen, in steeds wisselende leergemeenschappen. We hebben elkaar nodig om de opgaven van nu aan te pakken. De wereld van morgen begint bij het delen van kennis en inzichten van vandaag.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "2b00da37-9d4c-4b2b-b770-9d3981b81c6a",
+            "name": {
+                "en_GB": "Talent Development in Higher Education and Society",
+                "nl_NL": "Talentontwikkeling in Hoger Onderwijs en Samenleving"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "100"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2735790,
+                    "id": "100",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 11281717,
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "f372ce07-510d-47d3-9292-4322e7ebc146"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "5a4f9545-7ce0-46b6-8c92-74f7790cc582",
+            "name": {
+                "en_GB": "Sensors and Smart Systems",
+                "nl_NL": "Sensors and Smart Systems"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "413e8121-d495-4768-8c6e-025d5a43e668"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff",
+            "name": {
+                "en_GB": "Centre of Expertise Healthy Ageing",
+                "nl_NL": "Centre of Expertise Healthy Ageing"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_centre",
+                "term": {
+                    "en_GB": "Research Centre",
+                    "nl_NL": "Kenniscentrum"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "300"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2737591,
+                    "id": "300",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 65827588,
+                    "id": "EHEA",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/cost_center",
+                        "term": {
+                            "en_GB": "Cost center",
+                            "nl_NL": "Kostenplaats"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 2996443,
+                    "value": {
+                        "en_GB": "<p>Despite all efforts, inequalities of health and opportunity have increased in recent years instead of decreased. This makes the need and urgency for better health and participation all the greater. Hanze UAS Groningen contributes to the increase of healthy years for the citizens in the northern region by working on equality of opportunity &amp; participation, frailty &amp; adequate care, and healthy lifestyle &amp; living environment. Through research based on questions from the field of practice, we develop new knowledge and transfer that to the (future) professionals through education and learning networks.</p>\n<p><strong>Transition accelerators</strong><br/>In the transition to a healthy and active society, Hanze UAS contributes to other major societal changes, for instance in the field of digitization and energy. Similar issues play a role here, which is why Hanze UAS is also conducting practice-oriented research into how these transitions can be accelerated.  </p>\n<p>Hanze UAS aims to increase the impact of practice-oriented research through research into so-called transition accelerators. These transition accelerators are Learning Communities, Citizen Science, and Technology &amp; Digitization. You can read more about them <a href=\"https://www.hanze.nl/eng/research/strategic-themes/healthy-ageing/organisation/organisation/transitionaccelerators\">here</a>.  </p>",
+                        "nl_NL": "<p>Ondanks alle inspanningen zijn de gezondheidsverschillen en kansenongelijkheid de afgelopen jaren eerder groter dan kleiner geworden. Dat maakt de urgentie voor een transitie naar meer gezondheid en participatie des te groter. De Hanzehogeschool Groningen draagt bij aan meer gezonde jaren voor de inwoners in de noordelijke regio door te werken aan <a href=\"https://www.hanze.nl/nld/onderzoek/speerpunten/healthy-ageing/organisatie/organisatie/kansengelijkheid-participatie\">Kansengelijkheid &amp; Participatie</a>, <a href=\"https://www.hanze.nl/nld/onderzoek/speerpunten/healthy-ageing/organisatie/organisatie/kernthema-kwetbaarheid-passende-zorg\">Kwetsbaarheid &amp; Passende Zorg</a> en <a href=\"https://www.hanze.nl/nld/onderzoek/speerpunten/healthy-ageing/organisatie/organisatie/kernthema-leefstijl-leefomgeving\">Gezonde Leefstijl &amp; Leefomgeving</a>. Door onderzoek op basis van vragen uit de praktijk ontwikkelen we kennis en die dragen we over op (toekomstige) professionals via onderwijs en via leernetwerken. </p>\n<p><strong>Transitieversnellers</strong><br/>De Hanzehogeschool Groningen draagt in de transitie naar een gezonde en actieve samenleving bij aan andere grote maatschappelijke veranderingen op het gebied van bijvoorbeeld digitalisering en energie. Hier spelen vergelijkbare vraagstukken, vandaar dat de Hanzehogeschool ook praktijkgericht onderzoek doet naar de manier waarop deze transities kunnen worden versneld.</p>\n<p>Via onderzoek naar zogenaamde transitieversnellers wil de Hanzehogeschool de impact van het praktijkgerichte onderzoek vergroten. Deze transitieversnellers zijn Learning communities; Citizen Science en Technologie en Digitalisering. <a href=\"https://www.hanze.nl/nld/onderzoek/speerpunten/healthy-ageing/organisatie/organisatie/transitieversnellers\">Lees verder</a>.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "2149592a-90bf-4854-8fda-7a156b2395d9",
+            "name": {
+                "en_GB": "Centre of Expertise Energy",
+                "nl_NL": "Centre of Expertise Energie"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_centre",
+                "term": {
+                    "en_GB": "Research Centre",
+                    "nl_NL": "Kenniscentrum"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "301"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2737655,
+                    "id": "301",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 65827578,
+                    "id": "EEKC",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/cost_center",
+                        "term": {
+                            "en_GB": "Cost center",
+                            "nl_NL": "Kostenplaats"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 2996450,
+                    "value": {
+                        "en_GB": "<p><strong>Renewable energy needs innovative professionals!<br/></strong>It is one of the biggest challenges for the near future: the transition to a sustainable society, which is based on the use of clean energy sources. On a large scale, new solutions and new approaches are needed. The Hanze University of Applied Sciences, Groningen (Hanze UAS) is the leader in applied research into renewable energy. It is one of the universities of applied sciences where students from various disciplines are trained in energy education and are involved in research into energy matters.</p>\n<p><strong>What can you do in Renewable Energy during your study programme?<br/></strong>At Hanze UAS, you can specialise in New Energy during your study programme, by taking an 'energy track' consisting of a combination of components from your own study programme, components from other study programmes and learning activities from the Energy Academy Europe. Upon completion of the energy track, you will receive an energy certificate.</p>\n<p><strong>European Masters<br/></strong>Together with leading European Universities, EUREC Agency has developed the European Master in Renewable Energy and the European Master in Sustainable Energy System Management​ that merges business and technology in the field of energy. Hanze University of Applied Sciences, Groningen (Hanze UAS) became member of the EUREC consortium and started these master programmes in September 2012 and September 2015, respectively. ​</p>\n<p><a href=\"https://research.hanze.nl/en/organisations/centre-of-expertise-energy/organisations/\"><strong>Overview of Professorships and Research Areas</strong></a></p>\n<p> </p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "64540675-9071-43d6-a7df-e53ac7b51d95",
+            "name": {
+                "en_GB": "Research Centre Art & Society",
+                "nl_NL": "Kenniscentrum Kunst & Samenleving"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_centre",
+                "term": {
+                    "en_GB": "Research Centre",
+                    "nl_NL": "Kenniscentrum"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "303"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2737919,
+                    "id": "303",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 65828314,
+                    "id": "KCKS",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/cost_center",
+                        "term": {
+                            "en_GB": "Cost center",
+                            "nl_NL": "Kostenplaats"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 2996415,
+                    "value": {
+                        "en_GB": "<p>​​The Research Centre Art &amp; Society carries out research into the interaction between art and society and the ever changing professional practice of artists and musicians because of this. The results of this research are used in the professional practice as well as in higher arts education.</p>\n<p><a href=\"https://research.hanze.nl/en/organisations/research-centre-art-society/organisations/\">Overview of the Professorships and Research Area's within Research Centre Art &amp; Society.</a></p>\n<p>The research centre comprises research groups which are connected to various disciplines within music and fine arts and the teacher training courses that accompany these. The research centre consciously aims to be more than the sum of its parts; the combination of research groups has to result in added value to the contents of the results.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "be7d02b9-56d1-4f45-b3ef-f742333bf776",
+            "name": {
+                "en_GB": "Research Centre for Built Environment – NoorderRuimte",
+                "nl_NL": "Research Centre for Built Environment – NoorderRuimte"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_centre",
+                "term": {
+                    "en_GB": "Research Centre",
+                    "nl_NL": "Kenniscentrum"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "304"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2738074,
+                    "id": "304",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 65828518,
+                    "id": "KCNR",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/cost_center",
+                        "term": {
+                            "en_GB": "Cost center",
+                            "nl_NL": "Kostenplaats"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 2996422,
+                    "value": {
+                        "en_GB": "<p><span style=\"font-family: Calibri; font-size: medium;\">NoorderRuimte, Research Centre for Built Environment, performs practice-oriented research into the built environment of North Netherlands. We focus on the themes earthquakes, demographic transition, sustainability, and health and wellbeing. Our approach is integral. Our professors, lecturer-researchers, and students connect the fields of architecture, construction management, civil engineering, facility management and real estate. We always work together with practice.</span></p>",
+                        "nl_NL": "<p>Het Kenniscentrum NoorderRuimte doet praktijkgericht onderzoek naar de gebouwde omgeving in Noord-Nederland. Hierbij richten wij ons op vier thema's: Aardbevingen, Leefbaarheid, Duurzaamheid en Gezondheid &amp; Welzijn. Wij delen onze nieuwsgierigheid en passie voor een verbeterd (her)ontwerp van de gebouwde omgeving voor mensen. Binnen NoorderRuimte werken lectoren, (docent)onderzoekers, studenten en professionals uit het werkveld samen aan actuele onderzoeks vraagstukken uit de praktijk.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "413e8121-d495-4768-8c6e-025d5a43e668",
+            "name": {
+                "en_GB": "Research Centre Biobased Economy",
+                "nl_NL": "Kenniscentrum Biobased Economy"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/research_centre",
+                "term": {
+                    "en_GB": "Research Centre",
+                    "nl_NL": "Kenniscentrum"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "306"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2738123,
+                    "id": "306",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 65828423,
+                    "id": "KBBE",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/cost_center",
+                        "term": {
+                            "en_GB": "Cost center",
+                            "nl_NL": "Kostenplaats"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 16103727,
+                    "value": {
+                        "en_GB": "<p>Hanze University of Applied Sciences Groningen wants to contribute to a healthy and sustainable society. By conducting applied research in collaboration with SMEs and larger companies, we develop new and tangible biobased products, processes and activities that better fit the market demand. The<span class=\"Apple-converted-space\"> </span>Research Centre Biobased Economy brings together all the knowledge and experience relating to the biobased economy.</p>\n<p>A biobased economy is an economy that is based on green raw materials (from crops and residual flows from agriculture and the food industry) instead of fossil-based materials. It also involves a different approach to product development. The raw materials and components used are already taken into account during the design phase of a product, so that they can later be reused. This reduces the amount of waste produced, saving energy and resulting in less pollution.</p>\n<p>The research centre consists out of the following professorships.</p>\n<ul><li><a href=\"https://research.hanze.nl/en/organisations/biobased-ingredients-and-materials\">Biobased Ingredients</a></li><li><a href=\"https://research.hanze.nl/en/organisations/bio-refinery\">Biorefinery</a></li><li><a href=\"https://research.hanze.nl/en/organisations/plant-production-processing\">Plants Production &amp; Processing</a></li><li><a href=\"https://research.hanze.nl/en/organisations/circular-industry\">Circular Industry</a></li><li><a href=\"https://research.hanze.nl/en/organisations/smart-industry\">Smart Industry</a></li></ul>",
+                        "nl_NL": "<p>Hanzehogeschool Groningen wil bijdragen aan een gezonde en duurzame samenleving. Door het uitvoeren van toegepast onderzoek in samenwerking met het mkb en grotere bedrijven ontwikkelen we concrete, nieuwe biobased producten, processen en bedrijvigheid die beter aansluiten op de vraag van de markt. Het kenniscentrum Biobased Economy is waar alle kennis en ervaring met betrekking tot een biobased economy bij elkaar komt.</p>\n<p>Een Biobased Economy is een economie die gebaseerd is op groene grondstoffen (uit gewassen en reststromen uit landbouw en voedingsmiddelenindustrie) in plaats van fossiele grondstoffen. En het is een andere manier van kijken naar productontwikkeling. Al in de ontwerpfase van een product wordt rekening gehouden met de grondstoffen en onderdelen die gebruikt worden, zodat ze later opnieuw kunnen worden ingezet als grondstof of als component in een ander productieproces. Zo wordt minder afval geproduceerd, wat leidt tot minder vervuiling en energiebesparingen.</p>\n<p>Het kenniscentrum bestaat uit de volgende lectoraten:</p>\n<ul><li><a href=\"https://research.hanze.nl/en/organisations/biobased-ingredients-and-materials\">Biobased Ingredients</a></li><li><a href=\"https://research.hanze.nl/en/organisations/bio-refinery\">Biorefinery</a></li><li><a href=\"https://research.hanze.nl/en/organisations/plant-production-processing\">Plants Production &amp; Processing</a></li><li><a href=\"https://research.hanze.nl/en/organisations/circular-industry\">Circular Industry</a></li><li><a href=\"https://research.hanze.nl/en/organisations/smart-industry\">Smart Industry</a></li></ul>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "def39560-fee1-4032-8ffc-ffccc52b058a"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "fc47bd94-0e95-4d52-b5f6-74e37219179c",
+            "name": {
+                "en_GB": "Healthy Ageing, Allied Health Care and Nursing",
+                "nl_NL": "Healthy Ageing, Allied Health Care and Nursing"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "101"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2738860,
+                    "id": "101",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 6436263,
+                    "value": {
+                        "en_GB": "<p>Life expectancy is continuing to increase, giving today's children a very real chance of living to the age of 100. The bad news, however, is that ageing can be accompanied by a deterioration in physical, psychological and social ability, making the elderly more vulnerable. The more vulnerable an individual becomes, the greater the chance of illness and disabilities.</p>\n<p>The Research Group on Healthy Ageing, Allied Health Care and Nursing does applied academic research on vulnerability – in the paramedical and nursing domain. Its research seeks to establish how vulnerability can be measured and how to avoid or reduce vulnerability. Research focuses primarily on daily exercise, an adequate diet, muscle function, but also on social and psychological aspects and the optimal development of children.</p>",
+                        "nl_NL": "<p>De levensverwachting neemt nog steeds toe, kinderen die nu geboren worden hebben een reële kans om 100 jaar te worden. De keerzijde is dat met het ouder worden er ook een afname kan ontstaan van lichamelijk, psychische en sociale vermogens waardoor de kwetsbaarheid toeneemt. Naarmate mensen kwetsbaarder worden neemt de kans op ziekte en beperkingen toe.</p>\n<p>Het lectoraat Healthy Ageing, Allied Health Care and Nursing doet praktijkgericht wetenschappelijk onderzoek naar kwetsbaarheid in het paramedisch en verpleegkundig domein. Er wordt onderzocht hoe kwetsbaarheid gemeten kan worden en hoe het voorkomen of verminderd kan worden. Het onderzoek richt zich vooral op dagelijkse beweging, adequate voeding, spierfunctie maar ook sociale en psychische aspecten en optimale ontwikkeling van kinderen.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                }
+            ],
+            "systemName": "Organization"
+        },
+        {
+            "uuid": "e7129da1-55f4-4dbc-9c03-56ee64a42583",
+            "name": {
+                "en_GB": "Rehabilitation",
+                "nl_NL": "Rehabilitatie"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/professorship",
+                "term": {
+                    "en_GB": "Professorship",
+                    "nl_NL": "Lectoraat"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "PrimaryId",
+                    "idSource": "synchronisedOrganisation",
+                    "value": "104"
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 2739007,
+                    "id": "104",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/organisationid",
+                        "term": {
+                            "en_GB": "Organisation ID"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "ClassifiedId",
+                    "pureId": 3059742,
+                    "id": "KCAR120",
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/organisationsources/department_id_fez_",
+                        "term": {
+                            "en_GB": "Department ID (FEZ)"
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 3059741,
+                    "value": {
+                        "en_GB": "<p><strong>The Research Group Rehabilitation</strong></p>\n<p>The Research Group Rehabilitation wants to help improve how people with disabilities function when performing social roles in their preferred environment. Its starting point is that people with disabilities have the same wishes and goals as everyone else.</p>\n<p>The Research Group Rehabilitation has opted for the following three central themes, based on questions from the professional practice, the size of the rehabilitation knowledge domain and the manpower available: supported education; preventing and combating social isolation: rehabilitation in relation to social contacts; experiential expertise in the healthcare and welfare sectors.</p>",
+                        "nl_NL": "<p><strong>Lectoraat Rehabilitatie</strong></p>\n<p>Tips voor succesvol thuis studeren!</p>\n<p>​​​​Het Lectoraat Rehabilitatie wil een bijdrage leveren aan het functioneren van mensen met beperkingen bij het vervullen van maatschappelijke rollen in de omgeving van de eigen voorkeur. Uitgangspunt daarbij is dat mensen met beperkingen dezelfde wensen en doelen hebben als iedereen.</p>\n<p>Binnen het lectoraat Rehabilitatie is er op basis van de vragen in het werkveld, de omvang van het kennisdomein rehabilitatie en de beschikbare menskracht gekozen voor de volgende drie centrale thema's: begeleid leren; voorkomen en bestrijden van sociaal isolement: rehabilitatie op het gebied van sociale contacten; ervaringsdeskundigheid in zorg en welzijn.</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/organisation/customfields/organisation_profile",
+                        "term": {
+                            "en_GB": "Organisation profile",
+                            "nl_NL": "Organisatieprofiel"
+                        }
+                    }
+                }
+            ],
+            "parents": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                }
+            ],
+            "systemName": "Organization"
+        }
+    ]
+}

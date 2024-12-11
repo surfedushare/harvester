@@ -31,12 +31,18 @@ SEED_DEFAULTS = {
         "studies": [],
         "study_vocabulary": [],
         "disciplines": [],
-        "consortium": None
+        "consortium": None,
+        # MBO specific fields.
+        # The field doesn't agree across which dimension to categorize materials.
+        # So for now we use two types of category that are very similar in scope.
+        "industries": [],
+        "sectors": []
     },
     # Research product metadata
     "research_product": {
         "research_object_type": None,
         "research_themes": [],
-        "parties": []
+        "parties": [],
+        "projects": []
     }
 }

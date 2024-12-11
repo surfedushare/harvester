@@ -7,14 +7,15 @@ from datagrowth.resources import HttpResource
 
 class SharekitMetadataHarvest(HttpResource):
 
-    URI_TEMPLATE = settings.SHAREKIT_BASE_URL + "/api/jsonapi/channel/v1/{}/repoItems?filter[modified][GE]={}"
+    URI_TEMPLATE = settings.SOURCES["sharekit"]["endpoint"] + "/api/jsonapi/channel/v1/{}/" \
+                                                              "repoItems?filter[modified][GE]={}"
     PARAMETERS = {
         "page[size]": 25
     }
 
     def auth_headers(self):
         return {
-            "Authorization": f"Bearer {settings.SHAREKIT_API_KEY}"
+            "Authorization": f"Bearer {settings.SOURCES["sharekit"]["api_key"]}"
         }
 
     def next_parameters(self):

@@ -1,0 +1,3208 @@
+{
+    "@context": {
+        "dcterms": "http://purl.org/dc/terms/",
+        "edurep": "https://purl.edurep.nl/terms/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "sdo": "https://schema.org/",
+        "sh": "http://www.w3.org/ns/shacl#",
+        "skos": "http://www.w3.org/2004/02/skos/core#",
+        "void": "http://rdfs.org/ns/void#"
+    },
+    "@graph": [
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e735758c-36fa-4fff-ac44-e8e336fdc353",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Niet gespecificeerd naar sector"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a4e37d69-5bb9-4738-8509-8563eeef4a07",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Niet gespecificeerd naar beroepsopleiding"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/e735758c-36fa-4fff-ac44-e8e336fdc353"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector creatieve industrie en ict"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c936e69a-7934-47fc-8083-0a9af78da61b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "It systems and devices"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f40add9f-b9d0-4381-86d4-e61620485615",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Software development"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/76f9f312-537a-4b4b-beb9-3918f0dec52e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Ict support"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/5477ec6f-1c4d-496f-876c-62c7fa6c64a3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Podium- en evenemententechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/aec41f49-dd76-4f9e-8664-54dd3cd82bce",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Av-productie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4f6a18ce-f19d-41d3-a4e5-bf821b237e32",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mediamaken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/592cfcf4-75af-4b06-a37d-c476506205d5",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mediaredactie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4436bba3-4606-4d64-8900-feed031edd88",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Printmedia"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4657dbb0-2d3b-4aa4-84a5-bb0e95de6bbe",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mediamanagement"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2edfb4ec-a771-41e5-9e13-5238b88b2cb6",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mediavormgeving"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b5f2153b-adc2-480c-82b6-3f0c11cf00e3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Ruimtelijke vormgeving"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b8439082-6cc5-4cd9-b3b7-093ac1f0c3d9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Signmaking"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/023e9c67-5409-4bb8-8756-0c08407d9dca",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Stand- en decorbouw"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f5201b95-5cc0-4280-b990-9a30bb04c612",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Make-up art"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0f641067-f21f-4f95-aca0-da05ec400c06",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Artiesten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/7885b02a-806b-4d52-96d9-5d91891b6219"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector handel"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/5bc24ba5-a765-4051-9eb7-55da920cdc87",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Interieurvakmanschap"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e7259066-9840-4071-86ae-b5e68b838a5e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Commercie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/83353c1e-0e46-4467-b5cf-75ab28657c11",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Interieuradvies"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0a44c8c0-d992-42f7-a00b-00d0e3412a27",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Ondernemerschap op basis van een vakspecialisme"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/72e2bda0-55bd-4e86-968c-922dc365f98a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Retail advies"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/6a56f820-aff6-4a49-b277-0d0883aeeafc",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Retail operationeel"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/089c3cfe-23d0-4abd-9c4d-33c0393e604b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Leidinggeven op basis van vakmanschap"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/dc2d18fd-399a-4902-9392-677cd06f716e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Ondernemerschap handel"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ee7d7dc3-6234-4738-971b-f44893af7cf5",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Retail management"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/984d03a3-9df5-4209-86bb-65606f260165",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Fashion"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/299b83a4-eccd-44f1-b655-dc1baa2e511c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Fashionatelier"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector mobiliteit, transport, logistiek, maritiem"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e80a0b13-129a-4d02-8001-c5509e9972ea",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Autoschadehersteltechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/8e4af13f-4418-4adc-9425-5bddf083211f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Autospuiten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/835ec538-7779-4930-af27-d5ae9e4db73a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "(after)sales in de mobiliteitsbranche"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3d6e894c-d5fb-4363-aee1-10bca801025e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Assemblage, carrosseriebouw en recreatievoertuigen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/55b5d3b8-c4c1-410c-b0f9-46b0150171d4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Fietstechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3febf89d-5142-455f-ac75-5a10b642a8d6",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Specialist voertuigen en mobiele werktuigen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d1adeb24-02d8-4167-a05e-055444260177",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Verbrandingsmotortechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a1dbe7f2-e87f-4225-8c65-8df814df1e32",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Voertuigen en mobiele werktuigen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/7a2a6c96-dc00-462a-8c45-b2e6daecee06",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Logistiek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/8804f882-07ae-4c96-ae6a-e821634fe51c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Management transport en logistiek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c3ad35d1-ed3c-4862-8063-c8c1b9da66a8",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dienstverlening in de luchtvaart"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3b34eae1-b6db-4600-8226-10772cefd2f8",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Luchtvracht"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d846b2d1-1468-4dd2-924c-ce8aadae945d",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Operationele processen op de luchthaven"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/fbdca89a-32d5-4ad1-b409-3ed66d134e91",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Binnenvaart"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a617a8d6-1016-4c35-9b48-634cb508f530",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Bootmannen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2d0b374d-33d6-46d1-bed1-ed7575bae6f2",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Havenlogistiek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/9c8e35f8-a264-4ca3-a3e1-717d9ef833de",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Havenoperaties"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/9c3b0fa5-e764-40eb-8dde-3b8cedc738ec",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Koopvaardij smbw"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ca10659e-d915-457f-bb33-8be9f0b6e585",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Maritiem officier"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/74072b2d-309c-46bf-89db-5a7445b52f52",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Maritieme techniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/77d18570-d958-4b5f-8422-5c6ac2d5d153",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Rondvaartboot"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4a9d5664-6e2d-478a-be04-f94203606aa2",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Zeevisvaart sw6"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b53fd312-6a74-45e3-95c3-87f945896221",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Goederenvervoer"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b77ded9e-2215-4885-883d-71e09797347a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Personenvervoer"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b9e8bb15-4210-42bd-a315-dde665db8b23",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Railvervoer"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/36d3f4e6-b0ca-41d3-bc55-039326f2a1c9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector specialistisch vakmanschap"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/efb0b24d-083b-4bf5-b9c0-03bdb2aa8fea",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Creatief vakmanschap"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d1410ba5-94a4-47fd-b778-000bcaf8cc34",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Goud- en zilversmeden"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d8efaa07-490d-45b6-aa1e-72bceeccab2a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Juweliersbedrijf"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f05f7955-2816-4092-b793-90f04a13eb49",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Pianotechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e1ba86d5-5a31-4221-8f5a-9f2f206433ba",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Schoentechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/788dec37-77ae-4f67-9f6c-2a62ebec00d0",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Uurwerktechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/30a71975-e6ba-4d8e-92f7-7db93c8c2b71",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Vervallen dossier, niet meer te specificeren naar beroepsopleiding"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/40fc7051-124c-42a0-a1d4-e7ec9db3b7cf",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Audiciens"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4b397183-8fe3-4237-b4eb-91ef1bc8280e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Medewerkers steriele medische hulpmiddelen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/7d26bccd-2169-4542-9cf0-020992819b16",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Optiek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/9f4e4c7e-5813-4e4c-b6cf-dfbe70317a9a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Orthopedische schoentechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/47917e8e-9de3-42de-bc72-c0e01c36b3fc",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Orthopedische techniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/efc2aa07-1bb5-49f6-9926-2c9f36d6aa44",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Tandtechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/5f09e97c-048d-466c-bace-34b16d196ef3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Technisch oogheelkundig assistenten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/0651dd43-9b1c-4df2-871e-1ef03a7a3ec9"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector techniek en gebouwde omgeving"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/abe903cb-05b0-4b23-add3-dd9b1aea56e2",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Industrieel produceren met hout"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/750c0077-f246-4da3-b847-33d9ce674b5e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Keukenmontage"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/15061522-28f9-454a-8676-b9ed4769c9a8",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Meubels en (scheeps)interieurs maken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/79325a20-795e-4b15-8603-57c3fb95cff4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Meubels stofferen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c45a9bd5-adc6-4a71-88c4-18ba718df522",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Afval, milieu, beheer & onderhoud openbare ruimte"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0c702c87-88a2-4acc-8fb3-b1d60269b055",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Glaszetten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3125098e-1b12-4f01-b0d8-821c31e91b65",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Industriële lakverwerking"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/8e18c210-0a93-4f09-8b76-426fe9e284ff",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Kaderfunctie afbouw en onderhoud"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e7c67d31-e08e-4643-86ce-0a43b82180a9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Schilderen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d1a524ab-2433-4cf0-a112-e837baa96e84",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Specialist schilderen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/6471e72b-0be5-49ff-b560-4884c145ba71",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Decoratiestukadoor"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/cf5ee6dc-570c-4d83-b19d-fd0892c919a4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dekvloeren leggen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/6c35ccd1-e15a-497e-aaf6-4ec9db14d038",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Onderhoud- en verbouwbedrijf"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/200f3827-57ff-45ce-97d0-3d922dacb877",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Plafond-/wandmontage"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/fea995a3-86ab-4233-9270-3e73c46c1ecd",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Stukadoren"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0d2db340-898b-46e2-8852-1ac7b7e52f2c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Analisten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0f4514b1-f90d-4d12-8cc1-0e995bae685b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Betonboren"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0e107885-7b50-408d-bc9a-31cd9e563e89",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Betonreparatie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/613755ef-e94d-418c-a948-a6e19da5d5b4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Betonstaalverwerken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/db5b7dc9-483e-470c-b46c-8baf967aa140",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Betontimmeren"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/5d8f01ad-68b2-4e95-9314-d209295d9d32",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dakdekken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b1047cd8-1dba-4b6c-8810-0103e7a6b125",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Grond-, water- en wegenbouw"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/5f3eb82e-7448-42e8-81a2-b03e068ad9ae",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Hout en restauratie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/92b8aec0-ed1c-4280-8435-6cedb009f23c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Metselen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/6d6e330f-41c3-4443-97fc-40e829658d69",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Middenkader bouw en infra"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d6a45522-f7d5-42e8-a94c-77af8a3503ac",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Natuursteenbewerken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/910d9cbc-0f03-47fc-a07e-a4956dd9cbcc",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Restauratievakmanschap in de bouw"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/55943423-b16a-4793-b899-fcc08e5fb7dd",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Slopen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/cbe471c1-5464-4acb-907b-b7306c77b3f2",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Smart building"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c3d0d28d-e92d-4ac4-bde8-67292bc96b34",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Steigerbouw"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2fb62b6b-9ece-419d-a71e-c088b9e18f0f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Tegelzetten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2d147291-7171-4b9d-9620-d04aea3333c1",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Timmeren"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c8a04601-f67a-481d-8b7e-8e6993ddf646",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Voegen / gevelbehandelen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/122edb3e-2d4f-4216-8942-b679c3a7afd3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Werkvoorbereiden/uitvoeren"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/de2b4299-d89f-4c03-b20c-79aebd36e5b4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Machinisten"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a0656b9f-5266-4587-ba59-455c27bf8c6a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Elektrotechnische installaties"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3070cef4-c5a2-42fd-815a-c72756b6af08",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Elektrotechnische systemen en installaties"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/886d84bb-7042-415e-8650-ef0188f48658",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Engineering"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/47aaf960-9606-42ae-834e-f51958135f2d",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Engineering koude- en klimaatsystemen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/67a6c9db-3808-409b-b019-2552ac8ce2d7",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Isolatiewerken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/47dcb6af-3973-4e70-9756-c2f88207c103",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Technisch tekenen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/694cfeff-5803-458d-9c66-e76faf097b4d",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Infratechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/910913be-2100-455b-b6a2-c19a806976d3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Infratechniek (kader)"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4c2bcaae-f28f-4f1c-8086-1dc5bb611191",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Koude- en klimaatsystemen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/d41fec23-5694-4096-b60d-6747aa0caadb",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Service- en onderhoudstechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2b1feadc-9e37-4cbb-a7d0-0a7ba0281d87",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Industrieel onderhoud"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/cd46cc91-2009-4c7d-bef5-e071e327e95f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Industriële processen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/39f35983-0497-4347-b623-93512f8f4092",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Operationele techniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/9dcd1aff-61ec-4ba1-b142-712fbfbafc64",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Procestechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/bab53cd9-b6d7-4390-b68e-b9ccc2d9df31",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Luchtvaarttechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/04ca1e1c-d32b-4e1c-bcc7-f1d5475fc93b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mechatronica"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/668905db-3b88-4e59-8b73-c0859789d931",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Productietechniek"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a4546143-5d0d-4f1a-9002-15c89245d6de",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Werktuigkundige installaties (montage)"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/16a6a0ed-f282-4e6c-98ec-16e68d672925"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector voedsel, groen en gastvrijheid"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/edac120d-414a-4968-8e40-de34f050c711",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Schoonmaak en glazenwassen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a3f02cf3-b23a-4fe4-b3a1-8622bfa5c474",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Boulangerie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/bfc0e9f9-11f4-48ff-bc9e-6fca6254b20f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Brood en banket"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/623d5b8a-608d-4950-97a1-9fc656e5f130",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Patisserie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/88021271-cec5-44d5-b6dc-cc4b40679303",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Facilitaire dienstverlening"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f835caf0-958d-449f-9b8a-27d09654b620",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Bediening"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ca5099db-b6e2-46bb-9b31-0832a1cce5f1",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Fastservice"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4ec4aa09-0694-4a20-a69a-801fc6d64559",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Keuken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/61b0c8a2-e390-4b54-ab30-27fe727acf2c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Ondernemer horeca/bakkerij"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/fe673114-afc5-44a8-a494-83eb28500afd",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Travel, leisure & hospitality"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/8e83d3c7-649c-403c-a86d-68395d9fb6d5",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Haarverzorging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0383d200-f791-42fb-b93e-4413663be9a9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dierlijke vruchtbaarheid en voortplanting"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/6444e921-4347-4ca9-a060-0f1556a1c5c9",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dierverzorging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ba154ec1-3fdf-4ccf-9162-3e90398d9402",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Gespecialiseerde proefdierverzorging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a7cd7f9e-f3eb-4155-86db-8ff00571532d",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Hoefsmederij"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/47dae4c0-0272-433d-b640-dd0cc0357451",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Paardensport en -houderij"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ef5b4e50-56b0-4bc4-b888-a364a76b74ce",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Advies en onderzoek leefomgeving"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/7f24330c-6d9c-43e2-9b85-9f9cb589e37d",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Boomverzorging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b6868f54-d26f-4dcc-8e87-49b0e3a8674b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Duurzaamheid"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/54447555-30e6-470c-ae84-923d9c85bf6e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Geo, data & design"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b9b5361a-5a4f-4788-ac45-3ba8a2cb0514",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Vers: leidinggeven & ambacht"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/fd26b5b2-2761-4c33-955d-3d93bee6a20b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Vers: leidinggeven & industrie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3b9b140e-038b-4a5b-8566-363eb3ba361f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Vers: vakmanschap & ambacht"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ef24d3ef-4198-4d69-baec-47b4cc59e390",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Vers: vakmanschap & industrie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c4c0ee38-0ad3-4664-adfa-23682480af0e",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Agro productie, handel en technologie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/a3f063bc-2333-4fa2-ae35-62a21248e6e3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Bloem, groen en styling"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/b509f73b-c1f8-4f10-9bdc-3a8e59b1c3bd",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Groen, grond en groene infra"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c6734bc7-457a-4e45-8993-216b54576655",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Groene ruimte"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/33f41051-4426-417a-98f8-d2ed926b72d4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Voeding"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/09cf1cc2-befa-4f14-8b84-79a8f5413476",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Voeding- en leefstijladvies"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/9b4f2de4-da68-463e-9910-00ef70d0814a",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Zorgboerderij"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/eb0688ee-4a43-4f9c-8be0-f4ad38c4d47e"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector zakelijke dienstverlening en veiligheid"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/1119941e-3705-45b7-945b-dc5c8245f0c0",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Bibliotheken"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f467201b-9713-4437-a062-b1358eeb9121",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Business services"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/ba2e699c-1203-4d49-905a-1a4d2707bab5",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Evenementenorganisatie"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e799b6d8-a872-429e-ad11-da96f89c28a4",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Veiligheid en vakmanschap"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/74c688a9-1c62-4cea-9712-f0d5bbcca0ab",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Particuliere beveiliging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/8a0d3364-42a7-41b0-a980-652bdd4c633f",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Publieke veiligheid"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/3f88251c-c367-4efa-a858-f9dc2f45e822"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sector zorg, welzijn en sport"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/33d63fcb-56b7-4a92-a3cb-e038dbc75507",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Schoonheidsverzorging"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/465ce07c-653a-4805-ada3-ccdaabfc55c3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Voetzorg"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/7b2a367b-3439-417a-ac20-808cedbc2915",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sport en bewegen"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/887b1925-5f01-46f5-bad1-3fd82d91a565",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Dienstverlening"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/e43c972b-099e-4ce7-98e1-759de5459f74",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Apothekersassistent"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/c053d7f6-eff3-4dbc-9fd2-68fccaa3b726",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Doktersassistent"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/2c60b304-5c22-4bef-96e9-2f5578a9dde3",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Tandartsassistent"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/bd1f9379-2859-4d0f-a396-3dd16bf5fa9c",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Maatschappelijke zorg"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/4dd65458-7510-4bc8-8b09-1660d2c34a0b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Sociaal werk"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/553a6206-849f-4642-ac5b-d4430d83c156",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Instructeur mbo"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/be0c7278-1558-4025-b4cb-f8252f293901",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Pedagogisch werk"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/f2e47385-115c-4ee7-aba1-fcac5953814b",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Praktijkopleider"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/0783042f-3b32-4b20-a675-d4649c530953",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Mbo-verpleegkundige"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        },
+        {
+            "@id": "http://purl.edustandaard.nl/begrippenkader/85a35522-2c25-4a60-a81d-5e806d337936",
+            "@type": "skos:Concept",
+            "dcterms:educationLevel": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/f3ac3fbb-5eae-49e0-8494-0a44855fff25"
+            },
+            "dcterms:source": "http://purl.edustandaard.nl/begrippenkader",
+            "skos:inScheme": {
+                "@id": "urn:uuid:43ce5cf9-961c-4230-9f08-a8d436506561"
+            },
+            "skos:prefLabel": {
+                "@language": "nl",
+                "@value": "Verzorgende-ig"
+            },
+            "skos:broader": {
+                "@id": "http://purl.edustandaard.nl/begrippenkader/43554762-d033-48fa-b5a3-b6484d577b6b"
+            }
+        }
+    ]
+}

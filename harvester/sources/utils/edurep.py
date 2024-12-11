@@ -7,6 +7,11 @@ from core.constants import HIGHER_EDUCATION_LEVELS, MBO_EDUCATIONAL_LEVELS
 from sources.utils.base import BaseExtractor
 
 
+MBO_INDUSTRY_KEYWORDS = {
+    "btgtgo"
+}
+
+
 class EdurepExtractor(BaseExtractor):
 
     logger = logging.getLogger("harvester")
@@ -16,14 +21,40 @@ class EdurepExtractor(BaseExtractor):
     #############################
 
     @classmethod
-    def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str) -> list[str]:
+    def find_all_relation_identifiers(cls, element: bs4.BeautifulSoup, relation_type: str) -> list[str]:
+        relations = element.find_all(string=relation_type)
+        identifiers = set()
+        for relation in relations:
+            relation_element = relation.find_parent('czp:relation')
+            if not relation_element:
+                continue
+            catalog_entries = relation_element.find_all('czp:catalogentry')
+            for entry in catalog_entries:
+                catalog = entry.find('czp:catalog')
+                if not catalog:
+                    continue
+                match catalog_value := catalog.text.strip():
+                    case "uri":
+                        catalog_prefix = "urn:"
+                    case "UUID":
+                        catalog_prefix = "urn:uuid:"
+                    case _:
+                        catalog_prefix = catalog_value + ":"
+                raw_identifier = entry.find('czp:entry').text.strip()
+                identifiers.add(raw_identifier.replace(catalog_prefix, ""))
+        return list(identifiers)
+
+    @classmethod
+    def find_all_classification_identifiers(cls, element: bs4.BeautifulSoup, classification_type: str,
+                                            id_type: str) -> list[str]:
+        assert id_type in ["czp:entry", "czp:id"]
         entries = element.find_all(string=classification_type)
         identifiers = set()
         for entry in entries:
             classification_element = entry.find_parent('czp:classification')
             if not classification_element:
                 continue
-            raw_identifiers = classification_element.find_all("czp:id")
+            raw_identifiers = classification_element.find_all(id_type)
             taxon_path = classification_element.find("czp:taxonpath")
             source = taxon_path.find("czp:source") if taxon_path else None
             if source:
@@ -53,9 +84,8 @@ class EdurepExtractor(BaseExtractor):
         """
         Returns the state specified by the record or calculates state based on (non NL-LOM) educational level
         """
-        educational_level_state = cls._get_educational_level_state(product)
         header = product.find('header')
-        return header.get("status", educational_level_state)
+        return header.get("status", 'active')
 
     @classmethod
     def get_educational_levels(cls, product):
@@ -66,7 +96,7 @@ class EdurepExtractor(BaseExtractor):
         return levels
 
     @classmethod
-    def _get_educational_level_state(cls, product):
+    def _get_higher_education_level_state(cls, product):
         """
         Returns the desired state of the record based on (non NL-LOM) educational levels
         """
@@ -101,17 +131,44 @@ class EdurepExtractor(BaseExtractor):
         return "active" if has_higher_level and not has_lower_level else "inactive"
 
     @classmethod
-    def iterate_valid_products(cls, soup: bs4.BeautifulSoup):
+    def iterate_valid_higher_education_products(cls, soup: bs4.BeautifulSoup):
         for product in soup.find_all("record"):
+            # Deleted products don't specify education level so we pass those through
             product_state = cls.get_oaipmh_record_state(product)
-            educational_level_state = cls._get_educational_level_state(product)
+            if product_state == "deleted":
+                yield product
+                continue
+            # For regular products we check the educational level to meet higher education criteria
+            educational_level_state = cls._get_higher_education_level_state(product)
             if educational_level_state == "inactive" and product_state != "deleted":
                 continue
             yield product
 
+    @classmethod
+    def iterate_valid_vocational_education_products(cls, soup: bs4.BeautifulSoup):
+        for product in soup.find_all("record"):
+            # Deleted products don't specify keywords so we pass those through
+            product_state = cls.get_oaipmh_record_state(product)
+            if product_state == "deleted":
+                yield product
+                continue
+            # For regular products we check if keywords match the criteria
+            for keyword in cls.get_keywords(soup, product):
+                if keyword.lower() in MBO_INDUSTRY_KEYWORDS or product_state == "deleted":
+                    yield product
+                    break
+
     #############################
     # GENERIC TRANSFORMATIONS
     #############################
+
+    @classmethod
+    def get_keywords(cls, soup, el):
+        nodes = el.find_all('czp:keyword')
+        return [
+            node.find('czp:langstring').text.strip()
+            for node in nodes
+        ]
 
     @classmethod
     def get_copyright(cls, product):
