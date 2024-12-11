@@ -28,9 +28,12 @@ class Organization(BaseOrganization):
 
     type: str | None = Field(default=None)
     secretary: BaseOrganization | None = Field(default=None, description="Secretary of collaboration organization")
-    parents: list[BaseOrganization] = Field(default=[], description="Parent organizations within educational context")
+    parents: list[BaseOrganization] = Field(
+        default_factory=list,
+        description="Parent organizations within educational context"
+    )
     members: list[GenericOrganization] = Field(
-        default=[],
+        default_factory=list,
         description="Members of collaboration organizations possibly from outside the educational context"
     )
 
@@ -48,6 +51,13 @@ class Organization(BaseOrganization):
             return provider.external_id
 
 
+class SimpleOrganizationSerializer(serializers.Serializer):
+    srn = serializers.CharField()
+    name = serializers.CharField(allow_null=True, allow_blank=False)
+    ror = serializers.CharField(allow_null=True, allow_blank=False)
+    is_root = serializers.BooleanField(default=None, allow_null=True)
+
+
 class OrganizationSerializer(serializers.Serializer):
 
     entity = serializers.CharField()
@@ -60,6 +70,7 @@ class OrganizationSerializer(serializers.Serializer):
     description = serializers.CharField(allow_null=True, allow_blank=False)
     ror = serializers.CharField(allow_null=True, allow_blank=False)
     type = serializers.CharField(allow_null=False, allow_blank=False)
+    is_root = serializers.BooleanField(default=None, allow_null=True)
     secretary = serializers.DictField(allow_null=True, default=None)
-    parents = serializers.ListField(child=serializers.DictField())
-    members = serializers.ListField(child=serializers.DictField())
+    parents = SimpleOrganizationSerializer(many=True)
+    members = SimpleOrganizationSerializer(many=True)

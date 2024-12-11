@@ -140,11 +140,9 @@ class TestDocumentView(TestCase):
             "HBO"
         ],
         "material_types": ["unknown"],
-        "studies": [],
         "disciplines": [
             "exact_informatica"
         ],
-        "ideas": [],
         "study_vocabulary": [
             "http://purl.edustandaard.nl/concept/128a7da4-7d5c-4625-8b16-fec02aa94f5d",
             "http://purl.edustandaard.nl/concept/43943d13-306a-4838-a9d4-6a3c4f7a8e11",
