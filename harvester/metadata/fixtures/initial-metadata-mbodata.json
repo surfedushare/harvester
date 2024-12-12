@@ -4667,7 +4667,7 @@
         "updated_at": "2024-10-09T10:56:29.702Z",
         "translation": 10953,
         "is_hidden": true,
-        "is_manual": true,
+        "is_manual": false,
         "english_as_dutch": false,
         "value_output_order": "manual"
     }
