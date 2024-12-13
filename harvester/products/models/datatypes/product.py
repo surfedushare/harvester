@@ -45,6 +45,11 @@ def default_document_tasks():
             "checks": ["has_industries"],
             "resources": []
         }
+        tasks["lookup_sectors_translations"] = {
+            "depends_on": ["$.learning_material.sectors"],
+            "checks": ["has_sectors"],
+            "resources": []
+        }
     if settings.PLATFORM in [Platforms.EDUSOURCES, Platforms.MBODATA]:
         tasks["lookup_consortium_translations"] = {
             "depends_on": ["$.learning_material.consortium"],
@@ -79,6 +84,10 @@ class ProductDocument(HarvestDocument):
     @property
     def has_industries(self) -> bool:
         return self.properties.get("learning_material", {}).get("industries")
+
+    @property
+    def has_sectors(self) -> bool:
+        return self.properties.get("learning_material", {}).get("sectors")
 
     @property
     def has_publisher_year(self) -> bool:
@@ -207,6 +216,8 @@ class ProductDocument(HarvestDocument):
             data["consortium"] = {}
         if "industries" not in data:
             data["industries"] = {}
+        if "sectors" not in data:
+            data["sectors"] = {}
         if "publisher_year_normalized" not in data:
             data["publisher_year_normalized"] = None
         return data
@@ -269,6 +280,7 @@ class ProductDocument(HarvestDocument):
         if learning_material:
             learning_material.pop("study_vocabulary", None)  # prevents overwriting derivatives data
             learning_material.pop("industries", None)  # prevents overwriting derivatives data
+            learning_material.pop("sectors", None)  # prevents overwriting derivatives data
             if ("consortium" in data and data["consortium"]) or use_multilingual_fields:
                 learning_material.pop("consortium", None)  # prevents overwriting derivatives data
             data.update(learning_material)

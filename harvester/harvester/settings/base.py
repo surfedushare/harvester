@@ -68,6 +68,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 if ENVIRONMENT != "production":
     CORS_ALLOW_ALL_ORIGINS = True
+elif ENVIRONMENT == "production" and PROJECT == "mbodata":
+    CORS_ALLOWED_ORIGINS.append("tgo.mbo.edusources.nl")
 
 # Detect our own IP address
 try:
