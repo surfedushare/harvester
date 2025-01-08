@@ -31,6 +31,7 @@ class DocumentSearchSerializer(serializers.Serializer):
 
     results_total = serializers.DictField(read_only=True)
     results = serializers.ListField(read_only=True, child=serializers.DictField())
+    filter_counts = serializers.DictField(read_only=True)
 
     def validate_filters(self, filters):
         if not filters:
