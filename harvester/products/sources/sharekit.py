@@ -173,7 +173,7 @@ class SharekitMetadataExtraction:
 
     @classmethod
     def get_industries(cls, node):
-        industries = node["attributes"].get("mboDiscipline", [])
+        industries = node["attributes"].get("mboSector", [])
         if not industries:
             return []
         return [industry["source"] for industry in industries]
