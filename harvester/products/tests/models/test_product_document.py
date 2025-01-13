@@ -440,10 +440,7 @@ class FileDocumentTestCase(TestCase):
         })
 
     def test_overwrite_metrics(self):
-        product = ProductDocument.objects.get(id=1)
-        data = product.to_data(for_search=False, use_multilingual_fields=True)
-        self.assertEqual(data["overwrite"], data["srn"])
-        self.assertEqual(data["metrics"], {
+        expected_metrics = {
             "views": 1,
             "stars": {
                 "star_1": 5,
@@ -453,8 +450,20 @@ class FileDocumentTestCase(TestCase):
                 "star_5": 1,
                 "average": 2.3,
             },
-        })
+        }
+        # Check that overwrite metrics are included in search
+        product = ProductDocument.objects.get(id=1)
+        data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["overwrite"], data["srn"])
+        self.assertEqual(data["metrics"], expected_metrics)
+        # Make sure that products can be included in search without any metrics
         product.overwrite = None
         no_overwrite_data = product.to_data(for_search=False, use_multilingual_fields=True)
         self.assertIsNone(no_overwrite_data["overwrite"])
         self.assertIsNone(no_overwrite_data["metrics"])
+        # Check that products will add their own metrics when available
+        product.clean()
+        self.assertIsNotNone(product.overwrite)
+        clean_data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(clean_data["overwrite"], data["srn"])
+        self.assertEqual(clean_data["metrics"], expected_metrics)

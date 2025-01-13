@@ -15,6 +15,13 @@ from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
 
 
+class Overwrite(HarvestOverwrite):
+
+    class Meta:
+        verbose_name = "product overwrite"
+        verbose_name_plural = "product overwrites"
+
+
 def default_document_tasks():
     tasks = {
         "normalize_publisher_year": {
@@ -309,9 +316,7 @@ class ProductDocument(HarvestDocument):
             source_language = self.properties.get("language", None)
             self.metadata["language"] = get_analyzer_language(source_language)
 
-
-class Overwrite(HarvestOverwrite):
-
-    class Meta:
-        verbose_name = "product overwrite"
-        verbose_name_plural = "product overwrites"
+    def clean(self, set_metadata=True):
+        super().clean(set_metadata=set_metadata)
+        if not self.overwrite and Overwrite.objects.filter(id=self.identity).exists():
+            self.overwrite_id = self.identity
