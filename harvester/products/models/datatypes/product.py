@@ -165,6 +165,7 @@ class ProductDocument(HarvestDocument):
         data["files"] = files
         # Add contents of files in order to a ContentContainer and create other in-order lists
         licenses = []
+        access_rights = []
         technical_types = []
         for file_identity in prioritized_file_identities:
             file_data = files_by_identity.get(file_identity, {})
@@ -180,10 +181,13 @@ class ProductDocument(HarvestDocument):
             content_container.append(content)
             if license_ := file_data["copyright"]:
                 licenses.append(license_)
+            if access_right := file_data["access_rights"]:
+                access_rights.append(access_right)
             if technical_type := file_data["type"]:
                 technical_types.append(technical_type)
         # Return the product with updated data from files
         data["licenses"] = licenses
+        data["access_rights"] = access_rights
         data["technical_types"] = technical_types
         return data
 

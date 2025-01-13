@@ -50,6 +50,16 @@ class FileDocumentTestCase(TestCase):
             product_data = product.to_data()
             self.assertEqual(product_data["files"][0]["title"], "Attachment 1")
 
+    def test_licenses(self):
+        product = ProductDocument.objects.get(id=1)
+        product_data = product.to_data()
+        self.assertEqual(product_data["licenses"], ["cc-by-sa-40", "cc-by-sa-40", "cc-by-sa-40"])
+
+    def test_access_rights(self):
+        product = ProductDocument.objects.get(id=1)
+        product_data = product.to_data()
+        self.assertEqual(product_data["access_rights"], ['OpenAccess', 'OpenAccess', 'OpenAccess'])
+
     @override_settings(SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT=False)
     def test_to_search_no_files(self):
         FileDocument.objects.all().delete()
@@ -61,6 +71,8 @@ class FileDocumentTestCase(TestCase):
         self.assertIsNone(product_search["text"])
         self.assertIsNone(product_search["previews"])
         self.assertEqual(product_search["files"], [])
+        self.assertEqual(product_search["licenses"], [])
+        self.assertEqual(product_search["access_rights"], [])
 
     def test_technical_type_overrides(self):
         """
