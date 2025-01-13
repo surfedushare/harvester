@@ -1,15 +1,24 @@
+from django.conf import settings
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
 
+from search_client.opensearch.configuration.presets import get_preset_search_configuration
 from datagrowth.resources.admin import HttpResourceAdmin
 from metadata.models import (MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource,
                              SkosVocabularyResource)
 
 
 class MetadataFieldAdmin(admin.ModelAdmin):
-    list_display = ('name', 'entity', 'is_hidden', 'is_manual', 'english_as_dutch', 'value_output_order',)
+    list_display = (
+        'name', 'entity', 'is_search_filter', 'is_hidden', 'is_manual', 'english_as_dutch', 'value_output_order',
+    )
+
+    @admin.display(boolean=True)
+    def is_search_filter(self, obj):
+        search_configuration = get_preset_search_configuration(settings.PLATFORM, obj.entity)
+        return obj.name in search_configuration.filter_fields
 
 
 class MetadataTranslationAdmin(admin.ModelAdmin):
