@@ -5,13 +5,9 @@ from django.conf import settings
 from datagrowth.resources import HttpResource
 
 
-# Value to be replaced with: settings.SOURCES["sharekit"]["endpoint"]
-SHAREKIT_ENDPOINT = "https://api.test.surfsharekit.nl"
-
-
 class SharekitOrganizationResource(HttpResource):
 
-    URI_TEMPLATE = SHAREKIT_ENDPOINT + "/api/jsonapi/channel/v1/{}/institutes"
+    URI_TEMPLATE = settings.SOURCES["sharekit"]["endpoint"] + "/api/jsonapi/channel/v1/{}/institutes"
     PARAMETERS = {
         "page[size]": 25
     }
