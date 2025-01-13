@@ -1,5 +1,7 @@
 from rest_framework.schemas.openapi import AutoSchema
 
+from core.views.overwrite import OverwriteSerializer
+
 
 class HarvesterSchema(AutoSchema):
 
@@ -196,3 +198,22 @@ class HarvesterSchema(AutoSchema):
         else:
             operation["tags"] = ["default"]
         return operation
+
+    def get_responses(self, path, method):
+        responses = super().get_responses(path, method)
+        if method == 'GET' and path.startswith('/suggestions'):
+            serializer = self.get_response_serializer(path, method)
+            responses['200']['content']['application/json']['schema'] = self.get_reference(serializer)
+        return responses
+
+    def map_field(self, field):
+        if field.field_name == 'frequency' and field.parent.__class__.__name__ in \
+                ['MetadataFieldSerializer', "MetadataValueSerializer"]:
+            return {
+                'type': 'number'
+            }
+        if field.field_name == 'properties' and issubclass(field.parent.__class__, OverwriteSerializer):
+            return {
+                'type': 'object',
+            }
+        return super().map_field(field)

@@ -66,8 +66,8 @@ class MetricsSerializer(serializers.Serializer):
 class BaseSearchResultSerializer(serializers.Serializer):
 
     entity = serializers.CharField()
-    srn = serializers.CharField(default=None)
-    set = serializers.CharField(default=None)
+    srn = serializers.CharField()
+    set = serializers.CharField()
     state = serializers.CharField(default="active")
     external_id = serializers.CharField()
     score = serializers.FloatField(default=0.0)
