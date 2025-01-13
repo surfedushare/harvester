@@ -56,6 +56,7 @@ class SharekitMetadataExtraction:
                 "is_external": bool(int(author.get("external"))) if author.get("external") else False,
             }
             for author in authors
+            if "Onbekend" not in author["person"]["name"]
         ]
 
     @classmethod

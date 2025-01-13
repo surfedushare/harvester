@@ -114,6 +114,7 @@ class TestSharekitProductExtraction(TestCase):
 
     def test_authors_property(self):
         seeds = self.seeds
+        self.assertEqual(seeds[0]["authors"], [], "Expected unknown authors to be ignored")
         self.assertEqual(seeds[2]['authors'], [
             {
                 "name": "Ruudje Cock",
