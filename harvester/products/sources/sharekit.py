@@ -94,6 +94,8 @@ class SharekitMetadataExtraction:
         hbovpk_keywords = [keyword for keyword in keywords if keyword and "hbovpk" in keyword.lower()]
         if hbovpk_keywords:
             publishers.append("HBO Verpleegkunde")
+        if secondary_publisher := node["attributes"].get("publishedIn", {}).get("publisherDocument"):
+            publishers.append(secondary_publisher)
         return publishers
 
     @classmethod

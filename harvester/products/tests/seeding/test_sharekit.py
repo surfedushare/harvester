@@ -147,6 +147,10 @@ class TestSharekitProductExtraction(TestCase):
 
     def test_publishers_property(self):
         seeds = self.seeds
+        self.assertEqual(
+            seeds[0]['publishers'], ["SURFnet", "Wolters"],
+            "Expected secondary publishers to get extracted"
+        )
         self.assertEqual(seeds[2]['publishers'], ["Hogeschool Utrecht", 'SURFnet'])
         self.assertEqual(seeds[4]['publishers'], ['SURFnet'])
 
