@@ -176,14 +176,14 @@ class SharekitMetadataExtraction:
 
     @classmethod
     def get_industries(cls, node):
-        industries = node["attributes"].get("mboSector", [])
+        industries = node["attributes"].get("mboDomain", [])
         if not industries:
             return []
         return [industry["source"] for industry in industries]
 
     @classmethod
     def get_sectors(cls, node):
-        sectors = node["attributes"].get("mboDomain", [])
+        sectors = node["attributes"].get("mboSector", [])
         if not sectors:
             return []
         return [sector["source"] for sector in sectors]
