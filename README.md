@@ -123,10 +123,10 @@ It can be useful to run services outside their containers for connecting debugge
 
 #### Available apps
 
-Either way the database admin tool become available under:
+Either way the database admin tool becomes available under:
 
 ```bash
-http://localhost:8081/
+http://localhost:6543/
 ```
 
 #### Resetting your database
@@ -136,7 +136,7 @@ If your database container is not running it's quite easy to throw all data away
 To irreversibly destroy your local database with all data run:
 
 ```bash
-docker volume rm search-portal_postgres_database
+docker volume rm harvester_postgres_database
 ```
 
 And then follow the steps to [install the service](service/README.md#installation) and
@@ -157,7 +157,7 @@ Once your tests pass you can make a new build for the project you want to deploy
 This section outlines the most common options for deployment.
 Use `invoke -h <command>` to learn more about any invoke command.
 
-**When you want to deploy the development image to acceptance, or acceptance to production you can skip the container.build and push commands.**
+When you want to deploy the development image to acceptance, or acceptance to production you can skip the container.build and push commands.
 
 Before deploying you'll want to decide on a version number.
 It's best to talk to the team about which version number you want to use for a deploy.
