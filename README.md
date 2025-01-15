@@ -10,7 +10,7 @@ or locally stored data.
 
 ## Prerequisites
 
-This project uses `Python 3.12`, `npm`, `Docker`, `Docker Compose V2` and `psql`.
+This project uses `Python 3.12`, `Docker`, `Docker Compose V2` and `psql`.
 Make sure they are installed on your system before installing the project.
 
 ## Installation
@@ -22,12 +22,11 @@ External services like the database run in containers, so it's always necessary 
 
 #### Mac OS setup
 
-If you have a M1 or M2 macBook, use the installation guide [here](#m1-setup)
-We recommend installing Python through pyenv:
-
+We recommend installing Python through Conda for Mac.
 ```
-brew update && brew upgrade pyenv
-pyenv install 3.12.0
+brew install miniforge
+conda env create -f environment.yml
+conda activate search-client
 ```
 
 When using macOS make sure you have `libmagic` installed. It can be installed using `brew install libmagic`.
