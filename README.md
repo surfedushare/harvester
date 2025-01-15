@@ -26,7 +26,7 @@ We recommend installing Python through Conda for Mac.
 ```
 brew install miniforge
 conda env create -f environment.yml
-conda activate search-client
+conda activate harvester
 ```
 
 When using macOS make sure you have `libmagic` installed. It can be installed using `brew install libmagic`.
@@ -39,6 +39,7 @@ For a start the default values will do.
 To install the basic environment and tooling you'll need to setup a local environment on a host machine with:
 
 ```bash
+cp .env.example .env
 python3 -m venv venv --copies --upgrade-deps
 source activate.sh
 pip install -r requirements.txt
