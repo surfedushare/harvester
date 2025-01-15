@@ -66,7 +66,7 @@ This is important for many setup commands as well as running tests during develo
 To finish the container setup you can run these commands to build all containers:
 
 ```bash
-invoke aws.sync-repository-state
+invoke aws.sync-repository-state --no-profile
 invoke container.prepare-builds
 docker compose up --build
 ```
