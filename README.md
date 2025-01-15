@@ -75,8 +75,8 @@ After that you can seed the database with data:
 
 ```bash
 invoke db.setup
-invoke hrv.load-data localhost -a products -s production
-invoke hrv.load-data localhost -a files -s production
+invoke hrv.load-data localhost -a files -s development
+invoke hrv.load-data localhost -a products -s development
 ```
 
 The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
