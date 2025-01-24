@@ -94,10 +94,10 @@ class Command(base.LabelCommand):
         models["Document"].objects.all().delete()
         models["Dataset"].objects.all().delete()
         models["DatasetVersion"].objects.all().delete()
-        print("Deleting old overwrites")
+        print(f"Deleting old overwrites: {app_label}")
         models["Overwrite"].objects.all().delete()
-        print("Deleting old indices for products")
-        OpenSearchIndex.objects.all().delete()
+        print(f"Deleting old indices: {app_label}")
+        OpenSearchIndex.objects.filter(entity__startswith=app_label).delete()
 
         if harvest_source and not skip_download:
             logger.info(f"Downloading dump files for: {app_label}")
