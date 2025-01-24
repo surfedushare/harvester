@@ -4,7 +4,7 @@ from io import StringIO
 from invoke import Context
 
 from django.conf import settings
-from django.core.management import base, call_command
+from django.core.management import base, call_command, CommandError
 from django.apps import apps
 from django.db import connection
 
@@ -76,6 +76,8 @@ class Command(base.LabelCommand):
         model.objects.bulk_create(objects, ignore_conflicts=True)
 
     def handle_label(self, app_label, **options):
+        if app_label == "core":
+            raise CommandError("The app 'core' is no longer supported as datatype module use 'products' instead.")
 
         models = load_harvest_models(app_label)
 
@@ -92,9 +94,10 @@ class Command(base.LabelCommand):
         models["Document"].objects.all().delete()
         models["Dataset"].objects.all().delete()
         models["DatasetVersion"].objects.all().delete()
-        if app_label == "products":
-            print("Deleting old indices for products")
-            OpenSearchIndex.objects.all().delete()
+        print("Deleting old overwrites")
+        models["Overwrite"].objects.all().delete()
+        print("Deleting old indices for products")
+        OpenSearchIndex.objects.all().delete()
 
         if harvest_source and not skip_download:
             logger.info(f"Downloading dump files for: {app_label}")

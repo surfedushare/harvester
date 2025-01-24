@@ -21,11 +21,7 @@ def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestData
     :param app_label: the app model you want to load harvester models for
     :return: (dict) models
     """
-    model_names = ["Dataset", "DatasetVersion", "HarvestState", "Batch", "ProcessResult"]
-    if app_label == "core":
-        model_names.append("Collection")
-    else:
-        model_names.append("Set")
+    model_names = ["Dataset", "DatasetVersion", "HarvestState", "Batch", "ProcessResult", "Set", "Overwrite"]
     app_config = apps.get_app_config(app_label)
     models = {}
     for model_name in model_names:
