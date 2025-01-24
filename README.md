@@ -153,8 +153,32 @@ To irreversibly destroy your local database with all data run:
 docker volume rm harvester_postgres_database
 ```
 
-And then follow the steps to [install the service](service/README.md#installation) and
-[install the harvester](harvester/README.md#installation) to recreate the databases and populate them.
+Then re-run the database setup and data load commands described above.
+
+#### Surgically adjust environment configuration
+
+Because we leverage the [invoke library](https://docs.pyinvoke.org/en/stable/concepts/configuration.html)
+inside the Django app it's relatively easy to adjust environment settings without adjusting code.
+In this section we demonstrate a basic usage, but read the Invoke documentation for a more comprehensive understanding.
+
+Under the ``environments`` directory at the root of this repo you'll find directories for environments
+like localhost and production. Inside the directories sits an ``invoke.yml`` file which is the basis for most configuration.
+If you want to adjust configuration for a single process without adjusting processes within the same environment you can use environment variables.
+For instance the following will put any process into debug mode, even when using the production environment.
+
+```bash
+export DET_DJANGO_DEBUG=1
+```
+
+Alternatively you can prefix any command with the relevant environment variables like any bash command:
+
+```bash
+cd harvester
+DET_DJANGO_DEBUG=1 python manage.py shell
+```
+
+If you want permanent changes for your localhost setup you can edit the ``.env`` file and re-run the ``activate.sh`` command to load the changes.
+In fact on localhost processes always run in debug mode regardless of environment selection to help with debugging environment differences.
 
 ## Tests
 
