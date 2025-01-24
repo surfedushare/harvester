@@ -12,6 +12,9 @@ or locally stored data.
 
 This project uses `Python 3.12`, `Docker`, `Docker Compose V2` and `psql`.
 Make sure they are installed on your system before installing the project.
+For Mac there are two additional requirements: ``Brew`` and ``libmagic``.
+
+> Failing to install prerequisites will lead to strange errors during the installation process.
 
 ## Installation
 
@@ -20,31 +23,40 @@ It can be convenient to run some code for inspection outside of containers.
 To stay close to the production environment it works well to run the project in containers.
 External services like the database run in containers, so it's always necessary to use Docker.
 
-#### Mac OS setup
+#### Environment configuration
 
-We recommend installing Python through Conda for Mac.
+The environment configuration is managed by a combination of Docker and the [invoke library](https://docs.pyinvoke.org/en/stable/concepts/configuration.html).
+For localhost the Docker and application configuration can be changed using an ``.env`` file.
+The first step for installation is to create a simple default configuration that can be used during setup.
+
+```bash
+cp .env.example .env
+```
+
+Feel free to change your local ``env`` file. How this works is explained in the [surgically adjust environment configurations](#Surgically-adjust-environment-configuration) section.
+
+#### Mac OS Python setup
+
+We recommend installing Python through Conda for Mac, especially for the M-serie.
 ```
 brew install miniforge
 conda env create -f environment.yml
-conda activate harvester
+source activate.sh
 ```
 
-When using macOS make sure you have `libmagic` installed. It can be installed using `brew install libmagic`.
-
-#### General setup
-
-First copy the `.env.example` file to `.env` and update the variable values to fit your system.
-For a start the default values will do.
+#### Non-Mac Python setup
 
 To install the basic environment and tooling you'll need to setup a local environment on a host machine with:
 
 ```bash
-cp .env.example .env
+
 python3 -m venv venv --copies --upgrade-deps
 source activate.sh
 pip install -r requirements.txt
 pip install git+https://github.com/surfedushare/search-client.git@master
 ```
+
+#### Other important setup
 
 When using vscode copy `activate.sh` to venv/bin so pylance can find it.
 
@@ -63,7 +75,7 @@ to prevent weird error messages if you ever run the project outside of its conta
 This way you can reach these containers outside of the container network through their names.
 This is important for many setup commands as well as running tests during development.
 
-To finish the container setup you can run these commands to build all containers:
+To finish the setup you can run these commands to build all containers:
 
 ```bash
 invoke aws.sync-repository-state --no-profile
