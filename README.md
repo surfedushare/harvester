@@ -93,6 +93,8 @@ invoke hrv.load-data localhost -a products -s development
 
 The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
 For AWS environments you can find the admin password under the Django secrets in the Secret Manager.
+The secret value is named admin_password. You can copy it for each environment to your own password manager.
+The superuser is unavailable on production. A personal user will be given to you by SURF.
 
 
 ## Getting started
