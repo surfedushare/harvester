@@ -29,7 +29,7 @@ def default_document_tasks():
             "checks": ["has_publisher_year"],
             "resources": []
         },
-        "deactivate_invalid_products": {
+        "deactivate_invalid_documents": {
             "depends_on": ["$.modified_at"],
             "checks": [],
             "resources": []

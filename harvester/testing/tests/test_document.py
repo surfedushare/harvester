@@ -106,3 +106,22 @@ class TestDocumentModel(TestCase):
         document = TestDocument.build(seed, collection=self.set)
         self.assertIsNone(document.properties["title"])
         self.assertEqual(document.properties["access_rights"], "OpenAccess")
+
+    def test_invalid_properties(self):
+        # Check the initial state of the document used for testing
+        # The clean method should not change the state by default
+        self.document.clean()
+        self.assertEqual(
+            self.document.state, self.document.States.ACTIVE,
+            "Expected default state of test product to be active."
+        )
+        # Modify the pipeline to see how a failed validation propagates to Document properties.
+        self.document.pipeline["deactivate_invalid_documents"] = {
+            "success": True,  # indicating that pipeline has run
+            "validation": "2 validation errors"  # indicating problems with the validation
+        }
+        self.document.clean()
+        self.assertEqual(
+            self.document.state, self.document.States.INACTIVE,
+            "Expected state to be inactive when validation failed."
+        )

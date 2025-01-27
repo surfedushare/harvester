@@ -148,6 +148,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 for nested_key, nested_value in value.items():
                     if nested_key not in self.properties[key]:
                         self.properties[key][nested_key] = copy(nested_value)
+        # Setting the state attribute based on pipeline information
+        if document_validation := self.pipeline.get("deactivate_invalid_documents"):
+            if document_validation.get("validation"):
+                self.state = self.States.INACTIVE
+                self.properties["state"] = self.States.INACTIVE
         # Sets metadata properties based on "now"
         if set_metadata:
             self.set_metadata()

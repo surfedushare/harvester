@@ -7,7 +7,7 @@ from projects.constants import SEED_DEFAULTS
 
 def default_document_tasks():
     return {
-        "deactivate_invalid_projects": {
+        "deactivate_invalid_documents": {
             "depends_on": ["$.modified_at"],
             "checks": [],
             "resources": []
