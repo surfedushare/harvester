@@ -39,3 +39,4 @@ class ProjectSerializer(serializers.Serializer):
     parties = serializers.ListField(child=serializers.CharField())
     themes = serializers.ListField(child=serializers.CharField())
     research_themes = serializers.ListField(child=serializers.CharField(), source="themes", default=list)
+    sia_project_reference = serializers.CharField(allow_null=True, default=None)

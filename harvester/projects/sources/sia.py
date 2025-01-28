@@ -75,6 +75,7 @@ OBJECTIVE = {
     "products": lambda node: [],
     "photo_url": lambda node: None,
     # Research project metadata
+    "research_project.sia_project_reference": "$.dossiernummer",
     "research_project.owners": SiaProjectExtraction.get_owner_and_contact,
     "research_project.contacts": SiaProjectExtraction.get_owner_and_contact,
     "research_project.parties": SiaProjectExtraction.get_parties,
