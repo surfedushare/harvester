@@ -111,7 +111,6 @@ media/
 postgres/dumps/*.sql
 
 # Repository state
-nginx/ip-whitelist.conf
 harvester/sources/factories/fixtures
 harvester/files/bin/
 
