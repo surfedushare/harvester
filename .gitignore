@@ -111,6 +111,7 @@ media/
 postgres/dumps/*.sql
 
 # Repository state
+*.pii.json
 harvester/sources/factories/fixtures
 harvester/files/bin/
 
