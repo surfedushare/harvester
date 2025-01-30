@@ -66,12 +66,13 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(
             self.seeds[0]["research_project"]["parties"],
             [
-                {"name": "Camptoo"},
-                {"name": "DEOdrive"},
-                {"name": "Dutch Innovation Centre for Electric Road Transport (Dutch-INCERT)"},
-                {"name": "Emodz"}, {"name": "EMOSS"},
-                {"name": "EVConsult"},
-                {"name": "Hansa Green Tour"},
-                {"name": "Rijksdienst voor Ondernemend Nederland (RVO.nl)"}
+                "Camptoo",
+                "DEOdrive",
+                "Dutch Innovation Centre for Electric Road Transport (Dutch-INCERT)",
+                "Emodz",
+                "EMOSS",
+                "EVConsult",
+                "Hansa Green Tour",
+                "Rijksdienst voor Ondernemend Nederland (RVO.nl)",
             ]
         )

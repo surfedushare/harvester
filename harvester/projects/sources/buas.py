@@ -21,7 +21,7 @@ class BuasProjectExtractProcessor(PureExtractor):
     @classmethod
     def get_parties(cls, node):
         return [
-            {"name": party["externalOrganisation"]["name"]["text"][0]["value"]}
+            party["externalOrganisation"]["name"]["text"][0]["value"]
             for party in node.get("collaborators", [])
         ]
 
