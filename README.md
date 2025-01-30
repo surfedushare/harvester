@@ -12,6 +12,9 @@ or locally stored data.
 
 This project uses `Python 3.12`, `Docker`, `Docker Compose V2` and `psql`.
 Make sure they are installed on your system before installing the project.
+For Mac there are two additional requirements: ``Brew`` and ``libmagic``.
+
+> Failing to install prerequisites will lead to strange errors during the installation process.
 
 ## Installation
 
@@ -20,31 +23,40 @@ It can be convenient to run some code for inspection outside of containers.
 To stay close to the production environment it works well to run the project in containers.
 External services like the database run in containers, so it's always necessary to use Docker.
 
-#### Mac OS setup
+#### Environment configuration
 
-We recommend installing Python through Conda for Mac.
+The environment configuration is managed by a combination of Docker and the [invoke library](https://docs.pyinvoke.org/en/stable/concepts/configuration.html).
+For localhost the Docker and application configuration can be changed using an ``.env`` file.
+The first step for installation is to create a simple default configuration that can be used during setup.
+
+```bash
+cp .env.example .env
+```
+
+Feel free to change your local ``env`` file. How this works is explained in the [surgically adjust environment configurations](#Surgically-adjust-environment-configuration) section.
+
+#### Mac OS Python setup
+
+We recommend installing Python through Conda for Mac, especially for the M-serie.
 ```
 brew install miniforge
 conda env create -f environment.yml
-conda activate harvester
+source activate.sh
 ```
 
-When using macOS make sure you have `libmagic` installed. It can be installed using `brew install libmagic`.
-
-#### General setup
-
-First copy the `.env.example` file to `.env` and update the variable values to fit your system.
-For a start the default values will do.
+#### Non-Mac Python setup
 
 To install the basic environment and tooling you'll need to setup a local environment on a host machine with:
 
 ```bash
-cp .env.example .env
+
 python3 -m venv venv --copies --upgrade-deps
 source activate.sh
 pip install -r requirements.txt
 pip install git+https://github.com/surfedushare/search-client.git@master
 ```
+
+#### Other important setup
 
 When using vscode copy `activate.sh` to venv/bin so pylance can find it.
 
@@ -63,7 +75,7 @@ to prevent weird error messages if you ever run the project outside of its conta
 This way you can reach these containers outside of the container network through their names.
 This is important for many setup commands as well as running tests during development.
 
-To finish the container setup you can run these commands to build all containers:
+To finish the setup you can run these commands to build all containers:
 
 ```bash
 invoke aws.sync-repository-state --no-profile
@@ -81,6 +93,8 @@ invoke hrv.load-data localhost -a products -s development
 
 The setup Postgres command will have created a superuser called supersurf. On localhost the password is "qwerty".
 For AWS environments you can find the admin password under the Django secrets in the Secret Manager.
+The secret value is named admin_password. You can copy it for each environment to your own password manager.
+The superuser is unavailable on production. A personal user will be given to you by SURF.
 
 
 ## Getting started
@@ -139,8 +153,32 @@ To irreversibly destroy your local database with all data run:
 docker volume rm harvester_postgres_database
 ```
 
-And then follow the steps to [install the service](service/README.md#installation) and
-[install the harvester](harvester/README.md#installation) to recreate the databases and populate them.
+Then re-run the database setup and data load commands described above.
+
+#### Surgically adjust environment configuration
+
+Because we leverage the [invoke library](https://docs.pyinvoke.org/en/stable/concepts/configuration.html)
+inside the Django app it's relatively easy to adjust environment settings without adjusting code.
+In this section we demonstrate a basic usage, but read the Invoke documentation for a more comprehensive understanding.
+
+Under the ``environments`` directory at the root of this repo you'll find directories for environments
+like localhost and production. Inside the directories sits an ``invoke.yml`` file which is the basis for most configuration.
+If you want to adjust configuration for a single process without adjusting processes within the same environment you can use environment variables.
+For instance the following will put any process into debug mode, even when using the production environment.
+
+```bash
+export DET_DJANGO_DEBUG=1
+```
+
+Alternatively you can prefix any command with the relevant environment variables like any bash command:
+
+```bash
+cd harvester
+DET_DJANGO_DEBUG=1 python manage.py shell
+```
+
+If you want permanent changes for your localhost setup you can edit the ``.env`` file and re-run the ``activate.sh`` command to load the changes.
+In fact on localhost processes always run in debug mode regardless of environment selection to help with debugging environment differences.
 
 ## Tests
 
