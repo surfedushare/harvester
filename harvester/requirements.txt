@@ -47,7 +47,7 @@ urlobject==2.4.3
 lxml==4.9.4
 pandas==2.2.3
 polars==1.21.0
-beautifulsoup4==4.12.3
+beautifulsoup4==4.13.0
 
 # AWS
 awscli==1.37.7
