@@ -87,7 +87,7 @@ def load_data(ctx, mode, source, app_label=None):
     for label in app_labels:
         command = ["python", "manage.py", "load_harvester_data", label, f"--harvest-source={source}"]
         if source == "localhost":
-            print(f"Will try to import app '{app_label}' using pre-downloaded files")
+            print(f"Will try to import app '{label}' using pre-downloaded files")
             command += ["--skip-download"]
         run_harvester_task(ctx, mode, command)
 
