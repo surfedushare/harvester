@@ -11,7 +11,7 @@ from testing.cases import seeding
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
-class TestHanzeFileSeeding(seeding.SourceSeedingTestCase):
+class TestHanzeFileSeeding(seeding.FactorySeedingTestCase):
 
     entity = "files"
     source = "hanze"

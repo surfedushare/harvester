@@ -10,7 +10,7 @@ from sources.factories.buas.extraction import BuasPureResourceFactory
 from testing.cases import seeding
 
 
-class TestBuasProductSeeding(seeding.SourceSeedingTestCase):
+class TestBuasProductSeeding(seeding.FactorySeedingTestCase):
 
     entity = "products"
     source = "buas"

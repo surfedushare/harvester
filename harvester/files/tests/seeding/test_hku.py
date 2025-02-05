@@ -10,7 +10,7 @@ from sources.factories.hku.extraction import HkuMetadataResourceFactory
 from testing.cases import seeding
 
 
-class TestHkuFileSeeding(seeding.SourceSeedingTestCase):
+class TestHkuFileSeeding(seeding.FactorySeedingTestCase):
 
     entity = "files"
     source = "hku"
