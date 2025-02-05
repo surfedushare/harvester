@@ -56,6 +56,7 @@ class SharekitMetadataExtraction:
                 "is_external": bool(int(author.get("external"))) if author.get("external") else False,
             }
             for author in authors
+            if author["person"]["name"] and "Onbekend" not in author["person"]["name"]
         ]
 
     @classmethod
@@ -93,6 +94,8 @@ class SharekitMetadataExtraction:
         hbovpk_keywords = [keyword for keyword in keywords if keyword and "hbovpk" in keyword.lower()]
         if hbovpk_keywords:
             publishers.append("HBO Verpleegkunde")
+        if secondary_publisher := node["attributes"].get("publishedIn", {}).get("publisherDocument"):
+            publishers.append(secondary_publisher)
         return publishers
 
     @classmethod
@@ -173,14 +176,14 @@ class SharekitMetadataExtraction:
 
     @classmethod
     def get_industries(cls, node):
-        industries = node["attributes"].get("mboDiscipline", [])
+        industries = node["attributes"].get("mboDomain", [])
         if not industries:
             return []
         return [industry["source"] for industry in industries]
 
     @classmethod
     def get_sectors(cls, node):
-        sectors = node["attributes"].get("mboDomain", [])
+        sectors = node["attributes"].get("mboSector", [])
         if not sectors:
             return []
         return [sector["source"] for sector in sectors]

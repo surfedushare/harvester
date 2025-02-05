@@ -71,3 +71,6 @@ class TestSIAProjectsExtraction(ResourceFixturesMixin, TestCase):
             self.seeds[1]["research_project"]["parties"], [],
             "Expected deleted project to have no parties"
         )
+
+    def test_get_sia_project_reference(self):
+        self.assertEqual(self.seeds[0]["research_project"]["sia_project_reference"], "2014-01-15M")

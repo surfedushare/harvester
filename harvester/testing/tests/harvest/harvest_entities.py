@@ -152,7 +152,19 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.inactive_document = self.documents[3]
         self.inactive_document.state = TestDocument.States.INACTIVE
         self.inactive_document.save()
-        for doc in self.documents[4:]:
+        self.no_retry_document = self.documents[4]
+        self.no_retry_document.pipeline = {
+            "check_url": {"success": True},
+            "tika": {
+                "success": False,
+                "first_processed_at": "2000-01-01T00:00:00Z"
+            }
+        }
+        self.no_retry_document.derivatives = {
+            "check_url": {"status": 200}
+        }
+        self.no_retry_document.save()
+        for doc in self.documents[5:]:
             doc.pipeline = {
                 "check_url": {"success": True},
                 "tika": {"success": True}
@@ -248,10 +260,35 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.assertEqual(inactive_document.derivatives, {}, "Expected derivatives to remain as is")
         self.assertTrue(inactive_document.properties, "Expected properties to remain intact")
         self.assertIsNone(inactive_document.pending_at, "Expected inactive document to remain unprocessed")
+        # No retry document
+        no_retry_document = TestDocument.objects \
+            .exclude(dataset_version=self.dataset_version) \
+            .filter(identity=self.no_retry_document.identity) \
+            .last()
+        self.assertEqual(
+            no_retry_document.pipeline,
+            {
+                "check_url": {"success": True},
+                "tika": {
+                    "success": False,
+                    "first_processed_at": "2000-01-01T00:00:00Z"
+                }
+            },
+            "Expected pipeline to remain as is"
+        )
+        self.assertEqual(
+            no_retry_document.derivatives,
+            {
+                "check_url": {"status": 200}
+            },
+            "Expected derivatives to remain as is"
+        )
+        self.assertTrue(no_retry_document.properties, "Expected properties to remain intact")
+        self.assertIsNone(no_retry_document.pending_at, "Expected inactive document to remain unprocessed")
         # Success documents
         error_identities = [
             self.invalid_document.identity, self.failed_document.identity, self.unprocessed_document.identity,
-            self.inactive_document.identity
+            self.inactive_document.identity, self.no_retry_document.identity
         ]
         success_document = TestDocument.objects \
             .exclude(dataset_version=self.dataset_version, identity__in=error_identities) \

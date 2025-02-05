@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.permissions import AllowAny
 
 from datagrowth.datatypes.views import DocumentBaseSerializer
 from core.constants import Entities
@@ -91,3 +92,4 @@ class SearchProductDetailView(SearchDocumentRetrieveViewMixin, DatasetVersionDoc
     """
     entity = Entities.PRODUCTS
     exclude_deletes_unless_modified_since_filter = True
+    permission_classes = (AllowAny,)

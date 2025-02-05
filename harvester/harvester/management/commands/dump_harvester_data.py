@@ -4,7 +4,7 @@ from invoke import Context
 
 from django.apps import apps
 from django.conf import settings
-from django.core.management import base, call_command
+from django.core.management import base, call_command, CommandError
 from datagrowth.utils import get_dumps_path, object_to_disk, queryset_to_disk
 
 from harvester.settings import environment
@@ -47,6 +47,9 @@ class Command(base.LabelCommand):
         return paths
 
     def handle_label(self, app_label, **options):
+        if app_label == "core":
+            raise CommandError("The app 'core' is no longer supported as datatype module use 'products' instead.")
+
         models = load_harvest_models(app_label)
         dataset_files = []
 
@@ -56,18 +59,14 @@ class Command(base.LabelCommand):
                 os.makedirs(destination)
             dataset_file = os.path.join(destination, f"{dataset.name}.{dataset.id}.json")
             with open(dataset_file, "w") as json_file:
+                overwrites = models["Overwrite"].objects.all()
+                queryset_to_disk(overwrites, json_file)
                 object_to_disk(dataset, json_file)
-                if app_label == "core":
-                    queryset_to_disk(dataset.harvestsource_set, json_file)
-                    queryset_to_disk(dataset.harvest_set, json_file)
-                else:
-                    for version in dataset.versions.filter(is_current=True):
-                        if version.index:
-                            object_to_disk(version.index, json_file)
+                for version in dataset.versions.filter(is_current=True):
+                    if version.index:
+                        object_to_disk(version.index, json_file)
                 queryset_to_disk(dataset.versions.filter(is_current=True), json_file)
                 for version in dataset.versions.filter(is_current=True):
-                    if app_label == "core":
-                        queryset_to_disk(version.indices, json_file)
                     queryset_to_disk(version.sets.all(), json_file)
                     queryset_to_disk(version.documents.all(), json_file)
             dataset_files.append(dataset_file)

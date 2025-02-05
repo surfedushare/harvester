@@ -17,6 +17,7 @@ SEED_DEFAULTS = {
     "photo_url": None,
     # Research project metadata
     "research_project": {
+        "sia_project_reference": None,
         "owners": [],
         "contacts": [],
         "parties": [],

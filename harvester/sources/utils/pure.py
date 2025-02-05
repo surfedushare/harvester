@@ -50,7 +50,7 @@ def build_seeding_phases(resource: Type[HttpResource], objective: dict) -> list[
     resource_label = f"{resource._meta.app_label}.{resource._meta.model_name}"
     return [
         {
-            "phase": "research_outputs",
+            "phase": "items",
             "strategy": "initial",
             "batch_size": 100,
             "retrieve_data": {

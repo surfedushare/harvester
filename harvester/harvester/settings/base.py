@@ -69,7 +69,7 @@ CORS_ALLOWED_ORIGINS = [
 if ENVIRONMENT != "production":
     CORS_ALLOW_ALL_ORIGINS = True
 elif ENVIRONMENT == "production" and PROJECT == "mbodata":
-    CORS_ALLOWED_ORIGINS.append("tgo.mbo.edusources.nl")
+    CORS_ALLOWED_ORIGINS.append("https://tgo.mbo.edusources.nl")
 
 # Detect our own IP address
 try:
@@ -710,13 +710,6 @@ WEBHOOKS = {
         "allowed_ips": environment.harvester.webhook_allowed_ips.publinova
     }
 }
-# Acceptance webhook definitions
-WEBHOOKS["sharekit:edusources_acc"] = WEBHOOKS["sharekit:edusources"]
-WEBHOOKS["sharekit:nppo_acc"] = WEBHOOKS["sharekit:nppo"]
-# Legacy webhook set definitions for backward compatability
-WEBHOOKS["edusources"] = WEBHOOKS["sharekit:edusources"]
-WEBHOOKS["nppo"] = WEBHOOKS["sharekit:nppo"]
-WEBHOOKS["publinova"] = WEBHOOKS["publinova:publinova"]
 
 
 # Harvester tasks and logic

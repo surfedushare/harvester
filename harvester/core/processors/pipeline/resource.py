@@ -100,7 +100,8 @@ class ResourcePipelineProcessor(PipelineProcessor):
                 process_result.document.pipeline[pipeline_phase] = {
                     "success": result.success,
                     "resource": f"{result._meta.app_label}.{result._meta.model_name}",
-                    "id": result.id
+                    "id": result.id,
+                    "first_processed_at": result.created_at.isoformat(),
                 }
                 # Possibly "apply" the Resource to the Document to allow custom updates
                 if config.apply_resource_to:

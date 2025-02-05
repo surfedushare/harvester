@@ -97,7 +97,12 @@ def build_configuration_defaults(environment):
                     "mbodata": f"{environment_code}-mbodata",
                     "publinova": f"{environment_code}-publinova",
                 }
-            }
+            },
+            "pii_data_directories": [  # these are relative to repo root
+                os.path.join("harvester", "sources", "factories", "fixtures"),
+                os.path.join("harvester", "projects", "fixtures", "resources", "buas"),
+
+            ]
         },
         "aws": {
             "account": account_id,

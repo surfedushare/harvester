@@ -50,6 +50,16 @@ class FileDocumentTestCase(TestCase):
             product_data = product.to_data()
             self.assertEqual(product_data["files"][0]["title"], "Attachment 1")
 
+    def test_licenses(self):
+        product = ProductDocument.objects.get(id=1)
+        product_data = product.to_data()
+        self.assertEqual(product_data["licenses"], ["cc-by-sa-40", "cc-by-sa-40", "cc-by-sa-40"])
+
+    def test_access_rights(self):
+        product = ProductDocument.objects.get(id=1)
+        product_data = product.to_data()
+        self.assertEqual(product_data["access_rights"], ['OpenAccess', 'OpenAccess', 'OpenAccess'])
+
     @override_settings(SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT=False)
     def test_to_search_no_files(self):
         FileDocument.objects.all().delete()
@@ -61,6 +71,8 @@ class FileDocumentTestCase(TestCase):
         self.assertIsNone(product_search["text"])
         self.assertIsNone(product_search["previews"])
         self.assertEqual(product_search["files"], [])
+        self.assertEqual(product_search["licenses"], [])
+        self.assertEqual(product_search["access_rights"], [])
 
     def test_technical_type_overrides(self):
         """
@@ -428,10 +440,7 @@ class FileDocumentTestCase(TestCase):
         })
 
     def test_overwrite_metrics(self):
-        product = ProductDocument.objects.get(id=1)
-        data = product.to_data(for_search=False, use_multilingual_fields=True)
-        self.assertEqual(data["overwrite"], data["srn"])
-        self.assertEqual(data["metrics"], {
+        expected_metrics = {
             "views": 1,
             "stars": {
                 "star_1": 5,
@@ -441,8 +450,20 @@ class FileDocumentTestCase(TestCase):
                 "star_5": 1,
                 "average": 2.3,
             },
-        })
+        }
+        # Check that overwrite metrics are included in search
+        product = ProductDocument.objects.get(id=1)
+        data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(data["overwrite"], data["srn"])
+        self.assertEqual(data["metrics"], expected_metrics)
+        # Make sure that products can be included in search without any metrics
         product.overwrite = None
         no_overwrite_data = product.to_data(for_search=False, use_multilingual_fields=True)
         self.assertIsNone(no_overwrite_data["overwrite"])
         self.assertIsNone(no_overwrite_data["metrics"])
+        # Check that products will add their own metrics when available
+        product.clean()
+        self.assertIsNotNone(product.overwrite)
+        clean_data = product.to_data(for_search=False, use_multilingual_fields=True)
+        self.assertEqual(clean_data["overwrite"], data["srn"])
+        self.assertEqual(clean_data["metrics"], expected_metrics)
