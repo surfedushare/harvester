@@ -1,10 +1,57 @@
+from pathlib import Path
+
+from django.conf import settings
 from django.test import TestCase
 
 from datagrowth.resources.testing import ResourceFixturesMixin
 
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
-from projects.models import Set
+from testing.cases import seeding
+from projects.models import Set, BuasPureProjectResource
 from projects.sources.buas import SEEDING_PHASES
+
+
+class TestBuasProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
+
+    fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "buas")
+    resource_fixtures = ["buas-test"]
+    delta_fixtures = {
+        (BuasPureProjectResource, 1): ("body", "buas-projects.02.pii.json")
+    }
+
+    entity = "projects"
+    source = "buas"
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 100)
+        self.assertEqual(self.set.documents.count(), 100)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "buas:buas:ffffffff-e6d6-4af7-8bd0-cce85d57764e"
+        ])
+        self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 100 + 1,
+            "Expected 100 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 2,
+            "Expected 2 Documents to have no deleted_at date and 97 with deleted_at, "
+            "because most data didn't come in through the delta"
+        )
+        new_title = "K3K Consortium development zero-emissions tourism mobility"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=new_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
