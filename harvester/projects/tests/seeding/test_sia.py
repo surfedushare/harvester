@@ -1,10 +1,63 @@
+from pathlib import Path
+
+from django.conf import settings
 from django.test import TestCase
 
 from datagrowth.resources.testing import ResourceFixturesMixin
 
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
-from projects.models import Set
+from testing.cases import seeding
+from projects.models import Set, SiaProjectDetailsResource
 from projects.sources.sia import SEEDING_PHASES
+
+
+class TestSIAProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
+
+    fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "sia")
+    resource_fixtures = ["sia-test"]
+    delta_fixtures = {
+        (SiaProjectDetailsResource, 1): ("body", "sia-project.315b.json")
+    }
+
+    entity = "projects"
+    source = "sia"
+    delete_policy = DeletePolicies.TRANSIENT
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 2)
+        self.assertEqual(self.set.documents.count(), 2)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "sia:sia:project:1677"
+        ])
+        self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 2 + 1,
+            "Expected 2 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 2,
+            "Expected no deleted_at dates with DeletePolicy.TRANSIENT."
+        )
+        new_title = "Grrrrrrrroin Injury Prevention Study (GRIP)"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=new_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
+
+    def test_empty_seeding(self, *args):
+        # Creating the test data
+        self.setup_initial_documents()
+        # Test updating the initial data with no new data
+        batches_list = list(self.processor(self.source, "2025-01-01T00:00:00Z"))
+        self.assertEqual(batches_list, [])
 
 
 class TestSIAProjectsExtraction(ResourceFixturesMixin, TestCase):
