@@ -167,13 +167,21 @@ class TestEdurepFileExtraction(TestCase):
     def test_get_mime_type(self):
         self.assertEqual(self.seeds[0]["mime_type"],
                          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-        self.assertEqual(self.seeds[1]["mime_type"], None)
+        self.assertIsNone(self.seeds[1]["mime_type"], "Expected partial format tag to result in no mime_type")
         self.assertEqual(self.seeds[2]["mime_type"], "application/x-zip-compressed")
+        self.assertIsNone(self.seeds[5]["mime_type"], "Expected missing format tag to result in no mime_type")
 
     def test_get_url(self):
         self.assertEqual(self.seeds[0]["url"],
                          "https://surfsharekit.nl/objectstore/182216be-31a2-43c3-b7de-e5dd355b09f7")
-        self.assertEqual(self.seeds[1]["url"], "https://www.youtube.com/watch?v=Zl59P5ZNX3M")
+        self.assertEqual(
+            self.seeds[1]["url"], "https://www.youtube.com/watch?v=Zl59P5ZNX3M",
+            "Expected partial format tag to have no effect on the URL"
+        )
+        self.assertEqual(
+            self.seeds[5]["url"], "https://www.youtube.com/watch?v=21v9IYUcruI",
+            "Expected missing format tag to have no effect on the URL"
+        )
 
     def test_get_copyright(self):
         self.assertEqual(self.seeds[0]["copyright"], "cc-by-nc-40")
