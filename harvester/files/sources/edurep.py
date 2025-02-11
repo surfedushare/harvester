@@ -102,9 +102,9 @@ class EdurepFileExtraction:
         return default_access_rights
 
     @classmethod
-    def get_is_link(cls, soup, info: FileInfo) -> bool | None:
+    def get_is_link(cls, soup, info: FileInfo) -> bool:
         if not info.mime_type:
-            return
+            return False
         return info.mime_type.text.strip() == "text/html"
 
     @classmethod
