@@ -228,7 +228,10 @@ When an image is pushed to the registry you need to promote it for the environme
 APPLICATION_MODE=<environment> invoke container.promote
 ```
 
-When promoting a existing image (for instance the image already running on development or acceptance), add `--version=<version_number>`. 
+When promoting an existing image (for instance the image already running on development or acceptance),
+add `--version=<version_number>` as well as `--docker-login`.
+Running a command with `--docker-login` is only necessary once per day,
+but when promoting an existing image you often haven't pushed it on the same day
 
 To change the running containers on AWS you then need to deploy for the environment you have updated images for:
 
@@ -248,7 +251,7 @@ A special case of deploying is releasing. You should take the following steps du
 - There are a few things that you should check in a release PR, because it influences the release steps:
   - Are there any database migrations?
   - Are there changes to Open Search indices?
-  - Is it changing the public harvester API that the search service is consuming?
+  - Is it changing the public harvester API that the clients are consuming? (Edusources, Publinova or MBO)
   - Is it depending on infrastructure changes?
 - Plan your release according to the questions above.
   Use common sense for this and take into account that we do rolling updates.
@@ -256,7 +259,7 @@ A special case of deploying is releasing. You should take the following steps du
   then code that stops using the stuff should be deployed before the actual deletions take place.
   If you're adding to the database, indices, API or infrastructure then they should get added
   before code runs that expect these additions.
-  We write down these steps, together with their associated commands if applicable, in Pivotal tickets to remember them.
+  We write down these steps, together with their associated commands if applicable, in Gitlab tickets to remember them.
 - With complicated changes we prefer to try them on development
   and we create the release plan when putting the changes on acceptance.
   When we release to production following the plan should be sufficient to make a smooth release.
