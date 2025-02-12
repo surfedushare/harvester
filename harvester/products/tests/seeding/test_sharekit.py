@@ -135,7 +135,7 @@ class TestSharekitProductExtraction(TestCase):
                 "is_external": False,
             },
             {
-                "name": "Hans Kazan",
+                "name": "Elminster",
                 "email": "Hans Kazan",
                 "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
                 "dai": None,
