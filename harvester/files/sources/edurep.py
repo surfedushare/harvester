@@ -23,11 +23,12 @@ def build_file_infos_iterator(platform: Platforms):
 
     def get_file_infos(edurep_soup) -> FileInfo:
         for product in valid_product_iterator(edurep_soup):
-            mime_types = product.find_all('czp:format')
+            mime_types = iter(product.find_all('czp:format'))
             urls = product.find_all('czp:location')
             if not urls:
                 yield FileInfo(product, None, None)
-            for mime_type, url in zip(mime_types, urls):
+            for url in urls:
+                mime_type = next(mime_types, None)  # mime_type may not be specified by Edurep
                 yield FileInfo(product, mime_type, url)
 
     return get_file_infos
@@ -101,9 +102,9 @@ class EdurepFileExtraction:
         return default_access_rights
 
     @classmethod
-    def get_is_link(cls, soup, info: FileInfo) -> bool | None:
+    def get_is_link(cls, soup, info: FileInfo) -> bool:
         if not info.mime_type:
-            return
+            return False
         return info.mime_type.text.strip() == "text/html"
 
     @classmethod

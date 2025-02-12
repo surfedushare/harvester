@@ -94,8 +94,9 @@ class Command(base.LabelCommand):
         models["Document"].objects.all().delete()
         models["Dataset"].objects.all().delete()
         models["DatasetVersion"].objects.all().delete()
-        print(f"Deleting old overwrites: {app_label}")
-        models["Overwrite"].objects.all().delete()
+        if models["Overwrite"] is not None:
+            print(f"Deleting old overwrites: {app_label}")
+            models["Overwrite"].objects.all().delete()
         print(f"Deleting old indices: {app_label}")
         OpenSearchIndex.objects.filter(entity__startswith=app_label).delete()
 

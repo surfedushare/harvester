@@ -1,8 +1,8 @@
 # Harvester web
-django==4.2.18
+django==4.2.19
 djangorestframework==3.15.2
 django-cors-headers==3.14.0
-whitenoise==6.8.2
+whitenoise==6.9.0
 psycopg2-binary==2.9.10
 Pillow==10.4.0
 python-dateutil==2.9.0.post0
@@ -47,17 +47,17 @@ urlobject==2.4.3
 lxml==4.9.4
 pandas==2.2.3
 polars==1.21.0
-beautifulsoup4==4.12.3
+beautifulsoup4==4.13.3
 
 # AWS
-awscli==1.37.7
-boto3==1.36.7
+awscli==1.37.16
+boto3==1.36.13
 requests-aws4auth==1.3.1
 django-storages==1.14.4
 
 # Tools
 watchdog==2.3.1
-ipython==8.31.0
+ipython==8.32.0
 tqdm==4.67.1
 invoke==2.2.0
 ipdb==0.13.13
