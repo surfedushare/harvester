@@ -337,6 +337,24 @@
 },
 {
     "model": "sources.harvestentity",
+    "pk": 20,
+    "fields": {
+        "source": 7,
+        "type": "projects",
+        "is_available": true,
+        "is_manual": false,
+        "allows_update": false,
+        "set_specifications": [
+            "buas"
+        ],
+        "delete_policy": "no",
+        "purge_interval": {
+            "days": 30
+        }
+    }
+},
+{
+    "model": "sources.harvestentity",
     "pk": 14,
     "fields": {
         "source": 7,
