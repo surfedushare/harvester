@@ -25,7 +25,7 @@ class ProjectSerializer(serializers.Serializer):
     ended_at = serializers.DateField(allow_null=True)
     coordinates = serializers.ListField(
         child=serializers.FloatField(),
-        validators=[MinLengthValidator(2), MaxLengthValidator(2)]
+        validators=[MinLengthValidator(0), MaxLengthValidator(2)]
     )
     goal = serializers.CharField(allow_null=True, allow_blank=True)
     keywords = serializers.ListField(child=serializers.CharField())

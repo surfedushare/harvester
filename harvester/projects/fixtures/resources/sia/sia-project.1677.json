@@ -1,0 +1,48 @@
+{
+    "id": 1677,
+    "dossiernummer": "GOCH.KIEM.KGC01.021",
+    "grantid": "",
+    "zichtbaarheid": "tonen",
+    "titel": "Enzymatische recycling van polyesters",
+    "slug": "enzymatische-recycling-van-polyesters",
+    "status": "Afgerond",
+    "startdatum": "2020-01-01 00:00:00",
+    "einddatum": "2021-03-31 00:00:00",
+    "programma": "KIEM GoChem",
+    "regeling": "KIEM GoChem 2019-2025",
+    "kiahoofdthema": "",
+    "themas": [
+        "Sleuteltechnologieën en duurzame materialen",
+        "Chemie",
+        "High Tech Systemen en Materialen (HTSM)",
+        "Materialen - Made in Holland",
+        "Circulaire economie en grondstoffenefficiëntie: Duurzame circulaire impact",
+        "Bètatechniek"
+    ],
+    "taal": "nl",
+    "samenvatting": "Om een circulaire economie te bewerkstelligen is het sluiten van de kunststofkringloop cruciaal. Momenteel wordt slechts 15% van het geproduceerde kunststof in Nederland gerecycled. De mechanische recycling van PET-flessen wordt reeds op grote schaal toegepast, maar een groot deel van het polyester (PET) afval is van mindere kwaliteit en is vervuild met voedselresten, kleurstoffen of andere additieven. \r\nCumapol heeft samen met bedrijven en kennisinstellingen de krachten gebundeld en een nieuwe recyclingtechniek ontwikkeld. Deze technologie maakt het mogelijk om op een energiezuinige manier gekleurde of gemengde polyesters in bijvoorbeeld tapijt, textiel en voedselverpakkingen te recyclen tot nieuwe polyesters van hoge kwaliteit. Om dit te bereiken wordt chemische recycling toegepast: het polyester afval wordt afgebroken tot de chemische bouwstenen, gezuiverd, en vervolgens weer opgebouwd tot nieuwe polyester ketens.\r\nDe polycondensatiereactie speelt een belangrijke rol in de chemische recycling van polyesters. Polycondensatie is een evenwichtsreactie: condensatie zorgt voor ketenvorming, terwijl hydrolyse of glycolyse leidt tot afbraak van de polymeerketens. Deze reacties worden doorgaans gekatalyseerd door industriële katalysatoren zoals antimoontrioxide en zinkacetaat. Onderzoek heeft echter uitgewezen dat enzymen, de katalysatoren van de natuur, ook in staat zijn om op te treden als katalysator. Het doel van dit project is om de (bio)chemische recycling van vervuild polyesterafval te bewerkstelligen met behulp van enzymatische reacties, zodat een duurzame en circulaire economie een stap dichterbij komt.",
+    "eindrapportage": "Bedrijven, overheden en kennisinstituten hebben gezamenlijk in het Grondstoffenakkoord de ambitie uitgesproken voor \r\neen volledig circulaire economie in 2050. In de Transitieagenda Kunststoffen is dit verder uitgewerkt, waarbij het doel is te \r\nkomen tot een gesloten kunststofkringloop waarin alle plastics en rubbers worden hergebruikt en gerecycled. Momenteel \r\nwordt in Nederland circa 2000 Kton kunststof per jaar op de markt gebracht, waarvan slechts 300 Kton wordt gerecycled. \r\nDaarentegen wordt 1300 Kton aangeboden aan afvalverbrandingsinstallaties. Om de kunststofkringloop te sluiten wordt \r\ningezet op verbeterde afvalscheiding en de ontwikkeling van nieuwe recyclingsystemen.\r\nIndustriële recycling is doorgaans een fysisch proces, waarbij plastics worden omgesmolten tot granulaat (kunststofkorrels) \r\nwaaruit nieuwe producten kunnen worden gemaakt. Dit proces wordt ook wel mechanische recycling of secundaire \r\nrecycling genoemd. Een succesvolle toepassing van dit proces is de recycling van grote PET-flessen, die in Nederland worden \r\ningezameld via het statiegeldsysteem en op grote schaal worden omgesmolten tot nieuwe flessen. Mechanische recycling \r\nis echter alleen toepasbaar in het geval van schone afvalstromen van hoge kwaliteit. Aanwezige vervuilingen kunnen \r\nnamelijk niet worden verwijderd en zullen zich opbouwen in het recyclaat, waardoor verkleuringen kunnen optreden en \r\nhet product van mindere (mechanische) kwaliteit zal zijn.",
+    "updated_at": "2024-10-29 16:57:11",
+    "created_at": "2020-01-22 14:37:23",
+    "contactinformatie": {
+        "id": 9877,
+        "naam": "NHL Stenden Hogeschool",
+        "url": "https://www.nhlstenden.com/"
+    },
+    "consortiumpartners": [
+        {
+            "id": 12054,
+            "naam": "Cumapol Emmen B.V.",
+            "url": "https://www.cumapol.com"
+        }
+    ],
+    "netwerkleden": [],
+    "penvoerderplaats": "LEEUWARDEN",
+    "vhthemas": [
+        "Sleuteltechnologieën en duurzame materialen",
+        "Chemie",
+        "High Tech Systemen en Materialen (HTSM)",
+        "Circulaire economie en grondstoffenefficiëntie: Duurzame circulaire impact",
+        "Bètatechniek"
+    ]
+}

@@ -10,7 +10,7 @@ from files.sources.hva import SEEDING_PHASES
 from testing.cases import seeding
 
 
-class TestHvAFileSeeding(seeding.SourceSeedingTestCase):
+class TestHvAFileSeeding(seeding.FactorySeedingTestCase):
 
     entity = "files"
     source = "hva"

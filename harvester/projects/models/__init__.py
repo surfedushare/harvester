@@ -5,3 +5,4 @@ from projects.models.datatypes.containers import Dataset, DatasetVersion, Set
 from projects.models.datatypes.project import ProjectDocument
 
 from projects.models.resources.sia import SiaProjectIdsResource, SiaProjectDetailsResource
+from projects.models.resources.buas import BuasPureProjectResource

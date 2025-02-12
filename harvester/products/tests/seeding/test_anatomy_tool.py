@@ -11,7 +11,7 @@ from sources.factories.anatomy_tool.extraction import AnatomyToolOAIPMHFactory
 from testing.cases import seeding
 
 
-class TestAnatomyToolProductSeeding(seeding.SourceSeedingTestCase):
+class TestAnatomyToolProductSeeding(seeding.FactorySeedingTestCase):
 
     entity = "products"
     source = "anatomy_tool"
