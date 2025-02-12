@@ -4646,7 +4646,7 @@
         "is_hidden": false,
         "is_manual": false,
         "english_as_dutch": false,
-        "value_output_order": "frequency"
+        "value_output_order": "alphabetical"
     }
 },
 {
@@ -4751,7 +4751,7 @@
         "is_hidden": false,
         "is_manual": false,
         "english_as_dutch": false,
-        "value_output_order": "manual"
+        "value_output_order": "frequency"
     }
 },
 {
@@ -4766,7 +4766,7 @@
         "is_hidden": false,
         "is_manual": false,
         "english_as_dutch": false,
-        "value_output_order": "manual"
+        "value_output_order": "frequency"
     }
 },
 {
