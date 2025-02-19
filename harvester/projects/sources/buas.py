@@ -6,6 +6,9 @@ from projects.models import BuasPureProjectResource
 
 class BuasProjectExtractProcessor(PureExtractor):
 
+    source_name = "Breda University of Applied Sciences"
+    source_slug = "buas"
+
     @classmethod
     def get_status(cls, node):
         match node["status"]["key"]:
