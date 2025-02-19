@@ -1,0 +1,53 @@
+[
+    {
+        "model": "projects.hanzepureprojectresource",
+        "pk": 1,
+        "fields": {
+            "uri": "apimanagement.hanze.nl/nppo/projects",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2025-02-19T15:20:43.417Z",
+            "modified_at": "2025-02-19T15:20:43.417Z",
+            "purge_at": "2025-03-21T15:20:30.860Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://apimanagement.hanze.nl/nppo/projects",
+                "args": [
+                    "hanze",
+                    "1970-01-01"
+                ],
+                "data": null,
+                "kwargs": {},
+                "method": "get",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.9); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Wed, 19 Feb 2025 15:20:31 GMT",
+                "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+                "cf-ray": "91473dcb4c919fff-AMS",
+                "pragma": "no-cache",
+                "alt-svc": "h3=\":443\"; ma=86400",
+                "expires": "0",
+                "content-type": "application/json",
+                "cache-control": "private, max-age=14400",
+                "cf-cache-status": "DYNAMIC",
+                "referrer-policy": "origin",
+                "x-frame-options": "DENY",
+                "content-encoding": "gzip",
+                "x-xss-protection": "1; mode=block",
+                "transfer-encoding": "chunked",
+                "x-content-type-options": "nosniff",
+                "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains"
+            },
+            "body": "hanze/hanze-projects.01.pii.json"
+        }
+    }
+]
