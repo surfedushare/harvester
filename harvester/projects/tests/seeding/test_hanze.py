@@ -1,13 +1,59 @@
+from pathlib import Path
 from datetime import datetime, timedelta
 
+from django.conf import settings
 from django.test import TestCase
 from django.utils.timezone import now
 
 from datagrowth.resources.testing import ResourceFixturesMixin
 
+from core.constants import DeletePolicies
 from core.processors import HttpSeedingProcessor
-from projects.models import Set
+from testing.cases import seeding
+from projects.models import Set, HanzePureProjectResource
 from projects.sources.hanze import SEEDING_PHASES, HanzeProjectExtractProcessor
+
+
+class TestHanzeProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
+
+    fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "hanze")
+    resource_fixtures = ["hanze-test"]
+    delta_fixtures = {
+        (HanzePureProjectResource, 1): ("body", "hanze-projects.02.pii.json")
+    }
+
+    entity = "projects"
+    source = "hanze"
+    delete_policy = DeletePolicies.NO
+
+    def test_initial_seeding(self):
+        documents = super().test_initial_seeding()
+        self.assertEqual(len(documents), 10)
+        self.assertEqual(self.set.documents.count(), 10)
+
+    def test_delta_seeding(self, *args):
+        documents = super().test_delta_seeding([
+            "hanze:hanze:ffffffff-c18d-4d68-a364-55efbbfea489"
+        ])
+        self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
+        self.assertEqual(
+            self.set.documents.all().count(), 10 + 1,
+            "Expected 100 documents from initial harvest and 1 new document"
+        )
+        self.assertEqual(
+            self.set.documents.filter(pending_at__isnull=False).count(), 1,
+            "Expected 1 document added by delta to become pending"
+        )
+        self.assertEqual(
+            self.set.documents.filter(metadata__deleted_at=None).count(), 2,
+            "Expected 2 Documents to have no deleted_at date and 9 with deleted_at, "
+            "because most data didn't come in through the delta"
+        )
+        new_title = "Werpend onderzoek, hoe ver kun je onderzoek gooien?"
+        self.assertEqual(
+            self.set.documents.filter(properties__title=new_title).count(), 1,
+            "Expected title to get updated during delta harvest"
+        )
 
 
 class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
