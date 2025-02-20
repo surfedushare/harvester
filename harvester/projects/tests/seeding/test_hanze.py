@@ -30,8 +30,8 @@ class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[0]["srn"], "hanze:hanze:2236c2d4-2957-4d95-a71a-17c2845a6fd3")
 
     def test_get_status(self):
-        self.assertEqual(self.seeds[0]["status"], "finished")
-        self.assertEqual(self.seeds[4]["status"], "unknown")
+        self.assertEqual(self.seeds[0]["project_status"], "finished")
+        self.assertEqual(self.seeds[4]["project_status"], "unknown")
 
     def test_raw_get_status(self):
         today = now()

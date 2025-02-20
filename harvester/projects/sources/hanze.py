@@ -132,7 +132,7 @@ OBJECTIVE = {
     "provider": HanzeProjectExtractProcessor.get_provider,
     # # Project metadata
     "title": HanzeProjectExtractProcessor.get_title,
-    "status": HanzeProjectExtractProcessor.get_status,
+    "project_status": HanzeProjectExtractProcessor.get_status,
     "started_at": "$.period.startDate",
     "ended_at": "$.period.endDate",
     "description": HanzeProjectExtractProcessor.get_description,
