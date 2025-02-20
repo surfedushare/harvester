@@ -78,18 +78,14 @@ OBJECTIVE = {
     "started_at": "$.period.startDate",
     "ended_at": "$.period.endDate",
     "coordinates": lambda node: [],
-    "goal": lambda node: None,
     "description": "$.descriptions.0.value.text.0.value",
     "persons": BuasProjectExtractProcessor.get_persons,
     "keywords": "$.keywordGroups.0.keywordContainers.0.freeKeywords.0.freeKeywords",
     "products": BuasProjectExtractProcessor.get_products,
-    "photo_url": lambda node: None,
     # Research project metadata
-    "research_project.sia_project_reference": lambda node: None,
     "research_project.contacts": BuasProjectExtractProcessor.get_owners,
     "research_project.owners": BuasProjectExtractProcessor.get_owners,
     "research_project.parties": BuasProjectExtractProcessor.get_parties,
-    "research_project.themes": lambda node: [],
 }
 
 

@@ -135,21 +135,13 @@ OBJECTIVE = {
     "status": HanzeProjectExtractProcessor.get_status,
     "started_at": "$.period.startDate",
     "ended_at": "$.period.endDate",
-    "coordinates": lambda node: [],
-    "goal": lambda node: None,
     "description": HanzeProjectExtractProcessor.get_description,
-    "approach": lambda node: None,
-    "results": lambda node: None,
     "persons": HanzeProjectExtractProcessor.get_persons,
     "keywords": HanzeProjectExtractProcessor.get_keywords,
     "products": HanzeProjectExtractProcessor.get_products,
-    "photo_url": lambda node: None,
-    "sia_project_reference": lambda node: None,
     # # Research project metadata
-    "research_project.sia_project_reference": lambda node: None,
     "research_project.contacts": HanzeProjectExtractProcessor.get_owners,
     "research_project.owners": HanzeProjectExtractProcessor.get_owners,
-    "research_project.parties": lambda node: [],
     "research_project.themes": HanzeProjectExtractProcessor.get_research_themes,
 }
 
