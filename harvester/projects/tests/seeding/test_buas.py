@@ -78,6 +78,18 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[1]["project_status"], "to be started")
         self.assertEqual(self.seeds[31]["project_status"], "ongoing")
 
+    def test_get_keywords(self):
+        self.assertEqual(self.seeds[0]["keywords"], [
+            "Zero-emissions",
+            "tourism",
+            "mobility",
+            "transport",
+            "sustainable tourism",
+            "CSTT",
+            "Centre for Sustainability, Tourism and Transport"
+        ])
+        self.assertEqual(self.seeds[46]["keywords"], [], "Expected project without keywords to return a list")
+
     def test_get_persons(self):
         self.assertEqual(self.seeds[0]["persons"], [
             {"external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112", "email": None, "name": "Ikke Vogelaar"},

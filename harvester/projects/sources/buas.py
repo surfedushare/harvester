@@ -1,5 +1,7 @@
 from hashlib import sha1
 
+from datagrowth.utils import reach
+
 from sources.utils.pure import PureExtractor, build_seeding_phases
 from projects.models import BuasPureProjectResource
 
@@ -31,6 +33,11 @@ class BuasProjectExtractProcessor(PureExtractor):
     @classmethod
     def get_products(cls, node):
         return [product["uuid"] for product in node.get("relatedResearchOutputs", [])]
+
+    @classmethod
+    def get_keywords(cls, node):
+        keywords_path = "$.keywordGroups.0.keywordContainers.0.freeKeywords.0.freeKeywords"
+        return reach(keywords_path, node, default_factory=list)
 
     @classmethod
     def get_persons(cls, node):
@@ -80,7 +87,7 @@ OBJECTIVE = {
     "coordinates": lambda node: [],
     "description": "$.descriptions.0.value.text.0.value",
     "persons": BuasProjectExtractProcessor.get_persons,
-    "keywords": "$.keywordGroups.0.keywordContainers.0.freeKeywords.0.freeKeywords",
+    "keywords": BuasProjectExtractProcessor.get_keywords,
     "products": BuasProjectExtractProcessor.get_products,
     # Research project metadata
     "research_project.contacts": BuasProjectExtractProcessor.get_owners,
