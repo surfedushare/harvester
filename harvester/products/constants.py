@@ -40,6 +40,7 @@ SEED_DEFAULTS = {
     },
     # Research product metadata
     "research_product": {
+        "sia_project_id": None,
         "research_object_type": None,
         "research_themes": [],
         "parties": [],

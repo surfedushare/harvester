@@ -305,6 +305,7 @@ class TestResearchProductDocumentView(TestDocumentView):
         "description": "Geen samenvatting",
         "language": "nl",
         "copyright": "cc-by-sa-40",
+        "sia_project_id": None,
         "video": None,
         "harvest_source": "edusources",
         "previews": None,

@@ -10,7 +10,7 @@ from files.sources.anatomy_tool import SEEDING_PHASES
 from testing.cases import seeding
 
 
-class TestAnatomyToolFileSeeding(seeding.SourceSeedingTestCase):
+class TestAnatomyToolFileSeeding(seeding.FactorySeedingTestCase):
 
     entity = "files"
     source = "anatomy_tool"

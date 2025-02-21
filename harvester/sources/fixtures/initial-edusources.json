@@ -9,8 +9,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "edusources",
-            "edusourcesprivate"
+            "edusources"
         ],
         "delete_policy": "transient",
         "purge_interval": {
@@ -28,8 +27,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "edusources",
-            "edusourcesprivate"
+            "edusources"
         ],
         "delete_policy": "transient",
         "purge_interval": {

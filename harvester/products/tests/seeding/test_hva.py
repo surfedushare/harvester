@@ -11,7 +11,7 @@ from testing.cases import seeding
 
 
 @override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
-class TestHvaProductSeeding(seeding.SourceSeedingTestCase):
+class TestHvaProductSeeding(seeding.FactorySeedingTestCase):
 
     entity = "products"
     source = "hva"

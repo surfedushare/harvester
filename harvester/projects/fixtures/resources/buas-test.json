@@ -1,0 +1,56 @@
+[
+    {
+        "model": "projects.buaspureprojectresource",
+        "pk": 1,
+        "fields": {
+            "uri": "pure.buas.nl/ws/api/524/projects",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2025-01-27T15:41:51.122Z",
+            "modified_at": "2025-01-27T15:41:51.122Z",
+            "purge_at": "2025-02-26T15:41:31.936Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://pure.buas.nl/ws/api/524/projects",
+                "args": [
+                    "buas",
+                    "1970-01-01"
+                ],
+                "data": null,
+                "kwargs": {},
+                "method": "get",
+                "headers": {
+                    "accept": "application/json",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.8); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Mon, 27 Jan 2025 15:41:32 GMT",
+                "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+                "cf-ray": "9089d8f30cb50bd1-AMS",
+                "pragma": "no-cache",
+                "server": "cloudflare",
+                "alt-svc": "h3=\":443\"; ma=86400",
+                "expires": "0",
+                "connection": "keep-alive",
+                "content-type": "application/json",
+                "cache-control": "private, max-age=14400",
+                "cf-cache-status": "DYNAMIC",
+                "referrer-policy": "origin",
+                "x-frame-options": "DENY",
+                "content-encoding": "gzip",
+                "x-xss-protection": "1; mode=block",
+                "transfer-encoding": "chunked",
+                "x-content-type-options": "nosniff",
+                "content-security-policy": "default-src 'self' *.elsevier.com cdn.plu.mx api.plu.mx d39af2mgp1pqhg.cloudfront.net ajax.googleapis.com *.pendo.io pendo-static-5644800010354688.storage.googleapis.com pendo-io-static.storage.googleapis.com *.adobedtm.com *.demdex.net cm.everesttech.net *.youtube.com i.ytimg.com *.vimeo.com *.altmetric.com d1bxh8uas1mnw7.cloudfront.net *.googletagmanager.com *.google-analytics.com *.hotjar.com cdn.cookielaw.org maps.googleapis.com www.google.com *.gstatic.com fonts.googleapis.com stats.g.doubleclick.net hcaptcha.com *.hcaptcha.com geolocation.onetrust.com *.onetrust.com https://js-agent.newrelic.com https://bam.nr-data.net https://bam-cell.nr-data.net 'unsafe-inline' 'unsafe-eval' data:; img-src * data: maps.gstatic.com *.googleapis.com;",
+                "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains"
+            },
+            "body": "buas/buas-projects.01.pii.json"
+        }
+    }
+]

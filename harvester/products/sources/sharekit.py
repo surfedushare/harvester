@@ -47,7 +47,7 @@ class SharekitMetadataExtraction:
         authors = node["attributes"].get("authors", []) or []
         return [
             {
-                "name": author["person"]["name"],
+                "name": author.get("alias") or author["person"]["name"],
                 "email": author["person"]["email"],
                 "external_id": author["person"]["id"],
                 "dai": author["person"]["dai"],
@@ -224,6 +224,7 @@ OBJECTIVE = {
     "learning_material.industries": SharekitMetadataExtraction.get_industries,
     "learning_material.sectors": SharekitMetadataExtraction.get_sectors,
     # Research product metadata
+    "research_product.sia_project_id": "$.attributes.siaFileNum",
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,
     "research_product.projects": SharekitMetadataExtraction.get_projects,

@@ -135,7 +135,7 @@ class TestSharekitProductExtraction(TestCase):
                 "is_external": False,
             },
             {
-                "name": "Hans Kazan",
+                "name": "Elminster",
                 "email": "Hans Kazan",
                 "external_id": "c0ab267a-ad56-480c-a13a-90b325f45b5d",
                 "dai": None,
@@ -270,3 +270,8 @@ class TestSharekitProductExtraction(TestCase):
             "http://purl.edustandaard.nl/begrippenkader/cfe4d691-f099-4692-b105-86729ed5cbe1"
         ])
         self.assertEqual(seeds[1]["learning_material"]["industries"], [])
+
+    def test_sia_project_id(self):
+        seeds = self.seeds
+        self.assertEqual(seeds[0]["research_product"]["sia_project_id"], "KIEM.LSH.03.021")
+        self.assertIsNone(seeds[1]["research_product"]["sia_project_id"])
