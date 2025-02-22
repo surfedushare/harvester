@@ -31,7 +31,7 @@ class TestBuasProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "buas:buas:ffffffff-e6d6-4af7-8bd0-cce85d57764e"
+            "buas:project:ffffffff-e6d6-4af7-8bd0-cce85d57764e"
         ])
         self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
         self.assertEqual(

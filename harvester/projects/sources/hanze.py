@@ -127,7 +127,7 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": "$.items",
     "state": lambda node: "active",
-    "set": lambda node: "hanze:hanze",
+    "set": lambda node: "hanze:project",
     "external_id": "$.uuid",
     "provider": HanzeProjectExtractProcessor.get_provider,
     # # Project metadata

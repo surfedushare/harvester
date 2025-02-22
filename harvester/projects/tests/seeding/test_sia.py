@@ -31,7 +31,7 @@ class TestSIAProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "sia:sia:project:1677"
+            "sia:project:1677"
         ])
         self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
         self.assertEqual(
@@ -77,8 +77,8 @@ class TestSIAProjectsExtraction(ResourceFixturesMixin, TestCase):
             cls.seeds += [doc.properties for doc in batch]
 
     def test_get_external_id(self):
-        self.assertEqual(self.seeds[0]["external_id"], "project:315")
-        self.assertEqual(self.seeds[1]["external_id"], "project:1676")
+        self.assertEqual(self.seeds[0]["external_id"], "315")
+        self.assertEqual(self.seeds[1]["external_id"], "1676")
 
     def test_title(self):
         self.assertEqual(self.seeds[0]["title"], "Groin Injury Prevention Study (GRIP)")

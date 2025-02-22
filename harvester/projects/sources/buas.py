@@ -76,7 +76,7 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": "$.items",
     "state": lambda node: "active",
-    "set": lambda node: "buas:buas",
+    "set": lambda node: "buas:project",
     "external_id": "$.uuid",
     "provider": BuasProjectExtractProcessor.get_provider,
     # Project metadata

@@ -33,7 +33,7 @@ class TestHanzeProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "hanze:hanze:ffffffff-c18d-4d68-a364-55efbbfea489"
+            "hanze:project:ffffffff-c18d-4d68-a364-55efbbfea489"
         ])
         self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
         self.assertEqual(
@@ -73,7 +73,7 @@ class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
             cls.seeds += [doc.properties for doc in batch]
 
     def test_srn(self):
-        self.assertEqual(self.seeds[0]["srn"], "hanze:hanze:2236c2d4-2957-4d95-a71a-17c2845a6fd3")
+        self.assertEqual(self.seeds[0]["srn"], "hanze:project:2236c2d4-2957-4d95-a71a-17c2845a6fd3")
 
     def test_get_status(self):
         self.assertEqual(self.seeds[0]["project_status"], "finished")
