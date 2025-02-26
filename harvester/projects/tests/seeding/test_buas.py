@@ -31,7 +31,7 @@ class TestBuasProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "buas:buas:ffffffff-e6d6-4af7-8bd0-cce85d57764e"
+            "buas:project:ffffffff-e6d6-4af7-8bd0-cce85d57764e"
         ])
         self.assertEqual(len(documents), 2, "Expected test to work with a small sample for the delta")
         self.assertEqual(
@@ -77,6 +77,18 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[0]["project_status"], "finished")
         self.assertEqual(self.seeds[1]["project_status"], "to be started")
         self.assertEqual(self.seeds[31]["project_status"], "ongoing")
+
+    def test_get_keywords(self):
+        self.assertEqual(self.seeds[0]["keywords"], [
+            "Zero-emissions",
+            "tourism",
+            "mobility",
+            "transport",
+            "sustainable tourism",
+            "CSTT",
+            "Centre for Sustainability, Tourism and Transport"
+        ])
+        self.assertEqual(self.seeds[46]["keywords"], [], "Expected project without keywords to return a list")
 
     def test_get_persons(self):
         self.assertEqual(self.seeds[0]["persons"], [
