@@ -111,6 +111,7 @@ SEEDING_PHASES = [
                 "$.merge_id"
             ],
             "kwargs": {},
+            "backoff_delays": [30, 45, 60, 30, 45, 60],
         },
         "contribute_data": {
             "merge_on": "merge_id",
