@@ -32,6 +32,8 @@ class TestProjectView(TestCase):
         "ended_at": "2019-12-31",
         "coordinates": [],
         "goal": None,
+        "approach": None,
+        "results": None,
         "keywords": [
             "Zero-emissions",
             "tourism",
