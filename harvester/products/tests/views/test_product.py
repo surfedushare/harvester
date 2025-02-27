@@ -8,7 +8,7 @@ from search_client.constants import Platforms
 from products.models import DatasetVersion, ProductDocument
 
 
-class TestDocumentView(TestCase):
+class TestProductView(TestCase):
 
     fixtures = ["test-product-document"]
     maxDiff = None
@@ -290,7 +290,7 @@ class TestDocumentView(TestCase):
 
 
 @override_settings(PLATFORM=Platforms.PUBLINOVA)
-class TestResearchProductDocumentView(TestDocumentView):
+class TestResearchProductView(TestProductView):
     expected_document_output = {
         "srn": "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e",
         "set": "sharekit:edusources",
@@ -456,7 +456,7 @@ class TestResearchProductDocumentView(TestDocumentView):
     }
 
 
-class TestRawDocumentView(TestDocumentView):
+class TestRawProductView(TestProductView):
 
     format = "raw"
     list_view_name = "v1:products:raw-products"
@@ -480,7 +480,7 @@ class TestRawDocumentView(TestDocumentView):
     expected_product_count = 16  # 1 original and 15 copies including all deletes
 
 
-class TestMetadataDocumentView(TestDocumentView):
+class TestMetadataProductView(TestProductView):
 
     format = "metadata"
     list_view_name = "v1:products:metadata-products"
