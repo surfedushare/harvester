@@ -1,0 +1,184 @@
+[
+{
+    "model": "projects.dataset",
+    "pk": 1,
+    "fields": {
+        "name": "epsilon",
+        "is_harvested": true,
+        "indexing": "index_and_promote"
+    }
+},
+{
+    "model": "projects.datasetversion",
+    "pk": 1,
+    "fields": {
+        "pipeline": {
+            "create_opensearch_index": {
+                "success": true
+            },
+            "set_current_dataset_version": {
+                "success": true
+            }
+        },
+        "derivatives": {},
+        "pending_at": null,
+        "finished_at": "2025-02-13T01:27:58.783Z",
+        "dataset": 1,
+        "index": null,
+        "is_current": true,
+        "is_index_promoted": false,
+        "created_at": "2025-02-13T01:18:21.969Z",
+        "version": "1.43.18",
+        "tasks": {
+            "create_opensearch_index": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            },
+            "set_current_dataset_version": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        },
+        "historic_sets": []
+    }
+},
+{
+    "model": "projects.set",
+    "pk": 1,
+    "fields": {
+        "created_at": "2025-02-13T01:18:22.097Z",
+        "modified_at": "2025-02-13T01:23:29.761Z",
+        "identifier": "srn",
+        "referee": null,
+        "pipeline": {
+            "check_set_integrity": {
+                "success": true
+            }
+        },
+        "derivatives": {},
+        "finished_at": "2025-02-13T01:23:38.549Z",
+        "dataset_version": 1,
+        "name": "buas:project",
+        "delete_policy": "no",
+        "tasks": {
+            "check_set_integrity": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        },
+        "pending_at": null
+    }
+},
+{
+    "model": "projects.projectdocument",
+    "pk": 1,
+    "fields": {
+        "created_at": "2025-02-13T01:22:06.623Z",
+        "modified_at": "2025-02-13T01:23:30.702Z",
+        "properties": {
+            "set": "buas:project",
+            "srn": "buas:project:133ce0c9-9dd6-44b8-b798-3b524f17bce0",
+            "goal": null,
+            "state": "active",
+            "title": "K2K Consortium development zero-emissions tourism mobility",
+            "persons": [
+                {
+                    "name": "Eggie",
+                    "email": null,
+                    "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                },
+                {
+                    "name": "Paultje",
+                    "email": null,
+                    "external_id": "97ee5bd3-2145-4a4a-9a61-827e2ec839ef"
+                }
+            ],
+            "ended_at": "2019-12-31T12:00:00.000+0000",
+            "keywords": [
+                "Zero-emissions",
+                "tourism",
+                "mobility",
+                "transport",
+                "sustainable tourism",
+                "CSTT",
+                "Centre for Sustainability, Tourism and Transport"
+            ],
+            "products": [
+                "e3a6cbe7-1606-433d-8bca-7d42e08305c2",
+                "e4f96a7c-029b-42b3-8039-c184e31c76d0"
+            ],
+            "provider": {
+                "ror": null,
+                "name": "Breda University of Applied Sciences",
+                "slug": null,
+                "external_id": null
+            },
+            "photo_url": null,
+            "started_at": "2017-01-01T12:00:00.000+0000",
+            "coordinates": [],
+            "description": "Client: Netherlands Enterprise Agency (RVO.nl) / Partners for International Business (PIB)",
+            "external_id": "133ce0c9-9dd6-44b8-b798-3b524f17bce0",
+            "project_status": "finished",
+            "research_project": {
+                "owners": [
+                    {
+                        "name": "Eggie",
+                        "email": null,
+                        "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                    }
+                ],
+                "themes": [],
+                "parties": [
+                    "Camptoo",
+                    "DEOdrive",
+                    "Dutch Innovation Centre for Electric Road Transport (Dutch-INCERT)",
+                    "Emodz",
+                    "EMOSS",
+                    "EVConsult",
+                    "Hansa Green Tour",
+                    "Rijksdienst voor Ondernemend Nederland (RVO.nl)"
+                ],
+                "contacts": [
+                    {
+                        "name": "Eggie",
+                        "email": null,
+                        "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                    }
+                ],
+                "sia_project_reference": null
+            }
+        },
+        "identity": "buas:project:133ce0c9-9dd6-44b8-b798-3b524f17bce0",
+        "reference": null,
+        "pipeline": {
+            "deactivate_invalid_documents": {
+                "success": true,
+                "validation": null
+            }
+        },
+        "derivatives": {},
+        "pending_at": null,
+        "finished_at": "2025-02-13T01:23:30.702Z",
+        "dataset_version": 1,
+        "collection": 1,
+        "state": "active",
+        "metadata": {
+            "hash": "39fb07b6b421be440b118e8334f57b22f3735997",
+            "provider": "Breda University of Applied Sciences",
+            "created_at": "2025-02-13T01:22:06.614Z",
+            "deleted_at": "2025-02-13T01:23:30.702Z",
+            "modified_at": "2025-02-13T01:23:30.702Z"
+        },
+        "tasks": {
+            "deactivate_invalid_documents": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        }
+    }
+}
+]
