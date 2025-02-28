@@ -8,3 +8,4 @@ from projects.models.resources.sia import SiaProjectIdsResource, SiaProjectDetai
 from projects.models.resources.buas import BuasPureProjectResource
 from projects.models.resources.hanze import HanzePureProjectResource
 from projects.models.resources.hku import HkuProjectResource
+from projects.models.resources.hu import HuProjectResource
