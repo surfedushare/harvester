@@ -114,7 +114,7 @@ class TestHKUProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[5]["research_project"]["owners"], [
             {
                 "external_id": "hku:person:6714394",
-                "email": {},
+                "email": None,
                 "name": "Klaartje Klaar"
             }
         ])
@@ -124,7 +124,7 @@ class TestHKUProjectsExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[5]["research_project"]["contacts"], [
             {
                 "external_id": "hku:person:6714394",
-                "email": {},
+                "email": None,
                 "name": "Klaartje Klaar"
             }
         ])

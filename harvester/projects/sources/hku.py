@@ -142,7 +142,7 @@ class HkuProjectExtractor:
         return [
             {
                 "external_id": HkuProjectExtractor.build_person_srn(person["person_id"]),
-                "email": person.get("email", None),
+                "email": person.get("email", None) or None,
                 "name": f"{person['first_name']} {person['last_name']}"
             }
             for person in persons
