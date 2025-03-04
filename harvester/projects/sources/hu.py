@@ -29,6 +29,11 @@ class HUProjectExtractor:
         else:
             return "unknown"
 
+    @classmethod
+    def get_parties(cls, node):
+        organizations = node.get("parties", [])
+        return [organization["name"] for organization in organizations]
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -54,7 +59,7 @@ OBJECTIVE = {
     # Research project metadata
     "research_project.contacts": "$.contacts",
     "research_project.owners": "$.contacts",  # owners itself is always empty
-    "research_project.parties": "$.parties",
+    "research_project.parties": HUProjectExtractor.get_parties,
     "research_project.themes": "$.research_themes",
 }
 

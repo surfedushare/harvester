@@ -129,3 +129,6 @@ class TestHUProjectsExtraction(ResourceFixturesMixin, TestCase):
             "https://acceptatie.hu.nl/-/media/hu/afbeeldingen/onderzoek/projecten/360-graden-newsroom.ashx"
         )
         self.assertIsNone(self.seeds[1]["photo_url"])
+
+    def test_get_parties(self):
+        self.assertEqual(self.seeds[0]["research_project"]["parties"], ["HU"])
