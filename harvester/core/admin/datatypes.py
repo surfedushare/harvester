@@ -182,3 +182,7 @@ class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
 
     def inactive_document_count(self, obj):
         return obj.documents.filter(properties__state="inactive").count()
+
+
+class OverwriteAdmin(DataStorageAdmin):
+    search_fields = ("id",)

@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from datagrowth.admin import DocumentAdmin as OverwriteAdmin
-from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, DocumentAdmin
+from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, DocumentAdmin, OverwriteAdmin
 from core.admin.harvest import HarvestStateAdmin
 from products.models import Dataset, DatasetVersion, Set, ProductDocument, HarvestState, Overwrite
 
