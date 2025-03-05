@@ -33,6 +33,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                 return
             # Preparation and batching of documents to push to relevant indices.
             index.prepare_push(recreate=recreate)
+            enhance_calm = documents.count() >= 100
             for batch in ibatch(documents.iterator(), batch_size):
                 search_document_batch = []
                 for document in batch:
@@ -40,7 +41,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                     if index.entity in ["products", "testing"]:
                         search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
                     search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
-                errors += index.push(search_document_batch, is_done=False, enhance_calm=True)
+                errors += index.push(search_document_batch, is_done=False, enhance_calm=enhance_calm)
             # All documents have been pushed. We'll mark the push as done.
             index.pushed_at = current_time
             index.save()
