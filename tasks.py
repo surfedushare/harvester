@@ -11,14 +11,14 @@ from commands.test import test_collection
 from commands.services.harvester.invoke import (load_data, harvest, clean_data,
                                                 dump_data, sync_harvest_content, promote_dataset_version,
                                                 sync_preview_media, sync_metadata, harvester_migrate, load_metadata,
-                                                load_fixture)
+                                                load_fixture, index_dataset_versions)
 
 
 assert_repo_root_directory()
 
 
 harvester_collection = Collection("hrv", setup_postgres_localhost, harvest, clean_data, load_data,
-                                  dump_data, sync_harvest_content, promote_dataset_version,
+                                  dump_data, sync_harvest_content, promote_dataset_version, index_dataset_versions,
                                   sync_preview_media, sync_metadata, load_metadata)
 database_collection = Collection("db", setup_postgres_localhost, harvester_migrate, load_fixture)
 container_collection = Collection("container", build, push, promote, deploy, prepare_builds)

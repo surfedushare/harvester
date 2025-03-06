@@ -1,5 +1,7 @@
 from hashlib import sha1
 
+from datagrowth.utils import reach
+
 from sources.utils.pure import PureExtractor, build_seeding_phases
 from projects.models import BuasPureProjectResource
 
@@ -31,6 +33,11 @@ class BuasProjectExtractProcessor(PureExtractor):
     @classmethod
     def get_products(cls, node):
         return [product["uuid"] for product in node.get("relatedResearchOutputs", [])]
+
+    @classmethod
+    def get_keywords(cls, node):
+        keywords_path = "$.keywordGroups.0.keywordContainers.0.freeKeywords.0.freeKeywords"
+        return reach(keywords_path, node, default_factory=list)
 
     @classmethod
     def get_persons(cls, node):
@@ -69,7 +76,7 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": "$.items",
     "state": lambda node: "active",
-    "set": lambda node: "buas:buas",
+    "set": lambda node: "buas:project",
     "external_id": "$.uuid",
     "provider": BuasProjectExtractProcessor.get_provider,
     # Project metadata
@@ -78,18 +85,14 @@ OBJECTIVE = {
     "started_at": "$.period.startDate",
     "ended_at": "$.period.endDate",
     "coordinates": lambda node: [],
-    "goal": lambda node: None,
     "description": "$.descriptions.0.value.text.0.value",
     "persons": BuasProjectExtractProcessor.get_persons,
-    "keywords": "$.keywordGroups.0.keywordContainers.0.freeKeywords.0.freeKeywords",
+    "keywords": BuasProjectExtractProcessor.get_keywords,
     "products": BuasProjectExtractProcessor.get_products,
-    "photo_url": lambda node: None,
     # Research project metadata
-    "research_project.sia_project_reference": lambda node: None,
     "research_project.contacts": BuasProjectExtractProcessor.get_owners,
     "research_project.owners": BuasProjectExtractProcessor.get_owners,
     "research_project.parties": BuasProjectExtractProcessor.get_parties,
-    "research_project.themes": lambda node: [],
 }
 
 

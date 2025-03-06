@@ -101,6 +101,7 @@ def build_configuration_defaults(environment):
             "pii_data_directories": [  # these are relative to repo root
                 os.path.join("harvester", "sources", "factories", "fixtures"),
                 os.path.join("harvester", "projects", "fixtures", "resources", "buas"),
+                os.path.join("harvester", "projects", "fixtures", "resources", "hanze"),
 
             ]
         },

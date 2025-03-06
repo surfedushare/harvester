@@ -203,7 +203,7 @@ def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=No
     """
     Starts a task on the AWS container cluster or localhost to promote a DatasetVersion index to latest
     """
-    command = ["python", "manage.py", "promote_dataset_version", ]
+    command = ["python", "manage.py", "promote_dataset_version"]
     if version_id:
         command += [f"--dataset-version-id={version_id}"]
     elif dataset:
@@ -212,6 +212,29 @@ def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=No
             command += [f"--harvester-version={version}"]
     else:
         Exit("Either specify a dataset of a dataset version id")
+    run_harvester_task(ctx, mode, command)
+
+
+@task(
+    name="index_dataset_versions",
+    help={
+        "mode": "Mode you want to create indices for: localhost, development or acceptance. "
+                "Must match APPLICATION_MODE",
+        "entity": "A list of entities that you want to index"
+    },
+    iterable=["entity"]
+)
+def index_dataset_versions(ctx, mode, entity=None):
+    """
+    Starts a task on the AWS container cluster or localhost to index current DatasetVersions for specific entities.
+    """
+    if ctx.config.service.env == "production":
+        raise Exit("Cowardly refusing to re-index production environment")
+    if not entity:
+        entity = ["products", "projects"]
+
+    command = ["python", "manage.py", "index_dataset_versions"]
+    command += entity
     run_harvester_task(ctx, mode, command)
 
 

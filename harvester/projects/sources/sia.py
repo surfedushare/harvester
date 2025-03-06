@@ -6,12 +6,6 @@ from projects.models import ProjectDocument
 class SiaProjectExtraction:
 
     @classmethod
-    def get_external_id(cls, node):
-        if not node["id"]:
-            return
-        return f"project:{node['id']}"
-
-    @classmethod
     def get_state(cls, node):
         if not node.get("status"):
             return ProjectDocument.States.DELETED
@@ -58,9 +52,9 @@ OBJECTIVE = {
     # Essential objective keys for system functioning
     "@": "$",
     "state": SiaProjectExtraction.get_state,
-    "set": lambda node: "sia:sia",
+    "set": lambda node: "sia:project",
     "merge_id": "$.id",
-    "external_id": SiaProjectExtraction.get_external_id,
+    "external_id": lambda node: str(node["id"]),
     "provider": SiaProjectExtraction.get_provider,
     # Generic metadata
     "title": SiaProjectExtraction.get_title,
@@ -99,9 +93,9 @@ SEEDING_PHASES = [
             "objective": {
                 "@": "$",
                 "state": lambda node: "inactive",
-                "set": lambda node: "sia:sia",
+                "set": lambda node: "sia:project",
                 "merge_id": "$.id",
-                "external_id": SiaProjectExtraction.get_external_id,
+                "external_id": "$.id",
                 "provider": SiaProjectExtraction.get_provider,
             }
         }
@@ -117,6 +111,7 @@ SEEDING_PHASES = [
                 "$.merge_id"
             ],
             "kwargs": {},
+            "backoff_delays": [30, 45, 60, 30, 45, 60],
         },
         "contribute_data": {
             "merge_on": "merge_id",
