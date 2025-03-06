@@ -28,6 +28,8 @@ class ProjectSerializer(serializers.Serializer):
         validators=[MinLengthValidator(0), MaxLengthValidator(2)]
     )
     goal = serializers.CharField(allow_null=True, allow_blank=True)
+    approach = serializers.CharField(allow_null=True, allow_blank=True)
+    results = serializers.CharField(allow_null=True, allow_blank=True)
     keywords = serializers.ListField(child=serializers.CharField())
     products = serializers.ListField(child=serializers.CharField())
     previews = serializers.DictField(default=None, allow_null=True)
