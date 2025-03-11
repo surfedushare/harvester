@@ -127,3 +127,9 @@ class TestSIAProjectsExtraction(ResourceFixturesMixin, TestCase):
 
     def test_get_sia_project_reference(self):
         self.assertEqual(self.seeds[0]["research_project"]["sia_project_reference"], "2014-01-15M")
+
+    def test_get_started_at(self):
+        self.assertEqual(self.seeds[0]["started_at"], "2014-12-01")
+
+    def test_get_ended_at(self):
+        self.assertEqual(self.seeds[0]["ended_at"], "2017-06-01")

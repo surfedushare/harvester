@@ -1,5 +1,6 @@
 from django.conf import settings
 
+from datagrowth.utils import reach
 from projects.models import ProjectDocument
 
 
@@ -47,6 +48,20 @@ class SiaProjectExtraction:
             "name": None
         }]
 
+    @classmethod
+    def get_started_at(cls, node):
+        started_at = reach("$.startdatum", node)
+        if not started_at:
+            return None
+        return started_at.replace(" 00:00:00", "")
+
+    @classmethod
+    def get_ended_at(cls, node):
+        ended_at = reach("$.einddatum", node)
+        if not ended_at:
+            return None
+        return ended_at.replace(" 00:00:00", "")
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -59,8 +74,8 @@ OBJECTIVE = {
     # Generic metadata
     "title": SiaProjectExtraction.get_title,
     "project_status": SiaProjectExtraction.get_status,
-    "started_at": "$.startdatum",
-    "ended_at": "$.einddatum",
+    "started_at": SiaProjectExtraction.get_started_at,
+    "ended_at": SiaProjectExtraction.get_ended_at,
     "coordinates": lambda node: [],
     "goal": "$.eindrapportage",
     "description": "$.samenvatting",
