@@ -23,6 +23,7 @@ harvester:
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.nl"
+    hu: "https://hu.nl"
   webhook_allowed_ips:
     sharekit:
       - "145.101.123.227"

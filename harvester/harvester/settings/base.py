@@ -685,6 +685,10 @@ SOURCES = {
     "edurep": {
         "endpoint": environment.harvester.repositories.edurep,
         "api_key": None,
+    },
+    "hu": {
+        "endpoint": environment.harvester.repositories.hu,
+        "api_key": environment.secrets.hu.api_key
     }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
