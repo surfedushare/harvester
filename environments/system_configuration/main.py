@@ -102,6 +102,7 @@ def build_configuration_defaults(environment):
                 os.path.join("harvester", "sources", "factories", "fixtures"),
                 os.path.join("harvester", "projects", "fixtures", "resources", "buas"),
                 os.path.join("harvester", "projects", "fixtures", "resources", "hanze"),
+                os.path.join("harvester", "projects", "fixtures", "resources", "hku"),
 
             ]
         },
