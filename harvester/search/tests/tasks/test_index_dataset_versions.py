@@ -1,7 +1,7 @@
 from unittest.mock import patch, ANY
 from datetime import timedelta
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.timezone import now
 
 from search.tests.mocks import get_search_client_mock
@@ -13,6 +13,7 @@ from testing.utils.factories import create_datatype_models
 from testing.models import Dataset
 
 
+@override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
 class TestIndexDatasetVersions(TestCase):
 
     search_client = get_search_client_mock(has_history=True)

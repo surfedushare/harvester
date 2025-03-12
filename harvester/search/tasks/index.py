@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
@@ -38,7 +39,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                 search_document_batch = []
                 for document in batch:
                     language = document.get_analyzer_language()
-                    if index.entity in ["products", "testing"]:
+                    if index.entity in ["products", "testing"] and not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
                         search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
                     search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
                 errors += index.push(search_document_batch, is_done=False, enhance_calm=enhance_calm)
