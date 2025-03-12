@@ -86,7 +86,8 @@ class TestProjectView(TestCase):
         ],
         "themes": [],
         "research_themes": [],
-        "sia_project_reference": None
+        "sia_project_reference": None,
+        "photo_url": None,
     }
 
     expected_document_count = 13  # 1 original, 15 copies and minus 3 deletes

@@ -33,6 +33,7 @@ class ProjectSerializer(serializers.Serializer):
     keywords = serializers.ListField(child=serializers.CharField())
     products = serializers.ListField(child=serializers.CharField())
     previews = serializers.DictField(default=None, allow_null=True)
+    photo_url = serializers.CharField(allow_null=True, allow_blank=True)
 
     # Research project specific
     persons = ContactSerializer(many=True)
