@@ -95,6 +95,45 @@ def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> N
         document.save()
 
 
+@app.task(name="lookup_industry_parents", base=DatabaseConnectionResetTask)
+@atomic()
+def lookup_industry_parents(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Document = models["Document"]
+    for document in Document.objects.filter(id__in=document_ids).select_for_update():
+        metadata_values = MetadataValue.objects.select_related("translation").filter(
+            value__in=document.properties["learning_material"]["industries"],
+            field__name="industries.keyword"
+        )
+        value_ids = set()
+        value_nl = set()
+        value_en = set()
+        for metadata_value in metadata_values:
+            for ancestor in metadata_value.get_ancestors(include_self=True):
+                value_ids.add(ancestor.value)
+                value_nl.add(ancestor.translation.nl)
+                value_en.add(ancestor.translation.en)
+        value_ids = list(value_ids)
+        value_ids.sort()
+        value_nl = list(value_nl)
+        value_nl.sort()
+        value_en = list(value_en)
+        value_en.sort()
+        document.derivatives["lookup_industry_parents"] = {
+            "industries": {
+                "keyword": value_ids,
+                "nl": value_nl,
+                "en": value_en,
+            }
+        }
+        # For all documents we mark this task as completed to continue the harvesting process
+        document.pipeline["lookup_industry_parents"] = {
+            "success": True
+        }
+        document.save()
+
+
+# TODO: deprecated in favor of lookup_industry_parents
 @app.task(name="lookup_industries_translations", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_industries_translations(app_label: str, document_ids: list[int]) -> None:
@@ -118,6 +157,45 @@ def lookup_industries_translations(app_label: str, document_ids: list[int]) -> N
         document.save()
 
 
+@app.task(name="lookup_sector_parents", base=DatabaseConnectionResetTask)
+@atomic()
+def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
+    models = load_harvest_models(app_label)
+    Document = models["Document"]
+    for document in Document.objects.filter(id__in=document_ids).select_for_update():
+        metadata_values = MetadataValue.objects.select_related("translation").filter(
+            value__in=document.properties["learning_material"]["sectors"],
+            field__name="sectors.keyword"
+        )
+        value_ids = set()
+        value_nl = set()
+        value_en = set()
+        for metadata_value in metadata_values:
+            for ancestor in metadata_value.get_ancestors(include_self=True):
+                value_ids.add(ancestor.value)
+                value_nl.add(ancestor.translation.nl)
+                value_en.add(ancestor.translation.en)
+        value_ids = list(value_ids)
+        value_ids.sort()
+        value_nl = list(value_nl)
+        value_nl.sort()
+        value_en = list(value_en)
+        value_en.sort()
+        document.derivatives["lookup_sector_parents"] = {
+            "sectors": {
+                "keyword": value_ids,
+                "nl": value_nl,
+                "en": value_en,
+            }
+        }
+        # For all documents we mark this task as completed to continue the harvesting process
+        document.pipeline["lookup_sector_parents"] = {
+            "success": True
+        }
+        document.save()
+
+
+# TODO: deprecated in favor of lookup_sector_parents
 @app.task(name="lookup_sectors_translations", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_sectors_translations(app_label: str, document_ids: list[int]) -> None:

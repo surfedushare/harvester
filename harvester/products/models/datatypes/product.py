@@ -47,12 +47,12 @@ def default_document_tasks():
             "resources": []
         }
     elif settings.PLATFORM is Platforms.MBODATA:
-        tasks["lookup_industries_translations"] = {
+        tasks["lookup_industry_parents"] = {
             "depends_on": ["$.learning_material.industries"],
             "checks": ["has_industries"],
             "resources": []
         }
-        tasks["lookup_sectors_translations"] = {
+        tasks["lookup_sector_parents"] = {
             "depends_on": ["$.learning_material.sectors"],
             "checks": ["has_sectors"],
             "resources": []
