@@ -23,6 +23,7 @@ harvester:
     hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.nl"
+    hu: "https://hu.nl"
   webhook_allowed_ips:
     sharekit:
       - "145.101.123.227"
@@ -43,6 +44,7 @@ opensearch:
   decompound_word_lists:
     dutch: "analyzers/F131123737"
   domain_name: "surfpol-main"
+  enhance_calm_delay: 0
 
 tika:
   host: "http://localhost:9998"

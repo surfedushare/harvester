@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from time import sleep
 from datetime import datetime
 from collections import defaultdict
 
@@ -92,7 +93,8 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
-    def push(self, search_documents: list[tuple[str, dict]], request_timeout=300, is_done: bool = True) -> list[str]:
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=300, is_done: bool = True,
+             enhance_calm: bool = False) -> list[str]:
         current_time = make_aware(datetime.now())
         errors = []
         search_documents_by_language = defaultdict(list)
@@ -106,6 +108,8 @@ class OpenSearchIndex(models.Model):
                 if not is_ok:
                     self.error_count += 1
                     errors.append(result)
+                if enhance_calm:
+                    sleep(settings.OPENSEARCH_ENHANCE_CALM_DELAY)
         self.pushed_at = current_time
         if is_done:
             self.save()

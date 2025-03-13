@@ -321,6 +321,7 @@ OPENSEARCH_DECOMPOUND_WORD_LISTS = environment.opensearch.decompound_word_lists
 OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = None
 OPENSEARCH_PRESET_DEFAULT = SearchClient.preset_default
+OPENSEARCH_ENHANCE_CALM_DELAY = environment.opensearch.enhance_calm_delay
 
 
 # Tika
@@ -685,6 +686,10 @@ SOURCES = {
     "edurep": {
         "endpoint": environment.harvester.repositories.edurep,
         "api_key": None,
+    },
+    "hu": {
+        "endpoint": environment.harvester.repositories.hu,
+        "api_key": environment.secrets.hu.api_key
     }
 }
 SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api

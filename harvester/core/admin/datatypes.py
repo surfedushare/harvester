@@ -2,6 +2,7 @@ from opensearchpy import NotFoundError
 
 from django.contrib import admin, messages
 from django import forms
+from django.utils.timezone import now
 from django.utils.html import format_html
 from django.urls import reverse
 from django.db.models import Q, Count
@@ -13,6 +14,7 @@ from datagrowth.admin import DataStorageAdmin, DocumentAdmin as DatagrowthDocume
 from search.clients import get_opensearch_client
 from core.admin.widgets import PrettyJSONWidget
 from core.tasks.commands import promote_dataset_version
+from core.tasks.harvest.document import dispatch_document_tasks
 
 
 class HarvestObjectMixinAdmin(object):
@@ -147,7 +149,22 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
         return form
 
     def reset_document_tasks(self, request, queryset):
-        queryset.update(pipeline={}, derivatives={}, pending_at=None, finished_at=None)
+        current_time = now()
+        app_label = None
+        document_ids = []
+        for document in queryset:
+            document.prepare_task_processing(current_time, reset=True)
+            document.clean()
+            document.save()
+            app_label = document._meta.app_label
+            document_ids.append(document.id)
+        if app_label:
+            dispatch_document_tasks.delay(app_label, document_ids)
+            messages.info(request, "A job to process Document tasks has been dispatched for "
+                                   f"{len(document_ids)} documents. Please refresh the page in a couple of minutes "
+                                   "to see the results.")
+        else:
+            messages.warning(request, "Unable to dispatch Document tasks. Please contact support.")
 
 
 class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):

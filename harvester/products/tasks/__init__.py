@@ -1,4 +1,5 @@
 from products.tasks.products import normalize_publisher_year
 from products.tasks.learning_materials import (lookup_study_vocabulary_parents, normalize_disciplines,
                                                lookup_consortium_translations, lookup_industries_translations,
-                                               lookup_sectors_translations)
+                                               lookup_sectors_translations, lookup_industry_parents,
+                                               lookup_sector_parents)

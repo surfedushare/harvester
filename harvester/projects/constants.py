@@ -11,6 +11,8 @@ SEED_DEFAULTS = {
     "ended_at": None,
     "coordinates": [],
     "goal": None,
+    "approach": None,
+    "results": None,
     "persons": [],
     "keywords": [],
     "products": [],

@@ -1,0 +1,50 @@
+[
+{
+    "model": "projects.huprojectresource",
+    "pk": 1,
+    "fields": {
+        "uri": "hu.nl/api/publinova/projects",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-02-28T13:19:12.327Z",
+        "modified_at": "2025-02-28T13:19:12.327Z",
+        "purge_at": "2025-03-30T13:18:36.049Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "url": "https://hu.nl/api/publinova/projects",
+            "args": [
+                "hu",
+                "1970-01-01T00:00:00Z"
+            ],
+            "data": null,
+            "kwargs": {},
+            "method": "get",
+            "headers": {
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "User-Agent": "DataGrowth (v0.19.10); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate"
+            },
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Fri, 28 Feb 2025 13:18:47 GMT",
+            "vary": "Accept-Encoding",
+            "pragma": "no-cache",
+            "expires": "-1",
+            "x-cache": "CONFIG_NOCACHE",
+            "accept-ch": "Sec-CH-UA-Full-Version-List,Sec-CH-UA-Platform-Version,Sec-CH-UA-Arch,Sec-CH-UA-Model,Sec-CH-UA-Bitness",
+            "connection": "keep-alive",
+            "x-azure-ref": "20250228T131836Z-167448fdd46wpqlzhC1PAR2cug0000000hvg000000009w26",
+            "content-type": "application/json; charset=utf-8",
+            "cache-control": "no-cache",
+            "request-context": "appId=cid-v1:f2292a41-4785-4085-9304-d01a9de49ab3",
+            "content-encoding": "gzip",
+            "transfer-encoding": "chunked"
+        },
+        "body": "hu/hu-projects.01.pii.json"
+    }
+}
+]
