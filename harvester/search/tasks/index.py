@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
@@ -38,7 +39,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                 search_document_batch = []
                 for document in batch:
                     language = document.get_analyzer_language()
-                    if index.entity in ["products", "testing"]:
+                    if index.entity in ["products", "testing"] and not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
                         search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
                     search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
                 errors += index.push(search_document_batch, is_done=False, enhance_calm=enhance_calm)
@@ -84,12 +85,14 @@ def sync_opensearch_indices(app_label: str) -> None:
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
 def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False,
                            index_since: datetime = None) -> None:
-    index_since = index_since if not recreate_indices else make_aware(datetime(year=1970, month=1, day=1))
     for dataset_version_model, dataset_version_id in dataset_versions:
         # Load the dataset version
         Dataset, DatasetVersion, dataset_version = load_data_models(dataset_version_model, dataset_version_id)
         if dataset_version is None or dataset_version.index is None:
             continue
+        # Determine proper arguments based on loaded dataset version
+        recreate_index = recreate_indices or not dataset_version.has_promoted_sibling
+        index_since = index_since if not recreate_index else make_aware(datetime(year=1970, month=1, day=1))
         # Prepare the logger
         app_label = DatasetVersion._meta.app_label
         logger = HarvestLogger(
@@ -106,7 +109,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         logger.info(f"Pushing index for: {app_label}")
         index = _push_dataset_version_to_index(
             dataset_version, logger,
-            recreate=recreate_indices, push_since=index_since,
+            recreate=recreate_index, push_since=index_since,
             context="index_dataset_versions"
         )
         # Switch the aliases to the new indices if required

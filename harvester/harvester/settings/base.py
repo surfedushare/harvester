@@ -322,6 +322,7 @@ OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = None
 OPENSEARCH_PRESET_DEFAULT = SearchClient.preset_default
 OPENSEARCH_ENHANCE_CALM_DELAY = environment.opensearch.enhance_calm_delay
+OPENSEARCH_STRICT_MULTILINGUAL_FIELDS = environment.opensearch.strict_multilingual_fields
 
 
 # Tika
