@@ -49,6 +49,7 @@ opensearch:
   decompound_word_lists:
     dutch: "analyzers/F133444250"
   domain_name: "surfpol-main"
+  enhance_calm_delay: 5
 
 tika:
   host: "http://localhost:9998"

@@ -109,7 +109,7 @@ class OpenSearchIndex(models.Model):
                     self.error_count += 1
                     errors.append(result)
                 if enhance_calm:
-                    sleep(60)
+                    sleep(settings.OPENSEARCH_ENHANCE_CALM_DELAY)
         self.pushed_at = current_time
         if is_done:
             self.save()
