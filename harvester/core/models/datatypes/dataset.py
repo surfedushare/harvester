@@ -175,6 +175,10 @@ class HarvestDatasetVersion(HarvestObjectMixin):
             pass
         return collection
 
+    @property
+    def has_promoted_sibling(self) -> bool:
+        return self.__class__.objects.filter(version=self.version, is_index_promoted=True).exists()
+
     class Meta:
         abstract = True
         get_latest_by = "-created_at"

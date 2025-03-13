@@ -10,7 +10,7 @@ from search.tasks import index_dataset_versions
 from testing.constants import ENTITY_SEQUENCE_PROPERTIES
 from testing.utils.generators import seed_generator
 from testing.utils.factories import create_datatype_models
-from testing.models import Dataset
+from testing.models import Dataset, DatasetVersion
 
 
 @override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
@@ -50,6 +50,15 @@ class TestIndexDatasetVersions(TestCase):
         self.search_client.indices.delete_alias.reset_mock()
         self.search_client.indices.create.reset_mock()
         self.search_client.indices.delete.reset_mock()
+        # Create a non-functional DatasetVersion that is sibling to the functional DatasetVersion
+        # Having this sibling prevents index_dataset_version to use shortcuts
+        self.sibling = DatasetVersion.objects.create(
+            dataset=self.dataset_version.dataset,
+            index=self.dataset_version.index,
+            version=self.dataset_version.version,
+            is_current=True,
+            is_index_promoted=True,
+        )
 
     def assert_document_stream(self, streaming_bulk_mock, exclude_deletes=False, include_old_documents=False):
         self.assertEqual(streaming_bulk_mock.call_count, 4, "Expected a separate call for nl, en, unk and all")
@@ -221,3 +230,24 @@ class TestIndexDatasetVersions(TestCase):
         # Check indices are left alone
         self.assertEqual(self.search_client.indices.delete.call_count, 0, "Expected index not to be recreated")
         self.assertEqual(self.search_client.indices.create.call_count, 0, "Expected index not to be recreated")
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    @patch("search.models.index.streaming_bulk")
+    def test_index_no_sibling(self, streaming_bulk_mock, get_search_client_mock):
+        # Adjusting test data
+        self.sibling.delete()
+        # Running the command
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)])
+        # Check if data was sent to search engine
+        self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True, include_old_documents=True)
+        # Check DatasetVersion and OpensearchIndex updates
+        self.dataset_version.refresh_from_db()
+        self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
+        self.dataset_version.index.refresh_from_db()
+        self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        # Check alias modifications
+        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        # Check index recreation
+        self.assert_index_deletion("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_index_creation("edusources", "testing", ["en", "nl", "unk"])

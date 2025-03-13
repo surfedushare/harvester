@@ -85,12 +85,14 @@ def sync_opensearch_indices(app_label: str) -> None:
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
 def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False,
                            index_since: datetime = None) -> None:
-    index_since = index_since if not recreate_indices else make_aware(datetime(year=1970, month=1, day=1))
     for dataset_version_model, dataset_version_id in dataset_versions:
         # Load the dataset version
         Dataset, DatasetVersion, dataset_version = load_data_models(dataset_version_model, dataset_version_id)
         if dataset_version is None or dataset_version.index is None:
             continue
+        # Determine proper arguments based on loaded dataset version
+        recreate_index = recreate_indices or not dataset_version.has_promoted_sibling
+        index_since = index_since if not recreate_index else make_aware(datetime(year=1970, month=1, day=1))
         # Prepare the logger
         app_label = DatasetVersion._meta.app_label
         logger = HarvestLogger(
@@ -107,7 +109,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         logger.info(f"Pushing index for: {app_label}")
         index = _push_dataset_version_to_index(
             dataset_version, logger,
-            recreate=recreate_indices, push_since=index_since,
+            recreate=recreate_index, push_since=index_since,
             context="index_dataset_versions"
         )
         # Switch the aliases to the new indices if required
