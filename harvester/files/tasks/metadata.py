@@ -4,7 +4,8 @@ from django.conf import settings
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
-from core.processors import HttpGrowthProcessor
+
+from core.processors import HttpGrowthProcessor, ShellGrowthProcessor
 from core.loading import load_harvest_models
 
 
@@ -189,3 +190,26 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
         }
     })
     youtube_api_processor(FileDocument.objects.filter(id__in=document_ids))
+
+
+@app.task(name="video_transcripts", base=DatabaseConnectionResetTask)
+def video_transcripts(app_label: str, document_ids: list[int]):
+    models = load_harvest_models(app_label)
+    FileDocument = models["Document"]
+    youtube_processor = ShellGrowthProcessor({
+        "datatypes_app_label": "files",
+        "datatype_models": {
+            "document": "FileDocument",
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "growth_phase": "video_transcripts",
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.youtubetranscriptsresource",
+            "args": ["$.url"],
+            "kwargs": {},
+        },
+        "extractor": "ExtractProcessor.pass_resource_through"
+    })
+    youtube_processor(FileDocument.objects.filter(id__in=document_ids))

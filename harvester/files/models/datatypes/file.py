@@ -58,7 +58,15 @@ def default_document_tasks():
             "depends_on": ["$.hash"],
             "checks": ["is_youtube_video"],
             "resources": ["files.YoutubeAPIResource"]
-        }
+        },
+        "video_transcripts": {
+            # Unfortunately downloading transcripts needs logged in users when using the Youtube API
+            # So we use a shell tool here, but we can't depend on check_url or is_analysis_possible,
+            # because those fail for Youtube.
+            "depends_on": [],
+            "checks": ["is_video"],
+            "resources": ["files.YoutubeTranscriptsResource"]
+        },
     }
 
 
