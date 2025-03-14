@@ -193,6 +193,11 @@ class FileDocument(HarvestDocument):
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
             data["video"] = youtube_data
+            # Youtube doesn't allow link checking and therefor Tika isn't executed at all.
+            # Here we fill in some data to allow better search for Youtube.
+            data["title"] = youtube_data.get("title")  # replaces "URL 1" default
+            data["text"] = youtube_data.get("description")  # as if the text comes from Tika
+            data["copyright"] = youtube_data.get("license")  # will overwrite source information
         if "pdf_preview" in self.derivatives:
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:
