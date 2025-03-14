@@ -30,11 +30,17 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
             if recreate:
                 filters["state"] = HarvestDocument.States.ACTIVE
             documents = dataset_version.documents.filter(**filters)
-            if not documents.exists():
-                return
+            documents_count = documents.count()
+            if not documents_count:
+                return None
             # Preparation and batching of documents to push to relevant indices.
+            enhance_calm = documents_count >= 100 and not recreate
+            logger.info(
+                f"Starting batch indexing for {documents_count} {dataset_version._meta.app_label}; "
+                f"batch_size={batch_size}, recreate={recreate}, enhance_calm={enhance_calm}, "
+                f"push_since={push_since.isoformat()} "
+            )
             index.prepare_push(recreate=recreate)
-            enhance_calm = documents.count() >= 100
             for batch in ibatch(documents.iterator(), batch_size):
                 search_document_batch = []
                 for document in batch:
