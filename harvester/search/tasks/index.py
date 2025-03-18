@@ -38,7 +38,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
             logger.info(
                 f"Starting batch indexing for {documents_count} {dataset_version._meta.app_label}; "
                 f"batch_size={batch_size}, recreate={recreate}, enhance_calm={enhance_calm}, "
-                f"push_since={push_since.isoformat()} "
+                f"push_since={push_since.isoformat() if push_since else "1970-01-01"} "
             )
             index.prepare_push(recreate=recreate)
             for batch in ibatch(documents.iterator(), batch_size):
