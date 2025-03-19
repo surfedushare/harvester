@@ -6,6 +6,10 @@ from search import views
 app_name = 'search'
 public_api_patterns = [
     path(r'search/documents/', views.DocumentSearchAPIView.as_view(), name="search-documents"),
+    path(
+        r'search/documents/explain/', views.ExplainDocumentSearchAPIView.as_view(),
+        name="search-documents-explain"
+    ),
     path(r'search/autocomplete/', views.AutocompleteAPIView.as_view(), name="search-autocomplete"),
     path(r'search/stats/', views.SearchStatsAPIView.as_view(), name="search-stats"),
     path(r'find/documents/', views.DocumentSearchDetailsAPIView.as_view(), name="find-document-details"),
