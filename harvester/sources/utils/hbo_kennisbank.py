@@ -23,6 +23,12 @@ HBO_KENNISBANK_SET_TO_PROVIDER = {
         "external_id": None,
         "slug": "PUBHAS",
         "name": "HAS Green Academy"
+    },
+    "greeni:PUBAERES": {
+        "ror": None,
+        "external_id": None,
+        "slug": "PUBAERES",
+        "name": "Aeres Hogeschool"
     }
 }
 
