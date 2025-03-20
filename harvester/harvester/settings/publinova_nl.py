@@ -12,6 +12,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
     "Christelijke Hogeschool Ede",
     "Hogeschool Leiden",
     "Avans Hogeschool",
+    "Aeres Hogeschool",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
