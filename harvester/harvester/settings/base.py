@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'sources',
 
     'organizations',
+    'persons',
     'products',
     'projects',
     'files',
