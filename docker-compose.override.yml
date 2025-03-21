@@ -55,6 +55,7 @@ services:
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
       - ./environments/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ../search-client:/usr/src/search_client
     command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A harvester worker --loglevel=INFO
     healthcheck:
       test: celery -A harvester inspect ping
@@ -85,6 +86,7 @@ services:
       - ./harvester:/usr/src/app
       - ./media:/usr/src/media
       - ./environments/localhost/invoke.yml:/usr/src/environments/localhost/invoke.yml
+      - ../search-client:/usr/src/search_client
     command: celery -A harvester flower --url_prefix=flower
     ports:
       - "127.0.0.1:5555:5555"
