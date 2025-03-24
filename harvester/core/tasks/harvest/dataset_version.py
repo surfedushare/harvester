@@ -79,6 +79,7 @@ def create_opensearch_index(app_label: str, dataset_version_ids: list[int]) -> N
                 dataset_version.dataset.name,
                 dataset_version.version
             )
+            dataset_version.index.pushed_at = OpenSearchIndex.objects.get_pushed_at(dataset_version.index.name)
             dataset_version.index.save()
         dataset_version.pipeline["create_opensearch_index"] = {"success": True}
         dataset_version.save()

@@ -16,7 +16,19 @@ from search_client.opensearch.indices.legacy import create_open_search_index_con
 from search.clients import get_opensearch_client
 
 
+class OpenSearchIndexManager(models.Manager):
+
+    def get_pushed_at(self, index_name: str) -> datetime | None:
+        try:
+            latest_index = self.filter(name=index_name, pushed_at__isnull=False).latest("pushed_at")
+        except OpenSearchIndex.DoesNotExist:
+            return None
+        return latest_index.pushed_at
+
+
 class OpenSearchIndex(models.Model):
+
+    objects = OpenSearchIndexManager()
 
     name = models.CharField(max_length=255, db_index=True)
     entity = models.CharField(max_length=50, default="products")
