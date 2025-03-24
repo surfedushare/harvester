@@ -49,17 +49,18 @@ class TestYoutubeAPITask(TestCase):
         fail = FileDocument.objects.get(id=self.fail.id)
         self.assertTrue(success.pipeline["youtube_api"]["success"])
         self.assertIn("youtube_api", success.derivatives)
-        self.assertEqual(success.derivatives["youtube_api"],
-                         {'license': 'youtube',
-                          'duration': 'PT3M33S',
-                          'previews': {
-                              'preview': 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
-                              'full_size': 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-                              'preview_small': 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg'
-                          },
-                          'embed_url': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                          'definition': 'hd',
-                          'description': 'this is a description'})
+        self.assertEqual(success.derivatives["youtube_api"], {
+            "title": "This is a title",
+            "license": "youtube",
+            "duration": "PT3M33S",
+            "previews": {
+                "preview": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+                "full_size": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+                "preview_small": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg"
+            },
+            "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            "description": "this is a description"
+        })
         self.assertFalse(success.is_not_found)
         self.assertFalse(fail.pipeline["youtube_api"]["success"])
         self.assertNotIn("youtube_api", fail.derivatives)
