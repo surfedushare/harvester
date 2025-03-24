@@ -167,7 +167,7 @@ class FileDocument(HarvestDocument):
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
             mime_type, encoding = guess_type(url)
-        self.mime_type = mime_type
+        self.mime_type = mime_type if not self.is_youtube_video else "video/mp4"
         self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
         self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
