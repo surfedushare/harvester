@@ -105,7 +105,7 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
-    def push(self, search_documents: list[tuple[str, dict]], request_timeout=300, is_done: bool = True,
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150, is_done: bool = True,
              enhance_calm: bool = False) -> list[str]:
         current_time = make_aware(datetime.now())
         errors = []
