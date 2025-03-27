@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from search.models import OpenSearchIndex
 from search.tests.mocks import get_search_client_mock
@@ -31,6 +31,7 @@ class TestOpenSearchIndexModel(TestCase):
             self.search_client.indices.delete.assert_any_call(index=f"edusources-testing--test-001-{language}")
         self.search_client.indices.delete.assert_any_call(index="edusources-testing--test-001")
 
+    @override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
     def test_get_remote_names(self):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")
         instance.save()

@@ -70,13 +70,13 @@ class OpenSearchIndex(models.Model):
             name += f"-{language}"
         return name.replace(".", "")
 
-    def get_remote_names(self, include_multilingual_index=True) -> list[str]:
-        names = [
-            self.get_remote_name(language)
-            for language in settings.OPENSEARCH_LANGUAGE_CODES
-        ]
-        if include_multilingual_index:
-            names.append(self.get_remote_name())
+    def get_remote_names(self) -> list[str]:
+        names = [self.get_remote_name()]
+        if not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
+            names += [
+                self.get_remote_name(language)
+                for language in settings.OPENSEARCH_LANGUAGE_CODES
+            ]
         return names
 
     def check_remote_exists(self, language: str = None) -> bool:
@@ -88,6 +88,8 @@ class OpenSearchIndex(models.Model):
         if recreate:
             self.configuration = {}
             self.error_count = 0
+        # Copy pushed_at from previous index instances if available
+        self.pushed_at = OpenSearchIndex.objects.get_pushed_at(self.name)
         self.clean()
         self.save()
         # Guarantee that the remotes exist.
