@@ -89,7 +89,7 @@ class OpenSearchIndex(models.Model):
             self.configuration = {}
             self.error_count = 0
         # Copy pushed_at from previous index instances if available
-        self.pushed_at = OpenSearchIndex.objects.get_pushed_at(self.name)
+        self.pushed_at = OpenSearchIndex.objects.get_pushed_at(self.name) if not recreate else None
         self.clean()
         self.save()
         # Guarantee that the remotes exist.
