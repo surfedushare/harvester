@@ -1,4 +1,4 @@
 PACKAGE = {
-    "version": "1.43.63",
+    "version": "1.43.66",
     "name": "harvester"
 }
