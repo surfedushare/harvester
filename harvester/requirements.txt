@@ -35,7 +35,7 @@ vobject==0.9.9
 pdf2image==1.17.0
 django-versatileimagefield==3.1
 django-mptt==0.17.0
-yt-dlp==2025.2.19
+yt-dlp[default,curl-cffi]
 
 # Datagrowth & dependencies
 datagrowth==0.20.6
