@@ -43,7 +43,7 @@ class PublinovaProjectExtractor:
     def get_owners(cls, node):
         owners = node.get("owners", [])
         for owner in owners:
-            external_id = owner.pop("id")
+            external_id = owner.pop("external_id") if "external_id" in owner else owner.pop("id")
             owner["external_id"] = external_id
         return owners
 
@@ -51,7 +51,7 @@ class PublinovaProjectExtractor:
     def get_contacts(cls, node):
         contacts = node.get("contacts", [])
         for contact in contacts:
-            external_id = contact.pop("id")
+            external_id = contact.pop("external_id") if "external_id" in contact else contact.pop("id")
             contact["external_id"] = external_id
         return contacts
 
