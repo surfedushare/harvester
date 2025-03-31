@@ -57,7 +57,7 @@ class YoutubeTranscriptsResource(ShellResource):
                 continue
             with file_path.open("r") as transcript_file:
                 buffer += self._parse_transcription_result(file_path, transcript_file.read())
-        resource.stdout = buffer
+        resource.stdout += buffer
         resource.close()
         return resource
 
