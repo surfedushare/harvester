@@ -24,7 +24,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
         with atomic():
             # Load the relevant index and prepare loading Documents.
             index = OpenSearchIndex.objects.select_for_update(nowait=True).get(id=dataset_version.index.id)
-            push_since = push_since or index.pushed_at
+            push_since = push_since or index.pushed_at or OpenSearchIndex.objects.get_pushed_at(index.name)
             # See if any Documents match the criteria for pushing to indices.
             filters = {"metadata__modified_at__gte": push_since} if push_since else {}
             if recreate:
