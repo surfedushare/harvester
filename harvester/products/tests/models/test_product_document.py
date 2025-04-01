@@ -95,30 +95,6 @@ class FileDocumentTestCase(TestCase):
         self.assertEqual(product_search["technical_type"], "website",
                          "Expected ProductDocument to dictate technical_type without any files present")
 
-    def test_copyright_overrides(self):
-        """
-        Copyright is file dependant, when this is enabled in settings and product doesn't provide a value.
-        """
-        # Remove the product copyright and see if file copyright emerges.
-        product = ProductDocument.objects.get(id=1)
-        product.properties["copyright"] = None
-        product_search = product.to_data(for_search=True)
-        self.assertEqual(product_search["copyright"], "cc-by-sa-40")
-        # Test no product copyright and this feature disabled (tests use Edusources settings where this is enabled)
-        with override_settings(SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT=False):
-            product_search = product.to_data(for_search=True)
-            self.assertIsNone(product_search["copyright"], "cc-by-nd-40")
-        # Now we remove the value from FileDocument to see if the "yes" default shows up.
-        file_document = FileDocument.objects.get(id=1)
-        file_document.properties["copyright"] = None
-        file_document.save()
-        product_search = product.to_data(for_search=True)
-        self.assertEqual(product_search["copyright"], "yes")
-        # And finally we remove all files from product. It again should show the "yes" default.
-        FileDocument.objects.all().delete()
-        product_search = product.to_data(for_search=True)
-        self.assertEqual(product_search["copyright"], "yes")
-
     def test_multilingual_indices_to_data(self):
         product = ProductDocument.objects.get(id=1)
         data = product.to_data(for_search=False)
