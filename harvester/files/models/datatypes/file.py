@@ -61,10 +61,9 @@ def default_document_tasks():
         },
         "video_transcripts": {
             # Unfortunately downloading transcripts needs logged in users when using the Youtube API
-            # So we use a shell tool here, but we can't depend on check_url or is_analysis_possible,
-            # because those fail for Youtube.
+            # This shell tool also gets blocked by Youtube, but it works for Vimeo
             "depends_on": [],
-            "checks": ["is_video"],
+            "checks": ["is_video", "!is_youtube_video"],
             "resources": ["files.YoutubeTranscriptsResource"]
         },
     }
