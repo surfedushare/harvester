@@ -257,7 +257,7 @@ class ProductDocument(HarvestDocument):
     def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
                 use_multilingual_fields: bool = False) -> dict:
         # Generic transforms
-        data = super().to_data(merge_derivatives, use_multilingual_fields)
+        data = super().to_data(merge_derivatives=merge_derivatives, use_multilingual_fields=use_multilingual_fields)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
         if use_multilingual_fields:

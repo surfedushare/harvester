@@ -23,7 +23,7 @@ class PersonDocument(HarvestDocument):
     property_defaults = SEED_DEFAULTS
 
     def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = True) -> dict:
-        data = super().to_data(merge_derivatives, use_multilingual_fields)
+        data = super().to_data(merge_derivatives=merge_derivatives, use_multilingual_fields=use_multilingual_fields)
         researcher = data.pop("researcher", {})
         if researcher:
             data.update(researcher)
