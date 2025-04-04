@@ -117,7 +117,7 @@ class OpenSearchIndex(models.Model):
         for language, documents in search_documents_by_language.items():
             remote_name = self.get_remote_name(language)
             for is_ok, result in streaming_bulk(self.client, documents, index=remote_name,
-                                                chunk_size=100, yield_ok=False, raise_on_error=False,
+                                                chunk_size=50, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
                     self.error_count += 1
