@@ -22,6 +22,9 @@ django:
 harvester:
   sources_middleware_api: null
 
+opensearch:
+  strict_multilingual_fields: true
+
 conext:
   is_enabled: false
   client_id: none
