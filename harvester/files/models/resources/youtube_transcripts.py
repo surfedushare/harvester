@@ -26,6 +26,10 @@ class YoutubeTranscriptsResource(ShellResource):
         "{}"
     ]
 
+    @property
+    def success(self):
+        return self.status in [0, 204] and bool(self.stdout)
+
     @classmethod
     def _parse_transcription_result(cls, file_path: Path, result: str) -> str:
         title_text = f" {file_path.name} "
@@ -76,6 +80,9 @@ class YoutubeTranscriptsResource(ShellResource):
         return contents
 
     def handle_errors(self):
+        # We use a "no content" error code when video exists, but transcripts are not present.
+        if "no subtitles for the requested language" in self.stdout:
+            self.status = 204
         # Do not throw an error. We just have a product without transcripts
         # when it is not possible to fetch transcript files.
         return
