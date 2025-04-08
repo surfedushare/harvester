@@ -32,7 +32,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
             documents = dataset_version.documents.filter(**filters)
             documents_count = documents.count()
             if not documents_count:
-                return None
+                return index
             # Preparation and batching of documents to push to relevant indices.
             enhance_calm = documents_count >= 100 and not recreate
             logger.info(
@@ -121,5 +121,8 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             logger.info(f"Promoting to latest: {app_label}")
-            index.promote_all_to_latest()
+            # We actually perform OpenSearch operations when dealing with a completely new OpenSearchIndex instance.
+            if recreate_indices or not dataset_version.has_promoted_sibling:
+                index.promote_all_to_latest()
+            # We update Django's representation of which DatasetVersion best represents current data in OpenSearch.
             dataset_version.set_index_promoted()

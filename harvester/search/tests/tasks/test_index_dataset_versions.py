@@ -136,9 +136,15 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
-        # Check alias modifications
-        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        # Check aliases are unchanged
+        self.assertEqual(
+            self.search_client.indices.delete_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not delete that."
+        )
+        self.assertEqual(
+            self.search_client.indices.put_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not create others."
+        )
         # Check indices are left alone
         self.assertEqual(self.search_client.indices.delete.call_count, 0, "Expected index not to be recreated")
         self.assertEqual(self.search_client.indices.create.call_count, 0, "Expected index not to be recreated")
@@ -224,9 +230,15 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
-        # Check alias modifications
-        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        # Check aliases are unchanged
+        self.assertEqual(
+            self.search_client.indices.delete_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not delete that."
+        )
+        self.assertEqual(
+            self.search_client.indices.put_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not create others."
+        )
         # Check indices are left alone
         self.assertEqual(self.search_client.indices.delete.call_count, 0, "Expected index not to be recreated")
         self.assertEqual(self.search_client.indices.create.call_count, 0, "Expected index not to be recreated")
