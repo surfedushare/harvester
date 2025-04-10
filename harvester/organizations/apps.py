@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
+from search_client.serializers import Organization
+
 
 class OrganizationsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -23,5 +25,4 @@ class OrganizationsConfig(AppConfig):
         Until our views support Pydantic models for serialization, the Pydantic serializers are only used for
         transformations and validation. Although validations shouldn't ever fail, because we load internal data.
         """
-        from organizations.views.serializers import Organization
         return Organization

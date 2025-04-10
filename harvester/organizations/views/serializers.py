@@ -1,54 +1,4 @@
-from typing import Literal
-
 from rest_framework import serializers
-from pydantic import BaseModel, Field, field_serializer
-from search_client.serializers.core import Provider, EntityStates
-
-
-class BaseOrganization(BaseModel):
-    srn: str
-    name: str | None = Field(default=None)
-    ror: str | None = Field(default=None, description="Research Organization Registry identifier")
-    is_root: bool | None = Field(default=None)
-
-
-class GenericOrganization(BaseModel):
-    name: str
-    srn: str | None = Field(default=None)  # outside of education context a global identifier will often be missing
-
-
-class Organization(BaseOrganization):
-
-    entity: Literal["organization"] = Field(default="organization", init=False)
-    set: str
-    provider: Provider | str | None = Field(default=None)
-    state: EntityStates = Field(default=EntityStates.ACTIVE)
-
-    description: str | None = Field(default=None)
-
-    type: str | None = Field(default=None)
-    secretary: BaseOrganization | None = Field(default=None, description="Secretary of collaboration organization")
-    parents: list[BaseOrganization] = Field(
-        default_factory=list,
-        description="Parent organizations within educational context"
-    )
-    members: list[GenericOrganization] = Field(
-        default_factory=list,
-        description="Members of collaboration organizations possibly from outside the educational context"
-    )
-
-    @field_serializer("provider")
-    def serialize_provider(self, provider: Provider, _info) -> str:
-        if isinstance(provider, str):
-            return provider
-        elif provider.name:
-            return provider.name
-        elif provider.slug:
-            return provider.slug
-        elif provider.ror:
-            return provider.ror
-        elif provider.external_id:
-            return provider.external_id
 
 
 class SimpleOrganizationSerializer(serializers.Serializer):
@@ -71,6 +21,6 @@ class OrganizationSerializer(serializers.Serializer):
     ror = serializers.CharField(allow_null=True, allow_blank=False)
     type = serializers.CharField(allow_null=False, allow_blank=False)
     is_root = serializers.BooleanField(default=None, allow_null=True)
-    secretary = serializers.DictField(allow_null=True, default=None)
+    secretary = SimpleOrganizationSerializer()
     parents = SimpleOrganizationSerializer(many=True)
     members = SimpleOrganizationSerializer(many=True)
