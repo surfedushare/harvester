@@ -12,7 +12,8 @@ from opensearchpy.exceptions import NotFoundError
 
 from search_client.constants import Entities
 from search_client.opensearch.indices import (build_products_index_configuration, build_projects_index_configuration,
-                                              build_organizations_index_configuration)
+                                              build_organizations_index_configuration,
+                                              build_persons_index_configuration)
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search.clients import get_opensearch_client
 
@@ -204,6 +205,8 @@ class OpenSearchIndex(models.Model):
             return build_projects_index_configuration()
         elif entity is Entities.ORGANIZATIONS:
             return build_organizations_index_configuration()
+        elif entity is Entities.PERSONS:
+            return build_persons_index_configuration()
         return {}
 
     def __str__(self) -> str:
