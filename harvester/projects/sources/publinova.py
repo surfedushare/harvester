@@ -92,7 +92,7 @@ SEEDING_PHASES = [
         "strategy": "initial",
         "batch_size": None,
         "retrieve_data": {
-            "resource": "projects.huprojectresource",
+            "resource": "projects.publinovaprojectsresource",
             "method": "get",
             "args": [],
             "kwargs": {},
