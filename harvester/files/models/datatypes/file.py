@@ -63,7 +63,7 @@ def default_document_tasks():
             # Unfortunately downloading transcripts needs logged in users when using the Youtube API
             # This shell tool also gets blocked by Youtube, but it works for Vimeo
             "depends_on": [],
-            "checks": ["is_video", "!is_youtube_video"],
+            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
             "resources": ["files.YoutubeTranscriptsResource"]
         },
     }
