@@ -63,7 +63,7 @@ class PublinovaProjectExtractor:
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": "$",
+    "@": "$.data",
     "state": lambda node: ProjectDocument.States.ACTIVE,
     "set": lambda node: "publinova:project",
     "external_id": "$.id",
