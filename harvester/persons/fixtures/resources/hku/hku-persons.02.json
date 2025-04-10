@@ -5,7 +5,7 @@
                 "ORCID": "0000-0000-0000-0001",
                 "datelastmodified": "23-2-2022",
                 "deleted": false,
-                "description": "<p>Pietje Puk is a researcher and designer</p>",
+                "description": "<p>Pietje Puk is a super hero!</p>",
                 "email": "pietje.puk@hku.nl",
                 "first_name": "Pietje",
                 "last_name": "Puk",
@@ -54,15 +54,15 @@
                 }
             },
             {
-                "ORCID": "0000-0000-0000-0002",
+                "ORCID": "0000-0000-0000-0003",
                 "datelastmodified": "23-2-2022",
                 "deleted": false,
-                "description": "<p>Flappie doet maar wat</p>",
-                "email": "flappie@hku.nl",
-                "first_name": "Flappie",
-                "last_name": "Wappie",
+                "description": "<p>Klappie is kwaadaardig!</p>",
+                "email": "klappie@hku.nl",
+                "first_name": "Klappie",
+                "last_name": "op je Bakkie",
                 "organisation_id": 1,
-                "personid": 2,
+                "personid": 3,
                 "photo_url": {
                     "lowres": "https://octo.hku.nl/octo/repository/getfile?id=?FIwGwx6hxCY&version=transcoded&load=low",
                     "raw": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY",
@@ -72,21 +72,21 @@
                 "prefix": {},
                 "result_ids": {
                     "ID": [
-                        3
+                        4
                     ]
                 },
                 "results": {
                     "result": [
                         {
-                            "author": "Flappie Wappie",
+                            "author": "Klappie op je Bakkie",
                             "personID": {},
                             "resultID": 1,
-                            "title": "Doe maar!"
+                            "title": "Stomp op je neus!"
                         }
                     ]
                 },
                 "skills": {
-                    "value": "nietsen"
+                    "value": "meppen"
                 },
                 "theme": {
                     "value": [
