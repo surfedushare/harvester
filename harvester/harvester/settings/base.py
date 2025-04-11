@@ -669,6 +669,7 @@ SOURCES = {
     },
     "publinova": {
         "endpoint": environment.harvester.repositories.publinova,
+        "test_endpoint": "https://api.publinova.acc.surf.zooma.cloud",
         "api_key": environment.secrets.publinova.api_key
     },
     "saxion": {
