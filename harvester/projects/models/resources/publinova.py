@@ -11,8 +11,8 @@ logger = logging.getLogger("harvester")
 
 class PublinovaProjectsResource(HttpResource):
 
-    URI_TEMPLATE = settings.SOURCES["publinova"]["test_endpoint"] + "/sources/projects" \
-        if settings.SOURCES["publinova"]["test_endpoint"] else "/sources/projects"
+    URI_TEMPLATE = settings.SOURCES["publinova"]["endpoint"] + "/sources/projects" \
+        if settings.SOURCES["publinova"]["endpoint"] else "/sources/projects"
 
     def auth_headers(self):
         return {
