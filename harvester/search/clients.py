@@ -8,6 +8,7 @@ from opensearchpy import OpenSearch
 from search_client.constants import Entities
 from search_client.opensearch import SearchClient, OpenSearchClientBuilder
 from search_client.opensearch.configuration import SearchConfiguration
+from search_client.opensearch.indices.utils import prepare_suggest_completion  # noqa: F401
 
 
 def prepare_results_for_response(models: list[BaseModel], serializers: dict[Entities: Type[Serializer]],

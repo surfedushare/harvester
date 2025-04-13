@@ -1,5 +1,3 @@
-import re
-from unidecode import unidecode
 from hashlib import sha1
 from copy import copy
 
@@ -10,6 +8,7 @@ from core.constants import Platforms
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from core.utils.analyzers import get_analyzer_language
 from core.utils.contents import ContentContainer, Content
+from search.clients import prepare_suggest_completion
 from metadata.models import MetadataValue
 from products.constants import SEED_DEFAULTS
 from files.models import FileDocument
@@ -205,11 +204,7 @@ class ProductDocument(HarvestDocument):
             suggest_completion += title.split(" ")
         if text:
             suggest_completion += text.split(" ")[:1000]
-        alpha_pattern = re.compile("[^a-zA-Z]+")
-        return [  # removes reading signs and acutes for autocomplete suggestions
-            alpha_pattern.sub("", unidecode(word))
-            for word in suggest_completion
-        ]
+        return prepare_suggest_completion(*suggest_completion)
 
     def transform_search_data(self, data: dict, content: ContentContainer) -> dict:
         text = content.first("content")
@@ -257,7 +252,7 @@ class ProductDocument(HarvestDocument):
     def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
                 use_multilingual_fields: bool = False) -> dict:
         # Generic transforms
-        data = super().to_data(merge_derivatives, use_multilingual_fields)
+        data = super().to_data(merge_derivatives=merge_derivatives, use_multilingual_fields=use_multilingual_fields)
         source, set_name = data["set"].split(":")
         data["harvest_source"] = set_name
         if use_multilingual_fields:

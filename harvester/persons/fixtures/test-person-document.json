@@ -1,0 +1,152 @@
+[
+{
+    "model": "persons.dataset",
+    "pk": 1,
+    "fields": {
+        "name": "epsilon",
+        "is_harvested": true,
+        "indexing": "index_and_promote"
+    }
+},
+{
+    "model": "persons.datasetversion",
+    "pk": 1,
+    "fields": {
+        "pipeline": {
+            "create_opensearch_index": {
+                "success": true
+            },
+            "set_current_dataset_version": {
+                "success": true
+            }
+        },
+        "derivatives": {},
+        "pending_at": null,
+        "finished_at": "2025-02-13T01:27:58.783Z",
+        "dataset": 1,
+        "index": null,
+        "is_current": true,
+        "is_index_promoted": false,
+        "created_at": "2025-02-13T01:18:21.969Z",
+        "version": "1.43.18",
+        "tasks": {
+            "create_opensearch_index": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            },
+            "set_current_dataset_version": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        },
+        "historic_sets": []
+    }
+},
+{
+    "model": "persons.set",
+    "pk": 1,
+    "fields": {
+        "created_at": "2025-02-13T01:18:22.097Z",
+        "modified_at": "2025-02-13T01:23:29.761Z",
+        "identifier": "srn",
+        "referee": null,
+        "pipeline": {
+            "check_set_integrity": {
+                "success": true
+            }
+        },
+        "derivatives": {},
+        "finished_at": "2025-02-13T01:23:38.549Z",
+        "dataset_version": 1,
+        "name": "hku:person",
+        "delete_policy": "no",
+        "tasks": {
+            "check_set_integrity": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        },
+        "pending_at": null
+    }
+},
+{
+    "model": "persons.persondocument",
+    "pk": 1,
+    "fields": {
+        "created_at": "2025-02-13T01:22:06.623Z",
+        "modified_at": "2025-02-13T01:23:30.702Z",
+        "properties": {
+            "state": "active",
+            "set": "hku:person",
+            "external_id": "1",
+            "provider": {
+                "name": "Hogeschool voor de Kunsten Utrecht",
+                "slug": null,
+                "ror": null,
+                "external_id": null
+            },
+            "skills": [
+                "skills-yo"
+            ],
+            "author": {
+                "name": "Pietje Puk",
+                "first_name": "Pietje",
+                "last_name": "Puk",
+                "prefix": null,
+                "initials": null,
+                "isni": null
+            },
+            "sensitive": {
+                "email": "pietje.puk@hku.nl",
+                "phone": null,
+                "description": "<p>Pietje Puk is a researcher and designer</p>",
+                "photo_url": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY&version=transcoded"
+            },
+            "researcher": {
+                "title": "MA",
+                "themes": [
+                    "Taal, Cultuur en Kunsten",
+                    "Techniek"
+                ],
+                "orcid": "0000-0000-0000-0001",
+                "dai": null
+            },
+            "srn": "hku:person:1",
+            "organizations": [],
+            "is_employed": null,
+            "job_title": null
+        },
+        "identity": "hku:person:1",
+        "reference": null,
+        "pipeline": {
+            "deactivate_invalid_documents": {
+                "success": true,
+                "validation": null
+            }
+        },
+        "derivatives": {},
+        "pending_at": null,
+        "finished_at": "2025-02-13T01:23:30.702Z",
+        "dataset_version": 1,
+        "collection": 1,
+        "state": "active",
+        "metadata": {
+            "hash": "dfafb69f08517a82a073b25e217bec57356f97e9",
+            "provider": "Hogeschool voor de Kunsten",
+            "created_at": "2025-02-13T01:22:06.614Z",
+            "deleted_at": null,
+            "modified_at": "2025-02-13T01:23:30.702Z"
+        },
+        "tasks": {
+            "deactivate_invalid_documents": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        }
+    }
+}
+]

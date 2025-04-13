@@ -4,7 +4,7 @@ from products.models import ProductDocument
 from files.models import FileDocument
 
 
-class FileDocumentTestCase(TestCase):
+class ProductDocumentTestCase(TestCase):
 
     fixtures = ["test-product-document.json"]
 

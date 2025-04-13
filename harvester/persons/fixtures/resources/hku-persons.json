@@ -1,0 +1,52 @@
+[
+    {
+        "model": "persons.hkupersonresource",
+        "pk": 1,
+        "fields": {
+            "uri": "octo.hku.nl/octo/repository/api2/getPersons?format=json&project=pubplatv4",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2025-02-26T09:19:45.596Z",
+            "modified_at": "2025-02-26T09:19:45.596Z",
+            "purge_at": "2025-03-28T09:19:30.637Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://octo.hku.nl/octo/repository/api2/getPersons?format=json&project=pubplatv4",
+                "args": [
+                    "hku",
+                    "1970-01-01T00:00:00Z"
+                ],
+                "data": null,
+                "kwargs": {},
+                "method": "get",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.10); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Wed, 26 Feb 2025 09:19:32 GMT",
+                "vary": "Accept-Encoding, Origin",
+                "server": "nginx",
+                "x-cache": "MISS",
+                "connection": "keep-alive",
+                "x-appserver": "127.0.0.1:9090",
+                "content-type": "application/json;charset=UTF-8",
+                "cache-control": "no-cache",
+                "transfer-encoding": "chunked",
+                "x-appserver-status": "200",
+                "access-control-max-age": "86400",
+                "strict-transport-security": "max-age=31536000",
+                "access-control-allow-headers": "Request, Authorization, Accept, Method, SoapServer, SoapAction, Origin, Content-Type, Cache-Control, If-Modified-Since",
+                "access-control-allow-methods": "GET, POST, PUT, DELETE, HEAD, OPTIONS",
+                "access-control-allow-credentials": "true"
+            },
+            "body": "hku/hku-persons.01.json"
+        }
+    }
+]

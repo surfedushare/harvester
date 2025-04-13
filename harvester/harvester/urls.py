@@ -25,6 +25,7 @@ from core import views as core_views
 from metadata.urls import public_api_patterns as metadata_public, html_patterns as metadata_html_patterns
 from search.urls import public_api_patterns as search_public
 from organizations.urls import public_api_patterns as organizations_public
+from persons.urls import public_api_patterns as persons_public
 from products.urls import public_api_patterns as products_public, webhook_urlpatterns as products_webhooks
 from projects.urls import public_api_patterns as projects_public
 
@@ -38,7 +39,8 @@ Or you have to send an Authorization header with a value of "Token <your-api-tok
 schema_view = get_schema_view(
     title="Harvester API",
     description=api_description,
-    patterns=metadata_public + search_public + products_public + organizations_public + projects_public,
+    patterns=metadata_public + search_public + products_public + organizations_public + projects_public +
+    persons_public,
     url="/api/v1/"
 )
 swagger_view = login_required(
@@ -56,6 +58,7 @@ api_urlpatterns = [
     path('', include('metadata.urls')),
     path('', include('search.urls')),
     path('', include('organizations.urls')),
+    path('', include('persons.urls')),
     path('', include('products.urls')),
     path('', include('projects.urls')),
 ]
