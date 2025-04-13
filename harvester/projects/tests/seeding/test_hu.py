@@ -17,7 +17,7 @@ from projects.sources.hu import SEEDING_PHASES, HUProjectExtractor
 class TestHUProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "hu")
-    resource_fixtures = ["hu-test"]
+    resource_fixtures = ["hu-projects"]
     delta_fixtures = {
         (HuProjectResource, 1): ("body", "hu-projects.02.pii.json")
     }
@@ -58,7 +58,7 @@ class TestHUProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
 class TestHUProjectsExtraction(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["hu-test.json"]
+    resource_fixtures = ["hu-projects"]
     seeds = []
 
     @classmethod

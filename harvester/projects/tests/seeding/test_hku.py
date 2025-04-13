@@ -15,7 +15,7 @@ from projects.sources.hku import SEEDING_PHASES
 class TestHKUProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "hku")
-    resource_fixtures = ["hku-test"]
+    resource_fixtures = ["hku-projects"]
     delta_fixtures = {
         (HkuProjectResource, 1): ("body", "hku-projects.02.pii.json")
     }
@@ -56,7 +56,7 @@ class TestHKUProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
 class TestHKUProjectsExtraction(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["hku-test.json"]
+    resource_fixtures = ["hku-projects"]
     seeds = []
 
     @classmethod
