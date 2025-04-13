@@ -104,6 +104,7 @@ def build_configuration_defaults(environment):
                 os.path.join("harvester", "projects", "fixtures", "resources", "hanze"),
                 os.path.join("harvester", "projects", "fixtures", "resources", "hku"),
                 os.path.join("harvester", "projects", "fixtures", "resources", "hu"),
+                os.path.join("harvester", "projects", "fixtures", "resources", "publinova"),
             ]
         },
         "aws": {
