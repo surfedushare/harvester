@@ -34,7 +34,7 @@ email-validator==2.2.0
 vobject==0.9.9
 pdf2image==1.17.0
 django-versatileimagefield==3.1
-django-mptt==0.16.0
+django-mptt==0.17.0
 
 # Datagrowth & dependencies
 datagrowth==0.19.10
