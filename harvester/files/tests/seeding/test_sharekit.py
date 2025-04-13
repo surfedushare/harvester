@@ -207,5 +207,6 @@ class TestSharekitFileExtraction(TestCase):
 
     def test_type(self):
         self.assertEqual(self.seeds[0]["type"], "document")
-        self.assertEqual(self.seeds[1]["type"], "website", "Expected all links to be typed as website")
+        self.assertEqual(self.seeds[1]["type"], "video", "Expected youtube links to be typed as video")
         self.assertEqual(self.seeds[2]["type"], "unknown", "Expected 'unknown' for missing mime types")
+        self.assertEqual(self.seeds[4]["type"], "website", "Expected non-youtube links to be typed as website")

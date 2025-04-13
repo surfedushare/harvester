@@ -187,7 +187,7 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
                 "@": "$.items.0",
                 "description": "$.snippet.description",
                 "duration": "$.contentDetails.duration",
-                "definition": "$.contentDetails.definition",
+                "title": "$.snippet.title",
                 "license": "$.status.license",
                 "embed_url": get_embed_url,
                 "previews": get_previews

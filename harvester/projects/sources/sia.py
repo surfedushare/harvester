@@ -76,19 +76,13 @@ OBJECTIVE = {
     "project_status": SiaProjectExtraction.get_status,
     "started_at": SiaProjectExtraction.get_started_at,
     "ended_at": SiaProjectExtraction.get_ended_at,
-    "coordinates": lambda node: [],
     "goal": "$.eindrapportage",
     "description": "$.samenvatting",
-    "persons": lambda node: [],
-    "keywords": lambda node: [],
-    "products": lambda node: [],
-    "photo_url": lambda node: None,
     # Research project metadata
     "research_project.sia_project_reference": "$.dossiernummer",
     "research_project.owners": SiaProjectExtraction.get_owner_and_contact,
     "research_project.contacts": SiaProjectExtraction.get_owner_and_contact,
     "research_project.parties": SiaProjectExtraction.get_parties,
-    "research_project.themes": lambda node: [],
 }
 
 

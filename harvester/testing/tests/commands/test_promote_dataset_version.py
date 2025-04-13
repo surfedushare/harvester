@@ -11,6 +11,7 @@ from testing.utils.factories import create_datatype_models
 from testing.utils.generators import seed_generator
 
 
+@override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
 class TestPromoteDatasetVersion(TestCase):
 
     search_client = get_search_client_mock(has_history=True)

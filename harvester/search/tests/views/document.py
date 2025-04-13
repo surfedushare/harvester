@@ -292,3 +292,113 @@ class TestLearningMaterialsFindView(OpenSearchTestCaseMixin, TestDocumentsFindVi
 @override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
     platform = Platforms.PUBLINOVA
+
+
+class TestExplainSearchView(DocumentAPITestCase):
+
+    def assert_explain_results(self, results: dict, expected_fields_by_term: dict[str, list[str]]):
+        self.assertIsInstance(results["srn"], str)
+        self.assertIsInstance(results["total_score"], float)
+        self.assertIsInstance(results["recency_bonus"], float)
+        for term_result in results["terms"]:
+            self.assertIsInstance(term_result["term"], str)
+            self.assertIsInstance(term_result["fields"], dict)
+            self.assertIsInstance(term_result["score"], float)
+            self.assertIsInstance(term_result["relevancy"], float)
+            term = term_result["term"]
+            field_names = sorted(list(term_result["fields"].keys()))
+            self.assertEqual(field_names, sorted(expected_fields_by_term[term]))
+            for field_score in term_result["fields"].values():
+                self.assertIsInstance(field_score, float)
+
+    def test_explain_search_not_found(self):
+        explain_url = reverse("v1:search:search-documents-explain")
+        post_data = {
+            "srn": "sharekit:test:abc",
+            "search_text": "Nonsensical search text"
+        }
+        response = self.client.post(explain_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 404)
+
+    def test_explain_search_result_does_not_exist(self):
+        explain_url = reverse("v1:search:search-documents-explain")
+        post_data = {
+            "srn": "sharekit:test:def",
+            "search_text": "Onderzoek over"
+        }
+        response = self.client.post(explain_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 404)
+
+    def test_explain_search_nothing(self):
+        explain_url = reverse("v1:search:search-documents-explain")
+        post_data = {
+            "srn": "sharekit:test:abc",
+            "search_text": ""
+        }
+        response = self.client.post(explain_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+
+
+@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+class TestResearchProductExplainSearchView(OpenSearchTestCaseMixin, TestExplainSearchView):
+
+    fixtures = ["initial-metadata-publinova"]
+    platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
+
+    def test_explain_search(self):
+        explain_url = reverse("v1:search:search-documents-explain")
+        post_data = {
+            "srn": "sharekit:test:abc",
+            "search_text": "Onderzoek over"
+        }
+        response = self.client.post(explain_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assert_explain_results(data, {
+            "onderzoek": [
+                "texts.nl.descriptions.text",
+                "texts.nl.contents.text.folded",
+                "texts.nl.titles.text",
+                "texts.nl.descriptions.text.folded",
+                "texts.nl.contents.text.analyzed",
+                "texts.nl.descriptions.text.analyzed",
+                "texts.nl.contents.text",
+                "texts.nl.titles.text.analyzed",
+                "texts.nl.titles.text.folded"
+
+            ],
+            "over": [
+                "texts.nl.contents.text.folded",
+                "texts.nl.titles.text",
+                "texts.nl.contents.text",
+                "texts.nl.titles.text.folded"
+            ]
+        })
+
+
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+class TestLearningMaterialsExplainSearchView(OpenSearchTestCaseMixin, TestExplainSearchView):
+    fixtures = ["initial-metadata-edusources"]
+    platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
+
+    def test_explain_search(self):
+        explain_url = reverse("v1:search:search-documents-explain")
+        post_data = {
+            "srn": "sharekit:test:abc",
+            "search_text": "Wiskunde"
+        }
+        response = self.client.post(explain_url, data=post_data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assert_explain_results(data, {
+            "wiskund": [
+                "texts.nl.contents.text.analyzed",
+                "texts.nl.titles.text.analyzed"
+            ],
+            "wiskunde": [
+                "texts.nl.contents.text.folded",
+                "texts.nl.contents.text"
+            ]
+        })

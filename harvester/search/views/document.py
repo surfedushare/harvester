@@ -7,7 +7,9 @@ from rest_framework import serializers
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from opensearchpy.exceptions import NotFoundError
 
+from search_client.exceptions import ResultNotFound
 from harvester.schema import HarvesterSchema
 from search.clients import get_search_client, prepare_results_for_response
 from search.views.base import validate_presets, load_results_serializers
@@ -233,3 +235,74 @@ class DocumentSearchDetailsAPIView(GenericAPIView):
                 "is_precise": True
             }
         })
+
+
+class ExplainDocumentTermSerializer(serializers.Serializer):
+    term = serializers.CharField(required=True, allow_blank=False)
+    fields = serializers.DictField(allow_empty=True, child=serializers.FloatField())
+    score = serializers.FloatField(required=False, allow_null=True)
+    relevancy = serializers.FloatField(required=False, allow_null=True)
+
+
+class ExplainDocumentSearchSerializer(serializers.Serializer):
+    srn = serializers.CharField(required=True, allow_blank=False, write_only=True)
+    search_text = serializers.CharField(required=True, allow_blank=False, write_only=True)
+
+    total_score = serializers.FloatField(read_only=True)
+    terms = ExplainDocumentTermSerializer(many=True, read_only=True)
+    recency_bonus = serializers.FloatField(read_only=True)
+
+
+class ExplainDocumentSearchAPIView(GenericAPIView):
+    """
+    An endpoint designed to debug search results. This endpoint will explain "score" properties of search results.
+    It can not explain the effects of filters or custom ordering.
+    Please talk to an engineer to understand these effects.
+
+    This search endpoint only supports search configurations that combine languages into a single index like: "products:default".
+
+    ## Request body
+
+    **search_text**: The search query that you would like to debug.
+
+    **srn**: The SRN of the result that you want to understand the "score" property for.
+
+    ## Response body
+
+    **srn**: The SRN of the result that is being explained.
+
+    **total_score**: The sum of all term scores plus the recency bonus. This number will be equal to the "score" property on Documents during regular search.
+
+    **terms**: A list of search terms which match with the result. Notice that even simple search queries may constitute
+    multiple terms. This is to optimize the recall of a search query. For each term the **fields** indicate on which search fields a match takes place.
+    The **relevancy** of a term indicates how much a term contributes to the total score.
+
+    **recency_bonus**: The bonus granted to the score, because the Document is recently published.
+    """  # noqa: E501
+    permission_classes = (AllowAny,)
+    schema = HarvesterSchema()
+    serializer_class = ExplainDocumentSearchSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        presets = validate_presets(self.request, default_preset="products:default")
+        client = get_search_client(presets=presets)
+        context["filter_fields"] = client.configuration.get_valid_filter_fields()
+        context["presets"] = presets
+        return context
+
+    def post(self, request, *args, **kwargs):
+        # Validate request parameters and prepare search
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        presets = serializer.context["presets"]
+        client = get_search_client(presets=presets)
+        # Execute analysis and return results
+        try:
+            result = client.explain_result(data["srn"], data["search_text"])
+        except ResultNotFound:
+            raise Http404(f"Unable to explain result '{data["srn"]}', because it was not found in the results.")
+        except NotFoundError:
+            raise Http404(f"Unable to explain result '{data["srn"]}', because it does not exist.")
+        return Response(result.model_dump(mode="json"))

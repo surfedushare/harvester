@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
@@ -23,22 +24,28 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
         with atomic():
             # Load the relevant index and prepare loading Documents.
             index = OpenSearchIndex.objects.select_for_update(nowait=True).get(id=dataset_version.index.id)
-            push_since = push_since or index.pushed_at
+            push_since = push_since or index.pushed_at or OpenSearchIndex.objects.get_pushed_at(index.name)
             # See if any Documents match the criteria for pushing to indices.
             filters = {"metadata__modified_at__gte": push_since} if push_since else {}
             if recreate:
                 filters["state"] = HarvestDocument.States.ACTIVE
             documents = dataset_version.documents.filter(**filters)
-            if not documents.exists():
-                return
+            documents_count = documents.count()
+            if not documents_count:
+                return index
             # Preparation and batching of documents to push to relevant indices.
+            enhance_calm = documents_count >= 100 and not recreate
+            logger.info(
+                f"Starting batch indexing for {documents_count} {dataset_version._meta.app_label}; "
+                f"batch_size={batch_size}, recreate={recreate}, enhance_calm={enhance_calm}, "
+                f"push_since={push_since.isoformat() if push_since else "1970-01-01"} "
+            )
             index.prepare_push(recreate=recreate)
-            enhance_calm = documents.count() >= 100
             for batch in ibatch(documents.iterator(), batch_size):
                 search_document_batch = []
                 for document in batch:
                     language = document.get_analyzer_language()
-                    if index.entity in ["products", "testing"]:
+                    if index.entity in ["products", "testing"] and not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
                         search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
                     search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
                 errors += index.push(search_document_batch, is_done=False, enhance_calm=enhance_calm)
@@ -84,12 +91,14 @@ def sync_opensearch_indices(app_label: str) -> None:
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
 def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False,
                            index_since: datetime = None) -> None:
-    index_since = index_since if not recreate_indices else make_aware(datetime(year=1970, month=1, day=1))
     for dataset_version_model, dataset_version_id in dataset_versions:
         # Load the dataset version
         Dataset, DatasetVersion, dataset_version = load_data_models(dataset_version_model, dataset_version_id)
         if dataset_version is None or dataset_version.index is None:
             continue
+        # Determine proper arguments based on loaded dataset version
+        recreate_index = recreate_indices or not dataset_version.has_promoted_sibling
+        index_since = index_since if not recreate_index else make_aware(datetime(year=1970, month=1, day=1))
         # Prepare the logger
         app_label = DatasetVersion._meta.app_label
         logger = HarvestLogger(
@@ -106,11 +115,14 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         logger.info(f"Pushing index for: {app_label}")
         index = _push_dataset_version_to_index(
             dataset_version, logger,
-            recreate=recreate_indices, push_since=index_since,
+            recreate=recreate_index, push_since=index_since,
             context="index_dataset_versions"
         )
         # Switch the aliases to the new indices if required
         if index and dataset_version.dataset.indexing == Dataset.IndexingOptions.INDEX_AND_PROMOTE:
             logger.info(f"Promoting to latest: {app_label}")
-            index.promote_all_to_latest()
+            # We actually perform OpenSearch operations when dealing with a completely new OpenSearchIndex instance.
+            if recreate_indices or not dataset_version.has_promoted_sibling:
+                index.promote_all_to_latest()
+            # We update Django's representation of which DatasetVersion best represents current data in OpenSearch.
             dataset_version.set_index_promoted()

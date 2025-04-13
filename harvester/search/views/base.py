@@ -10,8 +10,9 @@ from search_client.constants import Entities
 from search_client.opensearch.configuration import is_valid_preset_search_configuration
 
 
-def validate_presets(request: Request, presets_parameter: str = "entities") -> list[str]:
-    entity_inputs = request.GET.get(presets_parameter, settings.OPENSEARCH_PRESET_DEFAULT).split(",")
+def validate_presets(request: Request, presets_parameter: str = "entities",
+                     default_preset: str = settings.OPENSEARCH_PRESET_DEFAULT) -> list[str]:
+    entity_inputs = request.GET.get(presets_parameter, default_preset).split(",")
     presets = []
     for entity_input in entity_inputs:
         try:

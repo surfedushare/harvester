@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
+from django.utils.timezone import now
 
 from search.models import OpenSearchIndex
 from search.tests.mocks import get_search_client_mock
@@ -31,6 +32,7 @@ class TestOpenSearchIndexModel(TestCase):
             self.search_client.indices.delete.assert_any_call(index=f"edusources-testing--test-001-{language}")
         self.search_client.indices.delete.assert_any_call(index="edusources-testing--test-001")
 
+    @override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
     def test_get_remote_names(self):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")
         instance.save()
@@ -41,3 +43,34 @@ class TestOpenSearchIndexModel(TestCase):
             "edusources-testing--test-001-unk",
             "edusources-testing--test-001",
         })
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    def test_prepare_push(self, get_search_client_mock):
+        # Setup some test data
+        current_time = now()
+        old_instance = OpenSearchIndex.build("testing", "test", "0.0.1")
+        old_instance.pushed_at = current_time
+        old_instance.clean()
+        old_instance.save()
+        # Create a new instance with identical version that should see the pushed_at of the old version
+        instance = OpenSearchIndex.build("testing", "test", "0.0.1")
+        instance.clean()
+        instance.save()
+        instance.prepare_push()
+        self.assertEqual(instance.pushed_at, current_time)
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    def test_prepare_push_recreate(self, get_search_client_mock):
+        # Setup some test data
+        current_time = now()
+        old_instance = OpenSearchIndex.build("testing", "test", "0.0.1")
+        old_instance.pushed_at = current_time
+        old_instance.clean()
+        old_instance.save()
+        # Create a new instance with identical version that should not see the pushed_at of the old version,
+        # because we're testing the recreate case
+        instance = OpenSearchIndex.build("testing", "test", "0.0.1")
+        instance.clean()
+        instance.save()
+        instance.prepare_push(recreate=True)
+        self.assertIsNone(instance.pushed_at)

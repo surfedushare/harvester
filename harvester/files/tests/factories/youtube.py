@@ -71,6 +71,7 @@ class HttpYoutubeResourceFactory(factory.django.DjangoModelFactory):
                     "snippet": {
                         "publishedAt": "2009-10-25T06:57:33Z",
                         "description": "this is a description",
+                        "title": "This is a title",
                         "thumbnails": {
                             "default": {
                                 "url": f"https://i.ytimg.com/vi/{id_}/default.jpg",

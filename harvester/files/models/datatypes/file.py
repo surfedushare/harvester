@@ -167,7 +167,7 @@ class FileDocument(HarvestDocument):
         mime_type = self.properties.get("mime_type")
         if not mime_type and url:
             mime_type, encoding = guess_type(url)
-        self.mime_type = mime_type
+        self.mime_type = mime_type if not self.is_youtube_video else "video/mp4"
         self.type = settings.MIME_TYPE_TO_TECHNICAL_TYPE.get(self.mime_type, "unknown")
         self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
@@ -193,6 +193,11 @@ class FileDocument(HarvestDocument):
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
             data["video"] = youtube_data
+            # Youtube doesn't allow link checking and therefor Tika isn't executed at all.
+            # Here we fill in some data to allow better search for Youtube.
+            data["title"] = youtube_data.get("title")  # replaces "URL 1" default
+            data["text"] = youtube_data.get("description")  # as if the text comes from Tika
+            data["copyright"] = youtube_data.get("license")  # will overwrite source information
         if "pdf_preview" in self.derivatives:
             data["previews"] = self.derivatives["pdf_preview"]
         elif "video_preview" in self.derivatives:

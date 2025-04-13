@@ -96,7 +96,7 @@ class HarvesterSchema(AutoSchema):
                     }
                 }
             ]
-            if "search/documents" in path:
+            if path.endswith("search/documents/"):
                 operation["parameters"] += [
                     {
                         "name": "include_filter_counts",

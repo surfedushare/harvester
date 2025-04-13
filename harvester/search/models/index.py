@@ -16,7 +16,19 @@ from search_client.opensearch.indices.legacy import create_open_search_index_con
 from search.clients import get_opensearch_client
 
 
+class OpenSearchIndexManager(models.Manager):
+
+    def get_pushed_at(self, index_name: str) -> datetime | None:
+        try:
+            latest_index = self.filter(name=index_name, pushed_at__isnull=False).latest("pushed_at")
+        except OpenSearchIndex.DoesNotExist:
+            return None
+        return latest_index.pushed_at
+
+
 class OpenSearchIndex(models.Model):
+
+    objects = OpenSearchIndexManager()
 
     name = models.CharField(max_length=255, db_index=True)
     entity = models.CharField(max_length=50, default="products")
@@ -58,13 +70,13 @@ class OpenSearchIndex(models.Model):
             name += f"-{language}"
         return name.replace(".", "")
 
-    def get_remote_names(self, include_multilingual_index=True) -> list[str]:
-        names = [
-            self.get_remote_name(language)
-            for language in settings.OPENSEARCH_LANGUAGE_CODES
-        ]
-        if include_multilingual_index:
-            names.append(self.get_remote_name())
+    def get_remote_names(self) -> list[str]:
+        names = [self.get_remote_name()]
+        if not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
+            names += [
+                self.get_remote_name(language)
+                for language in settings.OPENSEARCH_LANGUAGE_CODES
+            ]
         return names
 
     def check_remote_exists(self, language: str = None) -> bool:
@@ -76,6 +88,8 @@ class OpenSearchIndex(models.Model):
         if recreate:
             self.configuration = {}
             self.error_count = 0
+        # Copy pushed_at from previous index instances if available
+        self.pushed_at = OpenSearchIndex.objects.get_pushed_at(self.name) if not recreate else None
         self.clean()
         self.save()
         # Guarantee that the remotes exist.
@@ -93,7 +107,7 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
-    def push(self, search_documents: list[tuple[str, dict]], request_timeout=300, is_done: bool = True,
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150, is_done: bool = True,
              enhance_calm: bool = False) -> list[str]:
         current_time = make_aware(datetime.now())
         errors = []
@@ -103,7 +117,7 @@ class OpenSearchIndex(models.Model):
         for language, documents in search_documents_by_language.items():
             remote_name = self.get_remote_name(language)
             for is_ok, result in streaming_bulk(self.client, documents, index=remote_name,
-                                                chunk_size=100, yield_ok=False, raise_on_error=False,
+                                                chunk_size=50, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
                     self.error_count += 1
@@ -117,7 +131,7 @@ class OpenSearchIndex(models.Model):
 
     def promote_all_to_latest(self) -> None:
         # The legacy language indices we only create for products
-        if self.entity in ["products", "testing"]:
+        if self.entity in ["products", "testing"] and not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
             for language in settings.OPENSEARCH_LANGUAGE_CODES:
                 self.promote_language_index_to_latest(language)
         # New style indices are created for all entities

@@ -45,6 +45,7 @@ opensearch:
     dutch: "analyzers/F131123737"
   domain_name: "surfpol-main"
   enhance_calm_delay: 0
+  strict_multilingual_fields: false
 
 tika:
   host: "http://localhost:9998"

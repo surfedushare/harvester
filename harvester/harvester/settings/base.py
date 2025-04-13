@@ -322,6 +322,7 @@ OPENSEARCH_PASSWORD = environment.secrets.opensearch.password
 OPENSEARCH_ALIAS_PREFIX = None
 OPENSEARCH_PRESET_DEFAULT = SearchClient.preset_default
 OPENSEARCH_ENHANCE_CALM_DELAY = environment.opensearch.enhance_calm_delay
+OPENSEARCH_STRICT_MULTILINGUAL_FIELDS = environment.opensearch.strict_multilingual_fields
 
 
 # Tika
@@ -668,6 +669,7 @@ SOURCES = {
     },
     "publinova": {
         "endpoint": environment.harvester.repositories.publinova,
+        "test_endpoint": "https://api.publinova.acc.surf.zooma.cloud",
         "api_key": environment.secrets.publinova.api_key
     },
     "saxion": {
