@@ -20,7 +20,7 @@ django-allauth[socialaccount]==64.2.1
 Markdown==3.7
 
 # Harvester Celery
-celery==5.4.0
+celery==5.5.1
 celery[redis]
 redis==4.6.0
 flower==2.0.1
