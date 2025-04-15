@@ -31,7 +31,7 @@ class PersonSerializer(serializers.Serializer):
 
 
 class ResearcherSerializer(PersonSerializer):
-    parties = serializers.ListField(child=serializers.CharField(), source="organizations")
+    parties = serializers.ListField(child=serializers.CharField(), source="organizations", default=list)
     title = serializers.CharField(allow_null=True, default=None)
     themes = serializers.ListField(child=serializers.CharField())
     orcid = serializers.CharField(allow_null=True, default=None)
