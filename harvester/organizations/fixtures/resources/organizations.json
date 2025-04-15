@@ -196,5 +196,89 @@
         },
         "body": "hanze.initial.1.json"
     }
+},
+{
+    "model": "organizations.publinovaorganizationresource",
+    "pk": 1,
+    "fields": {
+        "uri": "api.publinova.acc.surf.zooma.cloud/sources/parties",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-05-15T08:54:21.726Z",
+        "modified_at": "2025-05-15T08:54:21.726Z",
+        "purge_at": "2025-05-15T08:54:21.726Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "publinova",
+                "19-01-01"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://api.publinova.acc.surf.zooma.cloud/sources/parties",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.19.10); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Tue, 15 Apr 2025 08:54:21 GMT",
+            "server": "Apache",
+            "vary": "Authorization",
+            "cache-control": "no-cache, private",
+            "content-length": "5895",
+            "connection": "close",
+            "content-type": "application/json"
+        },
+        "body": "publinova.initial.0.json"
+    }
+},
+{
+    "model": "organizations.publinovaorganizationresource",
+    "pk": 2,
+    "fields": {
+        "uri": "api.publinova.acc.surf.zooma.cloud/sources/parties?page=2",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-05-15T08:54:21.726Z",
+        "modified_at": "2025-05-15T08:54:21.726Z",
+        "purge_at": "2025-05-15T08:54:21.726Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "publinova",
+                "19-01-01"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=2",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.19.10); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Tue, 15 Apr 2025 08:54:21 GMT",
+            "server": "Apache",
+            "vary": "Authorization",
+            "cache-control": "no-cache, private",
+            "content-length": "5895",
+            "connection": "close",
+            "content-type": "application/json"
+        },
+        "body": "publinova.initial.1.json"
+    }
 }
 ]

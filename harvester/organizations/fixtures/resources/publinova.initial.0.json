@@ -1,0 +1,173 @@
+{
+    "data": [
+        {
+            "id": "01d6c396-3865-440b-b947-a2c661645669",
+            "name": "Kite Utrecht",
+            "description": "<p>Consortium Kite</p>",
+            "type": "Consortium",
+            "ror": null,
+            "parents": [],
+            "children": []
+        },
+        {
+            "id": "2eb15f86-b99f-4c69-9210-8934f55291a1",
+            "name": "Lectoraat Wiskunde en nogwat",
+            "description": null,
+            "type": "Professorship",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "6695a565-507f-4ff1-a112-b4983b16b08b",
+            "name": "Kinderboerderij Pietje Puk",
+            "description": null,
+            "type": "Partner",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "70d12987-e4c2-4756-8cca-a651591c5b16",
+            "name": "testpartij Rob",
+            "description": "<p>Dit is de omgeschrijving van de testpartij</p>",
+            "type": "Partner",
+            "ror": null,
+            "parents": [],
+            "children": []
+        },
+        {
+            "id": "71639131-631d-47cc-9b04-4e9f23524824",
+            "name": "Partner Manual 3 - aangemaakt in PN",
+            "description": null,
+            "type": "Partner",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": [
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                }
+            ]
+        },
+        {
+            "id": "7f9fc951-9d1b-44c7-8c9b-b867a3389ecd",
+            "name": "Partij met keywords",
+            "description": "<p></p>",
+            "type": "Professorship",
+            "ror": null,
+            "parents": [],
+            "children": []
+        },
+        {
+            "id": "8a1a96a5-d066-42ee-9381-cd90f851090e",
+            "name": "Partner Manual 2",
+            "description": "<p>Partij Partner aangemaakt met account van manual2.</p>",
+            "type": "Partner",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ]
+        },
+        {
+            "id": "8b56cca7-adb8-4b23-8812-de6ec715f0a5",
+            "name": "Lectoraat HvA #1",
+            "description": "<p>Testen of ik na aanmaken direct eigenaar ben, of als ondersteuner ook rechten van eigenaar heb.</p>",
+            "type": "Professorship",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "8b58aa9d-ec35-4647-bef6-9505daa113bf",
+            "name": "Test",
+            "description": "<p>testsetsetsetset</p>",
+            "type": "Professorship",
+            "ror": null,
+            "parents": [],
+            "children": []
+        },
+        {
+            "id": "98bf124f-057c-49ee-970b-4bf091adc5be",
+            "name": "Test",
+            "description": "<p>test</p>",
+            "type": "Professorship",
+            "ror": null,
+            "parents": [],
+            "children": []
+        }
+    ],
+    "links": {
+        "first": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=1",
+        "last": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=2",
+        "prev": null,
+        "next": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "https://api.publinova.acc.surf.zooma.cloud/sources/parties",
+        "per_page": 10,
+        "to": 10,
+        "total": 12
+    }
+}
