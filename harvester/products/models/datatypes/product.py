@@ -116,7 +116,8 @@ class ProductDocument(HarvestDocument):
         files_by_identity = {
             file_document.identity: file_document.to_data(use_multilingual_fields=use_multilingual_fields)
             for file_document in FileDocument.objects.filter(identity__in=file_identities, is_not_found=False,
-                                                             dataset_version__is_current=True)
+                                                             dataset_version__is_current=True,
+                                                             state=FileDocument.States.ACTIVE)
         }
         prioritized_file_identities = sorted(
             file_identities,
