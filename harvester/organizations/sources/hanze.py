@@ -67,7 +67,7 @@ OBJECTIVE = {
     "@": "$.items",
     "external_id": "$.uuid",
     "state": lambda node: "active",
-    "set": lambda node: "hanze:hanze",
+    "set": lambda node: "hanze:organization",
     "provider": HanzeOrganizationExtraction.get_provider,
     # Generic metadata
     "name": HanzeOrganizationExtraction.get_name,
