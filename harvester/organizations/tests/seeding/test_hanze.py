@@ -1,5 +1,4 @@
 from django.test import TestCase
-from datagrowth.configuration import register_defaults
 from datagrowth.resources.testing import ResourceFixturesMixin
 
 from core.processors import HttpSeedingProcessor
@@ -10,20 +9,6 @@ from organizations.sources.hanze import SEEDING_PHASES
 class TestHanzeOrganizationSeeding(ResourceFixturesMixin, TestCase):
 
     resource_fixtures = ["organizations.json"]
-
-    @classmethod
-    def setUpClass(cls):
-        register_defaults("global", {
-            "cache_only": True
-        })
-        super().setUpClass()
-
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
 
     def setUp(self) -> None:
         super().setUp()
@@ -52,20 +37,6 @@ class TestSharekitOrganizationExtraction(ResourceFixturesMixin, TestCase):
 
     resource_fixtures = ["organizations.json"]
     seeds = []
-
-    @classmethod
-    def setUpClass(cls):
-        register_defaults("global", {
-            "cache_only": True
-        })
-        super().setUpClass()
-
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
 
     @classmethod
     def setUpTestData(cls):

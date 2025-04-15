@@ -3,7 +3,6 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.core.management import call_command
 
-from datagrowth.configuration import register_defaults
 from datagrowth.resources.testing import ResourceFixturesMixin
 from metadata.models import MetadataValue
 
@@ -12,20 +11,6 @@ class TestHarvestSkosSources(ResourceFixturesMixin, TestCase):
 
     fixtures = ["initial-metadata-edusources", "initial-skos-sources-edusources"]
     resource_fixtures = ["skos-vocabulary-resources"]
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        register_defaults("global", {
-            "cache_only": True
-        })
-
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
 
     @patch("metadata.utils.operations.translate_with_deepl", return_value="Translated")
     def test_no_duplicates(self, fake_deepl):
