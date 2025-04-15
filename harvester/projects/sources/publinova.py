@@ -60,6 +60,20 @@ class PublinovaProjectExtractor:
         themes = node.get("themes", [])
         return [theme["label"] for theme in themes]
 
+    @classmethod
+    def get_started_at(cls, node):
+        started_at = node.get("started_date")
+        if not started_at:
+            return None
+        return parse_date(started_at).isoformat()
+
+    @classmethod
+    def get_ended_at(cls, node):
+        ended_at = node.get("end_date")
+        if not ended_at:
+            return None
+        return parse_date(ended_at).isoformat()
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -71,8 +85,8 @@ OBJECTIVE = {
     # Generic metadata
     "title": "$.title",
     "project_status": PublinovaProjectExtractor.get_status,
-    "started_at": "$.started_date",
-    "ended_at": "$.end_date",
+    "started_at": PublinovaProjectExtractor.get_started_at,
+    "ended_at": PublinovaProjectExtractor.get_ended_at,
     "goal": "$.goal",
     "description": "$.description",
     "approach": "$.approach",

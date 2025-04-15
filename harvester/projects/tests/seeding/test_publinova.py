@@ -106,3 +106,11 @@ class TestPublinovaProjectsExtraction(ResourceFixturesMixin, TestCase):
     def test_get_themes(self):
         self.assertEqual(self.seeds[0]["research_project"]["themes"], [])
         self.assertEqual(self.seeds[5]["research_project"]["themes"], ["Bouw & Logistiek"])
+
+    def test_get_started_at(self):
+        self.assertIsNone(self.seeds[0]["started_at"])
+        self.assertEqual(self.seeds[3]["started_at"], "2024-05-09T00:00:00")
+
+    def test_get_ended_at(self):
+        self.assertIsNone(self.seeds[0]["ended_at"])
+        self.assertEqual(self.seeds[3]["ended_at"], "2024-05-18T00:00:00")
