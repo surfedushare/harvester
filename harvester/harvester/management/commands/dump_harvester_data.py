@@ -59,8 +59,9 @@ class Command(base.LabelCommand):
                 os.makedirs(destination)
             dataset_file = os.path.join(destination, f"{dataset.name}.{dataset.id}.json")
             with open(dataset_file, "w") as json_file:
-                overwrites = models["Overwrite"].objects.all()
-                queryset_to_disk(overwrites, json_file)
+                if models["Overwrite"] is not None:
+                    overwrites = models["Overwrite"].objects.all()
+                    queryset_to_disk(overwrites, json_file)
                 object_to_disk(dataset, json_file)
                 for version in dataset.versions.filter(is_current=True):
                     if version.index:
