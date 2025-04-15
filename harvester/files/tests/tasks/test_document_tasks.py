@@ -30,15 +30,23 @@ class TestHarvestObjectFileDocument(TestCase):
 
     def test_get_primary_pending_tasks(self):
         pending_tasks_1 = self.document_1.get_pending_tasks()
-        self.assertEqual(pending_tasks_1, ["check_url"])
+        self.assertEqual(pending_tasks_1, ["deactivate_invalid_documents", "check_url"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ['video_preview', 'youtube_api'])
+        self.assertEqual(youtube_tasks, ["deactivate_invalid_documents", 'video_preview', 'youtube_api'])
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed
         self.document_1.pipeline["check_url"] = {"success": True}
         self.document_1.derivatives["check_url"] = {"status": 200}
+        self.document_1.pipeline["deactivate_invalid_documents"] = {
+            "success": True,
+            "validation": None
+        }
         self.document_1.save()
+        self.youtube.pipeline["deactivate_invalid_documents"] = {
+            "success": True,
+            "validation": None
+        }
         self.youtube.pipeline["youtube_api"] = {"success": True}
         self.youtube.pipeline["video_preview"] = {"success": True}
         self.youtube.save()
@@ -50,7 +58,10 @@ class TestHarvestObjectFileDocument(TestCase):
 
     def test_get_analysis_disallowed(self):
         pending_tasks_2 = self.document_2.get_pending_tasks()
-        self.assertEqual(pending_tasks_2, [], "Expected no tasks to execute when analysis is disallowed")
+        self.assertEqual(
+            pending_tasks_2, ["deactivate_invalid_documents"],
+            "Expected only document deactivation tasks to execute when analysis is disallowed"
+        )
 
 
 class TestSimpleDocumentTasks(TestCase):

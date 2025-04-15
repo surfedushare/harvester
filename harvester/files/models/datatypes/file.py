@@ -21,6 +21,11 @@ from files.models.resources.metadata import CheckURLResource
 
 def default_document_tasks():
     return {
+        "deactivate_invalid_documents": {
+            "depends_on": ["$.hash", "$.access_rights"],  # these properties are important for (output) serializers
+            "checks": [],
+            "resources": []
+        },
         "check_url": {
             "depends_on": ["$.hash"],
             "checks": ["!is_not_found", "is_analysis_allowed", "!is_youtube_video"],
