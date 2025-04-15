@@ -5,3 +5,4 @@ from persons.models.datatypes.containers import Dataset, DatasetVersion, Set
 from persons.models.datatypes.person import PersonDocument
 
 from persons.models.resources.hku import HkuPersonResource
+from persons.models.resources.publinova import PublinovaPersonResource

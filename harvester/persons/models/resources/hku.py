@@ -22,3 +22,7 @@ class HkuPersonResource(HttpResource):
         super().handle_errors()
         if not self.body:
             self.status = 204
+
+    class Meta:
+        verbose_name = "HKU person harvest"
+        verbose_name_plural = "HKU person harvests"
