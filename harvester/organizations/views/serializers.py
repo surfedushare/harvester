@@ -21,6 +21,6 @@ class OrganizationSerializer(serializers.Serializer):
     ror = serializers.CharField(allow_null=True, allow_blank=False)
     type = serializers.CharField(allow_null=False, allow_blank=False)
     is_root = serializers.BooleanField(default=None, allow_null=True)
-    secretary = SimpleOrganizationSerializer()
+    secretary = SimpleOrganizationSerializer(default=None, allow_null=True)
     parents = SimpleOrganizationSerializer(many=True)
     members = SimpleOrganizationSerializer(many=True)
