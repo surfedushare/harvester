@@ -70,7 +70,7 @@ def harvester_migrate(ctx, mode, app_label=None, migration=None):
     "mode": "Mode you want to load data for: localhost, development, acceptance or production. "
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
-    "app_label": "The Django app you want to dump data for",
+    "app_label": "The Django app you want to load data for",
 })
 def load_data(ctx, mode, source, app_label=None):
     """
