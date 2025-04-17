@@ -35,8 +35,8 @@ class TestHttpPipelineProcessor(TestCase):
     def test_synchronous_tika_pipeline(self, send_mock):
         resource = "files.httptikaresource"
         processor = HttpPipelineProcessor({
-            "pipeline_app_label": "files",
-            "pipeline_models": {
+            "datatypes_app_label": "files",
+            "datatype_models": {
                 "document": "FileDocument",
                 "process_result": "ProcessResult",
                 "batch": "Batch"
@@ -89,9 +89,9 @@ class TestHttpPipelineProcessor(TestCase):
         """
         resource = "files.httptikaresource"
         processor = HttpPipelineProcessor({
-            "pipeline_app_label": "files",
+            "datatypes_app_label": "files",
             "pipeline_phase": "tika",
-            "pipeline_models": {
+            "datatype_models": {
                 "document": "FileDocument",
                 "process_result": "ProcessResult",
                 "batch": "Batch"
@@ -120,7 +120,7 @@ class TestHttpPipelineProcessor(TestCase):
         self.assertEqual(len(chord_call_args), 1)
         for ix, signature in enumerate(chord_call_args[0]):
             self.assertIsInstance(signature, Signature)
-            self.assertEqual(signature.name, "pipeline_process_and_merge")
+            self.assertEqual(signature.name, "growth.process_and_merge")
             for arg in signature.args:
                 self.assertIsInstance(arg, int, "Expected a batch id as an argument in the signature")
             self.assertIn("config", signature.kwargs)
@@ -130,6 +130,6 @@ class TestHttpPipelineProcessor(TestCase):
         self.assertEqual(len(chord_result_call_args), 1)
         finish_signature = chord_result_call_args[0]
         self.assertIsInstance(finish_signature, Signature)
-        self.assertEqual(finish_signature.name, "pipeline_full_merge")
+        self.assertEqual(finish_signature.name, "growth.full_merge")
         self.assertEqual(finish_signature.args, ("HttpPipelineProcessor",))
         self.assertIn("config", finish_signature.kwargs)

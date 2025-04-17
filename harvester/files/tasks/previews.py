@@ -10,8 +10,8 @@ def video_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
     youtube_dl_processor = ShellPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
+        "datatypes_app_label": "files",
+        "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
@@ -41,8 +41,8 @@ def pdf_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
     pdf_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
+        "datatypes_app_label": "files",
+        "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
@@ -74,8 +74,8 @@ def image_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
     image_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
+        "datatypes_app_label": "files",
+        "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"

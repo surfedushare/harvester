@@ -15,8 +15,8 @@ class CoreConfig(AppConfig):
             "batch_size": 100,
             "purge_after": {"days": 30},
             "pipeline_depends_on": None,
-            "pipeline_app_label": None,
-            "pipeline_models": {
+            "datatypes_app_label": None,
+            "datatype_models": {
                 "document": "Document",
                 "process_result": "ProcessResult",
                 "batch": "Batch"

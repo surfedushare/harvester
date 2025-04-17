@@ -12,10 +12,10 @@ from datagrowth.resources.http.tasks import send
 from datagrowth.resources.shell.tasks import run
 from datagrowth.processors import Processor, ExtractProcessor
 
-from core.processors.pipeline.base import PipelineProcessor
+from core.processors.pipeline.base import GrowthProcessor
 
 
-class ResourcePipelineProcessor(PipelineProcessor):
+class ResourcePipelineProcessor(GrowthProcessor):
 
     resource_type = None
 

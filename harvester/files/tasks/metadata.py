@@ -37,8 +37,8 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
         return
 
     check_url_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
@@ -74,8 +74,8 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
     Document = models["Document"]
 
     tika_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
@@ -107,8 +107,8 @@ def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
     Document = models["Document"]
 
     tika_plain_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
@@ -165,8 +165,8 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
     youtube_api_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
+        "datatypes_app_label": "files",
+        "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
