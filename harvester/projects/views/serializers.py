@@ -6,6 +6,7 @@ class ContactSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=True, default=None)
     email = serializers.EmailField(allow_null=True, default=None)
     external_id = serializers.CharField(allow_null=True, default=None)
+    is_external = serializers.CharField(allow_null=True, default=None)
 
 
 class ProjectSerializer(serializers.Serializer):
