@@ -182,7 +182,6 @@ class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
         ])
 
     def test_get_persons(self):
-        import json; print(json.dumps([seed["persons"] for seed in self.seeds], indent=4))
         self.assertEqual(self.seeds[0]["persons"], [
             {
                 "name": "Gerdy Gert Gert",
