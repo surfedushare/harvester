@@ -92,9 +92,30 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
 
     def test_get_persons(self):
         self.assertEqual(self.seeds[0]["persons"], [
-            {"external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112", "email": None, "name": "Ikke Vogelaar"},
-            {"external_id": "97ee5bd3-2145-4a4a-9a61-827e2ec839ef", "email": None, "name": "Pietje Peter"},
-            {"name": "Kat Pax", "email": None, "external_id": "buas:person:b7431e1498e44deb3fb129369b08d416e23f7c3b"},
+            {
+                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
+                "email": None,
+                "name": "Ikke Vogelaar",
+                "is_external": False
+            },
+            {
+                "external_id": "97ee5bd3-2145-4a4a-9a61-827e2ec839ef",
+                "email": None,
+                "name": "Pietje Peter",
+                "is_external": False
+            },
+            {
+                "name": "Kat Pax",
+                "email": None,
+                "external_id": "buas:person:b7431e1498e44deb3fb129369b08d416e23f7c3b",
+                "is_external": True
+            },
+            {
+                "name": "Mama Goose",
+                "email": None,
+                "external_id": "92694f17-9a45-48d2-9bfa-d1e2cd6eb606",
+                "is_external": True
+            }
         ])
 
     def test_get_products(self):
@@ -108,7 +129,8 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
             {
                 "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
                 "email": None,
-                "name": "Ikke Vogelaar"
+                "name": "Ikke Vogelaar",
+                "is_external": False
             }
         ])
 
@@ -117,7 +139,8 @@ class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
             {
                 "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
                 "email": None,
-                "name": "Ikke Vogelaar"
+                "name": "Ikke Vogelaar",
+                "is_external": False
             }
         ])
 

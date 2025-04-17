@@ -182,12 +182,36 @@ class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
         ])
 
     def test_get_persons(self):
+        import json; print(json.dumps([seed["persons"] for seed in self.seeds], indent=4))
         self.assertEqual(self.seeds[0]["persons"], [
-            {"name": "Gerdy Gert Gert", "email": None, "external_id": "03157991-9fbc-4236-99d7-8c32af66f509"},
-            {"name": "Kat Pax", "email": None, "external_id": "hanze:person:b7431e1498e44deb3fb129369b08d416e23f7c3b"},
+            {
+                "name": "Gerdy Gert Gert",
+                "email": None,
+                "external_id": "03157991-9fbc-4236-99d7-8c32af66f509",
+                "is_external": False
+            },
+            {
+                "name": "Kat Pax",
+                "email": None,
+                "external_id": "hanze:person:b7431e1498e44deb3fb129369b08d416e23f7c3b",
+                "is_external": True
+            },
+            {
+                "name": "Margrietje met een Rietje",
+                "email": None,
+                "external_id": "8bf794b6-fc21-4bbe-b396-eab32d875c17",
+                "is_external": True
+            }
+
         ])
         self.assertEqual(self.seeds[5]["persons"], [
-            {"external_id": "e2d51cab-3b25-4890-b68f-10efeb49a9e9", "email": None, "name": "Johan de Acteur"}
+            {
+                "external_id":
+                    "e2d51cab-3b25-4890-b68f-10efeb49a9e9",
+                "email": None,
+                "name": "Johan de Acteur",
+                "is_external": False
+            }
         ])
 
     def test_get_owners(self):
@@ -195,7 +219,8 @@ class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
             {
                 "external_id": "e2d51cab-3b25-4890-b68f-10efeb49a9e9",
                 "email": None,
-                "name": "Johan de Acteur"
+                "name": "Johan de Acteur",
+                "is_external": False
             }
         ])
 
