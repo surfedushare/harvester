@@ -70,7 +70,7 @@ def harvester_migrate(ctx, mode, app_label=None, migration=None):
     "mode": "Mode you want to load data for: localhost, development, acceptance or production. "
             "Must match APPLICATION_MODE",
     "source": "Source you want to import from: development, acceptance or production.",
-    "app_label": "The Django app you want to dump data for",
+    "app_label": "The Django app you want to load data for",
 })
 def load_data(ctx, mode, source, app_label=None):
     """
@@ -80,7 +80,7 @@ def load_data(ctx, mode, source, app_label=None):
         raise Exit("Cowardly refusing to use production as a destination environment")
 
     if not app_label:
-        app_labels = ["files", "products", "projects", "organizations"]
+        app_labels = ["files", "products", "projects", "organizations", "persons"]
     else:
         app_labels = [app_label]
 
@@ -248,7 +248,7 @@ def dump_data(ctx, mode, app_label=None):
     Starts a task on the AWS container cluster to dump a specific Django app and its models
     """
     if not app_label:
-        app_labels = ["files", "products", "projects", "organizations"]
+        app_labels = ["files", "products", "projects", "organizations", "persons"]
     else:
         app_labels = [app_label]
 

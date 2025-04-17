@@ -12,3 +12,7 @@ class HuProjectResource(HttpResource):
         return {
             "apiKey": settings.SOURCES["hu"]["api_key"]
         }
+
+    class Meta:
+        verbose_name = "HU project harvest"
+        verbose_name_plural = "HU project harvests"

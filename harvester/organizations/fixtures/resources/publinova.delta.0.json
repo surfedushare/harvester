@@ -1,0 +1,202 @@
+{
+    "data": [
+        {
+            "id": "01d6c396-3865-440b-b947-a2c661645669",
+            "name": "Kite Utrecht",
+            "description": "<p>Consortium Kite</p>",
+            "type": "Consortium",
+            "ror": null,
+            "parents": [],
+            "children": []
+        },
+        {
+            "id": "d58cba84-bed2-461d-b340-4bc5492cb46a",
+            "name": "Test voor Sanne **NIEUW!**",
+            "description": "<p>beschrijving</p>",
+            "type": "Partner",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": [
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                },
+                {
+                    "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+                    "name": "SUP"
+                }
+            ]
+        },
+        {
+            "id": "ec3132c6-3873-4f69-9346-f05a2d48ad0b",
+            "name": "What'SUP",
+            "description": "<p>Onderliggende partij van SURF</p>",
+            "type": "Professorship",
+            "ror": null,
+            "parents": [
+                {
+                    "id": "c47cba84-bed2-461d-b340-4bc5492cb359",
+                    "name": "Test voor Sanne"
+                },
+                {
+                    "id": "c47cba84-bed2-461d-b340-4bc5492cb359",
+                    "name": "Test voor Sanne"
+                },
+                {
+                    "id": "be061251-90ed-11ed-9af5-02ce51ddf1a5",
+                    "name": "ArtEZ"
+                },
+                {
+                    "id": "5bae3a1e-b4f3-11ec-83aa-02ce51ddf1a5",
+                    "name": "De Haagse Hogeschool"
+                },
+                {
+                    "id": "9aae920f-9a3a-11ec-83aa-02ce51ddf1a5",
+                    "name": "Hogeschool van Arnhem en Nijmegen"
+                },
+                {
+                    "id": "b9847c7c-caae-455a-8131-3084525f0150",
+                    "name": "Hogeschool voor de Kunsten Utrecht"
+                },
+                {
+                    "id": "71639131-631d-47cc-9b04-4e9f23524824",
+                    "name": "Partner Manual 3 - aangemaakt in PN"
+                },
+                {
+                    "id": "c47cba84-bed2-461d-b340-4bc5492cb359",
+                    "name": "Test voor Sanne"
+                },
+                {
+                    "id": "be061251-90ed-11ed-9af5-02ce51ddf1a5",
+                    "name": "ArtEZ"
+                },
+                {
+                    "id": "5bae3a1e-b4f3-11ec-83aa-02ce51ddf1a5",
+                    "name": "De Haagse Hogeschool"
+                },
+                {
+                    "id": "9aae920f-9a3a-11ec-83aa-02ce51ddf1a5",
+                    "name": "Hogeschool van Arnhem en Nijmegen"
+                },
+                {
+                    "id": "b9847c7c-caae-455a-8131-3084525f0150",
+                    "name": "Hogeschool voor de Kunsten Utrecht"
+                },
+                {
+                    "id": "71639131-631d-47cc-9b04-4e9f23524824",
+                    "name": "Partner Manual 3 - aangemaakt in PN"
+                },
+                {
+                    "id": "c47cba84-bed2-461d-b340-4bc5492cb359",
+                    "name": "Test voor Sanne"
+                },
+                {
+                    "id": "be061251-90ed-11ed-9af5-02ce51ddf1a5",
+                    "name": "ArtEZ"
+                },
+                {
+                    "id": "5bae3a1e-b4f3-11ec-83aa-02ce51ddf1a5",
+                    "name": "De Haagse Hogeschool"
+                },
+                {
+                    "id": "9aae920f-9a3a-11ec-83aa-02ce51ddf1a5",
+                    "name": "Hogeschool van Arnhem en Nijmegen"
+                },
+                {
+                    "id": "b9847c7c-caae-455a-8131-3084525f0150",
+                    "name": "Hogeschool voor de Kunsten Utrecht"
+                },
+                {
+                    "id": "71639131-631d-47cc-9b04-4e9f23524824",
+                    "name": "Partner Manual 3 - aangemaakt in PN"
+                },
+                {
+                    "id": "4aa9031b-f8f1-4adf-8e1d-3e8b7f5935f9",
+                    "name": "Breda University of Applied Sciences"
+                },
+                {
+                    "id": "c47cba84-bed2-461d-b340-4bc5492cb359",
+                    "name": "Test voor Sanne"
+                },
+                {
+                    "id": "be061251-90ed-11ed-9af5-02ce51ddf1a5",
+                    "name": "ArtEZ"
+                },
+                {
+                    "id": "5bae3a1e-b4f3-11ec-83aa-02ce51ddf1a5",
+                    "name": "De Haagse Hogeschool"
+                },
+                {
+                    "id": "9aae920f-9a3a-11ec-83aa-02ce51ddf1a5",
+                    "name": "Hogeschool van Arnhem en Nijmegen"
+                },
+                {
+                    "id": "b9847c7c-caae-455a-8131-3084525f0150",
+                    "name": "Hogeschool voor de Kunsten Utrecht"
+                },
+                {
+                    "id": "71639131-631d-47cc-9b04-4e9f23524824",
+                    "name": "Partner Manual 3 - aangemaakt in PN"
+                },
+                {
+                    "id": "4aa9031b-f8f1-4adf-8e1d-3e8b7f5935f9",
+                    "name": "Breda University of Applied Sciences"
+                },
+                {
+                    "id": "02bab586-8816-11ec-83aa-02ce51ddf1a5",
+                    "name": "SURF test"
+                }
+            ],
+            "children": []
+        }
+    ],
+    "links": {
+        "first": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=1",
+        "last": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=2",
+        "prev": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=1",
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://api.publinova.acc.surf.zooma.cloud/sources/parties?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "https://api.publinova.acc.surf.zooma.cloud/sources/parties",
+        "per_page": 10,
+        "to": 3,
+        "total": 3
+    }
+}

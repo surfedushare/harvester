@@ -28,6 +28,7 @@ class HarvestEntity(models.Model):
 
     class EntityType(models.TextChoices):
         ORGANIZATION = "organizations", "Organization"
+        PERSONS = "persons", "Person"
         PRODUCT = "products", "Product"
         FILE = "files", "File"
         PROJECT = "projects", "Project"

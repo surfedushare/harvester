@@ -67,7 +67,7 @@ class TestSharekitFileSeeding(TestCase):
                     self.assertTrue(file_.finished_at)
                 if file_.properties["product_id"] == "63903863-6c93-4bda-b850-277f3c9ec00e":
                     self.assertEqual(
-                        file_.get_pending_tasks(), ["check_url"],
+                        file_.get_pending_tasks(), ["check_url", "deactivate_invalid_documents"],
                         "Expected a hash change to re-trigger related tasks"
                     )
                 documents.append(file_)

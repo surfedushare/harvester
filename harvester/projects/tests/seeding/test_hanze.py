@@ -17,7 +17,7 @@ from projects.sources.hanze import SEEDING_PHASES, HanzeProjectExtractProcessor
 class TestHanzeProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "hanze")
-    resource_fixtures = ["hanze-test"]
+    resource_fixtures = ["hanze-projects"]
     delta_fixtures = {
         (HanzePureProjectResource, 1): ("body", "hanze-projects.02.pii.json")
     }
@@ -58,7 +58,7 @@ class TestHanzeProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
 class TestHanzeProjectsExtraction(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["hanze-test.json"]
+    resource_fixtures = ["hanze-projects"]
     seeds = []
 
     @classmethod

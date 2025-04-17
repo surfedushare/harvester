@@ -15,7 +15,7 @@ from projects.sources.buas import SEEDING_PHASES
 class TestBuasProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "buas")
-    resource_fixtures = ["buas-test"]
+    resource_fixtures = ["buas-projects"]
     delta_fixtures = {
         (BuasPureProjectResource, 1): ("body", "buas-projects.02.pii.json")
     }
@@ -56,7 +56,7 @@ class TestBuasProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
 class TestBUASProjectsExtraction(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["buas-test.json"]
+    resource_fixtures = ["buas-projects"]
     seeds = []
 
     @classmethod

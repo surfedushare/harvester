@@ -5,7 +5,8 @@ from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, Do
 from core.admin.harvest import HarvestStateAdmin
 
 from organizations.models import (Dataset, DatasetVersion, Set, OrganizationDocument, HarvestState,
-                                  SharekitOrganizationResource, HanzeOrganizationResource)
+                                  SharekitOrganizationResource, HanzeOrganizationResource,
+                                  PublinovaOrganizationResource)
 
 
 admin.site.register(Dataset, DatasetAdmin)
@@ -17,3 +18,4 @@ admin.site.register(HarvestState, HarvestStateAdmin)
 
 admin.site.register(SharekitOrganizationResource, HttpResourceAdmin)
 admin.site.register(HanzeOrganizationResource, HttpResourceAdmin)
+admin.site.register(PublinovaOrganizationResource, HttpResourceAdmin)

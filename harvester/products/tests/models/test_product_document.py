@@ -4,7 +4,7 @@ from products.models import ProductDocument
 from files.models import FileDocument
 
 
-class FileDocumentTestCase(TestCase):
+class ProductDocumentTestCase(TestCase):
 
     fixtures = ["test-product-document.json"]
 
@@ -29,6 +29,24 @@ class FileDocumentTestCase(TestCase):
             "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:7ec8985621b50d7bf29b06cf4d413191d0a20bd4",
             "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a"
         ])
+
+    def test_invalid_file(self):
+        product = ProductDocument.objects.get(id=1)
+        file_entity = FileDocument.objects.get(id=1)
+        file_entity.state = FileDocument.States.INACTIVE
+        file_entity.save()
+        product_data = product.to_data()
+        file_identities = [file_["srn"] for file_ in product_data["files"]]
+        self.assertEqual(file_identities, [
+            "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:339df213a16895868ba4bfc635b7d3348348e33a",
+            "sharekit:edusources:63903863-6c93-4bda-b850-277f3c9ec00e:ae362bbe89cae936c89aed50dfd6b7a1cb6bf03b"
+        ])
+
+    def test_deleted_files(self):
+        product = ProductDocument.objects.get(id=1)
+        FileDocument.objects.all().update(state=FileDocument.States.DELETED)
+        product_data = product.to_data()
+        self.assertEqual(product_data["files"], [])
 
     def test_file_title_defaults(self):
         # Check title without title defaults enabled and title provided

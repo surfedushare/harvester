@@ -6,3 +6,4 @@ from organizations.models.datatypes.organization import OrganizationDocument
 
 from organizations.models.resources.sharekit import SharekitOrganizationResource
 from organizations.models.resources.hanze import HanzeOrganizationResource
+from organizations.models.resources.publinova import PublinovaOrganizationResource

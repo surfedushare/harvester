@@ -15,7 +15,7 @@ from projects.sources.sia import SEEDING_PHASES
 class TestSIAProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
     fixtures_directory = Path(settings.BASE_DIR, "projects", "fixtures", "resources", "sia")
-    resource_fixtures = ["sia-test"]
+    resource_fixtures = ["sia-projects"]
     delta_fixtures = {
         (SiaProjectDetailsResource, 1): ("body", "sia-project.315b.json")
     }
@@ -62,7 +62,7 @@ class TestSIAProjectSeeding(seeding.ResourceFixturesSeedingTestCase):
 
 class TestSIAProjectsExtraction(ResourceFixturesMixin, TestCase):
 
-    resource_fixtures = ["sia-test.json"]
+    resource_fixtures = ["sia-projects"]
     seeds = []
 
     @classmethod

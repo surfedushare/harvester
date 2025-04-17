@@ -1,0 +1,102 @@
+{
+    "root": {
+        "item": [
+            {
+                "ORCID": "0000-0000-0000-0001",
+                "datelastmodified": "23-2-2022",
+                "deleted": false,
+                "description": "<p>Pietje Puk is a researcher and designer</p>",
+                "email": "pietje.puk@hku.nl",
+                "first_name": "Pietje",
+                "last_name": "Puk",
+                "organisation_id": 1,
+                "personid": 1,
+                "photo_url": {
+                    "lowres": "https://octo.hku.nl/octo/repository/getfile?id=?FIwGwx6hxCY&version=transcoded&load=low",
+                    "raw": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY",
+                    "transcoded": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY&version=transcoded",
+                    "type": "IMAGE"
+                },
+                "prefix": {},
+                "result_ids": {
+                    "ID": [
+                        1,
+                        2
+                    ]
+                },
+                "results": {
+                    "result": [
+                        {
+                            "author": "Pietje Puk",
+                            "personID": {},
+                            "resultID": 1,
+                            "title": "Mixing realities"
+                        },
+                        {
+                            "author": "Pietje Puk",
+                            "personID": {},
+                            "resultID": 2,
+                            "title": "Mixed Reality"
+                        }
+                    ]
+                },
+                "skills": {
+                    "value": "skills-yo"
+                },
+                "theme": {
+                    "value": [
+                        "Taal, Cultuur en Kunsten",
+                        "Techniek"
+                    ]
+                },
+                "title": {
+                    "value": "MA"
+                }
+            },
+            {
+                "ORCID": "0000-0000-0000-0002",
+                "datelastmodified": "23-2-2022",
+                "deleted": false,
+                "description": "<p>Flappie doet maar wat</p>",
+                "email": "flappie@hku.nl",
+                "first_name": "Flappie",
+                "last_name": "Wappie",
+                "organisation_id": 1,
+                "personid": 2,
+                "photo_url": {
+                    "lowres": "https://octo.hku.nl/octo/repository/getfile?id=?FIwGwx6hxCY&version=transcoded&load=low",
+                    "raw": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY",
+                    "transcoded": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY&version=transcoded",
+                    "type": "IMAGE"
+                },
+                "prefix": {},
+                "result_ids": {
+                    "ID": [
+                        3
+                    ]
+                },
+                "results": {
+                    "result": [
+                        {
+                            "author": "Flappie Wappie",
+                            "personID": {},
+                            "resultID": 1,
+                            "title": "Doe maar!"
+                        }
+                    ]
+                },
+                "skills": {
+                    "value": "nietsen"
+                },
+                "theme": {
+                    "value": [
+                        "Taal, Cultuur en Kunsten"
+                    ]
+                },
+                "title": {
+                    "value": "MA"
+                }
+            }
+        ]
+    }
+}
