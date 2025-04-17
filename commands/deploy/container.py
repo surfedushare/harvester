@@ -179,7 +179,7 @@ def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
     inspection = ctx.run(f"docker manifest inspect {registry}/{name}:{version}", warn=True)
     version_exists = inspection.exited == 0
     if version_exists:
-        print("Skipping version tagging, because version already exists in registry")
+        print(f"Skipping version tagging, because version {version} already exists in registry")
         promote_tags.pop()
 
     # Print some output to know what the command is going to do
