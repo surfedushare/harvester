@@ -177,7 +177,8 @@ class FileDocument(HarvestDocument):
         self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
 
-    def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
+    def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
+                use_multilingual_fields: bool = False) -> dict:
         raw_data = super().to_data(merge_derivatives=False, use_multilingual_fields=use_multilingual_fields)
         data = {
             key: value
