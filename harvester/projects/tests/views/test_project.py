@@ -52,26 +52,30 @@ class TestProjectView(TestCase):
             {
                 "name": "Eggie",
                 "email": None,
-                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
+                "is_external": False
             },
             {
                 "name": "Paultje",
                 "email": None,
-                "external_id": "97ee5bd3-2145-4a4a-9a61-827e2ec839ef"
+                "external_id": "97ee5bd3-2145-4a4a-9a61-827e2ec839ef",
+                "is_external": None
             }
         ],
         "contacts": [
             {
                 "name": "Eggie",
                 "email": None,
-                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
+                "is_external": False
             }
         ],
         "owners": [
             {
                 "name": "Eggie",
                 "email": None,
-                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112"
+                "external_id": "4f3e10ea-c09b-4f9e-98bb-7407d1340112",
+                "is_external": False
             }
         ],
         "parties": [

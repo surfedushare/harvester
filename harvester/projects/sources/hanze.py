@@ -95,7 +95,8 @@ class HanzeProjectExtractProcessor(PureExtractor):
                     # do not yield any name or other identity information.
                     # We skip the (useless) data silently
                     continue
-            is_external = "externalPerson" in participant
+            is_external = "externalPerson" in participant or \
+                          "external" in participant.get("typeDiscriminator", "").lower()
             person_data = participant.get("person", {}) if not is_external else participant.get("externalPerson", {})
             persons.append({
                 "name": full_name,
@@ -103,7 +104,7 @@ class HanzeProjectExtractProcessor(PureExtractor):
                 "external_id": person_data.get("uuid",
                                                f"hanze:person:"
                                                f"{sha1(full_name.encode('utf-8')).hexdigest()}"),
-
+                "is_external": is_external,
             })
         return persons
 

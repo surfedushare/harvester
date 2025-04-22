@@ -177,12 +177,15 @@ class FileDocument(HarvestDocument):
         self.properties["type"] = self.type
         self.is_analysis_allowed = self.get_analysis_allowed()
 
-    def to_data(self, merge_derivatives: bool = True, use_multilingual_fields: bool = False) -> dict:
+    def to_data(self, merge_derivatives: bool = True, for_search: bool = True,
+                use_multilingual_fields: bool = False) -> dict:
+        # First we get raw data from HarvestDocument class and filter out fields we don't want to publicly share
         raw_data = super().to_data(merge_derivatives=False, use_multilingual_fields=use_multilingual_fields)
         data = {
             key: value
             for key, value in raw_data.items() if key in WHITELISTED_OUTPUT_FIELDS
         }
+        # Now we merge texts coming from other sources like Tika and Youtube API
         if "tika" in self.derivatives:
             text = strip_tags(self.derivatives["tika"]["texts"][0])
             lines = []
@@ -191,10 +194,7 @@ class FileDocument(HarvestDocument):
                 if not line:
                     continue
                 lines.append(line)
-            text = "\n".join(lines)
-            if text and len(text) >= 1000000:
-                text = " ".join(text.split(" ")[:10000])
-            data["text"] = text
+            data["text"] = "\n".join(lines)
         if "youtube_api" in self.derivatives:
             youtube_data = deepcopy(self.derivatives["youtube_api"])
             data["video"] = youtube_data
@@ -209,6 +209,12 @@ class FileDocument(HarvestDocument):
             data["previews"] = self.derivatives["video_preview"]
         elif "image_preview" in self.derivatives:
             data["previews"] = self.derivatives["image_preview"]
+        # Last but not least we validate that data is within bounds when dealing with output for search engine
+        if for_search and isinstance(data.get("text"), str):
+            # When text data exceeds maximum length we brutally cut the length while attempting to keep words intact.
+            if len(data["text"]) >= 100_000:
+                data["text"] = " ".join(data["text"].split(" ")[:10_000])
+        # Returning fully merged and clean data
         return data
 
 
