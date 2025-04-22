@@ -168,7 +168,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "PUBVHL", "PUBHAS"
+            "PUBVHL", "PUBHAS", "PUBAERES"
         ],
         "delete_policy": "transient",
         "purge_interval": {
@@ -186,7 +186,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "PUBVHL", "PUBHAS"
+            "PUBVHL", "PUBHAS", "PUBAERES"
         ],
         "delete_policy": "transient",
         "purge_interval": {
@@ -298,7 +298,7 @@
         "is_manual": false,
         "allows_update": false,
         "set_specifications": [
-            "hanze"
+            "organization"
         ],
         "delete_policy": "no",
         "purge_interval": {
