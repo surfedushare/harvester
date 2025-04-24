@@ -8,7 +8,8 @@ from django.utils.timezone import now
 
 class HarvestObjectMixin(models.Model):
 
-    pipeline = models.JSONField(default=dict, blank=True)
+    pipeline = models.JSONField(default=dict, blank=True)  # deprecated
+    task_results = models.JSONField(default=dict, blank=True)
     tasks = models.JSONField(default=dict, blank=True)
     derivatives = models.JSONField(default=dict, blank=True)
     pending_at = models.DateTimeField(default=now, null=True, blank=True)
