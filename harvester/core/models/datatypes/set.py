@@ -21,7 +21,7 @@ def default_set_tasks():
     }
 
 
-class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
+class HarvestSet(HarvestObjectMixin, DocumentCollectionMixin, CollectionBase):
     """
     Represents a set as used by the OAI-PMH protocol.
     These sets are logically collections of documents.

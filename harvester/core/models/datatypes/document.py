@@ -28,7 +28,7 @@ def document_metadata_default() -> dict:
     }
 
 
-class HarvestDocument(DocumentBase, HarvestObjectMixin):
+class HarvestDocument(HarvestObjectMixin, DocumentBase):
 
     # NB: These foreign keys are app agnostic and point to different models in different apps
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE,
