@@ -10,7 +10,6 @@ from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 
-from datagrowth.utils import reach
 from datagrowth.datatypes import DocumentBase
 from datagrowth.resources.base import Resource
 from core.models.datatypes.base import HarvestObjectMixin
@@ -79,19 +78,11 @@ class HarvestDocument(HarvestObjectMixin, DocumentBase):
         return output
 
     def update(self, data: Any, commit: bool = True) -> None:
-        current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
         # Deletes shouldn't update anything but state information
         if content.get("state") == self.States.DELETED:
-            super().update({"state": self.States.DELETED}, commit=commit)
+            super().update({"state": self.States.DELETED}, commit=commit, skip_task_invalidation=True)
             return
-        # See if pipeline task need to re-run due to changes
-        for dependency_key, task_names in self.get_property_dependencies().items():
-            current_value = reach(dependency_key, self.properties)
-            update_value = reach(dependency_key, content)
-            if current_value != update_value:
-                for task in task_names:
-                    self.invalidate_task(task, current_time=current_time, commit=commit)
         # Update as normal, but parse special keys
         data = self.parse_seed_data(data)
         super().update(data, commit=commit)
