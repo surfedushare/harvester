@@ -41,9 +41,9 @@ class TestCheckURLTask(TestCase):
     def test_task(self, send_mock):
         check_url_task("files", [doc.id for doc in self.documents])
         for doc in FileDocument.objects.all():
-            self.assertIn("check_url", doc.pipeline)
-            self.assertIn("success", doc.pipeline["check_url"])
-            self.assertTrue(doc.pipeline["check_url"]["success"])
+            self.assertIn("check_url", doc.task_results)
+            self.assertIn("success", doc.task_results["check_url"])
+            self.assertTrue(doc.task_results["check_url"]["success"])
             self.assertIn("check_url", doc.derivatives)
 
         success = FileDocument.objects.get(id=self.success.id)

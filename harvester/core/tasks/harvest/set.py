@@ -119,7 +119,7 @@ def check_set_integrity(app_label: str, set_ids: list[int]) -> None:
                 harvest_set.documents.all().delete()
                 harvest_set.copy_documents(historic_set)
         # For all sets we mark this task as completed to continue the harvesting process
-        harvest_set.pipeline["check_set_integrity"] = {
+        harvest_set.task_results["check_set_integrity"] = {
             "success": True,
             "is_replaced": is_replaced
         }

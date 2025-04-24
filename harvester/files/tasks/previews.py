@@ -2,21 +2,21 @@ from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.loading import load_harvest_models
-from core.processors import HttpPipelineProcessor, ShellPipelineProcessor
+from core.processors import HttpGrowthProcessor, ShellGrowthProcessor
 
 
 @app.task(name="video_preview", base=DatabaseConnectionResetTask)
 def video_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
-    youtube_dl_processor = ShellPipelineProcessor({
+    youtube_dl_processor = ShellGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "video_preview",
+        "growth_phase": "video_preview",
         "asynchronous": False,
         "retrieve_data": {
             "resource": "files.youtubethumbnailresource",
@@ -24,7 +24,6 @@ def video_preview(app_label: str, document_ids: list[int]):
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/video_preview",
             "objective": {
                 "@": "$",
                 "full_size": "$.full_size",
@@ -40,14 +39,14 @@ def video_preview(app_label: str, document_ids: list[int]):
 def pdf_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
-    pdf_processor = HttpPipelineProcessor({
+    pdf_processor = HttpGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "pdf_preview",
+        "growth_phase": "pdf_preview",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -57,7 +56,6 @@ def pdf_preview(app_label: str, document_ids: list[int]):
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/pdf_preview",
             "objective": {
                 "@": "$",
                 "full_size": "$.full_size",
@@ -73,14 +71,14 @@ def pdf_preview(app_label: str, document_ids: list[int]):
 def image_preview(app_label: str, document_ids: list[int]):
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
-    image_processor = HttpPipelineProcessor({
+    image_processor = HttpGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "image_preview",
+        "growth_phase": "image_preview",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -90,7 +88,6 @@ def image_preview(app_label: str, document_ids: list[int]):
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/image_preview",
             "objective": {
                 "@": "$",
                 "full_size": "$.full_size",

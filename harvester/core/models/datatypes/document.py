@@ -100,7 +100,7 @@ class HarvestDocument(HarvestObjectMixin, DocumentBase):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
-        elif self.state == self.States.ACTIVE and self.pipeline:
+        elif self.state == self.States.ACTIVE and self.task_results:
             self.metadata["deleted_at"] = None
         elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
@@ -139,8 +139,8 @@ class HarvestDocument(HarvestObjectMixin, DocumentBase):
                 for nested_key, nested_value in value.items():
                     if nested_key not in self.properties[key]:
                         self.properties[key][nested_key] = copy(nested_value)
-        # Setting the state attribute based on pipeline information
-        if document_validation := self.pipeline.get("deactivate_invalid_documents"):
+        # Setting the state attribute based on task information
+        if document_validation := self.task_results.get("deactivate_invalid_documents"):
             if document_validation.get("validation"):
                 self.state = self.States.INACTIVE
                 self.properties["state"] = self.States.INACTIVE
@@ -153,7 +153,7 @@ class HarvestDocument(HarvestObjectMixin, DocumentBase):
 
     def prepare_task_processing(self, current_time: datetime, reset: bool = False) -> None:
         # Check if previous runs have any errors and invalidate tasks where errors have occurred
-        for task, result in list(self.pipeline.items()):
+        for task, result in list(self.task_results.items()):
             first_processed_at = result.get("first_processed_at")
             if first_processed_at:
                 first_processed_at = datetime.fromisoformat(first_processed_at)

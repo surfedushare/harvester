@@ -57,7 +57,7 @@ class TestLookupSectorsTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(sectors_doc.pipeline, {
+        self.assertEqual(sectors_doc.task_results, {
             "lookup_sectors_translations": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:2")
@@ -70,6 +70,6 @@ class TestLookupSectorsTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(undefined.pipeline, {
+        self.assertEqual(undefined.task_results, {
             "lookup_sectors_translations": {"success": True}
         })

@@ -86,10 +86,10 @@ class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
             create_datatype_models("files", cls.set_names, cls.file_seeds, 4)
         )
         cls.update_document = cls.product_documents[1]
-        cls.update_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
+        cls.update_document.task_results["lookup_study_vocabulary_parents"] = {"success": True}
         cls.update_document.save()
         delete_document = cls.product_documents[0]
-        delete_document.pipeline["lookup_study_vocabulary_parents"] = {"success": True}
+        delete_document.task_results["lookup_study_vocabulary_parents"] = {"success": True}
         delete_document.save()
 
     @classmethod

@@ -42,15 +42,15 @@ class Command(BaseCommand):
                     models["Document"].objects.filter(dataset_version=stale_dataset_version)._raw_delete("default")
                     stale_dataset_version.delete()
             # Now go over all resources and delete old ones without matching documents
-            for resource_model, pipeline_phases in resources.items():
+            for resource_model, tasks in resources.items():
                 model = apps.get_model(resource_model)
                 for resource in model.objects.filter(purge_at__lte=purge_time):
                     document_phase_filters = [
                         Q(**{
-                            f"pipeline__{pipeline_phase}__resource": resource_model.lower(),
-                            f"pipeline__{pipeline_phase}__id": resource.id
+                            f"task_results__{task}__resource": resource_model.lower(),
+                            f"task_results__{task}__id": resource.id
                         })
-                        for pipeline_phase in pipeline_phases
+                        for task in tasks
                     ]
                     filters = reduce(lambda x, y: x | y, document_phase_filters)
                     if not models["Document"].objects.filter(filters).exists():

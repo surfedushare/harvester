@@ -26,7 +26,7 @@ def create_version_copy(dataset_version, version, created_at):
     return version_copy
 
 
-def set_tika_pipeline(dataset_version):
+def set_tika_task_results(dataset_version):
     documents = []
     for doc in dataset_version.documents.all():
         tika_resource = HttpTikaResourceFactory.create(
@@ -34,7 +34,7 @@ def set_tika_pipeline(dataset_version):
             modified_at=dataset_version.created_at,
             purge_at=dataset_version.created_at
         )
-        doc.pipeline = {
+        doc.task_results = {
             "tika": {
                 "success": tika_resource.success,
                 "resource": "{}.{}".format(tika_resource._meta.app_label, tika_resource._meta.model_name),
@@ -42,7 +42,7 @@ def set_tika_pipeline(dataset_version):
             }
         }
         documents.append(doc)
-    FileDocument.objects.bulk_update(documents, ["pipeline"])
+    FileDocument.objects.bulk_update(documents, ["task_results"])
 
 
 def update_generated_version(dataset_version: DatasetVersion, version=None):
@@ -52,9 +52,9 @@ def update_generated_version(dataset_version: DatasetVersion, version=None):
         dataset_version.version = version
         dataset_version.is_current = False
     dataset_version.save()
-    set_tika_pipeline(dataset_version)
+    set_tika_task_results(dataset_version)
     active_version_copy = create_version_copy(dataset_version, dataset_version.version, dataset_version.created_at)
-    set_tika_pipeline(active_version_copy)
+    set_tika_task_results(active_version_copy)
 
 
 class TestCleanData(TestCase):
@@ -76,7 +76,7 @@ class TestCleanData(TestCase):
             version = f"0.0.{28 - version_number}"
             for _ in range(0, 2):
                 dataset_version_copy = create_version_copy(active_dataset_version, version, created_time)
-                set_tika_pipeline(dataset_version_copy)
+                set_tika_task_results(dataset_version_copy)
 
         inactive_dataset, inactive_dataset_version, inactive_sets, inactive_documents = create_datatype_models(
             "files", ["test"], file_seeds[5:], 5
@@ -88,7 +88,7 @@ class TestCleanData(TestCase):
             version = f"0.0.{42 - version_number}"
             for _ in range(0, 2):
                 dataset_version_copy = create_version_copy(inactive_dataset_version, version, created_time)
-                set_tika_pipeline(dataset_version_copy)
+                set_tika_task_results(dataset_version_copy)
         # Create users
         last_year_join_date = make_aware(datetime.now() - timedelta(days=365))
         this_year_join_date = make_aware(datetime.now())
@@ -131,8 +131,8 @@ class TestCleanData(TestCase):
         old_tika_ids = []
         new_tika_ids = []
         for old_doc, new_doc in zip(oldest_version.documents.all(), newest_version.documents.all()):
-            old_tika_ids.append(old_doc.pipeline["tika"]["id"])
-            new_tika_ids.append(new_doc.pipeline["tika"]["id"])
+            old_tika_ids.append(old_doc.task_results["tika"]["id"])
+            new_tika_ids.append(new_doc.task_results["tika"]["id"])
             new_doc.properties = old_doc.properties
             new_doc.save()
         self.assertEqual(HttpTikaResource.objects.filter(id__in=old_tika_ids).count(), len(old_tika_ids),

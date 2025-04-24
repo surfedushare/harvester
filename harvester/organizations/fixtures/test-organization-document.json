@@ -12,7 +12,7 @@
     "model": "organizations.datasetversion",
     "pk": 1,
     "fields": {
-        "pipeline": {},
+        "task_results": {},
         "derivatives": {},
         "pending_at": "2023-10-17T14:18:46.870Z",
         "finished_at": null,
@@ -66,7 +66,7 @@
         },
         "identity": "sharekit:nppo:7c2a6784-4d18-472e-bf5e-f3a61cd66fae",
         "reference": null,
-        "pipeline": {
+        "task_results": {
             "deactivate_invalid_documents": {
                 "success": true,
                 "validation": null

@@ -55,12 +55,12 @@ def cancel_document_tasks(app_label: str, documents: list[int | HarvestDocument]
     stopped = []
     for document in documents:
         for task in document.get_pending_tasks():
-            document.pipeline[task] = {"success": False, "canceled": True}
+            document.task_results[task] = {"success": False, "canceled": True}
         document.pending_at = None
         document.finished_at = now()
         stopped.append(document)
 
-    models["Document"].objects.bulk_update(stopped, ["pending_at", "finished_at", "pipeline"])
+    models["Document"].objects.bulk_update(stopped, ["pending_at", "finished_at", "task_results"])
 
 
 @app.task(name="deactivate_invalid_documents", base=DatabaseConnectionResetTask)
@@ -77,7 +77,7 @@ def deactivate_invalid_documents(app_label: str, document_ids: list[int]) -> Non
         except pydantic.ValidationError as exc:
             validation_output = str(exc)
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["deactivate_invalid_documents"] = {
+        document.task_results["deactivate_invalid_documents"] = {
             "success": True,
             "validation": validation_output,
         }

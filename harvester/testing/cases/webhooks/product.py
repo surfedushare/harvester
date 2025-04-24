@@ -95,13 +95,13 @@ class TestProductWebhookTestCase(TestCase):
             self.assertIsNotNone(product.pending_at)
             self.assertIsNone(product.finished_at)
             self.assertEqual(
-                product.pipeline, {},
+                product.task_results, {},
                 "Expected tasks to get reset because of new study_vocabulary term"
             )
         else:
             self.assertIsNone(product.pending_at)
             self.assertIsNotNone(product.finished_at)
-            self.assertTrue(product.pipeline, "Expected tasks to remain valid")
+            self.assertTrue(product.task_results, "Expected tasks to remain valid")
 
     def assert_update_models(self):
         update_product, update_files = self.reload_document_models("update", many=True)

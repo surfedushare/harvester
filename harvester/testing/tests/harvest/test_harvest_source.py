@@ -76,9 +76,9 @@ class TestInitialHarvestSource(TestCase):
             "Expected no pending documents"
         )
         for ix, doc in enumerate(self.set.documents.all().order_by("created_at")):
-            self.assertEqual(list(doc.pipeline.keys()), ["tika", "check_url"])
-            self.assertTrue(doc.pipeline["tika"]["success"])
-            self.assertTrue(doc.pipeline["check_url"]["success"])
+            self.assertEqual(list(doc.task_results.keys()), ["tika", "check_url"])
+            self.assertTrue(doc.task_results["tika"]["success"])
+            self.assertTrue(doc.task_results["check_url"]["success"])
             self.assertEqual(list(doc.derivatives.keys()), ["tika", "check_url"])
             self.assertEqual(doc.derivatives["tika"], {
                 "texts": [f"Tika content for http://testserver/file/{ix}"]
@@ -93,16 +93,16 @@ class TestInitialHarvestSource(TestCase):
         # Assert Set state
         set_instance = Set.objects.get(id=self.set.id)
         self.assertIsNone(set_instance.pending_at)
-        self.assertEqual(list(set_instance.pipeline.keys()), ["check_set_integrity"])
-        self.assertTrue(set_instance.pipeline["check_set_integrity"]["success"])
+        self.assertEqual(list(set_instance.task_results.keys()), ["check_set_integrity"])
+        self.assertTrue(set_instance.task_results["check_set_integrity"]["success"])
         # Assert DatasetVersion state
         dataset_version = DatasetVersion.objects.get(id=self.dataset_version.id)
         self.assertIsNone(dataset_version.pending_at)
         self.assertEqual(
-            list(dataset_version.pipeline.keys()),
+            list(dataset_version.task_results.keys()),
             ["create_opensearch_index", "set_current_dataset_version"]
         )
-        self.assertTrue(dataset_version.pipeline["create_opensearch_index"]["success"])
+        self.assertTrue(dataset_version.task_results["create_opensearch_index"]["success"])
         self.assertIsNotNone(dataset_version.index)
 
     def test_initial_manual(self):

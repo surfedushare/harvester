@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from django.test import TestCase
 from celery.canvas import Signature
 
-from core.processors import HttpPipelineProcessor
+from core.processors import HttpGrowthProcessor
 from files.models import Batch, ProcessResult, HttpTikaResource
 from files.sources.sharekit import SEQUENCE_PROPERTIES
 from files.tests.factories.tika import HttpTikaResourceFactory
@@ -14,7 +14,7 @@ from testing.utils.generators import seed_generator
 chord_mock_result = MagicMock()
 
 
-class TestHttpPipelineProcessor(TestCase):
+class TestHttpGrowthProcessor(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -32,16 +32,16 @@ class TestHttpPipelineProcessor(TestCase):
             HttpTikaResourceFactory.create(url=seed["url"], status=status)
 
     @patch("files.models.resources.metadata.HttpTikaResource._send")
-    def test_synchronous_tika_pipeline(self, send_mock):
+    def test_synchronous_tika_growth(self, send_mock):
         resource = "files.httptikaresource"
-        processor = HttpPipelineProcessor({
+        processor = HttpGrowthProcessor({
             "datatypes_app_label": "files",
             "datatype_models": {
                 "document": "FileDocument",
                 "process_result": "ProcessResult",
                 "batch": "Batch"
             },
-            "pipeline_phase": "tika",
+            "growth_phase": "tika",
             "batch_size": 2,
             "asynchronous": False,
             "retrieve_data": {
@@ -52,7 +52,6 @@ class TestHttpPipelineProcessor(TestCase):
                 "kwargs": {},
             },
             "contribute_data": {
-                "to_property": "derivatives/tika",
                 "objective": {
                     "@": "$.0",
                     "text": "$.X-TIKA:content"
@@ -68,12 +67,12 @@ class TestHttpPipelineProcessor(TestCase):
         self.assertEqual(ProcessResult.objects.count(), 0, "Expected ProcessResults to get deleted after use")
         self.assertEqual(self.set.documents.count(), 5)
         for document in self.set.documents.all():
-            self.assertIn("tika", document.pipeline)
-            tika_pipeline = document.pipeline["tika"]
-            self.assertEqual(tika_pipeline["resource"], "files.httptikaresource")
-            self.assertIsInstance(tika_pipeline["id"], int)
-            self.assertIsInstance(tika_pipeline["success"], bool)
-            tika_resource = HttpTikaResource.objects.get(id=tika_pipeline["id"])
+            self.assertIn("tika", document.task_results)
+            tika_task = document.task_results["tika"]
+            self.assertEqual(tika_task["resource"], "files.httptikaresource")
+            self.assertIsInstance(tika_task["id"], int)
+            self.assertIsInstance(tika_task["success"], bool)
+            tika_resource = HttpTikaResource.objects.get(id=tika_task["id"])
             if tika_resource.status == 200:  # Incomplete testing Tika responses are 204
                 self.assertIsInstance(
                     document.derivatives["tika"]["text"], str,
@@ -81,16 +80,16 @@ class TestHttpPipelineProcessor(TestCase):
                 )
         self.assertEqual(send_mock.call_count, 2, "Expected one erroneous resource to retry and one new resource")
 
-    @patch("core.processors.pipeline.base.chord", return_value=chord_mock_result)
-    def test_asynchronous_pipeline(self, chord_mock):
+    @patch("datagrowth.processors.growth.chord", return_value=chord_mock_result)
+    def test_asynchronous_tika_growth(self, chord_mock):
         """
         This test only asserts if Celery is used as expected.
         See synchronous test for actual result testing.
         """
         resource = "files.httptikaresource"
-        processor = HttpPipelineProcessor({
+        processor = HttpGrowthProcessor({
             "datatypes_app_label": "files",
-            "pipeline_phase": "tika",
+            "growth_phase": "tika",
             "datatype_models": {
                 "document": "FileDocument",
                 "process_result": "ProcessResult",
@@ -131,5 +130,5 @@ class TestHttpPipelineProcessor(TestCase):
         finish_signature = chord_result_call_args[0]
         self.assertIsInstance(finish_signature, Signature)
         self.assertEqual(finish_signature.name, "growth.full_merge")
-        self.assertEqual(finish_signature.args, ("HttpPipelineProcessor",))
+        self.assertEqual(finish_signature.args, ("HttpGrowthProcessor",))
         self.assertIn("config", finish_signature.kwargs)

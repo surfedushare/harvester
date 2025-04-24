@@ -14,7 +14,6 @@ class CoreConfig(AppConfig):
         register_defaults("global", {
             "batch_size": 100,
             "purge_after": {"days": 30},
-            "pipeline_depends_on": None,
             "datatypes_app_label": None,
             "datatype_models": {
                 "document": "Document",
@@ -27,7 +26,7 @@ class CoreConfig(AppConfig):
             "method": "get",
             "continuation_limit": 9999  # an arbitrary large number to never hit this limit
         })
-        register_defaults("extract_processor", {
+        register_defaults("growth_processor", {
             "extractor": "ExtractProcessor.extract_from_resource",
             "to_property": None,
             "apply_resource_to": []
