@@ -72,10 +72,7 @@ class HarvestObjectMixin(models.Model):
             is_invalidated = True
             del self.derivatives[task_name]
         if is_invalidated:
-            self.pending_at = current_time or now()
-            self.finished_at = None
-        if commit:
-            self.save()
+            self.prepare_processing(current_time=current_time, commit=commit)
 
     def prepare_processing(self, current_time: datetime = None, commit: bool = True):
         self.pending_at = current_time or now()
