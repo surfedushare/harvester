@@ -25,7 +25,7 @@ def _load_growth_models(app_label: str, models: dict[str, str]) -> tuple[Model, 
 
 
 @app.task(
-    name="growth.full_merge",
+    name="harvester.full_merge",
     base=DatabaseConnectionResetTask,
     soft_time_limit=60*30,
     autoretry_for=(SoftTimeLimitExceeded,),
@@ -41,7 +41,7 @@ def full_merge(config, batch_ids, processor_name):
 
 
 @app.task(
-    name="growth.process_and_merge",
+    name="harvester.process_and_merge",
     base=DatabaseConnectionResetTask,
     soft_time_limit=60*30,
     autoretry_for=(SoftTimeLimitExceeded,),

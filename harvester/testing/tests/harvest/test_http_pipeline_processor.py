@@ -80,7 +80,7 @@ class TestHttpGrowthProcessor(TestCase):
                 )
         self.assertEqual(send_mock.call_count, 2, "Expected one erroneous resource to retry and one new resource")
 
-    @patch("datagrowth.processors.growth.chord", return_value=chord_mock_result)
+    @patch("core.processors.pipeline.base.chord", return_value=chord_mock_result)
     def test_asynchronous_tika_growth(self, chord_mock):
         """
         This test only asserts if Celery is used as expected.
@@ -119,7 +119,7 @@ class TestHttpGrowthProcessor(TestCase):
         self.assertEqual(len(chord_call_args), 1)
         for ix, signature in enumerate(chord_call_args[0]):
             self.assertIsInstance(signature, Signature)
-            self.assertEqual(signature.name, "growth.process_and_merge")
+            self.assertEqual(signature.name, "harvester.process_and_merge")
             for arg in signature.args:
                 self.assertIsInstance(arg, int, "Expected a batch id as an argument in the signature")
             self.assertIn("config", signature.kwargs)
@@ -129,6 +129,6 @@ class TestHttpGrowthProcessor(TestCase):
         self.assertEqual(len(chord_result_call_args), 1)
         finish_signature = chord_result_call_args[0]
         self.assertIsInstance(finish_signature, Signature)
-        self.assertEqual(finish_signature.name, "growth.full_merge")
+        self.assertEqual(finish_signature.name, "harvester.full_merge")
         self.assertEqual(finish_signature.args, ("HttpGrowthProcessor",))
         self.assertIn("config", finish_signature.kwargs)

@@ -13,7 +13,8 @@ from datagrowth.resources.base import Resource
 from datagrowth.resources.http.tasks import send
 from datagrowth.resources.shell.tasks import run
 from datagrowth.processors import ProcessorFactory
-from datagrowth.processors.growth import GrowthProcessor
+
+from core.processors.pipeline.base import GrowthProcessor
 
 
 log = logging.getLogger("datagrowth.growth")
