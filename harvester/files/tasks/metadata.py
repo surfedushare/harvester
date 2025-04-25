@@ -53,9 +53,7 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
             "kwargs": {},
         },
         "extractor": "ExtractProcessor.pass_resource_through",
-        "contribute_data": {
-            "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"],
-        }
+        "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"]
     })
     check_url_processor(Document.objects.filter(id__in=check_document_ids))
 
@@ -177,8 +175,8 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
             "args": ["$.url", "videos"],
             "kwargs": {},
         },
+        "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
         "contribute_data": {
-            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
             "objective": {
                 "@": "$.items.0",
                 "description": "$.snippet.description",
