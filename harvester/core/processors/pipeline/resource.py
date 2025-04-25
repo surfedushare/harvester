@@ -89,7 +89,7 @@ class ResourceGrowthProcessor(GrowthProcessor):
 
     def merge_batch(self, batch):
         growth_phase = self.config.growth_phase
-        config = create_config("extract_processor", self.config.contribute_data)
+        config = create_config("extract_processor", self.config.get("contribute_data", default={}))
         contribution_processor = self.config.extractor
         contribution_field = "derivatives"
         contribution_property = self.config.to_property
