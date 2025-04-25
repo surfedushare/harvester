@@ -37,7 +37,7 @@ django-versatileimagefield==3.1
 django-mptt==0.17.0
 
 # Datagrowth & dependencies
-datagrowth==0.20.5
+datagrowth==0.20.6
 requests==2.32.3
 urllib3==1.26.20
 jsonschema==4.20.0
