@@ -1,0 +1,637 @@
+{
+    "count": 1,
+    "pageInformation": {
+        "offset": 0,
+        "size": 10
+    },
+    "items": [
+        {
+            "uuid": "3fb481c3-6db8-44b2-8a51-39e6935e9e94",
+            "name": {
+                "firstName": "Obi-Wan",
+                "lastName": "Kenobi"
+            },
+            "staffOrganizationAssociations": [
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 9641345,
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "fc47bd94-0e95-4d52-b5f6-74e37219179c"
+                    },
+                    "emails": [
+                        {
+                            "pureId": 16154953,
+                            "value": "obi-wan@therepublic.spc",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personemailtype/email",
+                                "term": {
+                                    "en_GB": "Email"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2016-01-01"
+                    },
+                    "primaryAssociation": true,
+                    "jobTitle": {
+                        "uri": "/dk/atira/pure/person/jobtitles/phd_candidate",
+                        "term": {
+                            "en_GB": "PhD Candidate",
+                            "nl_NL": "PhD Kandidaat"
+                        }
+                    },
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 5238372,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/researcher",
+                        "term": {
+                            "en_GB": "Researcher"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "e4012d40-5bd0-4fec-a64b-05cd6cb400ff"
+                    },
+                    "period": {
+                        "startDate": "2016-08-01"
+                    },
+                    "primaryAssociation": false,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                }
+            ],
+            "profileInformation": [
+                {
+                    "pureId": 2747091,
+                    "value": {
+                        "en_GB": "Personal profile"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/teaching",
+                        "term": {
+                            "en_GB": "Teaching"
+                        }
+                    }
+                }
+            ],
+            "user": {
+                "systemName": "User",
+                "uuid": "3ce301c6-8fee-40cd-9ecd-4e6013b1d8b7"
+            },
+            "systemName": "Person"
+        },
+        {
+            "uuid": "9a138314-5ad6-49ae-8778-941323bbc7f5",
+            "externalPositions": [
+                {
+                    "pureId": 16032684,
+                    "appointmentString": {
+                        "en_GB": "owner"
+                    },
+                    "period": {
+                        "startDate": {
+                            "year": 2008
+                        }
+                    }
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FullKeywordGroup",
+                    "pureId": 15990257,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords"
+                    },
+                    "keywordContainers": [
+                        {
+                            "pureId": 15990258,
+                            "structuredKeyword": {
+                                "uri": "/dk/atira/pure/core/keywords/H/HM",
+                                "term": {
+                                    "en_GB": "HM Sociology"
+                                }
+                            },
+                            "freeKeywords": [
+                                {
+                                    "pureId": 15990259,
+                                    "locale": "nl_NL",
+                                    "freeKeywords": [
+                                        "intercultural communication",
+                                        "Intercultural Competence Development"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "name": {
+                "firstName": "Luke",
+                "lastName": "Skywalker"
+            },
+            "names": [
+                {
+                    "pureId": 15990260,
+                    "name": {
+                        "firstName": "Luke",
+                        "lastName": "Luchtloper"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/translated",
+                        "term": {
+                            "en_GB": "Translated name"
+                        }
+                    }
+                },
+                {
+                    "pureId": 25898279,
+                    "name": {
+                        "firstName": "",
+                        "lastName": "Skywalker"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/sort",
+                        "term": {
+                            "en_GB": "Sort name"
+                        }
+                    }
+                }
+            ],
+            "orcid": "0000-0002-0998-1111",
+            "staffOrganizationAssociations": [
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 34924819,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/researcher",
+                        "term": {
+                            "en_GB": "Researcher"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "d2cdb971-d713-42bd-8f46-ea37cf2761bf"
+                    },
+                    "period": {
+                        "startDate": "2013-09-01",
+                        "endDate": "2020-07-09"
+                    },
+                    "primaryAssociation": true,
+                    "jobDescription": {
+                        "nl_NL": "PhD"
+                    },
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                }
+            ],
+            "academicQualifications": [
+                {
+                    "pureId": 16032685,
+                    "awardDate": "2013-08-01",
+                    "period": {
+                        "startDate": {
+                            "year": 2008
+                        },
+                        "endDate": {
+                            "year": 2013
+                        }
+                    },
+                    "fieldOfStudy": {
+                        "uri": "/dk/atira/pure/personeducation/fieldofstudy/3300/3316",
+                        "term": {
+                            "en_GB": "Cultural Studies"
+                        }
+                    },
+                    "organization": {
+                        "externalOrganizationRef": {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "26fd8928-3c39-47cb-ac2e-dceaa986132d"
+                        }
+                    },
+                    "projectTitle": {
+                        "en_GB": "MAIR; Master Intercultural Relations"
+                    },
+                    "qualification": {
+                        "uri": "/dk/atira/pure/personeducation/qualification/master/masterofarts",
+                        "term": {
+                            "en_GB": "Master of Arts"
+                        }
+                    }
+                },
+                {
+                    "pureId": 16032687,
+                    "awardDate": "1988-08-01",
+                    "period": {
+                        "startDate": {
+                            "year": 1980
+                        },
+                        "endDate": {
+                            "year": 1988
+                        }
+                    },
+                    "fieldOfStudy": {
+                        "uri": "/dk/atira/pure/personeducation/fieldofstudy/3300/3312",
+                        "term": {
+                            "en_GB": "Sociology and Political Science"
+                        }
+                    },
+                    "organization": {
+                        "externalOrganizationRef": {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "ba888fae-427e-43aa-b9ae-23a1ed8eadfa"
+                        }
+                    },
+                    "qualification": {
+                        "uri": "/dk/atira/pure/personeducation/qualification/master/masterofscience",
+                        "term": {
+                            "en_GB": "Master of Science"
+                        }
+                    }
+                }
+            ],
+            "profilePhotos": [
+                {
+                    "pureId": 15990261,
+                    "fileId": "ZjNmZGY1",
+                    "fileName": "P1170810_2_.jpg",
+                    "mimeType": "image/jpeg",
+                    "size": 699677,
+                    "url": "https://testurl/api/.jpeg",
+                    "type": {
+                        "uri": "/dk/atira/pure/person/personfiles/portrait",
+                        "term": {
+                            "en_GB": "Portrait"
+                        }
+                    }
+                }
+            ],
+            "profileInformation": [
+                {
+                    "pureId": 2748501,
+                    "value": {
+                        "en_GB": "<p>Intercultural Relations; Intercultural Competence Development; International HRM; Honours education (culture and sustainability); Thesis writing supervision - BA &amp; MA; Research</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/teaching",
+                        "term": {
+                            "en_GB": "Teaching"
+                        }
+                    }
+                }
+            ],
+            "user": {
+                "systemName": "User",
+                "uuid": "59735ab5-bed3-4af1-bfc8-4a020161e41a"
+            },
+            "systemName": "Person"
+        },
+        {
+            "uuid": "8c5f2de3-47f2-4c43-b33e-80728c18ad1d",
+            "externalPositions": [
+                {
+                    "pureId": 16037890,
+                    "appointmentString": {
+                        "en_GB": "Expert member Innovation",
+                        "nl_NL": "Deskundig lid Innovatie"
+                    },
+                    "period": {
+                        "startDate": {
+                            "year": 2015
+                        }
+                    }
+                }
+            ],
+            "name": {
+                "firstName": "Leia",
+                "lastName": "Skywalker"
+            },
+            "staffOrganizationAssociations": [
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 14404695,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/researcher",
+                        "term": {
+                            "en_GB": "Researcher"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "b1395873-f7ae-4d1a-8b36-532226d82955"
+                    },
+                    "emails": [
+                        {
+                            "pureId": 16155226,
+                            "value": "leia@therepublic.spc",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personemailtype/email",
+                                "term": {
+                                    "en_GB": "Email"
+                                }
+                            }
+                        }
+                    ],
+                    "phoneNumbers": [
+                        {
+                            "pureId": 14404699,
+                            "value": "+312012345678",
+                            "type": {
+                                "uri": "/dk/atira/pure/person/personphonenumbertype/phone",
+                                "term": {
+                                    "en_GB": "Phone"
+                                }
+                            }
+                        }
+                    ],
+                    "period": {
+                        "startDate": "2008-12-01"
+                    },
+                    "primaryAssociation": true,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 41527837,
+                    "affiliationId": "",
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "e8f4e293-fac4-43ef-a6ee-d0c1d09bfe71"
+                    },
+                    "period": {
+                        "startDate": "2021-09-01"
+                    },
+                    "primaryAssociation": false,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 26227713,
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "414006e2-1f9b-43ae-ac95-a95f5192e78f"
+                    },
+                    "period": {
+                        "startDate": "2019-04-08"
+                    },
+                    "primaryAssociation": false,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                }
+            ],
+            "profilePhotos": [
+                {
+                    "pureId": 13667460,
+                    "fileId": "ZDA4Yzg0",
+                    "fileName": "leia.jpg",
+                    "mimeType": "image/jpeg",
+                    "size": 10670,
+                    "url": "https://research-test.hanze.nl/ws/api/persons/4e1c0598-5e3b-43a2-abdb-6c78f726dbb5/files/ZDA4Yzg0/leia.jpg",
+                    "type": {
+                        "uri": "/dk/atira/pure/person/personfiles/portrait",
+                        "term": {
+                            "en_GB": "Portrait"
+                        }
+                    }
+                }
+            ],
+            "profileInformation": [],
+            "user": {
+                "systemName": "User",
+                "uuid": "018844fb-2860-42a5-8034-f384f7d13197"
+            },
+            "systemName": "Person"
+        },
+        {
+            "uuid": "bb1847b6-89c5-4be3-8d89-fe20ac72cc39",
+            "externalPositions": [
+                {
+                    "pureId": 15602622,
+                    "appointmentString": {
+                        "en_GB": "Professor of Lifelong Learning in Music"
+                    },
+                    "period": {
+                        "startDate": {
+                            "year": 2014,
+                            "month": 3,
+                            "day": 1
+                        }
+                    }
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FullKeywordGroup",
+                    "pureId": 15832328,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords"
+                    },
+                    "keywordContainers": [
+                        {
+                            "pureId": 15832329,
+                            "structuredKeyword": {
+                                "uri": "/dk/atira/pure/core/keywords/M/M1",
+                                "term": {
+                                    "en_GB": "M Music"
+                                }
+                            },
+                            "freeKeywords": [
+                                {
+                                    "pureId": 15832330,
+                                    "locale": "nl_NL",
+                                    "freeKeywords": [
+                                        "Lifelong learning",
+                                        "Biographical research"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "name": {
+                "firstName": "Han",
+                "lastName": "Solo"
+            },
+            "staffOrganizationAssociations": [
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 36586069,
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "5818fe1b-25d5-4d0c-b43e-2fc7f83d6997"
+                    },
+                    "period": {
+                        "startDate": "2021-09-01"
+                    },
+                    "primaryAssociation": true,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 36585945,
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "ab275c51-e745-455f-8b6c-342783cc7c53"
+                    },
+                    "period": {
+                        "startDate": "2021-09-01"
+                    },
+                    "primaryAssociation": false,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 16023340,
+                    "affiliationId": "",
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "64540675-9071-43d6-a7df-e53ac7b51d95"
+                    },
+                    "period": {
+                        "startDate": "2004-01-01"
+                    },
+                    "primaryAssociation": false,
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                }
+            ],
+            "academicQualifications": [
+                {
+                    "pureId": 15602755,
+                    "fieldOfStudy": {
+                        "uri": "/dk/atira/pure/personeducation/fieldofstudy/1200/1210",
+                        "term": {
+                            "en_GB": "Music"
+                        }
+                    }
+                },
+                {
+                    "pureId": 15602756,
+                    "fieldOfStudy": {
+                        "uri": "/dk/atira/pure/personeducation/fieldofstudy/3300/3301",
+                        "term": {
+                            "en_GB": "Social Sciences (miscellaneous)"
+                        }
+                    }
+                }
+            ],
+            "profilePhotos": [
+                {
+                    "pureId": 15819547,
+                    "fileId": "ZjE2MzFi",
+                    "fileName": "_F8A7852_han_solo.jpg",
+                    "mimeType": "image/jpeg",
+                    "size": 6146134,
+                    "url": "https://research-test.hanze.nl/ws/api/persons/aac58661-b8a0-4d42-ad48-668772eaecb2/files/ZjE2MzFi/_F8A7852_han_solo.jpg",
+                    "type": {
+                        "uri": "/dk/atira/pure/person/personfiles/portrait",
+                        "term": {
+                            "en_GB": "Portrait"
+                        }
+                    }
+                }
+            ],
+            "profileInformation": [
+                {
+                    "pureId": 2754245,
+                    "value": {
+                        "en_GB": "<p>Personal profile</p>",
+                        "nl_NL": "<p>Musicians' biographical learning processes, lifelong and lifewide learning</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/researchinterests",
+                        "term": {
+                            "en_GB": "Research interests"
+                        }
+                    }
+                },
+                {
+                    "pureId": 15819683,
+                    "value": {
+                        "en_GB": "<p><em>Research positions and roles since 1996</em></p>\n<ul><li>Since 2004: Professor of Lifelong Learning in Music for the Prince Claus Conservatoire (Hanze University of Applied Sciences Groningen).</li><li>2014 – Oct.2021: Professor of Lifelong Learning in Music at the University of Music and Performing Arts in Vienna.</li><li>2014 – 2016: Chair of the working group on Research of the Strategic Partnership ‘New Audiences and Innovative Practice’ (academies of Reykjavik, Groningen, The Hague, Vienna, London Guildhall, Oslo).</li><li>2011 - 2014: Chair of the European working group ‘Mobility: Recognition, Monitoring and Joint Degrees’of the project ‘Polifonia’ (European Association of Conservatoires, AEC).\n<ul><li>2007-2010: Member of the European working group on ‘Research in Higher Music Education’ of the project ‘Polifonia’ (European Association of Conservatoires, AEC).</li><li>2006 - 2009: Leader of the development of an international joint master’s programme “Joint Music Master for New Audiences and Innovative Practice”. Subsidized by the European Socrates /Erasmus programme. Partners: Prince Claus Conservatoire Groningen, Royal Conservatoire The Hague, Guildhall School of Music &amp; Drama, London, Jyväskyla University of Applied Sciences, School of Music and the Reykjavik Academy of Arts, department of Music. In addition seven external partners (2 orchestras, Dutch Broadcast Centre of Music, Leiden University Graduate School, Faculty of Arts; municipality of Isafjördur (Iceland), Globetown Action Zone (London).</li><li>2004 - 2007: Co-chair of the European working group on ‘Trends and Changes in the European Music Profession’ of the AEC project ‘Polifonia’. Awarded ‘Success Story’ by European Committee in 2007.</li><li>2004 -2005: Chair of the Scientific Committee of EFMET (European Forum of Music Education Training) a co-production of the AEC and the European Music Council.</li><li>2002 - 2004: European coordinator of the Project ‘Music Study, Mobility and Accountability’, of the AEC and the NASM (National Association of Schools of Music, USA). Aim: to study transatlantic cooperation in the field of professional music education and quality assurance. Awarded ‘Best Practice’ in 2005 by European Commission.</li><li>1999 - 2001: Leader of project ‘Promuse’: a working group on Continuing Professional Development, initiated by the AEC, consisting next to the AEC of the following partners: Association of British Orchestras, London; Centre de Ressources Musique et Danse de la Cité de la Musique, Paris; Sibelius Academy Continuing Education Centre, Helsinki; European Music Office, Brussels; Foundation of Performing Arts, The Hague. Funded by the European Leonardo Programme. Awarded ‘Best Practice’ in 2002 by European Commission.</li><li>1996-1999: Coordinator of the 3-year Thematic Network Project on Lifelong Learning, ‘Continuing Professional Development for Musicians’ funded by the European Socrates programme. A project of the AEC.</li></ul>\n</li></ul>\n<p><em> </em></p>\n<p><em>Leadership</em></p>\n<ul><li>2009 - 2014: Leading professor of the Centre of Applied Research and Innovation ‘Art and Society’ of the Hanze University of Applied Sciences, Groningen.</li><li>1998 - 2004: Director of the North Netherlands Conservatoire. Integral responsibility.</li><li>1994 -1998: Director of the Classical Department North Netherlands Conservatoire.</li><li>1997 - 2006: Initiator and artistic director of the International Peter the Great Festival (Summerschool and chamber music concert series, initiated between Groningen and St. Petersburg) in 1997, 1998, 2000, 2002, 2003, 2004, 2005; 2006. Funded by separate sponsoring.</li></ul>\n<p> </p>\n<p><em>Councils</em></p>\n<ul><li>2011 - 2019: Member of the national advisory committee for Music and Music Theatre of the Prince Bernhard Foundation.</li><li>2009 - 2010: Member of the Arts Council of the City and Province of Groningen.</li><li>2005 - 2008: Board member of the European Association of Music in Schools.</li><li>2002- 2005: Vice president of the European Association of Conservatoires.</li><li>1997-2002: Member of the Council of the European Association of Conservatoires.</li></ul>\n<p><em> </em></p>\n<p><em>Teaching </em></p>\n<ul><li>Since 2004:  Guest professorships: a.o. Tokyo College of Music; University of Music and Performing Arts in Vienna; Music Academy of the University of Sarajewo; Iceland Academy of the Arts, Reykjavik; University of Minnesota, School of Music, Minneapolis; Guildhall School of Music &amp; Drama, London; Royal College of Music in Stockholm; New York University, NY City; Universidade Federal do Rio Grande do Sul, Porto Alegre, Brazil; Queensland Conservatorium, Brisbane, Australia.</li><li>Since 2009 PhD students in Groningen, Vienna, Reykjavik, Leiden and Graz.</li></ul>\n<ul><li>1991-1994: Professor of History of Music and Culture at the Royal Conservatoire The Hague.</li><li>1990-1992: Professor of History of Music and Culture at the North Netherlands Conservatoire.</li><li>1983-1994: Professor of Flute, flute pedagogy and chamber music at the Alkmaar Conservatoire.</li><li>1979 - 1990: Teacher of flute at the Amstelveen Music School.</li><li>1976 - 1979: Teacher of flute at the Institute of Creative Development, Assen.</li></ul>\n<p> </p>\n<p><em>Entrepreneurship</em></p>\n<ul><li>2017: Organiser of the symposium “Meaningful Music in Healthcare” of University Medical Center Groningen and research group Lifelong Learning in Music, in Prince Claus Conservatoire, Groningen.</li><li>2014: Organiser of the symposium “While the Music Lasts – a symposium on Music and Dementia” in De Nieuwe Liefde in Amsterdam.</li><li>2014: Organiser of the symposium “10 Years Lifelong Learning in Music” in Prince Claus Conservatoire, Groningen.</li><li>2012: Co-organiser of the symposium “While the Music Lasts – a symposium on Music and Dementia” in Wigmore Hall, London, UK.</li><li>2007: Initiator and organiser of the seminar “Trends and Changes in the Music Profession; Lifelong Learning &amp; Employability”, Groningen, Prince Claus Conservatoire. A joint seminar of the research group Lifelong Learning in Music and the European Thematic Network Polifonia.</li><li>2001: Host and organiser of the Annual Conference in Groningen of the European Association of Conservatoires.</li><li>Organiser of different seminars on music education at the North Netherlands Conservatoire (also international seminars; yearly between 1995 and 2004).</li><li>Founder of the Dutch Flute Association (1990).</li></ul>\n<p> </p>\n<p><em>Performing </em></p>\n<ul><li>Till 1994: Many chamber music concerts and (radio) recordings with: The Groningen Flute Quartet, Isos Ensemble and several other ad hoc ensembles.</li></ul>\n<p> </p>\n<p><em>Education</em></p>\n<ul><li>2008: Georg-August-University Göttingen, Germany, PhD in Social Sciences <em>Musicians as Lifelong Learners: Discovery through Biography</em>, summa cum laude.</li><li>1988: University of Amsterdam, master’s degree in musicology, specialisation Twentieth Century Music / Theoretical Musicology.</li><li>1979: North Netherlands Conservatoire, flute, performers and education diploma.</li><li>Several other courses, seminars and classes in the field of performance, education in arts and management.</li></ul>\n<p> </p>\n<p><em>Other positions and roles</em></p>\n<ul><li>Since 2020: Member international expert group for the research group Music for social impact: practitioners’ contexts, work, and beliefs (GSMD, London)</li><li>Since 2020: Member of the expert group of the project DEMEDARTS: Dementia, Empathy, Education, Arts. Universität für angewandte Kunst Vienna</li><li>Since 2020: Consultant and co-researcher in the project ‘<em>Health Care Performances</em><em>, artistic awareness, sensitivity and interaction’ </em>Royal Academy of Music in Arhus (Denmark).\n<ul><li>Since 2019: External evaluator of the European project ‘Social Inclusion and Wellbeing through the Arts and Interdisciplinary Practices’ (SWAIP) of Higher Arts Institutions in Alicante, Porto, München, Derbyshire, Reykjavik and Helsinki and the AEC.</li><li>Since 2017: Member of the Editorial Board of the <em>International Journal of Community Music.</em></li><li>2016/17 Winter semester: Visiting professor of Lifelong Learning in Music at the University of the Arts in Graz (Austria).</li><li>2015/2018: Advisor of research project <em>Singing away the Blues</em> on music and post-natal depression, of the Royal College of Music and Imperial College in London and the Westminster and Chelsea Hospitals.</li><li>2018: Member of doctoral committee Leiden University and Groningen University.</li><li>2017: Member of doctoral committee University of Humanities, Utrecht.</li><li>2015: Member Evaluation committee Professorship of Performing Arts, University of Gothenburg.</li><li>Since 2015: Member of the International Advisory Committee of Queensland Conservatorium Griffith University Research Centre, Brisbane.</li><li>2013: Visiting professor of Lifelong Learning in Music at the University of Music &amp; Performing Arts in Vienna (Institute of Music Education) during the summer semester.</li><li>2013: Music expert for evaluation visit for centre of expertise in music research, Oslo.</li><li>Since 2010: Visiting professor of Lifelong Learning in Music at the Sarajewo Academy of Music.</li><li>2012: Member of PhD examination committee KU Leuven.</li><li>2012: Member of PhD examination committee University of Malta.</li><li>2011-12 and 2014/15: Member of the scientific committee of the conference ‘The Reflective Conservatoire’, GSMD in London.</li><li>2011: External examiner Reykjavik Academy of the Arts.</li><li>2011/12: Critical friend of the project <em>Quo vadis Teufelsgeiger</em>? University of Music and Performing Arts Vienna.</li><li>2010/12, Member of the Steering Group of the programme <em>Rhythm for Life</em>, Royal College of Music, London.</li><li>2010 / 11: Member of the visiting committee for the accreditation of the Flemish Conservatoires.</li><li>2009 - 2011: Counsellor at the Music Academy of Sarajewo.</li><li>2008: Member of Thematic Forum of the European Committee on Continuing Education and Lifelong Learning.</li><li>2007: Evaluator for the Tuning process in the discipline of Music on behalf of the European Committee.</li><li>2007- 2011: External examiner for the BMus programme at the Royal College of Music in London.</li><li>2004: External examiner Royal College of Art London.</li><li>1996 – 2004: Member of juries in international competitions.</li></ul>\n</li></ul>\n<p> </p>\n<p><em>Honours</em></p>\n<ul><li>2010: Nationally nominated as ‘professor of the year.’</li><li>2008: Knighthood in the Order of Oranje Nassau.</li><li>2001: Honorary Fellow of the Guildhall School of Music and Drama, London (HonFGS).</li><li>2000: Diplôme d’Honneur of the Bulgarian Ministry of Culture.</li></ul>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/professionalinformation",
+                        "term": {
+                            "en_GB": "Professional Information"
+                        }
+                    }
+                },
+                {
+                    "pureId": 15819828,
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/researchinterests",
+                        "term": {
+                            "en_GB": "Research interests"
+                        }
+                    }
+                },
+                {
+                    "pureId": 25928431,
+                    "value": {
+                        "en_GB": "<p>Biographical research into professional musicians, ethnographic research into innovative music practices</p>"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/customfields/researchinterests",
+                        "term": {
+                            "en_GB": "Research interests"
+                        }
+                    }
+                }
+            ],
+            "user": {
+                "systemName": "User",
+                "uuid": "9570dc68-4e63-4306-a934-38bd5a27c760"
+            },
+            "systemName": "Person"
+        }
+    ]
+}
