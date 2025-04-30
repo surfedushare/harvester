@@ -1,0 +1,214 @@
+{
+    "count": 2,
+    "pageInformation": {
+        "offset": 0,
+        "size": 10
+    },
+    "items": [
+        {
+            "uuid": "af0b3aa3-054c-4068-9aad-506be254e6e9",
+            "portalUrl": "https://accpure.hva.nl/en/persons/af0b3aa3-054c-4068-9aad-506be254e6e9",
+            "name": {
+                "firstName": "Pietje",
+                "lastName": "Puk"
+            },
+            "names": [
+                {
+                    "pureId": 49583,
+                    "name": {
+                        "firstName": "P.",
+                        "lastName": "Puk"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/defaultpublishing",
+                        "term": {
+                            "en_GB": "Default publishing name"
+                        }
+                    }
+                },
+                {
+                    "pureId": 49584,
+                    "name": {
+                        "lastName": "Puk, P."
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/sort",
+                        "term": {
+                            "en_GB": "Sort name"
+                        }
+                    }
+                }
+            ],
+            "staffOrganizationAssociations": [
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 49585,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "55dd4350-ee23-41b9-9af7-9c95fd7097e2"
+                    },
+                    "period": {
+                        "startDate": "1899-12-31",
+                        "endDate": "2016-12-13"
+                    },
+                    "primaryAssociation": false,
+                    "jobTitle": {
+                        "uri": "/dk/atira/pure/person/jobtitles/seniorlecturer",
+                        "term": {
+                            "en_GB": "Senior Lecturer"
+                        }
+                    },
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 338020,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "55dd4350-ee23-41b9-9af7-9c95fd7097e2"
+                    },
+                    "period": {
+                        "startDate": "1900-01-01",
+                        "endDate": "2022-01-14"
+                    },
+                    "primaryAssociation": false,
+                    "jobTitle": {
+                        "uri": "/dk/atira/pure/person/jobtitles/seniorlecturer",
+                        "term": {
+                            "en_GB": "Senior Lecturer"
+                        }
+                    },
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                },
+                {
+                    "typeDiscriminator": "StaffOrganizationAssociation",
+                    "pureId": 25301489,
+                    "employmentType": {
+                        "uri": "/dk/atira/pure/person/employmenttypes/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    },
+                    "organization": {
+                        "systemName": "Organization",
+                        "uuid": "55dd4350-ee23-41b9-9af7-9c95fd7097e2"
+                    },
+                    "period": {
+                        "startDate": "1900-01-01"
+                    },
+                    "primaryAssociation": false,
+                    "jobTitle": {
+                        "uri": "/dk/atira/pure/person/jobtitles/seniorlecturer",
+                        "term": {
+                            "en_GB": "Senior Lecturer"
+                        }
+                    },
+                    "staffType": {
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "en_GB": "Academic"
+                        }
+                    }
+                }
+            ],
+            "titles": [
+                {
+                    "pureId": 49587,
+                    "value": {
+                        "en_GB": "dr."
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/titles/academicdegree",
+                        "term": {
+                            "en_GB": "Academic degree"
+                        }
+                    }
+                }
+            ],
+            "user": {
+                "systemName": "User",
+                "uuid": "1fd55bef-58bd-400f-a037-7248a27e44ba"
+            },
+            "systemName": "Person"
+        },
+        {
+            "uuid": "7a5596ca-272e-4415-9e72-13d2ab494dc7",
+            "portalUrl": "https://accpure.hva.nl/en/persons/7a5596ca-272e-4415-9e72-13d2ab494dc7",
+            "prettyUrlIdentifiers": [
+                "lizzy-shizzle"
+            ],
+            "name": {
+                "firstName": "Lizzy",
+                "lastName": "Shizzle"
+            },
+            "names": [
+                {
+                    "pureId": 50334,
+                    "name": {
+                        "firstName": "E.M.",
+                        "lastName": "Shizzle"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/defaultpublishing",
+                        "term": {
+                            "en_GB": "Default publishing name"
+                        }
+                    }
+                },
+                {
+                    "pureId": 50335,
+                    "name": {
+                        "lastName": "Shizzle, E.M."
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/sort",
+                        "term": {
+                            "en_GB": "Sort name"
+                        }
+                    }
+                },
+                {
+                    "pureId": 6280553,
+                    "name": {
+                        "firstName": "Lizzy ",
+                        "lastName": "Shizzle"
+                    },
+                    "type": {
+                        "uri": "/dk/atira/pure/person/names/knownas",
+                        "term": {
+                            "en_GB": "Known as name"
+                        }
+                    }
+                }
+            ],
+            "orcid": "0000-0001-7063-9748",
+            "user": {
+                "systemName": "User",
+                "uuid": "6ed3a851-a3df-43f9-8351-562283acce57"
+            },
+            "systemName": "Person"
+        }
+    ]
+}
