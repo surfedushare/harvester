@@ -144,6 +144,9 @@ class TestGreeniProductExtraction(TestCase):
     def test_get_title(self):
         self.assertEqual(self.seeds[0]["title"], "Out of the box...!")
 
+    def test_get_subtitle(self):
+        self.assertEqual(self.seeds[0]["subtitle"], "kennisinnovatie in het groene onderwijs en onderzoek")
+
     def test_get_description(self):
         self.assertTrue(self.seeds[0]["description"].startswith("Hoe kunnen de krachten gebundeld worden"))
 
