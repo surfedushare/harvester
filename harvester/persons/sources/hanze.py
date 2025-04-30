@@ -14,12 +14,15 @@ class HanzePersonsExtractProcessor(PureExtractor):
     source_slug = "hanze"
 
     @classmethod
-    def get_valid_staff_organization_association(cls, node):
+    def get_valid_staff_organization_association(cls, node, required_attribute=None):
         today = datetime.today()
         for association in node.get("staffOrganizationAssociations", []):
             end_date = association.get("period", None).get("endDate", None)
             if not end_date or date_parser(end_date, ignoretz=True) > today:
-                break
+                if not required_attribute:
+                    break
+                elif association.get(required_attribute):
+                    break
         else:
             return
         return association
@@ -122,7 +125,7 @@ class HanzePersonsExtractProcessor(PureExtractor):
 
     @classmethod
     def get_job_title(cls, node):
-        association = cls.get_valid_staff_organization_association(node)
+        association = cls.get_valid_staff_organization_association(node, required_attribute="jobTitle")
         if not association:
             return
         job_title_object = association.get("jobTitle", None)
