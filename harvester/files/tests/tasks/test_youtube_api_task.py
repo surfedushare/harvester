@@ -42,12 +42,12 @@ class TestYoutubeAPITask(TestCase):
     def test_embed_url(self, send_mock):
         youtube_api_task("files", [doc.id for doc in self.documents])
         for doc in FileDocument.objects.all():
-            self.assertIn("youtube_api", doc.pipeline)
-            self.assertIn("success", doc.pipeline["youtube_api"])
+            self.assertIn("youtube_api", doc.task_results)
+            self.assertIn("success", doc.task_results["youtube_api"])
         # Assert the success document
         success = FileDocument.objects.get(id=self.success.id)
         fail = FileDocument.objects.get(id=self.fail.id)
-        self.assertTrue(success.pipeline["youtube_api"]["success"])
+        self.assertTrue(success.task_results["youtube_api"]["success"])
         self.assertIn("youtube_api", success.derivatives)
         self.assertEqual(success.derivatives["youtube_api"], {
             "title": "This is a title",
@@ -62,6 +62,6 @@ class TestYoutubeAPITask(TestCase):
             "description": "this is a description"
         })
         self.assertFalse(success.is_not_found)
-        self.assertFalse(fail.pipeline["youtube_api"]["success"])
+        self.assertFalse(fail.task_results["youtube_api"]["success"])
         self.assertNotIn("youtube_api", fail.derivatives)
         self.assertTrue(fail.is_not_found)

@@ -62,7 +62,7 @@ def set_current_dataset_version(app_label: str, dataset_version_ids: list[int]) 
         should_set_current = not has_unfinished_sets and not has_pending_sets
         if should_set_current:
             dataset_version.set_current()
-            dataset_version.pipeline["set_current_dataset_version"] = {"success": True}
+            dataset_version.task_results["set_current_dataset_version"] = {"success": True}
             dataset_version.save()
 
 
@@ -80,5 +80,5 @@ def create_opensearch_index(app_label: str, dataset_version_ids: list[int]) -> N
                 dataset_version.version
             )
             dataset_version.index.save()
-        dataset_version.pipeline["create_opensearch_index"] = {"success": True}
+        dataset_version.task_results["create_opensearch_index"] = {"success": True}
         dataset_version.save()

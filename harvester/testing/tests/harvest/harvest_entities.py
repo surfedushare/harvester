@@ -131,7 +131,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         )
         self.merge_document = next((doc for doc in self.documents if doc.collection.name == "merge:merge_set"))
         self.invalid_document = self.documents[0]
-        self.invalid_document.pipeline = {
+        self.invalid_document.task_results = {
             "check_url": {"success": False},
         }
         self.invalid_document.derivatives = {
@@ -139,7 +139,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         }
         self.invalid_document.save()
         self.failed_document = self.documents[1]
-        self.failed_document.pipeline = {
+        self.failed_document.task_results = {
             "check_url": {"success": True},
             "tika": {"success": False}
         }
@@ -153,7 +153,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.inactive_document.state = TestDocument.States.INACTIVE
         self.inactive_document.save()
         self.no_retry_document = self.documents[4]
-        self.no_retry_document.pipeline = {
+        self.no_retry_document.task_results = {
             "check_url": {"success": True},
             "tika": {
                 "success": False,
@@ -165,7 +165,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         }
         self.no_retry_document.save()
         for doc in self.documents[5:]:
-            doc.pipeline = {
+            doc.task_results = {
                 "check_url": {"success": True},
                 "tika": {"success": True}
             }
@@ -218,7 +218,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .filter(identity=self.invalid_document.identity) \
             .last()
         self.assertEqual(
-            invalid_document.pipeline, {"check_url": {"success": False}},
+            invalid_document.task_results, {"check_url": {"success": False}},
             "Expected check_url to propagate between harvests"
         )
         self.assertEqual(
@@ -232,7 +232,10 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.failed_document.identity) \
             .last()
-        self.assertEqual(failed_document.pipeline, {"check_url": {"success": True}}, "Expected pipeline to get reset")
+        self.assertEqual(
+            failed_document.task_results, {"check_url": {"success": True}},
+            "Expected task_results to get reset"
+        )
         self.assertEqual(
             failed_document.derivatives, {"check_url": {"status": 200}},
             "Expected derivatives to get reset"
@@ -244,7 +247,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.unprocessed_document.identity) \
             .last()
-        self.assertEqual(unprocessed_document.pipeline, {}, "Expected pipeline to remain as is")
+        self.assertEqual(unprocessed_document.task_results, {}, "Expected task_results to remain as is")
         self.assertEqual(unprocessed_document.derivatives, {}, "Expected derivatives to remain as is")
         self.assertTrue(unprocessed_document.properties, "Expected properties to remain intact")
         self.assertIsInstance(
@@ -256,7 +259,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .exclude(dataset_version=self.dataset_version) \
             .filter(identity=self.inactive_document.identity) \
             .last()
-        self.assertEqual(inactive_document.pipeline, {}, "Expected pipeline to remain as is")
+        self.assertEqual(inactive_document.task_results, {}, "Expected task_results to remain as is")
         self.assertEqual(inactive_document.derivatives, {}, "Expected derivatives to remain as is")
         self.assertTrue(inactive_document.properties, "Expected properties to remain intact")
         self.assertIsNone(inactive_document.pending_at, "Expected inactive document to remain unprocessed")
@@ -266,7 +269,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .filter(identity=self.no_retry_document.identity) \
             .last()
         self.assertEqual(
-            no_retry_document.pipeline,
+            no_retry_document.task_results,
             {
                 "check_url": {"success": True},
                 "tika": {
@@ -274,7 +277,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
                     "first_processed_at": "2000-01-01T00:00:00Z"
                 }
             },
-            "Expected pipeline to remain as is"
+            "Expected task_results to remain as is"
         )
         self.assertEqual(
             no_retry_document.derivatives,
@@ -294,12 +297,12 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             .exclude(dataset_version=self.dataset_version, identity__in=error_identities) \
             .first()
         self.assertEqual(
-            success_document.pipeline,
+            success_document.task_results,
             {
                 "check_url": {"success": True},
                 "tika": {"success": True}
             },
-            "Expected pipeline to remain intact"
+            "Expected task_results to remain intact"
         )
         self.assertEqual(
             success_document.derivatives,

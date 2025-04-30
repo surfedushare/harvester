@@ -10,7 +10,6 @@ from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.timezone import now
 
-from datagrowth.utils import reach
 from datagrowth.datatypes import DocumentBase
 from datagrowth.resources.base import Resource
 from core.models.datatypes.base import HarvestObjectMixin
@@ -28,7 +27,7 @@ def document_metadata_default() -> dict:
     }
 
 
-class HarvestDocument(DocumentBase, HarvestObjectMixin):
+class HarvestDocument(HarvestObjectMixin, DocumentBase):
 
     # NB: These foreign keys are app agnostic and point to different models in different apps
     dataset_version = models.ForeignKey("DatasetVersion", blank=True, null=True, on_delete=models.CASCADE,
@@ -79,19 +78,11 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
         return output
 
     def update(self, data: Any, commit: bool = True) -> None:
-        current_time = now()
         content = data.properties if isinstance(data, DocumentBase) else data
         # Deletes shouldn't update anything but state information
         if content.get("state") == self.States.DELETED:
-            super().update({"state": self.States.DELETED}, commit=commit)
+            super().update({"state": self.States.DELETED}, commit=commit, skip_task_invalidation=True)
             return
-        # See if pipeline task need to re-run due to changes
-        for dependency_key, task_names in self.get_property_dependencies().items():
-            current_value = reach(dependency_key, self.properties)
-            update_value = reach(dependency_key, content)
-            if current_value != update_value:
-                for task in task_names:
-                    self.invalidate_task(task, current_time=current_time, commit=commit)
         # Update as normal, but parse special keys
         data = self.parse_seed_data(data)
         super().update(data, commit=commit)
@@ -109,7 +100,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
             self.metadata["deleted_at"] = current_time
             self.metadata["modified_at"] = current_time
             self.finish_processing(current_time, commit=False)
-        elif self.state == self.States.ACTIVE and self.pipeline:
+        elif self.state == self.States.ACTIVE and self.task_results:
             self.metadata["deleted_at"] = None
         elif self.state == self.States.ACTIVE:
             self.metadata["deleted_at"] = None
@@ -148,8 +139,8 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
                 for nested_key, nested_value in value.items():
                     if nested_key not in self.properties[key]:
                         self.properties[key][nested_key] = copy(nested_value)
-        # Setting the state attribute based on pipeline information
-        if document_validation := self.pipeline.get("deactivate_invalid_documents"):
+        # Setting the state attribute based on task information
+        if document_validation := self.task_results.get("deactivate_invalid_documents"):
             if document_validation.get("validation"):
                 self.state = self.States.INACTIVE
                 self.properties["state"] = self.States.INACTIVE
@@ -162,7 +153,7 @@ class HarvestDocument(DocumentBase, HarvestObjectMixin):
 
     def prepare_task_processing(self, current_time: datetime, reset: bool = False) -> None:
         # Check if previous runs have any errors and invalidate tasks where errors have occurred
-        for task, result in list(self.pipeline.items()):
+        for task, result in list(self.task_results.items()):
             first_processed_at = result.get("first_processed_at")
             if first_processed_at:
                 first_processed_at = datetime.fromisoformat(first_processed_at)

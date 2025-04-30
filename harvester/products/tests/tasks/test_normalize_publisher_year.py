@@ -49,27 +49,27 @@ class TestNormalizePublisherYear(TestCase):
         self.assertEqual(old_product.derivatives, {
             "normalize_publisher_year": {"publisher_year_normalized": "older-than"}
         })
-        self.assertEqual(old_product.pipeline, {
+        self.assertEqual(old_product.task_results, {
             "normalize_publisher_year": {"success": True}
         })
         new_product = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(new_product.derivatives, {
             "normalize_publisher_year": {"publisher_year_normalized": "2022"}
         })
-        self.assertEqual(new_product.pipeline, {
+        self.assertEqual(new_product.task_results, {
             "normalize_publisher_year": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:3")
         self.assertEqual(undefined.derivatives, {
             "normalize_publisher_year": {"publisher_year_normalized": None}
         })
-        self.assertEqual(undefined.pipeline, {
+        self.assertEqual(undefined.task_results, {
             "normalize_publisher_year": {"success": True}
         })
         invalid = ProductDocument.objects.get(identity="surf:testing:4")
         self.assertEqual(invalid.derivatives, {
             "normalize_publisher_year": {"publisher_year_normalized": None}
         })
-        self.assertEqual(invalid.pipeline, {
+        self.assertEqual(invalid.task_results, {
             "normalize_publisher_year": {"success": True}
         })

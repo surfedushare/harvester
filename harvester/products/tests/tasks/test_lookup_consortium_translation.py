@@ -54,7 +54,7 @@ class TestLookupConsortiumTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(consortium_doc.pipeline, {
+        self.assertEqual(consortium_doc.task_results, {
             "lookup_consortium_translations": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:2")
@@ -67,6 +67,6 @@ class TestLookupConsortiumTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(undefined.pipeline, {
+        self.assertEqual(undefined.task_results, {
             "lookup_consortium_translations": {"success": True}
         })

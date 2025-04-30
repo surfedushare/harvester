@@ -179,6 +179,10 @@ class HarvestDatasetVersion(HarvestObjectMixin):
     def has_promoted_sibling(self) -> bool:
         return self.__class__.objects.filter(version=self.version, is_index_promoted=True).exists()
 
+    def influence(self, instance):
+        if instance.dataset_version is None:  # possibly a Document passed on by a Collection
+            instance.dataset_version = self
+
     class Meta:
         abstract = True
         get_latest_by = "-created_at"

@@ -55,15 +55,15 @@ class HarvestLogger(object):
         extra = self._get_extra_info()
         harvester.error(message, extra=extra)
 
-    def report_document(self, external_id, entity, title=None, url=None, pipeline=None, state="upsert"):
+    def report_document(self, external_id, entity, title=None, url=None, tasks=None, state="upsert"):
         document_info = {
             "external_id": external_id,
             "title": title,
             "url": url
         }
-        pipeline = pipeline or {}
-        # Report on pipeline steps
-        for task, task_result in pipeline.items():
+        tasks = tasks or {}
+        # Report on task steps
+        for task, task_result in tasks.items():
             document = copy(document_info)
             document.update({
                 "task": task,
@@ -76,10 +76,10 @@ class HarvestLogger(object):
                 })
             if task_result["success"]:
                 extra = self._get_extra_info(phase="report", entity=entity, document=document)
-                documents.info(f"Pipeline success: {external_id}", extra=extra)
+                documents.info(f"Tasks success: {external_id}", extra=extra)
             else:
                 extra = self._get_extra_info(phase="report", entity=entity, document=document)
-                documents.error(f"Pipeline error: {external_id}", extra=extra)
+                documents.error(f"Tasks error: {external_id}", extra=extra)
         # Report material state
         document_info.update({
             "state": state

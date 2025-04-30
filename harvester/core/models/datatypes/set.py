@@ -21,7 +21,7 @@ def default_set_tasks():
     }
 
 
-class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
+class HarvestSet(HarvestObjectMixin, DocumentCollectionMixin, CollectionBase):
     """
     Represents a set as used by the OAI-PMH protocol.
     These sets are logically collections of documents.
@@ -53,7 +53,7 @@ class HarvestSet(DocumentCollectionMixin, CollectionBase, HarvestObjectMixin):
     @property
     def document_update_fields(self) -> list[str]:
         fields = super().document_update_fields
-        fields += ["state", "pipeline", "derivatives", "pending_at", "finished_at", "metadata"]
+        fields += ["state", "metadata"]
         return fields
 
     def copy_documents(self, source_set: HarvestSet) -> None:

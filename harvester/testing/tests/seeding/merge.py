@@ -59,7 +59,7 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
                                soft_deletes=True)
         )
         TestDocument.objects.all().update(
-            finished_at=self.current_time, pending_at=None, pipeline={"tika": {"success": True}}
+            finished_at=self.current_time, pending_at=None, task_results={"tika": {"success": True}}
         )
         self.updated_document = TestDocument.objects.get(properties__srn="surf:testing:1")
         self.updated_document.properties["title"] = "title for 1 before update"
@@ -67,7 +67,7 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.updated_document.save()
         self.unchanged_document = TestDocument.objects.get(properties__srn="surf:testing:2")
         self.unchanged_document.metadata["hash"] = "68ec32dbc79b1a5fc40caaec4134b4ba8b12bd8f"
-        self.unchanged_document.pipeline["tika"] = {"success": True}
+        self.unchanged_document.task_results["tika"] = {"success": True}
         self.unchanged_document.save()
 
     @patch.object(MockIdsResource, "PARAMETERS", UPDATE_PARAMETERS)
@@ -131,8 +131,8 @@ class TestMergeUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             "Expected unchanged document to keep finished_at same as at start of test"
         )
         self.assertIn(
-            "tika", unchanged_document.pipeline,
-            "Expected pre-existing document without update to keep any pipeline state"
+            "tika", unchanged_document.task_results,
+            "Expected pre-existing document without update to keep any task_results state"
         )
 
     @patch.object(MockIdsResource, "PARAMETERS", UPDATE_PARAMETERS)

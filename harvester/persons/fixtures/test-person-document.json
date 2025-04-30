@@ -12,7 +12,7 @@
     "model": "persons.datasetversion",
     "pk": 1,
     "fields": {
-        "pipeline": {
+        "task_results": {
             "create_opensearch_index": {
                 "success": true
             },
@@ -52,7 +52,7 @@
         "modified_at": "2025-02-13T01:23:29.761Z",
         "identifier": "srn",
         "referee": null,
-        "pipeline": {
+        "task_results": {
             "check_set_integrity": {
                 "success": true
             }
@@ -121,7 +121,7 @@
         },
         "identity": "hku:person:1",
         "reference": null,
-        "pipeline": {
+        "task_results": {
             "deactivate_invalid_documents": {
                 "success": true,
                 "validation": null

@@ -89,7 +89,7 @@ class TestLookupStudyVocabularyParents(TestCase):
                 }
             }
         }, "Expected all parents of all study vocabulary terms to get added without duplications")
-        self.assertEqual(doc_1.pipeline, {
+        self.assertEqual(doc_1.task_results, {
             "lookup_study_vocabulary_parents": {"success": True}
         })
         doc_2 = ProductDocument.objects.get(identity="surf:testing:2")
@@ -112,7 +112,7 @@ class TestLookupStudyVocabularyParents(TestCase):
                 }
             }
         }, "Expected parent of study vocabulary term to get added")
-        self.assertEqual(doc_2.pipeline, {
+        self.assertEqual(doc_2.task_results, {
             "lookup_study_vocabulary_parents": {"success": True}
         })
         doc_3 = ProductDocument.objects.get(identity="surf:testing:3")
@@ -125,6 +125,6 @@ class TestLookupStudyVocabularyParents(TestCase):
                 }
             }
         }, "Expected empty list when no study vocabulary terms were specified")
-        self.assertEqual(doc_3.pipeline, {
+        self.assertEqual(doc_3.task_results, {
             "lookup_study_vocabulary_parents": {"success": True}
         })

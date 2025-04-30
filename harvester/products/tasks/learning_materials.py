@@ -39,7 +39,7 @@ def lookup_study_vocabulary_parents(app_label: str, document_ids: list[int]) -> 
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_study_vocabulary_parents"] = {
+        document.task_results["lookup_study_vocabulary_parents"] = {
             "success": True
         }
         document.save()
@@ -64,7 +64,7 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["normalize_disciplines"] = {
+        document.task_results["normalize_disciplines"] = {
             "success": True
         }
         document.save()
@@ -89,7 +89,7 @@ def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> N
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_consortium_translations"] = {
+        document.task_results["lookup_consortium_translations"] = {
             "success": True
         }
         document.save()
@@ -127,7 +127,7 @@ def lookup_industry_parents(app_label: str, document_ids: list[int]) -> None:
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_industry_parents"] = {
+        document.task_results["lookup_industry_parents"] = {
             "success": True
         }
         document.save()
@@ -151,7 +151,7 @@ def lookup_industries_translations(app_label: str, document_ids: list[int]) -> N
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_industries_translations"] = {
+        document.task_results["lookup_industries_translations"] = {
             "success": True
         }
         document.save()
@@ -189,7 +189,7 @@ def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_sector_parents"] = {
+        document.task_results["lookup_sector_parents"] = {
             "success": True
         }
         document.save()
@@ -213,7 +213,7 @@ def lookup_sectors_translations(app_label: str, document_ids: list[int]) -> None
             }
         }
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["lookup_sectors_translations"] = {
+        document.task_results["lookup_sectors_translations"] = {
             "success": True
         }
         document.save()

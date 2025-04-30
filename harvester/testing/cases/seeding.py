@@ -49,7 +49,7 @@ class SeedingTestCase(TestCase):
         for batch in self.processor(self.source, "1970-01-01T00:00:00Z"):
             for doc in batch:
                 for task in doc.tasks.keys():
-                    doc.pipeline[task] = {"success": True}
+                    doc.task_results[task] = {"success": True}
                 if self.delete_policy == DeletePolicies.NO:
                     doc.properties["state"] = self.models["Document"].States.DELETED
                 doc.clean()

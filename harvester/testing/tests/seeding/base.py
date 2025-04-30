@@ -19,7 +19,7 @@ class HttpSeedingProcessorTestCase(TestCase):
         self.set = Set.objects.create(name="test", identifier="srn", dataset_version=self.dataset_version)
         self.ignored_document = TestDocument(
             collection=self.set,
-            pipeline={"tika": {"success": True}},
+            task_results={"tika": {"success": True}},
             properties={
                 "state": "active"
             },
@@ -49,7 +49,9 @@ class HttpSeedingProcessorTestCase(TestCase):
                 self.assertIsNotNone(result.identity, "Expected Set to prescribe the identity for TestDocument")
                 self.assertEqual(sorted(result.properties.keys()), sorted(list(SEED_DEFAULTS.keys()) + extra_keys))
                 if result.id not in preexisting_document_ids:
-                    self.assertFalse(result.pipeline, "Expected TestDocument without further pipeline processing")
+                    self.assertFalse(
+                        result.task_results, "Expected TestDocument without further task_results processing"
+                    )
                     self.assertFalse(result.derivatives, "Expected TestDocument without processing results")
                     if result.state == TestDocument.States.ACTIVE:
                         self.assertTrue(result.pending_at, "Expected new TestDocuments to be pending for processing")
@@ -73,7 +75,7 @@ class HttpSeedingProcessorTestCase(TestCase):
         ignored_document = TestDocument.objects.get(id=self.ignored_document.id)
         self.assertEqual(ignored_document.metadata, self.ignored_document.metadata)
         self.assertEqual(ignored_document.identity, self.ignored_document.identity)
-        self.assertEqual(ignored_document.pipeline, self.ignored_document.pipeline)
+        self.assertEqual(ignored_document.task_results, self.ignored_document.task_results)
         self.assertEqual(ignored_document.properties, self.ignored_document.properties)
         self.assertEqual(ignored_document.derivatives, self.ignored_document.derivatives)
         self.assertIsNone(ignored_document.pending_at)

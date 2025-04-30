@@ -4,7 +4,7 @@ from django.conf import settings
 from celery import current_app as app
 
 from harvester.tasks.base import DatabaseConnectionResetTask
-from core.processors import HttpPipelineProcessor
+from core.processors import HttpGrowthProcessor
 from core.loading import load_harvest_models
 
 
@@ -23,7 +23,7 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
         url = doc.properties.get("url")
         doc.status_code = 203 if url else 404  # 203 means non-authoritative information
         doc.is_not_found = doc.status_code == 404
-        doc.pipeline["check_url"] = {"success": bool(url), "is_auto_succeed": True}
+        doc.task_results["check_url"] = {"success": bool(url), "is_auto_succeed": True}
         doc.derivatives["check_url"] = {
             "url": url,
             "status": doc.status_code,
@@ -36,14 +36,14 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
     if not check_document_ids:  # all Documents auto succeeded
         return
 
-    check_url_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+    check_url_processor = HttpGrowthProcessor({
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "check_url",
+        "growth_phase": "check_url",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -52,11 +52,8 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
             "args": ["$.url"],
             "kwargs": {},
         },
-        "contribute_data": {
-            "to_property": "derivatives/check_url",
-            "extractor": "ExtractProcessor.pass_resource_through",
-            "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"],
-        }
+        "extractor": "ExtractProcessor.pass_resource_through",
+        "apply_resource_to": ["status_code", "redirects", "is_not_found", "pending_at", "finished_at"]
     })
     check_url_processor(Document.objects.filter(id__in=check_document_ids))
 
@@ -73,14 +70,14 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Document = models["Document"]
 
-    tika_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+    tika_processor = HttpGrowthProcessor({
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "tika",
+        "growth_phase": "tika",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -91,7 +88,6 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/tika",
             "objective": {
                 "@": "$",
                 "#texts": tika_content_extraction,
@@ -106,14 +102,14 @@ def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     Document = models["Document"]
 
-    tika_plain_processor = HttpPipelineProcessor({
-        "pipeline_app_label": app_label,
-        "pipeline_models": {
+    tika_plain_processor = HttpGrowthProcessor({
+        "datatypes_app_label": app_label,
+        "datatype_models": {
             "document": Document._meta.model_name,
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "tika_plain",
+        "growth_phase": "tika_plain",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -124,7 +120,6 @@ def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
             "kwargs": {},
         },
         "contribute_data": {
-            "to_property": "derivatives/tika_plain",
             "objective": {
                 "@": "$",
                 "#plains": tika_content_extraction,
@@ -164,14 +159,14 @@ def get_previews(node):
 def youtube_api_task(app_label, document_ids: list[int]) -> None:
     models = load_harvest_models(app_label)
     FileDocument = models["Document"]
-    youtube_api_processor = HttpPipelineProcessor({
-        "pipeline_app_label": "files",
-        "pipeline_models": {
+    youtube_api_processor = HttpGrowthProcessor({
+        "datatypes_app_label": "files",
+        "datatype_models": {
             "document": "FileDocument",
             "process_result": "ProcessResult",
             "batch": "Batch"
         },
-        "pipeline_phase": "youtube_api",
+        "growth_phase": "youtube_api",
         "batch_size": len(document_ids),
         "asynchronous": False,
         "retrieve_data": {
@@ -180,9 +175,8 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
             "args": ["$.url", "videos"],
             "kwargs": {},
         },
+        "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
         "contribute_data": {
-            "to_property": "derivatives/youtube_api",
-            "apply_resource_to": ["is_not_found", "pending_at", "finished_at"],
             "objective": {
                 "@": "$.items.0",
                 "description": "$.snippet.description",

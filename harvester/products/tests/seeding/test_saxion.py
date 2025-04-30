@@ -56,7 +56,7 @@ class TestSaxionProductSeeding(TestCase):
         for batch in self.processor("kenniscentra", "1970-01-01T00:00:00Z"):
             for doc in batch:
                 for task in doc.tasks.keys():
-                    doc.pipeline[task] = {"success": True}
+                    doc.task_results[task] = {"success": True}
                 doc.finish_processing()
                 initial_documents.append(doc)
         # Saxion doesn't really have delta's, so we delete initial resources and create a new "delta" resource.

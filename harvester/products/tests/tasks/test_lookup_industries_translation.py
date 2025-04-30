@@ -54,7 +54,7 @@ class TestLookupIndustriesTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(industries_doc.pipeline, {
+        self.assertEqual(industries_doc.task_results, {
             "lookup_industries_translations": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:2")
@@ -67,6 +67,6 @@ class TestLookupIndustriesTranslations(TestCase):
                 }
             }
         })
-        self.assertEqual(undefined.pipeline, {
+        self.assertEqual(undefined.task_results, {
             "lookup_industries_translations": {"success": True}
         })
