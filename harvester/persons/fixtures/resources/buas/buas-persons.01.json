@@ -1,0 +1,2281 @@
+{
+    "count": 3,
+    "pageInformation": {
+        "offset": 0,
+        "size": 100
+    },
+    "items": [
+        {
+            "pureId": 18060,
+            "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+            "externalIdSource": "synchronisedUnifiedPerson",
+            "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+            "name": {
+                "firstName": "F",
+                "lastName": "Maggie"
+            },
+            "scopusHIndex": 2,
+            "fte": 0.0,
+            "info": {
+                "createdBy": "sync_user",
+                "createdDate": "2016-01-25T08:48:47.589+0000",
+                "modifiedBy": "sync_user",
+                "modifiedDate": "2020-07-19T23:00:00.815+0000",
+                "portalUrl": "https://pure.buas.nl/en/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+            },
+            "visibility": {
+                "key": "FREE",
+                "value": {
+                    "formatted": false,
+                    "text": [
+                        {
+                            "locale": "en_GB",
+                            "value": "Public - No restriction"
+                        }
+                    ]
+                }
+            },
+            "staffOrganisationAssociations": [
+                {
+                    "pureId": 18061,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_7",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-01-01T12:00:00.000+0000",
+                        "endDate": "2014-07-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.8,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18062,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_6",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-01-01T12:00:00.000+0000",
+                        "endDate": "2014-06-30T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.2,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18064,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_5",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-01-01T12:00:00.000+0000",
+                        "endDate": "2013-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.6,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18066,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_4",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-07-13T12:00:00.000+0000",
+                        "endDate": "2013-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18067,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_3",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-01-01T12:00:00.000+0000",
+                        "endDate": "2013-07-12T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18068,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_2",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2012-06-04T12:00:00.000+0000",
+                        "endDate": "2012-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.6,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18069,
+                    "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==_1",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f2",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f2"
+                        },
+                        "externalId": "Y/tUU2VYUTUCYQxjXsUkPA==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "F Maggie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2012-10-01T12:00:00.000+0000",
+                        "endDate": "2012-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Researcher"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "pureId": 18150,
+            "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+            "externalIdSource": "synchronisedUnifiedPerson",
+            "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+            "name": {
+                "firstName": "OSP",
+                "lastName": "Bassie"
+            },
+            "scopusHIndex": 1,
+            "fte": 0.8,
+            "info": {
+                "createdBy": "sync_user",
+                "createdDate": "2016-01-25T08:48:47.834+0000",
+                "modifiedBy": "sync_user",
+                "modifiedDate": "2021-07-02T09:21:57.300+0000",
+                "portalUrl": "https://pure.buas.nl/en/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                "prettyURLIdentifiers": [
+                    "ozzie-bassie",
+                    "osp-bassie"
+                ]
+            },
+            "visibility": {
+                "key": "FREE",
+                "value": {
+                    "formatted": false,
+                    "text": [
+                        {
+                            "locale": "en_GB",
+                            "value": "Public - No restriction"
+                        }
+                    ]
+                }
+            },
+            "nameVariants": [
+                {
+                    "pureId": 730014,
+                    "name": {
+                        "firstName": "Ozzie",
+                        "lastName": "Bassie"
+                    },
+                    "type": {
+                        "pureId": 7603,
+                        "uri": "/dk/atira/pure/person/names/knownas",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Known as name"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "profilePhotos": [
+                {
+                    "pureId": 251152,
+                    "url": "https://pure.buas.nl/ws/files/251152/Bassie_Ozzie.jpg",
+                    "filename": "Bassie_Ozzie.jpg",
+                    "mimetype": "image/jpeg",
+                    "size": 6550797,
+                    "type": {
+                        "pureId": 7627,
+                        "uri": "/dk/atira/pure/person/personfiles/portrait",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Portrait"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 1202877,
+                    "url": "http://www.linkedin.com/in/ozzie-bassie",
+                    "linkType": {
+                        "pureId": 7633,
+                        "uri": "/dk/atira/pure/links/person/linkedin",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "LinkedIn"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "profileInformations": [
+                {
+                    "pureId": 251153,
+                    "value": {
+                        "formatted": true,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "<p><strong>Ozzie Bassie</strong> (1990) is a researcher and lecturer in the fields of multi-narrative design (transmedia), semiotics, and virtual reality. Graduated in 2013 from the Master in Media Innovation, Ozzie is now in the process of obtaining funding for his PhD research on multi-narrative design, as a part of the professorship on Contextual Connected Media of Prof. Marnix van Gisbergen. Besides his research, Ozzie co-runs The Creative Lab (<a href=\"http://www.creativelabbreda.nl/\"><span style=\"color: #0000ff;\">www.creativelabbreda.nl</span></a>), an extra-curricular platform for students, staff and industry to meet, inspire and collaborate on innovative projects in the media and gaming field, like virtual reality and 360\u00ae video. He has directed several 360\u00ae fiction films, of which one was nominated for the Bright VR Talent Award.</p>"
+                            }
+                        ]
+                    },
+                    "type": {
+                        "pureId": 4710,
+                        "uri": "/dk/atira/pure/person/customfields/researchinterests",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Research interests"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "pureId": 251155,
+                    "value": {
+                        "formatted": true,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "<p>\u00a0Multi-narrative design (transmedia),semiotics, virtual reality</p>"
+                            }
+                        ]
+                    },
+                    "type": {
+                        "pureId": 90049,
+                        "uri": "/dk/atira/pure/person/customfields/subjects",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Subjects"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "staffOrganisationAssociations": [
+                {
+                    "pureId": 18151,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_11",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2015-03-01T12:00:00.000+0000",
+                        "endDate": "2018-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 1.0,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7671,
+                        "uri": "/dk/atira/pure/person/personcontracttype/openended",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Open ended"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Lecturer"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18152,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_10",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2015-01-01T12:00:00.000+0000",
+                        "endDate": "2015-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 1.0,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Lecturer"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18153,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_9",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-09-01T12:00:00.000+0000",
+                        "endDate": "2014-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.8,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18154,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_8",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-03-01T12:00:00.000+0000",
+                        "endDate": "2014-08-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18155,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_7",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-03-01T12:00:00.000+0000",
+                        "endDate": "2014-08-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18156,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_6",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-01-01T12:00:00.000+0000",
+                        "endDate": "2014-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.2,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18157,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_3",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-11-25T12:00:00.000+0000",
+                        "endDate": "2014-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18158,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_4",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-11-25T12:00:00.000+0000",
+                        "endDate": "2014-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.2,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18159,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_5",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-01-01T12:00:00.000+0000",
+                        "endDate": "2014-02-28T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.2,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 18160,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_2",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2013-09-01T12:00:00.000+0000",
+                        "endDate": "2013-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.4,
+                    "employmentType": {
+                        "pureId": 4744,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalsupportstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational support staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Instructor"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "pureId": 344050,
+                    "externalId": "8FaZMjZMhWxT0akdVQgAWQ==_12",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "06fc2a73-ecb1-4fc3-a6ef-b225a4676b84",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/06fc2a73-ecb1-4fc3-a6ef-b225a4676b84"
+                        },
+                        "externalId": "8FaZMjZMhWxT0akdVQgAWQ==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "Ozzie Bassie"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2018-03-01T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": false,
+                    "fte": 0.8,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7671,
+                        "uri": "/dk/atira/pure/person/personcontracttype/openended",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Open ended"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Lecturer"
+                            }
+                        ]
+                    },
+                    "emails": [
+                        {
+                            "pureId": 1212698,
+                            "value": {
+                                "formatted": false,
+                                "value": "bassie@buas.nl"
+                            },
+                            "type": {
+                                "pureId": 7677,
+                                "uri": "/dk/atira/pure/person/personemailtype/email",
+                                "term": {
+                                    "formatted": false,
+                                    "text": [
+                                        {
+                                            "locale": "en_GB",
+                                            "value": "Email"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "pureId": 18062,
+            "externalId": "Z/tUU2VYUTUCYQxjXsUkPC==",
+            "externalIdSource": "synchronisedUnifiedPerson",
+            "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f4",
+            "name": {
+                "firstName": "A",
+                "lastName": "Johnson"
+            },
+            "scopusHIndex": 4,
+            "fte": 0.8,
+            "info": {
+                "createdBy": "sync_user",
+                "createdDate": "2016-03-25T08:48:47.589+0000",
+                "modifiedBy": "sync_user",
+                "modifiedDate": "2020-07-19T23:00:00.815+0000",
+                "portalUrl": "https://pure.buas.nl/en/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f4"
+            },
+            "visibility": {
+                "key": "FREE",
+                "value": {
+                    "formatted": false,
+                    "text": [
+                        {
+                            "locale": "en_GB",
+                            "value": "Public - No restriction"
+                        }
+                    ]
+                }
+            },
+            "staffOrganisationAssociations": [
+                {
+                    "pureId": 18063,
+                    "externalId": "Z/tUU2VYUTUCYQxjXsUkPC==_1",
+                    "externalIdSource": "synchronisedUnifiedPerson",
+                    "person": {
+                        "uuid": "db0b6307-3da1-4c73-9c84-3cb7c85ca3f4",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/persons/db0b6307-3da1-4c73-9c84-3cb7c85ca3f4"
+                        },
+                        "externalId": "Z/tUU2VYUTUCYQxjXsUkPC==",
+                        "externalIdSource": "synchronisedUnifiedPerson",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "value": "A Johnson"
+                                }
+                            ]
+                        }
+                    },
+                    "period": {
+                        "startDate": "2014-01-01T12:00:00.000+0000",
+                        "endDate": "2014-12-31T12:00:00.000+0000"
+                    },
+                    "isPrimaryAssociation": true,
+                    "fte": 0.8,
+                    "employmentType": {
+                        "pureId": 4742,
+                        "uri": "/dk/atira/pure/person/employmenttypes/educationalstaff",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Educational staff"
+                                }
+                            ]
+                        }
+                    },
+                    "organisationalUnit": {
+                        "uuid": "ac37675a-4aeb-436a-9dd8-ae0fb3241343",
+                        "link": {
+                            "ref": "content",
+                            "href": "https://pure.buas.nl/ws/api/523/organisational-units/ac37675a-4aeb-436a-9dd8-ae0fb3241343"
+                        },
+                        "externalId": "1000000",
+                        "externalIdSource": "synchronisedUnifiedOrganisation",
+                        "name": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academy for Games & Media"
+                                }
+                            ]
+                        },
+                        "type": {
+                            "pureId": 5173,
+                            "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/academy",
+                            "term": {
+                                "formatted": false,
+                                "text": [
+                                    {
+                                        "locale": "en_GB",
+                                        "value": "Academy"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "contractType": {
+                        "pureId": 7669,
+                        "uri": "/dk/atira/pure/person/personcontracttype/fixedterm",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Fixed-term"
+                                }
+                            ]
+                        }
+                    },
+                    "staffType": {
+                        "pureId": 7693,
+                        "uri": "/dk/atira/pure/person/personstafftype/academic",
+                        "term": {
+                            "formatted": false,
+                            "text": [
+                                {
+                                    "locale": "en_GB",
+                                    "value": "Academic"
+                                }
+                            ]
+                        }
+                    },
+                    "jobDescription": {
+                        "formatted": false,
+                        "text": [
+                            {
+                                "locale": "en_GB",
+                                "value": "Senior Lecturer"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
