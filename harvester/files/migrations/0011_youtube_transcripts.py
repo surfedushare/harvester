@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('files', '0009_improve_document_indices'),
+        ('files', '0010_datagrowth_v0_20'),
     ]
 
     operations = [
