@@ -56,7 +56,7 @@ django-storages==1.14.6
 
 # Tools
 watchdog==2.3.1
-ipython==8.35.0
+ipython==8.36.0
 tqdm==4.67.1
 invoke==2.2.0
 ipdb==0.13.13
