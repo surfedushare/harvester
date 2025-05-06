@@ -38,7 +38,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.deleted_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={},
+            task_results={},
             properties={
                 "state": "active",
                 "set": "surf:testing",
@@ -57,7 +57,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.updated_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={
+            task_results={
                 "tika": {
                     "success": True
                 }
@@ -81,7 +81,7 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             dataset_version=self.dataset_version,
             collection=self.set,
             identity="surf:testing:2",
-            pipeline={
+            task_results={
                 "tika": {
                     "success": True
                 }
@@ -139,8 +139,8 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             "Expected pre-existing document without relevant update to not become pending for tasks"
         )
         self.assertIn(
-            "tika", updated_document.pipeline,
-            "Expected pre-existing document without relevant update to keep any pipeline state"
+            "tika", updated_document.task_results,
+            "Expected pre-existing document without relevant update to keep any task_results state"
         )
         self.assertIsNone(updated_document.pending_at, "Did not expect title change to set Document as pending")
         self.assertEqual(
@@ -162,6 +162,6 @@ class TestSimpleUpdateHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             "Expected unchanged document to keep finished_at same as at start of test"
         )
         self.assertIn(
-            "tika", unchanged_document.pipeline,
-            "Expected pre-existing document without update to keep any pipeline state"
+            "tika", unchanged_document.task_results,
+            "Expected pre-existing document without update to keep any task_results state"
         )

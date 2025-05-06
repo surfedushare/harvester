@@ -1,5 +1,7 @@
+from typing import Callable, List
+import logging
 from time import sleep
-from sentry_sdk import capture_message
+from collections import defaultdict
 from collections.abc import Generator
 
 from django.db.models import Q
@@ -10,14 +12,25 @@ from datagrowth.configuration import create_config
 from datagrowth.resources.base import Resource
 from datagrowth.resources.http.tasks import send
 from datagrowth.resources.shell.tasks import run
-from datagrowth.processors import Processor, ExtractProcessor
+from datagrowth.processors import ProcessorFactory
 
-from core.processors.pipeline.base import PipelineProcessor
+from core.processors.pipeline.base import GrowthProcessor
 
 
-class ResourcePipelineProcessor(PipelineProcessor):
+log = logging.getLogger("datagrowth.growth")
+
+
+class ResourceGrowthProcessor(GrowthProcessor):
 
     resource_type = None
+
+    def __init__(self, config):
+        super().__init__(config)
+        resource_app_label, resource_model = self.config.retrieve_data["resource"].split(".")
+        self.result_type = ContentType.objects.get_by_natural_key(resource_app_label, resource_model)
+
+    def reduce_contributions(self, contributions):
+        return contributions[0]
 
     def resource_is_empty(self, resource):
         return False
@@ -26,22 +39,18 @@ class ResourcePipelineProcessor(PipelineProcessor):
         return [], []
 
     def filter_documents(self, queryset):
-        depends_on = self.config.pipeline_depends_on
-        pipeline_phase = self.config.pipeline_phase
-        filters = Q(**{f"pipeline__{pipeline_phase}__success": False})
-        filters |= Q(**{f"pipeline__{pipeline_phase}__isnull": True})
+        depends_on = self.config.depends_on
+        growth_phase = self.config.growth_phase
+        filters = Q(**{f"task_results__{growth_phase}__success": False})
+        filters |= Q(**{f"task_results__{growth_phase}__isnull": True})
         if depends_on:
-            filters &= Q(**{f"pipeline__{depends_on}__success": True})
+            filters &= Q(**{f"task_results__{depends_on}__success": True})
         return queryset.filter(filters)
 
     def process_batch(self, batch):
 
         config = create_config(self.resource_type, self.config.retrieve_data)
-        app_label, resource_model = config.resource.split(".")
-        resource_type = ContentType.objects.get_by_natural_key(app_label, resource_model)
 
-        updates = []
-        creates = []
         for process_result in batch.processresult_set.all():
             args, kwargs = process_result.document.output(config.args, config.kwargs)
             successes, fails = self.dispatch_resource(config, *args, **kwargs)
@@ -49,43 +58,42 @@ class ResourcePipelineProcessor(PipelineProcessor):
             if not len(results):
                 continue
             result_id = results.pop(0)
-            process_result.result_type = resource_type
+            process_result.result_type = self.result_type
             process_result.result_id = result_id
-            updates.append(process_result)
-            for result_id in results:
-                creates.append(
-                    self.ProcessResult(document=process_result.document, batch=batch,
-                                       result_id=result_id, result_type=resource_type)
-                )
-            self.ProcessResult.objects.bulk_create(creates)
-            self.ProcessResult.objects.bulk_update(updates, ["result_type", "result_id"])
+            process_result.save()
+            creates = [
+                self.ProcessResult(document=process_result.document, batch=batch, result_id=result_id,
+                                   result_type=self.result_type)
+                for result_id in results
+            ]
+            if creates:
+                self.ProcessResult.objects.bulk_create(creates)
 
-    def extract_from_resource(self, extractor: ExtractProcessor, extract_method_name: str,
-                              resource: Resource) -> dict | None:
+    def extract_contributions(self, extract_method: Callable, resource: Resource,
+                              allow_simple_values: bool = False) -> List:
         if self.resource_is_empty(resource):
-            return
-        extractor_method = getattr(extractor, extract_method_name)
-        contribution = extractor_method(resource)
+            return []
+        contribution = extract_method(resource)
         if isinstance(contribution, Generator):
             contribution = list(contribution)
-        if isinstance(contribution, dict):
+
+        if isinstance(contribution, list):
             return contribution
-        elif isinstance(contribution, list):
-            return contribution[0] if len(contribution) else None
         elif contribution is None:
-            return
+            return []
+        elif isinstance(contribution, dict) or allow_simple_values:
+            return [contribution]
+        elif isinstance(contribution, (str, int, float,)):
+            return [{"value": contribution}]
         else:
             raise ValueError(f"Unknown contribution type: {type(contribution)}")
 
     def merge_batch(self, batch):
-        pipeline_phase = self.config.pipeline_phase
-        config = create_config("extract_processor", self.config.contribute_data)
-        contribution_processor = config.extractor
-        extractor_name, method_name = Processor.get_processor_components(contribution_processor)
-        extractor_class = Processor.get_processor_class(extractor_name)
-        extractor = extractor_class(config)
-        contribution_field = "properties"
-        contribution_property = config.to_property
+        growth_phase = self.config.growth_phase
+        config = create_config("extract_processor", self.config.get("contribute_data", default={}))
+        contribution_processor = self.config.extractor
+        contribution_field = "derivatives"
+        contribution_property = self.config.to_property
         if contribution_property and "/" in contribution_property:
             contribution_field, contribution_property = contribution_property.split("/")
             contribution_property = contribution_property or None
@@ -93,28 +101,55 @@ class ResourcePipelineProcessor(PipelineProcessor):
         attempts = 0
         while attempts < 3:
 
-            documents = []
+            result_resources = defaultdict(list)
             for process_result in batch.processresult_set.filter(result_id__isnull=False):
-                result = process_result.result
-                # Write results to the pipeline
-                process_result.document.pipeline[pipeline_phase] = {
-                    "success": result.success,
-                    "resource": f"{result._meta.app_label}.{result._meta.model_name}",
-                    "id": result.id,
-                    "first_processed_at": result.created_at.isoformat(),
+                result_resources[process_result.document].append(process_result.result)
+
+            documents = []
+            for document, resources in result_resources.items():
+                main = resources[0]
+                # Write results to the task_results
+                document.task_results[growth_phase] = {
+                    "success": all([rsc.success for rsc in resources]),
+                    "resource": f"{main._meta.app_label}.{main._meta.model_name}",
+                    "id": main.id,
+                    "ids": [rsc.id for rsc in resources]
                 }
                 # Possibly "apply" the Resource to the Document to allow custom updates
-                if config.apply_resource_to:
-                    process_result.document.apply_resource(process_result.result)
+                if self.config.apply_resource_to:
+                    if len(resources) > 1:
+                        log.warning("Skipping a number of apply_resource calls for multiple resources result")
+                    document.apply_resource(main)
 
-                documents.append(process_result.document)
+                documents.append(document)
                 # Write data to the Document
-                contribution = self.extract_from_resource(extractor, method_name, result)
-                if contribution:
-                    field_attribute = getattr(process_result.document, contribution_field)
-                    if contribution_property is None:
+                extract_processor, extract_method = ProcessorFactory(contribution_processor).build_with_callable(config)
+                contributions = []
+                for resource in resources:
+                    extraction = self.extract_contributions(
+                        extract_method, resource,
+                        allow_simple_values=bool(contribution_property)
+                    )
+                    contributions += extraction
+                if len(contributions):
+                    # Prepare contributions and field to write the data
+                    contribution = self.reduce_contributions(contributions)
+                    field_attribute = getattr(document, contribution_field)
+                    if contribution_field == "derivatives" and growth_phase not in field_attribute:
+                        field_attribute[growth_phase] = {}
+                    # Write data based on configuration
+                    if contribution_field == "derivatives" and contribution_property:
+                        # Writing to property within growth phase derivatives data
+                        field_attribute[growth_phase][contribution_property] = contribution
+                    elif contribution_field == "derivatives":
+                        # Merge contributions into derivatives by growth phase
+                        field_attribute[growth_phase].update(contribution)
+                    elif contribution_property is None:
+                        # Usually this doesn't occur, because it's recommended to write contributions to a specific key.
+                        # However we keep this option for backward compatability.
                         field_attribute.update(contribution)
                     else:
+                        # Writing to property within field that is not the derivatives field
                         field_attribute[contribution_property] = contribution
 
             # We'll be locking the Documents for update to prevent accidental overwrite of parallel results
@@ -122,21 +157,21 @@ class ResourcePipelineProcessor(PipelineProcessor):
                 try:
                     list(
                         self.Document.objects
-                            .filter(id__in=[doc.id for doc in documents])
-                            .select_for_update(nowait=True)
+                        .filter(id__in=[doc.id for doc in documents])
+                        .select_for_update(nowait=True)
                     )
                 except transaction.DatabaseError:
                     attempts += 1
-                    warning = f"Failed to acquire lock to merge pipeline batch (attempt={attempts})"
-                    capture_message(warning, level="warning")
+                    warning = f"Failed to acquire lock to merge growth batch (attempt={attempts})"
+                    log.warning(warning)
                     sleep(5)
                     continue
-                fields = ["pipeline", contribution_field] + config.apply_resource_to
+                fields = ["task_results", contribution_field] + self.config.apply_resource_to
                 self.Document.objects.bulk_update(documents, fields)
                 break
 
 
-class HttpPipelineProcessor(ResourcePipelineProcessor):
+class HttpGrowthProcessor(ResourceGrowthProcessor):
 
     resource_type = "http_resource"
 
@@ -147,7 +182,7 @@ class HttpPipelineProcessor(ResourcePipelineProcessor):
         return resource.status == 204
 
 
-class ShellPipelineProcessor(ResourcePipelineProcessor):
+class ShellGrowthProcessor(ResourceGrowthProcessor):
 
     resource_type = "shell_resource"
 

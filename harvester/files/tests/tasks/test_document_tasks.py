@@ -36,19 +36,19 @@ class TestHarvestObjectFileDocument(TestCase):
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed
-        self.document_1.pipeline["check_url"] = {"success": True}
+        self.document_1.task_results["check_url"] = {"success": True}
         self.document_1.derivatives["check_url"] = {"status": 200}
-        self.document_1.pipeline["deactivate_invalid_documents"] = {
+        self.document_1.task_results["deactivate_invalid_documents"] = {
             "success": True,
             "validation": None
         }
         self.document_1.save()
-        self.youtube.pipeline["deactivate_invalid_documents"] = {
+        self.youtube.task_results["deactivate_invalid_documents"] = {
             "success": True,
             "validation": None
         }
-        self.youtube.pipeline["youtube_api"] = {"success": True}
-        self.youtube.pipeline["video_preview"] = {"success": True}
+        self.youtube.task_results["youtube_api"] = {"success": True}
+        self.youtube.task_results["video_preview"] = {"success": True}
         self.youtube.save()
         # Assert that tasks depending on Tika have become pending
         pending_tasks_1 = self.document_1.get_pending_tasks()
@@ -101,7 +101,7 @@ class TestSimpleDocumentTasks(TestCase):
             self.assertEqual(doc.domain, "example.com")
             self.assertIsNone(doc.mime_type)
             self.assertEqual(doc.type, "unknown")
-            self.assertTrue(doc.pipeline["check_url"]["success"])
+            self.assertTrue(doc.task_results["check_url"]["success"])
         # Assert the success document
         success = FileDocument.objects.get(id=self.success.id)
         self.assertIn("check_url", success.derivatives)
@@ -112,14 +112,14 @@ class TestSimpleDocumentTasks(TestCase):
         self.assertEqual(success.get_pending_tasks(), [], "Expected simple tasks to complete, leaving no pending tasks")
         # Assert the not found document
         not_found = FileDocument.objects.get(id=self.not_found.id)
-        self.assertNotIn("tika", not_found.pipeline)
+        self.assertNotIn("tika", not_found.task_results)
         self.assertNotIn("tika", not_found.derivatives)
         self.assertTrue(not_found.is_not_found)
         self.assertFalse(not_found.pending_at, "Expected Document to indicate it is no longer pending for tasks")
         self.assertIsNotNone(not_found.finished_at, "Expected Document to indicate it is finished")
         self.assertEqual(
             not_found.get_pending_tasks(), [],
-            "Expected 404 to register no pending tasks until the pipeline field gets a reset"
+            "Expected 404 to register no pending tasks until the task_results field gets a reset"
         )
 
     def test_dispatch_document_tasks_no_documents(self):
@@ -128,12 +128,15 @@ class TestSimpleDocumentTasks(TestCase):
     def test_cancel_document_tasks(self):
         cancel_document_tasks("files", self.documents)
         for doc in FileDocument.objects.all():
-            self.assertNotEqual(doc.pipeline, {}, "Expected cancel_document_tasks to write to pipeline")
-            for task, result in doc.pipeline.items():
+            self.assertNotEqual(doc.task_results, {}, "Expected cancel_document_tasks to write to task_results")
+            for task, result in doc.task_results.items():
                 self.assertEqual(result, {"success": False, "canceled": True})
 
     def test_cancel_document_tasks_no_documents(self):
         cancel_document_tasks("files", [])
         self.assertGreater(FileDocument.objects.all().count(), 0)
         for doc in FileDocument.objects.all():
-            self.assertEqual(doc.pipeline, {}, "Expected cancel_document_tasks to do nothing without input documents")
+            self.assertEqual(
+                doc.task_results, {},
+                "Expected cancel_document_tasks to do nothing without input documents"
+            )

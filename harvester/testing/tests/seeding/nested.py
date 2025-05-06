@@ -47,7 +47,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.updated_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={"tika": {"success": True}},
+            task_results={"tika": {"success": True}},
             properties={
                 "state": "active",
                 "set": "surf:testing",
@@ -68,7 +68,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             dataset_version=self.dataset_version,
             collection=self.set,
             identity="surf:testing:2",
-            pipeline={
+            task_results={
                 "tika": {
                     "success": True
                 }
@@ -92,7 +92,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
         self.deleted_document = TestDocument(
             dataset_version=self.dataset_version,
             collection=self.set,
-            pipeline={"tika": {"success": True}},
+            task_results={"tika": {"success": True}},
             properties={
                 "state": "active",
                 "set": "surf:testing",
@@ -167,7 +167,7 @@ class TestNestedDeletesHttpSeedingProcessor(HttpSeedingProcessorTestCase):
             "Expected unchanged document to keep finished_at same as at start of test"
         )
         self.assertIn(
-            "tika", unchanged_document.pipeline,
-            "Expected pre-existing document without update to keep any pipeline state"
+            "tika", unchanged_document.task_results,
+            "Expected pre-existing document without update to keep any task_results state"
         )
         self.assertEqual(unchanged_document.properties["parent_id"], "surf:testing:2")

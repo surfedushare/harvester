@@ -55,7 +55,7 @@ class TestGreeniFileSeeding(TestCase):
         for batch in self.processor("PUBVHL", "1970-01-01T00:00:00Z"):
             for doc in batch:
                 for task in doc.tasks.keys():
-                    doc.pipeline[task] = {"success": True}
+                    doc.task_results[task] = {"success": True}
                 doc.finish_processing()
                 initial_documents.append(doc)
         GreeniOAIPMHResourceFactory.create(is_initial=False, number=0)

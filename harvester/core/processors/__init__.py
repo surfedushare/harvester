@@ -1,2 +1,2 @@
-from .pipeline.resource import HttpPipelineProcessor, ShellPipelineProcessor
-from .seed.resource import HttpSeedingProcessor
+from core.processors.pipeline.resource import HttpGrowthProcessor, ShellGrowthProcessor
+from core.processors.seed.resource import HttpSeedingProcessor

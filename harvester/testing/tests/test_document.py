@@ -36,19 +36,19 @@ class TestDocumentModel(TestCase):
         })
 
     def test_invalidate_task(self):
-        # Setup the document to reflect that pipeline tasks have run
-        self.document.pipeline["tika"] = {"success": True}
+        # Setup the document to reflect that tasks have run
+        self.document.task_results["tika"] = {"success": True}
         self.document.derivatives["tika"] = {"texts": ["I will disappear"]}
-        self.document.pipeline["other"] = {"success": False}
+        self.document.task_results["other"] = {"success": False}
         self.document.derivatives["other"] = {"texts": ["I will remain"]}
         self.document.pending_at = None
         self.document.save()
         # Invalidate the Tika task
         self.document.invalidate_task("tika")
         # Assert the document
-        self.assertNotIn("tika", self.document.pipeline)
+        self.assertNotIn("tika", self.document.task_results)
         self.assertNotIn("tika", self.document.derivatives)
-        self.assertEqual(self.document.pipeline["other"], {"success": False})
+        self.assertEqual(self.document.task_results["other"], {"success": False})
         self.assertEqual(self.document.derivatives["other"], {"texts": ["I will remain"]})
         self.assertIsNotNone(
             self.document.pending_at,
@@ -65,7 +65,7 @@ class TestDocumentModel(TestCase):
         # Invalidate a non existing task
         self.document.invalidate_task("does_not_exist")
         # Assert the document
-        self.assertEqual(self.document.pipeline["other"], {"success": False})
+        self.assertEqual(self.document.task_results["other"], {"success": False})
         self.assertEqual(self.document.derivatives["other"], {"texts": ["I will remain"]})
         self.assertIsNone(self.document.pending_at, "Expected document to remain un-pending if task didn't exist")
         self.assertIsNotNone(
@@ -74,8 +74,8 @@ class TestDocumentModel(TestCase):
         )
 
     def test_update_url(self):
-        # Setup the document to reflect that pipeline tasks have run
-        self.document.pipeline["check_url"] = {"success": True}
+        # Setup the document to reflect that tasks have run
+        self.document.task_results["check_url"] = {"success": True}
         self.document.derivatives["check_url"] = {"status": 200}
         self.document.pending_at = None
         self.document.finished_at = now()
@@ -83,7 +83,7 @@ class TestDocumentModel(TestCase):
         # Update the document
         self.document.update({"url": None})
         # Assert the document
-        self.assertNotIn("check_url", self.document.pipeline)
+        self.assertNotIn("check_url", self.document.task_results)
         self.assertNotIn("check_url", self.document.derivatives)
         self.assertIsNotNone(self.document.pending_at, "Expected Document to become pending after updating URL")
         self.assertIsNone(self.document.finished_at, "Expected Document to not be finished after updating URL")
@@ -115,9 +115,9 @@ class TestDocumentModel(TestCase):
             self.document.state, self.document.States.ACTIVE,
             "Expected default state of test product to be active."
         )
-        # Modify the pipeline to see how a failed validation propagates to Document properties.
-        self.document.pipeline["deactivate_invalid_documents"] = {
-            "success": True,  # indicating that pipeline has run
+        # Modify the task_results to see how a failed validation propagates to Document properties.
+        self.document.task_results["deactivate_invalid_documents"] = {
+            "success": True,  # indicating that task has run
             "validation": "2 validation errors"  # indicating problems with the validation
         }
         self.document.clean()

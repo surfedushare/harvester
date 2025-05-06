@@ -19,11 +19,11 @@ from core.tasks.harvest.document import dispatch_document_tasks
 
 class HarvestObjectMixinAdmin(object):
 
-    def pipeline_info(self, obj):
-        if not obj.pipeline:
-            return "(no pipeline tasks)"
+    def task_info(self, obj):
+        if not obj.task_results:
+            return "(no tasks)"
         tasks_html = []
-        for task_name, task_info in obj.pipeline.items():
+        for task_name, task_info in obj.task_results.items():
             if "resource" in task_info:
                 resource_url_name = task_info["resource"].replace(".", "_").lower()
                 resource_change_url = reverse(f"admin:{resource_url_name}_change", args=(task_info["id"],))
@@ -49,14 +49,14 @@ class DataStorageAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "tasks": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
-            "pipeline": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "task_results": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
             "derivatives": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
         }
 
 
 class DatasetVersionAdmin(AdminConfirmMixin, HarvestObjectMixinAdmin, admin.ModelAdmin):
 
-    list_display = ('__str__', "pipeline_info", "created_at", "finished_at", 'is_current', "is_index_promoted",
+    list_display = ('__str__', "task_info", "created_at", "finished_at", 'is_current', "is_index_promoted",
                     "harvest_count", "index_count",)
     list_per_page = 10
     actions = ["promote_dataset_version_index"]
@@ -121,13 +121,13 @@ class DocumentAdminForm(forms.ModelForm):
             "metadata": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
             "properties": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
             "tasks": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
-            "pipeline": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+            "task_results": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
             "derivatives": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
         }
 
 
 class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
-    list_display = ('identity', 'state', 'pipeline_info', 'modified_at', "finished_at",)
+    list_display = ('identity', 'state', 'task_info', 'modified_at', "finished_at",)
     list_per_page = 10
     list_filter = ('dataset_version__is_current', 'collection__name', 'state',)
     readonly_fields = ("created_at", "modified_at",)
@@ -169,7 +169,7 @@ class DocumentAdmin(HarvestObjectMixinAdmin, DatagrowthDocumentAdmin):
 
 class SetAdmin(HarvestObjectMixinAdmin, DataStorageAdmin):
     list_display = [
-        '__str__', 'pipeline_info', 'created_at', 'finished_at',
+        '__str__', 'task_info', 'created_at', 'finished_at',
         'active_document_count', 'deleted_document_count', 'inactive_document_count'
     ]
     list_filter = ('dataset_version__is_current',)

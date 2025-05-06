@@ -12,7 +12,7 @@
         "model": "files.datasetversion",
         "pk": 1,
         "fields": {
-            "pipeline": {},
+            "task_results": {},
             "derivatives": {},
             "pending_at": "2023-10-17T14:18:46.870Z",
             "finished_at": null,
@@ -66,7 +66,7 @@
             },
             "identity": "sharekit:edusources:e9e212d6-e609-4d0b-903f-1f966bf8b420:2c338f034b2e643a660811a423b36a2cdb7ac1b6",
             "reference": null,
-            "pipeline": {
+            "task_results": {
                 "tika": {
                     "id": 1,
                     "success": true,

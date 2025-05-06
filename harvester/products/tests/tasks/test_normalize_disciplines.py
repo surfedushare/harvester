@@ -59,7 +59,7 @@ class TestNormalizeDisciplines(TestCase):
                 }
             }
         })
-        self.assertEqual(earth_and_environment.pipeline, {
+        self.assertEqual(earth_and_environment.task_results, {
             "normalize_disciplines": {"success": True}
         })
         economy_and_business = ProductDocument.objects.get(identity="surf:testing:2")
@@ -72,7 +72,7 @@ class TestNormalizeDisciplines(TestCase):
                 }
             }
         })
-        self.assertEqual(economy_and_business.pipeline, {
+        self.assertEqual(economy_and_business.task_results, {
             "normalize_disciplines": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:3")
@@ -85,6 +85,6 @@ class TestNormalizeDisciplines(TestCase):
                 }
             }
         })
-        self.assertEqual(undefined.pipeline, {
+        self.assertEqual(undefined.task_results, {
             "normalize_disciplines": {"success": True}
         })

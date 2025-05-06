@@ -17,5 +17,5 @@ def normalize_publisher_year(app_label: str, document_ids: list[int]) -> None:
         )
         document.derivatives["normalize_publisher_year"] = {"publisher_year_normalized": normalized_publisher_year}
         # For all documents we mark this task as completed to continue the harvesting process
-        document.pipeline["normalize_publisher_year"] = {"success": True}
+        document.task_results["normalize_publisher_year"] = {"success": True}
         document.save()

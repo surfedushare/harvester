@@ -55,7 +55,7 @@ class TestPublinovaProductSeeding(TestCase):
         for batch in self.processor("publinova", "1970-01-01T00:00:00Z"):
             for doc in batch:
                 for task in doc.tasks.keys():
-                    doc.pipeline[task] = {"success": True}
+                    doc.task_results[task] = {"success": True}
                 doc.properties["state"] = ProductDocument.States.DELETED
                 doc.clean()
                 doc.finish_processing(current_time=current_time)

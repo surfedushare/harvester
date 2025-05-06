@@ -12,7 +12,7 @@ class FileDocumentTestCase(TestCase):
     def test_get_pending_tasks_hash_update(self):
         # Check that file from fixture is not processing
         file_document = FileDocument.objects.get(pk=1)
-        check_url_pipeline = deepcopy(file_document.pipeline["check_url"])
+        check_url_task_results = deepcopy(file_document.task_results["check_url"])
         check_url_derivative = deepcopy(file_document.derivatives["check_url"])
         self.assertEqual(file_document.get_pending_tasks(), [])
         # Change the hash and see if the file becomes processing
@@ -24,7 +24,7 @@ class FileDocumentTestCase(TestCase):
         self.assertEqual(CheckURLResource.objects.count(), 1, "Expected check_url resource for file to get purged")
         self.assertEqual(HttpTikaResource.objects.count(), 1, "Expected tika resources for file to get purged")
         # Complete the check_url task by patching it and see if secondary tasks trigger
-        file_document.pipeline["check_url"] = check_url_pipeline
+        file_document.task_results["check_url"] = check_url_task_results
         file_document.derivatives["check_url"] = check_url_derivative
         self.assertEqual(file_document.get_pending_tasks(), ["tika"])
         self.assertIsNotNone(file_document.pending_at)
@@ -38,7 +38,10 @@ class FileDocumentTestCase(TestCase):
         file_document.invalidate_task("check_url")
         self.assertIsNotNone(file_document.pending_at)
         self.assertIsNone(file_document.finished_at)
-        self.assertEqual(CheckURLResource.objects.count(), 1, "Expected check_url resource from pipeline to be deleted")
+        self.assertEqual(
+            CheckURLResource.objects.count(), 1,
+            "Expected check_url resource from task results to be deleted"
+        )
         self.assertEqual(HttpTikaResource.objects.count(), 2, "Expected tika resources to be unaffected")
 
     def test_clean_url(self):

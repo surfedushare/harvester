@@ -4,10 +4,10 @@ from collections import OrderedDict
 from requests import Session
 from json.decoder import JSONDecodeError
 
-from datagrowth.datatypes import CollectionBase
+from datagrowth.datatypes.documents.db.collection import CollectionBase
 from datagrowth.configuration import create_config, ConfigurationType
 from datagrowth.resources.http.iterators import send_serie_iterator
-from datagrowth.processors import Processor
+from datagrowth.processors.base import Processor
 from datagrowth.processors.input.iterators import content_iterator
 from datagrowth.utils import ibatch
 
@@ -36,6 +36,7 @@ class ResourceSeedingProcessor(Processor):
 
     def build_seed_iterator(self, phase: Dict, *args, **kwargs) -> Iterator:
         resource_config = phase["retrieve"]
+        resource_config.supplement({"resource_exception_reraise": phase["phase"].strategy == "initial"})
         if not len(self.batch):
             # This is the initial case where there is no input from a buffer.
             # So we just use args and kwargs as given to the call to the processor.
@@ -85,13 +86,31 @@ class ResourceSeedingProcessor(Processor):
         if strategy in ["initial", "replace", "back_fill"]:
             self.batch = deepcopy(self.buffer)
         elif strategy == "merge":
-            merge_on = phase["contribute"].merge_on
-            buffer = {
-                content[merge_on]: content
-                for content in self.buffer
-            }
-            for content in self.batch:
-                content.update(buffer.get(content[merge_on], {}))
+            merge_base = phase["contribute"].get("merge_base", "batch")
+            merge_on = phase["contribute"].get("merge_on", self.collection.identifier)
+            composition_to = phase["contribute"].get("composition_to", None)
+            pop_merge_on = composition_to and merge_on != self.collection.identifier
+            if merge_base == "batch":
+                buffer = {
+                    content[merge_on]: content if not composition_to else {composition_to: content}
+                    for content in self.buffer
+                }
+                for content in self.batch:
+                    content.update(buffer.get(content[merge_on], {}))
+                    if pop_merge_on:
+                        content.pop(merge_on)
+            elif merge_base == "buffer":
+                batch = {
+                    content[merge_on]: content if not composition_to else {composition_to: content}
+                    for content in self.batch
+                }
+                for content in self.buffer:
+                    content.update(batch.get(content[merge_on], {}))
+                    if pop_merge_on:
+                        content.pop(merge_on)
+                self.batch = deepcopy(self.buffer)
+            else:
+                raise ValueError(f"Unexpected merge base: {merge_base}")
 
         self.buffer = []
 
@@ -103,6 +122,22 @@ class ResourceSeedingProcessor(Processor):
                 continue
             documents.append(doc)
         return self.collection.update_batches(documents, self.collection.identifier)
+
+    @classmethod
+    def create_phase_configurations(cls, phases):
+        for ix, phase in enumerate(phases):
+            phase = deepcopy(phase)
+            phase["index"] = ix
+            retrieve_data = phase.pop("retrieve_data", {})
+            contribute_data = phase.pop("contribute_data", {})
+            phase_config = create_config("seeding_processor", phase)
+            retrieve_config = create_config(cls.resource_type, retrieve_data)
+            contribute_config = create_config(cls.contribute_type, contribute_data)
+            yield {
+                "phase": phase_config,
+                "retrieve": retrieve_config,
+                "contribute": contribute_config
+            }
 
     def __init__(self, collection: CollectionBase, config: Union[ConfigurationType, Dict],
                  initial: List[Dict] = None) -> None:
@@ -126,20 +161,10 @@ class ResourceSeedingProcessor(Processor):
                 "Expected first phase to have strategy 'initial' if no initial seeds are given to the constructor"
         else:
             phases_selection = [phase for phase in self.config.phases if phase.get("is_post_initialization", False)]
-        self.phases = OrderedDict()
-        for ix, phase in enumerate(phases_selection):
-            phase = deepcopy(phase)
-            phase["index"] = ix
-            retrieve_data = phase.pop("retrieve_data", None)
-            contribute_data = phase.pop("contribute_data")
-            phase_config = create_config("seeding_processor", phase)
-            retrieve_config = create_config(self.resource_type, retrieve_data) if retrieve_data else None
-            contribute_config = create_config(self.contribute_type, contribute_data)
-            self.phases[phase_config.phase] = {
-                "phase": phase_config,
-                "retrieve": retrieve_config,
-                "contribute": contribute_config
-            }
+        self.phases = OrderedDict({
+            configs["phase"].phase: configs
+            for configs in self.create_phase_configurations(phases_selection)
+        })
 
     def __call__(self, *args, **kwargs) -> Iterator:
         while self.contents or self.buffer is None:
@@ -181,7 +206,7 @@ class ResourceSeedingProcessor(Processor):
                 # Likely that the while loop will end now and reset the processor
                 continue
             for batch in self.batch_to_documents():
-                yield batch
+                yield self.collection.reload_document_ids(batch)
             # Resetting batch after yielding it, because the batch is considered processed
             self.batch = []
         # Resets object state to allow multiple calls to the processor
@@ -190,6 +215,7 @@ class ResourceSeedingProcessor(Processor):
 
 
 class HttpSeedingProcessor(ResourceSeedingProcessor):
+
     resource_type = "http_resource"
 
     def get_session(self) -> Session:
