@@ -7,7 +7,7 @@ from core.admin.resources import HarvesterHttpResourcesAdmin, HarvesterShellReso
 from core.admin.harvest import HarvestStateAdmin
 from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState,
                           HttpTikaResource, YoutubeThumbnailResource, PdfThumbnailResource,
-                          YoutubeAPIResource, CheckURLResource, ImageThumbnailResource)
+                          YoutubeAPIResource, CheckURLResource, ImageThumbnailResource, YoutubeTranscriptsResource)
 
 
 class FileDocumentAdmin(DocumentAdmin):
@@ -41,3 +41,4 @@ admin.site.register(PdfThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(YoutubeAPIResource, HarvesterHttpResourcesAdmin)
 admin.site.register(CheckURLResource, HarvesterHttpResourcesAdmin)
 admin.site.register(ImageThumbnailResource, HarvesterHttpResourcesAdmin)
+admin.site.register(YoutubeTranscriptsResource, HarvesterHttpResourcesAdmin)
