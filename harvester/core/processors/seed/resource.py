@@ -4,6 +4,7 @@ from collections import OrderedDict
 from requests import Session
 from json.decoder import JSONDecodeError
 
+from datagrowth.exceptions import DGResourceException
 from datagrowth.datatypes.documents.db.collection import CollectionBase
 from datagrowth.configuration import create_config, ConfigurationType
 from datagrowth.resources.http.iterators import send_serie_iterator
@@ -178,7 +179,7 @@ class ResourceSeedingProcessor(Processor):
                         self.contents[phase_index] = self.build_seed_iterator(phase, *args, **kwargs)
                     try:
                         self.buffer = next(self.contents[phase_index])
-                    except (StopIteration, JSONDecodeError):
+                    except (StopIteration, JSONDecodeError, DGResourceException,):
                         # The contents iterator is exhausted.
                         # We'll flush the currently empty buffer
                         self.flush_buffer(phase, force=True)
