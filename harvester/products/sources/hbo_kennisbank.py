@@ -54,6 +54,11 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
         return node.text.strip() if node else None
 
     @classmethod
+    def get_subtitle(cls, soup, el):
+        node = el.find('subTitle')
+        return node.text.strip() if node else None
+
+    @classmethod
     def get_description(cls, soup, el):
         node = el.find('abstract')
         return node.text if node else None
@@ -161,6 +166,7 @@ def build_objective(extract_processor: Type[HBOKennisbankProductExtractor]) -> d
         "files": extract_processor.get_files,
         "language": extract_processor.get_product_language,
         "title": extract_processor.get_title,
+        "subtitle": extract_processor.get_subtitle,
         "description": extract_processor.get_description,
         "copyright": extract_processor.get_copyright,
         "copyright_description": extract_processor.get_copyright_description,
