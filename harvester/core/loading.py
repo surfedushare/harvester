@@ -10,28 +10,33 @@ from importlib import import_module
 from collections import defaultdict
 
 from django.apps import apps
+from datagrowth.datatypes.types import DataStorages
 
 
 def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
     """
-    A convenience function that loads relevant harvester models for a Django app.
-    The function will work for the "core" app to provide backwards compatability.
-    However the "core" loaded models may not work as expected, because they do not inherit from HarvestObject.
+    A convenience function that loads relevant harvester models for a Django app using DataStorages.
 
     :param app_label: the app model you want to load harvester models for
     :return: (dict) models
     """
-    model_names = ["Dataset", "DatasetVersion", "HarvestState", "Batch", "ProcessResult", "Set", "Overwrite"]
-    app_config = apps.get_app_config(app_label)
-    models = {}
-    for model_name in model_names:
+    app_config = apps.get_app_config(app_label=app_label)
+    storages = DataStorages.from_label(f"{app_label}.{app_config.document_model}")
+    models = {
+        "DatasetVersion": storages.DatasetVersion,
+        "Document": storages.Document,
+        "Set": storages.Collection,
+        "Collection": storages.Collection,
+    }
+
+    # Load additional models that aren't part of DataStorages
+    additional_models = ["Dataset", "HarvestState", "Batch", "ProcessResult", "Overwrite"]
+    for model_name in additional_models:
         try:
             models[model_name] = apps.get_model(f"{app_label}.{model_name}")
-        except LookupError:  # only here catch HarvestState which core will never have
+        except LookupError:
             models[model_name] = None
-    models["Document"] = apps.get_model(f"{app_label}.{app_config.document_model}")
-    if "Collection" in models:
-        models["Set"] = models["Collection"]
+
     return models
 
 
