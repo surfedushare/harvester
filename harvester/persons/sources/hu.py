@@ -1,3 +1,5 @@
+from datagrowth.utils import reach
+
 from persons.models import PersonDocument
 
 
@@ -34,7 +36,7 @@ OBJECTIVE = {
     "author.isni": "$.isni",
     # Sensitive metadata
     "sensitive.description": "$.description",
-    "sensitive.email": "$.email",
+    "sensitive.email": lambda node: reach("$.email", node) or None,
     "sensitive.phone": "$.phone",
     "sensitive.photo_url": "$.photo_url",
     # Research based metadata
