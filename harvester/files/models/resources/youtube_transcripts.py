@@ -77,7 +77,7 @@ class YoutubeTranscriptsResource(ShellResource):
                 buffer = None
             elif buffer is not None:
                 buffer += line + "\n"
-        return contents
+        return "".join(contents)
 
     def handle_errors(self):
         # We use a "no content" error code when video exists, but transcripts are not present.

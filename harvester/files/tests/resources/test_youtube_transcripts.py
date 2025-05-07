@@ -29,15 +29,13 @@ class TestYoutubeTranscriptsResource(TestCase):
 
     def test_transform(self):
         rsc = YoutubeTranscriptsResource()
-        results = rsc.transform(MOCK_STDOUT["success"])
-        self.assertIsInstance(results, list)
-        self.assertEqual(len(results), 1)
-        result = results[0]
+        result = rsc.transform(MOCK_STDOUT["success"])
+        self.assertIsInstance(result, str)
         self.assertTrue(result.startswith("WEBVTT"))
         self.assertTrue(result.endswith("is to thoroughly mix"))
 
     def test_transform_errors(self):
         rsc = YoutubeTranscriptsResource()
-        results = rsc.transform(MOCK_STDOUT["invalid_file"])
-        self.assertIsInstance(results, list)
-        self.assertEqual(len(results), 0)
+        result = rsc.transform(MOCK_STDOUT["invalid_file"])
+        self.assertIsInstance(result, str)
+        self.assertFalse(result)
