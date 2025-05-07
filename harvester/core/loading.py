@@ -1,9 +1,12 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 if TYPE_CHECKING:
     from core.models.datatypes.base import HarvestObjectMixin as HarvestObject
     from core.models.datatypes.dataset import HarvestDataset
+    from core.models.datatypes.set import HarvestSet
     from core.models.harvest import HarvestState
+    from core.models.pipeline import BatchBase, ProcessResultBase
+    from core.models.datatypes.overwrite import HarvestOverwrite
 
 from typing import Any
 from importlib import import_module
@@ -11,6 +14,55 @@ from collections import defaultdict
 
 from django.apps import apps
 from datagrowth.datatypes.types import DataStorages
+
+
+class HarvesterDataStorages(DataStorages):
+    """
+    Extended DataStorages class that includes additional harvester-specific models.
+    """
+
+    Set: Type[HarvestSet] = None
+    Dataset: Type[HarvestDataset] = None
+    HarvestState: Type[HarvestState] = None
+    Batch: Type[BatchBase] = None
+    ProcessResult: Type[ProcessResultBase] = None
+    Overwrite: Type[HarvestOverwrite] | None = None
+
+    @classmethod
+    def from_label(cls, label: str) -> HarvesterDataStorages:
+        """
+        Create a HarvesterDataStorages instance from an app label.
+
+        :param label: The app label to load models from
+        :return: A HarvesterDataStorages instance with all models loaded
+        """
+        # First create base DataStorages instance
+        storages = super().from_label(label)
+        app_label = label.split(".")[0]
+
+        # Create HarvesterDataStorages instance with base models
+        harvester_storages = cls(
+            model=storages.model,
+            DatasetVersion=storages.DatasetVersion,
+            Collection=storages.Collection,
+            Document=storages.Document
+        )
+
+        # Load required models - these will raise LookupError if missing
+        harvester_storages.Set = harvester_storages.Collection
+        harvester_storages.Dataset = apps.get_model(f"{app_label}.Dataset")
+        harvester_storages.HarvestState = apps.get_model(f"{app_label}.HarvestState")
+        harvester_storages.Batch = apps.get_model(f"{app_label}.Batch")
+        harvester_storages.ProcessResult = apps.get_model(f"{app_label}.ProcessResult")
+
+        # Load optional Overwrite model
+        try:
+            harvester_storages.Overwrite = apps.get_model(f"{app_label}.Overwrite")
+        except LookupError:
+            harvester_storages.Overwrite = None
+
+        return harvester_storages
+
 
 
 def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
@@ -21,22 +73,18 @@ def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestData
     :return: (dict) models
     """
     app_config = apps.get_app_config(app_label=app_label)
-    storages = DataStorages.from_label(f"{app_label}.{app_config.document_model}")
+    storages = HarvesterDataStorages.from_label(f"{app_label}.{app_config.document_model}")
     models = {
         "DatasetVersion": storages.DatasetVersion,
         "Document": storages.Document,
         "Set": storages.Collection,
         "Collection": storages.Collection,
+        "Dataset": storages.Dataset,
+        "HarvestState": storages.HarvestState,
+        "Batch": storages.Batch,
+        "ProcessResult": storages.ProcessResult,
+        "Overwrite": storages.Overwrite,
     }
-
-    # Load additional models that aren't part of DataStorages
-    additional_models = ["Dataset", "HarvestState", "Batch", "ProcessResult", "Overwrite"]
-    for model_name in additional_models:
-        try:
-            models[model_name] = apps.get_model(f"{app_label}.{model_name}")
-        except LookupError:
-            models[model_name] = None
-
     return models
 
 
