@@ -25,8 +25,8 @@ class ProductOverwriteListView(generics.ListAPIView):
 
     def get_serializer_context(self) -> None:
         context = super().get_serializer_context()
-        models = load_harvest_models("products")
-        context["Document"] = models["Document"]
+        storages = load_harvest_models("products")
+        context["Document"] = storages.Document
         return context
 
 
@@ -80,9 +80,9 @@ class ProductOverwriteDetailView(generics.RetrieveUpdateAPIView):
 
     def get_serializer_context(self) -> None:
         context = super().get_serializer_context()
-        models = load_harvest_models("products")
-        context["Document"] = models["Document"]
-        context["DatasetVersion"] = models["DatasetVersion"]
+        storages = load_harvest_models("products")
+        context["Document"] = storages.Document
+        context["DatasetVersion"] = storages.DatasetVersion
         return context
 
     def get_permissions(self):

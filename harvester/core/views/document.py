@@ -36,8 +36,8 @@ class DatasetVersionDocumentBaseView(generics.GenericAPIView):
                 status=HTTP_417_EXPECTATION_FAILED
             )
         version, app_label = self.request.resolver_match.app_name.split(":")
-        models = load_harvest_models(app_label)
-        dataset_version = models["DatasetVersion"].objects.get_current_version()
+        storages = load_harvest_models(app_label)
+        dataset_version = storages.DatasetVersion.objects.get_current_version()
         if not dataset_version:
             raise NoCurrentDatasetVersionException()
         modified_since_filter = self.request.query_params.get("modified_since")

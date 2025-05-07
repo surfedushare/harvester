@@ -19,9 +19,9 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
         entities = HarvestEntity.objects.select_related("source").filter(is_available=True)
     datasets = defaultdict(list)
     for entity in entities:
-        models = load_harvest_models(entity.type)
-        Dataset = models["Dataset"]
-        HarvestState = models["HarvestState"]
+        storages = load_harvest_models(entity.type)
+        Dataset = storages.Dataset
+        HarvestState = storages.HarvestState
         for dataset in Dataset.objects.filter(is_harvested=True):
             for set_specification in entity.set_specifications:
                 state, created = HarvestState.objects.get_or_create(
@@ -35,9 +35,9 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
     for dataset, states in datasets.items():
         # Check if there are any process_result leftovers from a previous harvest process.
         # We report these occurrences, because it may indicate a problem.
-        models = load_harvest_models(dataset._meta.app_label)
+        storages = load_harvest_models(dataset._meta.app_label)
         logged_result_types = set()
-        for process_result in models["ProcessResult"].objects.all():
+        for process_result in storages.ProcessResult.objects.all():
             if process_result.result_type not in logged_result_types:
                 capture_message(
                     f"Found unexpected process results for result type: {process_result.result_type}",
@@ -45,7 +45,7 @@ def harvest_entities(entity: str = None, reset: bool = False, asynchronous: bool
                 )
                 logged_result_types.add(process_result.result_type)
         # Deleting batches from previous harvests that are empty
-        models["Batch"].objects.annotate(doc_count=Count("documents")).filter(doc_count=0).delete()
+        storages.Batch.objects.annotate(doc_count=Count("documents")).filter(doc_count=0).delete()
 
         # Copy data from previous harvests and delete Resources where needed.
         # After that we harvest_source to start fetching metadata.

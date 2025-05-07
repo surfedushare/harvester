@@ -1,5 +1,3 @@
-from operator import itemgetter
-
 from django.utils.timezone import now
 
 from core.loading import load_harvest_models
@@ -9,13 +7,16 @@ from core.models.datatypes import HarvestDataset, HarvestDatasetVersion, Harvest
 def create_datatype_models(app_label: str, set_names: list[str], seeds: list[dict], docs_per_set: int) \
         -> tuple[HarvestDataset, HarvestDatasetVersion, list[HarvestSet], list[HarvestDocument]]:
     seeds.reverse()
-    models = load_harvest_models(app_label)
-    Dataset, DatasetVersion, Set, Document = itemgetter("Dataset", "DatasetVersion", "Set", "Document")(models)
+    storages = load_harvest_models(app_label)
+    Dataset = storages.Dataset
+    DatasetVersion = storages.DatasetVersion
+    Set = storages.Set
+    Document = storages.Document
     finished_at = now()
     dataset = Dataset(
         name="test",
         is_harvested=True,
-        indexing=models["Dataset"].IndexingOptions.INDEX_AND_PROMOTE
+        indexing=Dataset.IndexingOptions.INDEX_AND_PROMOTE
     )
     dataset.clean()
     dataset.save()

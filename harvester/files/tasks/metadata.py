@@ -11,8 +11,8 @@ from core.loading import load_harvest_models
 
 @app.task(name="check_url", base=DatabaseConnectionResetTask)
 def check_url_task(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
 
     check_document_ids = []
     for doc in Document.objects.filter(id__in=document_ids):
@@ -68,8 +68,8 @@ def tika_content_extraction(results):
 
 @app.task(name="tika", base=DatabaseConnectionResetTask)
 def tika_task(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
 
     tika_processor = HttpGrowthProcessor({
         "datatypes_app_label": app_label,
@@ -100,8 +100,8 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
 
 @app.task(name="tika_plain", base=DatabaseConnectionResetTask)
 def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
 
     tika_plain_processor = HttpGrowthProcessor({
         "datatypes_app_label": app_label,
@@ -158,8 +158,8 @@ def get_previews(node):
 
 @app.task(name="youtube_api", base=DatabaseConnectionResetTask)
 def youtube_api_task(app_label, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
     youtube_api_processor = HttpGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
@@ -194,8 +194,8 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
 
 @app.task(name="video_transcripts", base=DatabaseConnectionResetTask)
 def video_transcripts(app_label: str, document_ids: list[int]):
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
     youtube_processor = ShellGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {

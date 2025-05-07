@@ -1,10 +1,9 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Type
 if TYPE_CHECKING:
-    from core.models.datatypes.base import HarvestObjectMixin as HarvestObject
     from core.models.datatypes.dataset import HarvestDataset
     from core.models.datatypes.set import HarvestSet
-    from core.models.harvest import HarvestState
+    from core.models.harvest import HarvestState as HarvestStateType
     from core.models.pipeline import BatchBase, ProcessResultBase
     from core.models.datatypes.overwrite import HarvestOverwrite
 
@@ -23,7 +22,7 @@ class HarvesterDataStorages(DataStorages):
 
     Set: Type[HarvestSet] = None
     Dataset: Type[HarvestDataset] = None
-    HarvestState: Type[HarvestState] = None
+    HarvestState: Type[HarvestStateType] = None
     Batch: Type[BatchBase] = None
     ProcessResult: Type[ProcessResultBase] = None
     Overwrite: Type[HarvestOverwrite] | None = None
@@ -64,28 +63,15 @@ class HarvesterDataStorages(DataStorages):
         return harvester_storages
 
 
-
-def load_harvest_models(app_label: str) -> dict[str, HarvestObject | HarvestDataset | HarvestState]:
+def load_harvest_models(app_label: str) -> HarvesterDataStorages:
     """
     A convenience function that loads relevant harvester models for a Django app using DataStorages.
 
     :param app_label: the app model you want to load harvester models for
-    :return: (dict) models
+    :return: A HarvesterDataStorages instance with all models loaded
     """
     app_config = apps.get_app_config(app_label=app_label)
-    storages = HarvesterDataStorages.from_label(f"{app_label}.{app_config.document_model}")
-    models = {
-        "DatasetVersion": storages.DatasetVersion,
-        "Document": storages.Document,
-        "Set": storages.Collection,
-        "Collection": storages.Collection,
-        "Dataset": storages.Dataset,
-        "HarvestState": storages.HarvestState,
-        "Batch": storages.Batch,
-        "ProcessResult": storages.ProcessResult,
-        "Overwrite": storages.Overwrite,
-    }
-    return models
+    return HarvesterDataStorages.from_label(f"{app_label}.{app_config.document_model}")
 
 
 def load_source_configuration(app_label: str, source: str) -> dict[str, Any]:
@@ -114,11 +100,11 @@ def load_task_resources(app_label: str = None,
 
     task_resources = {}
     for config in app_configs:
-        models = load_harvest_models(config.label)
+        storages = load_harvest_models(config.label)
         task_resources[config.label] = defaultdict(list)
-        for model_name, model in models.items():
-            if model_name not in ["DatasetVersion", "Set", "Document"]:
-                continue
+
+        # Check models that have tasks
+        for model in [storages.DatasetVersion, storages.Collection, storages.Document]:
             model_task_definitions = model._meta.get_field("tasks").default()
             for task_name, task_definition in model_task_definitions.items():
                 for resource in task_definition["resources"]:

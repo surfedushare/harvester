@@ -28,8 +28,8 @@ class ManualDocumentAdmin(admin.ModelAdmin):
         object_id = obj.properties.get("external_id", None)
         if not object_id:
             return "(not set, please save document)"
-        models = load_harvest_models(obj.entity.type)
-        document_list_url = reverse(f"admin:{obj.entity.type}_{models["Document"]._meta.model_name}_changelist")
+        storages = load_harvest_models(obj.entity.type)
+        document_list_url = reverse(f"admin:{obj.entity.type}_{storages.Document._meta.model_name}_changelist")
         document_list_url += f"?q={object_id}&dataset_version__is_current__exact=1"
         return format_html('<a style="text-decoration: underline" href="{}">document</a>', document_list_url)
 

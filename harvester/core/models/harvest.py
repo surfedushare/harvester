@@ -40,10 +40,10 @@ class HarvestState(models.Model):
         return self.purge_after and self.purge_after < now()
 
     def reset(self, dataset_version: HarvestDatasetVersion) -> HarvestSet:
-        data_models = load_harvest_models(self.entity.type)
+        storages = load_harvest_models(self.entity.type)
         self.harvested_at = self._meta.get_field("harvested_at").default
         self.purge_after = None
-        self.harvest_set = data_models["Set"].objects.create(
+        self.harvest_set = storages.Set.objects.create(
             name=self.set_name,
             dataset_version=dataset_version,
             identifier="srn",
@@ -55,8 +55,8 @@ class HarvestState(models.Model):
 
     def prepare_using_set(self, dataset_version: HarvestDatasetVersion, harvest_set: HarvestSet) -> HarvestSet:
         current_time = now()
-        data_models = load_harvest_models(self.entity.type)
-        self.harvest_set = data_models["Set"].objects.create(
+        storages = load_harvest_models(self.entity.type)
+        self.harvest_set = storages.Set.objects.create(
             name=self.set_name,
             dataset_version=dataset_version,
             identifier="srn",
@@ -80,7 +80,7 @@ class HarvestState(models.Model):
                     document.metadata["deleted_at"] = current_time
                 document.clean(set_metadata=False)  # retains "metadata" from copy, but links new Set and DatasetVersion
                 documents.append(document)
-            data_models["Document"].objects.bulk_create(documents)
+            storages.Document.objects.bulk_create(documents)
         return self.harvest_set
 
     def clear_resources(self):

@@ -1,11 +1,10 @@
-from typing import cast
 from datetime import datetime
 
 from django.apps import apps
 from django.core.management.base import LabelCommand, CommandError
 
 from core.loading import load_harvest_models
-from core.models.datatypes.dataset import HarvestDatasetVersion, HarvestDataset
+from core.models.datatypes.dataset import HarvestDataset
 from search.tasks import index_dataset_versions
 
 
@@ -17,9 +16,8 @@ class Command(LabelCommand):
         except LookupError:
             raise CommandError(f"App {label} not found")
 
-        models = load_harvest_models(app_config.label)
-        DatasetVersion: HarvestDatasetVersion = cast(HarvestDatasetVersion, models["DatasetVersion"])
-        current_version = DatasetVersion.objects.get_current_version()
+        storages = load_harvest_models(app_config.label)
+        current_version = storages.DatasetVersion.objects.get_current_version()
         if current_version is None:
             raise CommandError(f"No current DatasetVersion found for {label}")
 

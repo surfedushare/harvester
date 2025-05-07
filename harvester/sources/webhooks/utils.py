@@ -48,9 +48,8 @@ def get_webhook_destination(set_name, app_label="core"):
     :param app_label: the app label of the entity that the webhook wants to update (default is core)
     :return: dataset_version and the set (previously collection)
     """
-    models = load_harvest_models(app_label)
-    DatasetVersion = models["DatasetVersion"]
-    dataset_version = DatasetVersion.objects.get_current_version()
+    storages = load_harvest_models(app_label)
+    dataset_version = storages.DatasetVersion.objects.get_current_version()
     if not dataset_version:
         return None, None
     set_instance = dataset_version.sets.filter(name=set_name).last()

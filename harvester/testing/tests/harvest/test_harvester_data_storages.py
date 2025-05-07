@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.apps import apps
 
 from core.loading import HarvesterDataStorages
 from core.models.harvest import HarvestState
@@ -39,7 +38,6 @@ class TestHarvesterDataStorages(TestCase):
         self.assertTrue(issubclass(self.storages.Batch, BatchBase))
         self.assertTrue(issubclass(self.storages.ProcessResult, ProcessResultBase))
         self.assertTrue(issubclass(self.storages.Overwrite, HarvestOverwrite))
-
 
     def test_missing_optional_model(self):
         """
