@@ -81,7 +81,7 @@ class TestBUASPersonsExtraction(ResourceFixturesMixin, TestCase):
         )
 
     def test_get_skills(self):
-        self.assertIsNone(self.seeds[0]["skills"])
+        self.assertEqual(self.seeds[0]["skills"], [])
         self.assertEqual(self.seeds[1]["skills"], [
             "Multi-narrative design (transmedia)", "semiotics", "virtual reality"
         ])

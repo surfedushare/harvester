@@ -52,7 +52,7 @@ class BuasPersonExtractProcessor:
     def get_skills(cls, node):
         raw_skills = cls.parse_profile_information(node, "subjects")
         if not raw_skills:
-            return
+            return []
         skills = strip_tags(raw_skills).split(",")
         return [skill.strip() for skill in skills]
 
@@ -60,9 +60,10 @@ class BuasPersonExtractProcessor:
     def get_email(cls, node):
         staff_association = cls.get_legacy_valid_staff_organization_association(node)
         if not staff_association:
-            return
+            return None
         for email in staff_association.get("emails", []):
             return email.get("value").get("value")
+        return None
 
     @classmethod
     def get_is_employed(cls, node):
@@ -73,17 +74,17 @@ class BuasPersonExtractProcessor:
     def get_photo_url(cls, node):
         profile_photos = node.get("profilePhotos", [])
         if not profile_photos:
-            return
+            return None
         return profile_photos[0]["url"]
 
     @classmethod
     def get_job_title(cls, node):
         association = cls.get_legacy_valid_staff_organization_association(node, required_attribute="jobDescription")
         if not association:
-            return
+            return None
         job_title_object = association.get("jobDescription")
         if not job_title_object:
-            return
+            return None
         elif "term" in job_title_object:
             job_title_object = job_title_object["term"]
         return job_title_object["text"][0]["value"]
