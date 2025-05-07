@@ -1,6 +1,7 @@
 from typing import Type
 from urllib.parse import unquote
 
+from django.conf import settings
 from django.apps import apps
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
@@ -118,10 +119,12 @@ class SearchDocumentListViewMixin(SearchDocumentGenericViewMixin):
         return queryset
 
     def get_serializer(self, *args, **kwargs):
+        use_multilingual_fields = settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS or \
+            settings.OPENSEARCH_PRESET_DEFAULT == "products:default"
         transformer = self.get_transformer_class()
         if len(args):
             objects = [
-                transformer(**doc.to_data()).model_dump(mode="json")
+                transformer(**doc.to_data(use_multilingual_fields=use_multilingual_fields)).model_dump(mode="json")
                 for doc in args[0]
             ]
             args = (objects, *args[1:])
@@ -131,8 +134,11 @@ class SearchDocumentListViewMixin(SearchDocumentGenericViewMixin):
 class SearchDocumentRetrieveViewMixin(SearchDocumentGenericViewMixin):
 
     def get_serializer(self, *args, **kwargs):
+        use_multilingual_fields = settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS or \
+            settings.OPENSEARCH_PRESET_DEFAULT == "products:default"
         transformer = self.get_transformer_class()
         if len(args):
-            obj = transformer(**args[0].to_data()).model_dump(mode="json")
+            obj = transformer(**args[0].to_data(use_multilingual_fields=use_multilingual_fields))
+            obj = obj.model_dump(mode="json")
             args = (obj, *args[1:])
         return super().get_serializer(*args, **kwargs)

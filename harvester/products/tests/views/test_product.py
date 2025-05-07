@@ -120,8 +120,8 @@ class TestProductView(TestCase):
                 "is_external": None,
             }
         ],
-        "has_parts": ["child"],
-        "is_part_of": ["parent"],
+        "has_parts": ["sharekit:edusources:child"],
+        "is_part_of": ["sharekit:edusources:parent"],
         "keywords": [
             "correspondentie",
             "Didactiek",
@@ -396,8 +396,8 @@ class TestResearchProductView(TestProductView):
                 "is_external": None,
             }
         ],
-        "has_parts": ["child"],
-        "is_part_of": ["parent"],
+        "has_parts": ["sharekit:edusources:child"],
+        "is_part_of": ["sharekit:edusources:parent"],
         "keywords": [
             "correspondentie",
             "Didactiek",
