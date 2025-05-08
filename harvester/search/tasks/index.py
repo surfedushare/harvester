@@ -183,7 +183,8 @@ def sync_opensearch_indices(app_label: str) -> None:
 
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
 def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False,
-                           index_since: datetime = None, asynchronous: bool = False) -> list[str]:
+                           index_since: datetime = None, asynchronous: bool = False,
+                           batch_size: int = 100) -> list[str]:
     """
     Index multiple dataset versions, either synchronously or asynchronously.
 
@@ -192,6 +193,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         recreate_indices: Whether to recreate the indices
         index_since: Only index documents modified since this time
         asynchronous: Whether to run the indexing asynchronously
+        batch_size: Number of documents to index in a single Celery task
 
     Returns:
         List of task IDs if any work has been dispatched.
@@ -224,7 +226,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         # Create partial index_documents tasks
         index_tasks = [
             index_documents.s(storages.app_label, dataset_version_id, batch)
-            for batch in ibatch(document_ids, 100)
+            for batch in ibatch(document_ids, batch_size=batch_size)
         ]
         # Create a callback task to close the index after indexing completes
         finish_indexing = close_index.s(storages.app_label, dataset_version_id, force_promotion=recreate_indices)

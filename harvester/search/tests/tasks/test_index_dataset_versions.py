@@ -275,3 +275,32 @@ class TestIndexDatasetVersions(TestCase):
         # Check index recreation
         self.assert_index_deletion("edusources", "testing", ["en", "nl", "unk"])
         self.assert_index_creation("edusources", "testing", ["en", "nl", "unk"])
+
+    @patch("search.models.index.get_opensearch_client", return_value=search_client)
+    @patch("search.models.index.streaming_bulk")
+    def test_index_batches(self, streaming_bulk_mock, get_search_client_mock):
+        index_dataset_versions(
+            [("testing.DatasetVersion", self.dataset_version.id,)],
+            asynchronous=False, batch_size=2
+        )
+        # Check if data was sent in batches to search engine
+        self.assertEqual(streaming_bulk_mock.call_count, 14, "Expected 5 batches to get added split by language.")
+
+        # Check DatasetVersion and OpensearchIndex updates
+        self.dataset_version.refresh_from_db()
+        self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
+        self.dataset_version.index.refresh_from_db()
+        self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
+        # Check aliases are unchanged
+        self.assertEqual(
+            self.search_client.indices.delete_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not delete that."
+        )
+        self.assertEqual(
+            self.search_client.indices.put_alias.call_count, 0,
+            "Sibling DatasetVersion already managed aliases remotely and new DatasetVersion should not create others."
+        )
+        # Check indices are left alone
+        self.assertEqual(self.search_client.indices.delete.call_count, 0, "Expected index not to be recreated")
+        self.assertEqual(self.search_client.indices.create.call_count, 0, "Expected index not to be recreated")
