@@ -128,7 +128,7 @@ class TestIndexDatasetVersions(TestCase):
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
     @patch("search.models.index.streaming_bulk")
     def test_index_promote(self, streaming_bulk_mock, get_search_client_mock):
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)])
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], asynchronous=False)
         # Check if data was sent to search engine
         self.assert_document_stream(streaming_bulk_mock)
         # Check DatasetVersion and OpensearchIndex updates
@@ -156,7 +156,7 @@ class TestIndexDatasetVersions(TestCase):
         self.dataset_version.dataset.indexing = Dataset.IndexingOptions.INDEX_ONLY
         self.dataset_version.dataset.save()
 
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)])
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], asynchronous=False)
 
         # Check if data was sent to search engine
         self.assert_document_stream(streaming_bulk_mock)
@@ -183,7 +183,7 @@ class TestIndexDatasetVersions(TestCase):
         self.dataset_version.index = None
         self.dataset_version.save()
 
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)])
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], asynchronous=False)
 
         # Check documents aren't pushed
         self.assertEqual(streaming_bulk_mock.call_count, 0, "Expected no documents to get added without an index")
@@ -206,7 +206,10 @@ class TestIndexDatasetVersions(TestCase):
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
     @patch("search.models.index.streaming_bulk")
     def test_index_recreate(self, streaming_bulk_mock, get_search_client_mock):
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], recreate_indices=True)
+        index_dataset_versions(
+            [("testing.DatasetVersion", self.dataset_version.id,)],
+            recreate_indices=True, asynchronous=False
+        )
         # Check if data was sent to search engine
         self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True, include_old_documents=True)
         # Check DatasetVersion and OpensearchIndex updates
@@ -226,7 +229,10 @@ class TestIndexDatasetVersions(TestCase):
     @patch("search.models.index.streaming_bulk")
     def test_index_since(self, streaming_bulk_mock, get_search_client_mock):
         index_since = self.start_time - timedelta(days=2)
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], index_since=index_since)
+        index_dataset_versions(
+            [("testing.DatasetVersion", self.dataset_version.id,)],
+            index_since=index_since, asynchronous=False
+        )
         # Check if data was sent to search engine
         self.assert_document_stream(streaming_bulk_mock, include_old_documents=True)
         # Check DatasetVersion and OpensearchIndex updates
@@ -254,7 +260,7 @@ class TestIndexDatasetVersions(TestCase):
         # Adjusting test data
         self.sibling.delete()
         # Running the command
-        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)])
+        index_dataset_versions([("testing.DatasetVersion", self.dataset_version.id,)], asynchronous=False)
         # Check if data was sent to search engine
         self.assert_document_stream(streaming_bulk_mock, exclude_deletes=True, include_old_documents=True)
         # Check DatasetVersion and OpensearchIndex updates

@@ -70,7 +70,7 @@ class Command(BaseCommand):
                 logger.error(message)
                 dataset_versions = _load_current_dataset_versions(dataset_versions)
 
-        index_dataset_versions(dataset_versions)
+        index_dataset_versions(dataset_versions, asynchronous=asynchronous)
 
         if report_dataset_version:
             for dataset_version_model, dataset_version_id in dataset_versions:
@@ -78,4 +78,4 @@ class Command(BaseCommand):
                 dataset_version = DatasetVersion.objects.get(id=dataset_version_id)
                 logger.report_dataset_version(dataset_version)
 
-        logger.info("Finished harvest command")
+        logger.info("Finished harvest command (but indexing might be running in the background)")

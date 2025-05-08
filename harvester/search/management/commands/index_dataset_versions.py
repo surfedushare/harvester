@@ -26,5 +26,5 @@ class Command(LabelCommand):
 
         index_dataset_versions(
             [(f"{app_config.label}.DatasetVersion", current_version.id)],
-            recreate_indices=True, index_since=datetime(year=1970, month=1, day=1),
+            recreate_indices=True, index_since=datetime(year=1970, month=1, day=1), asynchronous=False
         )
