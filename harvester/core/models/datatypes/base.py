@@ -24,6 +24,14 @@ class HarvestObjectMixin(models.Model):
         app_config = apps.get_app_config(app_label)
         return apps.get_model(f"{app_label}.{app_config.document_model}")
 
+    @classmethod
+    def get_collection_model(cls):
+        """
+        Using Set as the name for Collection model
+        """
+        app_label = cls._meta.app_label
+        return apps.get_model(f"{app_label}.Set")
+
     def get_pending_tasks(self) -> list[str]:
         pending_tasks = []
         for task_name, conditions in self.tasks.items():
