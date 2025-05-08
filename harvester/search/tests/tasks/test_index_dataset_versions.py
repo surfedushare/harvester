@@ -136,6 +136,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
         # Check aliases are unchanged
         self.assertEqual(
             self.search_client.indices.delete_alias.call_count, 0,
@@ -164,6 +165,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertFalse(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be not promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
         # Check aliases are unchanged
         self.assertEqual(
             self.search_client.indices.delete_alias.call_count, 0,
@@ -190,6 +192,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertFalse(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be not promoted.")
         index.refresh_from_db()
         self.assertEqual(index.pushed_at, self.start_time)
+        self.assertIsNone(index.opened_at)
         # Check aliases are unchanged
         self.assertEqual(
             self.search_client.indices.delete_alias.call_count, 0,
@@ -211,6 +214,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
         # Check alias modifications
         self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
         self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
@@ -230,6 +234,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
         # Check aliases are unchanged
         self.assertEqual(
             self.search_client.indices.delete_alias.call_count, 0,
@@ -257,6 +262,7 @@ class TestIndexDatasetVersions(TestCase):
         self.assertTrue(self.dataset_version.is_index_promoted, "Expected DatasetVersion to be marked promoted.")
         self.dataset_version.index.refresh_from_db()
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
+        self.assertIsNone(self.dataset_version.index.opened_at)
         # Check alias modifications
         self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
         self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
