@@ -40,6 +40,10 @@ class OpenSearchIndex(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     pushed_at = models.DateTimeField(null=True, blank=True)
+    opened_at = models.DateTimeField(
+        null=True, blank=True,
+        help_text="Indicates when the index was opened for indexing. Set to None to close the index."
+    )
 
     @classmethod
     def build(cls, app_label: str, dataset: str, version: str) -> OpenSearchIndex:
@@ -108,6 +112,16 @@ class OpenSearchIndex(models.Model):
                 self.client.indices.delete(index=remote_name)
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
+
+    def open(self, recreate: bool = None) -> None:
+        self.opened_at = make_aware(datetime.now())
+        self.prepare_push(recreate)
+
+    def close(self) -> None:
+        self.pushed_at = self.opened_at
+        self.opened_at = None
+        self.clean()
+        self.save()
 
     def push(self, search_documents: list[tuple[str, dict]], request_timeout=150, is_done: bool = True,
              enhance_calm: bool = False) -> list[str]:
