@@ -4,21 +4,21 @@ from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
-from celery import current_app as app, chord, group
+from celery import current_app as app, group
+from opensearchpy.exceptions import ConnectionError
 
 from datagrowth.utils.iterators import ibatch
 from harvester.tasks.base import DatabaseConnectionResetTask
 from core.logging import HarvestLogger
 from core.models.datatypes import HarvestDatasetVersion, HarvestDocument
 from core.loading import HarvesterDataStorages
-from search.loading import load_data_models
 from search.models import OpenSearchIndex
 
 
 @app.task(
     name="index_documents",
     base=DatabaseConnectionResetTask,
-    autoretry_for=(TimeoutError,),
+    autoretry_for=(ConnectionError,),
     retry_kwargs={'max_retries': 3, 'countdown': 60}
 )
 @atomic()
