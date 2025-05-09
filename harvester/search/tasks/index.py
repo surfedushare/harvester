@@ -4,7 +4,7 @@ from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
-from celery import current_app as app, group
+from celery import current_app as app, chord
 from opensearchpy.exceptions import ConnectionError
 
 from datagrowth.utils.iterators import ibatch
@@ -232,9 +232,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         finish_indexing = close_index.s(storages.app_label, dataset_version_id, force_promotion=recreate_indices)
         # Dispatch the group with callback and collect task ID or execute synchronously
         if asynchronous:
-            index_tasks_group = group(index_tasks)
-            result = index_tasks_group.apply_async()
-            result.then(finish_indexing)
+            result = chord(index_tasks)(finish_indexing)
             task_ids.append(result.id)
         else:
             for index_task in index_tasks:
