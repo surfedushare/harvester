@@ -181,6 +181,14 @@ def sync_opensearch_indices(app_label: str) -> None:
     _push_dataset_version_to_index(dataset_version, logger, context="sync_opensearch_indices")
 
 
+@app.task(name="close_index_wrapper", base=DatabaseConnectionResetTask)
+def close_index_wrapper(results, app_label: str, dataset_version_id: int, force_promotion: bool = False) -> None:
+    """
+    Wrapper task that ignores the results from the chord group and calls close_index with the correct parameters.
+    """
+    return close_index(app_label, dataset_version_id, force_promotion=force_promotion)
+
+
 @app.task(name="index_dataset_versions", base=DatabaseConnectionResetTask)
 def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_indices: bool = False,
                            index_since: datetime = None, asynchronous: bool = False,
@@ -229,7 +237,9 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
             for batch in ibatch(document_ids, batch_size=batch_size)
         ]
         # Create a callback task to close the index after indexing completes
-        finish_indexing = close_index.s(storages.app_label, dataset_version_id, force_promotion=recreate_indices)
+        finish_indexing = close_index_wrapper.s(
+            storages.app_label, dataset_version_id, force_promotion=recreate_indices
+        )
         # Dispatch the group with callback and collect task ID or execute synchronously
         if asynchronous:
             result = chord(index_tasks)(finish_indexing)
@@ -237,6 +247,6 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         else:
             for index_task in index_tasks:
                 index_task()
-            finish_indexing()
+            finish_indexing(None)
 
     return task_ids
