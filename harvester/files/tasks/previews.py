@@ -19,7 +19,7 @@ def video_preview(app_label: str, document_ids: list[int]):
         "growth_phase": "video_preview",
         "asynchronous": False,
         "retrieve_data": {
-            "resource": "files.youtubethumbnailresource",
+            "resource": "files.videothumbnailresource",
             "args": ["$.url"],
             "kwargs": {},
         },
