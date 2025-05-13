@@ -23,7 +23,7 @@ from search.models import OpenSearchIndex
     retry_kwargs={'max_retries': 3, 'countdown': 60}
 )
 @atomic()
-def index_documents(app_label: str, dataset_version_id: int, document_ids: list[int]) -> None:
+def index_documents(app_label: str, dataset_version_id: int, document_ids: list[int], silent: bool = True) -> None:
     """
     Index a specific set of documents for a dataset version.
 
@@ -48,9 +48,10 @@ def index_documents(app_label: str, dataset_version_id: int, document_ids: list[
         },
         warn_delete_does_not_exist=False
     )
+    if not silent:
+        logger.debug(f"Starting batch indexing for {len(document_ids)} documents")
 
     # Get documents and process
-    logger.debug(f"Starting batch indexing for {len(document_ids)} documents")
     documents = dataset_version.documents.filter(id__in=document_ids)
     enhance_calm = len(document_ids) >= 100
     search_documents = []
@@ -236,6 +237,18 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
             dataset_version.index.close()
             continue
 
+        # Prepare the logger
+        logger = HarvestLogger(
+            dataset_version.dataset.name,
+            "index_documents",
+            command_options={
+                "app_label": storages.app_label,
+                "dataset_version_id": dataset_version_id,
+                "document_count": len(document_ids)
+            },
+            warn_delete_does_not_exist=False
+        )
+
         # Create partial index_documents tasks
         index_tasks = [
             index_documents.s(storages.app_label, dataset_version_id, batch)
@@ -246,6 +259,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
             storages.app_label, dataset_version_id, force_promotion=recreate_indices
         )
         # Dispatch the group with callback and collect task ID or execute synchronously
+        logger.debug(f"Starting batch indexing for {len(document_ids)} documents")
         if asynchronous:
             result = chord(index_tasks)(finish_indexing)
             task_ids.append(result.id)
