@@ -206,7 +206,7 @@ def video_transcripts(app_label: str, document_ids: list[int]):
         "growth_phase": "video_transcripts",
         "asynchronous": False,
         "retrieve_data": {
-            "resource": "files.youtubetranscriptsresource",
+            "resource": "files.videotranscriptsresource",
             "args": ["$.url"],
             "kwargs": {},
         },

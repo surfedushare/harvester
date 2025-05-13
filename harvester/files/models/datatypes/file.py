@@ -15,7 +15,7 @@ from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.constants import SEED_DEFAULTS
-from files.models.resources.youtube_api import YoutubeAPIResource
+from files.models.resources.youtube import YoutubeAPIResource
 from files.models.resources.metadata import CheckURLResource
 
 
@@ -52,7 +52,7 @@ def default_document_tasks():
             # but that fails for Youtube so that's not a possibility at the moment.
             "depends_on": [],
             "checks": ["is_video"],
-            "resources": ["files.YoutubeThumbnailResource"]
+            "resources": ["files.VideoThumbnailResource"]
         },
         "youtube_api": {
             "depends_on": ["$.hash"],
@@ -64,7 +64,7 @@ def default_document_tasks():
             # This shell tool also gets blocked by Youtube, but it works for Vimeo
             "depends_on": [],
             "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
-            "resources": ["files.YoutubeTranscriptsResource"]
+            "resources": ["files.VideoTranscriptsResource"]
         },
     }
 

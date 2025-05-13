@@ -10,7 +10,7 @@ from datagrowth.resources import ShellResource
 logger = logging.getLogger("harvester")
 
 
-class YoutubeTranscriptsResource(ShellResource):
+class VideoTranscriptsResource(ShellResource):
 
     class ErrorCodes(Enum):
         MISSING_FILES = 1

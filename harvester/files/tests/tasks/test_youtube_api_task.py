@@ -38,7 +38,7 @@ class TestYoutubeAPITask(TestCase):
         })
         super().tearDownClass()
 
-    @patch("files.models.resources.youtube_api.YoutubeAPIResource._send")
+    @patch("files.models.resources.youtube.YoutubeAPIResource._send")
     def test_embed_url(self, send_mock):
         youtube_api_task("files", [doc.id for doc in self.documents])
         for doc in FileDocument.objects.all():

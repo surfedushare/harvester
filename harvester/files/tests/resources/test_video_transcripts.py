@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from files.models import YoutubeTranscriptsResource
+from files.models import VideoTranscriptsResource
 
 
 MOCK_STDOUT = {
@@ -25,17 +25,17 @@ File invalid
 }
 
 
-class TestYoutubeTranscriptsResource(TestCase):
+class TestVideoTranscriptsResource(TestCase):
 
     def test_transform(self):
-        rsc = YoutubeTranscriptsResource()
+        rsc = VideoTranscriptsResource()
         result = rsc.transform(MOCK_STDOUT["success"])
         self.assertIsInstance(result, str)
         self.assertTrue(result.startswith("WEBVTT"))
         self.assertTrue(result.endswith("is to thoroughly mix"))
 
     def test_transform_errors(self):
-        rsc = YoutubeTranscriptsResource()
+        rsc = VideoTranscriptsResource()
         result = rsc.transform(MOCK_STDOUT["invalid_file"])
         self.assertIsInstance(result, str)
         self.assertFalse(result)
