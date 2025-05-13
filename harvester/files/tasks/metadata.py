@@ -141,7 +141,7 @@ def get_embed_url(node):
     return url
 
 
-def get_previews(node):
+def get_preview_file(node):
     thumbnails = node["snippet"]["thumbnails"]
     if "maxres" in thumbnails:
         full_size_key = "maxres"
@@ -149,11 +149,7 @@ def get_previews(node):
         full_size_key = "standard"
     else:
         full_size_key = "default"
-    return {
-        "full_size": thumbnails[full_size_key]["url"],
-        "preview": thumbnails["high"]["url"],
-        "preview_small": thumbnails["medium"]["url"]
-    }
+    return thumbnails[full_size_key]["url"]
 
 
 @app.task(name="youtube_api", base=DatabaseConnectionResetTask)
@@ -185,7 +181,7 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
                 "title": "$.snippet.title",
                 "license": "$.status.license",
                 "embed_url": get_embed_url,
-                "previews": get_previews
+                "preview_file": get_preview_file
             }
         }
     })
