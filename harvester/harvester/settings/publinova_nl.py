@@ -14,6 +14,12 @@ SHAREKIT_TEST_ORGANIZATIONS = [
     "Avans Hogeschool",
     "Aeres Hogeschool",
     "Amsterdamse Hogeschool voor de Kunsten",
+    "Marnix Academie",
+    "Driestar Educatief",
+    "Hogeschool Viaa",
+    "Hogeschool Rotterdam",
+    "Hogeschool Windesheim",
+    "HZ University of Applied Sciences",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
