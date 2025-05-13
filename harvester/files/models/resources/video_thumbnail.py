@@ -21,12 +21,12 @@ logger = logging.getLogger("harvester")
 
 
 def get_preview_file_path(instance, file_name):
-    return os.path.join("", "previews", "youtube")
+    return os.path.join("", "previews", "video")
 
 
-class YoutubeThumbnailResource(ShellResource):
+class VideoThumbnailResource(ShellResource):
 
-    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "youtube"), null=True, blank=True)
+    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "video"), null=True, blank=True)
 
     CMD_TEMPLATE = [
         "youtube-dl",
@@ -112,13 +112,13 @@ class YoutubeThumbnailResource(ShellResource):
             return extension.split("?")[0]
 
 
-@receiver(models.signals.post_delete, sender=YoutubeThumbnailResource)
+@receiver(models.signals.post_delete, sender=VideoThumbnailResource)
 def delete_youtube_thumbnail_images(sender, instance, **kwargs):
     if instance.preview:
         # Deletes images from VersatileImageField
         try:
             instance.preview.delete_all_created_images()
         except AssertionError:
-            logger.warning(f"AssertionError when deleting images for YoutubeThumbnailResource {instance.id}")
+            logger.warning(f"AssertionError when deleting images for VideoThumbnailResource {instance.id}")
         # Deletes original image
         instance.preview.delete(save=False)

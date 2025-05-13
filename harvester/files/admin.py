@@ -6,8 +6,8 @@ from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, Do
 from core.admin.resources import HarvesterHttpResourcesAdmin, HarvesterShellResourceAdmin
 from core.admin.harvest import HarvestStateAdmin
 from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState,
-                          HttpTikaResource, YoutubeThumbnailResource, PdfThumbnailResource,
-                          YoutubeAPIResource, CheckURLResource, ImageThumbnailResource, YoutubeTranscriptsResource)
+                          HttpTikaResource, VideoThumbnailResource, PdfThumbnailResource,
+                          YoutubeAPIResource, CheckURLResource, ImageThumbnailResource, VideoTranscriptsResource)
 
 
 class FileDocumentAdmin(DocumentAdmin):
@@ -36,9 +36,9 @@ admin.site.register(FileDocument, FileDocumentAdmin)
 admin.site.register(HarvestState, HarvestStateAdmin)
 
 admin.site.register(HttpTikaResource, HarvesterHttpResourcesAdmin)
-admin.site.register(YoutubeThumbnailResource, HarvesterShellResourceAdmin)
+admin.site.register(VideoThumbnailResource, HarvesterShellResourceAdmin)
 admin.site.register(PdfThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(YoutubeAPIResource, HarvesterHttpResourcesAdmin)
 admin.site.register(CheckURLResource, HarvesterHttpResourcesAdmin)
 admin.site.register(ImageThumbnailResource, HarvesterHttpResourcesAdmin)
-admin.site.register(YoutubeTranscriptsResource, HarvesterHttpResourcesAdmin)
+admin.site.register(VideoTranscriptsResource, HarvesterHttpResourcesAdmin)
