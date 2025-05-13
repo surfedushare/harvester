@@ -32,7 +32,9 @@ class TestHarvestObjectFileDocument(TestCase):
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["deactivate_invalid_documents", "check_url"])
         youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["deactivate_invalid_documents", 'video_preview', 'youtube_api'])
+        self.assertEqual(youtube_tasks, [
+            "deactivate_invalid_documents", "video_preview", "youtube_api",
+        ])
 
     def test_get_secondary_pending_tasks(self):
         # Set Tika task as completed

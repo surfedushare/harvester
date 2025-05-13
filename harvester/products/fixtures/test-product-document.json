@@ -187,6 +187,13 @@
                         "Applied Science",
                         "Applied Science"
                     ]
+                },
+                "lookup_consortium_translations": {
+                    "consortium": {
+                        "en": "Stimuleringsregeling Open en Online Onderwijs",
+                        "keyword": "Stimuleringsregeling Open en Online Onderwijs",
+                        "nl": "Stimuleringsregeling Open en Online Onderwijs"
+                    }
                 }
             },
             "pending_at": null,
