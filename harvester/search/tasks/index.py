@@ -1,11 +1,12 @@
 from datetime import datetime
+from time import sleep
 
 from django.conf import settings
 from django.apps import apps
 from django.db.transaction import atomic, DatabaseError
 from django.utils.timezone import make_aware
 from celery import current_app as app, chord
-from opensearchpy.exceptions import ConnectionError
+from opensearchpy.exceptions import ConnectionError, TransportError
 
 from datagrowth.utils.iterators import ibatch
 from harvester.tasks.base import DatabaseConnectionResetTask
@@ -18,7 +19,7 @@ from search.models import OpenSearchIndex
 @app.task(
     name="index_documents",
     base=DatabaseConnectionResetTask,
-    autoretry_for=(ConnectionError,),
+    autoretry_for=(ConnectionError, TransportError),
     retry_kwargs={'max_retries': 3, 'countdown': 60}
 )
 @atomic()
@@ -59,7 +60,11 @@ def index_documents(app_label: str, dataset_version_id: int, document_ids: list[
             language = document.get_analyzer_language()
             search_documents.append((language, document.to_search(use_multilingual_fields=False)))
         search_documents.append(("all", document.to_search(use_multilingual_fields=True)))
-    errors += dataset_version.index.push(search_documents, is_done=True, enhance_calm=enhance_calm)
+    try:
+        errors += dataset_version.index.push(search_documents, is_done=True, enhance_calm=enhance_calm)
+    except TransportError:
+        logger.warning("Taking extended timeout to relieve Open Search load")
+        sleep(300)
 
     logger.open_search_errors(errors)
 
