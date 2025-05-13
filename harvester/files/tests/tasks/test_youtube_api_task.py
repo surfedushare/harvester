@@ -53,11 +53,7 @@ class TestYoutubeAPITask(TestCase):
             "title": "This is a title",
             "license": "youtube",
             "duration": "PT3M33S",
-            "previews": {
-                "preview": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-                "full_size": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-                "preview_small": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg"
-            },
+            "preview_file": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
             "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
             "description": "this is a description"
         })
