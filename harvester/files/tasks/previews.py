@@ -35,6 +35,38 @@ def video_preview(app_label: str, document_ids: list[int]):
     youtube_dl_processor(FileDocument.objects.filter(id__in=document_ids))
 
 
+@app.task(name="youtube_preview", base=DatabaseConnectionResetTask)
+def youtube_preview(app_label: str, document_ids: list[int]):
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
+    youtube_processor = HttpGrowthProcessor({
+        "datatypes_app_label": "files",
+        "datatype_models": {
+            "document": "FileDocument",
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "growth_phase": "youtube_preview",
+        "batch_size": len(document_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.youtubethumbnailresource",
+            "method": "get",
+            "args": ["$.preview_file"],
+            "kwargs": {},
+        },
+        "contribute_data": {
+            "objective": {
+                "@": "$",
+                "full_size": "$.full_size",
+                "preview": "$.preview",
+                "preview_small": "$.preview_small",
+            }
+        }
+    })
+    youtube_processor(FileDocument.objects.filter(id__in=document_ids))
+
+
 @app.task(name="pdf_preview", base=DatabaseConnectionResetTask)
 def pdf_preview(app_label: str, document_ids: list[int]):
     storages = load_harvest_models(app_label)
