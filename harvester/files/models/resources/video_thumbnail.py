@@ -29,7 +29,7 @@ class VideoThumbnailResource(ShellResource):
     preview = VersatileImageField(upload_to=os.path.join("files", "previews", "video"), null=True, blank=True)
 
     CMD_TEMPLATE = [
-        "youtube-dl",
+        "yt-dlp",
         "--sleep-interval", "2",
         "--max-sleep-interval", "5",
         "--skip-download",
