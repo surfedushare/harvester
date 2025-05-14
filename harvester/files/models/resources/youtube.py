@@ -1,9 +1,15 @@
+import os
 import re
 from copy import copy
+from io import BytesIO
+from urllib.parse import urlparse, urljoin
 
 from django.conf import settings
 
-from datagrowth.resources import HttpResource
+from versatileimagefield.fields import VersatileImageField
+from versatileimagefield.utils import build_versatileimagefield_url_set
+
+from datagrowth.resources import HttpResource, HttpFileResource
 
 
 class YoutubeAPIResource(HttpResource):
@@ -46,3 +52,42 @@ class YoutubeAPIResource(HttpResource):
         elif kind == "caption":
             parameters["part"] = "snippet"
         return parameters
+
+
+class YoutubeThumbnailResource(HttpFileResource):
+
+    preview = VersatileImageField(upload_to=os.path.join("files", "previews", "youtube"), null=True, blank=True)
+
+    @staticmethod
+    def get_preview_filename(thumbnail_url):
+        url = urlparse(thumbnail_url)
+        path = url.path
+        remainder, filename = os.path.split(path)
+        remainder, youtube_id = os.path.split(remainder)
+        return f"{youtube_id}-{filename}"
+
+    def _update_from_results(self, response):
+        # Save the metadata
+        self.head = dict(response.headers.lower_items())
+        self.status = response.status_code
+        # Get the image file we want to save
+        fd = BytesIO(response.content)
+        # Defer a file name from the URL
+        variables = self.variables()
+        preview_file_name = self.get_preview_filename(variables["url"][0])
+        # Save to instance
+        self.preview.save(preview_file_name, fd)
+
+    @property
+    def content(self):
+        if self.success:
+            signed_urls = build_versatileimagefield_url_set(self.preview, [
+                ('full_size', 'url'),
+                ('preview', 'thumbnail__400x300'),
+                ('preview_small', 'thumbnail__200x150'),
+            ])
+            return "application/json", {
+                image_key: urljoin(url, urlparse(url).path)
+                for image_key, url in signed_urls.items()
+            }
+        return None, None
