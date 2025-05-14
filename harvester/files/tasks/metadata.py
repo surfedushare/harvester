@@ -98,38 +98,6 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
     tika_processor(Document.objects.filter(id__in=document_ids))
 
 
-@app.task(name="tika_plain", base=DatabaseConnectionResetTask)
-def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
-    storages = load_harvest_models(app_label)
-    Document = storages.Document
-
-    tika_plain_processor = HttpGrowthProcessor({
-        "datatypes_app_label": app_label,
-        "datatype_models": {
-            "document": Document._meta.model_name,
-            "process_result": "ProcessResult",
-            "batch": "Batch"
-        },
-        "growth_phase": "tika_plain",
-        "batch_size": len(document_ids),
-        "asynchronous": False,
-        "retrieve_data": {
-            "tika_return_type": "text",
-            "resource": "files.httptikaresource",
-            "method": "put",
-            "args": ["$.url"],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "objective": {
-                "@": "$",
-                "#plains": tika_content_extraction,
-            }
-        }
-    })
-    tika_plain_processor(Document.objects.filter(id__in=document_ids))
-
-
 def get_embed_url(node):
     html = node["player"]["embedHtml"]
     url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
