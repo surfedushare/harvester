@@ -1,0 +1,276 @@
+[
+{
+    "model": "files.dataset",
+    "pk": 1,
+    "fields": {
+        "name": "test",
+        "is_harvested": true,
+        "indexing": "no"
+    }
+},
+{
+    "model": "files.datasetversion",
+    "pk": 1,
+    "fields": {
+        "task_results": {},
+        "derivatives": {},
+        "pending_at": "2023-10-17T14:18:46.870Z",
+        "finished_at": null,
+        "dataset": 1,
+        "index": null,
+        "is_current": true,
+        "is_index_promoted": false,
+        "created_at": "2023-10-17T14:18:46.870Z",
+        "modified_at": "2023-10-17T14:18:46.870Z",
+        "version": "1.39.25",
+        "tasks": {
+            "create_opensearch_index": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            },
+            "set_current_dataset_version": {
+                "checks": [],
+                "resources": [],
+                "depends_on": []
+            }
+        },
+        "historic_sets": []
+    }
+},
+{
+    "model": "files.filedocument",
+    "pk": 1,
+    "fields": {
+        "created_at": "2024-04-16T01:07:16.144Z",
+        "modified_at": "2024-04-16T08:08:57.988Z",
+        "properties": {
+            "set": "sharekit:edusources",
+            "srn": "sharekit:edusources:e9e212d6-e609-4d0b-903f-1f966bf8b420:2c338f034b2e643a660811a423b36a2cdb7ac1b6",
+            "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "hash": "2c338f034b2e643a660811a423b36a2cdb7ac1b6",
+            "type": "document",
+            "state": "active",
+            "title": "Docentenhandleiding",
+            "is_link": false,
+            "provider": {
+                "name": "Hogeschool Rotterdam",
+                "slug": null,
+                "external_id": null,
+                "ror": null
+            },
+            "copyright": null,
+            "mime_type": "text/html",
+            "product_id": "e9e212d6-e609-4d0b-903f-1f966bf8b420",
+            "external_id": "e9e212d6-e609-4d0b-903f-1f966bf8b420:2c338f034b2e643a660811a423b36a2cdb7ac1b6",
+            "access_rights": "OpenAccess"
+        },
+        "identity": "sharekit:edusources:e9e212d6-e609-4d0b-903f-1f966bf8b420:2c338f034b2e643a660811a423b36a2cdb7ac1b6",
+        "reference": null,
+        "task_results": {
+            "youtube_api": {
+                "id": 1,
+                "success": true,
+                "resource": "files.youtubeapiresource"
+            }
+        },
+        "derivatives": {
+            "youtube_api": {
+                "title": "This is a title",
+                "license": "youtube",
+                "duration": "PT3M33S",
+                "preview_file": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+                "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "description": "this is a description"
+            }
+        },
+        "pending_at": null,
+        "finished_at": "2024-04-16T08:07:52.472Z",
+        "dataset_version": 1,
+        "collection": null,
+        "overwrite": null,
+        "state": "active",
+        "metadata": {
+            "srn": null,
+            "hash": "0d7ce90f18a1f8e369f6c444e4a05b8092edaf2a",
+            "provider": "Hogeschool Rotterdam",
+            "created_at": "2024-04-15T13:30:16.361Z",
+            "deleted_at": null,
+            "modified_at": "2024-04-16T08:08:57.988Z"
+        },
+        "tasks": {
+            "tika": {
+                "checks": [
+                    "is_analysis_possible"
+                ],
+                "resources": [
+                    "files.HttpTikaResource"
+                ],
+                "depends_on": [
+                    "$.hash",
+                    "check_url"
+                ]
+            },
+            "check_url": {
+                "checks": [
+                    "!is_not_found",
+                    "is_analysis_allowed",
+                    "!is_youtube_video"
+                ],
+                "resources": [
+                    "files.CheckURLResource"
+                ],
+                "depends_on": [
+                    "$.hash"
+                ]
+            },
+            "pdf_preview": {
+                "checks": [
+                    "is_analysis_possible",
+                    "is_pdf"
+                ],
+                "resources": [
+                    "files.PdfThumbnailResource"
+                ],
+                "depends_on": [
+                    "$.hash",
+                    "check_url"
+                ]
+            },
+            "youtube_api": {
+                "checks": [
+                    "is_youtube_video"
+                ],
+                "resources": [
+                    "files.YoutubeAPIResource"
+                ],
+                "depends_on": [
+                    "$.hash"
+                ]
+            },
+            "video_preview": {
+                "checks": [
+                    "is_video"
+                ],
+                "resources": [
+                    "files.VideoThumbnailResource"
+                ],
+                "depends_on": []
+            },
+            "youtube_preview": {
+                "checks": [],
+                "resources": [
+                    "files.YoutubeThumbnailResource"
+                ],
+                "depends_on": ["youtube_api"]
+            }
+        },
+        "status_code": 200,
+        "redirects": "no",
+        "domain": "youtube.com",
+        "mime_type": "text/html",
+        "type": "video",
+        "is_not_found": false,
+        "is_analysis_allowed": true
+    }
+},
+{
+    "model": "files.youtubeapiresource",
+    "pk": null,
+    "fields": {
+        "uri": "youtube.googleapis.com/youtube/v3/videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-05-14T07:16:42.060Z",
+        "modified_at": "2025-05-14T07:16:48.438Z",
+        "purge_at": "2025-06-13T08:00:52.912Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "videos"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://youtube.googleapis.com/youtube/v3/videos?id=dQw4w9WgXcQ&part=snippet%2Cplayer%2CcontentDetails%2Cstatus&key=secret",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive",
+                "Referer": "https://harvester.dev.surfedushare.nl"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "content-type": "application/json; charset=UTF-8",
+            "vary": "Origin, X-Origin, Referer",
+            "content-encoding": "gzip",
+            "date": "Wed, 14 May 2025 08:00:53 GMT",
+            "server": "scaffolding on HTTPServer2",
+            "x-xss-protection": "0",
+            "x-frame-options": "SAMEORIGIN",
+            "x-content-type-options": "nosniff",
+            "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "transfer-encoding": "chunked"
+        },
+        "body": "{\n  \"kind\": \"youtube#videoListResponse\",\n  \"etag\": \"qWO0dMMbRoUOmhIvdlcyfbDEHtc\",\n  \"items\": [\n    {\n      \"kind\": \"youtube#video\",\n      \"etag\": \"a4M0sNgBcPTbxIM6OXfSI_-BbhI\",\n      \"id\": \"dQw4w9WgXcQ\",\n      \"snippet\": {\n        \"publishedAt\": \"2009-10-25T06:57:33Z\",\n        \"channelId\": \"UCuAXFkgsw1L7xaCfnd5JJOw\",\n        \"title\": \"Rick Astley - Never Gonna Give You Up (Official Music Video)\",\n        \"description\": \"The official video for “Never Gonna Give You Up” by Rick Astley. \\n\\nNever: The Autobiography 📚 OUT NOW! \\nFollow this link to get your copy and listen to Rick’s ‘Never’ playlist ❤️ #RickAstleyNever\\nhttps://linktr.ee/rickastleynever\\n\\n“Never Gonna Give You Up” was a global smash on its release in July 1987, topping the charts in 25 countries including Rick’s native UK and the US Billboard Hot 100.  It also won the Brit Award for Best single in 1988. Stock Aitken and Waterman wrote and produced the track which was the lead-off single and lead track from Rick’s debut LP “Whenever You Need Somebody”.  The album was itself a UK number one and would go on to sell over 15 million copies worldwide.\\n\\nThe legendary video was directed by Simon West – who later went on to make Hollywood blockbusters such as Con Air, Lara Croft – Tomb Raider and The Expendables 2.  The video passed the 1bn YouTube views milestone on 28 July 2021.\\n\\nSubscribe to the official Rick Astley YouTube channel: https://RickAstley.lnk.to/YTSubID\\n\\nFollow Rick Astley:\\nFacebook: https://RickAstley.lnk.to/FBFollowID \\nTwitter: https://RickAstley.lnk.to/TwitterID \\nInstagram: https://RickAstley.lnk.to/InstagramID \\nWebsite: https://RickAstley.lnk.to/storeID \\nTikTok: https://RickAstley.lnk.to/TikTokID\\n\\nListen to Rick Astley:\\nSpotify: https://RickAstley.lnk.to/SpotifyID \\nApple Music: https://RickAstley.lnk.to/AppleMusicID \\nAmazon Music: https://RickAstley.lnk.to/AmazonMusicID \\nDeezer: https://RickAstley.lnk.to/DeezerID \\n\\nLyrics:\\nWe’re no strangers to love\\nYou know the rules and so do I\\nA full commitment’s what I’m thinking of\\nYou wouldn’t get this from any other guy\\n\\nI just wanna tell you how I’m feeling\\nGotta make you understand\\n\\nNever gonna give you up\\nNever gonna let you down\\nNever gonna run around and desert you\\nNever gonna make you cry\\nNever gonna say goodbye\\nNever gonna tell a lie and hurt you\\n\\nWe’ve known each other for so long\\nYour heart’s been aching but you’re too shy to say it\\nInside we both know what’s been going on\\nWe know the game and we’re gonna play it\\n\\nAnd if you ask me how I’m feeling\\nDon’t tell me you’re too blind to see\\n\\nNever gonna give you up\\nNever gonna let you down\\nNever gonna run around and desert you\\nNever gonna make you cry\\nNever gonna say goodbye\\nNever gonna tell a lie and hurt you\\n\\n#RickAstley #NeverGonnaGiveYouUp #WheneverYouNeedSomebody #OfficialMusicVideo\",\n        \"thumbnails\": {\n          \"default\": {\n            \"url\": \"https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg\",\n            \"width\": 120,\n            \"height\": 90\n          },\n          \"medium\": {\n            \"url\": \"https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg\",\n            \"width\": 320,\n            \"height\": 180\n          },\n          \"high\": {\n            \"url\": \"https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg\",\n            \"width\": 480,\n            \"height\": 360\n          },\n          \"standard\": {\n            \"url\": \"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg\",\n            \"width\": 640,\n            \"height\": 480\n          },\n          \"maxres\": {\n            \"url\": \"https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg\",\n            \"width\": 1280,\n            \"height\": 720\n          }\n        },\n        \"channelTitle\": \"Rick Astley\",\n        \"tags\": [\n          \"rick astley\",\n          \"Never Gonna Give You Up\",\n          \"nggyu\",\n          \"never gonna give you up lyrics\",\n          \"rick rolled\",\n          \"Rick Roll\",\n          \"rick astley official\",\n          \"rickrolled\",\n          \"Fortnite song\",\n          \"Fortnite event\",\n          \"Fortnite dance\",\n          \"fortnite never gonna give you up\",\n          \"rick roll\",\n          \"rickrolling\",\n          \"rick rolling\",\n          \"never gonna give you up\",\n          \"80s music\",\n          \"rick astley new\",\n          \"animated video\",\n          \"rickroll\",\n          \"meme songs\",\n          \"never gonna give u up lyrics\",\n          \"Rick Astley 2022\",\n          \"never gonna let you down\",\n          \"animated\",\n          \"rick rolls 2022\",\n          \"never gonna give you up karaoke\"\n        ],\n        \"categoryId\": \"10\",\n        \"liveBroadcastContent\": \"none\",\n        \"defaultLanguage\": \"en\",\n        \"localized\": {\n          \"title\": \"Rick Astley - Never Gonna Give You Up (Official Music Video)\",\n          \"description\": \"The official video for “Never Gonna Give You Up” by Rick Astley. \\n\\nNever: The Autobiography 📚 OUT NOW! \\nFollow this link to get your copy and listen to Rick’s ‘Never’ playlist ❤️ #RickAstleyNever\\nhttps://linktr.ee/rickastleynever\\n\\n“Never Gonna Give You Up” was a global smash on its release in July 1987, topping the charts in 25 countries including Rick’s native UK and the US Billboard Hot 100.  It also won the Brit Award for Best single in 1988. Stock Aitken and Waterman wrote and produced the track which was the lead-off single and lead track from Rick’s debut LP “Whenever You Need Somebody”.  The album was itself a UK number one and would go on to sell over 15 million copies worldwide.\\n\\nThe legendary video was directed by Simon West – who later went on to make Hollywood blockbusters such as Con Air, Lara Croft – Tomb Raider and The Expendables 2.  The video passed the 1bn YouTube views milestone on 28 July 2021.\\n\\nSubscribe to the official Rick Astley YouTube channel: https://RickAstley.lnk.to/YTSubID\\n\\nFollow Rick Astley:\\nFacebook: https://RickAstley.lnk.to/FBFollowID \\nTwitter: https://RickAstley.lnk.to/TwitterID \\nInstagram: https://RickAstley.lnk.to/InstagramID \\nWebsite: https://RickAstley.lnk.to/storeID \\nTikTok: https://RickAstley.lnk.to/TikTokID\\n\\nListen to Rick Astley:\\nSpotify: https://RickAstley.lnk.to/SpotifyID \\nApple Music: https://RickAstley.lnk.to/AppleMusicID \\nAmazon Music: https://RickAstley.lnk.to/AmazonMusicID \\nDeezer: https://RickAstley.lnk.to/DeezerID \\n\\nLyrics:\\nWe’re no strangers to love\\nYou know the rules and so do I\\nA full commitment’s what I’m thinking of\\nYou wouldn’t get this from any other guy\\n\\nI just wanna tell you how I’m feeling\\nGotta make you understand\\n\\nNever gonna give you up\\nNever gonna let you down\\nNever gonna run around and desert you\\nNever gonna make you cry\\nNever gonna say goodbye\\nNever gonna tell a lie and hurt you\\n\\nWe’ve known each other for so long\\nYour heart’s been aching but you’re too shy to say it\\nInside we both know what’s been going on\\nWe know the game and we’re gonna play it\\n\\nAnd if you ask me how I’m feeling\\nDon’t tell me you’re too blind to see\\n\\nNever gonna give you up\\nNever gonna let you down\\nNever gonna run around and desert you\\nNever gonna make you cry\\nNever gonna say goodbye\\nNever gonna tell a lie and hurt you\\n\\n#RickAstley #NeverGonnaGiveYouUp #WheneverYouNeedSomebody #OfficialMusicVideo\"\n        },\n        \"defaultAudioLanguage\": \"en\"\n      },\n      \"contentDetails\": {\n        \"duration\": \"PT3M33S\",\n        \"dimension\": \"2d\",\n        \"definition\": \"hd\",\n        \"caption\": \"true\",\n        \"licensedContent\": true,\n        \"contentRating\": {},\n        \"projection\": \"rectangular\"\n      },\n      \"status\": {\n        \"uploadStatus\": \"processed\",\n        \"privacyStatus\": \"public\",\n        \"license\": \"youtube\",\n        \"embeddable\": true,\n        \"publicStatsViewable\": true,\n        \"madeForKids\": false\n      },\n      \"player\": {\n        \"embedHtml\": \"\\u003ciframe width=\\\"480\\\" height=\\\"270\\\" src=\\\"//www.youtube.com/embed/dQw4w9WgXcQ\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" referrerpolicy=\\\"strict-origin-when-cross-origin\\\" allowfullscreen\\u003e\\u003c/iframe\\u003e\"\n      }\n    }\n  ],\n  \"pageInfo\": {\n    \"totalResults\": 1,\n    \"resultsPerPage\": 1\n  }\n}\n"
+    }
+},
+{
+    "model": "files.youtubethumbnailresource",
+    "pk": 1,
+    "fields": {
+        "uri": "i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-05-14T07:16:42.060Z",
+        "modified_at": "2025-05-14T07:16:48.438Z",
+        "purge_at": "2025-06-13T07:16:41.901Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "cancel": false,
+            "backoff_delay": false
+        },
+        "head": {
+            "accept-ranges": "bytes",
+            "access-control-allow-origin": "*",
+            "cross-origin-resource-policy": "cross-origin",
+            "cross-origin-opener-policy-report-only": "same-origin; report-to=\"youtube\"",
+            "report-to": "{\"group\":\"youtube\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/youtube\"}]}",
+            "timing-allow-origin": "*",
+            "content-length": "73992",
+            "x-content-type-options": "nosniff",
+            "server": "sffe",
+            "x-xss-protection": "0",
+            "date": "Wed, 14 May 2025 05:21:34 GMT",
+            "expires": "Wed, 14 May 2025 07:21:34 GMT",
+            "cache-control": "public, max-age=7200",
+            "etag": "\"1631784323\"",
+            "content-type": "image/jpeg",
+            "age": "6908",
+            "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+        },
+        "body": null,
+        "preview": "files/previews/youtube/dQw4w9WgXcQ-maxresdefault.jpg"
+    }
+}
+]
