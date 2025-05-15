@@ -223,6 +223,8 @@ class FileDocument(HarvestDocument):
             data["previews"] = self.derivatives["video_preview"]
         elif "image_preview" in self.derivatives:
             data["previews"] = self.derivatives["image_preview"]
+        elif "youtube_preview" in self.derivatives:
+            data["previews"] = self.derivatives["youtube_preview"]
         # Last but not least we validate that data is within bounds when dealing with output for search engine
         if for_search and isinstance(data.get("text"), str):
             # When text data exceeds maximum length we brutally cut the length while attempting to keep words intact.
