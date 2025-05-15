@@ -46,8 +46,12 @@ class TestRunHarvest(TestCase):
         # Run command
         call_command("run_harvest", "--timeout=1", "--wait-interval=1", "--asynchronous")
         self.assertEqual(harvest_entities_mock.call_args_list, [call(reset=False, asynchronous=True)])
+        indexed_dataset_versions = [
+            ("files.datasetversion", file_version.id),
+            ("products.datasetversion", product_version.id)
+        ]
         self.assertEqual(
             index_dataset_versions_mock.call_args_list,
-            [call([("files.datasetversion", file_version.id), ("products.datasetversion", product_version.id)])],
+            [call(indexed_dataset_versions, asynchronous=True)],
             "Expected command timeout to lead to use of fallback versions when available"
         )

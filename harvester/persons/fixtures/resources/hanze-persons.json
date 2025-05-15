@@ -1,0 +1,293 @@
+[
+{
+    "model": "persons.hanzepersonresource",
+    "pk": 1,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/persons",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T10:58:56.378Z",
+        "modified_at": "2025-04-29T10:58:56.378Z",
+        "purge_at": "2025-05-29T10:58:45.221Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "hanze",
+                "1970-01-01T00:00:00Z"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/persons",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "expires": "0",
+            "pragma": "no-cache",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e49397e500e44-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 10:58:45 GMT"
+        },
+        "body": "hanze/hanze-persons.01.json"
+    }
+},
+{
+    "model": "persons.hanzeuserresource",
+    "pk": 1,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/users/3ce301c6-8fee-40cd-9ecd-4e6013b1d8b7",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T11:00:57.945Z",
+        "modified_at": "2025-04-29T11:00:57.945Z",
+        "purge_at": "2025-05-29T11:00:50.095Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "3ce301c6-8fee-40cd-9ecd-4e6013b1d8b7"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/users/3ce301c6-8fee-40cd-9ecd-4e6013b1d8b7",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e4c45eb69655c-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 11:00:50 GMT"
+        },
+        "body": "hanze/hanze-user.3ce301c6-8fee-40cd-9ecd-4e6013b1d8b7.json"
+    }
+},
+{
+    "model": "persons.hanzeuserresource",
+    "pk": 2,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/users/59735ab5-bed3-4af1-bfc8-4a020161e41a",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T11:00:57.945Z",
+        "modified_at": "2025-04-29T11:00:57.945Z",
+        "purge_at": "2025-05-29T11:00:50.095Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "59735ab5-bed3-4af1-bfc8-4a020161e41a"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/users/59735ab5-bed3-4af1-bfc8-4a020161e41a",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e4c45eb69655c-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 11:00:50 GMT"
+        },
+        "body": "hanze/hanze-user.59735ab5-bed3-4af1-bfc8-4a020161e41a.json"
+    }
+},
+{
+    "model": "persons.hanzeuserresource",
+    "pk": 3,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/users/018844fb-2860-42a5-8034-f384f7d13197",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T11:00:57.945Z",
+        "modified_at": "2025-04-29T11:00:57.945Z",
+        "purge_at": "2025-05-29T11:00:50.095Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "018844fb-2860-42a5-8034-f384f7d13197"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/users/018844fb-2860-42a5-8034-f384f7d13197",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e4c45eb69655c-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 11:00:50 GMT"
+        },
+        "body": "hanze/hanze-user.018844fb-2860-42a5-8034-f384f7d13197.json"
+    }
+},
+{
+    "model": "persons.hanzeuserresource",
+    "pk": 4,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/users/9570dc68-4e63-4306-a934-38bd5a27c760",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T11:00:57.945Z",
+        "modified_at": "2025-04-29T11:00:57.945Z",
+        "purge_at": "2025-05-29T11:00:50.095Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "9570dc68-4e63-4306-a934-38bd5a27c760"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/users/9570dc68-4e63-4306-a934-38bd5a27c760",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e4c45eb69655c-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 11:00:50 GMT"
+        },
+        "body": "hanze/hanze-user.9570dc68-4e63-4306-a934-38bd5a27c760.json"
+    }
+},
+{
+    "model": "persons.hanzeuserresource",
+    "pk": 5,
+    "fields": {
+        "uri": "apimanagement.hanze.nl/nppo/users/b9417505-1275-4a66-b6dc-e2f142b98739",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-29T11:00:57.945Z",
+        "modified_at": "2025-04-29T11:00:57.945Z",
+        "purge_at": "2025-05-29T11:00:50.095Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "b9417505-1275-4a66-b6dc-e2f142b98739"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://apimanagement.hanze.nl/nppo/users/b9417505-1275-4a66-b6dc-e2f142b98739",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "cache-control": "private, max-age=14400",
+            "transfer-encoding": "chunked",
+            "content-type": "application/json",
+            "content-encoding": "br",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "cf-ray": "937e4c45eb69655c-AMS",
+            "alt-svc": "h3=\":443\"; ma=86400",
+            "date": "Tue, 29 Apr 2025 11:00:50 GMT"
+        },
+        "body": "hanze/hanze-user.b9417505-1275-4a66-b6dc-e2f142b98739.json"
+    }
+}
+]

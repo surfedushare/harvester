@@ -24,9 +24,9 @@ def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocumen
         # Give system/cloud a bit of time to process documents fully
         sleep(recursion_depth)
 
-    models = load_harvest_models(app_label)
-    documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
-    pending = validate_pending_harvest_instances(documents, model=models["Document"])
+    storages = load_harvest_models(app_label)
+    documents = load_pending_harvest_instances(*documents, model=storages.Document, as_list=True)
+    pending = validate_pending_harvest_instances(documents, model=storages.Document)
 
     if len(pending):
         recursive_callback_signature = dispatch_document_tasks.si(
@@ -47,8 +47,8 @@ def dispatch_document_tasks(app_label: str, documents: list[int | HarvestDocumen
 def cancel_document_tasks(app_label: str, documents: list[int | HarvestDocument]) -> None:
     if not len(documents):
         return
-    models = load_harvest_models(app_label)
-    documents = load_pending_harvest_instances(*documents, model=models["Document"], as_list=True)
+    storages = load_harvest_models(app_label)
+    documents = load_pending_harvest_instances(*documents, model=storages.Document, as_list=True)
     if not documents:
         return
     documents = documents if isinstance(documents, list) else [documents]
@@ -60,14 +60,14 @@ def cancel_document_tasks(app_label: str, documents: list[int | HarvestDocument]
         document.finished_at = now()
         stopped.append(document)
 
-    models["Document"].objects.bulk_update(stopped, ["pending_at", "finished_at", "task_results"])
+    storages.Document.objects.bulk_update(stopped, ["pending_at", "finished_at", "task_results"])
 
 
 @app.task(name="deactivate_invalid_documents", base=DatabaseConnectionResetTask)
 @atomic()
 def deactivate_invalid_documents(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     app_config = apps.get_app_config(app_label)
     Validator = app_config.result_transformer
     for document in Document.objects.filter(id__in=document_ids).select_for_update():

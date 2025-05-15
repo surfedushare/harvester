@@ -1,0 +1,205 @@
+[
+{
+    "model": "persons.hvapersonresource",
+    "pk": 1,
+    "fields": {
+        "uri": "accpure.hva.nl/ws/api/persons",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-30T08:08:47.796Z",
+        "modified_at": "2025-04-30T08:08:47.796Z",
+        "purge_at": "2025-05-30T08:08:38.375Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "hva",
+                "1970-01-01T00:00:00Z"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://accpure.hva.nl/ws/api/persons",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 30 Apr 2025 08:08:38 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "cache-control": "private, max-age=14400",
+            "expires": "0",
+            "pragma": "no-cache",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "server": "cloudflare",
+            "cf-ray": "93858d68d99b774c-AMS",
+            "content-encoding": "br",
+            "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "body": "hva/hva-persons.01.json"
+    }
+},
+{
+    "model": "persons.hvauserresource",
+    "pk": 1,
+    "fields": {
+        "uri": "accpure.hva.nl/ws/api/users/1fd55bef-58bd-400f-a037-7248a27e44ba",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-30T08:17:43.478Z",
+        "modified_at": "2025-04-30T08:17:43.478Z",
+        "purge_at": "2025-05-30T08:17:35.755Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "1fd55bef-58bd-400f-a037-7248a27e44ba"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://accpure.hva.nl/ws/api/users/1fd55bef-58bd-400f-a037-7248a27e44ba",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 30 Apr 2025 08:17:35 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "cache-control": "private, max-age=14400",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "server": "cloudflare",
+            "cf-ray": "93859a874cda1ca7-AMS",
+            "content-encoding": "br",
+            "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "body": "hva/hva-user.1fd55bef-58bd-400f-a037-7248a27e44ba.json"
+    }
+},
+{
+    "model": "persons.hvauserresource",
+    "pk": 2,
+    "fields": {
+        "uri": "accpure.hva.nl/ws/api/users/6ed3a851-a3df-43f9-8351-562283acce57",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-30T08:17:43.478Z",
+        "modified_at": "2025-04-30T08:17:43.478Z",
+        "purge_at": "2025-05-30T08:17:35.755Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "6ed3a851-a3df-43f9-8351-562283acce57"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://accpure.hva.nl/ws/api/users/6ed3a851-a3df-43f9-8351-562283acce57",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 30 Apr 2025 08:17:35 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "cache-control": "private, max-age=14400",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "server": "cloudflare",
+            "cf-ray": "93859a874cda1ca7-AMS",
+            "content-encoding": "br",
+            "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "body": "hva/hva-user.6ed3a851-a3df-43f9-8351-562283acce57.json"
+    }
+},
+{
+    "model": "persons.hvauserresource",
+    "pk": 3,
+    "fields": {
+        "uri": "accpure.hva.nl/ws/api/users/196fc2a9-318d-47df-bd82-887f6c0c3808",
+        "status": 200,
+        "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+        "created_at": "2025-04-30T08:17:43.478Z",
+        "modified_at": "2025-04-30T08:17:43.478Z",
+        "purge_at": "2025-05-30T08:17:35.755Z",
+        "retainer_type": null,
+        "retainer_id": null,
+        "data_hash": "",
+        "request": {
+            "args": [
+                "196fc2a9-318d-47df-bd82-887f6c0c3808"
+            ],
+            "kwargs": {},
+            "method": "get",
+            "url": "https://accpure.hva.nl/ws/api/users/196fc2a9-318d-47df-bd82-887f6c0c3808",
+            "headers": {
+                "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept": "*/*",
+                "Connection": "keep-alive"
+            },
+            "data": null,
+            "backoff_delay": false
+        },
+        "head": {
+            "date": "Wed, 30 Apr 2025 08:17:35 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "cache-control": "private, max-age=14400",
+            "referrer-policy": "origin",
+            "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains",
+            "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "1; mode=block",
+            "cf-cache-status": "DYNAMIC",
+            "server": "cloudflare",
+            "cf-ray": "93859a874cda1ca7-AMS",
+            "content-encoding": "br",
+            "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "body": "hva/hva-user.196fc2a9-318d-47df-bd82-887f6c0c3808.json"
+    }
+}
+]
