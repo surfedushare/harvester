@@ -5,9 +5,9 @@ from django.urls import reverse
 from core.admin.datatypes import DatasetAdmin, DatasetVersionAdmin, SetAdmin, DocumentAdmin
 from core.admin.resources import HarvesterHttpResourcesAdmin, HarvesterShellResourceAdmin
 from core.admin.harvest import HarvestStateAdmin
-from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState,
-                          HttpTikaResource, VideoThumbnailResource, PdfThumbnailResource,
-                          YoutubeAPIResource, CheckURLResource, ImageThumbnailResource, VideoTranscriptsResource)
+from files.models import (Dataset, DatasetVersion, Set, FileDocument, HarvestState, HttpTikaResource,
+                          VideoThumbnailResource, PdfThumbnailResource, YoutubeAPIResource, YoutubeThumbnailResource,
+                          CheckURLResource, ImageThumbnailResource, VideoTranscriptsResource)
 
 
 class FileDocumentAdmin(DocumentAdmin):
@@ -39,6 +39,7 @@ admin.site.register(HttpTikaResource, HarvesterHttpResourcesAdmin)
 admin.site.register(VideoThumbnailResource, HarvesterShellResourceAdmin)
 admin.site.register(PdfThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(YoutubeAPIResource, HarvesterHttpResourcesAdmin)
+admin.site.register(YoutubeThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(CheckURLResource, HarvesterHttpResourcesAdmin)
 admin.site.register(ImageThumbnailResource, HarvesterHttpResourcesAdmin)
 admin.site.register(VideoTranscriptsResource, HarvesterHttpResourcesAdmin)
