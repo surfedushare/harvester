@@ -48,8 +48,7 @@ class FileDocumentFactory(factory.django.DjangoModelFactory):
         model = FileDocument
 
     class Params:
-        harvest_source = "sharekit"
-        provider = {"slug": "surf"}  # not a real provider
+        set = "sharekit:edusources"
         url = "https://maken.wikiwijs.nl/124977/Zorgwekkend_gedrag___kopie_1"
         mime_type = None
         title = "Zorgwekkend gedrag"
@@ -59,7 +58,7 @@ class FileDocumentFactory(factory.django.DjangoModelFactory):
     dataset_version = factory.SubFactory(DatasetVersionFactory)
     collection = factory.SubFactory(SetFactory)
     identity = factory.LazyAttribute(
-        lambda obj: f"{obj.harvest_source}:{obj.provider}:{sha1(obj.url.encode('utf-8')).hexdigest()}"
+        lambda obj: f"{obj.set}:{sha1(obj.url.encode('utf-8')).hexdigest()}"
     )
 
     @factory.lazy_attribute
@@ -68,6 +67,7 @@ class FileDocumentFactory(factory.django.DjangoModelFactory):
             attr: getattr(self, attr, SEED_DEFAULTS[attr])
             for attr in SEED_DEFAULTS
         }
-        params["srn"] = f"{self.harvest_source}:{self.provider}:{sha1(self.url.encode('utf-8')).hexdigest()}"
+        params["srn"] = self.identity
+        params["set"] = self.set
         params["hash"] = sha1(self.url.encode('utf-8')).hexdigest()
         return build_file_seed(**params)
