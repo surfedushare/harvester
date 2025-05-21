@@ -10,3 +10,4 @@ from files.models.resources.video_thumbnail import VideoThumbnailResource
 from files.models.resources.youtube import YoutubeAPIResource, YoutubeThumbnailResource
 from files.models.resources.video_transcripts import VideoTranscriptsResource
 from files.models.resources.image_thumbnail import ImageThumbnailResource
+from files.models.resources.file_mirror import MirrorFileResource
