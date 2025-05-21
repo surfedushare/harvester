@@ -52,7 +52,6 @@ opensearch:
   decompound_word_lists:
     dutch: "decompound_word_list.nl.txt"
   domain_name: null
-  enhance_calm_delay: 0
   strict_multilingual_fields: true
 
 tika:

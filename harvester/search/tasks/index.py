@@ -53,7 +53,6 @@ def index_documents(app_label: str, dataset_version_id: int, document_ids: list[
 
     # Get documents and process
     documents = dataset_version.documents.filter(id__in=document_ids)
-    enhance_calm = len(document_ids) >= 100
     search_documents = []
     errors = []
     for document in documents:
@@ -62,7 +61,7 @@ def index_documents(app_label: str, dataset_version_id: int, document_ids: list[
             search_documents.append((language, document.to_search(use_multilingual_fields=False)))
         search_documents.append(("all", document.to_search(use_multilingual_fields=True)))
     try:
-        errors += dataset_version.index.push(search_documents, is_done=True, enhance_calm=enhance_calm)
+        errors += dataset_version.index.push(search_documents)
     except TransportError:
         logger.warning("Taking extended timeout to relieve Open Search load")
         sleep(300)
@@ -133,13 +132,12 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
             if not documents_count:
                 return index
             # Preparation and batching of documents to push to relevant indices.
-            enhance_calm = documents_count >= 100 and not recreate
             logger.info(
                 f"Starting batch indexing for {documents_count} {dataset_version._meta.app_label}; "
-                f"batch_size={batch_size}, recreate={recreate}, enhance_calm={enhance_calm}, "
+                f"batch_size={batch_size}, recreate={recreate}, "
                 f"push_since={push_since.isoformat() if push_since else "1970-01-01"} "
             )
-            index.prepare_push(recreate=recreate)
+            index.open(recreate=recreate, opened_at=current_time)
             for batch in ibatch(documents.iterator(), batch_size):
                 search_document_batch = []
                 for document in batch:
@@ -147,10 +145,9 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                     if index.entity in ["products", "testing"] and not settings.OPENSEARCH_STRICT_MULTILINGUAL_FIELDS:
                         search_document_batch.append((language, document.to_search(use_multilingual_fields=False)))
                     search_document_batch.append(("all", document.to_search(use_multilingual_fields=True)))
-                errors += index.push(search_document_batch, is_done=False, enhance_calm=enhance_calm)
-            # All documents have been pushed. We'll mark the push as done.
-            index.pushed_at = current_time
-            index.save()
+                errors += index.push(search_document_batch)
+            # All documents have been pushed. Close the index.
+            index.close()
     except DatabaseError:
         index = None
         message_context = "" if not context else f"for {context}"

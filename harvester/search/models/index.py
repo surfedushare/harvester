@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from time import sleep
 from datetime import datetime
 from collections import defaultdict
 
@@ -9,6 +8,7 @@ from django.db import models
 from django.utils.timezone import make_aware
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
+from django.db.models import F
 
 from search_client.constants import Entities
 from search_client.opensearch.indices import (build_products_index_configuration, build_projects_index_configuration,
@@ -113,8 +113,8 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
-    def open(self, recreate: bool = None) -> None:
-        self.opened_at = make_aware(datetime.now())
+    def open(self, recreate: bool = None, opened_at: datetime = None) -> None:
+        self.opened_at = opened_at or make_aware(datetime.now())
         self.prepare_push(recreate)
 
     def close(self) -> None:
@@ -123,9 +123,7 @@ class OpenSearchIndex(models.Model):
         self.clean()
         self.save()
 
-    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150, is_done: bool = True,
-             enhance_calm: bool = False) -> list[str]:
-        current_time = make_aware(datetime.now())
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150) -> list[str]:
         errors = []
         search_documents_by_language = defaultdict(list)
         for language, search_document in search_documents:
@@ -136,13 +134,10 @@ class OpenSearchIndex(models.Model):
                                                 chunk_size=50, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
-                    self.error_count += 1
                     errors.append(result)
-                if enhance_calm:
-                    sleep(settings.OPENSEARCH_ENHANCE_CALM_DELAY)
-        self.pushed_at = current_time
-        if is_done:
-            self.save()
+
+        if len(errors) > 0:
+            OpenSearchIndex.objects.filter(id=self.id).update(error_count=F('error_count') + len(errors))
         return errors
 
     def promote_all_to_latest(self) -> None:
