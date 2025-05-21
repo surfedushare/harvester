@@ -19,11 +19,12 @@ from search.models import OpenSearchIndex
 @app.task(
     name="index_documents",
     base=DatabaseConnectionResetTask,
+    bind=True,
     autoretry_for=(ConnectionError, TransportError),
-    retry_kwargs={'max_retries': 3, 'countdown': 60}
+    retry_kwargs={'max_retries': 5, 'countdown': 60}
 )
 @atomic()
-def index_documents(app_label: str, dataset_version_id: int, document_ids: list[int], silent: bool = True) -> None:
+def index_documents(self, app_label: str, dataset_version_id: int, document_ids: list[int], silent: bool = True) -> None:
     """
     Index a specific set of documents for a dataset version.
 
@@ -60,11 +61,15 @@ def index_documents(app_label: str, dataset_version_id: int, document_ids: list[
             language = document.get_analyzer_language()
             search_documents.append((language, document.to_search(use_multilingual_fields=False)))
         search_documents.append(("all", document.to_search(use_multilingual_fields=True)))
+
     try:
         errors += dataset_version.index.push(search_documents)
-    except TransportError:
-        logger.warning("Taking extended timeout to relieve Open Search load")
-        sleep(300)
+    except ConnectionError as exc:
+        raise self.retry(exc=exc)
+    except TransportError as exc:
+        # Base countdown of 2 minutes, increase by 2 minutes for each retry
+        countdown = 120 * (self.request.retries + 1)
+        raise self.retry(exc=exc, countdown=countdown)
 
     logger.open_search_errors(errors)
 
