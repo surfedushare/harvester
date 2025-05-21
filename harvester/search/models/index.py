@@ -114,6 +114,8 @@ class OpenSearchIndex(models.Model):
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
     def open(self, recreate: bool = None, opened_at: datetime = None) -> None:
+        if self.opened_at:
+            raise RuntimeError(f"Refusing to open an index that is already open with id: {self.id}")
         self.opened_at = opened_at or make_aware(datetime.now())
         self.prepare_push(recreate)
 
