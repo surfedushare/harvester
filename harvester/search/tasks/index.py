@@ -1,5 +1,4 @@
 from datetime import datetime
-from time import sleep
 
 from django.conf import settings
 from django.apps import apps
@@ -13,7 +12,7 @@ from harvester.tasks.base import DatabaseConnectionResetTask
 from core.logging import HarvestLogger
 from core.models.datatypes import HarvestDatasetVersion, HarvestDocument
 from core.loading import HarvesterDataStorages
-from search.models import OpenSearchIndex
+from search.models import OpenSearchIndex, AlreadyOpenIndexError
 
 
 @app.task(
@@ -24,7 +23,8 @@ from search.models import OpenSearchIndex
     retry_kwargs={'max_retries': 5, 'countdown': 60}
 )
 @atomic()
-def index_documents(self, app_label: str, dataset_version_id: int, document_ids: list[int], silent: bool = True) -> None:
+def index_documents(self, app_label: str, dataset_version_id: int, document_ids: list[int],
+                    silent: bool = True) -> None:
     """
     Index a specific set of documents for a dataset version.
 
@@ -153,7 +153,7 @@ def _push_dataset_version_to_index(dataset_version: HarvestDatasetVersion, logge
                 errors += index.push(search_document_batch)
             # All documents have been pushed. Close the index.
             index.close()
-    except DatabaseError:
+    except (DatabaseError, AlreadyOpenIndexError):
         index = None
         message_context = "" if not context else f"for {context}"
         logger.warning(f"Unable to acquire a database lock {message_context}")

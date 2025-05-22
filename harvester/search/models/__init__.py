@@ -1,1 +1,1 @@
-from search.models.index import OpenSearchIndex
+from search.models.index import OpenSearchIndex, AlreadyOpenIndexError

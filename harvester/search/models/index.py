@@ -18,6 +18,10 @@ from search_client.opensearch.indices.legacy import create_open_search_index_con
 from search.clients import get_opensearch_client
 
 
+class AlreadyOpenIndexError(RuntimeError):
+    pass
+
+
 class OpenSearchIndexManager(models.Manager):
 
     def get_pushed_at(self, index_name: str) -> datetime | None:
@@ -115,7 +119,7 @@ class OpenSearchIndex(models.Model):
 
     def open(self, recreate: bool = None, opened_at: datetime = None) -> None:
         if self.opened_at:
-            raise RuntimeError(f"Refusing to open an index that is already open with id: {self.id}")
+            raise AlreadyOpenIndexError(f"Refusing to open an index that is already open with id: {self.id}")
         self.opened_at = opened_at or make_aware(datetime.now())
         self.prepare_push(recreate)
 
