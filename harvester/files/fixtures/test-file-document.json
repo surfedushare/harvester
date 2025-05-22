@@ -391,5 +391,278 @@
             "body": "{\"http-connection:target-ip-address\":\"46.17.6.158\",\"http-header:status-code\":\"200\",\"X-TIKA:Parsed-By-Full-Set\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"X-TIKA:content_handler\":\"ToTextContentHandler\",\"resourceName\":\"apache-tika-4472183543111308227.tmp\",\"http-connection:num-redirects\":\"0\",\"http-connection:target-url\":\"https://anatomytool.org/node/57056\",\"viewport\":\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\",\"X-TIKA:Parsed-By\":[\"org.apache.tika.parser.DefaultParser\",\"org.apache.tika.parser.html.HtmlParser\"],\"dc:title\":\"gonad mouse embryo | AnatomyTOOL\",\"Content-Encoding\":\"UTF-8\",\"Content-Type-Hint\":\"text/html; charset=utf-8\",\"X-TIKA:parse_time_millis\":\"4\",\"X-TIKA:embedded_depth\":\"0\",\"X-TIKA:content\":\"Fake Tika resource content\", \"Content-Length\":\"0\",\"http-header:content-type\":\"text/html; charset=utf-8\",\"Content-Language\":\"en\",\"Content-Type\":\"text/html; charset=UTF-8\",\"Generator\":\"Drupal 7 (http://drupal.org)\"}",
             "retainer_type": null
         }
+    },
+    {
+        "model": "files.filedocument",
+        "pk": 2,
+        "fields": {
+            "created_at": "2025-05-21T01:15:47.155Z",
+            "modified_at": "2025-05-21T01:24:56.271Z",
+            "properties": {
+                "set": "hanze:hanze",
+                "srn": "hanze:hanze:a17d080f-ee5f-4422-b668-18cf31372574:657ef246fd035ecc81de1e479bdd5ca8ceb61e7d",
+                "url": "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+                "hash": "657ef246fd035ecc81de1e479bdd5ca8ceb61e7d",
+                "type": "document",
+                "state": "active",
+                "title": "EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+                "is_link": false,
+                "language": "nl",
+                "priority": 0,
+                "provider": {
+                    "ror": null,
+                    "name": "Hanze",
+                    "slug": "hanze",
+                    "external_id": null
+                },
+                "copyright": "unspecified",
+                "mime_type": "application/pdf",
+                "product_id": "a17d080f-ee5f-4422-b668-18cf31372574",
+                "external_id": "a17d080f-ee5f-4422-b668-18cf31372574:657ef246fd035ecc81de1e479bdd5ca8ceb61e7d",
+                "access_rights": "OpenAccess"
+            },
+            "identity": "hanze:hanze:a17d080f-ee5f-4422-b668-18cf31372574:657ef246fd035ecc81de1e479bdd5ca8ceb61e7d",
+            "reference": null,
+            "pipeline": {},
+            "task_results": {
+                "check_url": {
+                    "id": 3,
+                    "ids": [
+                        3
+                    ],
+                    "success": true,
+                    "resource": "files.checkurlresource"
+                },
+                "deactivate_invalid_documents": {
+                    "success": true,
+                    "validation": null
+                }
+            },
+            "derivatives": {
+                "check_url": {
+                    "url": "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+                    "status": 200,
+                    "content_type": "application/problem+json",
+                    "has_redirect": false,
+                    "has_temporary_redirect": false
+                }
+            },
+            "pending_at": null,
+            "finished_at": "2025-05-10T01:47:41.932Z",
+            "dataset_version": 1,
+            "collection": null,
+            "overwrite": null,
+            "state": "active",
+            "metadata": {
+                "hash": "3b7e538d586c56d842b3c2d0a301c7f15bf3cbfd",
+                "provider": "Hanze",
+                "created_at": "2025-05-10T01:25:29.622Z",
+                "deleted_at": null,
+                "modified_at": "2025-05-10T01:25:29.622Z"
+            },
+            "tasks": {
+                "tika": {
+                    "checks": [
+                        "is_analysis_possible"
+                    ],
+                    "resources": [
+                        "files.HttpTikaResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "check_url": {
+                    "checks": [
+                        "!is_not_found",
+                        "is_analysis_allowed",
+                        "!is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.CheckURLResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "pdf_preview": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_pdf"
+                    ],
+                    "resources": [
+                        "files.PdfThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "youtube_api": {
+                    "checks": [
+                        "is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeAPIResource"
+                    ],
+                    "depends_on": [
+                        "$.hash"
+                    ]
+                },
+                "image_preview": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_image"
+                    ],
+                    "resources": [
+                        "files.ImageThumbnailResource"
+                    ],
+                    "depends_on": [
+                        "$.hash",
+                        "check_url"
+                    ]
+                },
+                "video_preview": {
+                    "checks": [
+                        "is_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeThumbnailResource"
+                    ],
+                    "depends_on": []
+                },
+                "video_transcripts": {
+                    "checks": [
+                        "is_analysis_possible",
+                        "is_video",
+                        "!is_youtube_video"
+                    ],
+                    "resources": [
+                        "files.YoutubeTranscriptsResource"
+                    ],
+                    "depends_on": []
+                },
+                "deactivate_invalid_documents": {
+                    "checks": [],
+                    "resources": [],
+                    "depends_on": [
+                        "$.hash",
+                        "$.access_rights"
+                    ]
+                }
+            },
+            "status_code": 200,
+            "redirects": "no",
+            "domain": "research.hanze.nl",
+            "mime_type": "application/pdf",
+            "type": "document",
+            "is_not_found": false,
+            "is_analysis_allowed": true
+        }
+    },
+    {
+        "model": "files.checkurlresource",
+        "pk": 3,
+        "fields": {
+            "uri": "apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"], \"resource\": \"files.checkurlresource\", \"method\": \"head\", \"args\": [\"$.url\"], \"kwargs\": {}}",
+            "created_at": "2025-05-10T01:47:30.149Z",
+            "modified_at": "2025-05-10T01:47:30.149Z",
+            "purge_at": "2025-06-09T01:47:29.997Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+                "args": [
+                    "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf"
+                ],
+                "data": {},
+                "kwargs": {},
+                "method": "head",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate, br"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Sat, 10 May 2025 01:47:30 GMT",
+                "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding",
+                "cf-ray": "93d5c4d8dfb7dcc4-FRA",
+                "pragma": "no-cache",
+                "server": "cloudflare",
+                "alt-svc": "h3=\":443\"; ma=86400",
+                "expires": "0",
+                "connection": "keep-alive",
+                "content-type": "application/problem+json",
+                "cache-control": "private, max-age=14400",
+                "cf-cache-status": "MISS",
+                "referrer-policy": "origin",
+                "x-frame-options": "DENY",
+                "x-xss-protection": "1; mode=block",
+                "x-content-type-options": "nosniff",
+                "content-security-policy": "default-src 'self' *.elsevier.com cdn.plu.mx api.plu.mx d39af2mgp1pqhg.cloudfront.net ajax.googleapis.com *.pendo.io pendo-static-5644800010354688.storage.googleapis.com pendo-io-static.storage.googleapis.com *.adobedtm.com *.demdex.net cm.everesttech.net *.youtube.com i.ytimg.com *.vimeo.com *.altmetric.com d1bxh8uas1mnw7.cloudfront.net *.googletagmanager.com *.google-analytics.com *.hotjar.com cdn.cookielaw.org maps.googleapis.com www.google.com *.gstatic.com fonts.googleapis.com stats.g.doubleclick.net hcaptcha.com *.hcaptcha.com geolocation.onetrust.com *.onetrust.com https://js-agent.newrelic.com https://bam.nr-data.net https://bam-cell.nr-data.net 'unsafe-inline' 'unsafe-eval' data:; img-src * data: maps.gstatic.com *.googleapis.com;",
+                "strict-transport-security": "max-age=63072000; includeSubDomains, max-age=31536000 ; includeSubDomains"
+            },
+            "body": "{\"has_redirect\": false, \"has_temporary_redirect\": false, \"url\": \"https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf\", \"status\": 200, \"content_type\": \"application/problem+json\"}"
+        }
+    },
+    {
+        "model": "files.mirrorfileresource",
+        "pk": 1,
+        "fields": {
+            "uri": "apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2025-05-14T10:52:13.634Z",
+            "modified_at": "2025-05-14T10:52:13.634Z",
+            "purge_at": "2025-06-13T10:51:56.177Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "args": [
+                    "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf"
+                ],
+                "kwargs": {},
+                "method": "get",
+                "url": "https://apimanagement.hanze.nl/nppo/research-outputs/a17d080f-ee5f-4422-b668-18cf31372574/files/MDA0MGJhNGJj/EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf",
+                "headers": {
+                    "User-Agent": "DataGrowth (v0.20.6); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Accept": "*/*",
+                    "Connection": "keep-alive"
+                },
+                "data": null,
+                "cancel": false,
+                "backoff_delay": false
+            },
+            "head": {
+                "Cache-Control": "public, max-age=14400",
+                "Transfer-Encoding": "chunked",
+                "Content-Type": "application/pdf",
+                "Expires": "Wed, 14 May 2025 14:51:58 GMT",
+                "Last-Modified": "Wed, 14 May 2025 10:51:58 GMT",
+                "content-disposition": "attachment; filename=\"EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf\"",
+                "content-security-policy": "script-src 'none'",
+                "pragma": "public",
+                "referrer-policy": "origin",
+                "strict-transport-security": "max-age=63072000; includeSubDomains,max-age=31536000 ; includeSubDomains",
+                "vary": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Accept-Encoding",
+                "x-content-type-options": "nosniff",
+                "x-frame-options": "DENY",
+                "x-xss-protection": "1; mode=block",
+                "CF-Cache-Status": "MISS",
+                "CF-RAY": "93f9d7dcae629fa0-AMS",
+                "alt-svc": "h3=\":443\"; ma=86400",
+                "Date": "Wed, 14 May 2025 10:51:58 GMT"
+            },
+            "body": "files/downloads/5/f5/20250514105202066903.EPRIME_D2.1_Pre-school_and_primary_school_PE_teachers_needs_and_assets_analysis_report.pdf"
+        }
     }
 ]
