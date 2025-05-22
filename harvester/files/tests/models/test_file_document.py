@@ -41,7 +41,7 @@ class FileDocumentTestCase(TestCase):
 
     def test_invalidate_task_resource_purge(self):
         # Pre-test asserts
-        self.assertEqual(CheckURLResource.objects.count(), 2, "Expected three check_url resources at start of test")
+        self.assertEqual(CheckURLResource.objects.count(), 3, "Expected three check_url resources at start of test")
         self.assertEqual(HttpTikaResource.objects.count(), 2, "Expected two tika resources at start of test")
         file_document = FileDocument.objects.get(pk=1)
         check_url_resource_id = file_document.task_results["check_url"]["id"]
