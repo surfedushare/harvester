@@ -10,7 +10,6 @@ from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactor
 from testing.cases import seeding
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHanzeFileSeeding(seeding.FactorySeedingTestCase):
 
     entity = "files"
@@ -26,7 +25,7 @@ class TestHanzeFileSeeding(seeding.FactorySeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "hanze:hanze:ffffffff-3115-41bb-9d73-2a193da652ea:34c9d2735ae055acb66f3cd85c996a84efd12842",
+            "hanze:hanze:ffffffff-3115-41bb-9d73-2a193da652ea:87763635119aebfcdcb4721e076c563f4591be17",
         ])
         self.assertEqual(len(documents), 8, "Expected test to work with single page for the delta")
         self.assertEqual(
@@ -50,7 +49,6 @@ class TestHanzeFileSeeding(seeding.FactorySeedingTestCase):
         )
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHanzeFileExtraction(TestCase):
 
     set = None
@@ -84,7 +82,7 @@ class TestHanzeFileExtraction(TestCase):
     def test_get_external_id(self):
         self.assertEqual(
             self.seeds[0]["external_id"],
-            "01ea0ee1-a419-42ee-878b-439b44562098:01df6be8b59f65074350ca33c8eded52ea106222"
+            "01ea0ee1-a419-42ee-878b-439b44562098:dcb29c3c24db4ca313ef7662eec7284be4bde029"
         )
 
     def test_get_language(self):
@@ -94,13 +92,13 @@ class TestHanzeFileExtraction(TestCase):
     def test_get_url(self):
         self.assertEqual(
             self.seeds[0]["url"],
-            "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
+            "https://apimanagement.hanze.nl/nppo/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
             "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
             "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf"
         )
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "01df6be8b59f65074350ca33c8eded52ea106222")
+        self.assertEqual(self.seeds[0]["hash"], "dcb29c3c24db4ca313ef7662eec7284be4bde029")
 
     def test_get_mime_type(self):
         self.assertEqual(self.seeds[0]["mime_type"], "application/pdf")

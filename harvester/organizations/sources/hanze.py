@@ -5,7 +5,6 @@ from sources.utils.pure import PureExtractor
 
 class HanzeOrganizationExtraction(PureExtractor):
 
-    pure_api_prefix = "/nppo/"
     source_slug = "hanze"
     source_name = "Hanze"
 
