@@ -7,7 +7,6 @@ from sources.utils.pure import PureExtractor
 
 class HvaPersonsExtractProcessor(PureExtractor):
 
-    pure_api_prefix = "/ws/api/"
     source_name = "Hogeschool van Amsterdam"
     source_slug = "hva"
 

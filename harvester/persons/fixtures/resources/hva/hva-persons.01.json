@@ -7,7 +7,7 @@
     "items": [
         {
             "uuid": "af0b3aa3-054c-4068-9aad-506be254e6e9",
-            "portalUrl": "https://accpure.hva.nl/en/persons/af0b3aa3-054c-4068-9aad-506be254e6e9",
+            "portalUrl": "https://pure.hva.nl/en/persons/af0b3aa3-054c-4068-9aad-506be254e6e9",
             "name": {
                 "firstName": "Pietje",
                 "lastName": "Puk"
@@ -155,7 +155,7 @@
         },
         {
             "uuid": "7a5596ca-272e-4415-9e72-13d2ab494dc7",
-            "portalUrl": "https://accpure.hva.nl/en/persons/7a5596ca-272e-4415-9e72-13d2ab494dc7",
+            "portalUrl": "https://pure.hva.nl/en/persons/7a5596ca-272e-4415-9e72-13d2ab494dc7",
             "prettyUrlIdentifiers": [
                 "lizzy-shizzle"
             ],
