@@ -21,39 +21,52 @@ from files.models.resources.metadata import CheckURLResource
 
 def default_document_tasks():
     return {
+        # Incoming data that is invalid should deactivate the document.
+        # Other tasks may execute, but document will never be outputted to frontends.
+        # As this task depends only on the incoming data it runs on every document.
         "deactivate_invalid_documents": {
             "depends_on": ["$.hash", "$.access_rights"],  # these properties are important for (output) serializers
             "checks": [],
             "resources": []
         },
+
+        # There are pre-publish tasks that check existence of URL's, download content and resolve redirects.
+        # These are non-Youtube only, because YouTube requires separate API based processing.
         "check_url": {
             "depends_on": ["$.hash"],
             "checks": ["!is_not_found", "is_analysis_allowed", "!is_youtube_video"],
             "resources": ["files.CheckURLResource"]
         },
-        "tika": {
+        "publish_content": {
             "depends_on": ["$.hash", "check_url"],
             "checks": ["is_analysis_possible"],
+            "resources": ["files.MirrorFileResource"]
+        },
+
+        # These are post-publish tasks. The public_url is assumed to be available to work with.
+        "tika": {
+            "depends_on": ["$.hash", "publish_content"],
+            "checks": ["is_published"],
             "resources": ["files.HttpTikaResource"]
         },
         "pdf_preview": {
-            "depends_on": ["$.hash", "check_url"],
-            "checks": ["is_analysis_possible", "is_pdf"],
+            "depends_on": ["$.hash", "publish_content"],
+            "checks": ["is_published", "is_pdf"],
             "resources": ["files.PdfThumbnailResource"]
         },
         "image_preview": {
-            "depends_on": ["$.hash", "check_url"],
-            "checks": ["is_analysis_possible", "is_image"],
+            "depends_on": ["$.hash", "publish_content"],
+            "checks": ["is_published", "is_image"],
             "resources": ["files.ImageThumbnailResource"]
         },
         "video_preview": {
-            "depends_on": [],
-            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
+            "depends_on": ["$.hash", "publish_content"],
+            "checks": ["is_published", "is_video"],
             "resources": ["files.VideoThumbnailResource"]
         },
         "video_transcripts": {
-            "depends_on": [],
-            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
+            "depends_on": ["$.hash", "publish_content"],
+            "checks": ["is_published", "is_video"],
             "resources": ["files.VideoTranscriptsResource"]
         },
 
@@ -163,6 +176,11 @@ class FileDocument(HarvestDocument):
         check_url = self.derivatives.get("check_url", {})
         status = check_url.get("status")
         return status is not None and 200 <= status < 209
+
+    @property
+    def is_published(self):
+        publish_content = self.task_results.get("publish_content", {})
+        return publish_content.get("success", False)
 
     def get_analysis_allowed(self) -> bool:
         match self.properties.get("access_rights", None), self.properties.get("copyright", None):

@@ -141,7 +141,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
             "tika_return_type": "xml",
             "resource": "files.httptikaresource",
             "method": "put",
-            "args": ["$.url"],
+            "args": ["$.public_url"],
             "kwargs": {},
         },
         "contribute_data": {
