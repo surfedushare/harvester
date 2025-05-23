@@ -54,11 +54,26 @@ class TestHarvestObjectFileDocument(TestCase):
             "preview_file": "https://i.ytimg.com/vi_webp/t6tUThsvE4M/maxresdefault.webp"
         }
         self.youtube.save()
+        # Assert that tasks depending on check_url or youtube_api have become pending
+        pending_tasks_1 = self.document_1.get_pending_tasks()
+        self.assertEqual(pending_tasks_1, ["publish_content"])
+        youtube_tasks = self.youtube.get_pending_tasks()
+        self.assertEqual(youtube_tasks, ["youtube_preview"])
+
+    def test_get_tertiary_pending_tasks(self):
+        # Set Tika task as completed
+        self.document_1.task_results["check_url"] = {"success": True}
+        self.document_1.derivatives["check_url"] = {"status": 200}
+        self.document_1.task_results["deactivate_invalid_documents"] = {
+            "success": True,
+            "validation": None
+        }
+        self.document_1.task_results["publish_content"] = {"success": True, "is_auto_succeed": True}
+        self.document_1.derivatives["publish_content"] = {"public_url": self.document_1.properties["url"]}
+        self.document_1.save()
         # Assert that tasks depending on Tika have become pending
         pending_tasks_1 = self.document_1.get_pending_tasks()
         self.assertEqual(pending_tasks_1, ["tika"])
-        youtube_tasks = self.youtube.get_pending_tasks()
-        self.assertEqual(youtube_tasks, ["youtube_preview"])
 
     def test_get_analysis_disallowed(self):
         pending_tasks_2 = self.document_2.get_pending_tasks()
