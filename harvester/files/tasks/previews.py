@@ -20,7 +20,7 @@ def video_preview(app_label: str, document_ids: list[int]):
         "asynchronous": False,
         "retrieve_data": {
             "resource": "files.videothumbnailresource",
-            "args": ["$.url"],
+            "args": ["$.public_url"],
             "kwargs": {},
         },
         "contribute_data": {
@@ -84,7 +84,7 @@ def pdf_preview(app_label: str, document_ids: list[int]):
         "retrieve_data": {
             "resource": "files.pdfthumbnailresource",
             "method": "get",
-            "args": ["$.url"],
+            "args": ["$.public_url"],
             "kwargs": {},
         },
         "contribute_data": {
@@ -116,7 +116,7 @@ def image_preview(app_label: str, document_ids: list[int]):
         "retrieve_data": {
             "resource": "files.imagethumbnailresource",
             "method": "get",
-            "args": ["$.url"],
+            "args": ["$.public_url"],
             "kwargs": {},
         },
         "contribute_data": {

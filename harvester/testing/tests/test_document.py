@@ -32,7 +32,7 @@ class TestDocumentModel(TestCase):
     def test_get_property_dependencies(self):
         property_dependencies = self.document.get_property_dependencies()
         self.assertEqual(property_dependencies, {
-            "$.url": ["check_url"]
+            "$.url": ["check_url", "publish_content", "tika"]
         })
 
     def test_invalidate_task(self):
