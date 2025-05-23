@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 from django.conf import settings
 from django.apps import apps
@@ -67,6 +68,8 @@ def index_documents(self, app_label: str, dataset_version_id: int, document_ids:
     except ConnectionError as exc:
         raise self.retry(exc=exc)
     except TransportError as exc:
+        # Hold off the worker from picking up more tasks from the queue that will also fail
+        sleep(120)
         # Base countdown of 2 minutes, increase by 2 minutes for each retry
         countdown = 120 * (self.request.retries + 1)
         raise self.retry(exc=exc, countdown=countdown)
