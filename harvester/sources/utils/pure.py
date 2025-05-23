@@ -7,7 +7,6 @@ from sources.utils.base import BaseExtractor
 
 class PureExtractor(BaseExtractor):
 
-    pure_api_prefix = None
     source_slug = None
     source_name = None
 

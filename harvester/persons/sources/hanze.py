@@ -9,7 +9,6 @@ from sources.utils.pure import PureExtractor
 
 class HanzePersonsExtractProcessor(PureExtractor):
 
-    pure_api_prefix = "/nppo/"
     source_name = "Hanze"
     source_slug = "hanze"
 

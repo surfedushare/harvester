@@ -10,7 +10,6 @@ from sources.factories.hanze.extraction import HanzeResearchObjectResourceFactor
 from testing.cases import seeding
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHanzeProductSeeding(seeding.FactorySeedingTestCase):
 
     entity = "products"
@@ -49,7 +48,6 @@ class TestHanzeProductSeeding(seeding.FactorySeedingTestCase):
         )
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHanzeProductExtraction(TestCase):
 
     set = None
@@ -85,12 +83,12 @@ class TestHanzeProductExtraction(TestCase):
 
     def test_get_files(self):
         self.assertEqual(self.seeds[0]["files"], [
-            "http://testserver/api/v1/files/hanze/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
+            "https://apimanagement.hanze.nl/nppo/research-outputs/01ea0ee1-a419-42ee-878b-439b44562098/"
             "files/NWU1MWM2/wtnr2_verh1_p99_113_HR_v2_Inter_nationale_ervaringen"
             "_met_ondergrondse_infiltratievoorzieningen_20_jaar.pdf",
         ])
         self.assertEqual(self.seeds[12]["files"], [
-            "http://testserver/api/v1/files/hanze/research-outputs/3786d62c-11fa-445b-a299-cc79ea00d468/"
+            "https://apimanagement.hanze.nl/nppo/research-outputs/3786d62c-11fa-445b-a299-cc79ea00d468/"
             "files/MDAxYTdkM2M2/Power_to_the_people_accepted_version_1.pdf",
         ])
 

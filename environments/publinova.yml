@@ -21,9 +21,6 @@ django:
   users:
     usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/publinova"
 
-harvester:
-  sources_middleware_api: "https://sources.{environment_code}.publinova.nl/api/v1/"
-
 conext:
   client_id: "harvester.prod.publinova.nl"
 

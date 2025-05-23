@@ -693,7 +693,6 @@ SOURCES = {
         "api_key": environment.secrets.hu.api_key
     }
 }
-SOURCES_MIDDLEWARE_API = environment.harvester.sources_middleware_api
 
 
 # Webhooks
