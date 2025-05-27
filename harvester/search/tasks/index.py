@@ -106,10 +106,11 @@ def close_index(app_label: str, dataset_version_id: int, force_promotion: bool =
     )
 
     # Close the index
+    logger.info(f"Closing the index: {app_label}")
     dataset_version.index.close()
     # Only promote if indexing is enabled and set to promote
     if dataset_version.dataset.indexing == storages.Dataset.IndexingOptions.INDEX_AND_PROMOTE:
-        logger.info(f"Promoting to latest: {app_label}")
+        logger.info(f"Promoting index to latest: {app_label}")
         # We actually perform OpenSearch operations when dealing with a completely new OpenSearchIndex instance.
         if force_promotion or not dataset_version.has_promoted_sibling:
             dataset_version.index.promote_all_to_latest()
@@ -223,6 +224,17 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         if dataset_version is None or dataset_version.index is None:
             continue
 
+        # Prepare the logger
+        logger = HarvestLogger(
+            dataset_version.dataset.name,
+            "index_documents",
+            command_options={
+                "app_label": storages.app_label,
+                "dataset_version_id": dataset_version_id,
+            },
+            warn_delete_does_not_exist=False
+        )
+
         # Open the index
         recreate_index = recreate_indices or not dataset_version.has_promoted_sibling
         dataset_version.index.open(recreate=recreate_index)
@@ -236,20 +248,9 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
         document_ids = list(dataset_version.documents.filter(**filters).values_list('id', flat=True))
 
         if not document_ids:
-            dataset_version.index.close()
+            logger.info(f"No documents found for {storages.app_label} since {index_since}")
+            dataset_version.index.close(promote=True)
             continue
-
-        # Prepare the logger
-        logger = HarvestLogger(
-            dataset_version.dataset.name,
-            "index_documents",
-            command_options={
-                "app_label": storages.app_label,
-                "dataset_version_id": dataset_version_id,
-                "document_count": len(document_ids)
-            },
-            warn_delete_does_not_exist=False
-        )
 
         # Create partial index_documents tasks
         index_tasks = [
@@ -261,7 +262,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
             storages.app_label, dataset_version_id, force_promotion=recreate_indices
         )
         # Dispatch the group with callback and collect task ID or execute synchronously
-        logger.debug(f"Starting batch indexing for {len(document_ids)} documents")
+        logger.info(f"Starting batch indexing for {len(document_ids)} documents")
         if asynchronous:
             result = chord(index_tasks)(finish_indexing)
             task_ids.append(result.id)
