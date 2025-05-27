@@ -10,4 +10,6 @@ SIMPLE_METADATA_FREQUENCY_FIELDS = ["study_vocabulary"]
 
 SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False
 
-OPENSEARCH_PRESET_DEFAULT = "products:default"
+# Creating a soft test on remotes to see if Edusources team updated their s***
+if MODE != "localhost":
+    OPENSEARCH_PRESET_DEFAULT = "products:default"
