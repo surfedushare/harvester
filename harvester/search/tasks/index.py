@@ -249,7 +249,7 @@ def index_dataset_versions(dataset_versions: list[tuple[str, int]], recreate_ind
 
         if not document_ids:
             logger.info(f"No documents found for {storages.app_label} since {index_since}")
-            dataset_version.index.close(promote=True)
+            close_index(storages.app_label, dataset_version_id, force_promotion=recreate_indices)
             continue
 
         # Create partial index_documents tasks

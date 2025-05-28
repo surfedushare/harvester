@@ -123,11 +123,9 @@ class OpenSearchIndex(models.Model):
         self.opened_at = opened_at or make_aware(datetime.now())
         self.prepare_push(recreate)
 
-    def close(self, promote: bool = False) -> None:
+    def close(self) -> None:
         self.pushed_at = self.opened_at
         self.opened_at = None
-        if promote:
-            self.promote_all_to_latest()
         self.clean()
         self.save()
 
