@@ -41,7 +41,7 @@ yt-dlp[default,curl-cffi]
 datagrowth==0.20.6
 requests==2.32.3
 urllib3==1.26.20
-jsonschema==4.23.0
+jsonschema==4.24.0
 pytz==2021.3
 urlobject==2.4.3
 lxml==4.9.4
