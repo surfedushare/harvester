@@ -79,7 +79,7 @@ class Command(base.LabelCommand):
         if app_label == "core":
             raise CommandError("The app 'core' is no longer supported as datatype module use 'products' instead.")
 
-        models = load_harvest_models(app_label)
+        storages = load_harvest_models(app_label)
 
         skip_download = options["skip_download"]
         harvest_source = options.get("harvest_source", None)
@@ -91,12 +91,12 @@ class Command(base.LabelCommand):
 
         # Delete old datasets
         print(f"Deleting old data: {app_label}")
-        models["Document"].objects.all().delete()
-        models["Dataset"].objects.all().delete()
-        models["DatasetVersion"].objects.all().delete()
-        if models["Overwrite"] is not None:
+        storages.Document.objects.all().delete()
+        storages.Dataset.objects.all().delete()
+        storages.DatasetVersion.objects.all().delete()
+        if storages.Overwrite is not None:
             print(f"Deleting old overwrites: {app_label}")
-            models["Overwrite"].objects.all().delete()
+            storages.Overwrite.objects.all().delete()
         print(f"Deleting old indices: {app_label}")
         OpenSearchIndex.objects.filter(entity__startswith=app_label).delete()
 
@@ -107,7 +107,7 @@ class Command(base.LabelCommand):
             ctx.run(f"aws s3 sync {harvester_data_bucket} {settings.DATAGROWTH_DATA_DIR}", echo=True)
 
         logger.info(f"Importing data for: {app_label}")
-        for entry in os.scandir(get_dumps_path(models["Dataset"])):
+        for entry in os.scandir(get_dumps_path(storages.Dataset)):
             if entry.is_file():
                 with open(entry.path, "r") as dump_file:
                     for objects in objects_from_disk(dump_file):
@@ -117,9 +117,9 @@ class Command(base.LabelCommand):
         self.reset_postgres_sequences(app_label)
 
         # Index data
-        latest_dataset_version = models["DatasetVersion"].objects.get_current_version()
+        latest_dataset_version = storages.DatasetVersion.objects.get_current_version()
         if latest_dataset_version and latest_dataset_version.index:
             latest_dataset_version.index.pushed_at = None  # forces a new push for this environment
             latest_dataset_version.index.configuration = {}  # forces recreation of configuration for environment
             latest_dataset_version.index.save()
-            index_dataset_versions([latest_dataset_version.model_key], recreate_indices=True)
+            index_dataset_versions([latest_dataset_version.model_key], recreate_indices=True, asynchronous=False)

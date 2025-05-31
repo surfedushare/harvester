@@ -15,6 +15,23 @@ class HarvestObjectMixin(models.Model):
     pending_at = models.DateTimeField(default=now, null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
 
+    @classmethod
+    def get_document_model(cls):
+        """
+        Uses app_config of the inheriting model to get the correct name of the document_model
+        """
+        app_label = cls._meta.app_label
+        app_config = apps.get_app_config(app_label)
+        return apps.get_model(f"{app_label}.{app_config.document_model}")
+
+    @classmethod
+    def get_collection_model(cls):
+        """
+        Using Set as the name for Collection model
+        """
+        app_label = cls._meta.app_label
+        return apps.get_model(f"{app_label}.Set")
+
     def get_pending_tasks(self) -> list[str]:
         pending_tasks = []
         for task_name, conditions in self.tasks.items():

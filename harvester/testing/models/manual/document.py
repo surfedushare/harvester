@@ -72,10 +72,10 @@ def dispatch_manual_document(document: ManualDocument, asynchronous: bool = True
     seeding_config = create_config("seeding_processor", {
         "phases": source_configuration["seeding_phases"]
     })
-    harvest_models = load_harvest_models(entity_type)
-    dataset_version = harvest_models["DatasetVersion"].objects.get_current_version()
+    storages = load_harvest_models(entity_type)
+    dataset_version = storages.DatasetVersion.objects.get_current_version()
     set_name = f"{source_module}:{document.set_specification}"
-    set_instance = harvest_models["Set"].objects.get(dataset_version=dataset_version, name=set_name)
+    set_instance = storages.Set.objects.get(dataset_version=dataset_version, name=set_name)
 
     # Store seeds as documents and dispatch tasks
     current_time = now()

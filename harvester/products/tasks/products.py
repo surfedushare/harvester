@@ -9,8 +9,8 @@ from metadata.utils.operations import normalize_field_values
 @app.task(name="normalize_publisher_year", base=DatabaseConnectionResetTask)
 @atomic()
 def normalize_publisher_year(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         normalized_publisher_year = normalize_field_values(
             "publisher_year", document.properties["publisher_year"], is_singular=True

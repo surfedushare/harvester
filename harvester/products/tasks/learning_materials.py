@@ -10,8 +10,8 @@ from metadata.utils.operations import normalize_field_values
 @app.task(name="lookup_study_vocabulary_parents", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_study_vocabulary_parents(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         metadata_values = MetadataValue.objects.select_related("translation").filter(
             value__in=document.properties["learning_material"]["study_vocabulary"],
@@ -48,8 +48,8 @@ def lookup_study_vocabulary_parents(app_label: str, document_ids: list[int]) -> 
 @app.task(name="normalize_disciplines", base=DatabaseConnectionResetTask)
 @atomic()
 def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         disciplines_normalized = normalize_field_values(
             "disciplines",
@@ -73,8 +73,8 @@ def normalize_disciplines(app_label: str, document_ids: list[int]) -> None:
 @app.task(name="lookup_consortium_translations", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         consortium_value = MetadataValue.objects \
             .select_related("translation") \
@@ -98,8 +98,8 @@ def lookup_consortium_translations(app_label: str, document_ids: list[int]) -> N
 @app.task(name="lookup_industry_parents", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_industry_parents(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         metadata_values = MetadataValue.objects.select_related("translation").filter(
             value__in=document.properties["learning_material"]["industries"],
@@ -137,8 +137,8 @@ def lookup_industry_parents(app_label: str, document_ids: list[int]) -> None:
 @app.task(name="lookup_industries_translations", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_industries_translations(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         industries = MetadataValue.objects \
             .select_related("translation") \
@@ -160,8 +160,8 @@ def lookup_industries_translations(app_label: str, document_ids: list[int]) -> N
 @app.task(name="lookup_sector_parents", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         metadata_values = MetadataValue.objects.select_related("translation").filter(
             value__in=document.properties["learning_material"]["sectors"],
@@ -199,8 +199,8 @@ def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
 @app.task(name="lookup_sectors_translations", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_sectors_translations(app_label: str, document_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     for document in Document.objects.filter(id__in=document_ids).select_for_update():
         sectors = MetadataValue.objects \
             .select_related("translation") \

@@ -1,10 +1,13 @@
 from time import sleep
+from datetime import timedelta
 
 from django.apps import apps
 from django.core.management.base import BaseCommand
+from django.utils.timezone import now
 
 from core.logging import HarvestLogger
 from core.models.resources.utils import extend_resource_cache
+from core.tasks.monitoring import monitor_tasks
 from sources.tasks import harvest_entities
 from search.loading import dataset_versions_are_ready
 from search.tasks import index_dataset_versions
@@ -43,7 +46,7 @@ class Command(BaseCommand):
         reset = options["reset"]
         asynchronous = options["asynchronous"]
         report_dataset_version = options["report_dataset_version"]
-        timeout = options["timeout"]
+        deadline = now() + timedelta(seconds=options["timeout"])
         wait_interval = options["wait_interval"]
         logger = HarvestLogger("general", "run_harvest", command_options=options, is_legacy_logger=False)
 
@@ -58,19 +61,26 @@ class Command(BaseCommand):
             logger.info("Done extending resource cache")
 
         dataset_versions = harvest_entities(reset=reset, asynchronous=asynchronous)
-        ready = not asynchronous
-        timer = 0
-        while not ready and not timer >= timeout:
-            ready = dataset_versions_are_ready(dataset_versions)
+        etl_ready = not asynchronous
+        while not etl_ready and now() < deadline:
+            etl_ready = dataset_versions_are_ready(dataset_versions)
             sleep(wait_interval)
-            timer += wait_interval
         else:
-            if timer >= timeout:
-                message = "Run harvest command exceeded timeout"
+            if now() >= deadline:
+                message = "Run harvest ETL exceeded timeout"
                 logger.error(message)
                 dataset_versions = _load_current_dataset_versions(dataset_versions)
+                deadline += timedelta(hours=1)
 
-        index_dataset_versions(dataset_versions)
+        task_ids = index_dataset_versions(dataset_versions, asynchronous=asynchronous)
+        indexing_ready = not asynchronous
+        while not indexing_ready and now() < deadline:
+            indexing_ready = monitor_tasks(task_ids)["all_complete"]
+            sleep(wait_interval)
+        else:
+            if now() >= deadline:
+                message = "Run harvest indexing exceeded timeout"
+                logger.error(message)
 
         if report_dataset_version:
             for dataset_version_model, dataset_version_id in dataset_versions:

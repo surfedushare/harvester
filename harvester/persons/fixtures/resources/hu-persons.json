@@ -1,0 +1,50 @@
+[
+    {
+        "model": "persons.hupersonresource",
+        "pk": 1,
+        "fields": {
+            "uri": "hu.nl/api/publinova/persons",
+            "status": 200,
+            "config": "{\"_namespace\": \"global\", \"_private\": [\"_private\", \"_defaults\", \"_namespace\"]}",
+            "created_at": "2025-02-26T09:19:45.596Z",
+            "modified_at": "2025-02-26T09:19:45.596Z",
+            "purge_at": "2025-03-28T09:19:30.637Z",
+            "retainer_type": null,
+            "retainer_id": null,
+            "data_hash": "",
+            "request": {
+                "url": "https://hu.nl/api/publinova/persons",
+                "args": [
+                    "hu",
+                    "1970-01-01T00:00:00Z"
+                ],
+                "data": null,
+                "kwargs": {},
+                "method": "get",
+                "headers": {
+                    "Accept": "*/*",
+                    "Connection": "keep-alive",
+                    "User-Agent": "DataGrowth (v0.19.10); python-requests/2.32.3",
+                    "Accept-Encoding": "gzip, deflate"
+                },
+                "backoff_delay": false
+            },
+            "head": {
+                "date": "Wed, 26 Feb 2025 09:19:32 GMT",
+                "vary": "Accept-Encoding, Origin",
+                "server": "nginx",
+                "x-cache": "MISS",
+                "connection": "keep-alive",
+                "content-type": "application/json;charset=UTF-8",
+                "cache-control": "no-cache",
+                "transfer-encoding": "chunked",
+                "access-control-max-age": "86400",
+                "strict-transport-security": "max-age=31536000",
+                "access-control-allow-headers": "Request, Authorization, Accept, Method, Origin, Content-Type, Cache-Control, If-Modified-Since, apiKey",
+                "access-control-allow-methods": "GET, POST, PUT, DELETE, HEAD, OPTIONS",
+                "access-control-allow-credentials": "true"
+            },
+            "body": "hu/hu-persons.01.json"
+        }
+    }
+]

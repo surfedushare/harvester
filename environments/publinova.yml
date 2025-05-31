@@ -25,3 +25,6 @@ harvester:
 
 conext:
   client_id: "harvester.prod.publinova.nl"
+
+opensearch:
+  strict_multilingual_fields: true

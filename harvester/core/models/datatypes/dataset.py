@@ -8,6 +8,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
+from datagrowth.datatypes.storage import DataStorage
 
 from core.models.datatypes.base import HarvestObjectMixin
 
@@ -121,7 +122,7 @@ def version_default() -> str:
     return settings.VERSION
 
 
-class HarvestDatasetVersion(HarvestObjectMixin):
+class HarvestDatasetVersion(HarvestObjectMixin, DataStorage):
 
     objects = HarvestDatasetVersionManager()
 

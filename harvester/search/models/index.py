@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from time import sleep
 from datetime import datetime
 from collections import defaultdict
 
@@ -9,6 +8,7 @@ from django.db import models
 from django.utils.timezone import make_aware
 from opensearchpy.helpers import streaming_bulk
 from opensearchpy.exceptions import NotFoundError
+from django.db.models import F
 
 from search_client.constants import Entities
 from search_client.opensearch.indices import (build_products_index_configuration, build_projects_index_configuration,
@@ -16,6 +16,10 @@ from search_client.opensearch.indices import (build_products_index_configuration
                                               build_persons_index_configuration)
 from search_client.opensearch.indices.legacy import create_open_search_index_configuration
 from search.clients import get_opensearch_client
+
+
+class AlreadyOpenIndexError(RuntimeError):
+    pass
 
 
 class OpenSearchIndexManager(models.Manager):
@@ -40,6 +44,10 @@ class OpenSearchIndex(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     pushed_at = models.DateTimeField(null=True, blank=True)
+    opened_at = models.DateTimeField(
+        null=True, blank=True,
+        help_text="Indicates when the index was opened for indexing. Set to None to close the index."
+    )
 
     @classmethod
     def build(cls, app_label: str, dataset: str, version: str) -> OpenSearchIndex:
@@ -109,9 +117,19 @@ class OpenSearchIndex(models.Model):
             if remote_exists and recreate or not remote_exists:
                 self.client.indices.create(index=remote_name, body=self.configuration.get(language, "unk"))
 
-    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150, is_done: bool = True,
-             enhance_calm: bool = False) -> list[str]:
-        current_time = make_aware(datetime.now())
+    def open(self, recreate: bool = None, opened_at: datetime = None) -> None:
+        if self.opened_at:
+            raise AlreadyOpenIndexError(f"Refusing to open an index that is already open with id: {self.id}")
+        self.opened_at = opened_at or make_aware(datetime.now())
+        self.prepare_push(recreate)
+
+    def close(self) -> None:
+        self.pushed_at = self.opened_at
+        self.opened_at = None
+        self.clean()
+        self.save()
+
+    def push(self, search_documents: list[tuple[str, dict]], request_timeout=150) -> list[str]:
         errors = []
         search_documents_by_language = defaultdict(list)
         for language, search_document in search_documents:
@@ -119,16 +137,13 @@ class OpenSearchIndex(models.Model):
         for language, documents in search_documents_by_language.items():
             remote_name = self.get_remote_name(language)
             for is_ok, result in streaming_bulk(self.client, documents, index=remote_name,
-                                                chunk_size=10, yield_ok=False, raise_on_error=False,
+                                                chunk_size=50, yield_ok=False, raise_on_error=False,
                                                 request_timeout=request_timeout):
                 if not is_ok:
-                    self.error_count += 1
                     errors.append(result)
-                if enhance_calm:
-                    sleep(settings.OPENSEARCH_ENHANCE_CALM_DELAY)
-        self.pushed_at = current_time
-        if is_done:
-            self.save()
+
+        if len(errors) > 0:
+            OpenSearchIndex.objects.filter(id=self.id).update(error_count=F('error_count') + len(errors))
         return errors
 
     def promote_all_to_latest(self) -> None:

@@ -50,17 +50,17 @@ class Command(base.LabelCommand):
         if app_label == "core":
             raise CommandError("The app 'core' is no longer supported as datatype module use 'products' instead.")
 
-        models = load_harvest_models(app_label)
+        storages = load_harvest_models(app_label)
         dataset_files = []
 
-        for dataset in models["Dataset"].objects.all():
+        for dataset in storages.Dataset.objects.all():
             destination = get_dumps_path(dataset)
             if not os.path.exists(destination):
                 os.makedirs(destination)
             dataset_file = os.path.join(destination, f"{dataset.name}.{dataset.id}.json")
             with open(dataset_file, "w") as json_file:
-                if models["Overwrite"] is not None:
-                    overwrites = models["Overwrite"].objects.all()
+                if storages.Overwrite is not None:
+                    overwrites = storages.Overwrite.objects.all()
                     queryset_to_disk(overwrites, json_file)
                 object_to_disk(dataset, json_file)
                 for version in dataset.versions.filter(is_current=True):

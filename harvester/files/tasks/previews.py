@@ -7,8 +7,8 @@ from core.processors import HttpGrowthProcessor, ShellGrowthProcessor
 
 @app.task(name="video_preview", base=DatabaseConnectionResetTask)
 def video_preview(app_label: str, document_ids: list[int]):
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
     youtube_dl_processor = ShellGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
@@ -37,8 +37,8 @@ def video_preview(app_label: str, document_ids: list[int]):
 
 @app.task(name="pdf_preview", base=DatabaseConnectionResetTask)
 def pdf_preview(app_label: str, document_ids: list[int]):
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
     pdf_processor = HttpGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {
@@ -69,8 +69,8 @@ def pdf_preview(app_label: str, document_ids: list[int]):
 
 @app.task(name="image_preview", base=DatabaseConnectionResetTask)
 def image_preview(app_label: str, document_ids: list[int]):
-    models = load_harvest_models(app_label)
-    FileDocument = models["Document"]
+    storages = load_harvest_models(app_label)
+    FileDocument = storages.Document
     image_processor = HttpGrowthProcessor({
         "datatypes_app_label": "files",
         "datatype_models": {

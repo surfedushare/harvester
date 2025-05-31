@@ -38,8 +38,8 @@ class TestProductWebhookTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        models = load_harvest_models(cls.entity_type)
-        cls.Document = models["Document"]
+        storages = load_harvest_models(cls.entity_type)
+        cls.Document = storages.Document
 
     def call_webhook(self, url, ip=None, verb="create", overrides=None):
         data = deepcopy(self.test_data[verb])

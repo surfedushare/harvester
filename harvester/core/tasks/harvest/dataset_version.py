@@ -20,13 +20,13 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int, asynchr
         raise RecursionError("Maximum harvest_dataset_version recursion reached")
     previous_tasks = previous_tasks or []
     # Load DatasetVersion and check its state
-    models = load_harvest_models(app_label)
-    dataset_version = load_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
+    storages = load_harvest_models(app_label)
+    dataset_version = load_pending_harvest_instances(dataset_version, model=storages.DatasetVersion)
     if dataset_version is None:  # parallel tasks may already picked-up this dispatch
         return
 
     # Dispatch pending tasks
-    pending = validate_pending_harvest_instances(dataset_version, model=models["DatasetVersion"])
+    pending = validate_pending_harvest_instances(dataset_version, model=storages.DatasetVersion)
     pending_tasks = [task for instance in pending for task in instance.get_pending_tasks()]
     if len(pending) and pending_tasks != previous_tasks:  # we're not repeating the same tasks indefinitely
         recursive_callback_signature = dispatch_dataset_version_tasks.si(
@@ -47,8 +47,8 @@ def dispatch_dataset_version_tasks(app_label: str, dataset_version: int, asynchr
 @app.task(name="set_current_dataset_version", base=DatabaseConnectionResetTask)
 @atomic
 def set_current_dataset_version(app_label: str, dataset_version_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    DatasetVersion = models["DatasetVersion"]
+    storages = load_harvest_models(app_label)
+    DatasetVersion = storages.DatasetVersion
     for dataset_version in DatasetVersion.objects.filter(id__in=dataset_version_ids).select_for_update():
         # A Set is unfinished when it is not yet pending (because Documents are still coming in),
         # but any tasks for the set haven't run either
@@ -69,11 +69,11 @@ def set_current_dataset_version(app_label: str, dataset_version_ids: list[int]) 
 @app.task(name="create_opensearch_index", base=DatabaseConnectionResetTask)
 @atomic
 def create_opensearch_index(app_label: str, dataset_version_ids: list[int]) -> None:
-    models = load_harvest_models(app_label)
-    DatasetVersion = models["DatasetVersion"]
+    storages = load_harvest_models(app_label)
+    DatasetVersion = storages.DatasetVersion
     OpenSearchIndex = apps.get_model("search.OpenSearchIndex")
     for dataset_version in DatasetVersion.objects.filter(id__in=dataset_version_ids).select_for_update():
-        if dataset_version.dataset.indexing != models["Dataset"].IndexingOptions.NO:
+        if dataset_version.dataset.indexing != storages.Dataset.IndexingOptions.NO:
             dataset_version.index = OpenSearchIndex.build(
                 app_label,
                 dataset_version.dataset.name,

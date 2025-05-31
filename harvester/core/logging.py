@@ -16,7 +16,7 @@ class HarvestLogger(object):
     command_options = None
     warn_delete_does_not_exist = True
 
-    def __init__(self, dataset, command, command_options, is_legacy_logger=True, warn_delete_does_not_exist=True):
+    def __init__(self, dataset, command, command_options, is_legacy_logger=False, warn_delete_does_not_exist=True):
         self.dataset = dataset
         self.command = command
         self.command_options = command_options

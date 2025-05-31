@@ -26,9 +26,9 @@ class Command(BaseCommand):
         if app_label == "core":
             raise CommandError("No longer possible to promote a legacy dataset version from the core app")
 
-        models = load_harvest_models(app_label)
-        Dataset = models["Dataset"]
-        DatasetVersion = models["DatasetVersion"]
+        storages = load_harvest_models(app_label)
+        Dataset = storages.Dataset
+        DatasetVersion = storages.DatasetVersion
 
         if not dataset_version_id and not dataset_name:
             raise CommandError("Dataset name required if dataset version id is not specified")

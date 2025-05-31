@@ -10,8 +10,11 @@ class FileDocumentTestCase(TestCase):
     fixtures = ["test-file-document.json"]
 
     def test_get_pending_tasks_hash_update(self):
-        # Check that file from fixture is not processing
+        # Load test data from fixture
         file_document = FileDocument.objects.get(pk=1)
+        check_url_resource_id = file_document.task_results["check_url"]["id"]
+        tika_resource_id = file_document.task_results["tika"]["id"]
+        # Check that file from fixture is not processing
         check_url_task_results = deepcopy(file_document.task_results["check_url"])
         check_url_derivative = deepcopy(file_document.derivatives["check_url"])
         self.assertEqual(file_document.get_pending_tasks(), [])
@@ -21,8 +24,14 @@ class FileDocumentTestCase(TestCase):
         self.assertIsNotNone(file_document.pending_at)
         self.assertIsNone(file_document.finished_at)
         # The Tika and URL resources should be cleared
-        self.assertEqual(CheckURLResource.objects.count(), 1, "Expected check_url resource for file to get purged")
-        self.assertEqual(HttpTikaResource.objects.count(), 1, "Expected tika resources for file to get purged")
+        self.assertEqual(
+            CheckURLResource.objects.filter(id=check_url_resource_id).count(), 0,
+            "Expected check_url resource for file to get purged"
+        )
+        self.assertEqual(
+            HttpTikaResource.objects.filter(id=tika_resource_id).count(), 0,
+            "Expected tika resources for file to get purged"
+        )
         # Complete the check_url task by patching it and see if secondary tasks trigger
         file_document.task_results["check_url"] = check_url_task_results
         file_document.derivatives["check_url"] = check_url_derivative
@@ -32,14 +41,15 @@ class FileDocumentTestCase(TestCase):
 
     def test_invalidate_task_resource_purge(self):
         # Pre-test asserts
-        self.assertEqual(CheckURLResource.objects.count(), 2, "Expected two check_url resources at start of test")
+        self.assertEqual(CheckURLResource.objects.count(), 2, "Expected three check_url resources at start of test")
         self.assertEqual(HttpTikaResource.objects.count(), 2, "Expected two tika resources at start of test")
         file_document = FileDocument.objects.get(pk=1)
+        check_url_resource_id = file_document.task_results["check_url"]["id"]
         file_document.invalidate_task("check_url")
         self.assertIsNotNone(file_document.pending_at)
         self.assertIsNone(file_document.finished_at)
         self.assertEqual(
-            CheckURLResource.objects.count(), 1,
+            CheckURLResource.objects.filter(id=check_url_resource_id).count(), 0,
             "Expected check_url resource from task results to be deleted"
         )
         self.assertEqual(HttpTikaResource.objects.count(), 2, "Expected tika resources to be unaffected")

@@ -31,8 +31,8 @@ def seed_generator(source: str, size: int, sequence_properties=None, has_languag
 def document_generator(source: str, size: int, batch_size: int, set_instance: HarvestSet,
                        sequence_properties: dict = None, time_offset: dict = None, app_label: str = "testing",
                        soft_deletes: bool = False) -> Iterator[HarvestDocument]:
-    models = load_harvest_models(app_label)
-    Document = models["Document"]
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
     build_time = None if not time_offset else now() - timedelta(**time_offset)
     documents = [
         Document.build(seed, collection=set_instance, build_time=build_time)

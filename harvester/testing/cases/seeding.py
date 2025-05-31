@@ -26,18 +26,18 @@ class SeedingTestCase(TestCase):
     source: str = None
     delete_policy: DeletePolicies = None
 
-    models: dict = None
+    storages: dict = None
     configuration: dict = None
 
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.models = load_harvest_models(cls.entity)
+        cls.storages = load_harvest_models(cls.entity)
         cls.configuration = load_source_configuration(cls.entity, cls.source)
 
     def setUp(self) -> None:
         super().setUp()
         # Creating objects for seeding
-        self.set = self.models["Set"].objects.create(name=self.source, identifier="srn")
+        self.set = self.storages.Set.objects.create(name=self.source, identifier="srn")
         self.processor = HttpSeedingProcessor(self.set, {
             "phases": self.configuration["seeding_phases"]
         })
@@ -51,7 +51,7 @@ class SeedingTestCase(TestCase):
                 for task in doc.tasks.keys():
                     doc.task_results[task] = {"success": True}
                 if self.delete_policy == DeletePolicies.NO:
-                    doc.properties["state"] = self.models["Document"].States.DELETED
+                    doc.properties["state"] = self.storages.Document.States.DELETED
                 doc.clean()
                 doc.finish_processing(current_time=current_time)
                 initial_documents.append(doc)
@@ -65,7 +65,7 @@ class SeedingTestCase(TestCase):
         for batch in self.processor(self.source, "1970-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
             for doc in batch:
-                self.assertIsInstance(doc, self.models["Document"])
+                self.assertIsInstance(doc, self.storages.Document)
                 self.assertIsNotNone(doc.identity)
                 self.assertTrue(doc.properties)
                 if doc.state == doc.States.ACTIVE:
@@ -86,7 +86,7 @@ class SeedingTestCase(TestCase):
         for batch in self.processor(self.source, "2020-01-01T00:00:00Z"):
             self.assertIsInstance(batch, list)
             for doc in batch:
-                self.assertIsInstance(doc, self.models["Document"])
+                self.assertIsInstance(doc, self.storages.Document)
                 self.assertIsNotNone(doc.identity)
                 self.assertTrue(doc.properties)
                 if doc.identity in become_processing_ids:

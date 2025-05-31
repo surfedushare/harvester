@@ -14,14 +14,14 @@ from core.processors.seed.resource import HttpSeedingProcessor
 @app.task(name="harvest_source", base=DatabaseConnectionResetTask)
 def harvest_source(app_label: str, source: str, set_specification: str, asynchronous=True) -> None:
     current_time = now()
-    models = load_harvest_models(app_label)
+    storages = load_harvest_models(app_label)
     configuration = load_source_configuration(app_label, source)
     logger_options = {
         "source": source,
         "set_specification": set_specification
     }
     logger = HarvestLogger(app_label, "harvest_source", logger_options, is_legacy_logger=False)
-    harvest_state = models["HarvestState"].objects \
+    harvest_state = storages.HarvestState.objects \
         .select_related("entity", "entity__source", "harvest_set") \
         .get(entity__source__module=source, entity__type=app_label, set_specification=set_specification)
     harvest_set = harvest_state.harvest_set
