@@ -24,5 +24,14 @@ if [ "$APPLICATION_MODE" == "localhost" ] && [ ! -e "/home/app/.aws/credentials"
 fi
 
 
+# We're serving static files through Whitenoise. See: http://whitenoise.evans.io/en/stable/index.html#
+# If you doubt this decision then read the "infrequently asked question" section for details.
+# Here we gather static files that get served through uWSGI if they don't exist.
+# We don't do this in Dockerfile to allow M-chips to build AMD platform containers without Rosetta chocking.
+if [ -z "$(ls -A /usr/src/static/)" ]; then
+    python manage.py collectstatic --noinput
+fi
+
+
 # Executing the normal commands
 exec "$@"
