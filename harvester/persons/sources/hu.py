@@ -26,24 +26,24 @@ OBJECTIVE = {
     "skills": "$.skills",
     "organizations": "$.parties",
     "is_employed": "$.is_employed",
-    "job_title": "$.job_title",
+    "job_title": lambda node: reach("$.job_title", node) or None,
     # Author metadata
     "author.name": "$.name",
     "author.first_name": "$.first_name",
     "author.last_name": "$.last_name",
     "author.prefix": "$.prefix",
     "author.initials": "$.initials",
-    "author.isni": "$.isni",
+    "author.isni": lambda node: reach("$.isni", node) or None,
     # Sensitive metadata
-    "sensitive.description": "$.description",
+    "sensitive.description": lambda node: reach("$.description", node) or None,
     "sensitive.email": lambda node: reach("$.email", node) or None,
-    "sensitive.phone": "$.phone",
-    "sensitive.photo_url": "$.photo_url",
+    "sensitive.phone": lambda node: reach("$.phone", node) or None,
+    "sensitive.photo_url": lambda node: reach("$.photo_url", node) or None,
     # Research based metadata
-    "researcher.title": "$.title",  # academic title
+    "researcher.title": lambda node: reach("$.title", node) or None,  # academic title
     "researcher.themes": "$.themes",
-    "researcher.dai": "$.dai",
-    "researcher.orcid": "$.orcid",
+    "researcher.dai": lambda node: reach("$.dai", node) or None,
+    "researcher.orcid": lambda node: reach("$.orcid", node) or None,
     "researcher.research_themes": "$.research_themes",
 }
 
