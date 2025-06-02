@@ -133,30 +133,6 @@ def lookup_industry_parents(app_label: str, document_ids: list[int]) -> None:
         document.save()
 
 
-# TODO: deprecated in favor of lookup_industry_parents
-@app.task(name="lookup_industries_translations", base=DatabaseConnectionResetTask)
-@atomic()
-def lookup_industries_translations(app_label: str, document_ids: list[int]) -> None:
-    storages = load_harvest_models(app_label)
-    Document = storages.Document
-    for document in Document.objects.filter(id__in=document_ids).select_for_update():
-        industries = MetadataValue.objects \
-            .select_related("translation") \
-            .filter(value__in=document.properties["learning_material"]["industries"], field__name="industries.keyword")
-        document.derivatives["lookup_industries_translations"] = {
-            "industries": {
-                "keyword": [industry.value for industry in industries],
-                "nl": [industry.translation.nl for industry in industries],
-                "en": [industry.translation.en for industry in industries],
-            }
-        }
-        # For all documents we mark this task as completed to continue the harvesting process
-        document.task_results["lookup_industries_translations"] = {
-            "success": True
-        }
-        document.save()
-
-
 @app.task(name="lookup_sector_parents", base=DatabaseConnectionResetTask)
 @atomic()
 def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
@@ -190,30 +166,6 @@ def lookup_sector_parents(app_label: str, document_ids: list[int]) -> None:
         }
         # For all documents we mark this task as completed to continue the harvesting process
         document.task_results["lookup_sector_parents"] = {
-            "success": True
-        }
-        document.save()
-
-
-# TODO: deprecated in favor of lookup_sector_parents
-@app.task(name="lookup_sectors_translations", base=DatabaseConnectionResetTask)
-@atomic()
-def lookup_sectors_translations(app_label: str, document_ids: list[int]) -> None:
-    storages = load_harvest_models(app_label)
-    Document = storages.Document
-    for document in Document.objects.filter(id__in=document_ids).select_for_update():
-        sectors = MetadataValue.objects \
-            .select_related("translation") \
-            .filter(value__in=document.properties["learning_material"]["sectors"], field__name="sectors.keyword")
-        document.derivatives["lookup_sectors_translations"] = {
-            "sectors": {
-                "keyword": [sector.value for sector in sectors],
-                "nl": [sector.translation.nl for sector in sectors],
-                "en": [sector.translation.en for sector in sectors],
-            }
-        }
-        # For all documents we mark this task as completed to continue the harvesting process
-        document.task_results["lookup_sectors_translations"] = {
             "success": True
         }
         document.save()
