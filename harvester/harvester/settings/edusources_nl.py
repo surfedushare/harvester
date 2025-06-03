@@ -10,7 +10,8 @@ SIMPLE_METADATA_FREQUENCY_FIELDS = ["study_vocabulary"]
 
 SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False
 
-# Creating a soft test on remotes to see if Edusources team updated their s***
-if MODE != "localhost":
+# Disables legacy indices for non-production in the hope things get updated
+# Localhost is required for testing which should change. Publinova should be the main test target going forward.
+if MODE not in ["localhost", "production"]:
     OPENSEARCH_PRESET_DEFAULT = "products:default"
     OPENSEARCH_STRICT_MULTILINGUAL_FIELDS = True
