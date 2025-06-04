@@ -428,7 +428,7 @@
                         "is_video"
                     ],
                     "resources": [
-                        "files.YoutubeThumbnailResource"
+                        "files.VideoThumbnailResource"
                     ],
                     "depends_on": []
                 }
@@ -567,7 +567,7 @@
                         "is_video"
                     ],
                     "resources": [
-                        "files.YoutubeThumbnailResource"
+                        "files.VideoThumbnailResource"
                     ],
                     "depends_on": []
                 }
@@ -716,7 +716,7 @@
                         "is_video"
                     ],
                     "resources": [
-                        "files.YoutubeThumbnailResource"
+                        "files.VideoThumbnailResource"
                     ],
                     "depends_on": []
                 }

@@ -15,7 +15,7 @@ from datagrowth.resources.base import Resource
 
 from core.models.datatypes import HarvestDocument, HarvestOverwrite
 from files.constants import SEED_DEFAULTS
-from files.models.resources.youtube_api import YoutubeAPIResource
+from files.models.resources.youtube import YoutubeAPIResource
 from files.models.resources.metadata import CheckURLResource
 
 
@@ -47,24 +47,26 @@ def default_document_tasks():
             "resources": ["files.ImageThumbnailResource"]
         },
         "video_preview": {
-            # While thumbnails from Youtube API get ignored we need this task to be lenient.
-            # It would be better to perform a check_url and use is_analysis_possible before executing,
-            # but that fails for Youtube so that's not a possibility at the moment.
             "depends_on": [],
-            "checks": ["is_video"],
-            "resources": ["files.YoutubeThumbnailResource"]
+            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
+            "resources": ["files.VideoThumbnailResource"]
         },
+        "video_transcripts": {
+            "depends_on": [],
+            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
+            "resources": ["files.VideoTranscriptsResource"]
+        },
+
+        # A separate tasks branch for YouTube videos, which fetches metadata and creates previews.
         "youtube_api": {
             "depends_on": ["$.hash"],
             "checks": ["is_youtube_video"],
             "resources": ["files.YoutubeAPIResource"]
         },
-        "video_transcripts": {
-            # Unfortunately downloading transcripts needs logged in users when using the Youtube API
-            # This shell tool also gets blocked by Youtube, but it works for Vimeo
-            "depends_on": [],
-            "checks": ["is_analysis_possible", "is_video", "!is_youtube_video"],
-            "resources": ["files.YoutubeTranscriptsResource"]
+        "youtube_preview": {
+            "depends_on": ["$.hash", "youtube_api"],
+            "checks": ["has_youtube_metadata"],
+            "resources": ["files.YoutubeThumbnailResource"]
         },
     }
 
@@ -131,6 +133,11 @@ class FileDocument(HarvestDocument):
         if not self.domain or not url:
             return False
         return youtube_domain_regex.match(self.domain) and YoutubeAPIResource.url_to_id(url)
+
+    @property
+    def has_youtube_metadata(self):
+        youtube_api = self.task_results.get("youtube_api", {})
+        return youtube_api.get("success")
 
     @property
     def is_video(self):
@@ -216,6 +223,8 @@ class FileDocument(HarvestDocument):
             data["previews"] = self.derivatives["video_preview"]
         elif "image_preview" in self.derivatives:
             data["previews"] = self.derivatives["image_preview"]
+        elif "youtube_preview" in self.derivatives:
+            data["previews"] = self.derivatives["youtube_preview"]
         # Last but not least we validate that data is within bounds when dealing with output for search engine
         if for_search and isinstance(data.get("text"), str):
             # When text data exceeds maximum length we brutally cut the length while attempting to keep words intact.

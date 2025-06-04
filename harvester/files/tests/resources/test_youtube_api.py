@@ -20,7 +20,7 @@ class TestYoutubeAPIResource(TestCase):
         "https://www.youtube.com/watch?annotation_id=annotation_123&feature=iv&src_vid=oI5-Cl-jvSs&v=dQw4w9WgXcQ",
     ]
 
-    @patch("files.models.resources.youtube_api.YoutubeAPIResource._send")
+    @patch("files.models.resources.youtube.YoutubeAPIResource._send")
     def test_regex(self, send_mock):
         for url in self.valid_urls:
             resource = YoutubeAPIResource(

@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from metadata.models import MetadataField, MetadataValue, MetadataTranslation
 from testing.utils.factories import create_datatype_models
-from products.tasks import lookup_sectors_translations
+from products.tasks import lookup_sector_parents
 from products.models import ProductDocument
 
 
@@ -46,10 +46,10 @@ class TestLookupSectorsTranslations(TestCase):
         )
 
     def test_lookup_sectors_translations(self):
-        lookup_sectors_translations("products", [doc.id for doc in self.documents])
+        lookup_sector_parents("products", [doc.id for doc in self.documents])
         sectors_doc = ProductDocument.objects.get(identity="surf:testing:1")
         self.assertEqual(sectors_doc.derivatives, {
-            "lookup_sectors_translations": {
+            "lookup_sector_parents": {
                 "sectors": {
                     "keyword": ["tgo"],
                     "en": ["Engineering and built environment sector"],
@@ -58,11 +58,11 @@ class TestLookupSectorsTranslations(TestCase):
             }
         })
         self.assertEqual(sectors_doc.task_results, {
-            "lookup_sectors_translations": {"success": True}
+            "lookup_sector_parents": {"success": True}
         })
         undefined = ProductDocument.objects.get(identity="surf:testing:2")
         self.assertEqual(undefined.derivatives, {
-            "lookup_sectors_translations": {
+            "lookup_sector_parents": {
                 "sectors": {
                     "keyword": [],
                     "en": [],
@@ -71,5 +71,5 @@ class TestLookupSectorsTranslations(TestCase):
             }
         })
         self.assertEqual(undefined.task_results, {
-            "lookup_sectors_translations": {"success": True}
+            "lookup_sector_parents": {"success": True}
         })
