@@ -14,8 +14,8 @@ class PersonSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=True, default=None)
     first_name = serializers.CharField(allow_null=True, default=None)
     last_name = serializers.CharField(allow_null=True, default=None)
-    prefix = serializers.CharField(allow_null=True, default=None)
-    initials = serializers.CharField(allow_null=True, default=None)
+    prefix = serializers.CharField(allow_null=True, allow_blank=True, default=None)
+    initials = serializers.CharField(allow_null=True, allow_blank=True, default=None)
 
     email = serializers.EmailField(allow_null=True, default=None)
     phone = serializers.CharField(allow_null=True, default=None)

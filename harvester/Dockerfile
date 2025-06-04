@@ -41,7 +41,7 @@ RUN pip install -U --no-cache-dir --user pip
 RUN pip install wheel
 RUN pip install --no-cache-dir --user uwsgi==2.0.24
 RUN pip install --no-cache-dir --user -r requirements.txt
-RUN pip install --no-cache-dir --user git+https://github.com/surfedushare/search-client.git@v0.7.8
+RUN pip install --no-cache-dir --user git+https://github.com/surfedushare/search-client.git@v0.7.9
 
 # Copy application
 COPY harvester /usr/src/app
@@ -49,13 +49,6 @@ COPY harvester /usr/src/app
 # The default environment mode is production, but during image build we use the localhost mode
 # This allows to run setup commands locally without loading secrets
 COPY environments /usr/src/environments
-
-# We're serving static files through Whitenoise
-# See: http://whitenoise.evans.io/en/stable/index.html#
-# If you doubt this decision then read the "infrequently asked question" section for details
-# Here we gather static files that get served through uWSGI if they don't exist
-RUN export APPLICATION_MODE=localhost && export APPLICATION_CONTEXT=unprivileged && \
-    python manage.py collectstatic --noinput
 
 # Entrypoint sets our environment correctly
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
