@@ -7,7 +7,7 @@ from organizations.tasks import lookup_organization_parents
 
 class TestOrganizationHierarchy(TestCase):
 
-    fixtures = ["test-organization-hierarchy.json"]
+    fixtures = ["test-organization-document.json"]
 
     def setUp(self):
         self.dataset = Dataset.objects.get(pk=1)
