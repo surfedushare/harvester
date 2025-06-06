@@ -28,7 +28,7 @@ class TestOrganizationHierarchy(TestCase):
         Test that the organization hierarchy is correctly built and stored in the set's documents
         """
         # Run the task on the organization set
-        lookup_organization_parents("organizations", self.organization_set.id)
+        lookup_organization_parents("organizations", [self.organization_set.id])
 
         # Refresh documents from database
         self.documents = OrganizationDocument.objects.filter(id__in=self.organization_set.documents.all())
@@ -80,7 +80,7 @@ class TestOrganizationHierarchy(TestCase):
         """
         Test that task results are properly set for all documents in the set and the set itself
         """
-        lookup_organization_parents("organizations", self.organization_set.id)
+        lookup_organization_parents("organizations", [self.organization_set.id])
 
         # Refresh from database
         self.organization_set.refresh_from_db()
@@ -131,7 +131,7 @@ class TestOrganizationHierarchy(TestCase):
             self.organization_set.documents.add(doc_a, doc_b, doc_c)
 
             # Run the task
-            lookup_organization_parents("organizations", self.organization_set.id)
+            lookup_organization_parents("organizations", [self.organization_set.id])
 
         # Refresh documents
         doc_a.refresh_from_db()
