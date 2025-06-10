@@ -1,4 +1,4 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
 from core.constants import DeletePolicies
