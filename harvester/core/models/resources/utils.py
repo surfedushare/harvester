@@ -1,4 +1,4 @@
-from typing import Iterator
+from typing import Iterator, cast, Type
 
 from django.apps import apps
 
@@ -6,12 +6,11 @@ from datagrowth.resources.base import Resource
 from core.loading import load_task_resources
 
 
-def extend_resource_cache(app_label: str = None,
-                          task_resources: dict[str, dict[str, list[str]]] = None) -> Iterator[Resource]:
+def extend_resource_cache(app_label: str = None, task_resources: dict[str, dict[str, list[str]]] = None) -> Iterator[tuple[str, Type[Resource]]]:  # noqa: E501
     task_resources = task_resources or load_task_resources(app_label=app_label)
     for label, resources in task_resources.items():
         for resource_model in resources:
-            model = apps.get_model(resource_model)
+            model = cast(Resource, apps.get_model(resource_model))
             instance = model()
             instance.clean()  # this calculates the preferred purge_at datetime
             model.objects.update(purge_at=instance.purge_at)
