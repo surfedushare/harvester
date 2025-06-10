@@ -23,6 +23,11 @@ class OrganizationDocumentTestCase(TestCase):
                 {
                     "srn": "sharekit:nppo:66a0079d-c8c2-4bf1-93b9-a2133aa57524",
                     "name": "Kenniscentrum Sociale Innovatie"
+                },
+                # The parent below filters out during lookup_organization_parent task execution
+                {
+                    "srn": "sharekit:nppo:6660079d-c8c2-4bf1-93b9-a2133aa57555",
+                    "name": "Oud Kenniscentrum Asociale Zaken"
                 }
             ],
             "provider": "SURFSharekit",
@@ -39,3 +44,33 @@ class OrganizationDocumentTestCase(TestCase):
                 "ALL"
             ]
         })
+
+    def test_provider(self):
+        organization = OrganizationDocument.objects.get(id=1)
+        # Check case where neither parent nor secretary is set
+        organization_search = organization.to_search()
+        self.assertEqual(organization_search["provider"], "SURFSharekit")
+        # Check case where root parent is set through lookup_organization_parent
+        organization.derivatives["lookup_organization_parent"] = {
+            "parents": [
+                {
+                    "srn": "sharekit:nppo:66a0079d-c8c2-4bf1-93b9-a2133aa57524",
+                    "name": "Kenniscentrum Sociale Innovatie",
+                    "is_root": False
+                },
+                {
+                    "srn": "sharekit:nppo:9bc007df-82c3-4bcb-9b94-1dfd5d77f9ca",
+                    "name": "Hogeschool Utrecht",
+                    "is_root": True
+                },
+            ]
+        }
+        organization_search = organization.to_search()
+        self.assertEqual(organization_search["provider"], "Hogeschool Utrecht")
+        # Check case where secretary is set
+        organization.properties["secretary"] = {
+            "srn": "sharekit:nppo:66a0079d-c8c2-4bf1-93b9-a2133aa57524",
+            "name": "Kenniscentrum Sociale Innovatie",
+        }
+        organization_search = organization.to_search()
+        self.assertEqual(organization_search["provider"], "Kenniscentrum Sociale Innovatie")

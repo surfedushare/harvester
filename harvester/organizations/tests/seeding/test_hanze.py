@@ -81,7 +81,7 @@ class TestSharekitOrganizationExtraction(ResourceFixturesMixin, TestCase):
         self.assertEqual(self.seeds[0]["parents"], [])
         self.assertEqual(self.seeds[1]["parents"], [
             {
-                "srn": "hanze:hanze:f372ce07-510d-47d3-9292-4322e7ebc146",
+                "srn": "hanze:organization:f372ce07-510d-47d3-9292-4322e7ebc146",
                 "name": None
             }
         ])
