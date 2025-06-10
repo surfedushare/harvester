@@ -54,7 +54,6 @@ swagger_view = login_required(
 api_urlpatterns = [
     path('openapi/', schema_view, name='openapi-schema'),
     path('docs/', swagger_view, name='docs'),
-    path('', include('core.urls')),
     path('', include('metadata.urls')),
     path('', include('search.urls')),
     path('', include('organizations.urls')),
