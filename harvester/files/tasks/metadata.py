@@ -59,6 +59,62 @@ def check_url_task(app_label: str, document_ids: list[int]) -> None:
     check_url_processor(Document.objects.filter(id__in=check_document_ids))
 
 
+@app.task(name="publish_content", base=DatabaseConnectionResetTask)
+def publish_content_task(app_label: str, document_ids: list[int]) -> None:
+    storages = load_harvest_models(app_label)
+    Document = storages.Document
+
+    mirror_file_ids = []
+    for doc in Document.objects.filter(id__in=document_ids):
+        # Filter out any documents that needs file mirroring.
+        # Mirroring a file will result in download of a file using source credentials.
+        # Once mirrored the file is available without these credentials for the frontend.
+        # At the time of writing this is used to bypass Pure authentication for OpenAccess files,
+        # that should be available, but aren't for mysterious reasons.
+        is_mirror_file = True
+        for mirror_source in settings.FILE_MIRROR_SOURCES:
+            if mirror_source in doc.properties.get("set"):
+                mirror_file_ids.append(doc.id)
+                break
+        else:
+            is_mirror_file = False
+        if is_mirror_file:
+            continue
+
+        # When dealing with files that do not need hacks we use the resolved check_url as the public_url
+        # This means that URL will exist and will not lead to redirects that some downstreams tasks can't process.
+        publish_success = doc.task_results.get("check_url", {}).get("success", False)
+        public_url = doc.derivatives["check_url"]["url"] if publish_success else None
+        doc.task_results["publish_content"] = {"success": publish_success, "is_auto_succeed": True}
+        doc.derivatives["publish_content"] = {
+            "public_url": public_url,
+        }
+        doc.save()
+
+    if not mirror_file_ids:  # no files to mirror
+        return
+
+    mirror_processor = HttpGrowthProcessor({
+        "datatypes_app_label": app_label,
+        "datatype_models": {
+            "document": Document._meta.model_name,
+            "process_result": "ProcessResult",
+            "batch": "Batch"
+        },
+        "growth_phase": "publish_content",
+        "batch_size": len(mirror_file_ids),
+        "asynchronous": False,
+        "retrieve_data": {
+            "resource": "files.mirrorfileresource",
+            "method": "get",
+            "args": ["$.url"],
+            "kwargs": {},
+        },
+        "extractor": "ExtractProcessor.pass_resource_through",
+    })
+    mirror_processor(Document.objects.filter(id__in=mirror_file_ids))
+
+
 def tika_content_extraction(results):
     return [
         result.get("X-TIKA:content", "").strip()
@@ -98,38 +154,6 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
     tika_processor(Document.objects.filter(id__in=document_ids))
 
 
-@app.task(name="tika_plain", base=DatabaseConnectionResetTask)
-def tika_plain_task(app_label: str, document_ids: list[int]) -> None:
-    storages = load_harvest_models(app_label)
-    Document = storages.Document
-
-    tika_plain_processor = HttpGrowthProcessor({
-        "datatypes_app_label": app_label,
-        "datatype_models": {
-            "document": Document._meta.model_name,
-            "process_result": "ProcessResult",
-            "batch": "Batch"
-        },
-        "growth_phase": "tika_plain",
-        "batch_size": len(document_ids),
-        "asynchronous": False,
-        "retrieve_data": {
-            "tika_return_type": "text",
-            "resource": "files.httptikaresource",
-            "method": "put",
-            "args": ["$.url"],
-            "kwargs": {},
-        },
-        "contribute_data": {
-            "objective": {
-                "@": "$",
-                "#plains": tika_content_extraction,
-            }
-        }
-    })
-    tika_plain_processor(Document.objects.filter(id__in=document_ids))
-
-
 def get_embed_url(node):
     html = node["player"]["embedHtml"]
     url_regex = re.findall(r'src=\\?"\/?\/?(.*?)\\?"', html)  # finds the string withing src: src="<string>"
@@ -141,7 +165,7 @@ def get_embed_url(node):
     return url
 
 
-def get_previews(node):
+def get_preview_file(node):
     thumbnails = node["snippet"]["thumbnails"]
     if "maxres" in thumbnails:
         full_size_key = "maxres"
@@ -149,11 +173,7 @@ def get_previews(node):
         full_size_key = "standard"
     else:
         full_size_key = "default"
-    return {
-        "full_size": thumbnails[full_size_key]["url"],
-        "preview": thumbnails["high"]["url"],
-        "preview_small": thumbnails["medium"]["url"]
-    }
+    return thumbnails[full_size_key]["url"]
 
 
 @app.task(name="youtube_api", base=DatabaseConnectionResetTask)
@@ -185,7 +205,7 @@ def youtube_api_task(app_label, document_ids: list[int]) -> None:
                 "title": "$.snippet.title",
                 "license": "$.status.license",
                 "embed_url": get_embed_url,
-                "previews": get_previews
+                "preview_file": get_preview_file
             }
         }
     })
@@ -206,7 +226,7 @@ def video_transcripts(app_label: str, document_ids: list[int]):
         "growth_phase": "video_transcripts",
         "asynchronous": False,
         "retrieve_data": {
-            "resource": "files.youtubetranscriptsresource",
+            "resource": "files.videotranscriptsresource",
             "args": ["$.url"],
             "kwargs": {},
         },

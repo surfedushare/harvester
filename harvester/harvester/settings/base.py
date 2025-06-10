@@ -721,6 +721,7 @@ WEBHOOKS = {
 # Harvester tasks and logic
 
 CHECK_URL_AUTO_SUCCEED_SETS = []
+FILE_MIRROR_SOURCES = ["hanze", "hva"]
 SET_PRODUCT_COPYRIGHT_BY_MAIN_FILE_COPYRIGHT = False
 DEFAULT_FILE_TITLES_TEMPLATE = None
 ALLOW_MANUAL_DOCUMENTS = environment.harvester.manual_documents
