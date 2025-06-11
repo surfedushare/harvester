@@ -15,6 +15,7 @@ class OrganizationSerializer(serializers.Serializer):
     set = serializers.CharField()
     provider = serializers.CharField(default=None, allow_null=True)
     state = serializers.CharField(default="active")
+    score = serializers.FloatField(default=0.0)
 
     name = serializers.CharField(allow_null=True, allow_blank=False)
     description = serializers.CharField(allow_null=True, allow_blank=False)

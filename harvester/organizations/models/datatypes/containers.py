@@ -3,7 +3,24 @@ from django.db import models
 from core.models.datatypes import HarvestDataset, HarvestDatasetVersion, HarvestSet
 
 
+def default_set_tasks():
+    return {
+        "check_set_integrity": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
+        },
+        "lookup_organization_parents": {
+            "depends_on": [],
+            "checks": [],
+            "resources": []
+        }
+    }
+
+
 class Set(HarvestSet):
+
+    tasks = models.JSONField(default=default_set_tasks, blank=True)
 
     class Meta:
         verbose_name = "organization set"

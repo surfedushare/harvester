@@ -52,7 +52,7 @@ class HanzeOrganizationExtraction(PureExtractor):
 
     @classmethod
     def get_parents(cls, node):
-        srn_prefix = f"{cls.source_slug}:hanze"
+        srn_prefix = f"{cls.source_slug}:organization"
         return [
             {
                 "srn": f"{srn_prefix}:{parent["uuid"]}",
