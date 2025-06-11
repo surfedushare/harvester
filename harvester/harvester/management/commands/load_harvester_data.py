@@ -104,7 +104,9 @@ class Command(base.LabelCommand):
             logger.info(f"Downloading dump files for: {app_label}")
             ctx = Context(environment)
             source_data = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester/{app_label}"
-            ctx.run(f"aws s3 sync {source_data} {settings.DATAGROWTH_DATA_DIR}", echo=True)
+            ctx.run(f"aws s3 sync {source_data} {settings.DATAGROWTH_DATA_DIR}/{app_label}", echo=True)
+            source_metadata = f"s3://{source_environment.aws.harvest_content_bucket}/datasets/harvester/metadata"
+            ctx.run(f"aws s3 sync {source_metadata} {settings.DATAGROWTH_DATA_DIR}/metadata", echo=True)
 
         logger.info(f"Importing data for: {app_label}")
         for entry in os.scandir(get_dumps_path(storages.Dataset)):
