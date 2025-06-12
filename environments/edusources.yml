@@ -19,9 +19,6 @@ django:
   users:
     usernames: "arn:aws:secretsmanager:eu-central-1:{account}:secret:users/edusources"
 
-harvester:
-  sources_middleware_api: null
-
 conext:
   is_enabled: false
   client_id: none

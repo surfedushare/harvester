@@ -17,9 +17,14 @@ def default_document_tasks():
             "checks": [],
             "resources": ["files.CheckURLResource"]
         },
-        "tika": {
-            "depends_on": ["check_url"],
+        "publish_content": {
+            "depends_on": ["$.url", "check_url"],
             "checks": [],
+            "resources": ["files.MirrorFileResource"]
+        },
+        "tika": {
+            "depends_on": ["$.url", "publish_content"],
+            "checks": ["is_published"],
             "resources": ["files.HttpTikaResource"]
         }
     }
@@ -40,6 +45,11 @@ class TestDocument(HarvestDocument):
                 self.is_not_found = True
                 self.pending_at = None
                 self.finished_at = now()
+
+    @property
+    def is_published(self):
+        publish_content = self.task_results.get("publish_content", {})
+        return publish_content.get("success", False)
 
     def get_analyzer_language(self) -> str:
         return get_analyzer_language(self.properties.get("language", None))

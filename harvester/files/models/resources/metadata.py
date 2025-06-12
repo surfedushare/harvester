@@ -1,5 +1,6 @@
 import logging
 import json
+from urllib3.util import parse_url
 from urllib3.exceptions import LocationParseError
 from requests.exceptions import InvalidURL
 
@@ -56,6 +57,18 @@ class HttpTikaResource(HttpResource):
 
 
 class CheckURLResource(URLResource):
+
+    def auth_headers(self):
+        scheme, auth, host, port, path, query, fragment = parse_url(self.request["url"])
+        if host.endswith("hanze.nl"):
+            return {
+                "Ocp-Apim-Subscription-Key": settings.SOURCES["hanze"]["api_key"]
+            }
+        elif host.endswith("hva.nl"):
+            return {
+                "api-key": settings.SOURCES["hva"]["api_key"]
+            }
+        return {}
 
     def _update_from_results(self, response):
         self.head = dict(response.headers.lower_items())

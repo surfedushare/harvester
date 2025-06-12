@@ -46,7 +46,7 @@ class PureFileExtraction(PureExtractor):
     def get_url(cls, info: ElectronicVersionInfo) -> str:
         url_property = "url" if info.is_link else cls.file_url_property
         normalized_url = cls.parse_url(info.data[url_property])
-        return cls._parse_file_url(normalized_url)
+        return cls.parse_file_url(normalized_url)
 
     @classmethod
     def get_hash(cls, info: ElectronicVersionInfo) -> str:

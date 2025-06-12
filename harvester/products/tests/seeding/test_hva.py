@@ -1,4 +1,4 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
 from core.constants import DeletePolicies
@@ -10,7 +10,6 @@ from sources.factories.hva.extraction import HvaPureResourceFactory
 from testing.cases import seeding
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHvaProductSeeding(seeding.FactorySeedingTestCase):
 
     entity = "products"
@@ -48,7 +47,6 @@ class TestHvaProductSeeding(seeding.FactorySeedingTestCase):
         )
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHvaProductExtraction(TestCase):
 
     set = None
@@ -85,7 +83,7 @@ class TestHvaProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["files"], [])
         self.assertEqual(seeds[3]["files"], [
-            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
+            "https://pure.hva.nl/ws/api/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/"
             "MDIyMzRi/636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf",
         ])
 

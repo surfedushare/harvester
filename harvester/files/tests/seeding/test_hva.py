@@ -1,4 +1,4 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from datagrowth.configuration import register_defaults
 from core.constants import DeletePolicies
@@ -25,7 +25,7 @@ class TestHvAFileSeeding(seeding.FactorySeedingTestCase):
 
     def test_delta_seeding(self, *args):
         documents = super().test_delta_seeding([
-            "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a:484cf5228fad26faec3c382b410c228a8bdfe5e1",
+            "hva:hva:f6b1feec-b7f1-442a-9a49-1da4cbb3646a:dfa3dda07a92eb0d56bc8d48f74a7605ed4e8acd",
         ])
         self.assertEqual(len(documents), 6, "Expected test to work with single page for the delta")
         self.assertEqual(
@@ -47,7 +47,6 @@ class TestHvAFileSeeding(seeding.FactorySeedingTestCase):
         )
 
 
-@override_settings(SOURCES_MIDDLEWARE_API="http://testserver/api/v1/")
 class TestHvaFileExtraction(TestCase):
 
     set = None
@@ -81,7 +80,7 @@ class TestHvaFileExtraction(TestCase):
     def test_get_external_id(self):
         self.assertEqual(
             self.seeds[0]["external_id"],
-            "d7126f6d-c412-43c8-ad2a-6acb7613917d:f5052b0d0d801fcd313c4395f963ab332ab3a521"
+            "d7126f6d-c412-43c8-ad2a-6acb7613917d:7f7df20bbcbc19d061345684dcb30cfd52976a44"
         )
         self.assertEqual(
             self.seeds[3]["external_id"],
@@ -97,7 +96,7 @@ class TestHvaFileExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(
             seeds[0]["url"],
-            "http://testserver/api/v1/files/hva/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
+            "https://pure.hva.nl/ws/api/research-outputs/d7126f6d-c412-43c8-ad2a-6acb7613917d/files/MDIyMzRi/"
             "636835_schuldenvrij-de-weg-naar-werk_aangepast.pdf"
         )
         self.assertEqual(
@@ -106,7 +105,7 @@ class TestHvaFileExtraction(TestCase):
         )
 
     def test_get_hash(self):
-        self.assertEqual(self.seeds[0]["hash"], "f5052b0d0d801fcd313c4395f963ab332ab3a521")
+        self.assertEqual(self.seeds[0]["hash"], "7f7df20bbcbc19d061345684dcb30cfd52976a44")
         self.assertEqual(self.seeds[3]["hash"], "54a95ef8691a8b3ac88759451ac61feeedaa14cf")
 
     def test_get_mime_type(self):

@@ -1,12 +1,13 @@
 from unittest.mock import patch
 from copy import copy
 from datetime import datetime
+import pytest
 
 from django.test import TestCase
 from django.utils.timezone import now
 from django.utils.timezone import make_aware
 
-from datagrowth.configuration import register_defaults
+from datagrowth.resources.testing import EnableGlobalCacheMixin
 
 from core.tasks.harvest.source import harvest_source
 from sources.models.harvest import HarvestEntity
@@ -18,23 +19,10 @@ from testing.utils.factories import create_datatype_models
 from testing.models import Dataset, DatasetVersion, HarvestState, Set
 
 
-class TestInitialHarvestSource(TestCase):
+@pytest.mark.slow
+class TestInitialHarvestSource(EnableGlobalCacheMixin, TestCase):
 
     fixtures = ["test-sources-harvest-models"]
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        register_defaults("global", {
-            "cache_only": True
-        })
-
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
 
     def setUp(self):
         super().setUp()
@@ -76,10 +64,15 @@ class TestInitialHarvestSource(TestCase):
             "Expected no pending documents"
         )
         for ix, doc in enumerate(self.set.documents.all().order_by("created_at")):
-            self.assertEqual(list(doc.task_results.keys()), ["tika", "check_url"])
+            self.assertEqual(list(doc.task_results.keys()), ["tika", "check_url", "publish_content"])
             self.assertTrue(doc.task_results["tika"]["success"])
             self.assertTrue(doc.task_results["check_url"]["success"])
-            self.assertEqual(list(doc.derivatives.keys()), ["tika", "check_url"])
+            self.assertTrue(doc.task_results["publish_content"]["success"])
+            self.assertTrue(
+                doc.task_results["publish_content"]["is_auto_succeed"],
+                "Expected mirror based publishing to be tested by files module"
+            )
+            self.assertEqual(list(doc.derivatives.keys()), ["tika", "check_url", "publish_content"])
             self.assertEqual(doc.derivatives["tika"], {
                 "texts": [f"Tika content for http://testserver/file/{ix}"]
             })
@@ -89,6 +82,9 @@ class TestInitialHarvestSource(TestCase):
                 "content_type": "text/html",
                 "has_redirect": False,
                 "has_temporary_redirect": False
+            })
+            self.assertEqual(doc.derivatives["publish_content"], {
+                "public_url": f"http://testserver/file/{ix}",
             })
         # Assert Set state
         set_instance = Set.objects.get(id=self.set.id)

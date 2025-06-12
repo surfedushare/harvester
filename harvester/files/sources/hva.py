@@ -4,7 +4,6 @@ from files.sources.pure import PureFileExtraction, build_objective
 
 
 class HvAFileExtractor(PureFileExtraction):
-    pure_api_prefix = "/ws/api/"
     source_slug = "hva"
 
 

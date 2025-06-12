@@ -155,13 +155,15 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.no_retry_document = self.documents[4]
         self.no_retry_document.task_results = {
             "check_url": {"success": True},
+            "publish_content": {"success": True},
             "tika": {
                 "success": False,
                 "first_processed_at": "2000-01-01T00:00:00Z"
             }
         }
         self.no_retry_document.derivatives = {
-            "check_url": {"status": 200}
+            "check_url": {"status": 200},
+            "publish_content": {"public_url": "http://testserver/no-retry-url"},
         }
         self.no_retry_document.save()
         for doc in self.documents[5:]:
@@ -272,6 +274,7 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
             no_retry_document.task_results,
             {
                 "check_url": {"success": True},
+                "publish_content": {"success": True},
                 "tika": {
                     "success": False,
                     "first_processed_at": "2000-01-01T00:00:00Z"
@@ -282,12 +285,13 @@ class TestDeltaHarvestEntities(HarvestEntitiesTestCase):
         self.assertEqual(
             no_retry_document.derivatives,
             {
-                "check_url": {"status": 200}
+                "check_url": {"status": 200},
+                "publish_content": {"public_url": "http://testserver/no-retry-url"},
             },
             "Expected derivatives to remain as is"
         )
         self.assertTrue(no_retry_document.properties, "Expected properties to remain intact")
-        self.assertIsNone(no_retry_document.pending_at, "Expected inactive document to remain unprocessed")
+        self.assertIsNone(no_retry_document.pending_at, "Expected no retry document to remain unprocessed")
         # Success documents
         error_identities = [
             self.invalid_document.identity, self.failed_document.identity, self.unprocessed_document.identity,
