@@ -136,7 +136,6 @@ class TestSharekitProductExtraction(TestCase):
             "Expected production to result in skipped Product when dealing with staging provider."
         )
 
-
     def test_modified_at(self):
         seeds = self.seeds
         self.assertEqual(seeds[0]["modified_at"], "2017-12-11T12:52:09Z")
