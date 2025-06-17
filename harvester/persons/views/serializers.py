@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
 
+class SocialLinkSerializer(serializers.Serializer):
+    type = serializers.CharField()
+    url = serializers.URLField()
+
+
 class PersonSerializer(serializers.Serializer):
 
     entity = serializers.CharField()
@@ -21,6 +26,7 @@ class PersonSerializer(serializers.Serializer):
     phone = serializers.CharField(allow_null=True, default=None)
     photo_url = serializers.CharField(allow_null=True, allow_blank=False)
     description = serializers.CharField(allow_null=True, default=None)
+    socials = SocialLinkSerializer(many=True)
 
     isni = serializers.CharField(allow_null=True, default=None)
 
