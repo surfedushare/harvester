@@ -10,7 +10,13 @@ class HanzeOrganizationExtraction(PureExtractor):
 
     @classmethod
     def parse_multilingual_value(cls, value: dict) -> str | None:
-        return next(iter(value.values()), None)
+        return value.get(
+            "nl_NL",
+            value.get(
+                "en_GB",
+                next(iter(value.values()), None)
+            )
+        )
 
     @classmethod
     def parse_type_value(cls, value: dict) -> str | None:
