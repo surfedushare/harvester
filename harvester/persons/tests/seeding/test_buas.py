@@ -106,3 +106,12 @@ class TestBUASPersonsExtraction(ResourceFixturesMixin, TestCase):
         self.assertIsNone(self.seeds[0]["job_title"])
         self.assertEqual(self.seeds[1]["job_title"], "Lecturer")
         self.assertIsNone(self.seeds[2]["job_title"])
+
+    def test_socials(self):
+        self.assertEqual(self.seeds[0]["sensitive"]["socials"], [])
+        self.assertEqual(self.seeds[1]["sensitive"]["socials"], [
+            {
+                "type": "linkedin",
+                "url": "http://www.linkedin.com/in/ozzie-bassie",
+            }
+        ])
