@@ -1,6 +1,7 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from core.processors import HttpSeedingProcessor
+from sources.models import HarvestSource
 from sources.factories.sharekit.extraction import SharekitMetadataHarvestFactory
 from products.models import Set, ProductDocument
 from products.sources.sharekit import SEEDING_PHASES
@@ -85,6 +86,12 @@ class TestSharekitProductExtraction(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        HarvestSource.objects.create(
+            name="Sharekit",
+            module="sharekit",
+            is_repository=True,
+            staging_providers=["TU Delft"]
+        )
         SharekitMetadataHarvestFactory.create_common_sharekit_responses()
         cls.set = Set.objects.create(name="edusources", identifier="srn")
         processor = HttpSeedingProcessor(cls.set, {
@@ -107,6 +114,28 @@ class TestSharekitProductExtraction(TestCase):
             "slug": None,
             "name": "TU Delft"
         }, "Expected non-consortium provider to get extracted")
+
+    def test_get_state(self):
+        self.assertEqual(self.seeds[0]["state"], "active")
+        self.assertEqual(
+            self.seeds[1]["state"], "active",
+            "Expected non-production to always result in active Product."
+        )
+        # Run seeding under production settings
+        with override_settings(ENVIRONMENT="production"):
+            production_set = Set.objects.create(name="production", identifier="srn")
+            processor = HttpSeedingProcessor(production_set, {
+                "phases": SEEDING_PHASES
+            })
+            seeds = []
+            for batch in processor("edusources", "1970-01-01T00:00:00Z"):
+                seeds += [doc.properties for doc in batch]
+        self.assertEqual(seeds[0]["state"], "active")
+        self.assertEqual(
+            seeds[1]["state"], "active",
+            "Expected production to result in skipped Product when dealing with staging provider."
+        )
+
 
     def test_modified_at(self):
         seeds = self.seeds

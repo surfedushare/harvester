@@ -3,8 +3,10 @@ from django.contrib import admin, messages
 from django.utils.timezone import now
 from django.utils.html import format_html
 from django.urls import reverse
+from django import forms
 
 from datagrowth.admin import HttpResourceAdmin
+from core.admin.widgets import PrettyJSONWidget
 from core.loading import load_harvest_models
 from sources.models import (HvaPureResource, HkuMetadataResource, GreeniOAIPMHResource, BuasPureResource,
                             HanzeResearchObjectResource, PublinovaMetadataResource, SharekitMetadataHarvest,
@@ -12,8 +14,18 @@ from sources.models import (HvaPureResource, HkuMetadataResource, GreeniOAIPMHRe
 from sources.models.harvest import HarvestSource, HarvestEntity
 
 
+class HarvestSourceAdminForm(forms.ModelForm):
+    class Meta:
+        model = HarvestSource
+        fields = "__all__"
+        widgets = {
+            "staging_providers": PrettyJSONWidget(attrs={"rows": 20, "cols": 80}),
+        }
+
+
 class HarvestSourceAdmin(admin.ModelAdmin):
 
+    form = HarvestSourceAdminForm
     list_display = ("name", "module", "is_repository", "show_entities")
     actions = ["purge_source_harvest_states", "set_source_to_manual_harvest", "set_source_to_automatic_harvest"]
 
