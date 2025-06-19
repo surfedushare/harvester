@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from core.constants import Platforms
 from core.processors import HttpSeedingProcessor
@@ -9,6 +9,7 @@ from files.models import Set as FileSet, FileDocument
 from files.sources.edurep import SEEDING_PHASES, build_file_infos_iterator
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)
 class TestEdurepFileSeeding(TestCase):
 
     @classmethod
@@ -130,6 +131,7 @@ class TestEdurepFileSeeding(TestCase):
         self.assertEqual(self.set.documents.count(), 2)
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)
 class TestEdurepFileExtraction(TestCase):
 
     @classmethod

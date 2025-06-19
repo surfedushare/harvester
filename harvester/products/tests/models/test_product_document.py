@@ -51,8 +51,9 @@ class ProductDocumentTestCase(TestCase):
     def test_file_title_defaults(self):
         # Check title without title defaults enabled and title provided
         product = ProductDocument.objects.get(id=1)
-        product_data = product.to_data()
-        self.assertEqual(product_data["files"][0]["title"], "IMSCP_94812.zip")
+        with override_settings(DEFAULT_FILE_TITLES_TEMPLATE=None):
+            product_data = product.to_data()
+            self.assertEqual(product_data["files"][0]["title"], "IMSCP_94812.zip")
         # Check title with title defaults enabled and title provided
         with override_settings(DEFAULT_FILE_TITLES_TEMPLATE="Attachment {ix}"):
             product_data = product.to_data()
@@ -61,8 +62,9 @@ class ProductDocumentTestCase(TestCase):
         file_document = FileDocument.objects.first()
         file_document.properties["title"] = None
         file_document.save()
-        product_data = product.to_data()
-        self.assertIsNone(product_data["files"][0]["title"])
+        with override_settings(DEFAULT_FILE_TITLES_TEMPLATE=None):
+            product_data = product.to_data()
+            self.assertIsNone(product_data["files"][0]["title"])
         # Check title with default enabled and title missing
         with override_settings(DEFAULT_FILE_TITLES_TEMPLATE="Attachment {ix}"):
             product_data = product.to_data()
