@@ -15,13 +15,16 @@ logger = logging.getLogger("harvester")
 FileInfo = namedtuple("FileInfo", ["product", "mime_type", "url"])
 
 
-def build_file_infos_iterator(platform: Platforms):
-    if platform is Platforms.EDUSOURCES:
-        valid_product_iterator = EdurepExtractor.iterate_valid_higher_education_products
-    else:
-        valid_product_iterator = EdurepExtractor.iterate_valid_vocational_education_products
+def build_file_infos_iterator(platform: Platforms = None):
 
     def get_file_infos(edurep_soup) -> FileInfo:
+
+        active_platform = platform or settings.PLATFORM
+        if active_platform is Platforms.EDUSOURCES:
+            valid_product_iterator = EdurepExtractor.iterate_valid_higher_education_products
+        else:
+            valid_product_iterator = EdurepExtractor.iterate_valid_vocational_education_products
+
         for product in valid_product_iterator(edurep_soup):
             mime_types = iter(product.find_all('czp:format'))
             urls = product.find_all('czp:location')
@@ -114,7 +117,7 @@ class EdurepFileExtraction:
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
-    "@": build_file_infos_iterator(settings.PLATFORM),
+    "@": build_file_infos_iterator(),
     "state": EdurepFileExtraction.get_state,
     "external_id": EdurepFileExtraction.get_external_id,
     "set": EdurepFileExtraction.get_set,

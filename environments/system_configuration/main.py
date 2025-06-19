@@ -32,7 +32,7 @@ from .aws import (AWS_ENVIRONMENT_CONFIGURATIONS, AWS_ACCOUNT_CONFIGURATIONS, AW
 ENVIRONMENTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODE = os.environ.get("APPLICATION_MODE", "production")
 CONTEXT = os.environ.get("APPLICATION_CONTEXT", "container")
-PROJECT = os.environ.get("APPLICATION_PROJECT", "edusources")
+PROJECT = os.environ.get("APPLICATION_PROJECT", "publinova")
 TEAM = os.environ.get("APPLICATION_TEAM", "web")
 ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
 
