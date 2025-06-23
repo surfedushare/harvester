@@ -142,6 +142,19 @@ class HanzePersonsExtractProcessor(PureExtractor):
             return
         return phone_numbers[0]["value"]
 
+    @classmethod
+    def get_socials(cls, node):
+        raw_links = node.get("links", [])
+        links = []
+        for raw_link in raw_links:
+            raw_link_type = raw_link.get("linkType")
+            if not raw_link_type:
+                continue
+            _, link_type = os.path.split(raw_link_type["uri"])
+            url = raw_link["url"]
+            links.append({"type": link_type, "url": url})
+        return links
+
 
 OBJECTIVE = {
     # Essential objective keys for system functioning
@@ -164,6 +177,7 @@ OBJECTIVE = {
     "sensitive.phone": HanzePersonsExtractProcessor.get_phone,
     "sensitive.description": HanzePersonsExtractProcessor.get_description,
     "sensitive.photo_url": HanzePersonsExtractProcessor.get_photo_url,
+    "sensitive.socials": HanzePersonsExtractProcessor.get_socials,
     # Research based metadata
     "researcher.orcid": "$.orcid",
 }
