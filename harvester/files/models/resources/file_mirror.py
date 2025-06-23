@@ -9,6 +9,11 @@ from datagrowth.resources import HttpFileResource
 
 class MirrorFileResource(HttpFileResource):
 
+    @staticmethod
+    def is_url_supported(url: str) -> bool:
+        scheme, auth, host, port, path, query, fragment = parse_url(url)
+        return host.endswith("hanze.nl") or host.endswith("hva.nl")
+
     def auth_headers(self):
         scheme, auth, host, port, path, query, fragment = parse_url(self.request["url"])
         if host.endswith("hanze.nl"):

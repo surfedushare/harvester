@@ -1,5 +1,7 @@
 from sentry_sdk import capture_message
 
+from django.conf import settings
+
 from sources.utils.pure import build_seeding_phases
 from sources.models import HanzeResearchObjectResource
 from sources.extraction.hanze.research_themes import ASJC_TO_RESEARCH_THEME
@@ -8,10 +10,14 @@ from products.sources.pure import PureProductExtraction, build_objective
 
 class HanzeProductExtractor(PureProductExtraction):
 
-    pure_api_prefix = "/nppo/"
     source_slug = "hanze"
     source_name = "Hanze"
     support_subtitle = True
+
+    @classmethod
+    def parse_file_url(cls, url):
+        hanze_middleware_endpoint = f"{settings.SOURCES["hanze"]["endpoint"]}/nppo/"
+        return url.replace("https://research.hanze.nl/ws/api/", hanze_middleware_endpoint)
 
     @classmethod
     def get_keywords(cls, node):

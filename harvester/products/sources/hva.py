@@ -4,7 +4,6 @@ from products.sources.pure import PureProductExtraction, build_objective
 
 
 class HvAProductExtractor(PureProductExtraction):
-    pure_api_prefix = "/ws/api/"
     source_slug = "hva"
     source_name = "Hogeschool van Amsterdam"
 

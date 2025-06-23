@@ -1,14 +1,13 @@
 from django.test import TestCase
-from unittest.mock import patch
 
-from datagrowth.configuration import register_defaults
+from datagrowth.resources.testing import EnableGlobalCacheMixin
 
 from files.models import FileDocument
 from files.tasks.metadata import check_url_task
 from files.tests.factories import create_file_document_set
 
 
-class TestCheckURLTask(TestCase):
+class TestCheckURLTask(EnableGlobalCacheMixin, TestCase):
 
     dataset_version = None
     set = None
@@ -18,9 +17,6 @@ class TestCheckURLTask(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        register_defaults("global", {
-            "cache_only": True
-        })
         cls.dataset_version, cls.set, cls.documents = create_file_document_set(
             set_specification="test",
             docs=[{"url": "https://surf.nl"},
@@ -30,15 +26,7 @@ class TestCheckURLTask(TestCase):
         )
         cls.success, cls.fail, = cls.documents
 
-    @classmethod
-    def tearDownClass(cls):
-        register_defaults("global", {
-            "cache_only": False
-        })
-        super().tearDownClass()
-
-    @patch("files.models.resources.metadata.CheckURLResource._send")
-    def test_task(self, send_mock):
+    def test_task(self):
         check_url_task("files", [doc.id for doc in self.documents])
         for doc in FileDocument.objects.all():
             self.assertIn("check_url", doc.task_results)

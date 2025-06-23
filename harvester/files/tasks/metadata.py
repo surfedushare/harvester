@@ -7,6 +7,7 @@ from harvester.tasks.base import DatabaseConnectionResetTask
 
 from core.processors import HttpGrowthProcessor, ShellGrowthProcessor
 from core.loading import load_harvest_models
+from files.models import MirrorFileResource
 
 
 @app.task(name="check_url", base=DatabaseConnectionResetTask)
@@ -71,7 +72,9 @@ def publish_content_task(app_label: str, document_ids: list[int]) -> None:
         # Once mirrored the file is available without these credentials for the frontend.
         # At the time of writing this is used to bypass Pure authentication for OpenAccess files,
         # that should be available, but aren't for mysterious reasons.
-        is_mirror_file = True
+        url = doc.properties.get("url")
+        is_mirror_file = url and MirrorFileResource.is_url_supported(url)
+        # This additional check makes sure that only proper Pure sources will trigger mirroring.
         for mirror_source in settings.FILE_MIRROR_SOURCES:
             if mirror_source in doc.properties.get("set"):
                 mirror_file_ids.append(doc.id)
@@ -141,7 +144,7 @@ def tika_task(app_label: str, document_ids: list[int]) -> None:
             "tika_return_type": "xml",
             "resource": "files.httptikaresource",
             "method": "put",
-            "args": ["$.url"],
+            "args": ["$.public_url"],
             "kwargs": {},
         },
         "contribute_data": {

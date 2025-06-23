@@ -20,7 +20,7 @@ class PureProductExtraction(PureExtractor):
         for electronic_version in electronic_versions:
             if "file" in electronic_version:
                 normalized_url = cls.parse_url(electronic_version["file"][cls.file_url_property])
-                url = cls._parse_file_url(normalized_url)
+                url = cls.parse_file_url(normalized_url)
             elif "link" in electronic_version:
                 url = electronic_version["link"]
             else:

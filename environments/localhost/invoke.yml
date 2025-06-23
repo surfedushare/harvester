@@ -24,7 +24,7 @@ harvester:
     edurep: "https://staging.edurep.kennisnet.nl"
     sharekit: "https://api.acc.surfsharekit.nl"
     han: "https://repository.han.nl"
-    hva: "https://accpure.hva.nl"
+    hva: "https://pure.hva.nl"
     hanze: "https://apimanagement.hanze.nl"
     publinova: "https://api.publinova.acc.surf.zooma.cloud"
     hu: "https://hu.nl"

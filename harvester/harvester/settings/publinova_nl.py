@@ -7,7 +7,6 @@ DOCUMENT_TYPE = DocumentTypes.RESEARCH_PRODUCT
 SHAREKIT_TEST_ORGANIZATIONS = [
     "Publinova test",
     "ArtEZ University of the Arts",
-    "Hogeschool Inholland",
     "Hogeschool KPZ",
     "Christelijke Hogeschool Ede",
     "Hogeschool Leiden",
@@ -25,7 +24,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
 
-CHECK_URL_AUTO_SUCCEED_SETS = ["saxion:kenniscentra"]
+CHECK_URL_AUTO_SUCCEED_SETS = ["saxion:kenniscentra", "hanze:hanze"]
 DEFAULT_FILE_TITLES_TEMPLATE = "Attachment {ix}"
 
 OPENSEARCH_PRESET_DEFAULT = "products:default"
