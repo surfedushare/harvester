@@ -132,7 +132,7 @@ class TestSharekitProductExtraction(TestCase):
                 seeds += [doc.properties for doc in batch]
         self.assertEqual(seeds[0]["state"], "active")
         self.assertEqual(
-            seeds[1]["state"], "active",
+            seeds[1]["state"], "skipped",
             "Expected production to result in skipped Product when dealing with staging provider."
         )
 
