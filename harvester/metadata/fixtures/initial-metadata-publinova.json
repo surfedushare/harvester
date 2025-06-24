@@ -187,48 +187,25 @@
         }
     },
     {
-        "model": "metadata.metadatafield",
-        "pk": 2,
+        "model": "metadata.metadatatranslation",
+        "pk": 49583,
         "fields": {
-            "name": "copyright.keyword",
-            "entity": "products:multilingual-indices",
-            "created_at": "2022-01-11T10:08:21.761Z",
-            "updated_at": "2022-01-11T10:08:21.761Z",
-            "translation": 2002,
-            "is_hidden": false,
-            "is_manual": false,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
+            "created_at": "2024-09-30T07:39:15.348Z",
+            "updated_at": "2024-09-30T07:39:15.348Z",
+            "nl": "Instelling",
+            "en": "Institute",
+            "is_fuzzy": true
         }
     },
     {
-        "model": "metadata.metadatafield",
-        "pk": 3,
+        "model": "metadata.metadatatranslation",
+        "pk": 49584,
         "fields": {
-            "name": "language.keyword",
-            "entity": "products:multilingual-indices",
-            "created_at": "2022-01-11T10:08:21.811Z",
-            "updated_at": "2024-02-26T13:39:58.331Z",
-            "translation": 2012,
-            "is_hidden": false,
-            "is_manual": false,
-            "english_as_dutch": false,
-            "value_output_order": "manual"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
-        "pk": 4,
-        "fields": {
-            "name": "publisher_date",
-            "entity": "products:multilingual-indices",
-            "created_at": "2022-01-11T10:08:21.813Z",
-            "updated_at": "2022-01-11T10:08:21.813Z",
-            "translation": 2013,
-            "is_hidden": false,
-            "is_manual": true,
-            "english_as_dutch": false,
-            "value_output_order": "frequency"
+            "created_at": "2024-09-30T07:39:15.348Z",
+            "updated_at": "2024-09-30T07:39:15.348Z",
+            "nl": "Instelling",
+            "en": "Institute",
+            "is_fuzzy": true
         }
     },
     {
@@ -323,21 +300,6 @@
     },
     {
         "model": "metadata.metadatafield",
-        "pk": 11,
-        "fields": {
-            "name": "technical_type",
-            "entity": "products:multilingual-indices",
-            "created_at": "2024-02-26T10:57:13.377Z",
-            "updated_at": "2024-02-26T13:39:46.238Z",
-            "translation": 43806,
-            "is_hidden": false,
-            "is_manual": false,
-            "english_as_dutch": false,
-            "value_output_order": "manual"
-        }
-    },
-    {
-        "model": "metadata.metadatafield",
         "pk": 12,
         "fields": {
             "name": "publisher_year_normalized",
@@ -356,7 +318,7 @@
         "pk": 18,
         "fields": {
             "name": "language",
-            "entity": "products:default",
+            "entity": "products",
             "created_at": "2024-09-30T07:39:15.235Z",
             "updated_at": "2024-09-30T07:39:15.235Z",
             "translation": 46250,
@@ -371,7 +333,7 @@
         "pk": 19,
         "fields": {
             "name": "licenses",
-            "entity": "products:default",
+            "entity": "products",
             "created_at": "2024-09-30T07:39:15.297Z",
             "updated_at": "2024-09-30T07:39:15.297Z",
             "translation": 46258,
@@ -386,7 +348,7 @@
         "pk": 20,
         "fields": {
             "name": "technical_types",
-            "entity": "products:default",
+            "entity": "products",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
             "translation": 46269,
@@ -401,7 +363,7 @@
         "pk": 21,
         "fields": {
             "name": "project_status",
-            "entity": "products:default",
+            "entity": "projects",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
             "translation": 49580,
@@ -416,11 +378,11 @@
         "pk": 22,
         "fields": {
             "name": "provider",
-            "entity": "products:default",
+            "entity": "products",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
             "translation": 49581,
-            "is_hidden": true,
+            "is_hidden": false,
             "is_manual": false,
             "english_as_dutch": false,
             "value_output_order": "frequency"
@@ -431,10 +393,40 @@
         "pk": 23,
         "fields": {
             "name": "provider",
-            "entity": "projects:default",
+            "entity": "projects",
             "created_at": "2024-09-30T07:39:15.353Z",
             "updated_at": "2024-09-30T07:39:15.353Z",
             "translation": 49582,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 24,
+        "fields": {
+            "name": "provider",
+            "entity": "organizations",
+            "created_at": "2024-09-30T07:39:15.353Z",
+            "updated_at": "2024-09-30T07:39:15.353Z",
+            "translation": 49583,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "frequency"
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 25,
+        "fields": {
+            "name": "provider",
+            "entity": "persons",
+            "created_at": "2024-09-30T07:39:15.353Z",
+            "updated_at": "2024-09-30T07:39:15.353Z",
+            "translation": 49584,
             "is_hidden": false,
             "is_manual": false,
             "english_as_dutch": false,
