@@ -1,6 +1,7 @@
 import os
 
 from django.conf import settings
+from django.apps import apps
 
 from sources.utils.base import BaseExtractor
 
@@ -33,9 +34,10 @@ class SharekitExtractor(BaseExtractor):
         attributes = node.get("attributes", {})
         default_state = "active"
         if attributes:
+            sources_config = apps.get_app_config("sources")
+            sharekit_staging_providers = sources_config.staging_providers_by_source.get("sharekit", [])
             provider_name = attributes.get("owner", {}).get("name", None)
-            if provider_name and provider_name in settings.SHAREKIT_TEST_ORGANIZATIONS and \
-                    settings.ENVIRONMENT == "production":
+            if provider_name and provider_name in sharekit_staging_providers and settings.ENVIRONMENT == "production":
                 default_state = "skipped"
         return node.get("meta", {}).get("status", default_state)
 

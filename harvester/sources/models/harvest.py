@@ -16,6 +16,11 @@ class HarvestSource(models.Model):
         default=False,
         help_text="Enable when source is a repository for multiple providers"
     )
+    staging_providers = models.JSONField(
+        default=list, blank=True,
+        help_text="List of names of providers from repository sources who's Documents should get state=skipped "
+                  "on production to prevent exposure, while allowing normal processing/display on other environments."
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

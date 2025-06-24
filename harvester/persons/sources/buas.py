@@ -89,6 +89,19 @@ class BuasPersonExtractProcessor:
             job_title_object = job_title_object["term"]
         return job_title_object["text"][0]["value"]
 
+    @classmethod
+    def get_socials(cls, node):
+        raw_links = node.get("links", [])
+        links = []
+        for raw_link in raw_links:
+            raw_link_type = raw_link.get("linkType")
+            if not raw_link_type:
+                continue
+            _, link_type = os.path.split(raw_link_type["uri"])
+            url = raw_link["url"]
+            links.append({"type": link_type, "url": url})
+        return links
+
 
 OBJECTIVE = {
     # Essential keys for functioning of the system
@@ -109,6 +122,7 @@ OBJECTIVE = {
     "sensitive.email": BuasPersonExtractProcessor.get_email,
     "sensitive.description": BuasPersonExtractProcessor.get_description,
     "sensitive.photo_url": BuasPersonExtractProcessor.get_photo_url,
+    "sensitive.socials": BuasPersonExtractProcessor.get_socials,
     # Research based metadata
     "researcher.title": BuasPersonExtractProcessor.get_job_title,
     "researcher.orcid": "$.orcid",

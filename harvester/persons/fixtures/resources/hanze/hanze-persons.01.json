@@ -298,6 +298,33 @@
                     }
                 }
             ],
+            "links": [
+                {
+                    "pureId": 5893481,
+                    "url": "https://www.researchgate.net/profile/Luke_Skywalker",
+                    "description": {
+                        "en_GB": "ResearchGate"
+                    },
+                    "linkType": {
+                        "uri": "/dk/atira/pure/links/person/researchgate",
+                        "term": {
+                            "en_GB": "ResearchGate",
+                            "nl_NL": "ResearchGate"
+                        }
+                    }
+                },
+                {
+                    "pureId": 15990599,
+                    "url": "http://www.linkedin.com/in/luke-skywalker",
+                    "linkType": {
+                        "uri": "/dk/atira/pure/links/person/linkedin",
+                        "term": {
+                            "en_GB": "LinkedIn",
+                            "nl_NL": "Linkedin"
+                        }
+                    }
+                }
+            ],
             "user": {
                 "systemName": "User",
                 "uuid": "59735ab5-bed3-4af1-bfc8-4a020161e41a"

@@ -32,6 +32,7 @@ class TestPersonView(TestCase):
         "initials": None,
         "email": "pietje.puk@hku.nl",
         "phone": None,
+        "socials": [],
         "photo_url": "https://octo.hku.nl/octo/repository/getfile?id=FIwGwx6hxCY&version=transcoded",
         "description": "<p>Pietje Puk is a researcher and designer</p>",
         "isni": None,

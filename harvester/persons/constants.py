@@ -29,6 +29,7 @@ SEED_DEFAULTS = {
         "email": None,
         "phone": None,
         "photo_url": None,
+        "socials": []
     },
     # Research based metadata
     "researcher": {

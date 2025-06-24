@@ -153,3 +153,16 @@ class TestHanzePersonExtraction(ResourceFixturesMixin, TestCase):
     def test_phone(self):
         self.assertIsNone(self.seeds[0]["sensitive"]["phone"])
         self.assertEqual(self.seeds[2]["sensitive"]["phone"], "+312012345678")
+
+    def test_socials(self):
+        self.assertEqual(self.seeds[0]["sensitive"]["socials"], [])
+        self.assertEqual(self.seeds[1]["sensitive"]["socials"], [
+            {
+                "type": "researchgate",
+                "url": "https://www.researchgate.net/profile/Luke_Skywalker",
+            },
+            {
+                "type": "linkedin",
+                "url": "http://www.linkedin.com/in/luke-skywalker",
+            }
+        ])
