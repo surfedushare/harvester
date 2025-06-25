@@ -11,6 +11,6 @@ class SourcesConfig(AppConfig):
     def staging_providers_by_source(self) -> dict[str, list[str]]:
         from sources.models import HarvestSource
         return {
-            source.name: source.staging_providers
+            source.module: source.staging_providers
             for source in HarvestSource.objects.all()
         }

@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.test import TestCase, override_settings
 
 from core.processors import HttpSeedingProcessor
@@ -121,6 +122,10 @@ class TestSharekitProductExtraction(TestCase):
             self.seeds[1]["state"], "active",
             "Expected non-production to always result in active Product."
         )
+        # Test that under production the staging providers will not be "active"
+        # Deleting cached property to allow cache reset
+        sources_config = apps.get_app_config("sources")
+        del sources_config.staging_providers_by_source
         # Run seeding under production settings
         with override_settings(ENVIRONMENT="production"):
             production_set = Set.objects.create(name="production", identifier="srn")
@@ -132,7 +137,7 @@ class TestSharekitProductExtraction(TestCase):
                 seeds += [doc.properties for doc in batch]
         self.assertEqual(seeds[0]["state"], "active")
         self.assertEqual(
-            seeds[1]["state"], "active",
+            seeds[1]["state"], "skipped",
             "Expected production to result in skipped Product when dealing with staging provider."
         )
 

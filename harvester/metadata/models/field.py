@@ -69,7 +69,7 @@ class MetadataField(models.Model):
                                           default=ValueOutputOrders.FREQUENCY)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.entity})"
 
     @classmethod
     def get_name(cls):
