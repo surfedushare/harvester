@@ -19,7 +19,7 @@ class TestOpenSearchIndexModel(TestCase):
     def test_build(self):
         instance = OpenSearchIndex.build("testing", "test", "0.0.1")
         self.assertIsNone(instance.id)
-        self.assertEqual(instance.name, "edusources-testing--test-0.0.1")
+        self.assertEqual(instance.name, "publinova-testing--test-0.0.1")
         self.assertEqual(instance.entity, "testing")
         self.assertEqual(set(instance.configuration.keys()), {"nl", "en", "unk", "all"})
 
@@ -29,8 +29,8 @@ class TestOpenSearchIndexModel(TestCase):
         instance.save()
         instance.delete()  # we're testing this
         for language in ["en", "nl", "unk"]:
-            self.search_client.indices.delete.assert_any_call(index=f"edusources-testing--test-001-{language}")
-        self.search_client.indices.delete.assert_any_call(index="edusources-testing--test-001")
+            self.search_client.indices.delete.assert_any_call(index=f"publinova-testing--test-001-{language}")
+        self.search_client.indices.delete.assert_any_call(index="publinova-testing--test-001")
 
     @override_settings(OPENSEARCH_STRICT_MULTILINGUAL_FIELDS=False)
     def test_get_remote_names(self):
@@ -38,10 +38,10 @@ class TestOpenSearchIndexModel(TestCase):
         instance.save()
         names = instance.get_remote_names()
         self.assertEqual(set(names), {
-            "edusources-testing--test-001-en",
-            "edusources-testing--test-001-nl",
-            "edusources-testing--test-001-unk",
-            "edusources-testing--test-001",
+            "publinova-testing--test-001-en",
+            "publinova-testing--test-001-nl",
+            "publinova-testing--test-001-unk",
+            "publinova-testing--test-001",
         })
 
     @patch("search.models.index.get_opensearch_client", return_value=search_client)

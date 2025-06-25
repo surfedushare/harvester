@@ -11,14 +11,16 @@ class TestStatsView(DocumentAPITestCase):
         response = self.client.get(stats_url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(data, {"documents": 2, "products": None, "projects": None})
+        self.assertEqual(data, {"documents": 2, "products": 2, "projects": None})
+
+
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
+class TestLearningMaterialStatsView(OpenSearchTestCaseMixin, TestStatsView):
+    platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
 
 @override_settings(OPENSEARCH_ALIAS_PREFIX="test")
-class TestLearningMaterialStatsView(OpenSearchTestCaseMixin, TestStatsView):
-    platform = Platforms.EDUSOURCES
-
-
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductStatsView(OpenSearchTestCaseMixin, TestStatsView):
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]

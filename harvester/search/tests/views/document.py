@@ -134,11 +134,12 @@ class TestDocumentSearchView(DocumentAPITestCase):
         self.assertIsNone(data["filter_counts"])
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-edusources"]
     platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
     def test_search_including_filter_counts(self):
         search_url = reverse("v1:search:search-documents") + "?include_filter_counts=1"
@@ -148,7 +149,7 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
             "page_size": 10,
             "filters": [
                 {
-                    "external_id": "learning_material_disciplines_normalized",
+                    "external_id": "disciplines_normalized.keyword",
                     "items": ["exact_informatica"]
                 }
             ]
@@ -163,15 +164,20 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         self.assertEqual(data["page"], 1)
         self.assertEqual(data["page_size"], 10)
         self.assertEqual(data["filter_counts"], {
+            "provider-Wikiwijs Maken": 2,
             "publishers.keyword-Wikiwijs Maken": 2,
+            "technical_types-document": 2,
             "technical_type-document": 2,
-            "learning_material_disciplines_normalized-exact_informatica": 2,
+            "disciplines_normalized.keyword-exact_informatica": 2,
             "lom_educational_levels-HBO": 2,
-            "language.keyword-nl": 2,
+            "language-nl": 2,
             "authors.name.keyword-Marc de Graaf": 2,
             "authors.name.keyword-Michel van Ast": 2,
             "authors.name.keyword-Theo van den Bogaart": 2,
-            "copyright.keyword-cc-by-40": 2
+            "copyright.keyword-cc-by-40": 2,
+            "licenses-cc-by-40": 2,
+            "study_vocabulary.keyword-http://purl.edustandaard.nl/concept/1ba23d31-f46e-4b40-8c53-fae23b333279": 2,
+            "consortium.keyword-SURF": 2,
         })
 
     def test_search_filter_does_not_exist(self):
@@ -197,11 +203,12 @@ class TestLearningMaterialSearchView(OpenSearchTestCaseMixin, TestDocumentSearch
         })
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSearchView(OpenSearchTestCaseMixin, TestDocumentSearchView):
 
     fixtures = ["initial-metadata-publinova"]
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
 
 
 class TestDocumentFindView(DocumentAPITestCase):
@@ -242,14 +249,16 @@ class TestDocumentFindView(DocumentAPITestCase):
         self.assertEqual(data["detail"], "Not found.")
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
     platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductFindView(OpenSearchTestCaseMixin, TestDocumentFindView):
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
 
 
 class TestDocumentsFindView(DocumentAPITestCase):
@@ -284,14 +293,16 @@ class TestDocumentsFindView(DocumentAPITestCase):
         self.assertEqual(data["results_total"], {"value": 0, "is_precise": True})
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
     platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductsFindView(OpenSearchTestCaseMixin, TestDocumentsFindView):
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
 
 
 class TestExplainSearchView(DocumentAPITestCase):
@@ -339,7 +350,7 @@ class TestExplainSearchView(DocumentAPITestCase):
         self.assertEqual(response.status_code, 400)
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductExplainSearchView(OpenSearchTestCaseMixin, TestExplainSearchView):
 
     fixtures = ["initial-metadata-publinova"]
@@ -377,7 +388,7 @@ class TestResearchProductExplainSearchView(OpenSearchTestCaseMixin, TestExplainS
         })
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialsExplainSearchView(OpenSearchTestCaseMixin, TestExplainSearchView):
     fixtures = ["initial-metadata-edusources"]
     platform = Platforms.EDUSOURCES

@@ -219,11 +219,11 @@ class TestIndexDatasetVersions(TestCase):
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
         self.assertIsNone(self.dataset_version.index.opened_at)
         # Check alias modifications
-        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_alias_deletion("publinova", "testing", ["en", "nl", "unk"])
+        self.assert_alias_creation("publinova", "testing", ["en", "nl", "unk"])
         # Check index recreation
-        self.assert_index_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_index_creation("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_index_deletion("publinova", "testing", ["en", "nl", "unk"])
+        self.assert_index_creation("publinova", "testing", ["en", "nl", "unk"])
 
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
     @patch("search.models.index.streaming_bulk")
@@ -270,11 +270,11 @@ class TestIndexDatasetVersions(TestCase):
         self.assertGreater(self.dataset_version.index.pushed_at, self.start_time)
         self.assertIsNone(self.dataset_version.index.opened_at)
         # Check alias modifications
-        self.assert_alias_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_alias_creation("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_alias_deletion("publinova", "testing", ["en", "nl", "unk"])
+        self.assert_alias_creation("publinova", "testing", ["en", "nl", "unk"])
         # Check index recreation
-        self.assert_index_deletion("edusources", "testing", ["en", "nl", "unk"])
-        self.assert_index_creation("edusources", "testing", ["en", "nl", "unk"])
+        self.assert_index_deletion("publinova", "testing", ["en", "nl", "unk"])
+        self.assert_index_creation("publinova", "testing", ["en", "nl", "unk"])
 
     @patch("search.models.index.get_opensearch_client", return_value=search_client)
     @patch("search.models.index.streaming_bulk")

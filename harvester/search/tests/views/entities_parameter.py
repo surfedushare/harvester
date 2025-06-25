@@ -79,13 +79,13 @@ class TestProductSearchView(DocumentAPITestCase):
                 self.assertEqual(data, {"documents": 2, "products": 2, "projects": None})
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestEdusourcesProductSearchViews(OpenSearchTestCaseMixin, TestProductSearchView):
     platform = Platforms.EDUSOURCES
     presets = ["products:default"]
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestPublinovaProductSearchViews(OpenSearchTestCaseMixin, TestProductSearchView):
     platform = Platforms.PUBLINOVA
     presets = ["products:default"]
