@@ -1,6 +1,5 @@
 import os
 import json
-import boto3
 
 from invoke.tasks import task
 from invoke.exceptions import Exit
@@ -196,32 +195,3 @@ def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
         ctx.run(f"docker push {registry}/{name}:{promote_tag}", echo=True, pty=True)
         ctx.run(f"docker tag {registry}/{name}-nginx:{source_tag} {registry}/{name}-nginx:{promote_tag}", echo=True)
         ctx.run(f"docker push {registry}/{name}-nginx:{promote_tag}", echo=True, pty=True)
-
-
-@task()
-def print_available_images(ctx):
-    """
-    Retrieves some images from AWS and prints them in version order.
-    Possibly misses versions if it's not part of the first images batch from AWS.
-    """
-    # Load info
-    target_info = TARGETS["harvester"]
-    name = target_info["name"]
-
-    # Start boto
-    session = boto3.Session(profile_name=ctx.config.aws.production.profile_name)
-    ecr = session.client("ecr")
-
-    # List images
-    production_account = ctx.config.aws.production.account
-    response = ecr.list_images(
-        registryId=production_account,
-        repositoryName=name,
-    )
-
-    # Print output
-    def image_version_sort(image):
-        return tuple([int(section) for section in image["imageTag"].split(".")])
-    images = [image for image in response["imageIds"] if "imageTag" in image and "." in image["imageTag"]]
-    images.sort(key=image_version_sort, reverse=True)
-    print(json.dumps(images[:10], indent=4))

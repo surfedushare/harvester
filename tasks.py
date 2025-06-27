@@ -6,7 +6,7 @@ from commands.postgres.invoke import setup_postgres_localhost
 from commands.opensearch.tasks import search_collection
 from commands.aws.ecs import cleanup_ecs_artifacts
 from commands.aws.repository import sync_repository_state
-from commands.deploy import prepare_builds, build, push, deploy, promote, print_available_images, publish_tika_image
+from commands.deploy import prepare_builds, build, push, deploy, promote, publish_tika_image
 from commands.test import test_collection
 from commands.services.harvester.invoke import (load_data, harvest, clean_data,
                                                 dump_data, sync_harvest_content, promote_dataset_version,
@@ -22,7 +22,7 @@ harvester_collection = Collection("hrv", setup_postgres_localhost, harvest, clea
                                   sync_preview_media, sync_metadata, load_metadata)
 database_collection = Collection("db", setup_postgres_localhost, harvester_migrate, load_fixture)
 container_collection = Collection("container", build, push, promote, deploy, prepare_builds)
-aws_collection = Collection("aws", print_available_images, sync_repository_state, cleanup_ecs_artifacts,
+aws_collection = Collection("aws", sync_repository_state, cleanup_ecs_artifacts,
                             publish_tika_image)
 
 

@@ -14,10 +14,10 @@ class TestMetadataTreeView(TestCase):
         self.user = User.objects.create(username="supersurf")
         self.client.force_login(self.user)
         self.expected_field_count = MetadataField.objects \
-            .filter(is_hidden=False, entity__in=["products", "products:multilingual-indices"]) \
-            .count()
-        self.expected_products_field_count = MetadataField.objects \
             .filter(is_hidden=False, entity__in=["products", "products:default"]) \
+            .count()
+        self.expected_projects_field_count = MetadataField.objects \
+            .filter(is_hidden=False, entity__in=["projects", "projects:default"]) \
             .count()
 
     @staticmethod
@@ -76,7 +76,7 @@ class TestMetadataTreeView(TestCase):
         # Revealing material_types-document, because we want to check interaction with technical_type.document
         MetadataValue.objects.filter(field__name="material_types", value="document").update(is_hidden=False)
         # Deleting technical_type.document
-        document = MetadataValue.objects.get(field__name="technical_type", value="document")
+        document = MetadataValue.objects.get(field__name="technical_types", value="document")
         document.delete()
         self.assertIsNotNone(document.deleted_at)
         # Running the API request
@@ -84,7 +84,7 @@ class TestMetadataTreeView(TestCase):
         data = response.json()
         # Asserting response data
         self.assertEqual(len(data), self.expected_field_count)
-        technical_type = next(field for field in data if field["value"] == "technical_type")
+        technical_type = next(field for field in data if field["value"] == "technical_types")
         for child in technical_type["children"]:
             self.assertNotEqual(child["value"], "document")
         material_types = next(field for field in data if field["value"] == "material_types")
@@ -124,10 +124,10 @@ class TestMetadataTreeView(TestCase):
             "2021", "2022", "2023", "2024", "older-than"
         ])
 
-    def test_metadata_tree_product_entity(self):
-        response = self.client.get("/api/v1/metadata/tree/?entity=products:default")
+    def test_metadata_tree_projects_entity(self):
+        response = self.client.get("/api/v1/metadata/tree/?entity=projects:default")
         data = response.json()
-        self.assertEqual(len(data), self.expected_products_field_count)
+        self.assertEqual(len(data), self.expected_projects_field_count)
         for field in data:
             self.assertIsNone(field["field"])
             self.assert_metadata_node_structure(field)

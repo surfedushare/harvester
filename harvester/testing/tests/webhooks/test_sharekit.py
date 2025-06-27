@@ -2,6 +2,7 @@ from django.test import override_settings
 from django.urls import reverse
 from django.utils.timezone import now
 
+from core.constants import Platforms
 from sources.factories.sharekit.extraction import SharekitMetadataHarvestFactory
 from testing.cases.webhooks import product as product_test_case
 from testing.utils.factories import create_datatype_models
@@ -15,7 +16,7 @@ WEBHOOKS = {
 }
 
 
-@override_settings(WEBHOOKS=WEBHOOKS)
+@override_settings(WEBHOOKS=WEBHOOKS, PLATFORM=Platforms.EDUSOURCES)  # TODO: preferably default changes to Publinova
 class TestSharekitProductWebhook(product_test_case.TestProductWebhookTestCase):
 
     entity_type = "products"

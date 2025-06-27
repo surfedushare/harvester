@@ -49,18 +49,18 @@ class TestPromoteDatasetVersion(TestCase):
         for args, kwargs in self.search_client.indices.put_alias.call_args_list:
             content_key, identifier = kwargs["index"].split("--")
             project, entity = content_key.split("-")
-            self.assertEqual(project, "edusources")
+            self.assertEqual(project, "publinova")
             self.assertEqual(entity, "products")
             try:
                 version_name, version_number, language = identifier.split("-")
                 self.assertIn(language, ["nl", "en", "unk"])
                 self.assertIn(kwargs["name"], [
-                    "edusources-nl", "edusources-en", "edusources-unk",
+                    "publinova-nl", "publinova-en", "publinova-unk",
                 ])
             except ValueError:
                 version_name, version_number = identifier.split("-")
                 self.assertIn(kwargs["name"], [
-                    "edusources-products", "edusources-products", "edusources-products",
+                    "publinova-products", "publinova-products", "publinova-products",
                 ])
             self.assertEqual(version_name, "test")
             self.assertEqual(version_number, "001")
@@ -68,20 +68,20 @@ class TestPromoteDatasetVersion(TestCase):
         self.assertEqual(self.search_client.indices.delete_alias.call_count, 10)
         for language in ["nl", "en", "unk"]:
             self.search_client.indices.delete_alias.assert_any_call(
-                index=f"edusources-products--*-*-{language}",
-                name=f"edusources-products-{language}"
+                index=f"publinova-products--*-*-{language}",
+                name=f"publinova-products-{language}"
             )
             self.search_client.indices.delete_alias.assert_any_call(
-                index=f"edusources-products--*-*-{language}",
-                name=f"edusources-{language}"
+                index=f"publinova-products--*-*-{language}",
+                name=f"publinova-{language}"
             )
             self.search_client.indices.delete_alias.assert_any_call(
-                index=f"*-*-*-edusources-{language}",
-                name=f"edusources-{language}"
+                index=f"*-*-*-publinova-{language}",
+                name=f"publinova-{language}"
             )
             self.search_client.indices.delete_alias.assert_any_call(
-                index="edusources-products--*-*",
-                name="edusources-products"
+                index="publinova-products--*-*",
+                name="publinova-products"
             )
 
     def assert_is_current(self, expected_is_current):

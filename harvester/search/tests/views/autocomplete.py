@@ -21,11 +21,13 @@ class TestAutoCompleteView(DocumentAPITestCase):
         self.assertEqual(data, [])
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialAutoCompleteView(OpenSearchTestCaseMixin, TestAutoCompleteView):
     platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductAutoCompleteView(OpenSearchTestCaseMixin, TestAutoCompleteView):
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]

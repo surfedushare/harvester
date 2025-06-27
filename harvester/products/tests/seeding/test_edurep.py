@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from search_client.constants import Platforms
 from core.processors import HttpSeedingProcessor
@@ -9,6 +9,7 @@ from products.sources.edurep import SEEDING_PHASES, build_objective
 from sources.factories.edurep.extraction import EdurepOAIPMHFactory
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)
 class TestEdurepProductSeeding(TestCase):
 
     @classmethod
@@ -19,8 +20,10 @@ class TestEdurepProductSeeding(TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.set = Set.objects.create(name="edurep", identifier="srn")
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.EDUSOURCES)
         self.processor = HttpSeedingProcessor(self.set, {
-            "phases": SEEDING_PHASES
+            "phases": seeding_phases
         })
 
     def test_initial_seeding(self):
@@ -104,6 +107,7 @@ class TestEdurepProductSeeding(TestCase):
         self.assertEqual(self.set.documents.count(), 3)
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)
 class TestEdurepProductExtraction(TestCase):
 
     set = None
@@ -114,8 +118,10 @@ class TestEdurepProductExtraction(TestCase):
         super().setUpClass()
         EdurepOAIPMHFactory.create_common_responses(include_delta=True)
         cls.set = Set.objects.create(name="edurep", identifier="srn")
+        seeding_phases = deepcopy(SEEDING_PHASES)
+        seeding_phases[0]["contribute_data"]["objective"] = build_objective(Platforms.EDUSOURCES)
         processor = HttpSeedingProcessor(cls.set, {
-            "phases": SEEDING_PHASES
+            "phases": seeding_phases
         })
         cls.seeds = []
         for batch in processor("edurep", "1970-01-01T00:00:00Z"):

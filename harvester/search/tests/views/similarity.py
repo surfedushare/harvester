@@ -27,9 +27,10 @@ class TestSimilarityView(DocumentAPITestCase):
         self.assertEqual(data["results_total"], {"value": 0, "is_precise": True})
 
 
-@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(PLATFORM=Platforms.EDUSOURCES, OPENSEARCH_ALIAS_PREFIX="test")
 class TestLearningMaterialSimilarityView(OpenSearchTestCaseMixin, TestSimilarityView):
     platform = Platforms.EDUSOURCES
+    presets = ["products:default"]
 
     @classmethod
     def setUpClass(cls):
@@ -39,9 +40,10 @@ class TestLearningMaterialSimilarityView(OpenSearchTestCaseMixin, TestSimilarity
         cls.index_document(Entities.PRODUCTS, is_last_entity_document=True, external_id="456", source="surfsharekit")
 
 
-@override_settings(PLATFORM=Platforms.PUBLINOVA, OPENSEARCH_ALIAS_PREFIX="test")
+@override_settings(OPENSEARCH_ALIAS_PREFIX="test")
 class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityView):
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
 
     @classmethod
     def setUpClass(cls):
@@ -55,6 +57,7 @@ class TestResearchProductSimilarityView(OpenSearchTestCaseMixin, TestSimilarityV
 class TestAuthorSimilarityView(OpenSearchTestCaseMixin, DocumentAPITestCase):
 
     platform = Platforms.PUBLINOVA
+    presets = ["products:default"]
 
     @classmethod
     def setUpClass(cls):

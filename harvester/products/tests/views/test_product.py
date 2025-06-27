@@ -8,6 +8,7 @@ from search_client.constants import Platforms
 from products.models import DatasetVersion, ProductDocument
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)
 class TestProductView(TestCase):
 
     fixtures = ["test-product-document"]

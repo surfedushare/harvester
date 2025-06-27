@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.test import TestCase, override_settings
 
+from core.constants import Platforms
 from core.processors import HttpSeedingProcessor
 from sources.models import HarvestSource
 from sources.factories.sharekit.extraction import SharekitMetadataHarvestFactory
@@ -8,6 +9,7 @@ from products.models import Set, ProductDocument
 from products.sources.sharekit import SEEDING_PHASES
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)  # TODO: preferably the default changes to Publinova
 class TestSharekitProductSeeding(TestCase):
 
     @classmethod
@@ -80,6 +82,7 @@ class TestSharekitProductSeeding(TestCase):
         self.assertEqual(self.set.documents.count(), 0)
 
 
+@override_settings(PLATFORM=Platforms.EDUSOURCES)  # TODO: preferably the default changes to Publinova
 class TestSharekitProductExtraction(TestCase):
 
     set = None

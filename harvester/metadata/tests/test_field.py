@@ -47,7 +47,7 @@ class TestMetadataFieldManager(TestCase):
         # First the default products call
         products_args, products_kwargs = search_client_mock.search.call_args_list[0]
         self.assertEqual(
-            products_kwargs["index"], ["edusources-products"],
+            products_kwargs["index"], ["publinova-products"],
             "Expected 'products' entity to result in 'products:default' configuration preset"
         )
         fields = products_kwargs["body"]["aggs"]
@@ -57,7 +57,7 @@ class TestMetadataFieldManager(TestCase):
         # Now the multilingual indices products call
         multilingual_indices_args, multilingual_indices_kwargs = search_client_mock.search.call_args_list[1]
         self.assertEqual(
-            multilingual_indices_kwargs["index"], ["edusources-nl", "edusources-en", "edusources-unk"],
+            multilingual_indices_kwargs["index"], ["publinova-nl", "publinova-en", "publinova-unk"],
             "Expected 'multilingual-indices' entity to use language specific indices."
         )
         fields = multilingual_indices_kwargs["body"]["aggs"]
