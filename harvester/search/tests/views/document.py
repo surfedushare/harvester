@@ -370,20 +370,14 @@ class TestResearchProductExplainSearchView(OpenSearchTestCaseMixin, TestExplainS
             "onderzoek": [
                 "texts.nl.descriptions.text",
                 "texts.nl.contents.text.folded",
-                "texts.nl.titles.text",
                 "texts.nl.descriptions.text.folded",
                 "texts.nl.contents.text.analyzed",
                 "texts.nl.descriptions.text.analyzed",
                 "texts.nl.contents.text",
-                "texts.nl.titles.text.analyzed",
-                "texts.nl.titles.text.folded"
-
             ],
             "over": [
                 "texts.nl.contents.text.folded",
-                "texts.nl.titles.text",
-                "texts.nl.contents.text",
-                "texts.nl.titles.text.folded"
+                "texts.nl.contents.text"
             ]
         })
 
@@ -405,8 +399,7 @@ class TestLearningMaterialsExplainSearchView(OpenSearchTestCaseMixin, TestExplai
         data = response.json()
         self.assert_explain_results(data, {
             "wiskund": [
-                "texts.nl.contents.text.analyzed",
-                "texts.nl.titles.text.analyzed"
+                "texts.nl.contents.text.analyzed"
             ],
             "wiskunde": [
                 "texts.nl.contents.text.folded",
