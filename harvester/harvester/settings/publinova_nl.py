@@ -20,6 +20,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
     "Hogeschool Windesheim",
     "HZ University of Applied Sciences",
     "HAN University of Applied Sciences",
+    "Iselinge Hogeschool",
 ]
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
