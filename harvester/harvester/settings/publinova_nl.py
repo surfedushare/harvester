@@ -25,7 +25,7 @@ SHAREKIT_TEST_ORGANIZATIONS = [
 
 SIMPLE_METADATA_FREQUENCY_FIELDS = []
 
-CHECK_URL_AUTO_SUCCEED_SETS = ["saxion:kenniscentra", "hanze:hanze"]
+CHECK_URL_AUTO_SUCCEED_SETS = ["saxion:kenniscentra"]
 DEFAULT_FILE_TITLES_TEMPLATE = "Attachment {ix}"
 
 OPENSEARCH_PRESET_DEFAULT = "products:default"
