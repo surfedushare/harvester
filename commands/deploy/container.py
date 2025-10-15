@@ -139,12 +139,14 @@ def push(ctx, commit=None, docker_login=False, push_latest=False):
         "commit": "The commit hash that the image to be promoted is tagged with",
         "docker_login": "Specify this flag to login to AWS registry. Needed only once per session",
         "version": "Which version to promote. Defaults to version specified in package.py.",
+        "platform": "If set, the `platform` will be use in the `docker pull` command, "
+        "adding `--platform=<platform>`. Default is `linux/amd64`.",
         "exclude": "List deploy targets that you want to exclude from this deploy like: "
                    "edusources, publinova or central",
     },
     iterable=["exclude"]
 )
-def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
+def promote(ctx, commit=None, docker_login=False, version=None, platform="linux/amd64", exclude=None):
     """
     Adds deploy tags to a previously pushed Docker image in the AWS container registry.
     """
@@ -187,8 +189,9 @@ def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
     print("Tags added by promotion:", promote_tags)
 
     # Pull the source images
-    ctx.run(f"docker pull {registry}/{name}:{source_tag}", echo=True, pty=True)
-    ctx.run(f"docker pull {registry}/{name}-nginx:{source_tag}", echo=True, pty=True)
+    platform_option = "" if platform.strip() == "" else f"--platform={platform}"
+    ctx.run(f"docker pull {platform_option} {registry}/{name}:{source_tag}", echo=True, pty=True)
+    ctx.run(f"docker pull {platform_option} {registry}/{name}-nginx:{source_tag}", echo=True, pty=True)
 
     # Tagging and pushing of our image and nginx image with relevant tags
     for promote_tag in promote_tags:
@@ -198,11 +201,14 @@ def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
         ctx.run(f"docker push {registry}/{name}-nginx:{promote_tag}", echo=True, pty=True)
 
 
-@task()
-def print_available_images(ctx):
+@task(
+    help={
+        "count": "Sets the amount of images that will be returned, defaults to 10",
+    }
+)
+def print_available_images(ctx, count=10):
     """
     Retrieves some images from AWS and prints them in version order.
-    Possibly misses versions if it's not part of the first images batch from AWS.
     """
     # Load info
     target_info = TARGETS["harvester"]
@@ -214,14 +220,24 @@ def print_available_images(ctx):
 
     # List images
     production_account = ctx.config.aws.production.account
-    response = ecr.list_images(
+
+    # We need a paginator to collect all images,
+    # beause the ecr.list_images call only returns 100 images.
+    paginator = ecr.get_paginator('list_images')
+    page_iterator = paginator.paginate(
         registryId=production_account,
         repositoryName=name,
     )
 
+# Collect all images from all pages
+    all_images = []
+    for page in page_iterator:
+        all_images.extend(page.get('imageIds', []))
+
     # Print output
     def image_version_sort(image):
         return tuple([int(section) for section in image["imageTag"].split(".")])
-    images = [image for image in response["imageIds"] if "imageTag" in image and "." in image["imageTag"]]
+
+    images = [image for image in all_images if "imageTag" in image and "." in image["imageTag"]]
     images.sort(key=image_version_sort, reverse=True)
-    print(json.dumps(images[:10], indent=4))
+    print(json.dumps(images[:count], indent=4))
