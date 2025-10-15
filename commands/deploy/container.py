@@ -187,8 +187,8 @@ def promote(ctx, commit=None, docker_login=False, version=None, exclude=None):
     print("Tags added by promotion:", promote_tags)
 
     # Pull the source images
-    ctx.run(f"docker pull --platform=linux/amd64 {registry}/{name}:{source_tag}", echo=True, pty=True)
-    ctx.run(f"docker pull --platform=linux/amd64 {registry}/{name}-nginx:{source_tag}", echo=True, pty=True)
+    ctx.run(f"docker pull {registry}/{name}:{source_tag}", echo=True, pty=True)
+    ctx.run(f"docker pull {registry}/{name}-nginx:{source_tag}", echo=True, pty=True)
 
     # Tagging and pushing of our image and nginx image with relevant tags
     for promote_tag in promote_tags:
@@ -220,4 +220,8 @@ def print_available_images(ctx):
     )
 
     # Print output
-    print(json.dumps(response["imageIds"], indent=4))
+    def image_version_sort(image):
+        return tuple([int(section) for section in image["imageTag"].split(".")])
+    images = [image for image in response["imageIds"] if "imageTag" in image and "." in image["imageTag"]]
+    images.sort(key=image_version_sort, reverse=True)
+    print(json.dumps(images[:10], indent=4))
