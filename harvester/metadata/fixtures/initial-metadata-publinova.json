@@ -432,5 +432,91 @@
             "english_as_dutch": false,
             "value_output_order": "frequency"
         }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 49585,
+        "fields": {
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "nl": "Publicaties met bestand / URL",
+            "en": "Publications including file / URL",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 49586,
+        "fields": {
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "nl": "Ja",
+            "en": "Yes",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatatranslation",
+        "pk": 49587,
+        "fields": {
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "nl": "Nee",
+            "en": "No",
+            "is_fuzzy": false
+        }
+    },
+    {
+        "model": "metadata.metadatafield",
+        "pk": 26,
+        "fields": {
+            "name": "has_material",
+            "entity": "products:default",
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "translation": 49585,
+            "is_hidden": false,
+            "is_manual": false,
+            "english_as_dutch": false,
+            "value_output_order": "manual"
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 49588,
+        "fields": {
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "field": 26,
+            "translation": 49586,
+            "value": "yes",
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1,
+            "level": 0,
+            "parent": null,
+            "is_hidden": false,
+            "is_manual": false,
+            "deleted_at": null
+        }
+    },
+    {
+        "model": "metadata.metadatavalue",
+        "pk": 49589,
+        "fields": {
+            "created_at": "2025-10-27T12:00:00.000Z",
+            "updated_at": "2025-10-27T12:00:00.000Z",
+            "field": 26,
+            "translation": 49587,
+            "value": "no",
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 2,
+            "level": 0,
+            "parent": null,
+            "is_hidden": false,
+            "is_manual": false,
+            "deleted_at": null
+        }
     }
 ]
