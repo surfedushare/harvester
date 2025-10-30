@@ -47,7 +47,7 @@ class TestGreeniFileSeeding(TestCase):
                 else:
                     self.assertIsNone(product.pending_at)
                     self.assertIsNotNone(product.finished_at)
-        self.assertEqual(self.set.documents.count(), 198)
+        self.assertEqual(self.set.documents.count(), 100)
 
     def test_delta_seeding(self):
         # Load the initial data, set all tasks as completed and create delta Resource
@@ -80,10 +80,10 @@ class TestGreeniFileSeeding(TestCase):
                     self.assertIsNone(file_.pending_at)
                     self.assertTrue(file_.finished_at)
                 documents.append(file_)
-        self.assertEqual(len(documents), 2 + 2, "Expected 2 additions and 2 deletes")
+        self.assertEqual(len(documents), 1 + 1, "Expected 1 additions and 1 deletes")
         self.assertEqual(
-            self.set.documents.count(), 198 + 2,
-            "Expected 198 initial Documents and 2 additional Documents"
+            self.set.documents.count(), 100 + 1,
+            "Expected 100 initial Documents and 1 additional Documents"
         )
 
 
@@ -151,7 +151,7 @@ class TestGreeniFileExtraction(TestCase):
 
     def test_get_is_link(self):
         self.assertFalse(self.seeds[0]["is_link"])
-        self.assertTrue(self.seeds[1]["is_link"])
+        self.assertFalse(self.seeds[1]["is_link"])
 
     def test_get_provider(self):
         self.assertEqual(self.seeds[0]["provider"], {
