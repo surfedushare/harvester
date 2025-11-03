@@ -196,6 +196,8 @@ class ProductDocument(HarvestDocument):
         data["licenses"] = licenses
         data["access_rights"] = access_rights
         data["technical_types"] = technical_types
+        # Set has_material field based on whether there are any files/external entities
+        data["has_material"] = "yes" if files else "no"
         return data
 
     @staticmethod
@@ -281,6 +283,7 @@ class ProductDocument(HarvestDocument):
             data.update({
                 "url": None, "mime_type": None, "previews": None, "video": None,
                 "technical_type": data.get("technical_type"),
+                "has_material": "no",
             })
         # Platform specific transforms
         learning_material = data.pop("learning_material", {})
