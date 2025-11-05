@@ -19,3 +19,23 @@ class TrashListFilter(admin.SimpleListFilter):
         except ValueError:
             is_trash = False
         return queryset.filter(deleted_at__isnull=not is_trash)
+
+
+class HasMaterialListFilter(admin.SimpleListFilter):
+
+    title = 'has material (file/URL)'
+    parameter_name = 'has_material'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == 'yes':
+            return queryset.filter(properties__has_material='yes')
+        elif value == 'no':
+            return queryset.filter(properties__has_material='no')
+        return queryset
