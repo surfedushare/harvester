@@ -92,7 +92,7 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
 
     search_fields = ('name', 'value',)
     autocomplete_fields = ("translation", "parent",)
-    list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'frequency', 'deleted_at',)
+    list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'has_material', 'frequency', 'deleted_at',)
     list_display_links = ('indented_title',)
     list_filter = ('is_hidden', HasMaterialMetadataValueListFilter, 'field', TrashListFilter)
     readonly_fields = ('frequency', 'deleted_at',)
@@ -120,6 +120,10 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
         if obj is not None:
             fields += ("value",)
         return fields
+
+    @admin.display(boolean=True, description="has material")
+    def has_material(self, obj):
+        return obj.field.name == "has_material"
 
 
 class SkosMetadataSourceAdmin(admin.ModelAdmin):
