@@ -92,7 +92,15 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
 
     search_fields = ('name', 'value',)
     autocomplete_fields = ("translation", "parent",)
-    list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'has_material', 'frequency', 'deleted_at',)
+    list_display = (
+        'tree_actions',
+        'indented_title',
+        'is_hidden',
+        'is_manual',
+        'has_material',
+        'frequency',
+        'deleted_at',
+    )
     list_display_links = ('indented_title',)
     list_filter = ('is_hidden', HasMaterialMetadataValueListFilter, 'field', TrashListFilter)
     readonly_fields = ('frequency', 'deleted_at',)
