@@ -5,6 +5,7 @@ from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
 
 from search_client.opensearch.configuration.presets import get_preset_search_configuration
+from core.admin.filters import HasMaterialMetadataValueListFilter
 from datagrowth.resources.admin import HttpResourceAdmin
 from metadata.models import (MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource,
                              SkosVocabularyResource)
@@ -93,7 +94,7 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
     autocomplete_fields = ("translation", "parent",)
     list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'frequency', 'deleted_at',)
     list_display_links = ('indented_title',)
-    list_filter = ('is_hidden', 'field', TrashListFilter)
+    list_filter = ('is_hidden', HasMaterialMetadataValueListFilter, 'field', TrashListFilter)
     readonly_fields = ('frequency', 'deleted_at',)
 
     actions = [unhide_filters, hide_filters, trash_nodes, restore_nodes]
