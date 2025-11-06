@@ -39,3 +39,23 @@ class HasMaterialListFilter(admin.SimpleListFilter):
         elif value == 'no':
             return queryset.filter(properties__has_material='no')
         return queryset
+
+
+class HasMaterialMetadataValueListFilter(admin.SimpleListFilter):
+
+    title = 'has material metadata values'
+    parameter_name = 'has_material'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == 'yes':
+            return queryset.filter(field__name='has_material', value='yes')
+        elif value == 'no':
+            return queryset.filter(field__name='has_material', value='no')
+        return queryset
