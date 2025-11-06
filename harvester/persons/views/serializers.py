@@ -26,7 +26,7 @@ class PersonSerializer(serializers.Serializer):
     phone = serializers.CharField(allow_null=True, default=None)
     photo_url = serializers.CharField(allow_null=True, allow_blank=False)
     description = serializers.CharField(allow_null=True, default=None)
-    socials = SocialLinkSerializer(many=True)
+    socials = SocialLinkSerializer(many=True, required=False, default=list)
 
     isni = serializers.CharField(allow_null=True, default=None)
 
