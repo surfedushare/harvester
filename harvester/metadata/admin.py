@@ -5,7 +5,6 @@ from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
 
 from search_client.opensearch.configuration.presets import get_preset_search_configuration
-from core.admin.filters import HasMaterialMetadataValueListFilter
 from datagrowth.resources.admin import HttpResourceAdmin
 from metadata.models import (MetadataValue, MetadataField, MetadataTranslation, SkosMetadataSource,
                              SkosVocabularyResource)
@@ -92,17 +91,9 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
 
     search_fields = ('name', 'value',)
     autocomplete_fields = ("translation", "parent",)
-    list_display = (
-        'tree_actions',
-        'indented_title',
-        'is_hidden',
-        'is_manual',
-        'has_material',
-        'frequency',
-        'deleted_at',
-    )
+    list_display = ('tree_actions', 'indented_title', 'is_hidden', 'is_manual', 'frequency', 'deleted_at',)
     list_display_links = ('indented_title',)
-    list_filter = ('is_hidden', HasMaterialMetadataValueListFilter, 'field', TrashListFilter)
+    list_filter = ('is_hidden', 'field', TrashListFilter)
     readonly_fields = ('frequency', 'deleted_at',)
 
     actions = [unhide_filters, hide_filters, trash_nodes, restore_nodes]
@@ -128,10 +119,6 @@ class MetadataValueAdmin(DraggableMPTTAdmin):
         if obj is not None:
             fields += ("value",)
         return fields
-
-    @admin.display(boolean=True, description="has material")
-    def has_material(self, obj):
-        return obj.field.name == "has_material"
 
 
 class SkosMetadataSourceAdmin(admin.ModelAdmin):
