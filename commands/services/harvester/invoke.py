@@ -197,13 +197,17 @@ def clean_data(ctx, mode, force_user_deletes=False):
                "(ignored if version_id is specified)",
     "version": "Version of the harvester that created the dataset version you want to index "
                "Defaults to latest version (ignored if version_id is specified)",
-    "version_id": "Id of the DatasetVersion you want to promote"
+    "version_id": "Id of the DatasetVersion you want to promote",
+    "app_label": "The app label you want to select (defaults to `products`)"
 })
-def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=None):
+def promote_dataset_version(ctx, mode, dataset=None, version=None, version_id=None, app_label=None):
     """
     Starts a task on the AWS container cluster or localhost to promote a DatasetVersion index to latest
     """
     command = ["python", "manage.py", "promote_dataset_version"]
+
+    if app_label:
+        command += [f"--app-label={app_label}"]
     if version_id:
         command += [f"--dataset-version-id={version_id}"]
     elif dataset:
