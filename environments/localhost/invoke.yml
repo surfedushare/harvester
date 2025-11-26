@@ -78,3 +78,5 @@ secrets:
     api_key: "123abc"
     sharekit_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     publinova_webhook_secret: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+  fontys:
+    api_key: "test-fontys-key"

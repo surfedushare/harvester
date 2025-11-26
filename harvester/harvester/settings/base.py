@@ -664,6 +664,10 @@ SOURCES = {
         "endpoint": "https://pure.buas.nl",
         "api_key": environment.secrets.buas.api_key
     },
+    "fontys": {
+        "endpoint": "https://pure-staging.fontys.nl",
+        "api_key": environment.secrets.fontys.api_key
+    },
     "hanze": {
         "endpoint": environment.harvester.repositories.hanze,
         "api_key": environment.secrets.hanze.api_key

@@ -3,6 +3,7 @@ from .hva import HvaPureResource
 from .hku import HkuMetadataResource
 from .greeni import GreeniOAIPMHResource
 from .buas import BuasPureResource
+from .fontys import FontysPureResource
 from .hanze import HanzeResearchObjectResource
 from .edurep import EdurepOAIPMH
 from .publinova import PublinovaMetadataResource

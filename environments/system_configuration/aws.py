@@ -77,6 +77,9 @@ AWS_SECRET_CONFIGURATIONS = {
     "hva": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/hva",
     },
+    "fontys": {
+        "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/fontys",
+    },
     "buas": {
         "api_key": "arn:aws:secretsmanager:eu-central-1:{account}:secret:credentials/buas",
     },
