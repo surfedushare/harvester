@@ -98,8 +98,10 @@ class HBOKennisbankProductExtractor(HBOKennisbankExtractor):
 
     @classmethod
     def get_publishers(cls, soup, el):
+        hbo_nameparts = el.find_all("hbo:namePart")
         publisher = el.find("publisher")
-        return [publisher.text.strip()] if publisher else []
+        publisher_nodes = [publisher, *hbo_nameparts]
+        return [publisher_node.text.strip() for publisher_node in publisher_nodes if publisher_node]
 
     @classmethod
     def get_publisher_date(cls, soup, el):
