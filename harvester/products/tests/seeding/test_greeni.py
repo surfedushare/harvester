@@ -183,8 +183,16 @@ class TestGreeniProductExtraction(TestCase):
         self.assertEqual(self.seeds[9]["organizations"]["root"]["name"], "Hogeschool Van Hall Larenstein")
 
     def test_get_publishers(self):
-        self.assertEqual(self.seeds[0]["publishers"], ["VHL"])
-        self.assertEqual(self.seeds[9]["publishers"], ["Agrimedia"])
+        self.assertEqual(self.seeds[0]["publishers"], [
+            "VHL",
+            "Hogeschool Van Hall Larenstein",
+            "Groene Leefomgeving van Steden"
+        ])
+        self.assertEqual(self.seeds[9]["publishers"], [
+            "Agrimedia",
+            "Hogeschool Van Hall Larenstein",
+            "Welzijn van Dieren"
+        ])
 
     def test_publisher_year(self):
         self.assertEqual(self.seeds[0]["publisher_year"], 2010)

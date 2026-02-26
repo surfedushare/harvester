@@ -183,7 +183,12 @@ class TestSaxionProductExtraction(TestCase):
         self.assertEqual(self.deleted["authors"], [])
 
     def test_get_publishers(self):
-        self.assertEqual(self.seeds[0]["publishers"], ["Saxion University of Applied Sciences"])
+        self.assertEqual(self.seeds[0]["publishers"], [
+            "Saxion University of Applied Sciences",
+            "Saxion University of Applied\n                                                        Sciences",
+            "Academie AGZ",
+            "Gezondheid & Bewegen"
+        ])
         self.assertEqual(self.deleted["publishers"], [])
 
     def test_publisher_date(self):
