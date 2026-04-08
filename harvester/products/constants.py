@@ -44,6 +44,7 @@ SEED_DEFAULTS = {
         "research_object_type": None,
         "research_themes": [],
         "parties": [],
-        "projects": []
+        "projects": [],
+        "published_in": None
     }
 }
