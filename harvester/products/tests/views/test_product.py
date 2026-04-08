@@ -419,6 +419,7 @@ class TestResearchProductView(TestProductView):
         ],
         "research_themes": [],
         "projects": [],
+        "published_in": None,
         "owners": [
             {
                 "dai": None,

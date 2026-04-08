@@ -317,8 +317,8 @@ class TestSharekitProductExtraction(TestCase):
         )
         self.assertEqual(
             seeds[1]["research_product"]["published_in"],
-            "TU Delft Press, Vol. 3, Uitgave: 5, Pagina's: 242-245",
-            "Expected publishedIn fields to be concatenated into a single string"
+            "TU Delft Press",
+            "Expected publishedIn title to be extracted"
         )
         self.assertEqual(
             seeds[2]["research_product"]["published_in"],
