@@ -15,3 +15,4 @@ class ResearchProductResultSerializer(BaseSearchResultSerializer):
     contacts = AuthorSerializer(many=True)
     subtitle = serializers.CharField(allow_null=True)
     sia_project_id = serializers.CharField(default=None, allow_null=True)
+    published_in = serializers.CharField(default=None, allow_null=True)

@@ -99,6 +99,28 @@ class SharekitMetadataExtraction:
         return publishers
 
     @classmethod
+    def get_published_in(cls, node):
+        published_in = node["attributes"].get("publishedIn", {}) or {}
+        parts = []
+        if title := published_in.get("title"):
+            parts.append(title)
+        if edition := published_in.get("edition"):
+            parts.append(f"Vol. {edition}")
+        if issue := published_in.get("issue"):
+            parts.append(f"Uitgave: {issue}")
+        page_start = published_in.get("pageStart")
+        page_end = published_in.get("pageEnd")
+        if page_start and page_end:
+            parts.append(f"Pagina's: {page_start}-{page_end}")
+        elif page_start:
+            parts.append(f"Pagina: {page_start}")
+        if issn := published_in.get("issn"):
+            parts.append(f"ISSN: {issn}")
+        if isbn := published_in.get("isbn"):
+            parts.append(f"ISBN: {isbn}")
+        return ", ".join(parts) if parts else None
+
+    @classmethod
     def get_publisher_year(cls, node):
         publisher_date = node["attributes"].get("publishedAt", None)
         if not publisher_date:
@@ -228,6 +250,7 @@ OBJECTIVE = {
     "research_product.research_object_type": "$.attributes.typeResearchObject",
     "research_product.research_themes": SharekitMetadataExtraction.get_research_themes,
     "research_product.projects": SharekitMetadataExtraction.get_projects,
+    "research_product.published_in": SharekitMetadataExtraction.get_published_in,
 }
 
 

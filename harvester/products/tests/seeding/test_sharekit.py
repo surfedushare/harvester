@@ -308,3 +308,24 @@ class TestSharekitProductExtraction(TestCase):
         seeds = self.seeds
         self.assertEqual(seeds[0]["research_product"]["sia_project_id"], "KIEM.LSH.03.021")
         self.assertIsNone(seeds[1]["research_product"]["sia_project_id"])
+
+    def test_published_in(self):
+        seeds = self.seeds
+        self.assertIsNone(
+            seeds[0]["research_product"]["published_in"],
+            "Expected material without publishedIn title to return None"
+        )
+        self.assertEqual(
+            seeds[1]["research_product"]["published_in"],
+            "TU Delft Press",
+            "Expected publishedIn title to be extracted"
+        )
+        self.assertEqual(
+            seeds[2]["research_product"]["published_in"],
+            "SURFnet Press",
+            "Expected publishedIn with only title to return just the title"
+        )
+        self.assertIsNone(
+            seeds[3]["research_product"]["published_in"],
+            "Expected material without any publishedIn data to return None"
+        )
