@@ -367,9 +367,7 @@ class TestResearchProductExplainSearchView(OpenSearchTestCaseMixin, TestExplainS
             ],
             "over": [
                 "texts.nl.contents.text.folded",
-                "texts.nl.titles.text",
-                "texts.nl.contents.text",
-                "texts.nl.titles.text.folded"
+                "texts.nl.contents.text"
             ]
         })
 
