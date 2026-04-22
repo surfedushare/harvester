@@ -181,11 +181,11 @@ class TestSharekitProductExtraction(TestCase):
     def test_publishers_property(self):
         seeds = self.seeds
         self.assertEqual(
-            seeds[0]['publishers'], ["SURFnet", "Wolters"],
+            seeds[0]['publishers'], ["SURFnet", "Codarts Rotterdam", "Wolters"],
             "Expected secondary publishers to get extracted"
         )
         self.assertEqual(seeds[2]['publishers'], ["Hogeschool Utrecht", 'SURFnet'])
-        self.assertEqual(seeds[4]['publishers'], ['SURFnet'])
+        self.assertEqual(seeds[4]['publishers'], ['SURFnet', 'Universiteit van Amsterdam'])
 
     def test_consortium(self):
         seeds = self.seeds
