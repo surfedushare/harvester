@@ -111,6 +111,11 @@ class SharekitMetadataExtraction:
             parts.append(title)
         if edition := published_in.get("edition"):
             parts.append(f"Vol. {edition}")
+        if year := published_in.get("year"):
+            if edition:
+                parts.append(year)
+            else:
+                parts.append(f"Vol. {year}")
         if issue := published_in.get("issue"):
             parts.append(f"Uitgave: {issue}")
         page_start = published_in.get("pageStart")
